@@ -1,0 +1,68 @@
+leather helmet:
+  description: A simple plain leather helmet
+  equiped: false
+  history: {}
+  item_type: equipment
+  name: 'Leather helmet'
+  requirements:
+    armor: 0
+    damage: 0
+    dex: 0
+    hp_max: 0
+    int: 0
+    level: 0
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  slot: head
+  stats:
+    armor: 2
+    damage: 0
+    dex: 0
+    hp_max: 0
+    int: 0
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  tags: []
+
+red potion:
+  description: Its just a bottle of holy water mixed with tomato juice
+  history: {}
+  item_type: consumable
+  name: '@redRed Potion@normal'
+  skills:
+  - cure light wounds
+  tags: []
+
+long sword:
+  description: A trusty long sword, perfection
+  equiped: false
+  history: {}
+  item_type: equipment
+  name: Long Sword
+  requirements:
+    armor: 0
+    damage: 0
+    dex: 0
+    hp_max: 0
+    int: 0
+    level: 0
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  slot: primary
+  stats:
+    armor: 0
+    damage: 2
+    dex: 0
+    hp_max: 0
+    int: 0
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  tags: []

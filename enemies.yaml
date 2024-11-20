@@ -1,0 +1,9 @@
+skeleton:
+  hp: 10
+  mp: 10
+  str:
+  dex:
+  int:
+  armor: 1
+  marmor: 1
+  

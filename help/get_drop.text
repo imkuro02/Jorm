@@ -1,0 +1,5 @@
+Title: Get and Drop items
+Syntax: "get <item on ground>" , "drop <item in inventory>" 
+
+Put an item on the floor into your inventory.
+Or an item in your inventory on the ground.

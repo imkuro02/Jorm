@@ -1,0 +1,10 @@
+Title: Level
+Syntax: "level <stat>" 
+
+You use the level command to level up when you have accumulated enough exp.
+Exp is a stat that does not decrease, but you need more exp per level to use the level command
+
+When you level up, you need to state which stat to add one score into.
+After you have leveled up, you get one "practice point" to spend.
+
+The "points" are used to practice a skill, with the "practice" command

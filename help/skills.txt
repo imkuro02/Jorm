@@ -1,0 +1,7 @@
+Title: Skills
+Syntax: "skills" , "skills <skill name>" 
+
+To view your skills, type "skills" , but if you want to inspect a skill type "skills <skill name>" 
+This works for skills that you have not learned yet aswell, this will display information about skills 
+before you practice them, or before you use a consumable item
+

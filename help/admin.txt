@@ -1,0 +1,23 @@
+Title: Admin commands
+
+create new item "new <item type>" this can be "equipment" , "item" (for misc items) and "consumable" 
+
+set new name "update <item id> name <new name>" 
+set new desc "update <item id> desc <new description>" 
+set new slot "update <item id> slot <item slot>" / "update <item id> slot none" 
+
+set new stat "update <item id> <stat name> <value>" 
+set new req  "update <item id> <stat name with r infront of it> <value>" 
+             for example: "update <item id> rlevel <value>" 
+
+level is only a requirement and not a stat, to set level use rlevel and not level
+
+for consumable items you can add skills (effects they will cause when consumed) 
+with "update <item id> skills <skill id>" 
+
+to clear skills "update <item id> skills none" 
+
+
+
+you can force gain exp with "mexp <value>" this works for negative values aswell
+

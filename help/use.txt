@@ -1,0 +1,6 @@
+Title: Use
+Syntax: "use <skill>" , "use <skill> on <target>" , "use <skill> at <target>" 
+
+When you want to use a skill on someone or somehting, you "use" the skill.
+Skills will have descriptions whether they can or cannot target allies, combat participants, yourself. etc
+

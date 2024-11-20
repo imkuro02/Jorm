@@ -1,0 +1,10 @@
+Title: Practice
+Syntax: "practice" , "practice <skill name>" 
+ 
+You can view how many practice points you have both by using the "stats" command and "practice" command.
+
+When you have atleast 1 practice point, you can use the "practice" command to learn a skill.
+Or further advance in your knowledge of an already learned skill.
+
+You gain one practice point whenever you level up.
+And you cannot practice any skills beyond 95.

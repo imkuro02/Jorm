@@ -1,0 +1,12 @@
+Title: Items and item types
+
+Items are objects you can pick up and interact with
+Just "item" items are misc items, they dont do anything 
+
+Items that are "equipment" can be equiped and provide stats
+
+Items that are "consumable" can be used on yourself freely, whenever you want to use them
+In a fight, you need to wait for your turn to use an item.
+
+consumable items can also be used on others aswell, but only in combat.
+if you want someone to use a potion of healing outside of combat, you need to give them the potion.

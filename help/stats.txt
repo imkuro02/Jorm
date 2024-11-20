@@ -1,0 +1,6 @@
+Title: Stats
+Syntax: "stats" 
+
+View your character stats
+To view your skills, use the "skills" command.
+To view ALL skills including those you have not learned yet, use the "practice" command without any arguments.

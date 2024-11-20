@@ -1,0 +1,29 @@
+dungeon:
+  room_types:
+    - [
+      'Past the entrance',
+      'There is really no light in this place is there?'
+    ]
+
+    - [
+      'Dark corridor',
+      'Are the walls getting closer?',
+    ]
+
+    - [
+      'Barrack remains',
+      'This room used to be a barrack, who stayed here is uncertain. from the strange markings and scratches, its safe to say they are under new management.'
+    ]
+
+    - [
+      'A tunnel',
+      'You squeeze your way past a hole in the wall, there are bones here.'
+    ]
+
+  encounters:
+    - skeleton: 
+      min: 1
+      max: 3
+    - slime:
+      min: 1
+      max: 1 

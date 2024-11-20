@@ -1,0 +1,31 @@
+world:
+  home:
+    name: Town square
+    description: Town
+    exits:
+      north: 1
+
+  1:
+    name: Store
+    description: Store
+    exits:
+      south: home
+      down: 2
+    enemies:
+      - Josh the penis
+      - dung eater
+  
+  2:
+    name: Cellar
+    description: Cellar
+    exits:
+      up: 1
+      further down: 3
+    enemies:
+      - test 
+
+  3: 
+    name: a tunnel 
+    description: a tunnel
+    exits: 
+      back up: 2

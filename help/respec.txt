@@ -1,0 +1,4 @@
+Title: Respec
+Syntax: "respec" 
+
+Re-allocate your stats and points, your exp is kept.

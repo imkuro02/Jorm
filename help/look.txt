@@ -1,0 +1,4 @@
+Title: look
+Syntax: "look" , "look <direction>" , "look <character>" 
+
+Look is a very simple command, you will look and then see the room and all its characters, items, and exits.

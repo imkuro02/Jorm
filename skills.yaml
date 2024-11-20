@@ -1,0 +1,108 @@
+
+swing:
+  name: Swing
+  description: Swing at your target dealing physical damage, scales with your base damage and 10% of strength
+  level: 0 
+  must_be_fighting: True
+  target_self_is_valid: True
+  hp_cost: 0
+  mp_cost: 2
+  script_to_run:
+    name_of_script: skill_simple_damage
+    arguments: [0, 'physical', {'str': 0.1, 'damage': 1}] 
+  use_case_success_for_self:    'You swing and hit #TARGET#'
+  use_case_success_for_others:  '#USER# swings and hits #TARGET#'
+  use_case_fail_for_self:       'You lose your footing while swinging'
+  use_case_fail_for_others:     '#USER# loses their footing while swinging'
+
+  use_perspectives:
+    you on you:           'You swing and hit yourself!'
+    you on other:         'You swing and hit #OTHER#'
+    user on user:         '#USER# swings and hits themselves!'
+    user on you:          '#USER# swings and hits you!'
+    user on other:        '#USER# swings and hits #OTHER#'
+
+    you on you fail:      'You lose your footing while swinging at yourself!'
+    you on other fail:    'You lose your footing while swinging at #OTHER#'
+    user on user fail:    '#USER# loses their footing while swinging at themselves'
+    user on you fail:     '#USER# loses their footing while swinging at you!'
+    user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
+
+
+  
+magic missile:
+  name: Poof
+  description: Fire a magic missile at your target dealing magic damage, scales with 10% of your ingelligence
+  level: 0
+  must_be_fighting: True
+  target_self_is_valid: True
+  hp_cost: 0
+  mp_cost: 2
+  script_to_run:
+    name_of_script: skill_simple_damage
+    arguments: [2, 'magical', {'int': 0.1}]
+
+  use_perspectives:
+    you on you:           'You point at yourself and fire a magical missile straight to your forehead!'
+    you on other:         'You point at #OTHER# and fire a magical missile into their chest!'
+    user on user:         '#USER# points at themselves and fires a magical missile straight into their forehead!'
+    user on you:          '#USER# points at you and fires a magical missile straight into your chest!'
+    user on other:        '#USER# points at #OTHER# and fires a magical missile straight into their chest!'
+
+    you on you fail:      'You lose your concentration while gathering energy to shoot yourself in the face'
+    you on other fail:    'You lose your concentration while gathering energy to fire a magical missile at #OTHER#'
+    user on user fail:    '#USER# loses their concentration while gathering energy to fire a magical missile at themselves?'
+    user on you fail:     '#USER# loses their concentration while attempting to fire a magical missile at you'
+    user on other fail:   '#USER# loses their concentration while attempting to fire a magical missile at #OTHER#'
+
+brain sap:
+  name: Give head
+  description: hoo hoo hee haa
+  level: 2
+  must_be_fighting: True
+  target_self_is_valid: False
+  hp_cost: 0
+  mp_cost: 2
+  script_to_run:
+    name_of_script: skill_simple_damage
+    arguments: [2, 'pure', []]
+
+  use_perspectives:
+    you on you:           'You swing and hit yourself!'
+    you on other:         'You swing and hit #OTHER#'
+    user on user:         '#USER# swings and hits themselves!'
+    user on you:          '#USER# swings and hits you!'
+    user on other:        '#USER# swings and hits #OTHER#'
+
+    you on you fail:      'You lose your footing while swinging at yourself!'
+    you on other fail:    'You lose your footing while swinging at #OTHER#'
+    user on user fail:    '#USER# loses their footing while swinging at themselves'
+    user on you fail:     '#USER# loses their footing while swinging at you!'
+    user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
+
+cure light wounds:
+  name: Tiny Heal
+  description: Heal your target for 10 + intelligence
+  level: 0
+  must_be_fighting: False
+  target_self_is_valid: True
+  hp_cost: 0
+  mp_cost: 2
+  script_to_run:
+    name_of_script: skill_simple_damage
+    arguments: [10, 'heal', {'int': 1}]
+
+  use_perspectives:
+    you on you:           'You pray for yourself'
+    you on other:         'You pray for #OTHER#'
+    user on user:         '#USER# prays for themselves'
+    user on you:          '#USER# prays for you'
+    user on other:        '#USER# prays for #OTHER#'
+
+    you on you fail:      'You lose concentration while praying for yourself'
+    you on other fail:    'You lose concentration while praying for #OTHER#'
+    user on user fail:    '#USER loses their concentration while praying for themselves'
+    user on you fail:     '#USER# loses their concentration while praying for you'
+    user on other fail:   '#USER# loses their concentration while praying for #OTHER#'
+
+  

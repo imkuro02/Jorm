@@ -1,0 +1,9 @@
+Title: Inventory
+Syntax: "inventory" 
+
+Look through your inventory, items that are worn will display which slot they are worn in.
+
+To take a closer look at an item use the "identify" command.
+To see your worn equipment, use the "equipment" command.
+To wear an item use "wear" , and to remove an item use "remove" 
+
