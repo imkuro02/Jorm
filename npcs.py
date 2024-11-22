@@ -6,27 +6,24 @@ import items
 import copy
 import skills
 
-with open('config/enemies.yaml', 'r') as file:
-    ENEMIES = {}
-    ALL_ENEMIES = yaml.safe_load(file)
-    for i in ALL_ENEMIES:
-        if 'template' not in i:
-            ENEMIES[i] = ALL_ENEMIES[i]
 
-    #print(ENEMIES)
+
+
 
 def create_enemy(room, enemy_id):
-    if enemy_id not in ENEMIES:
+    if enemy_id not in room.world.factory.config.ENEMIES:
         print(f'error creating enemy: {enemy_id}')
         return
 
+    enemy = room.world.factory.config.ENEMIES[enemy_id]
+
     names = 'Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
     name = random.choice(names.split())
-    name = name + ' The ' + ENEMIES[enemy_id]['name']
-    stats = ENEMIES[enemy_id]['stats']
-    skills = ENEMIES[enemy_id]['skills']
-    combat_loop = ENEMIES[enemy_id]['combat_loop']
-    loot = ENEMIES[enemy_id]['loot']
+    name = name + ' The ' + enemy['name']
+    stats = enemy['stats']
+    skills = enemy['skills']
+    combat_loop = enemy['combat_loop']
+    loot = enemy['loot']
     Enemy(name, room, stats, skills, combat_loop, loot)
 
 
@@ -40,6 +37,7 @@ class Enemy(Actor):
         self.combat_loop = copy.deepcopy(combat_loop)
         self.loot = copy.deepcopy(loot)
         self.room.move_enemy(self)
+
         #self.inventory = {}    
 
     def tick(self):
@@ -69,21 +67,30 @@ class Enemy(Actor):
         self.finish_turn()
 
     def drop_loot(self,entity):
-        with open("config/items.yaml", "r") as file:
-            data = yaml.safe_load(file)
+        all_items = self.room.world.factory.config.ITEMS
         
         for item in self.loot: 
             roll = random.random()
             if roll >= self.loot[item]:
                 continue
 
-            new_item = items.load_item(data[item])
+            new_item = items.load_item(all_items[item])
 
             if new_item.item_type == 'equipment':
                 for i in range(random.randint(0,new_item.requirements['level'])):
                     stat = random.choice([s for s in new_item.stats.keys()])
                     new_item.stats[stat] = new_item.stats[stat] + 1
                     #print(stat)
+
+                prefixes = self.room.world.factory.config.EQUIPMENT_PREFIXES[1]
+                prefix = random.choice(prefixes)
+
+                new_item.name = prefix['prefix_name'] + ' ' + new_item.name
+                for stat in prefix['stats']:
+                    new_item.stats[stat] += prefix['stats'][stat] 
+                #print(prefixes,prefix)
+
+                
                     
             
             entity.inventory_add_item(new_item)   

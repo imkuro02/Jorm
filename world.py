@@ -7,138 +7,6 @@ import random
 from combat import Combat
 
 
-class _Combat:
-    def __init__(self, room, team1, team2):
-        self.room = room
-        self.team1 = team1
-        self.team2 = team2
-        self.order = []
-        self.current_actor = None
-        self.time_since_turn_finished = 0
-        self.round = 1
-        
-    def tick(self):
-        self.time_since_turn_finished += 1
-        print(self.time_since_turn_finished, len(self.team1), len(self.team2))
-        if self.time_since_turn_finished == 30*20:
-            if isinstance(self.current_actor, Player):
-                self.current_actor.simple_broadcast(
-                    'Your turn is over in 10 seconds.',
-                    f'{self.current_actor.name}\'s turn is over in 10 seconds.'
-                )
-
-        if self.time_since_turn_finished >= 30*30:
-            if isinstance(self.current_actor, Player):
-                self.current_actor.simple_broadcast(
-                    'You missed your turn.',
-                    f'{self.current_actor.name} missed their turn.'
-                )
-
-            self.time_since_turn_finished = 0
-            self.next_turn()
-        
-        team1_died = True
-        for i in self.team1.values():
-            if i.status != 'dead':
-                team1_died = False
-            i.tick()
-            
-        if team1_died:
-            self.combat_over(winner = self.team2, loser = self.team1)
-            return
-
-        team2_died = True
-        for i in self.team2.values():
-            if i.status != 'dead':
-                team2_died = False
-            i.tick()
-
-        if team2_died:
-            self.combat_over(winner = self.team1, loser = self.team2)
-            return
-
-        #print(f'THIS GUY LEFT AYO? {self.current_actor.name in self.room.players}')
-        #print(len(self.team1), len(self.team2))
-        #if self.current_actor not in self.room.players.values() and self.current_actor not in self.room.npcs.values():
-        #    print(f'This guy left -> ',self.current_actor)
-        #    self.next_turn()
-
-        if self.current_actor.room != self.room:
-            print('current actor is not here')
-            if self.current_actor.name in self.team1: del self.team1[self.current_actor.name]
-            if self.current_actor.name in self.team2: del self.team2[self.current_actor.name]
-            self.next_turn()
-            return
-
-        if self.current_actor.status == 'dead':
-            self.next_turn()
-            return
-            
-
-    def combat_over(self, winner, loser):
-        print('combat over', winner)
-        players_to_move = []
-        enemies_to_remove = []
-
-        for i in winner.values():
-            if isinstance(i, Player):
-                i.sendLine('@yellowYou won this fight!@normal')
-        for i in loser.values():
-            if isinstance(i, Player):
-                players_to_move.append(i)
-                i.sendLine('@redYou lost this fight!@normal')
-
-        for i in loser.values():
-            if isinstance(i, Enemy):
-                enemies_to_remove.append(i)
-
-        for i in players_to_move:
-            i.protocol.factory.world.rooms['home'].move_player(i)
-            i.status = 'normal'
-
-        for i in self.team1.values():
-            i.status = 'normal'
-        for i in self.team2.values():
-            i.status = 'normal'
-
-        self.team1 = {}
-        self.team2 = {}
-        self.room.combat = None
-
-    def next_turn(self):
-        self.time_since_turn_finished = 0
-        if len(self.order) == 0:
-            self.initiative()
-            return
-        
-        self.current_actor = self.order[0]
-        self.order.pop(0)
-        self.current_actor.set_turn()
-
-    def initiative(self):
-        print('initiative', len(self.team1), len(self.team2))
-        
-        for i in self.team1.values():
-            if i.status != 'dead':
-                self.order.append(i)
-        for i in self.team2.values():
-            if i.status != 'dead':
-                self.order.append(i)
-
-        for i in self.order:
-            if isinstance(i, Player):
-                combat_stats = f'\n@yellowCombat overview (Round {self.round})@normal:\n'
-                for participant in self.order:
-                    
-                    combat_stats = combat_stats + f'{participant.pretty_name()} [@red{participant.stats["hp"]}/{participant.stats["hp_max"]}@normal]\n'
-                i.sendLine(combat_stats)
-                i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
-                
-        self.round += 1
-        for i in self.order:
-            i.status = 'fighting'
-        self.next_turn()
-
 class Room:
     def __init__(self, world, uid, name, description, exits, dungeon = None):
         self.world = world
@@ -320,7 +188,8 @@ class Dungeon(Room):
         
 
 class World:
-    def __init__(self):
+    def __init__(self, factory):
+        self.factory = factory
         '''
         self.rooms = {
             'home': Room(self, 'home','Town', 'The recall point'),
@@ -334,16 +203,14 @@ class World:
         #self.rooms['market'].spawn_enemy()
         '''
         self.rooms = {}
-        import yaml
-        with open('config/world.yaml', 'r') as file:
-            rooms = yaml.safe_load(file)
-            for r in rooms['world']:
-                room = rooms['world'][r]
-                self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
-                if 'enemies' in room:
-                    for enemy in room['enemies']:
-                        #self.rooms[r].spawn_enemy(enemy)
-                        npcs.create_enemy(self.rooms[r], enemy)
+        world = self.factory.config.WORLD
+        for r in world['world']:
+            room = world['world'][r]
+            self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
+            if 'enemies' in room:
+                for enemy in room['enemies']:
+                    #self.rooms[r].spawn_enemy(enemy)
+                    npcs.create_enemy(self.rooms[r], enemy)
 
     def save_world(self):
         pass

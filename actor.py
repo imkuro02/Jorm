@@ -1,13 +1,14 @@
 from copy import deepcopy
 from items import Item
 
-
-
 class Actor:
     def __init__(self, name, room):
         self.name = name
         #self.protocol = protocol
         self.room = room
+        if self.room != None:
+            self.factory = self.room.world.factory
+            self.use_manager = self.factory.use_manager
 
         self.status = 'normal'
 

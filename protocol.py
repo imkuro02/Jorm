@@ -109,7 +109,14 @@ class Protocol(protocol.Protocol):
         self.factory.protocols.add(self)
         self.splash_screen()
         
+    def compare_slots_to_items(self):
+        for i in self.actor.slots.values():
+            if i not in self.actor.inventory:
+                if i == None: continue
+                print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{i} is not in inventory?')
+
     def load_actor(self):
+        
         actor = self.factory.db.read_actor(self.actor.name)
         if actor == None:
             return False
@@ -122,7 +129,7 @@ class Protocol(protocol.Protocol):
             new_item = items.load_item(item)
             self.actor.inventory[new_item.id] = new_item
 
-
+        self.compare_slots_to_items()
         return True
         
     def save_actor(self):
@@ -137,6 +144,8 @@ class Protocol(protocol.Protocol):
             'slots': self.actor.slots,
             'inventory': inventory
         })
+        self.compare_slots_to_items()
+
         actor = self.factory.db.read_actor(self.username)
         #print(actor)
 

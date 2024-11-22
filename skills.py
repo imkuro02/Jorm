@@ -3,6 +3,16 @@ import yaml
 #from actor import Actor
 import utils
 
+factory = None
+
+with open('config/skills.yaml', 'r') as file:
+    SKILLS = {}
+    SKILLS_UNFILTERED = yaml.safe_load(file)
+    for i in SKILLS_UNFILTERED:
+        if 'template' not in i:
+            SKILLS[i] = SKILLS_UNFILTERED[i]
+
+
 def skill_simple_damage(user, target, arguments):
     base_damage = arguments[0]      # int
     damage_type = arguments[1]      # string 
@@ -14,13 +24,6 @@ def skill_simple_damage(user, target, arguments):
         
     damage = int(damage)
     target.take_damage(damage, damage_type)
-
-with open('config/skills.yaml', 'r') as file:
-    SKILLS = {}
-    SKILLS_UNFILTERED = yaml.safe_load(file)
-    for i in SKILLS_UNFILTERED:
-        if 'template' not in i:
-            SKILLS[i] = SKILLS_UNFILTERED[i]
 
 def get_skills():
     name_to_id = {}

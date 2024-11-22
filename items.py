@@ -1,9 +1,10 @@
 import uuid
 import skills
 import random
-
+import copy
 # load an item either from 
 def load_item(item):
+    item = copy.deepcopy(item)
     if item['item_type'] == 'equipment':
         new_item = Equipment()
 

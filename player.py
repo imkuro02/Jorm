@@ -246,13 +246,12 @@ class Player(Actor):
             self.stats[stat] += 1
             self.stats['points'] += 1
 
-            self.stats['hp_max'] += 10 
-            self.stats['mp_max'] += 10 
-            self.stats['armor'] += 1 
-            self.stats['marmor'] += 1 
-            self.stats['damage'] += 1
+            self.stats['hp_max'] += self.stats['str'] + int(self.stats['dex']*.5) + int(self.stats['luk']*.5)
+            self.stats['mp_max'] += self.stats['int'] + int(self.stats['dex']*.5) + int(self.stats['luk']*.5)
 
-            
+
+            self.stats['armor'] += int(self.stats['dex']*3)
+            self.stats['marmor'] += int(self.stats['dex']*3)
 
             
             self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!')
@@ -327,16 +326,16 @@ class Player(Actor):
     @check_not_in_combat
     @check_alive
     def command_respec(self, line):
-        #for i in self.slots.values():
-        #    if i != None:
-        #        self.sendLine('@redYou must unequip everything to respec@normal')
-        #        return
+        for i in self.slots.values():
+            if i != None:
+                self.sendLine('@redYou must unequip everything to respec@normal')
+                return
 
         exp = self.stats['exp']
         temp_player = Player(None, self.name, None)
         self.stats = temp_player.stats
         self.skills = temp_player.skills
-        print(temp_player)
+        #print(temp_player)
         del temp_player
 
         #self.stats = self.create_new_stats()
@@ -531,11 +530,6 @@ class Player(Actor):
             exits = self.protocol.factory.world.rooms[self.room.uid].exits
             see = see + f'You can go: @brown{"@normal, @brown".join([name for name in exits])}@normal.'
             see = see + '\n'
-            #for direction in exits:
-                #see = see + f'@brown{direction}@normal: {self.protocol.factory.world.rooms[exits[direction]].name}\n'
-                #see = see +
-            #print(self.protocol.factory.world.rooms[self.room.uid].exits)
-
 
             index = 0
             if self.room.inventory != {}:
@@ -592,21 +586,10 @@ class Player(Actor):
             return
 
         id_to_name, name_to_id = skills.get_skills()
-        #skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
-        #skill_id = name_to_id[skill_name]
         list_of_skill_names = [skill for skill in name_to_id.keys()]
         list_of_consumables = [item.name for item in self.inventory.values() if item.item_type == 'consumable']
         whole_list = list_of_consumables + list_of_skill_names
-        
 
-        '''
-        list_of_skills = [skill for skill in skills.SKILLS.keys()]
-        list_of_consumables = [item.name for item in self.inventory.values() if item.item_type == 'consumable']
-        whole_list = list_of_consumables + list_of_skills
-        best_match = utils.match_word(line, whole_list)
-        '''
-
-        #print(best_match)
         action = None
         target = self
 
@@ -629,10 +612,10 @@ class Player(Actor):
             item = self.get_item(best_match)
 
             def use_item(item, user, target):
-                skills.use_broadcast(self, target, item.use_perspectives)
+                self.use_manager.use_broadcast(self, target, item.use_perspectives)
                 for skill in item.skills:
-                    script = getattr(skills, skills.SKILLS[skill]['script_to_run']['name_of_script'])
-                    arguments = skills.SKILLS[skill]['script_to_run']['arguments']
+                    script = getattr(skills, self.use_manager.SKILLS[skill]['script_to_run']['name_of_script'])
+                    arguments = self.use_manager.SKILLS[skill]['script_to_run']['arguments']
                     script(user, target, arguments)
                 self.inventory_remove_item(item.id)
                 return
@@ -661,10 +644,8 @@ class Player(Actor):
 
         elif best_match in list_of_skill_names:
             skill_id = name_to_id[best_match]
-            #print(print(f'you used {best_match}'))
-
             # if skills.use finished with True statement and there were no errors
-            if skills.use_skill(self, target, skill_id):
+            if self.use_manager.use_skill(self, target, skill_id):
                 self.finish_turn()
 
 
@@ -761,7 +742,7 @@ class Player(Actor):
     @check_is_admin
     @check_no_empty_line
     def command_update_item(self, line):
-        print(line)
+        #print(line)
         try:
             item = self.get_item(line.split()[0])
             item_id = item.id
@@ -770,19 +751,25 @@ class Player(Actor):
 
             if stat in 'name':
                 self.inventory[item_id].name = str(value)
+                self.sendLine('@greenUpdated@normal')
                 return
 
             if stat in 'description':
                 self.inventory[item_id].description = str(value)
+                self.sendLine('@greenUpdated@normal')
                 return
 
             if self.inventory[item_id].item_type == 'consumable':
                 print(stat, value)
                 if stat in 'skills':
+                    if value not in self.factory.config.SKILLS:
+                        self.sendLine('@redNot a valid skill_id@normal')
+                        return
                     if str(value).lower() == 'none':
                         self.inventory[item_id].skills = []
                     else:
                         self.inventory[item_id].skills.append(value)
+                    self.sendLine('@greenUpdated@normal')
                     return
 
             if self.inventory[item_id].item_type == 'equipment':
@@ -793,19 +780,23 @@ class Player(Actor):
                 if stat in 'slot':
                     if str(value) in self.slots:
                         self.inventory[item_id].slot = str(value)
+                        self.sendLine('@greenUpdated@normal')
                         return
                     if str(value).lower() == 'none':
                         self.inventory[item_id].slot = None
+                        self.sendLine('@greenUpdated@normal')
                         return
 
                 if str(stat) in self.inventory[item_id].stats:
                     self.inventory[str(item_id)].stats[str(stat)] = int(value)
+                    self.sendLine('@greenUpdated@normal')
                     return
 
                 if stat[0] == 'r':
                     #print(stat, stat[1::])
                     if str(stat[1::]) in self.inventory[item_id].requirements:
                         self.inventory[str(item_id)].requirements[str(stat[1::])] = int(value)
+                        self.sendLine('@greenUpdated@normal')
                         return
 
         except Exception as e:
@@ -919,7 +910,8 @@ class Player(Actor):
 
     def sendLine(self,line):
         #self.sendLine()
-        self.protocol.transport.write(f'{utils.add_color(line)}\n> '.encode('utf-8'))
+        line = utils.add_color(f'{line}\n')
+        self.protocol.transport.write(line.encode('utf-8'))
 
     def handle(self, line):
         
