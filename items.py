@@ -7,12 +7,15 @@ def load_item(item):
     item = copy.deepcopy(item)
     if item['item_type'] == 'equipment':
         new_item = Equipment()
+        template = Equipment()
 
         new_item.item_type = item['item_type']
         new_item.name = item['name']
         new_item.description = item['description']
+
         new_item.stats = item['stats']
         new_item.requirements = item['requirements']
+
         new_item.slot = item['slot']
         new_item.equiped = item['equiped']
         new_item.tags = item['tags']
@@ -152,7 +155,7 @@ class Equipment(Item):
             'armor': 0,
             'marmor': 0,
 
-            'damage': 0,
+            #'damage': 0,
             }
 
         self.requirements = {
@@ -167,7 +170,7 @@ class Equipment(Item):
             'armor': 0,
             'marmor': 0,
 
-            'damage': 0,
+            #'damage': 0,
             'level': 0,
             }
 
@@ -185,6 +188,7 @@ class Equipment(Item):
             'stats': self.stats,
             'requirements': self.requirements
         }
+
         return my_dict
 
     def set_stat(stat, value):
@@ -206,7 +210,7 @@ class Equipment(Item):
         output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
         output += f'@gray{"HP":<{space}} {s["hp_max"]:<{space}} {r["hp_max"]:<{space}}\n'
         output += f'@normal{"MP":<{space}} {s["mp_max"]:<{space}} {r["mp_max"]:<{space}}\n'
-        output += f'@gray{"Damage":<{space}} {s["damage"]:<{space}} {r["damage"]:<{space}}\n'
+        #output += f'@gray{"Damage":<{space}} {s["damage"]:<{space}} {r["damage"]:<{space}}\n'
         output += f'@normal{"Armor":<{space}} {s["armor"]:<{space}} {r["armor"]:<{space}}\n'
         output += f'@gray{"Marmor":<{space}} {s["marmor"]:<{space}} {r["marmor"]:<{space}}\n'
         output += f'@normal{"STR":<{space}} {s["str"]:<{space}} {r["str"]:<{space}}\n'

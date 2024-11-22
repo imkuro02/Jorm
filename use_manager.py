@@ -15,7 +15,7 @@ class UseManager:
         for i in bonus_damages:
             damage += user.stats[i] * bonus_damages[i]
             
-        damage = int(damage)
+        damage = round(damage)
         target.take_damage(damage, damage_type)
 
     def get_skills(self):

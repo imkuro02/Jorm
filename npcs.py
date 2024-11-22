@@ -87,7 +87,7 @@ class Enemy(Actor):
 
                 new_item.name = prefix['prefix_name'] + ' ' + new_item.name
                 for stat in prefix['stats']:
-                    new_item.stats[stat] += prefix['stats'][stat] 
+                    new_item.stats[stat] = new_item.stats[stat] + prefix['stats'][stat] 
                 #print(prefixes,prefix)
 
                 

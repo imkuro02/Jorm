@@ -246,13 +246,11 @@ class Player(Actor):
             self.stats[stat] += 1
             self.stats['points'] += 1
 
-            self.stats['hp_max'] += self.stats['str'] + int(self.stats['dex']*.5) + int(self.stats['luk']*.5)
-            self.stats['mp_max'] += self.stats['int'] + int(self.stats['dex']*.5) + int(self.stats['luk']*.5)
+            self.stats['hp_max'] += self.stats['str'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
+            self.stats['mp_max'] += self.stats['int'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
 
-
-            self.stats['armor'] += int(self.stats['dex']*3)
-            self.stats['marmor'] += int(self.stats['dex']*3)
-
+            self.stats['armor'] += round(self.stats['dex']*3)
+            self.stats['marmor'] += round(self.stats['dex']*3)
             
             self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!')
             

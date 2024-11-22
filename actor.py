@@ -37,7 +37,7 @@ class Actor:
             'armor': 0,
             'marmor': 0,
 
-            'damage': 1,
+            #'damage': 1,
 
             'level': 1,
             'points': 0,
@@ -93,7 +93,7 @@ class Actor:
         output = f'{self.pretty_name()}\n'
         output += f'Health: @red{self.stats["hp"]}@normal/@red{self.stats["hp_max"]}@normal\n'
         output += f'Mana:   @cyan{self.stats["mp"]}@normal/@cyan{self.stats["mp_max"]}@normal\n'
-        output += f'Damage: {self.stats["damage"]}\n'
+        #output += f'Damage: {self.stats["damage"]}\n'
         output += f'Armor:  {self.stats["armor"]}\n'
         output += f'Marmor: {self.stats["armor"]}\n'
         output += f'STR:    {self.stats["str"]}\n'

@@ -7,7 +7,6 @@ leather helmet:
   name: 'Leather helmet'
   requirements:
     armor: 0
-    damage: 0
     dex: 0
     hp_max: 0
     int: 0
@@ -19,7 +18,6 @@ leather helmet:
   slot: head
   stats:
     armor: 2
-    damage: 0
     dex: 0
     hp_max: 0
     int: 0
@@ -46,7 +44,6 @@ long sword:
   name: Long Sword
   requirements:
     armor: 0
-    damage: 0
     dex: 0
     hp_max: 0
     int: 0
@@ -58,7 +55,6 @@ long sword:
   slot: primary
   stats:
     armor: 0
-    damage: 2
     dex: 0
     hp_max: 0
     int: 0

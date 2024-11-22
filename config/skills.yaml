@@ -1,7 +1,7 @@
 
 swing:
   name: Swing
-  description: Swing at your target dealing physical damage, scales with your base damage and 10% of strength
+  description: Swing at your target dealing 1 physical damage + 70% of strength and dexterity
   level: 0 
   must_be_fighting: True
   target_self_is_valid: True
@@ -9,7 +9,7 @@ swing:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [0, 'physical', {'str': 0.1, 'damage': 1}] 
+    arguments: [1, 'physical', {'str': 0.7, 'dex': 0.7}] 
   use_case_success_for_self:    'You swing and hit #TARGET#'
   use_case_success_for_others:  '#USER# swings and hits #TARGET#'
   use_case_fail_for_self:       'You lose your footing while swinging'
@@ -32,7 +32,7 @@ swing:
   
 magic missile:
   name: Magic Missile
-  description: Fire a magic missile at your target dealing magic damage, scales with 10% of your ingelligence
+  description: Fire a magic missile at your target dealing 2 magical damage + 100% of your ingelligence
   level: 0
   must_be_fighting: True
   target_self_is_valid: True
@@ -40,7 +40,7 @@ magic missile:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [2, 'magical', {'int': 0.1}]
+    arguments: [2, 'magical', {'int': 1}]
 
   use_perspectives:
     you on you:           'You point at yourself and fire a magical missile straight to your forehead!'
@@ -82,7 +82,7 @@ brain sap:
 
 cure light wounds:
   name: Cure Light Wounds
-  description: Heal your target for 10 + intelligence
+  description: Heal your target for 10 + 100% intelligence
   level: 0
   must_be_fighting: False
   target_self_is_valid: True
