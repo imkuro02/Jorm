@@ -6,7 +6,7 @@ swing:
   must_be_fighting: True
   target_self_is_valid: True
   hp_cost: 0
-  mp_cost: 2
+  mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage
     arguments: [0, 'physical', {'str': 0.1, 'damage': 1}] 
@@ -31,7 +31,7 @@ swing:
 
   
 magic missile:
-  name: Poof
+  name: Magic Missile
   description: Fire a magic missile at your target dealing magic damage, scales with 10% of your ingelligence
   level: 0
   must_be_fighting: True
@@ -81,7 +81,7 @@ brain sap:
     user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
 
 cure light wounds:
-  name: Tiny Heal
+  name: Cure Light Wounds
   description: Heal your target for 10 + intelligence
   level: 0
   must_be_fighting: False
@@ -101,7 +101,7 @@ cure light wounds:
 
     you on you fail:      'You lose concentration while praying for yourself'
     you on other fail:    'You lose concentration while praying for #OTHER#'
-    user on user fail:    '#USER loses their concentration while praying for themselves'
+    user on user fail:    '#USER# loses their concentration while praying for themselves'
     user on you fail:     '#USER# loses their concentration while praying for you'
     user on other fail:   '#USER# loses their concentration while praying for #OTHER#'
 

@@ -38,13 +38,13 @@ class Actor:
 
             'damage': 1,
 
-            'level': 0,
+            'level': 1,
             'points': 0,
             'exp': 0
             }
 
         self.skills = {
-            'swing':50+15
+            'swing':95
             }
     '''
     def create_new_skills(self):
@@ -179,9 +179,9 @@ class Actor:
             if player == self:
                 if line_self == None:
                     continue
-                player.protocol.sendLine(f'{line_self}')
+                player.sendLine(f'{line_self}')
             else:
                 if line_others == None:
                     continue
-                player.protocol.sendLine(f'{line_others}')
+                player.sendLine(f'{line_others}')
 

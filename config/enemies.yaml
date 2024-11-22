@@ -1,0 +1,33 @@
+skeleton:
+  name: Skeleton
+  stats:
+    hp: 5
+    mp: 20
+
+    armor: 0
+    marmor: 0
+
+    damage: 1
+
+    str: 0
+    dex: 0
+    int: 0
+    luk: 0
+    
+    exp: 1
+
+  loot:
+    long sword: 1
+    red potion: 0.1
+
+  skills:
+    swing: 30
+    cure light wounds: 20
+
+  combat_loop:
+    - skill: swing 
+      target: enemy_random
+    - skill: swing
+      target: enemy_random
+
+  

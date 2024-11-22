@@ -12,8 +12,8 @@ world:
       south: home
       down: 2
     enemies:
-      - Josh the penis
-      - dung eater
+      - skeleton
+      - skeleton
   
   2:
     name: Cellar
@@ -22,7 +22,7 @@ world:
       up: 1
       further down: 3
     enemies:
-      - test 
+      - skeleton 
 
   3: 
     name: a tunnel 

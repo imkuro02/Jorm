@@ -1,6 +1,6 @@
 import random
 import yaml
-from actor import Actor
+#from actor import Actor
 import utils
 
 def skill_simple_damage(user, target, arguments):
@@ -15,7 +15,7 @@ def skill_simple_damage(user, target, arguments):
     damage = int(damage)
     target.take_damage(damage, damage_type)
 
-with open('skills.yaml', 'r') as file:
+with open('config/skills.yaml', 'r') as file:
     SKILLS = {}
     SKILLS_UNFILTERED = yaml.safe_load(file)
     for i in SKILLS_UNFILTERED:
@@ -34,7 +34,7 @@ def get_skills():
 
 def error(user, err):
     if type(user).__name__ == "Player":
-        user.protocol.sendLine(err)
+        user.sendLine(err)
     else:
         print(err)
 
@@ -48,31 +48,31 @@ def suse_broadcast(user, target, for_self, for_others):
         if i == user and i == target: # you are the user and the target
             message = for_self.replace('#USER#', 'you')
             message = message.replace('#TARGET#', 'yourself')
-            i.protocol.sendLine(message)
+            i.sendLine(message)
             continue
 
         if i != user and user == target: # you arent the user but the user is the target
             message = for_others.replace('#USER#', target.pretty_name())
             message = message.replace('#TARGET#', 'themself')
-            i.protocol.sendLine(message)
+            i.sendLine(message)
             continue
 
         if i == user: # check if you are the user
             message = for_self.replace('#USER#', 'you')
             message = message.replace('#TARGET#', target.pretty_name())
-            i.protocol.sendLine(message)
+            i.sendLine(message)
             continue
 
         elif i == target: # check if you are the target
             message = for_others.replace('#USER#', user.pretty_name())
             message = message.replace('#TARGET#', 'you')
-            i.protocol.sendLine(message)
+            i.sendLine(message)
             continue
 
         else: # everyone else
             message = for_others.replace('#USER#', user.pretty_name())
             message = message.replace('#TARGET#', target.pretty_name())
-            i.protocol.sendLine(message)
+            i.sendLine(message)
             continue
        
 def use_broadcast(user, other, perspectives):
@@ -85,19 +85,19 @@ def use_broadcast(user, other, perspectives):
             continue
 
         if receiver == user and receiver == other:
-            receiver.protocol.sendLine(perspectives['you on you'])
+            receiver.sendLine(perspectives['you on you'])
             continue
         if receiver == user and receiver != other:
-            receiver.protocol.sendLine(perspectives['you on other'])
+            receiver.sendLine(perspectives['you on other'])
             continue
         if receiver != user and receiver != other and user == other:
-            receiver.protocol.sendLine(perspectives['user on user'])
+            receiver.sendLine(perspectives['user on user'])
             continue
         if receiver != user and receiver == other:
-            receiver.protocol.sendLine(perspectives['user on you'])
+            receiver.sendLine(perspectives['user on you'])
             continue
         if receiver != user and receiver != other:
-            receiver.protocol.sendLine(perspectives['user on other'])
+            receiver.sendLine(perspectives['user on other'])
             continue
 
 def use_skill(user: "Actor", target: "Actor", skill_name: str):

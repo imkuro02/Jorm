@@ -10,6 +10,7 @@ DO = b'\xfd'      # Please Do
 DONT = b'\xfe'    # Please Don’t
 ECHO = b'\x01'    # Echo
 LINEMODE = b'\x22' # Line mode
+#GMCP = b'\x'
 
 class Protocol(protocol.Protocol):
     def __init__(self, factory):
@@ -19,20 +20,28 @@ class Protocol(protocol.Protocol):
         self.username = None
         
 
-    def splash_screen(self):
+    def clear_screen(self):
+        self.sendLine('\x1b[0m')
         self.sendLine('\u001B[2J')
+    def splash_screen(self):
+        #def clear_screen(client_socket):
+        ## Send ANSI escape sequence to clear screen
+        
+        #client_socket.send(b"\x1b[2J\x1b[H")
 
         #self.transport.write(IAC + DO + LINEMODE)
         #self.transport.write(IAC + WONT + ECHO)
 
+        self.clear_screen()
+
         all_colors = ''
-        #for i in range(31,40):
-        #    all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
+        for i in range(31,40):
+            all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
 
         #for i in range(0,255):
         #    all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
 
-        self.sendLine(all_colors + '\x1b[0m')
+        self.sendLine(all_colors)
         self.sendLine('Type "b" to restart login / register process.')
         self.sendLine('Welcome! Please enter your username:')
 
@@ -82,11 +91,14 @@ class Protocol(protocol.Protocol):
             if user[1] == line:
                 self.actor = Player(self, self.username, self.factory.world.rooms['home'])
                 self.state = self.PLAY
-                self.sendLine('\u001B[2J')
+                #self.sendLine('\u001B[2J')
+                self.clear_screen()
                 #self.sendLine(f'You are logged in as "{self.username}"')
-                self.actor.simple_broadcast(f'You are logged in as "{self.username}"', f'{self.actor.name} logged in.')
+                
                 if not self.load_actor():
                     self.save_actor()
+                
+                self.actor.simple_broadcast(f'You are logged in as "{self.username}"', f'{self.actor.name} logged in.')
                 
             else:
                 self.splash_screen()
@@ -155,11 +167,11 @@ class Protocol(protocol.Protocol):
         # decode and process input data
         line = data.decode('utf-8', errors='ignore').strip()
 
-        if line:  # skip empty lines
-            if '@' in line:
-                line = line + '@normal'
-            self.state(line)
-            return
+        #if line:  # skip empty lines
+        if '@' in line:
+            line = line + '@normal'
+        self.state(line)
+        return
 
     def sendLine(self, line):
         line = utils.add_color(line)

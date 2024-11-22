@@ -1,4 +1,6 @@
 import uuid
+import skills
+import random
 
 # load an item either from 
 def load_item(item):
@@ -35,6 +37,7 @@ def load_item(item):
         new_item.history = item['history']
         new_item.skills = item['skills']
         
+    
 
     # on creation of an item object, it receives a uuid
     # if there is no uuid present in the item dict received, then that item is being created for the first time
@@ -42,9 +45,10 @@ def load_item(item):
     # receive its id, and not get a new randomly generated one
     if 'id' in item:
         new_item.id = item['id']
-        return new_item
-    else:
-        return new_item
+    if 'keep' in item:
+        new_item.keep = item['keep']
+
+    return new_item
 
 def save_item(item):
     return item.to_dict()
@@ -57,6 +61,7 @@ class Item:
         self.description = 'Description here'
         self.history = {}
         self.tags = []
+        self.keep = False
 
     def to_dict(self):
         my_dict = {
@@ -65,7 +70,8 @@ class Item:
             'name': self.name,
             'description': self.description,
             'history': self.history,
-            'tags': self.tags
+            'tags': self.tags,
+            'keep': self.keep
         }
         return my_dict
 
@@ -76,12 +82,15 @@ class Item:
 
 class Consumable(Item):
     def __init__(self):
+        super().__init__()
+        '''
         self.id = str(uuid.uuid4())
         self.item_type = type(self).__name__.lower()
         self.name = 'Name of item'
         self.description = 'Description here'
         self.history = {}
         self.tags = []
+        '''
         
         self.skills = []
         self.use_perspectives = {
@@ -101,25 +110,31 @@ class Consumable(Item):
             'description': self.description,
             'history': self.history,
             'tags': self.tags,
-            
+            'keep': self.keep,
+
             'skills': self.skills
+            
         }
         return my_dict
 
     def identify(self):
         output = super().identify()
-        output += f'Contents: {self.skills}'
+        id_to_name, name_to_id = skills.get_skills()
+        output += f'Contents: {[id_to_name[skill_id] for skill_id in self.skills]}'
         return output
 
 
 class Equipment(Item):
     def __init__(self):
+        super().__init__()
+        '''
         self.id = str(uuid.uuid4())
         self.item_type = type(self).__name__.lower()
         self.name = 'Name of item'
         self.description = 'Description here'
         self.history = {}
         self.tags = []
+        '''
 
         self.slot = None
         self.equiped = False
@@ -163,6 +178,7 @@ class Equipment(Item):
             'description': self.description,
             'history': self.history,
             'tags': self.tags,
+            'keep': self.keep,
             'slot': self.slot,
             'equiped': self.equiped,
             'stats': self.stats,

@@ -1,10 +1,11 @@
-from npcs import Enemy
+import npcs
 from player import Player
 import time
 #from items import Item
 import uuid
 import random
 from combat import Combat
+
 
 class _Combat:
     def __init__(self, room, team1, team2):
@@ -81,11 +82,11 @@ class _Combat:
 
         for i in winner.values():
             if isinstance(i, Player):
-                i.protocol.sendLine('@yellowYou won this fight!@normal')
+                i.sendLine('@yellowYou won this fight!@normal')
         for i in loser.values():
             if isinstance(i, Player):
                 players_to_move.append(i)
-                i.protocol.sendLine('@redYou lost this fight!@normal')
+                i.sendLine('@redYou lost this fight!@normal')
 
         for i in loser.values():
             if isinstance(i, Enemy):
@@ -130,8 +131,8 @@ class _Combat:
                 for participant in self.order:
                     
                     combat_stats = combat_stats + f'{participant.pretty_name()} [@red{participant.stats["hp"]}/{participant.stats["hp_max"]}@normal]\n'
-                i.protocol.sendLine(combat_stats)
-                i.protocol.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
+                i.sendLine(combat_stats)
+                i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
                 
         self.round += 1
         for i in self.order:
@@ -163,8 +164,8 @@ class Room:
             return
         self.combat.tick()
 
-    def spawn_enemy(self, name):
-        _ = Enemy(name, self)
+    #def spawn_enemy(self, name):
+    #    _ = Enemy(name, self)
 
     def inventory_add_item(self, item):
         self.inventory[item.id] = item
@@ -192,7 +193,7 @@ class Room:
 
         #for p in player.room.entities.values():
         #    if not silent and p != player and isinstance(p, Player):
-        #        p.protocol.sendLine(f'{player.pretty_name()} went to {self.name}.')
+        #        p.sendLine(f'{player.pretty_name()} went to {self.name}.')
 
         #new_room.move_player(self)
 
@@ -202,11 +203,11 @@ class Room:
         self.entities[player.name] = player
 
         #if not silent:
-        #    player.protocol.sendLine(f'You arrived at {self.name}.')
+        #    player.sendLine(f'You arrived at {self.name}.')
 
         #    for p in player.room.entities.values():
         #        if p != player and isinstance(p, Player):
-        #            p.protocol.sendLine(f'{player.pretty_name()} arrived from {old_room.name}.')
+        #            p.sendLine(f'{player.pretty_name()} arrived from {old_room.name}.')
 
         player.command_look('')
         #if self.combat == None:
@@ -230,7 +231,7 @@ class Room:
                     players_to_move.append(i)
 
             for i in players_to_move:
-                i.protocol.sendLine(f'You explore {i.room.name}')
+                i.sendLine(f'You explore {i.room.name}')
                 dungeon.move_player(i, True)
                 
             for i in players_to_move:
@@ -334,14 +335,15 @@ class World:
         '''
         self.rooms = {}
         import yaml
-        with open('world.yaml', 'r') as file:
+        with open('config/world.yaml', 'r') as file:
             rooms = yaml.safe_load(file)
             for r in rooms['world']:
                 room = rooms['world'][r]
                 self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
                 if 'enemies' in room:
                     for enemy in room['enemies']:
-                        self.rooms[r].spawn_enemy(enemy)
+                        #self.rooms[r].spawn_enemy(enemy)
+                        npcs.create_enemy(self.rooms[r], enemy)
 
     def save_world(self):
         pass

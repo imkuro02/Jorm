@@ -55,6 +55,7 @@ class Combat:
         #    self.combat_over()
 
         if self.current_actor.room != self.room:
+            print(self.current_actor.name, 'removed from combat')
             if self.current_actor.name in self.participants: del self.participants[self.current_actor.name]
             self.next_turn()
             return
@@ -67,7 +68,7 @@ class Combat:
         for i in self.participants.values():
             if i.status == 'fighting': i.status = 'normal'
             if type(i).__name__ == "Player":
-                i.protocol.sendLine('@yellowCombat over!@normal')
+                i.sendLine('@yellowCombat over!@normal')
 
         self.participants = {}
         self.room.combat = None
@@ -100,11 +101,11 @@ class Combat:
 
         for i in self.order:
             if type(i).__name__ == "Player":
-                combat_stats = f'\n@yellowCombat overview (Round {self.round})@normal:\n'
+                combat_stats = f'\n@yellowCombat overview (Round {self.round})@normal:'
                 for participant in self.order:
-                    combat_stats = combat_stats + f'{participant.pretty_name()} [@red{participant.stats["hp"]}@normal/@red{participant.stats["hp_max"]}@normal]\n'
-                i.protocol.sendLine(combat_stats)
-                #i.protocol.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
+                    combat_stats = combat_stats + f'\n{participant.pretty_name()} [@red{participant.stats["hp"]}@normal/@red{participant.stats["hp_max"]}@normal]'
+                i.sendLine(combat_stats)
+                #i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
                 
         self.round += 1
         for i in self.order:

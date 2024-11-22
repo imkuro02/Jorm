@@ -49,7 +49,7 @@ long sword:
     dex: 0
     hp_max: 0
     int: 0
-    level: 0
+    level: 1
     luk: 0
     marmor: 0
     mp_max: 0
@@ -66,3 +66,4 @@ long sword:
     mp_max: 0
     str: 0
   tags: []
+

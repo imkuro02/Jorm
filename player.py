@@ -10,6 +10,8 @@ class Player(Actor):
     def __init__(self, protocol, name, room):
         self.protocol = protocol
         super().__init__(name, room)
+        self.last_line_sent = None
+
         if self.room != None:
             self.room.move_player(self)
         
@@ -23,7 +25,8 @@ class Player(Actor):
             's':    'command_say',
             'g':    'command_go',
             'e':    'command_equipment',
-            'f':    'command_fight'
+            'f':    'command_fight',
+            'p':    'command_send_prompt'
         }
 
         self.commands = {
@@ -47,6 +50,7 @@ class Player(Actor):
             'get':      'command_get',
             'drop':     'command_drop',
             'wear':     'command_wear',
+            'keep':     'command_keep',
             'remove':   'command_remove',
 
             'use':      'command_use',
@@ -75,7 +79,7 @@ class Player(Actor):
             # Check if the target string is in any of the lines
             found = any(self.name in admin for admin in lines)
             if not found:
-                self.protocol.sendLine('You are not an admin')
+                self.sendLine('You are not an admin')
                 return
             return func(self, line)
         return wrapper
@@ -84,7 +88,7 @@ class Player(Actor):
     def check_no_empty_line(func):
         def wrapper(self, line):
             if line == '':
-                self.protocol.sendLine('This command needs arguments')
+                self.sendLine('This command needs arguments')
                 return
             else:
                 return func(self, line)
@@ -96,7 +100,7 @@ class Player(Actor):
                 return func(self, line)
             if self.room.combat != None:
                 if self.room.combat.current_actor != self:
-                    self.protocol.sendLine('Not your turn to act.')
+                    self.sendLine('Not your turn to act.')
                     return
             return func(self, line)
         return wrapper
@@ -104,7 +108,7 @@ class Player(Actor):
     def check_alive(func):
         def wrapper(self, line):
             if self.status == 'dead':
-                self.protocol.sendLine('@redYou are dead@normal')
+                self.sendLine('@redYou are dead@normal')
                 return 
             return func(self, line)
         return wrapper
@@ -112,13 +116,14 @@ class Player(Actor):
     def check_not_in_combat(func):
         def wrapper(self, line):
             if self.status == 'fighting':
-                self.protocol.sendLine('You can\'t do this in combat')
+                self.sendLine('You can\'t do this in combat')
                 return
             return func(self, line)
         return wrapper
 
     def set_turn(self):
-        self.protocol.sendLine('@yellowYour turn.@normal')
+        output = '@yellowYour turn. @normal'
+        self.sendLine(output)
 
     def get_exp_needed_to_level(self):
         exp_needed = 2 ** self.stats['level']
@@ -141,7 +146,7 @@ class Player(Actor):
 
         # Return if you cant find a target
         if not isinstance(target, Actor):
-            self.protocol.sendLine(f'Could not find your target {target}')
+            self.sendLine(f'Could not find your target {target}')
             return None
 
         return target
@@ -184,24 +189,25 @@ class Player(Actor):
 
     def inventory_equip(self, item):
         if item.slot != None:
-            if self.slots[item.slot] == None:
+            if self.slots[item.slot] != None:
+                self.inventory_unequip(self.inventory[self.slots[item.slot]])
+            
+            self.slots[item.slot] = item.id
+            
+            item.equiped = True 
+            for stat_name in item.stats:
+                stat_val = item.stats[stat_name]
                 
-                self.slots[item.slot] = item.id
-                
-                item.equiped = True 
-                for stat_name in item.stats:
-                    stat_val = item.stats[stat_name]
-                    
-                    self.stats[stat_name] += stat_val
-                    #print(self.stats[stat_name])
-                
-                self.simple_broadcast(
-                    f'You equip {item.name}',
-                    f'{self.pretty_name()} equips {item.name}'
-                    )
+                self.stats[stat_name] += stat_val
+                #print(self.stats[stat_name])
+            
+            self.simple_broadcast(
+                f'You equip {item.name}',
+                f'{self.pretty_name()} equips {item.name}'
+                )
 
-                #self.slots[item.slot] = item.id
-                #print(self.slots[item.slot])
+            #self.slots[item.slot] = item.id
+            #print(self.slots[item.slot])
 
     def inventory_unequip(self, item):
         if item.equiped:
@@ -228,24 +234,29 @@ class Player(Actor):
         stat = stat.lower()
         exp_needed = self.get_exp_needed_to_level()
         if self.get_exp_needed_to_level() > self.stats['exp']:
-            self.protocol.sendLine(f'You need {exp_needed-self.stats["exp"]}EXP to level up')
+            self.sendLine(f'You need {exp_needed-self.stats["exp"]}EXP to level up')
             return
 
         if stat not in 'str dex int luk'.split():
-            self.protocol.sendLine('You can only level up STR, DEX, INT or LUK')
+            self.sendLine('You can only level up STR, DEX, INT or LUK')
             return
 
         if stat in self.stats:
             self.stats['level'] += 1
             self.stats[stat] += 1
             self.stats['points'] += 1
-            self.protocol.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!')
-            
-            self.stats['hp_max'] += self.stats['str']
-            self.stats['mp_max'] += self.stats['int']
-            self.stats['hp_max'] += int(self.stats['luk']/2)
-            self.stats['mp_max'] += int(self.stats['luk']/2)
 
+            self.stats['hp_max'] += 10 
+            self.stats['mp_max'] += 10 
+            self.stats['armor'] += 1 
+            self.stats['marmor'] += 1 
+            self.stats['damage'] += 1
+
+            
+
+            
+            self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!')
+            
     @check_not_in_combat
     def command_practice(self, line):
         
@@ -260,35 +271,35 @@ class Player(Actor):
                     learned = self.skills[skill_id]
                 level = skills.SKILLS[skill_id]['level']
                 output += (f'{skills.SKILLS[skill_id]["name"]:<20} | {str(learned) + "":<8} | {str(level):<5} \n')
-            self.protocol.sendLine(f'{output}')
+            self.sendLine(f'{output}')
         else:
             id_to_name, name_to_id = skills.get_skills()
             skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
             skill_id = name_to_id[skill_name]
 
             if self.stats['points'] <= 0:
-                self.protocol.sendLine('@redYou do not have enough points to practice@normal')
+                self.sendLine('@redYou do not have enough points to practice@normal')
                 return
 
             if skill_id not in skills.SKILLS.keys():
-                self.protocol.sendLine('This skill does not exist')
+                self.sendLine('This skill does not exist')
                 return
 
             if skill_id in self.skills:
                 # do not level beyond 95
                 if self.skills[skill_id] >= 95:
-                    self.protocol.sendLine(f'@redYou are already a master at "{skill_name}"@normal')
+                    self.sendLine(f'@redYou are already a master at "{skill_name}"@normal')
                     return
 
                 self.skills[skill_id] += 15
-                self.protocol.sendLine(f'@greenYou spend one practice point on "{skill_name}"@normal')
+                self.sendLine(f'@greenYou spend one practice point on "{skill_name}"@normal')
                 self.stats['points'] -= 1
             else:
                 if self.stats['level'] < skills.SKILLS[skill_id]['level']:
-                    self.protocol.sendLine('@redYou are not high enough level to practice this skill@normal')
+                    self.sendLine('@redYou are not high enough level to practice this skill@normal')
                     return
                 self.skills[skill_id] = 50
-                self.protocol.sendLine(f'@greenYou learned the skill "{skill_name}"@normal')
+                self.sendLine(f'@greenYou learned the skill "{skill_name}"@normal')
                 self.stats['points'] -= 1
 
             
@@ -301,25 +312,25 @@ class Player(Actor):
             output = ''
             output += f'{skill["name"]}\n'
             output += f'{skill["description"]}\n'
-            self.protocol.sendLine(output)
+            self.sendLine(output)
         else:
             if len(self.skills) == 0:
-                self.protocol.sendLine('You do not know any skills...')
+                self.sendLine('You do not know any skills...')
                 return
 
             output = 'SKILLS:\n'
             max_length = max(len(skill) for skill in self.skills) + 1
             for skill_id in self.skills:
                 output = output + f'{id_to_name[skill_id] + ":":<{max_length}} {self.skills[skill_id]}\n'
-            self.protocol.sendLine(output)
+            self.sendLine(output)
 
     @check_not_in_combat
     @check_alive
     def command_respec(self, line):
-        for i in self.slots.values():
-            if i != None:
-                self.protocol.sendLine('@redYou must unequip everything to respec@normal')
-                return
+        #for i in self.slots.values():
+        #    if i != None:
+        #        self.sendLine('@redYou must unequip everything to respec@normal')
+        #        return
 
         exp = self.stats['exp']
         temp_player = Player(None, self.name, None)
@@ -331,7 +342,7 @@ class Player(Actor):
         #self.stats = self.create_new_stats()
         #self.skills = self.create_new_skills()
         self.stats['exp'] = exp
-        self.protocol.sendLine('@greenYou have reset your stats, experience is kept.@normal')
+        self.sendLine('@greenYou have reset your stats, experience is kept.@normal')
 
     def command_stats(self, line):
         output = f'You are {self.get_character_sheet()}'
@@ -344,7 +355,7 @@ class Player(Actor):
             output += f'@greenYou have enough exp to level up@normal\n'
         output += f'Experience:      {self.stats["exp"]}\n'
         output += f'Practice Points: {self.stats["points"]}\n'
-        self.protocol.sendLine(output)
+        self.sendLine(output)
 
     @check_no_empty_line
     def command_identify(self, line):
@@ -352,7 +363,7 @@ class Player(Actor):
         if item == None:
             return
         output = item.identify()
-        self.protocol.sendLine(output)
+        self.sendLine(output)
         
     @check_no_empty_line
     @check_not_in_combat
@@ -361,7 +372,7 @@ class Player(Actor):
         item = self.get_item(line, search_mode = 'room')
 
         if item == None:
-            self.protocol.sendLine('Get what?')
+            self.sendLine('Get what?')
             return
 
         self.inventory_add_item(item)
@@ -377,12 +388,16 @@ class Player(Actor):
     def command_drop(self, line):
         item = self.get_item(line)
         if item == None:
-            self.protocol.sendLine(f'Drop what?')
+            self.sendLine(f'Drop what?')
+            return
+
+        if item.keep == True:
+            self.sendLine(f'{item.name} is keept')
             return
 
         if item.item_type == 'equipment':
             if item.equiped:
-                self.protocol.sendLine(f'You can\'t drop worn items')
+                self.sendLine(f'You can\'t drop worn items')
                 return
 
         self.simple_broadcast(
@@ -401,14 +416,18 @@ class Player(Actor):
         for i in self.inventory:
             index += 1 
             if self.inventory[i].item_type == 'equipment':
-                if self.inventory[i].equiped:
-                    output = output + f'{index}. {self.inventory[i].name} @gray({self.inventory[i].slot})@normal \n'
-                else:
-                    output = output + f'{index}. {self.inventory[i].name}\n'
+                
+           
+                output = output + f'{index}. {self.inventory[i].name}'
+                if self.inventory[i].equiped:   output = output + f' @gray({self.inventory[i].slot})@normal'
+                if self.inventory[i].keep:      output = output + f' @gray(K)@normal'
+                output = output + '\n'
+
+                # @gray({self.inventory[i].slot})@normal
             else:
                 output = output + f'{index}. {self.inventory[i].name}\n'
         
-        self.protocol.sendLine(output)
+        self.sendLine(output)
 
     def command_equipment(self, line):
         output = 'You are wearing:\n'
@@ -417,7 +436,7 @@ class Player(Actor):
                 output = output + f'{i + ":":<12} @grayNothing@normal\n'
             else:
                 output = output + f'{i + ":":<12} {self.inventory[self.slots[i]].name}\n'
-        self.protocol.sendLine(output)
+        self.sendLine(output)
 
     @check_no_empty_line
     #@check_your_turn
@@ -426,16 +445,21 @@ class Player(Actor):
 
         item = self.get_item(line)
 
+        for req in item.requirements:
+            if item.requirements[req] > self.stats[req]:
+                self.sendLine(f'@redYou do not meet the requirements to wear@normal {item.name}')
+                return
+
         if item.item_type != 'equipment':
-            self.protocol.sendLine(f'This item is not equipable')
+            self.sendLine(f'This item is not equipable')
             return
 
         if item == None:
-            self.protocol.sendLine(f'Wear what?')
+            self.sendLine(f'Wear what?')
             return
 
         if item.equiped:
-            self.protocol.sendLine(f'{item.name} is already equiped')
+            self.sendLine(f'{item.name} is already equiped')
             return
 
         self.inventory_equip(item)
@@ -446,15 +470,25 @@ class Player(Actor):
     def command_remove(self, line):
         item = self.get_item(line)
         if item.item_type != 'equipment':
-            self.protocol.sendLine(f'This item is not equipable')
+            self.sendLine(f'This item is not equipable')
             return
         if item == None:
-            self.protocol.sendLine(f'Remove what?')
+            self.sendLine(f'Remove what?')
             return
         if item.equiped == False:
-            self.protocol.sendLine(f'{item.name} is not equiped yet')
+            self.sendLine(f'{item.name} is not equiped yet')
             return
         self.inventory_unequip(item)
+
+    def command_keep(self, line):
+        item = self.get_item(line)
+        if item == None:
+            self.sendLine('Keep what?')
+        item.keep = not item.keep
+        if item.keep:
+            self.sendLine(f'Keeping {item.name}')
+        else:
+            self.sendLine(f'Unkeeping {item.name}')
     
     @check_no_empty_line
     def command_say(self, line):
@@ -469,9 +503,9 @@ class Player(Actor):
             if entity == None:
                 return
             sheet = entity.get_character_sheet()
-            self.protocol.sendLine(f'You are looking at {sheet}')
+            self.sendLine(f'You are looking at {sheet}')
         else:
-            see = f'\nYou look around, you are in "{self.room.name}"\n'
+            see = f'You are in "@brown{self.room.name}@normal"\n'
             see = see + f'@gray{self.room.description}@normal\n'
             #see += f'{self.room.combat}'
             #see = see + self.room.name + '\n'
@@ -495,7 +529,7 @@ class Player(Actor):
                         see = see + '\n'
 
             exits = self.protocol.factory.world.rooms[self.room.uid].exits
-            see = see + f'You can go: {[name for name in exits]}'
+            see = see + f'You can go: @brown{"@normal, @brown".join([name for name in exits])}@normal.'
             see = see + '\n'
             #for direction in exits:
                 #see = see + f'@brown{direction}@normal: {self.protocol.factory.world.rooms[exits[direction]].name}\n'
@@ -511,7 +545,7 @@ class Player(Actor):
                     index += 1
                     see = see + f'{index}. {i.name}' + '\n'
 
-            self.protocol.sendLine(see)
+            self.sendLine(see)
 
     @check_no_empty_line
     @check_not_in_combat
@@ -554,7 +588,7 @@ class Player(Actor):
     def command_use(self, line):
 
         if line.endswith(('on', 'at')):
-            self.protocol.sendLine('Use on who?')
+            self.sendLine('Use on who?')
             return
 
         id_to_name, name_to_id = skills.get_skills()
@@ -563,7 +597,7 @@ class Player(Actor):
         list_of_skill_names = [skill for skill in name_to_id.keys()]
         list_of_consumables = [item.name for item in self.inventory.values() if item.item_type == 'consumable']
         whole_list = list_of_consumables + list_of_skill_names
-        best_match = utils.match_word(line, whole_list)
+        
 
         '''
         list_of_skills = [skill for skill in skills.SKILLS.keys()]
@@ -588,6 +622,8 @@ class Player(Actor):
             if target == None:
                 return
 
+        best_match = utils.match_word(action, whole_list)
+
         # if you are trying to use an item
         if best_match in list_of_consumables:
             item = self.get_item(best_match)
@@ -597,9 +633,8 @@ class Player(Actor):
                 for skill in item.skills:
                     script = getattr(skills, skills.SKILLS[skill]['script_to_run']['name_of_script'])
                     arguments = skills.SKILLS[skill]['script_to_run']['arguments']
-                    
-
                     script(user, target, arguments)
+                self.inventory_remove_item(item.id)
                 return
 
             if target == self:
@@ -609,15 +644,15 @@ class Player(Actor):
 
             elif target != self:
                 if self.room.combat == None:
-                    self.protocol.sendLine('You can\'t use items on others out of combat')
+                    self.sendLine('You can\'t use items on others out of combat')
                     return
 
                 if self not in self.room.combat.participants.values():
-                    self.protocol.sendLine(f'You can\'t use items on others while you are not in combat')
+                    self.sendLine(f'You can\'t use items on others while you are not in combat')
                     return
 
                 if target not in self.room.combat.participants.values():
-                    self.protocol.sendLine(f'You can\'t use items on others while they are not fighting')
+                    self.sendLine(f'You can\'t use items on others while they are not fighting')
                     return
 
                 use_item(item, self, target)
@@ -661,6 +696,10 @@ class Player(Actor):
     def command_rest(self, line):
         if self.status == 'dead':
             self.status = 'normal'
+
+            self.stats['hp'] = self.stats['hp_max']
+            self.stats['mp'] = self.stats['mp_max']
+
             self.simple_broadcast(
                 'You ressurect',
                 f'{self.pretty_name()} ressurects')
@@ -669,6 +708,10 @@ class Player(Actor):
                 None,
                 f'{self.pretty_name()} has ressurected')
         else:
+
+            self.stats['hp'] = self.stats['hp_max']
+            self.stats['mp'] = self.stats['mp_max']
+
             if self.room.uid == 'home':
                 self.simple_broadcast(
                     f'You rest',
@@ -685,8 +728,7 @@ class Player(Actor):
                     f'{self.pretty_name()} has returned to town to rest'
                     )
             
-        self.stats['hp'] = self.stats['hp_max']
-        self.stats['mp'] = self.stats['mp_max']
+        
 
     # --------------------------------------------- MOD COMMANDS
 
@@ -719,8 +761,10 @@ class Player(Actor):
     @check_is_admin
     @check_no_empty_line
     def command_update_item(self, line):
+        print(line)
         try:
-            item_id = line.split()[0]
+            item = self.get_item(line.split()[0])
+            item_id = item.id
             stat = line.split()[1] 
             value = " ".join(line.split()[2::])
 
@@ -733,6 +777,7 @@ class Player(Actor):
                 return
 
             if self.inventory[item_id].item_type == 'consumable':
+                print(stat, value)
                 if stat in 'skills':
                     if str(value).lower() == 'none':
                         self.inventory[item_id].skills = []
@@ -742,7 +787,7 @@ class Player(Actor):
 
             if self.inventory[item_id].item_type == 'equipment':
                 if self.inventory[item_id].equiped:
-                    self.protocol.sendLine(f'command_update_item: dont update items while they are worn!!!')
+                    self.sendLine(f'command_update_item: dont update items while they are worn!!!')
                     return
 
                 if stat in 'slot':
@@ -758,68 +803,71 @@ class Player(Actor):
                     return
 
                 if stat[0] == 'r':
-                    print(stat, stat[1::])
+                    #print(stat, stat[1::])
                     if str(stat[1::]) in self.inventory[item_id].requirements:
                         self.inventory[str(item_id)].requirements[str(stat[1::])] = int(value)
                         return
 
         except Exception as e:
-            self.protocol.sendLine(f'something went wrong with updating the item: {e}')
+            self.sendLine(f'something went wrong with updating the item: {e}')
 
     @check_is_admin
     @check_no_empty_line
     def command_load_item(self, line):
-        with open("items.yaml", "r") as file:
+        with open("config/items.yaml", "r") as file:
             data = yaml.safe_load(file)
 
         if line not in data:
-            self.protocol.sendLine(f'{line} is not a premade item')
+            self.sendLine(f'{line} is not a premade item')
             return
 
         item = items.load_item(data[line])
         self.inventory_add_item(item)
 
     def command_export_item(self, line):
-        if line not in self.inventory:
-            self.protocol.sendLine('Can\'t export this item')
-            return
+        item = self.get_item(line)
 
-        item = self.inventory[line]
+
+        #if line not in self.inventory:
+        #    self.sendLine('Can\'t export this item')
+        #    return
+
+        #item = self.inventory[line]
         item_dict = item.to_dict()
         del item_dict['id']
         item_dict = {item_dict['name'].lower(): item_dict}
         yaml_text = yaml.dump(item_dict, default_flow_style=False)
-        self.protocol.sendLine(yaml_text)
+        self.sendLine(yaml_text)
 
     '''
     def command_syntax(self, line):
         output = ''
         for func_name in HELPFILE:
             output = output + f'The syntax for "@red{func_name}@normal" is "@red{HELPFILE[func_name]}@normal"\n'
-        self.protocol.sendLine(output)
+        self.sendLine(output)
 
     def command_explore(self, line):
         self.room.explore()
         
     def command_next(self, line):
         if self.room.combat != None:
-            self.protocol.sendLine('You can\'t venture forth while in combat!')
+            self.sendLine('You can\'t venture forth while in combat!')
         self.room.next()
     '''
     @check_alive
     @check_your_turn
     def command_flee(self, line):
         if self.room.combat == None:
-            self.protocol.sendLine('You are not in combat, you don\'t need to flee')
+            self.sendLine('You are not in combat, you don\'t need to flee')
             return
         self.simple_broadcast(
-            None,
+            f'You have fled back to town',
             f'{self.pretty_name()} flees!'
         )
         self.protocol.factory.world.rooms['home'].move_player(self, silent = True)
         self.status = 'normal'
         self.simple_broadcast(
-            f'You have fled back to town',
+            None,
             f'{self.pretty_name()} comes running in a panic!'
         )
 
@@ -827,7 +875,7 @@ class Player(Actor):
     def command_fight(self, line):
         error_output = self.room.new_combat()
         if isinstance(error_output, str):
-            self.protocol.sendLine(error_output)
+            self.sendLine(error_output)
 
     @check_alive
     @check_your_turn
@@ -850,7 +898,7 @@ class Player(Actor):
             output = f'@redNo command found, here are all commands you can use help on@normal\n'
             for i in files:
                 output += f'{i}\n'
-            self.protocol.sendLine(output)
+            self.sendLine(output)
             return
 
         best_match = utils.match_word(line, files)
@@ -859,9 +907,30 @@ class Player(Actor):
             content = content.replace(' "',' @yellow"')
             content = content.replace('" ','"@normal ')
 
-        self.protocol.sendLine(content)
+        self.sendLine(content)
+
+    def prompt(self):
+        output = f'[@red{self.stats["hp"]}@normal/@red{self.stats["hp_max"]}@normal '
+        output += f'@cyan{self.stats["mp"]}@normal/@cyan{self.stats["mp_max"]}@normal]'
+        return utils.add_color(output)
+
+    def command_send_prompt(self, line):
+        self.sendLine(self.prompt())
+
+    def sendLine(self,line):
+        #self.sendLine()
+        self.protocol.transport.write(f'{utils.add_color(line)}\n> '.encode('utf-8'))
 
     def handle(self, line):
+        
+        # empty lines are handled as resend last line
+        if not line: 
+            line = self.last_line_sent
+            if not line:
+                return
+
+        self.last_line_sent = line
+
         command = line.split()[0]
         line = " ".join(line.split()[1::]).strip()
 
@@ -873,6 +942,8 @@ class Player(Actor):
         best_match = utils.match_word(command, self.commands.keys())
         script = getattr(self, self.commands[best_match])
         script(line)
+
+        
 
             
             
