@@ -1,7 +1,7 @@
 from actor import Actor
 import items
 import copy 
-import skills
+#import skills
 import utils
 import yaml
 import os
@@ -261,16 +261,16 @@ class Player(Actor):
         if len(line) <= 1:
             output = f'You have {self.stats["points"]} practice points left.\n'
             output += f'{"Skill":<20} | {"Learned":<8} | {"Level Req":<5}\n'
-            for skill_id in skills.SKILLS.keys():
+            for skill_id in self.factory.config.SKILLS.keys():
                 if skill_id not in self.skills.keys():
                     learned = 0
                 else:
                     learned = self.skills[skill_id]
-                level = skills.SKILLS[skill_id]['level']
-                output += (f'{skills.SKILLS[skill_id]["name"]:<20} | {str(learned) + "":<8} | {str(level):<5} \n')
+                level = self.factory.config.SKILLS[skill_id]['level']
+                output += (f'{self.factory.config.SKILLS[skill_id]["name"]:<20} | {str(learned) + "":<8} | {str(level):<5} \n')
             self.sendLine(f'{output}')
         else:
-            id_to_name, name_to_id = skills.get_skills()
+            id_to_name, name_to_id = self.use_manager.get_skills()
             skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
             skill_id = name_to_id[skill_name]
 
@@ -278,7 +278,7 @@ class Player(Actor):
                 self.sendLine('@redYou do not have enough points to practice@normal')
                 return
 
-            if skill_id not in skills.SKILLS.keys():
+            if skill_id not in self.factory.config.SKILLS.keys():
                 self.sendLine('This skill does not exist')
                 return
 
@@ -292,7 +292,7 @@ class Player(Actor):
                 self.sendLine(f'@greenYou spend one practice point on "{skill_name}"@normal')
                 self.stats['points'] -= 1
             else:
-                if self.stats['level'] < skills.SKILLS[skill_id]['level']:
+                if self.stats['level'] < self.factory.config.SKILLS[skill_id]['level']:
                     self.sendLine('@redYou are not high enough level to practice this skill@normal')
                     return
                 self.skills[skill_id] = 50
@@ -301,11 +301,11 @@ class Player(Actor):
 
             
     def command_skills(self, line):
-        id_to_name, name_to_id = skills.get_skills()
+        id_to_name, name_to_id = self.use_manager.get_skills()
         if len(line) > 0:
             skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
             skill_id = name_to_id[skill_name]
-            skill = skills.SKILLS[skill_id]
+            skill = self.factory.config.SKILLS[skill_id]
             output = ''
             output += f'{skill["name"]}\n'
             output += f'{skill["description"]}\n'
@@ -583,7 +583,7 @@ class Player(Actor):
             self.sendLine('Use on who?')
             return
 
-        id_to_name, name_to_id = skills.get_skills()
+        id_to_name, name_to_id = self.use_manager.get_skills()
         list_of_skill_names = [skill for skill in name_to_id.keys()]
         list_of_consumables = [item.name for item in self.inventory.values() if item.item_type == 'consumable']
         whole_list = list_of_consumables + list_of_skill_names

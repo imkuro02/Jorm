@@ -4,7 +4,6 @@ import yaml
 import copy
 import items
 import copy
-import skills
 
 
 
@@ -55,7 +54,7 @@ class Enemy(Actor):
 
         random_target = random.choice([entity for entity in self.room.combat.participants.values() if type(entity).__name__ != type(self).__name__])
         skill_to_use = self.combat_loop[0]
-        skills.use_skill(self, random_target, self.combat_loop[0]['skill'])
+        self.use_manager.use_skill(self, random_target, self.combat_loop[0]['skill'])
 
         self.combat_loop.append(self.combat_loop[0])
         self.combat_loop.pop(0)
