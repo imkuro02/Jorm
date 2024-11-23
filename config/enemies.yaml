@@ -68,7 +68,8 @@ rat:
     
     exp: 1
 
-  loot: []
+  loot: 
+    lucky charm: 1
 
   skills:
     swing: 30

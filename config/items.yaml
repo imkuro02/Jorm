@@ -93,3 +93,91 @@ dagger :
     str: 1
   tags: []
 
+pan lid:
+  description: This tiny pan lid is just big enough to act as a buckler shield
+  equiped: false
+  history: {}
+  item_type: equipment
+  keep: false
+  name: Pan Lid
+  requirements:
+    armor: 0
+    dex: 0
+    hp_max: 0
+    int: 0
+    level: 1
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  slot: secondary
+  stats:
+    armor: 1
+    dex: 0
+    hp_max: 0
+    int: 0
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  tags: []
+
+sandals:
+  description: Perfect for a walk, or a run from a scary monster!
+  equiped: false
+  history: {}
+  item_type: equipment
+  keep: false
+  name: Sandals
+  requirements:
+    armor: 0
+    dex: 0
+    hp_max: 0
+    int: 0
+    level: 0
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  slot: boots
+  stats:
+    armor: 0
+    dex: 1
+    hp_max: 0
+    int: 0
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  tags: []
+
+
+lucky charm:
+  description: You think this is supposed to be a rabbits foot but its so worn out
+    you can't tell
+  equiped: false
+  history: {}
+  item_type: equipment
+  keep: false
+  name: Lucky Charm
+  requirements:
+    armor: 0
+    dex: 0
+    hp_max: 0
+    int: 0
+    level: 2
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  slot: trinket
+  stats:
+    armor: 0
+    dex: 0
+    hp_max: 0
+    int: 0
+    luk: 4
+    marmor: 0
+    mp_max: 0
+    str: 0
+  tags: []

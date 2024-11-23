@@ -197,7 +197,7 @@ class Player(Actor):
             item.equiped = True 
             for stat_name in item.stats:
                 stat_val = item.stats[stat_name]
-                
+                #print(stat_name, item.stats[stat_name])
                 self.stats[stat_name] += stat_val
                 #print(self.stats[stat_name])
             
@@ -249,8 +249,8 @@ class Player(Actor):
             self.stats['hp_max'] += 5
             self.stats['mp_max'] += 5
 
-            #self.stats['hp_max'] += self.stats['str'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
-            #self.stats['mp_max'] += self.stats['int'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
+            self.stats['hp_max'] += self.stats['str'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
+            self.stats['mp_max'] += self.stats['int'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
 
             #self.stats['armor'] += round(self.stats['dex']*.4)
             #self.stats['marmor'] += round(self.stats['dex']*.4)
@@ -350,7 +350,7 @@ class Player(Actor):
         exp_needed = self.get_exp_needed_to_level() - self.stats['exp']
         output += f'Level: {self.stats["level"]}\n'
         if exp_needed > 0:
-            output += f'@redYou need {exp_needed}exp to level up@normal\n'
+            output += f'@redYou need {exp_needed} exp to level up@normal\n'
         else:
             output += f'@greenYou have enough exp to level up@normal\n'
         output += f'Experience:      {self.stats["exp"]}\n'

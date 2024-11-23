@@ -81,8 +81,6 @@ class Enemy(Actor):
                     new_item.stats[stat] = new_item.stats[stat] + 1
                     #print(stat)
 
-                
-
                 # temp prefix code
                 roll = random.random()
                 if roll<0.1:
@@ -93,11 +91,8 @@ class Enemy(Actor):
                         new_item.stats[stat] = new_item.stats[stat] + prefix['stats'][stat] 
                 #print(prefixes,prefix)
 
-                
-                    
-            
+            entity.sendLine(f'You loot {new_item.name}')
             entity.inventory_add_item(new_item)   
-        
 
     def die(self):
         if self.room.combat == None:

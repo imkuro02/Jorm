@@ -95,7 +95,7 @@ class Actor:
         output += f'Mana:   @cyan{self.stats["mp"]}@normal/@cyan{self.stats["mp_max"]}@normal\n'
         #output += f'Damage: {self.stats["damage"]}\n'
         output += f'Armor:  {self.stats["armor"]}\n'
-        output += f'Marmor: {self.stats["armor"]}\n'
+        output += f'Marmor: {self.stats["marmor"]}\n'
         output += f'STR:    {self.stats["str"]}\n'
         output += f'DEX:    {self.stats["dex"]}\n'
         output += f'INT:    {self.stats["int"]}\n'
