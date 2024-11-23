@@ -480,6 +480,7 @@ class Player(Actor):
             return
         self.inventory_unequip(item)
 
+    @check_no_empty_line
     def command_keep(self, line):
         item = self.get_item(line)
         if item == None:
@@ -498,29 +499,24 @@ class Player(Actor):
             )
 
     def command_look(self, line):
-        if line != '':
-            entity = self.get_entity(line)
-            if entity == None:
-                return
-            sheet = entity.get_character_sheet()
-            self.sendLine(f'You are looking at {sheet}')
-        else:
-            see = f'You are in "@brown{self.room.name}@normal"\n'
-            see = see + f'@gray{self.room.description}@normal\n'
-            #see += f'{self.room.combat}'
-            #see = see + self.room.name + '\n'
-            if self.room.dungeon != None:
-                see = see + f'You can @redexplore@normal this area\n'
+        def look_room(self, room_id):
+            room = self.factory.world.rooms[room_id]
 
-            if len(self.room.entities) == 1:
+            if room_id == self.room.uid:
+                see = f'You are in "@brown{room.name}@normal"\n'
+            else:
+                see = f'You look at "@brown{room.name}@normal"\n'
+            see = see + f'@gray{room.description}@normal\n'
+
+
+            if len(room.entities) == 1:
                 see = see + 'You are alone.\n'
             else:
                 see = see + 'there are others here:\n'
-                for i in self.room.entities.values():
+                for i in room.entities.values():
                     if i == self:
                         pass
                     else:
-                        
                         see = see + i.pretty_name() 
                         if i.status == 'dead':
                             see = see + f' @brown(DEAD)@normal'
@@ -528,19 +524,40 @@ class Player(Actor):
                             see = see + f' @brown(FIGHTING)@normal'
                         see = see + '\n'
 
-            exits = self.protocol.factory.world.rooms[self.room.uid].exits
+            exits = self.protocol.factory.world.rooms[room.uid].exits
             see = see + f'You can go: @brown{"@normal, @brown".join([name for name in exits])}@normal.'
             see = see + '\n'
 
             index = 0
-            if self.room.inventory != {}:
+            if room.inventory != {}:
                 
                 see = see + 'On the ground you see:\n'
-                for i in self.room.inventory.values():
+                for i in room.inventory.values():
                     index += 1
                     see = see + f'{index}. {i.name}' + '\n'
 
             self.sendLine(see)
+
+        if line == '':
+            look_room(self, self.room.uid)
+            return
+
+        if line != '':
+            #exits = self.protocol.factory.world.rooms[self.room.uid].exits
+            
+            #for _exit in exits:
+            #    if line in _exit:
+            #        room_id = self.protocol.factory.world.rooms[exits[_exit]].uid
+            #        look_room(self, room_id)
+            #        return
+
+            entity = self.get_entity(line)
+            if entity == None:
+                return
+            sheet = entity.get_character_sheet()
+            self.sendLine(f'You are looking at {sheet}')
+
+            
 
     @check_no_empty_line
     @check_not_in_combat
@@ -582,7 +599,7 @@ class Player(Actor):
     @check_alive
     def command_use(self, line):
 
-        if line.endswith(('on', 'at')):
+        if line.endswith((' on', ' at')):
             self.sendLine('Use on who?')
             return
 

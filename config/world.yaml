@@ -1,13 +1,13 @@
 world:
   home:
     name: Town square
-    description: Town
+    description: You see a small dried up well which sits right in the middle of a unkept stone path, there are few buildings, most look freshly burnt to the ground, some are still standing, marked with only a few burns
     exits:
       north: 1
 
   1:
     name: Store
-    description: Store
+    description: You see a small counter, shelves which are unstocked, is that a puddle of pee?.. nevermind..
     exits:
       south: home
       down: 2
@@ -17,7 +17,7 @@ world:
   
   2:
     name: Cellar
-    description: Cellar
+    description: spiderwebs between every single crack in the busted up stone walls
     exits:
       up: 1
       further down: 3
@@ -25,7 +25,7 @@ world:
       - skeleton 
 
   3: 
-    name: a tunnel 
+    name: A tunnel 
     description: a tunnel
     exits: 
       back up: 2
