@@ -12,8 +12,8 @@ world:
       south: home
       down: 2
     enemies:
-      - skeleton
-      - skeleton
+      - rat
+      - rat
   
   2:
     name: Cellar

@@ -1,7 +1,7 @@
 
 swing:
   name: Swing
-  description: Swing at your target dealing 1 physical damage + 70% of strength and dexterity
+  description: Swing at your target dealing 1 physical damage + 70% of strength and 100% dexterity
   level: 0 
   must_be_fighting: True
   target_self_is_valid: True
@@ -9,7 +9,7 @@ swing:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [1, 'physical', {'str': 0.7, 'dex': 0.7}] 
+    arguments: [1, 'physical', {'str': 0.7, 'dex': 1}] 
   use_case_success_for_self:    'You swing and hit #TARGET#'
   use_case_success_for_others:  '#USER# swings and hits #TARGET#'
   use_case_fail_for_self:       'You lose your footing while swinging'

@@ -47,6 +47,35 @@ long sword:
     dex: 0
     hp_max: 0
     int: 0
+    level: 2
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 0
+  slot: primary
+  stats:
+    armor: 0
+    dex: 1
+    hp_max: 0
+    int: 0
+    luk: 0
+    marmor: 0
+    mp_max: 0
+    str: 1
+  tags: []
+
+
+dagger :
+  description: A trusty long sword, perfection
+  equiped: false
+  history: {}
+  item_type: equipment
+  name: Dagger
+  requirements:
+    armor: 0
+    dex: 0
+    hp_max: 0
+    int: 0
     level: 1
     luk: 0
     marmor: 0
@@ -55,12 +84,12 @@ long sword:
   slot: primary
   stats:
     armor: 0
-    dex: 0
+    dex: 1
     hp_max: 0
     int: 0
     luk: 0
     marmor: 0
     mp_max: 0
-    str: 0
+    str: 1
   tags: []
 

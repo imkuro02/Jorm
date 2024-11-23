@@ -195,6 +195,17 @@ class Equipment(Item):
         self.stats[stat] = value
 
     def identify(self):
+        translations = {
+            'hp_max': 'Health',
+            'mp_max': 'Mana',
+            'armor':  'Armor',
+            'marmor': 'Marmor',
+            'str': 'STR',
+            'dex': 'DEX',
+            'int': 'INT',
+            'luk': 'LUK'
+        }
+
         #print('identifying')
         output = super().identify()
         s = self.stats
@@ -208,15 +219,24 @@ class Equipment(Item):
         output += f'Level: {r["level"]}\n'
         space = 9
         output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
-        output += f'@gray{"HP":<{space}} {s["hp_max"]:<{space}} {r["hp_max"]:<{space}}\n'
+        for stat in translations:
+            s = self.stats[stat]
+            r = self.requirements[stat]
+            if r == 0 and s == 0:
+                continue
+            output += f'@normal{translations[stat]:<{space}} {s:<{space}} {r:<{space}}\n'
+        '''
+        output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
+        output += f'@normal{"HP":<{space}} {s["hp_max"]:<{space}} {r["hp_max"]:<{space}}\n'
         output += f'@normal{"MP":<{space}} {s["mp_max"]:<{space}} {r["mp_max"]:<{space}}\n'
         #output += f'@gray{"Damage":<{space}} {s["damage"]:<{space}} {r["damage"]:<{space}}\n'
         output += f'@normal{"Armor":<{space}} {s["armor"]:<{space}} {r["armor"]:<{space}}\n'
-        output += f'@gray{"Marmor":<{space}} {s["marmor"]:<{space}} {r["marmor"]:<{space}}\n'
+        output += f'@normal{"Marmor":<{space}} {s["marmor"]:<{space}} {r["marmor"]:<{space}}\n'
         output += f'@normal{"STR":<{space}} {s["str"]:<{space}} {r["str"]:<{space}}\n'
-        output += f'@gray{"DEX":<{space}} {s["dex"]:<{space}} {r["dex"]:<{space}}\n'
+        output += f'@normal{"DEX":<{space}} {s["dex"]:<{space}} {r["dex"]:<{space}}\n'
         output += f'@normal{"INT":<{space}} {s["int"]:<{space}} {r["int"]:<{space}}\n'
-        output += f'@gray{"LUK":<{space}} {s["luk"]:<{space}} {r["luk"]:<{space}}\n'
+        output += f'@normal{"LUK":<{space}} {s["luk"]:<{space}} {r["luk"]:<{space}}\n'
+        '''
         return output
 
 

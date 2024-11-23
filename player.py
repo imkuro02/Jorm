@@ -122,11 +122,11 @@ class Player(Actor):
         return wrapper
 
     def set_turn(self):
-        output = '@yellowYour turn. @normal'
+        output = f'@yellowYour turn. {self.prompt()} @normal'
         self.sendLine(output)
 
     def get_exp_needed_to_level(self):
-        exp_needed = 2 ** self.stats['level']
+        exp_needed = 5 ** self.stats['level']
         return exp_needed
 
     def get_entity(self, line):
@@ -246,11 +246,14 @@ class Player(Actor):
             self.stats[stat] += 1
             self.stats['points'] += 1
 
-            self.stats['hp_max'] += self.stats['str'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
-            self.stats['mp_max'] += self.stats['int'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
+            self.stats['hp_max'] += 5
+            self.stats['mp_max'] += 5
 
-            self.stats['armor'] += round(self.stats['dex']*3)
-            self.stats['marmor'] += round(self.stats['dex']*3)
+            #self.stats['hp_max'] += self.stats['str'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
+            #self.stats['mp_max'] += self.stats['int'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
+
+            #self.stats['armor'] += round(self.stats['dex']*.4)
+            #self.stats['marmor'] += round(self.stats['dex']*.4)
             
             self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!')
             
@@ -612,7 +615,7 @@ class Player(Actor):
             def use_item(item, user, target):
                 self.use_manager.use_broadcast(self, target, item.use_perspectives)
                 for skill in item.skills:
-                    script = getattr(skills, self.use_manager.SKILLS[skill]['script_to_run']['name_of_script'])
+                    script = getattr(self.use_manager, self.use_manager.SKILLS[skill]['script_to_run']['name_of_script'])
                     arguments = self.use_manager.SKILLS[skill]['script_to_run']['arguments']
                     script(user, target, arguments)
                 self.inventory_remove_item(item.id)

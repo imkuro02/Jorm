@@ -81,12 +81,16 @@ class Enemy(Actor):
                     new_item.stats[stat] = new_item.stats[stat] + 1
                     #print(stat)
 
-                prefixes = self.room.world.factory.config.EQUIPMENT_PREFIXES[1]
-                prefix = random.choice(prefixes)
+                
 
-                new_item.name = prefix['prefix_name'] + ' ' + new_item.name
-                for stat in prefix['stats']:
-                    new_item.stats[stat] = new_item.stats[stat] + prefix['stats'][stat] 
+                # temp prefix code
+                roll = random.random()
+                if roll<0.1:
+                    prefixes = self.room.world.factory.config.EQUIPMENT_PREFIXES[1]
+                    prefix = random.choice(prefixes)
+                    new_item.name = prefix['prefix_name'] + ' ' + new_item.name
+                    for stat in prefix['stats']:
+                        new_item.stats[stat] = new_item.stats[stat] + prefix['stats'][stat] 
                 #print(prefixes,prefix)
 
                 
