@@ -37,14 +37,56 @@ def match_word(word: str, l: list):
     return best_match
     
 
+def get_match(line, things):
+    index = 1
+
+    if '.' in line:
+        index, line = line.split('.')
+    
+    line = line.strip()
+    #index = index.strip()
+    try:
+        index = int(index)
+    except ValueError:
+        index = 1
+
+    if index == 0:
+        index = 1
+
+    thing_names = []
+
+    # reverse the dictionary so you can search from last order
+    if index <= -1:
+        things_reversed = {} 
+        for i in reversed(things):
+            things_reversed[i] = things[i]
+        things = things_reversed
+        # set the index to a positive value again
+        index = abs(index)
+
+    # create a list of names for fuzzy wuzzy
+    for thing in things.values():
+        thing_names.append(remove_color(thing.name))
+
+    # get a list of matches
+    matches = match_word_get_list(line, thing_names)
+
+    # loop thru the matches, if the "line" is in the "things" name, add 1 to i, if i == index, then that is the "thing" you are looking for
+    i = 1
+    for val in things.values():
+        #print(index, matches[index-1][0].lower(),'----------', i, val.name)
+        
+        if line.lower() in remove_color(val.name).lower(): 
+            if i == index:
+                return val
+            i += 1
+
 def match_word_get_list(word: str, l: list):
     
     matches = process.extract(word, l, limit=None)
     best_matches = [match for match in matches]
     return best_matches
-    
-def match_word_indexed(word: str, l: dict):
-    process.extract(target, my_list, limit=5)
+
  
 
 def remove_color(line):

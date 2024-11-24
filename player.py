@@ -130,19 +130,7 @@ class Player(Actor):
         return exp_needed
 
     def get_entity(self, line):
-        target = line
-        available_targets = {}
-        for entity in self.room.entities.values():
-            if type(entity).__name__ == "Player":
-                available_targets[entity.name] = entity
-        for entity in self.room.entities.values():
-            if type(entity).__name__ == "Enemy":
-                available_targets[entity.name] = entity
-        
-        for i in available_targets.values():
-            if ' '+target.lower() in ' '+i.name.lower():
-                target = i
-                break
+        return utils.get_match(line, self.room.entities)
 
         # Return if you cant find a target
         if not isinstance(target, Actor):
@@ -165,6 +153,10 @@ class Player(Actor):
 
     def get_item(self, line, search_mode = 'self'):
         line = line.strip()
+
+        if line == '':
+            return 
+
         # search whole inventory
         if search_mode == 'self':
             inventory = self.inventory
@@ -204,61 +196,17 @@ class Player(Actor):
         if len(inventory) == 0:
             return
 
-        if line == '':
-            return 
+        # let this try and override what you search if you are looking for an item in a equipment slot
+        if search_mode not in ['room']:
+            for slot in self.slots.keys():
+                #print(slot, line)
+                if 'slot '+line in 'slot '+slot:
+                    if self.slots[slot] == None:
+                        continue
+                    return self.inventory[self.slots[slot]]
 
-        index = 1
-
-        if '.' in line:
-            index, line = line.split('.')
-        #if 'nd ' in line:
-        #    index, line = line.split('nd ')
-        #if 'th ' in line:
-        #    index, line = line.split('th ')
-        
-
-        line = line.strip()
-        #index = index.strip()
-        try:
-            index = int(index)
-        except ValueError:
-            index = 1
-
-        item_names = []
-
-        for item in inventory.values():
-            item_names.append(utils.remove_color(item.name))
-
-        matches = utils.match_word_get_list(line, item_names)
-        #print(matches)
-        i = 1
-        for val in inventory.values():
-            #print(index, matches[index-1][0].lower(),'----------', i, val.name)
-            
-            if line.lower() in utils.remove_color(val.name).lower(): #== matches[index-1][0].lower():
-                
-                if i == index:
-                    return val
-                i += 1
-                #continue
-            
-
-
-        #print(matches)
-
-        #for i, (key, value) in enumerate(inventory.items()):
-        #    print(i+1, key, value.name)
-        #    if i+1 == index:
-        #        return value
-        #for i in range(0,len(inventory.values()):
-        #    if i != index:
-        #       continue
-            
-            #if utils.remove_color(i.name).lower() == name.lower():
-            #    return i
-
-        #except Exception as e:
-        #    print(e, 'in get_item func')
+        return utils.get_match(line, inventory)
+       
 
     def inventory_equip(self, item):
         if item.slot != None:
@@ -433,6 +381,7 @@ class Player(Actor):
     @check_no_empty_line
     def command_identify(self, line):
         item = self.get_item(line)
+        
         if item == None:
             return
         output = item.identify()
@@ -485,18 +434,16 @@ class Player(Actor):
         output = ''
         output = output + 'You look through your inventory and see:\n'
         
-        index = 0
         for i in self.inventory:
-            index += 1 
             if self.inventory[i].item_type == 'equipment':     
-                output = output + f'{index}. {self.inventory[i].name}'
+                output = output + f'{self.inventory[i].name}'
                 if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
                 if self.inventory[i].keep:      output = output + f' @red(K)@normal'
                 output = output + '\n'
 
                 # @cyan({self.inventory[i].slot})@normal
             else:
-                output = output + f'{index}. {self.inventory[i].name}\n'
+                output = output + f'{self.inventory[i].name}\n'
         
         self.sendLine(output)
 
