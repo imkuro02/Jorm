@@ -1,3 +1,6 @@
+https://pubclient.sindome.org/
+https://gist.github.com/JBlond/2fea43a3049b38287e5e9cefc87b2124
+
 areas
 from recall site, runto an area, its like a mini dungeon with random rooms chests enemies and loot, some unique rooms etc
 

@@ -122,7 +122,7 @@ class Player(Actor):
         return wrapper
 
     def set_turn(self):
-        output = f'@yellowYour turn. {self.prompt()} @normal'
+        output = f'@yellowYour turn.@normal {self.prompt()} @normal'
         self.sendLine(output)
 
     def get_exp_needed_to_level(self):
@@ -151,26 +151,55 @@ class Player(Actor):
 
         return target
 
+    def raise_item(self, item_id):
+        # move the item to the first position
+        if item_id in self.inventory:
+            value = self.inventory.pop(item_id)             # remove the key value pair
+            self.inventory = {item_id: value, **self.inventory}    # reconstruct with the item first
+
+    def lower_item(self, item_id):
+        # move the item to the first position
+        if item_id in self.inventory:
+            value = self.inventory.pop(item_id) # remove the keyvalue pair
+            self.inventory[item_id] = value     # reconstruct with the item last
+
     def get_item(self, line, search_mode = 'self'):
+        line = line.strip()
+        # search whole inventory
         if search_mode == 'self':
             inventory = self.inventory
 
+        # only search items that are not kept in inventory
+        if search_mode == 'unkept':
+            inventory = {}
+            for item in self.inventory.values():
+                if item.keep == True:
+                    continue 
+                inventory[item.id] = self.inventory[item.id] 
+
+        # search the rooms inventory
         if search_mode == 'room':
             inventory = self.room.inventory
 
-        # check if an inventory id was sent instead of an item name
-        try:
-            line = int(line)
-            index = 1
-            for item in inventory.values():
-                if index == line:
-                    return item
-                index += 1
-                if index > len(inventory):
-                    return
-                
-        except ValueError:
-            pass
+        # search only equiped items
+        if search_mode == 'equipment':
+            inventory = {}
+            for item in self.inventory.values():
+                if item.item_type != 'equipment':
+                    continue 
+                if item.equiped == False:
+                    continue 
+                inventory[item.id] = self.inventory[item.id] 
+
+        # search equipement that is not yet equiped
+        if search_mode == 'equipable':
+            inventory = {}
+            for item in self.inventory.values():
+                if item.item_type != 'equipment':
+                    continue 
+                if item.equiped == True:
+                    continue 
+                inventory[item.id] = self.inventory[item.id] 
 
         if len(inventory) == 0:
             return
@@ -178,14 +207,58 @@ class Player(Actor):
         if line == '':
             return 
 
-        item_names = [utils.remove_color(item.name) for item in inventory.values()]
-        item_names = sorted(item_names)
+        index = 1
 
-        name = utils.match_word(line, item_names)
+        if '.' in line:
+            index, line = line.split('.')
+        #if 'nd ' in line:
+        #    index, line = line.split('nd ')
+        #if 'th ' in line:
+        #    index, line = line.split('th ')
+        
 
-        for i in inventory.values():
-            if utils.remove_color(i.name).lower() == name.lower():
-                return i
+        line = line.strip()
+        #index = index.strip()
+        try:
+            index = int(index)
+        except ValueError:
+            index = 1
+
+        item_names = []
+
+        for item in inventory.values():
+            item_names.append(utils.remove_color(item.name))
+
+        matches = utils.match_word_get_list(line, item_names)
+        #print(matches)
+        i = 1
+        for val in inventory.values():
+            #print(index, matches[index-1][0].lower(),'----------', i, val.name)
+            
+            if line.lower() in utils.remove_color(val.name).lower(): #== matches[index-1][0].lower():
+                
+                if i == index:
+                    return val
+                i += 1
+                #continue
+            
+
+
+        #print(matches)
+
+        #for i, (key, value) in enumerate(inventory.items()):
+        #    print(i+1, key, value.name)
+        #    if i+1 == index:
+        #        return value
+        #for i in range(0,len(inventory.values()):
+        #    if i != index:
+        #       continue
+            
+            #if utils.remove_color(i.name).lower() == name.lower():
+            #    return i
+
+        #except Exception as e:
+        #    print(e, 'in get_item func')
 
     def inventory_equip(self, item):
         if item.slot != None:
@@ -386,7 +459,7 @@ class Player(Actor):
     @check_not_in_combat
     @check_alive
     def command_drop(self, line):
-        item = self.get_item(line)
+        item = self.get_item(line, search_mode = 'unkept')
         if item == None:
             self.sendLine(f'Drop what?')
             return
@@ -415,15 +488,13 @@ class Player(Actor):
         index = 0
         for i in self.inventory:
             index += 1 
-            if self.inventory[i].item_type == 'equipment':
-                
-           
+            if self.inventory[i].item_type == 'equipment':     
                 output = output + f'{index}. {self.inventory[i].name}'
-                if self.inventory[i].equiped:   output = output + f' @gray({self.inventory[i].slot})@normal'
-                if self.inventory[i].keep:      output = output + f' @gray(K)@normal'
+                if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
+                if self.inventory[i].keep:      output = output + f' @red(K)@normal'
                 output = output + '\n'
 
-                # @gray({self.inventory[i].slot})@normal
+                # @cyan({self.inventory[i].slot})@normal
             else:
                 output = output + f'{index}. {self.inventory[i].name}\n'
         
@@ -433,7 +504,7 @@ class Player(Actor):
         output = 'You are wearing:\n'
         for i in self.slots:
             if None == self.slots[i]:
-                output = output + f'{i + ":":<12} @grayNothing@normal\n'
+                output = output + f'{i + ":":<12} ...\n'
             else:
                 output = output + f'{i + ":":<12} {self.inventory[self.slots[i]].name}\n'
         self.sendLine(output)
@@ -443,7 +514,7 @@ class Player(Actor):
     @check_alive
     def command_wear(self, line):
 
-        item = self.get_item(line)
+        item = self.get_item(line, search_mode = 'equipable')
 
         for req in item.requirements:
             if item.requirements[req] > self.stats[req]:
@@ -462,19 +533,29 @@ class Player(Actor):
             self.sendLine(f'{item.name} is already equiped')
             return
 
+        #self.inventory_remove_item(item.id)
+        #self.inventory_add_item(item)
+        #self.raise_item(item.id)
         self.inventory_equip(item)
     
     @check_no_empty_line
     #@check_not_in_combat
     @check_alive
     def command_remove(self, line):
-        item = self.get_item(line)
-        if item.item_type != 'equipment':
-            self.sendLine(f'This item is not equipable')
+        if line == '':
+            self.sendLine(f'Remove what?')
             return
+
+        item = self.get_item(line, search_mode = 'equipment')
+
         if item == None:
             self.sendLine(f'Remove what?')
             return
+
+        if item.item_type != 'equipment':
+            self.sendLine(f'This item is not equipable')
+            return
+        
         if item.equiped == False:
             self.sendLine(f'{item.name} is not equiped yet')
             return
@@ -488,8 +569,10 @@ class Player(Actor):
         item.keep = not item.keep
         if item.keep:
             self.sendLine(f'Keeping {item.name}')
+            self.raise_item(item.id)
         else:
             self.sendLine(f'Unkeeping {item.name}')
+            self.lower_item(item.id)
     
     @check_no_empty_line
     def command_say(self, line):
@@ -503,10 +586,10 @@ class Player(Actor):
             room = self.factory.world.rooms[room_id]
 
             if room_id == self.room.uid:
-                see = f'You are in "@brown{room.name}@normal"\n'
+                see = f'You are in @yellow{room.name}@normal\n'
             else:
-                see = f'You look at "@brown{room.name}@normal"\n'
-            see = see + f'@gray{room.description}@normal\n'
+                see = f'You look at @yellow{room.name}@normal\n'
+            see = see + f'@cyan{room.description}@normal\n'
 
 
             if len(room.entities) == 1:
@@ -519,13 +602,13 @@ class Player(Actor):
                     else:
                         see = see + i.pretty_name() 
                         if i.status == 'dead':
-                            see = see + f' @brown(DEAD)@normal'
+                            see = see + f' @yellow(DEAD)@normal'
                         if i.status == 'fighting':
-                            see = see + f' @brown(FIGHTING)@normal'
+                            see = see + f' @yellow(FIGHTING)@normal'
                         see = see + '\n'
 
             exits = self.protocol.factory.world.rooms[room.uid].exits
-            see = see + f'You can go: @brown{"@normal, @brown".join([name for name in exits])}@normal.'
+            see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
             see = see + '\n'
 
             index = 0
@@ -605,7 +688,7 @@ class Player(Actor):
 
         id_to_name, name_to_id = self.use_manager.get_skills()
         list_of_skill_names = [skill for skill in name_to_id.keys()]
-        list_of_consumables = [item.name for item in self.inventory.values() if item.item_type == 'consumable']
+        list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == 'consumable']
         whole_list = list_of_consumables + list_of_skill_names
 
         action = None
@@ -626,8 +709,9 @@ class Player(Actor):
         best_match = utils.match_word(action, whole_list)
 
         # if you are trying to use an item
+        print(best_match)
         if best_match in list_of_consumables:
-            item = self.get_item(best_match)
+            item = self.get_item(action)
 
             def use_item(item, user, target):
                 self.use_manager.use_broadcast(self, target, item.use_perspectives)
@@ -835,7 +919,9 @@ class Player(Actor):
 
     def command_export_item(self, line):
         item = self.get_item(line)
-
+        if item == None:
+            self.sendLine('cant find this item to export')
+            return
 
         #if line not in self.inventory:
         #    self.sendLine('Can\'t export this item')
@@ -843,10 +929,11 @@ class Player(Actor):
 
         #item = self.inventory[line]
         item_dict = item.to_dict()
+        
         del item_dict['id']
         item_dict = {item_dict['name'].lower(): item_dict}
         yaml_text = yaml.dump(item_dict, default_flow_style=False)
-        self.sendLine(yaml_text)
+        self.sendLine(yaml_text, color = False)
 
     '''
     def command_syntax(self, line):
@@ -926,9 +1013,10 @@ class Player(Actor):
     def command_send_prompt(self, line):
         self.sendLine(self.prompt())
 
-    def sendLine(self,line):
+    def sendLine(self, line, color = True):
         #self.sendLine()
-        line = utils.add_color(f'{line}\n')
+        if color:
+            line = utils.add_color(f'{line}\n')
         self.protocol.transport.write(line.encode('utf-8'))
 
     def handle(self, line):

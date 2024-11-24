@@ -23,6 +23,7 @@ class Protocol(protocol.Protocol):
     def clear_screen(self):
         self.sendLine('\x1b[0m')
         self.sendLine('\u001B[2J')
+
     def splash_screen(self):
         #def clear_screen(client_socket):
         ## Send ANSI escape sequence to clear screen
@@ -34,9 +35,10 @@ class Protocol(protocol.Protocol):
 
         self.clear_screen()
 
-        all_colors = ''
-        for i in range(31,40):
-            all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
+        all_colors = utils.print_colors()
+        #all_colors = ''
+        #for i in range(31,40):
+        #    all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
 
         #for i in range(0,255):
         #    all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
@@ -89,16 +91,21 @@ class Protocol(protocol.Protocol):
         else:
             user = self.factory.db.read_user(self.username)
             if user[1] == line:
+                self.clear_screen()
+                
+
                 self.actor = Player(self, self.username, self.factory.world.rooms['home'])
+                #self.actor.simple_broadcast(f'You are logged in as "{self.username}"', f'{self.actor.name} logged in.')
                 self.state = self.PLAY
                 #self.sendLine('\u001B[2J')
-                self.clear_screen()
+                
                 #self.sendLine(f'You are logged in as "{self.username}"')
                 
+
                 if not self.load_actor():
                     self.save_actor()
                 
-                self.actor.simple_broadcast(f'You are logged in as "{self.username}"', f'{self.actor.name} logged in.')
+                
                 
             else:
                 self.splash_screen()

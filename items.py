@@ -1,7 +1,8 @@
 import uuid
-import skills
+#import skills
 import random
 import copy
+
 # load an item either from 
 def load_item(item):
     item = copy.deepcopy(item)
@@ -80,8 +81,8 @@ class Item:
         return my_dict
 
     def identify(self):
-        output = f'{self.name} {self.id} (@gray{self.item_type}@normal)\n'
-        output += f'@gray{self.description}@normal\n'
+        output = f'{self.name} {self.id} (@cyan{self.item_type}@normal)\n'
+        output += f'@cyan{self.description}@normal\n'
         return output
 
 class Consumable(Item):
@@ -95,7 +96,6 @@ class Consumable(Item):
         self.history = {}
         self.tags = []
         '''
-        
         self.skills = []
         self.use_perspectives = {
             'you on you':           'You drink the vile liquid',
@@ -123,8 +123,10 @@ class Consumable(Item):
 
     def identify(self):
         output = super().identify()
-        id_to_name, name_to_id = skills.get_skills()
+        
+        id_to_name, name_to_id = FACTORY.use_manager.get_skills()
         output += f'Contents: {[id_to_name[skill_id] for skill_id in self.skills]}'
+        #output += f'Contents: {self.skills}'
         return output
 
 
@@ -214,7 +216,7 @@ class Equipment(Item):
             return output
         output += f'Slot: {self.slot.capitalize()} '
         if self.equiped:
-            output += f'{"@gray(Equiped)@normal"}'
+            output += f'{"@cyan(Equiped)@normal"}'
         output += '\n'
         output += f'Level: {r["level"]}\n'
         space = 9
@@ -229,7 +231,7 @@ class Equipment(Item):
         output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
         output += f'@normal{"HP":<{space}} {s["hp_max"]:<{space}} {r["hp_max"]:<{space}}\n'
         output += f'@normal{"MP":<{space}} {s["mp_max"]:<{space}} {r["mp_max"]:<{space}}\n'
-        #output += f'@gray{"Damage":<{space}} {s["damage"]:<{space}} {r["damage"]:<{space}}\n'
+        #output += f'@cyan{"Damage":<{space}} {s["damage"]:<{space}} {r["damage"]:<{space}}\n'
         output += f'@normal{"Armor":<{space}} {s["armor"]:<{space}} {r["armor"]:<{space}}\n'
         output += f'@normal{"Marmor":<{space}} {s["marmor"]:<{space}} {r["marmor"]:<{space}}\n'
         output += f'@normal{"STR":<{space}} {s["str"]:<{space}} {r["str"]:<{space}}\n'
