@@ -57,6 +57,9 @@ class Protocol(protocol.Protocol):
         if line == 'logout':
             self.disconnect()
             return
+        if line == 'clear':
+            self.clear_screen()
+            return
         self.actor.handle(line)
         return
             

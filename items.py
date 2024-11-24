@@ -81,7 +81,8 @@ class Item:
         return my_dict
 
     def identify(self):
-        output = f'{self.name} {self.id} (@cyan{self.item_type}@normal)\n'
+        #output = f'{self.name} {self.id} (@cyan{self.item_type}@normal)\n'
+        output = f'{self.name} (@cyan{self.item_type}@normal)\n'
         output += f'@cyan{self.description}@normal\n'
         return output
 
