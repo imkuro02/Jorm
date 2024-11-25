@@ -941,16 +941,20 @@ class Player(Actor):
         self.finish_turn()
 
     def command_affects(self, line):
+        output = ''
         if line == '':
-            output = ''
-            for aff in self.affect_manager.affects:
-                output += f'{aff.name} for {aff.turns} turns\n'
-            if output == '':
+            if len(self.affect_manager.affects) == 0:
                 output = 'You are not affected by anything'
             else:
-                output = 'You are affected by:\n' + output
+                output = 'You are affected by:\n' 
+                output += f'{"Affliction":<15} {"For":<3} {"Info"}\n'
+                for aff in self.affect_manager.affects.values():
+                    output += f'{aff.info()}'
         else:
             output = self.affect_manager.load_affect(line)
+            if output == None:
+                self.sendLine('Could not load affect')
+                return
             self.affect_manager.set_affect(output)
         self.sendLine(output)
 

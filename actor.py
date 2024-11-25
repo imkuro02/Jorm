@@ -109,7 +109,14 @@ class Actor:
 
     def take_damage(self, source, damage, damage_type):
         damage, damage_type = self.affect_manager.take_damage(source, damage, damage_type)
+ 
         match damage_type:
+            # the string 'none' can be returned from affect_manager.take_damage() 
+            # meaning the damage was completely cancelled by something
+            # the affect should sendLine what exactly happened
+            # example: physical damage while ethereal should send "You are ethereal"
+            case 'none': 
+                return 
             case 'physical':
                 damage -= self.stats['armor']
             case 'magical':
@@ -186,10 +193,10 @@ class Actor:
         self.affect_manager.finish_turn()
 
         if self.room.combat == None:
-            print('no combat')
+            #print('no combat')
             return
         if self != self.room.combat.current_actor:
-            print('not my turn')
+            #print('not my turn')
             return
         self.room.combat.next_turn()
 

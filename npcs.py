@@ -96,10 +96,10 @@ class Enemy(Actor):
 
     def die(self):
         if self.room.combat == None:
-            print('no combat')
+            #print('1no combat')
             return
         if self not in self.room.combat.participants.values():
-            print('not in combat')
+            #print('not in combat')
             return
         for entity in self.room.combat.participants.values():
             if type(entity).__name__ == "Player":

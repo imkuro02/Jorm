@@ -167,7 +167,16 @@ class Protocol(protocol.Protocol):
     # override
     def connectionLost(self, reason):
         if self.actor != None:
+            
             #self.factory.broadcast(f'{self.actor.name} has disconnected.')
+
+            # REMOVE ALL AFFECTS VERY IMPORTANT
+            aff_to_delete = []
+            for aff in self.actor.affect_manager.affects.values():
+                aff_to_delete.append(aff)
+            for aff in aff_to_delete:
+                aff.on_finished(silent = True)
+                
             self.save_actor()
             # teleport player to town to remove them safely
             self.factory.world.rooms['home'].move_player(self.actor)
