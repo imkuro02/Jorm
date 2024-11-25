@@ -109,4 +109,4 @@ class Enemy(Actor):
 
 
     def set_turn(self):
-        pass
+        super().set_turn()

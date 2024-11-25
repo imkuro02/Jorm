@@ -19,7 +19,7 @@ template:
     red potion: 0.1
 
   skills:
-    swing: 75
+    swing: 3
 
   combat_loop:
     - skill: swing 
@@ -46,7 +46,7 @@ skeleton:
     long sword: 1
 
   skills:
-    swing: 75
+    swing: 3
 
   combat_loop:
     - skill: swing 
@@ -72,7 +72,7 @@ rat:
     lucky charm: 1
 
   skills:
-    swing: 30
+    swing: 1
 
   combat_loop:
     - skill: swing

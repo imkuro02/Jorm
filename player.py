@@ -44,6 +44,7 @@ class Player(Actor):
             'equipment':'command_equipment',
             'inventory':'command_inventory',
             'skills':   'command_skills',
+            'affects':  'command_affects',
             
 
             'identify': 'command_identify',
@@ -121,12 +122,8 @@ class Player(Actor):
             return func(self, line)
         return wrapper
 
-    def set_turn(self):
-        output = f'@yellowYour turn.@normal {self.prompt()} @normal'
-        self.sendLine(output)
-
     def get_exp_needed_to_level(self):
-        exp_needed = 5 ** self.stats['level']
+        exp_needed = 2 ** self.stats['level']
         return exp_needed
 
     def get_entity(self, line):
@@ -276,7 +273,7 @@ class Player(Actor):
             #self.stats['armor'] += round(self.stats['dex']*.4)
             #self.stats['marmor'] += round(self.stats['dex']*.4)
             
-            self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!')
+            self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!@normal')
             
     @check_not_in_combat
     def command_practice(self, line):
@@ -307,19 +304,24 @@ class Player(Actor):
                 return
 
             if skill_id in self.skills:
-                # do not level beyond 95
-                if self.skills[skill_id] >= 95:
+                # do not level beyond 6
+                if self.skills[skill_id] >= 6:
                     self.sendLine(f'@redYou are already a master at "{skill_name}"@normal')
                     return
+                if self.skills[skill_id] > self.stats['points']:
+                    self.sendLine(f'@redYou need {self.skills[skill_id]} practice points to practice this.@normal')
+                    return
 
-                self.skills[skill_id] += 15
-                self.sendLine(f'@greenYou spend one practice point on "{skill_name}"@normal')
-                self.stats['points'] -= 1
+
+                self.stats['points'] -= self.skills[skill_id]
+                self.sendLine(f'@greenYou spend {self.skills[skill_id]} practice point on "{skill_name}"@normal')
+                self.skills[skill_id] += 1
+                
             else:
                 if self.stats['level'] < self.factory.config.SKILLS[skill_id]['level']:
                     self.sendLine('@redYou are not high enough level to practice this skill@normal')
                     return
-                self.skills[skill_id] = 50
+                self.skills[skill_id] = 1
                 self.sendLine(f'@greenYou learned the skill "{skill_name}"@normal')
                 self.stats['points'] -= 1
 
@@ -620,6 +622,7 @@ class Player(Actor):
             None,
             f'{self.pretty_name()} arrived'
             )
+        self.finish_turn()
 
     # --------------------------------------------- ACTIONS
 
@@ -921,11 +924,13 @@ class Player(Actor):
             self.sendLine(error_output)
 
     @check_alive
-    @check_your_turn
+    #@check_your_turn
     def command_combat_pass_turn(self, line):
         if self.room.combat == None:
+            self.finish_turn()
             return
         if self.status != 'fighting':
+            self.finish_turn()
             return
         if self.room.combat.current_actor != self:
             return
@@ -934,6 +939,20 @@ class Player(Actor):
             f'{self.pretty_name()} passes their turn.'
         )
         self.finish_turn()
+
+    def command_affects(self, line):
+        if line == '':
+            output = ''
+            for aff in self.affect_manager.affects:
+                output += f'{aff.name} for {aff.turns} turns\n'
+            if output == '':
+                output = 'You are not affected by anything'
+            else:
+                output = 'You are affected by:\n' + output
+        else:
+            output = self.affect_manager.load_affect(line)
+            self.affect_manager.set_affect(output)
+        self.sendLine(output)
 
     def command_help(self, line):
         files = os.listdir('help')

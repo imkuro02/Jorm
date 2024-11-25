@@ -1,6 +1,6 @@
 from copy import deepcopy
 from items import Item
-
+import affects
 class Actor:
     def __init__(self, name, room):
         self.name = name
@@ -9,6 +9,8 @@ class Actor:
         if self.room != None:
             self.factory = self.room.world.factory
             self.use_manager = self.factory.use_manager
+
+        self.affect_manager = affects.AffectsManager(self)
 
         self.status = 'normal'
 
@@ -45,7 +47,7 @@ class Actor:
             }
 
         self.skills = {
-            'swing':95
+            'swing':3
             }
     '''
     def create_new_skills(self):
@@ -105,8 +107,8 @@ class Actor:
     def tick(self):
         pass
 
-    def take_damage(self, damage, damage_type):
-        #print(damage, damage_type)
+    def take_damage(self, source, damage, damage_type):
+        damage, damage_type = self.affect_manager.take_damage(source, damage, damage_type)
         match damage_type:
             case 'physical':
                 damage -= self.stats['armor']
@@ -136,6 +138,9 @@ class Actor:
             f'{self.pretty_name()} takes {damage} damage'
             )
 
+        if self.stats['hp'] >= self.stats['hp_max']:
+            self.stats['hp'] = self.stats['hp_max']
+
         if self.stats['hp'] <= 0:
             self.stats['hp'] = 0
             self.status = 'dead'
@@ -163,15 +168,6 @@ class Actor:
         del self.room.entities[self.name]
         self.room = None
 
-    def finish_turn(self):
-        if self.room.combat == None:
-            print('no combat')
-            return
-        if self != self.room.combat.current_actor:
-            print('not my turn')
-            return
-        self.room.combat.next_turn()
-
     def simple_broadcast(self, line_self, line_others):
         #print(self.name,[line_self,line_others])
         for player in self.room.entities.values():
@@ -185,4 +181,22 @@ class Actor:
                 if line_others == None:
                     continue
                 player.sendLine(f'{line_others}')
+
+    def finish_turn(self):
+        self.affect_manager.finish_turn()
+
+        if self.room.combat == None:
+            print('no combat')
+            return
+        if self != self.room.combat.current_actor:
+            print('not my turn')
+            return
+        self.room.combat.next_turn()
+
+    def set_turn(self):
+        self.affect_manager.set_turn()
+        if type(self).__name__ == "Player":
+            output = f'@yellowYour turn.@normal {self.prompt()} @normal'
+            self.sendLine(output)
+    
 

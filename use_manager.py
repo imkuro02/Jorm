@@ -1,5 +1,6 @@
 import utils
 import random
+import affects
 
 class UseManager:
     def __init__(self, factory):
@@ -16,7 +17,7 @@ class UseManager:
             damage += user.stats[i] * bonus_damages[i]
             
         damage = round(damage)
-        target.take_damage(damage, damage_type)
+        target.take_damage(user, damage, damage_type)
 
     def get_skills(self):
         name_to_id = {}
@@ -140,7 +141,15 @@ class UseManager:
         user.stats['mp'] -= mp_cost
 
         roll = random.randint(1,100)
-        success = roll <= user.skills[best_match]
+        level_to_successrate = {
+            1: 45,
+            2: 60,
+            3: 70,
+            4: 80,
+            5: 90,
+            6: 95
+        }
+        success = roll <= level_to_successrate[user.skills[best_match]]
 
         use_perspectives = self.SKILLS[best_match]['use_perspectives']
 

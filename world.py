@@ -47,14 +47,19 @@ class Room:
             return 'There is already a fight here!'
 
         participants = {}
+        npcs_here = False
+        players_here = False
         for i in self.entities.values():
             #print(i)
             if type(i).__name__ == "Player":
                 participants[i.name] = i
+                players_here = True
             if type(i).__name__ == "Enemy":
                 participants[i.name] = i
+                npcs_here = True
 
-        self.combat = Combat(self, participants)
+        if players_here and npcs_here:
+            self.combat = Combat(self, participants)
         
     def move_player(self, player, silent = False):
         #old_room = player.room
