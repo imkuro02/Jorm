@@ -1,13 +1,12 @@
 
-import enum
 
-class AffType(enum.Enum):
-    Basic = enum.auto()
-    DOT1 = enum.auto()
-    DOT2 = enum.auto()
-    HealAmp = enum.auto()
-    PowerUp = enum.auto()
-    Ethereal = enum.auto()
+class AffType:
+    Basic = 1
+    DOT1 = 2
+    DOT2 = 3
+    HealAmp = 4
+    PowerUp = 5
+    Ethereal = 6
 
 class AffectsManager:
     def __init__(self, owner):
@@ -54,7 +53,7 @@ class AffectsManager:
             if aff.turns <= 0:
                 affs_to_pop.append(aff)
         for aff in affs_to_pop:
-            self.pop_affect(aff)
+            aff.on_finished(False)
 
         
 

@@ -174,7 +174,7 @@ class Player(Actor):
         if search_mode == 'equipment':
             inventory = {}
             for item in self.inventory.values():
-                if item.item_type != 'equipment':
+                if item.item_type != items.ItemTypes.Equipment:
                     continue 
                 if item.equiped == False:
                     continue 
@@ -184,7 +184,7 @@ class Player(Actor):
         if search_mode == 'equipable':
             inventory = {}
             for item in self.inventory.values():
-                if item.item_type != 'equipment':
+                if item.item_type != items.ItemTypes.Equipment:
                     continue 
                 if item.equiped == True:
                     continue 
@@ -419,7 +419,7 @@ class Player(Actor):
             self.sendLine(f'{item.name} is keept')
             return
 
-        if item.item_type == 'equipment':
+        if item.item_type == items.ItemTypes.Equipment:
             if item.equiped:
                 self.sendLine(f'You can\'t drop worn items')
                 return
@@ -437,7 +437,7 @@ class Player(Actor):
         output = output + 'You look through your inventory and see:\n'
         
         for i in self.inventory:
-            if self.inventory[i].item_type == 'equipment':     
+            if self.inventory[i].item_type == items.ItemTypes.Equipment:     
                 output = output + f'{self.inventory[i].name}'
                 if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
                 if self.inventory[i].keep:      output = output + f' @red(K)@normal'
@@ -463,14 +463,14 @@ class Player(Actor):
     @check_alive
     def command_wear(self, line):
 
-        item = self.get_item(line, search_mode = 'equipable')
+        item = self.get_item(line, search_mode = 'equipment')
 
         for req in item.requirements:
             if item.requirements[req] > self.stats[req]:
                 self.sendLine(f'@redYou do not meet the requirements to wear@normal {item.name}')
                 return
 
-        if item.item_type != 'equipment':
+        if item.item_type != items.ItemTypes.Equipment:
             self.sendLine(f'This item is not equipable')
             return
 
@@ -501,7 +501,7 @@ class Player(Actor):
             self.sendLine(f'Remove what?')
             return
 
-        if item.item_type != 'equipment':
+        if item.item_type != items.ItemTypes.Equipment:
             self.sendLine(f'This item is not equipable')
             return
         
@@ -638,7 +638,7 @@ class Player(Actor):
 
         id_to_name, name_to_id = self.use_manager.get_skills()
         list_of_skill_names = [skill for skill in name_to_id.keys()]
-        list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == 'consumable']
+        list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == items.ItemTypes.Consumable]
         whole_list = list_of_consumables + list_of_skill_names
 
         action = None
@@ -811,7 +811,7 @@ class Player(Actor):
                 self.sendLine('@greenUpdated@normal')
                 return
 
-            if self.inventory[item_id].item_type == 'consumable':
+            if self.inventory[item_id].item_type == items.ItemTypes.Consumable:
                 print(stat, value)
                 if stat in 'skills':
                     if value not in self.factory.config.SKILLS:
@@ -824,7 +824,7 @@ class Player(Actor):
                     self.sendLine('@greenUpdated@normal')
                     return
 
-            if self.inventory[item_id].item_type == 'equipment':
+            if self.inventory[item_id].item_type == items.ItemTypes.Equipment:
                 if self.inventory[item_id].equiped:
                     self.sendLine(f'command_update_item: dont update items while they are worn!!!')
                     return

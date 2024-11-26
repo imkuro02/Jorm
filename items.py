@@ -3,10 +3,15 @@ import uuid
 import random
 import copy
 
+class ItemTypes:
+    Misc = 1
+    Equipment = 2
+    Consumable = 3
+
 # load an item either from 
 def load_item(item):
     item = copy.deepcopy(item)
-    if item['item_type'] == 'equipment':
+    if item['item_type'] == ItemTypes.Equipment:
         new_item = Equipment()
         template = Equipment()
 
@@ -23,7 +28,7 @@ def load_item(item):
         new_item.history = item['history']
 
 
-    if item['item_type']  == 'item':
+    if item['item_type']  == ItemTypes.Misc:
         new_item = Item()
 
         new_item.item_type = item['item_type']
@@ -32,7 +37,7 @@ def load_item(item):
         new_item.tags = item['tags']
         new_item.history = item['history']
 
-    if item['item_type']  == 'consumable':
+    if item['item_type']  == ItemTypes.Consumable:
         new_item = Consumable()
 
         new_item.item_type = item['item_type']
@@ -82,7 +87,8 @@ class Item:
 
     def identify(self):
         #output = f'{self.name} {self.id} (@cyan{self.item_type}@normal)\n'
-        output = f'{self.name} (@cyan{self.item_type}@normal)\n'
+        #output = f'{self.name} (@cyan{self.item_type}@normal)\n'
+        output = f'{self.name}\n'
         output += f'@cyan{self.description}@normal\n'
         return output
 
