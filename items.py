@@ -15,7 +15,7 @@ def load_item(item):
         new_item = Equipment()
         template = Equipment()
 
-        new_item.item_type = item['item_type']
+        #new_item.item_type = item['item_type']
         new_item.name = item['name']
         new_item.description = item['description']
 
@@ -28,19 +28,19 @@ def load_item(item):
         new_item.history = item['history']
 
 
-    if item['item_type']  == ItemTypes.Misc:
+    if item['item_type'] == ItemTypes.Misc:
         new_item = Item()
 
-        new_item.item_type = item['item_type']
+        #new_item.item_type = item['item_type']
         new_item.name = item['name']
         new_item.description = item['description']
         new_item.tags = item['tags']
         new_item.history = item['history']
 
-    if item['item_type']  == ItemTypes.Consumable:
+    if item['item_type'] == ItemTypes.Consumable:
         new_item = Consumable()
 
-        new_item.item_type = item['item_type']
+        #new_item.item_type = item['item_type']
         new_item.name = item['name']
         new_item.description = item['description']
         new_item.tags = item['tags']
@@ -66,7 +66,7 @@ def save_item(item):
 class Item:
     def __init__(self):
         self.id = str(uuid.uuid4())
-        self.item_type = type(self).__name__.lower()
+        self.item_type = ItemTypes.Misc
         self.name = 'Name of item'
         self.description = 'Description here'
         self.history = {}
@@ -95,6 +95,7 @@ class Item:
 class Consumable(Item):
     def __init__(self):
         super().__init__()
+        self.item_type = ItemTypes.Consumable
         '''
         self.id = str(uuid.uuid4())
         self.item_type = type(self).__name__.lower()
@@ -140,6 +141,7 @@ class Consumable(Item):
 class Equipment(Item):
     def __init__(self):
         super().__init__()
+        self.item_type = ItemTypes.Equipment
         '''
         self.id = str(uuid.uuid4())
         self.item_type = type(self).__name__.lower()

@@ -160,23 +160,24 @@ class Actor:
             self.die()
 
     def die(self):
-        if type(self).__name__ == "Player":
-            item = Item()
-            item.name = f'Corpse of {self.name}'
-            item.description = f'This is the corpse of {self.name}, kinda gross...'
-            self.room.inventory_add_item(item)
-            return
+        if self.room.combat != None:
+            if self.room.combat.current_actor == self:
+                self.room.combat.next_turn()
 
         item = Item()
         item.name = f'Corpse of {self.name}'
         item.description = f'This is the corpse of {self.name}, kinda gross...'
         self.room.inventory_add_item(item)
-        #i.room = None
-        del self.room.entities[self.name]
-        self.room = None
+
+        if type(self).__name__ != "Player":
+            del self.room.entities[self.name]
+            self.room = None
 
     def simple_broadcast(self, line_self, line_others):
         #print(self.name,[line_self,line_others])
+        if self.room == None:
+            return
+            
         for player in self.room.entities.values():
             if type(player).__name__ != "Player":
                 continue
@@ -191,7 +192,8 @@ class Actor:
 
     def finish_turn(self):
         self.affect_manager.finish_turn()
-
+        if self.room == None:
+            return
         if self.room.combat == None:
             #print('no combat')
             return

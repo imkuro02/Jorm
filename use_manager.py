@@ -7,6 +7,21 @@ class UseManager:
         self.factory = factory
         self.SKILLS = self.factory.config.SKILLS
         
+    def skill_simple_damage_and_affliction(self, user, target, arguments):
+        base_damage = arguments[0]      # int
+        damage_type = arguments[1]      # string 
+        bonus_damages = arguments[2]    # dictionary like {'str': 1.1}
+
+        affliction = arguments[3]
+
+        self.skill_simple_damage(user, target, [base_damage, damage_type, bonus_damages])
+        self.skill_set_afflictions(user, target, [affliction])
+
+    def skill_set_afflictions(self, user, target, arguments):
+        afflictions = arguments    
+        for aff in afflictions:
+            target.affect_manager.set_affect(target.affect_manager.load_affect(aff))
+
     def skill_simple_damage(self, user, target, arguments):
         base_damage = arguments[0]      # int
         damage_type = arguments[1]      # string 
@@ -110,7 +125,12 @@ class UseManager:
 
         # cant target yourself
         if target == user and not self.SKILLS[best_match]['target_self_is_valid']:
-            error(user, f'You can\'t use {skill_name} on yourself')
+            self.error(user, f'You can\'t use {skill_name} on yourself')
+            return
+
+        # cant target others
+        if target != user and not self.SKILLS[best_match]['target_others_is_valid']:
+            self.error(user, f'You can\'t use {skill_name} on others')
             return
 
         if self.SKILLS[best_match]['must_be_fighting']:

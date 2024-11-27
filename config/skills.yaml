@@ -5,15 +5,12 @@ swing:
   level: 0 
   must_be_fighting: True
   target_self_is_valid: True
+  target_others_is_valid: True
   hp_cost: 0
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage
     arguments: [1, 'physical', {'str': 0.7, 'dex': 1}] 
-  use_case_success_for_self:    'You swing and hit #TARGET#'
-  use_case_success_for_others:  '#USER# swings and hits #TARGET#'
-  use_case_fail_for_self:       'You lose your footing while swinging'
-  use_case_fail_for_others:     '#USER# loses their footing while swinging'
 
   use_perspectives:
     you on you:           'You swing and hit yourself!'
@@ -36,6 +33,7 @@ magic missile:
   level: 0
   must_be_fighting: True
   target_self_is_valid: True
+  target_others_is_valid: True
   hp_cost: 0
   mp_cost: 2
   script_to_run:
@@ -61,6 +59,7 @@ brain sap:
   level: 2
   must_be_fighting: True
   target_self_is_valid: False
+  target_others_is_valid: True
   hp_cost: 0
   mp_cost: 2
   script_to_run:
@@ -86,6 +85,7 @@ cure light wounds:
   level: 0
   must_be_fighting: False
   target_self_is_valid: True
+  target_others_is_valid: True
   hp_cost: 0
   mp_cost: 2
   script_to_run:
@@ -104,5 +104,57 @@ cure light wounds:
     user on user fail:    '#USER# loses their concentration while praying for themselves'
     user on you fail:     '#USER# loses their concentration while praying for you'
     user on other fail:   '#USER# loses their concentration while praying for #OTHER#'
+
+ethereal:
+  name: Become Ethereal
+  description: You become ethereal
+  level: 0
+  must_be_fighting: False
+  target_self_is_valid: True
+  target_others_is_valid: False
+  hp_cost: 0
+  mp_cost: 2
+  script_to_run:
+    name_of_script: skill_set_afflictions
+    arguments: ['ethereal']
+
+  use_perspectives:
+    you on you:           'You focus, and begin to fade'
+    you on other:         'You focus, and #OTHER# begins to fade'
+    user on user:         '#USER# focuses, and begins to fade'
+    user on you:          '#USER# focuses, and you begin to fade'
+    user on other:        '#USER# focuses, and #OTHER# begins to fade'
+
+    you on you fail:      'You lose your focus'
+    you on other fail:    'You lose your focus on #OTHER#'
+    user on user fail:    '#USER# loses their focus'
+    user on you fail:     '#USER# loses their focus on you'
+    user on other fail:   '#USER# loses their focus on #OTHER#'
+
+bash:
+  name: Bash
+  description: Bash your target, stunning them for 1 turn
+  level: 0
+  must_be_fighting: True
+  target_self_is_valid: False
+  target_others_is_valid: True
+  hp_cost: 0
+  mp_cost: 0
+  script_to_run:
+    name_of_script: skill_simple_damage_and_affliction
+    arguments: [0, 'physical', {'str': 1}, 'stunned']
+
+  use_perspectives:
+    you on you:           'You bash yourself'
+    you on other:         'You bash #OTHER#'
+    user on user:         '#USER# bashes themselves'
+    user on you:          '#USER# bashes you'
+    user on other:        '#USER# bashes #OTHER#'
+
+    you on you fail:      'You fail to bash yourself'
+    you on other fail:    'You fail to bash #OTHER#'
+    user on user fail:    '#USER# fails to bash themselves'
+    user on you fail:     '#USER# fails to bash you'
+    user on other fail:   '#USER# fails to bash #OTHER#'
 
   

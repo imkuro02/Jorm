@@ -7,6 +7,8 @@ class AffType:
     HealAmp = 4
     PowerUp = 5
     Ethereal = 6
+    ReflectDamage = 7
+    Stunned = 8
 
 class AffectsManager:
     def __init__(self, owner):
@@ -14,8 +16,6 @@ class AffectsManager:
         self.affects = {}
 
     def load_affect(self, affect_id):
-        
-    
         if affect_id == 'affect':
             return Affect(AffType.Basic, self, 'AffectName', 2)
         if affect_id == 'dot':
@@ -28,7 +28,10 @@ class AffectsManager:
             return AffectStatBonus(AffType.PowerUp, self, 'Fortified', 10, {'str':1,'hp':100,'hp_max':100})
         if affect_id == 'ethereal':
             return AffectEthereal(AffType.Ethereal, self, 'Ethereal', 10)
-        
+        if affect_id == 'reflect':
+            return AffectReflectDamage(AffType.ReflectDamage, self, 'Reflecting', 20)
+        if affect_id == 'stunned':
+            return AffectStunned(AffType.Stunned, self, 'Stunned', 3)
 
     def set_affect(self, affect):
         if affect.aff_type in self.affects:
@@ -42,7 +45,10 @@ class AffectsManager:
 
     # called at start of turn
     def set_turn(self):
+        aff_to_set_turn = []
         for aff in self.affects.values():
+            aff_to_set_turn.append(aff)
+        for aff in aff_to_set_turn:
             aff.set_turn()
 
     # called at end of turn
@@ -78,7 +84,7 @@ class Affect:
     def on_applied(self):
         self.affect_manager.owner.simple_broadcast(
             f'You are {self.name}',
-            f'{self.affect_manager.owner.name} is {self.name}',
+            f'{self.affect_manager.owner.pretty_name()} is {self.name}',
         )
 
 
@@ -87,12 +93,13 @@ class Affect:
         if not silent:
             self.affect_manager.owner.simple_broadcast(
                 f'You are no longer {self.name}',
-                f'{self.affect_manager.owner.name} is no longer {self.name}\n',
+                f'{self.affect_manager.owner.pretty_name()} is no longer {self.name}\n',
             )
         self.affect_manager.pop_affect(self)
 
     # called at start of turn
     def set_turn(self):
+        return True
         pass
 
     # called at end of turn
@@ -104,26 +111,42 @@ class Affect:
     # called whenever hp updates in any way
     def take_damage(self, source, damage, damage_type):
         return damage, damage_type
-        
-class AffectEthereal(Affect):
+
+
+class AffectReflectDamage(Affect):
     def __init__(self, aff_type, affect_manager, name, turns):
         super().__init__(aff_type, affect_manager, name, turns)
 
     def info(self):
-        return super().info().replace('\n', f'You take no physical damage, but take 140% magical damage\n')
+        return super().info().replace('\n', f'You reflect a portion of physical damage taken\n')
 
     def take_damage(self, source, damage, damage_type):
         if damage_type == 'physical': 
-            self.affect_manager.owner.simple_broadcast(
-                f'You are Ethereal',
-                f'{self.affect_manager.owner.pretty_name()} is Ethereal'
-            )
-            return 0, 'none'
 
-        if damage_type == 'magical':
-            damage = int(damage * 1.4)
+            self.affect_manager.owner.simple_broadcast(
+                f'You reflect a portion of the damage',
+                f'{self.affect_manager.owner.pretty_name()} reflects a portion of the damage'
+            )
+
+            source.take_damage(self.affect_manager.owner, damage, 'pure')
+            return damage, damage_type
 
         return super().take_damage(source, damage, damage_type)
+
+class AffectStunned(Affect):
+    def __init__(self, aff_type, affect_manager, name, turns):
+        super().__init__(aff_type, affect_manager, name, turns)
+
+    def info(self):
+        return super().info().replace('\n', f'You cannot act on your turns\n')
+
+    # called at start of turn
+    def set_turn(self):
+        self.affect_manager.owner.simple_broadcast(
+            f'You are too stunned to act!',
+            f'{self.affect_manager.owner.pretty_name()} is too stunned to act!')
+        self.affect_manager.owner.finish_turn()
+
 
 class AffectDOT(Affect):
     def __init__(self, aff_type, affect_manager, name, turns, damage_per_turn, damage_type):

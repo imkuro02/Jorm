@@ -463,7 +463,9 @@ class Player(Actor):
     @check_alive
     def command_wear(self, line):
 
-        item = self.get_item(line, search_mode = 'equipment')
+        item = self.get_item(line, search_mode = 'equipable')
+        if item == None:
+            self.sendLine('Wear what?')
 
         for req in item.requirements:
             if item.requirements[req] > self.stats[req]:
@@ -472,10 +474,6 @@ class Player(Actor):
 
         if item.item_type != items.ItemTypes.Equipment:
             self.sendLine(f'This item is not equipable')
-            return
-
-        if item == None:
-            self.sendLine(f'Wear what?')
             return
 
         if item.equiped:
