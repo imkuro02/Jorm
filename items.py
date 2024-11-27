@@ -2,18 +2,18 @@ import uuid
 #import skills
 import random
 import copy
+from config import ItemType
 
-class ItemTypes:
-    Misc = 1
-    Equipment = 2
-    Consumable = 3
 
 # load an item either from 
 def load_item(item):
     item = copy.deepcopy(item)
-    if item['item_type'] == ItemTypes.Equipment:
+    item_type = getattr(ItemType, item['item_type'])
+    #print(item_type)
+
+    if item_type == ItemType.Equipment:
         new_item = Equipment()
-        template = Equipment()
+        #template = Equipment()
 
         #new_item.item_type = item['item_type']
         new_item.name = item['name']
@@ -28,7 +28,7 @@ def load_item(item):
         new_item.history = item['history']
 
 
-    if item['item_type'] == ItemTypes.Misc:
+    if item_type == ItemType.Misc:
         new_item = Item()
 
         #new_item.item_type = item['item_type']
@@ -37,7 +37,7 @@ def load_item(item):
         new_item.tags = item['tags']
         new_item.history = item['history']
 
-    if item['item_type'] == ItemTypes.Consumable:
+    if item_type == ItemType.Consumable:
         new_item = Consumable()
 
         #new_item.item_type = item['item_type']
@@ -66,17 +66,19 @@ def save_item(item):
 class Item:
     def __init__(self):
         self.id = str(uuid.uuid4())
-        self.item_type = ItemTypes.Misc
+        self.item_type = ItemType.Misc
         self.name = 'Name of item'
         self.description = 'Description here'
         self.history = {}
         self.tags = []
         self.keep = False
+        
 
     def to_dict(self):
+        
         my_dict = {
             'id': self.id,
-            'item_type': self.item_type,
+            'item_type': ItemType(self.item_type).name,
             'name': self.name,
             'description': self.description,
             'history': self.history,
@@ -95,7 +97,7 @@ class Item:
 class Consumable(Item):
     def __init__(self):
         super().__init__()
-        self.item_type = ItemTypes.Consumable
+        self.item_type = ItemType.Consumable
         '''
         self.id = str(uuid.uuid4())
         self.item_type = type(self).__name__.lower()
@@ -117,7 +119,7 @@ class Consumable(Item):
     def to_dict(self):
         my_dict = {
             'id': self.id,
-            'item_type': self.item_type,
+            'item_type': ItemType(self.item_type).name,
             'name': self.name,
             'description': self.description,
             'history': self.history,
@@ -141,7 +143,7 @@ class Consumable(Item):
 class Equipment(Item):
     def __init__(self):
         super().__init__()
-        self.item_type = ItemTypes.Equipment
+        self.item_type = ItemType.Equipment
         '''
         self.id = str(uuid.uuid4())
         self.item_type = type(self).__name__.lower()
@@ -188,7 +190,7 @@ class Equipment(Item):
     def to_dict(self):
         my_dict = {
             'id': self.id,
-            'item_type': self.item_type,
+            'item_type': ItemType(self.item_type).name,
             'name': self.name,
             'description': self.description,
             'history': self.history,

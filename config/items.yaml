@@ -3,7 +3,7 @@ leather helmet:
   description: A simple plain leather helmet
   equiped: false
   history: {}
-  item_type: 2
+  item_type: Equipment
   name: 'Leather helmet'
   requirements:
     armor: 0
@@ -30,7 +30,7 @@ leather helmet:
 red potion:
   description: Its just a bottle of holy water mixed with tomato juice
   history: {}
-  item_type: 3
+  item_type: Consumable
   name: '@redRed Potion@normal'
   skills:
   - cure light wounds
@@ -40,7 +40,7 @@ long sword:
   description: A trusty long sword, perfection
   equiped: false
   history: {}
-  item_type: 2
+  item_type: Equipment
   name: Long Sword
   requirements:
     armor: 0
@@ -69,7 +69,7 @@ dagger :
   description: A trusty long sword, perfection
   equiped: false
   history: {}
-  item_type: 2
+  item_type: Equipment
   name: Dagger
   requirements:
     armor: 0
@@ -97,7 +97,7 @@ pan lid:
   description: This tiny pan lid is just big enough to act as a buckler shield
   equiped: false
   history: {}
-  item_type: 2
+  item_type: Equipment
   keep: false
   name: Pan Lid
   requirements:
@@ -126,7 +126,7 @@ sandals:
   description: Perfect for a walk, or a run from a scary monster!
   equiped: false
   history: {}
-  item_type: 2
+  item_type: Equipment
   keep: false
   name: Sandals
   requirements:
@@ -157,7 +157,7 @@ lucky charm:
     you can't tell
   equiped: false
   history: {}
-  item_type: 2
+  item_type: Equipment
   keep: false
   name: Lucky Charm
   requirements:

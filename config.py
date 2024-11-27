@@ -1,4 +1,32 @@
 import yaml
+from enum import Enum, auto
+
+class ItemType(Enum):
+    Misc = auto()
+    Equipment = auto()
+    Consumable = auto()
+    
+class AffType(Enum):
+    Basic = auto()
+    DOT1 = auto()
+    DOT2 = auto()
+    HealAmp = auto()
+    PowerUp = auto()
+    Ethereal = auto()
+    ReflectDamage = auto()
+    Stunned = auto()
+
+class DamageType(Enum):
+    Physical = auto()
+    Magical = auto()
+    Healing = auto()
+    Pure = auto()
+    Cancelled = auto()
+
+class ActorStatusType(Enum):
+    Normal = auto()
+    Fighting = auto()
+    Dead = auto()
 
 class Config:
     def __init__(self):
@@ -35,4 +63,7 @@ class Config:
             for i in WORLD_UNFILTERED:
                 if 'template' not in i:
                     self.WORLD[i] = WORLD_UNFILTERED[i]
-    
+
+        
+        
+

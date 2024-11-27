@@ -10,7 +10,7 @@ swing:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [1, 'physical', {'str': 0.7, 'dex': 1}] 
+    arguments: [1, Physical, {'str': 0.7, 'dex': 1}] 
 
   use_perspectives:
     you on you:           'You swing and hit yourself!'
@@ -38,7 +38,7 @@ magic missile:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [2, 'magical', {'int': 1}]
+    arguments: [2, Magical, {'int': 1}]
 
   use_perspectives:
     you on you:           'You point at yourself and fire a magical missile straight to your forehead!'
@@ -64,7 +64,7 @@ brain sap:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [2, 'pure', []]
+    arguments: [2, Pure, []]
 
   use_perspectives:
     you on you:           'You swing and hit yourself!'
@@ -90,7 +90,7 @@ cure light wounds:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [10, 'heal', {'int': 1}]
+    arguments: [10, Healing, {'int': 1}]
 
   use_perspectives:
     you on you:           'You pray for yourself'
@@ -142,7 +142,7 @@ bash:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage_and_affliction
-    arguments: [0, 'physical', {'str': 1}, 'stunned']
+    arguments: [0, Cancelled, {'str': 1}, 'stunned']
 
   use_perspectives:
     you on you:           'You bash yourself'

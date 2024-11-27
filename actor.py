@@ -1,6 +1,8 @@
 from copy import deepcopy
 from items import Item
 import affects
+from config import DamageType, ActorStatusType
+
 class Actor:
     def __init__(self, name, room):
         self.name = name
@@ -12,7 +14,7 @@ class Actor:
 
         self.affect_manager = affects.AffectsManager(self)
 
-        self.status = 'normal'
+        self.status = ActorStatusType.Normal
 
         self.slots = {
             'head':         None,
@@ -84,7 +86,7 @@ class Actor:
             case "Player":
                 output = output + f'@cyan{self.name}@normal'
 
-        if self.status == 'fighting':
+        if self.status == ActorStatusType.Fighting:
             output = f'{output}'
 
         
@@ -115,15 +117,15 @@ class Actor:
             # meaning the damage was completely cancelled by something
             # the affect should sendLine what exactly happened
             # example: physical damage while ethereal should send "You are ethereal"
-            case 'none': 
+            case DamageType.Cancelled: 
                 return 
-            case 'physical':
+            case DamageType.Physical:
                 damage -= self.stats['armor']
-            case 'magical':
+            case DamageType.Magical:
                 damage -= self.stats['marmor']
-            case 'pure':
+            case DamageType.Pure:
                 pass
-            case 'heal':
+            case DamageType.Healing:
                 #print('HEALED')
                 self.stats['hp'] += damage
                 self.simple_broadcast(
@@ -150,7 +152,7 @@ class Actor:
 
         if self.stats['hp'] <= 0:
             self.stats['hp'] = 0
-            self.status = 'dead'
+            self.status = ActorStatusType.Dead
 
             self.simple_broadcast(
                 f'@redYou died@normal',

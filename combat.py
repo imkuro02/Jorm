@@ -1,3 +1,4 @@
+from config import ActorStatusType
 class Combat:
     def __init__(self, room, participants):
         self.room = room
@@ -60,13 +61,13 @@ class Combat:
             self.next_turn()
             return
 
-        if self.current_actor.status == 'dead':
+        if self.current_actor.status == ActorStatusType.Dead:
             self.next_turn()
             return      
 
     def combat_over(self):
         for i in self.participants.values():
-            if i.status == 'fighting': i.status = 'normal'
+            if i.status == ActorStatusType.Fighting: i.status = ActorStatusType.Normal
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
 
@@ -77,9 +78,9 @@ class Combat:
         team1_died = True
         team2_died = True
         for i in self.participants.values():
-            if i.status != 'dead' and type(i).__name__ == "Player":
+            if i.status != ActorStatusType.Dead and type(i).__name__ == "Player":
                 team1_died = False
-            if i.status != 'dead' and type(i).__name__ == "Enemy":
+            if i.status != ActorStatusType.Dead and type(i).__name__ == "Enemy":
                 team2_died = False
         if team1_died or team2_died:
             self.combat_over()
@@ -96,7 +97,7 @@ class Combat:
 
     def initiative(self):
         for i in self.participants.values():
-            if i.status != 'dead':
+            if i.status != ActorStatusType.Dead:
                 self.order.append(i)
 
         for i in self.order:
@@ -109,7 +110,7 @@ class Combat:
                 
         self.round += 1
         for i in self.order:
-            i.status = 'fighting'
+            i.status = ActorStatusType.Fighting
 
         if len(self.order) == 0:
             self.combat_over()

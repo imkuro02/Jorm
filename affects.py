@@ -1,14 +1,6 @@
 
 
-class AffType:
-    Basic = 1
-    DOT1 = 2
-    DOT2 = 3
-    HealAmp = 4
-    PowerUp = 5
-    Ethereal = 6
-    ReflectDamage = 7
-    Stunned = 8
+from config import AffType, DamageType
 
 class AffectsManager:
     def __init__(self, owner):
@@ -121,14 +113,14 @@ class AffectReflectDamage(Affect):
         return super().info().replace('\n', f'You reflect a portion of physical damage taken\n')
 
     def take_damage(self, source, damage, damage_type):
-        if damage_type == 'physical': 
+        if damage_type == DamageType.Physical: 
 
             self.affect_manager.owner.simple_broadcast(
                 f'You reflect a portion of the damage',
                 f'{self.affect_manager.owner.pretty_name()} reflects a portion of the damage'
             )
 
-            source.take_damage(self.affect_manager.owner, damage, 'pure')
+            source.take_damage(self.affect_manager.owner, damage, DamageType.Pure)
             return damage, damage_type
 
         return super().take_damage(source, damage, damage_type)

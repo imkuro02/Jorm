@@ -11,6 +11,7 @@ class ServerFactory(protocol.Factory):
         self.config = config.Config()
         self.use_manager = UseManager(self)
         items.FACTORY = self
+        
 
         self.protocols = set()
         self.world = World(self)

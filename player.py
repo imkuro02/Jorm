@@ -5,7 +5,7 @@ import copy
 import utils
 import yaml
 import os
-
+from config import DamageType, ItemType, ActorStatusType
 class Player(Actor):
     def __init__(self, protocol, name, room):
         self.protocol = protocol
@@ -97,7 +97,7 @@ class Player(Actor):
 
     def check_your_turn(func):
         def wrapper(self, line):
-            if self.status != 'fighting':
+            if self.status != ActorStatusType.Fighting:
                 return func(self, line)
             if self.room.combat != None:
                 if self.room.combat.current_actor != self:
@@ -108,7 +108,7 @@ class Player(Actor):
 
     def check_alive(func):
         def wrapper(self, line):
-            if self.status == 'dead':
+            if self.status == ActorStatusType.Dead:
                 self.sendLine('@redYou are dead@normal')
                 return 
             return func(self, line)
@@ -116,7 +116,7 @@ class Player(Actor):
 
     def check_not_in_combat(func):
         def wrapper(self, line):
-            if self.status == 'fighting':
+            if self.status == ActorStatusType.Fighting:
                 self.sendLine('You can\'t do this in combat')
                 return
             return func(self, line)
@@ -174,7 +174,7 @@ class Player(Actor):
         if search_mode == 'equipment':
             inventory = {}
             for item in self.inventory.values():
-                if item.item_type != items.ItemTypes.Equipment:
+                if item.item_type != ItemType.Equipment:
                     continue 
                 if item.equiped == False:
                     continue 
@@ -184,7 +184,7 @@ class Player(Actor):
         if search_mode == 'equipable':
             inventory = {}
             for item in self.inventory.values():
-                if item.item_type != items.ItemTypes.Equipment:
+                if item.item_type != ItemType.Equipment:
                     continue 
                 if item.equiped == True:
                     continue 
@@ -419,7 +419,7 @@ class Player(Actor):
             self.sendLine(f'{item.name} is keept')
             return
 
-        if item.item_type == items.ItemTypes.Equipment:
+        if item.item_type == ItemType.Equipment:
             if item.equiped:
                 self.sendLine(f'You can\'t drop worn items')
                 return
@@ -437,7 +437,7 @@ class Player(Actor):
         output = output + 'You look through your inventory and see:\n'
         
         for i in self.inventory:
-            if self.inventory[i].item_type == items.ItemTypes.Equipment:     
+            if self.inventory[i].item_type == ItemType.Equipment:     
                 output = output + f'{self.inventory[i].name}'
                 if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
                 if self.inventory[i].keep:      output = output + f' @red(K)@normal'
@@ -472,7 +472,7 @@ class Player(Actor):
                 self.sendLine(f'@redYou do not meet the requirements to wear@normal {item.name}')
                 return
 
-        if item.item_type != items.ItemTypes.Equipment:
+        if item.item_type != ItemType.Equipment:
             self.sendLine(f'This item is not equipable')
             return
 
@@ -499,7 +499,7 @@ class Player(Actor):
             self.sendLine(f'Remove what?')
             return
 
-        if item.item_type != items.ItemTypes.Equipment:
+        if item.item_type != ItemType.Equipment:
             self.sendLine(f'This item is not equipable')
             return
         
@@ -548,9 +548,9 @@ class Player(Actor):
                         pass
                     else:
                         see = see + i.pretty_name() 
-                        if i.status == 'dead':
+                        if i.status == ActorStatusType.Dead:
                             see = see + f' @yellow(DEAD)@normal'
-                        if i.status == 'fighting':
+                        if i.status == ActorStatusType.Fighting:
                             see = see + f' @yellow(FIGHTING)@normal'
                         see = see + '\n'
 
@@ -636,7 +636,7 @@ class Player(Actor):
 
         id_to_name, name_to_id = self.use_manager.get_skills()
         list_of_skill_names = [skill for skill in name_to_id.keys()]
-        list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == items.ItemTypes.Consumable]
+        list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == ItemType.Consumable]
         whole_list = list_of_consumables + list_of_skill_names
 
         action = None
@@ -725,8 +725,8 @@ class Player(Actor):
 
     @check_not_in_combat
     def command_rest(self, line):
-        if self.status == 'dead':
-            self.status = 'normal'
+        if self.status == ActorStatusType.Dead:
+            self.status = ActorStatusType.Normal
 
             self.stats['hp'] = self.stats['hp_max']
             self.stats['mp'] = self.stats['mp_max']
@@ -809,7 +809,7 @@ class Player(Actor):
                 self.sendLine('@greenUpdated@normal')
                 return
 
-            if self.inventory[item_id].item_type == items.ItemTypes.Consumable:
+            if self.inventory[item_id].item_type == ItemType.Consumable:
                 print(stat, value)
                 if stat in 'skills':
                     if value not in self.factory.config.SKILLS:
@@ -822,7 +822,7 @@ class Player(Actor):
                     self.sendLine('@greenUpdated@normal')
                     return
 
-            if self.inventory[item_id].item_type == items.ItemTypes.Equipment:
+            if self.inventory[item_id].item_type == ItemType.Equipment:
                 if self.inventory[item_id].equiped:
                     self.sendLine(f'command_update_item: dont update items while they are worn!!!')
                     return
@@ -909,7 +909,7 @@ class Player(Actor):
             f'{self.pretty_name()} flees!'
         )
         self.protocol.factory.world.rooms['home'].move_player(self, silent = True)
-        self.status = 'normal'
+        self.status = ActorStatusType.Normal
         self.simple_broadcast(
             None,
             f'{self.pretty_name()} comes running in a panic!'
@@ -927,7 +927,7 @@ class Player(Actor):
         if self.room.combat == None:
             self.finish_turn()
             return
-        if self.status != 'fighting':
+        if self.status != ActorStatusType.Fighting:
             self.finish_turn()
             return
         if self.room.combat.current_actor != self:
