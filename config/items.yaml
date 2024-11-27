@@ -15,7 +15,7 @@ leather helmet:
     marmor: 0
     mp_max: 0
     str: 0
-  slot: head
+  slot: Head
   stats:
     armor: 2
     dex: 0
@@ -52,7 +52,7 @@ long sword:
     marmor: 0
     mp_max: 0
     str: 0
-  slot: primary
+  slot: Primary
   stats:
     armor: 0
     dex: 1
@@ -81,7 +81,7 @@ dagger :
     marmor: 0
     mp_max: 0
     str: 0
-  slot: primary
+  slot: Primary
   stats:
     armor: 0
     dex: 1
@@ -110,7 +110,7 @@ pan lid:
     marmor: 0
     mp_max: 0
     str: 0
-  slot: secondary
+  slot: Secondary
   stats:
     armor: 1
     dex: 0
@@ -139,7 +139,7 @@ sandals:
     marmor: 0
     mp_max: 0
     str: 0
-  slot: boots
+  slot: Feet
   stats:
     armor: 0
     dex: 1
@@ -170,7 +170,7 @@ lucky charm:
     marmor: 0
     mp_max: 0
     str: 0
-  slot: trinket
+  slot: Trinket
   stats:
     armor: 0
     dex: 0

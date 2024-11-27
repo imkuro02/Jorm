@@ -28,6 +28,43 @@ class ActorStatusType(Enum):
     Fighting = auto()
     Dead = auto()
 
+class EquipmentSlotType(Enum):
+    Head =      auto()
+    Neck =      auto()
+    Chest =     auto()
+    Hands =     auto()
+    Belt =      auto()
+    Legs =      auto()
+    Boots =     auto()
+    Trinket =   auto()
+    Primary =   auto()
+    Secondary = auto()
+
+class ActorStatType(Enum):
+    Head =      auto()
+    Neck =      auto()
+    Chest =     auto()
+    Hands =     auto()
+    Belt =      auto()
+    Legs =      auto()
+    Boots =     auto()
+    Trinket =   auto()
+    Primary =   auto()
+    Secondary = auto()
+
+class EquipmentStatType(Enum):
+    Head =      auto()
+    Neck =      auto()
+    Chest =     auto()
+    Hands =     auto()
+    Belt =      auto()
+    Legs =      auto()
+    Boots =     auto()
+    Trinket =   auto()
+    Primary =   auto()
+    Secondary = auto()
+        
+
 class Config:
     def __init__(self):
         self.ENEMIES = {}

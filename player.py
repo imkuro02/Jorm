@@ -207,10 +207,10 @@ class Player(Actor):
 
     def inventory_equip(self, item):
         if item.slot != None:
-            if self.slots[item.slot] != None:
-                self.inventory_unequip(self.inventory[self.slots[item.slot]])
+            if self.slots[item.slot.name] != None:
+                self.inventory_unequip(self.inventory[self.slots[item.slot.name]])
             
-            self.slots[item.slot] = item.id
+            self.slots[item.slot.name] = item.id
             
             item.equiped = True 
             for stat_name in item.stats:
@@ -229,7 +229,7 @@ class Player(Actor):
 
     def inventory_unequip(self, item):
         if item.equiped:
-            self.slots[item.slot] = None
+            self.slots[item.slot.name] = None
             item.equiped = False
 
             for stat_name in item.stats:
@@ -439,7 +439,7 @@ class Player(Actor):
         for i in self.inventory:
             if self.inventory[i].item_type == ItemType.Equipment:     
                 output = output + f'{self.inventory[i].name}'
-                if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
+                if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot.name})@normal'
                 if self.inventory[i].keep:      output = output + f' @red(K)@normal'
                 output = output + '\n'
 
@@ -829,7 +829,7 @@ class Player(Actor):
 
                 if stat in 'slot':
                     if str(value) in self.slots:
-                        self.inventory[item_id].slot = str(value)
+                        self.inventory[item_id].slot = EquipmentSlotType(stat)
                         self.sendLine('@greenUpdated@normal')
                         return
                     if str(value).lower() == 'none':

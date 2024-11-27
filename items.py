@@ -2,7 +2,7 @@ import uuid
 #import skills
 import random
 import copy
-from config import ItemType
+from config import ItemType, EquipmentSlotType
 
 
 # load an item either from 
@@ -22,7 +22,7 @@ def load_item(item):
         new_item.stats = item['stats']
         new_item.requirements = item['requirements']
 
-        new_item.slot = item['slot']
+        new_item.slot = getattr(EquipmentSlotType, item['slot'])
         new_item.equiped = item['equiped']
         new_item.tags = item['tags']
         new_item.history = item['history']
@@ -153,7 +153,7 @@ class Equipment(Item):
         self.tags = []
         '''
 
-        self.slot = None
+        self.slot = EquipmentSlotType.Trinket
         self.equiped = False
         
         self.stats = {
@@ -196,7 +196,7 @@ class Equipment(Item):
             'history': self.history,
             'tags': self.tags,
             'keep': self.keep,
-            'slot': self.slot,
+            'slot': EquipmentSlotType(self.slot).name,
             'equiped': self.equiped,
             'stats': self.stats,
             'requirements': self.requirements
@@ -225,9 +225,9 @@ class Equipment(Item):
         r = self.requirements
         if self.slot == None:
             return output
-        output += f'Slot: {self.slot.capitalize()} '
+        output += f'Slot: {EquipmentSlotType(self.slot).name} '
         if self.equiped:
-            output += f'{"@cyan(Equiped)@normal"}'
+            output += f'{"@green(Equiped)@normal"}'
         output += '\n'
         output += f'Level: {r["level"]}\n'
         space = 9

@@ -1,7 +1,7 @@
 from copy import deepcopy
 from items import Item
 import affects
-from config import DamageType, ActorStatusType
+from config import DamageType, ActorStatusType, EquipmentSlotType
 
 class Actor:
     def __init__(self, name, room):
@@ -16,16 +16,9 @@ class Actor:
 
         self.status = ActorStatusType.Normal
 
-        self.slots = {
-            'head':         None,
-            'neck':         None,
-            'chest':        None,
-            'legs':         None,
-            'boots':        None,
-            'trinket':      None,
-            'primary':      None,
-            'secondary':    None
-        }
+        self.slots = {}
+        for slot in EquipmentSlotType:
+            self.slots[slot.name] = None
 
         self.stats = {
             'hp': 10,
@@ -51,32 +44,7 @@ class Actor:
         self.skills = {
             'swing':3
             }
-    '''
-    def create_new_skills(self):
-        return {'swing':50+15}
-        
-    def create_new_stats(self):
-        return {
-            'hp': 10,
-            'hp_max': 10,
-            'mp': 10,
-            'mp_max': 10,
-
-            'str': 0,
-            'dex': 0,
-            'int': 0,
-            'luk': 0,
-
-            'armor': 0,
-            'marmor': 0,
-
-            'damage': 1,
-
-            'level': 0,
-            'points': 0,
-            'exp': 0
-            }
-    '''
+   
     def pretty_name(self):
         output = ''
         
