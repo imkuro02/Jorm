@@ -299,7 +299,7 @@ class Player(Actor):
                     learned = 0
                 else:
                     learned = self.skills[skill_id]
-                level = self.factory.config.SKILLS[skill_id]['LVL']
+                level = self.factory.config.SKILLS[skill_id]['level_req']
                 output += (f'{self.factory.config.SKILLS[skill_id]["name"]:<20} | {str(learned) + "":<8} | {str(level):<5} \n')
             self.sendLine(f'{output}')
         else:
@@ -326,11 +326,11 @@ class Player(Actor):
 
 
                 self.stats[StatType.PP] -= self.skills[skill_id]
-                self.sendLine(f'@greenYou spend {self.skills[skill_id]} practice point on "{skill_name}"@normal')
+                self.sendLine(f'@greenYou spend {self.skills[skill_id]} practice point(s) on "{skill_name}"@normal')
                 self.skills[skill_id] += 1
                 
             else:
-                if self.stats[StatType.LVL] < self.factory.config.SKILLS[skill_id]['LVL']:
+                if self.stats[StatType.LVL] < self.factory.config.SKILLS[skill_id]['level_req']:
                     self.sendLine('@redYou are not high enough level to practice this skill@normal')
                     return
                 self.skills[skill_id] = 1

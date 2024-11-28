@@ -2,7 +2,7 @@
 swing:
   name: Swing
   description: Swing at your target dealing 1 physical damage + 70% of Body
-  LVL: 0 
+  level_req: 0 
   must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
@@ -30,7 +30,7 @@ swing:
 magic missile:
   name: Magic Missile
   description: Fire a magic missile at your target dealing 4 magical damage + 100% of your Mind
-  LVL: 0
+  level_req: 0
   must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
@@ -56,7 +56,7 @@ magic missile:
 brain sap:
   name: Give head
   description: hoo hoo hee haa
-  LVL: 2
+  level_req: 2
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
@@ -82,7 +82,7 @@ brain sap:
 cure light wounds:
   name: Cure Light Wounds
   description: Heal your target for 10 + 100% Soul
-  LVL: 0
+  level_req: 0
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: True
@@ -108,7 +108,7 @@ cure light wounds:
 ethereal:
   name: Become Ethereal
   description: You become ethereal
-  LVL: 0
+  level_req: 0
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: False
@@ -134,7 +134,7 @@ ethereal:
 bash:
   name: Bash
   description: Bash your target, stunning them for 1 turn
-  LVL: 4
+  level_req: 4
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
