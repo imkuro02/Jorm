@@ -1,18 +1,17 @@
 template:
   name: Skeleton
   stats:
-    hp: 15
-    mp: 20
+    Health: 15
+    Mana: 20
 
-    armor: 0
-    marmor: 0
+    Armor: 0
+    Marmor: 0
 
-    str: 0
-    dex: 0
-    int: 0
-    luk: 0
+    Body: 1
+    Mind: 2
+    Soul: 0
     
-    exp: 1
+    Experience: 1
 
   loot:
     long sword: 1
@@ -29,18 +28,17 @@ template:
 skeleton:
   name: Skeleton
   stats:
-    hp: 15
-    mp: 20
+    Health: 15
+    Mana: 20
 
-    armor: 0
-    marmor: 0
+    Armor: 0
+    Marmor: 0
 
-    str: 1
-    dex: 2
-    int: 0
-    luk: 0
+    Body: 1
+    Mind: 2
+    Soul: 0
     
-    exp: 1
+    Experience: 1
 
   loot:
     long sword: 1
@@ -55,18 +53,17 @@ skeleton:
 rat:
   name: Rat
   stats:
-    hp: 5
-    mp: 20
+    Health: 5
+    Mana: 20
 
-    armor: 0
-    marmor: 0
+    Armor: 0
+    Marmor: 0
 
-    str: 0
-    dex: 0
-    int: 0
-    luk: 0
+    Body: 0
+    Mind: 0
+    Soul: 0
     
-    exp: 1
+    Experience: 1
 
   loot: 
     lucky charm: 1

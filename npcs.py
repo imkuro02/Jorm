@@ -4,6 +4,7 @@ import yaml
 import copy
 import items
 import copy
+from config import StatType, ItemType
 
 
 
@@ -19,6 +20,11 @@ def create_enemy(room, enemy_id):
     names = 'Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
     name = random.choice(names.split())
     name = name + ' The ' + enemy['name']
+    #stats = {}
+    #for stat in enemy['stats']:
+     #   stat_name = getattr(StatType, stat)
+     #   stats[stat_name] = enemy['stats'][stat]
+    #print(stats)
     stats = enemy['stats']
     skills = enemy['skills']
     combat_loop = enemy['combat_loop']
@@ -30,8 +36,8 @@ class Enemy(Actor):
     def __init__(self, name, room, stats, skills, combat_loop, loot):
         super().__init__(name, room)
         self.stats = copy.deepcopy(stats)
-        self.stats['hp_max'] = self.stats['hp']
-        self.stats['mp_max'] = self.stats['mp']
+        self.stats[StatType.HPMAX] = self.stats[StatType.HP]
+        self.stats[StatType.MPMAX] = self.stats[StatType.MP]
         self.skills = copy.deepcopy(skills)
         self.combat_loop = copy.deepcopy(combat_loop)
         self.loot = copy.deepcopy(loot)
@@ -75,12 +81,13 @@ class Enemy(Actor):
 
             new_item = items.load_item(all_items[item])
 
-            if new_item.item_type == 'equipment':
-                for i in range(random.randint(0,new_item.requirements['level'])):
+            if new_item.item_type == ItemType.EQUIPMENT:
+                for i in range(random.randint(0,new_item.requirements[StatType.LVL])):
                     stat = random.choice([s for s in new_item.stats.keys()])
                     new_item.stats[stat] = new_item.stats[stat] + 1
                     #print(stat)
 
+                '''
                 # temp prefix code
                 roll = random.random()
                 if roll<0.1:
@@ -90,6 +97,7 @@ class Enemy(Actor):
                     for stat in prefix['stats']:
                         new_item.stats[stat] = new_item.stats[stat] + prefix['stats'][stat] 
                 #print(prefixes,prefix)
+                '''
 
             entity.sendLine(f'You loot {new_item.name}')
             entity.inventory_add_item(new_item)   
@@ -103,7 +111,7 @@ class Enemy(Actor):
             return
         for entity in self.room.combat.participants.values():
             if type(entity).__name__ == "Player":
-                entity.stats['exp'] += self.stats['exp']
+                entity.stats[StatType.EXP] += self.stats[StatType.EXP]
                 self.drop_loot(entity)
         super().die()
 

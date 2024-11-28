@@ -1,69 +1,58 @@
 import yaml
 from enum import Enum, auto
 
-class ItemType(Enum):
-    Misc = auto()
-    Equipment = auto()
-    Consumable = auto()
+class ItemType:
+    MISC = 'Misc'
+    EQUIPMENT = 'Equipment'
+    CONSUMABLE = 'Consumable'
     
-class AffType(Enum):
-    Basic = auto()
-    DOT1 = auto()
-    DOT2 = auto()
-    HealAmp = auto()
-    PowerUp = auto()
-    Ethereal = auto()
-    ReflectDamage = auto()
-    Stunned = auto()
+class AffType:
+    BASIC = 1
+    DOT1 = 2
+    DOT2 = 3
+    HEALAMP = 4
+    POWERUP = 5
+    ETHEREAL = 6
+    REFLECTDAMAGE = 7
+    STUNNED = 8
 
-class DamageType(Enum):
-    Physical = auto()
-    Magical = auto()
-    Healing = auto()
-    Pure = auto()
-    Cancelled = auto()
+class DamageType:
+    PHYSICAL = 1
+    MAGICAL = 2
+    HEALING = 3
+    PURE = 4
+    CANCELLED = 5
 
-class ActorStatusType(Enum):
-    Normal = auto()
-    Fighting = auto()
-    Dead = auto()
+class ActorStatusType:
+    NORMAL = 'Normal'
+    FIGHTING = 'Fighting'
+    DEAD = 'Dead'
 
-class EquipmentSlotType(Enum):
-    Head =      auto()
-    Neck =      auto()
-    Chest =     auto()
-    Hands =     auto()
-    Belt =      auto()
-    Legs =      auto()
-    Boots =     auto()
-    Trinket =   auto()
-    Primary =   auto()
-    Secondary = auto()
+class EquipmentSlotType:
+    HEAD =      'Head'
+    NECK =      'Neck'
+    CHEST =     'Chest'
+    HANDS =     'Hands'
+    BELT =      'Belt'
+    LEGS =      'Legs'
+    FEET =      'Feet'
+    TRINKET =   'Trinket'
+    PRIMARY =   'Primary'
+    SECONDARY = 'Secondary'
 
-class ActorStatType(Enum):
-    Head =      auto()
-    Neck =      auto()
-    Chest =     auto()
-    Hands =     auto()
-    Belt =      auto()
-    Legs =      auto()
-    Boots =     auto()
-    Trinket =   auto()
-    Primary =   auto()
-    Secondary = auto()
-
-class EquipmentStatType(Enum):
-    Head =      auto()
-    Neck =      auto()
-    Chest =     auto()
-    Hands =     auto()
-    Belt =      auto()
-    Legs =      auto()
-    Boots =     auto()
-    Trinket =   auto()
-    Primary =   auto()
-    Secondary = auto()
-        
+class StatType:
+    HPMAX = 'Max Health'
+    MPMAX = 'Max Mana'
+    HP = 'Health'
+    MP = 'Mana'
+    BODY = 'Body'
+    MIND = 'Mind'
+    SOUL = 'Soul'
+    ARMOR = 'Armor'
+    MARMOR = 'Marmor'
+    EXP = 'Experience'
+    LVL = 'Level'
+    PP = 'Practice Points'
 
 class Config:
     def __init__(self):

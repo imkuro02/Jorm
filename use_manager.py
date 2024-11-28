@@ -1,7 +1,7 @@
 import utils
 import random
 import affects
-from config import DamageType, ActorStatusType
+from config import DamageType, ActorStatusType, StatType
 class UseManager:
     def __init__(self, factory):
         self.factory = factory
@@ -25,11 +25,12 @@ class UseManager:
     def skill_simple_damage(self, user, target, arguments):
         base_damage = arguments[0]      # int
         damage_type = getattr(DamageType, arguments[1])      # string 
-        bonus_damages = arguments[2]    # dictionary like {'str': 1.1}
+        bonus_damages = arguments[2]    # dictionary like {'BODY': 1.1}
 
         damage = base_damage
         for i in bonus_damages:
-            damage += user.stats[i] * bonus_damages[i]
+            stat_name = getattr(StatType,i)
+            damage += user.stats[stat_name] * bonus_damages[i]
             
         damage = round(damage)
         target.take_damage(user, damage, damage_type)
@@ -134,31 +135,31 @@ class UseManager:
             return
 
         if self.SKILLS[best_match]['must_be_fighting']:
-            if user.status != ActorStatusType.Fighting:
+            if user.status != ActorStatusType.FIGHTING:
                 self.error(user, f'{skill_name} can only be used during a fight')
                 return
 
-        if user.status == ActorStatusType.Fighting and target.status != ActorStatusType.Fighting:
+        if user.status == ActorStatusType.FIGHTING and target.status != ActorStatusType.FIGHTING:
             self.error(user, f'You are in a fight but {target.name} is not participating!')
             return
 
-        if user.status != ActorStatusType.Fighting and target.status == ActorStatusType.Fighting:
+        if user.status != ActorStatusType.FIGHTING and target.status == ActorStatusType.FIGHTING:
             self.error(user, f'{target.name} is in a fight you are not participating in!')
             return
 
         hp_cost = self.SKILLS[best_match]['hp_cost']
         mp_cost = self.SKILLS[best_match]['mp_cost']
 
-        if hp_cost > user.stats['hp'] + 1:
+        if hp_cost > user.stats[StatType.HP] + 1:
             self.error(user, f'You need atleast {hp_cost} HP to use {skill_name}')
             return
         
-        if mp_cost > user.stats['mp']:
+        if mp_cost > user.stats[StatType.MP]:
             self.error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
             return
 
-        user.stats['hp'] -= hp_cost
-        user.stats['mp'] -= mp_cost
+        user.stats[StatType.HP] -= hp_cost
+        user.stats[StatType.MP] -= mp_cost
 
         roll = random.randint(1,100)
         level_to_successrate = {

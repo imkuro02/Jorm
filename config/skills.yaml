@@ -2,7 +2,7 @@
 swing:
   name: Swing
   description: Swing at your target dealing 1 physical damage + 70% of strength and 100% dexterity
-  level: 0 
+  LVL: 0 
   must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
@@ -10,7 +10,7 @@ swing:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [1, Physical, {'str': 0.7, 'dex': 1}] 
+    arguments: [1, PHYSICAL, {BODY: 0.7}] 
 
   use_perspectives:
     you on you:           'You swing and hit yourself!'
@@ -30,7 +30,7 @@ swing:
 magic missile:
   name: Magic Missile
   description: Fire a magic missile at your target dealing 2 magical damage + 100% of your ingelligence
-  level: 0
+  LVL: 0
   must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
@@ -38,7 +38,7 @@ magic missile:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [2, Magical, {'int': 1}]
+    arguments: [2, MAGICAL, {MIND: 1}]
 
   use_perspectives:
     you on you:           'You point at yourself and fire a magical missile straight to your forehead!'
@@ -56,7 +56,7 @@ magic missile:
 brain sap:
   name: Give head
   description: hoo hoo hee haa
-  level: 2
+  LVL: 2
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
@@ -64,7 +64,7 @@ brain sap:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [2, Pure, []]
+    arguments: [2, PURE, []]
 
   use_perspectives:
     you on you:           'You swing and hit yourself!'
@@ -82,7 +82,7 @@ brain sap:
 cure light wounds:
   name: Cure Light Wounds
   description: Heal your target for 10 + 100% intelligence
-  level: 0
+  LVL: 0
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: True
@@ -90,7 +90,7 @@ cure light wounds:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [10, Healing, {'int': 1}]
+    arguments: [10, HEALING, {SOUL: 1}]
 
   use_perspectives:
     you on you:           'You pray for yourself'
@@ -108,7 +108,7 @@ cure light wounds:
 ethereal:
   name: Become Ethereal
   description: You become ethereal
-  level: 0
+  LVL: 0
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: False
@@ -134,7 +134,7 @@ ethereal:
 bash:
   name: Bash
   description: Bash your target, stunning them for 1 turn
-  level: 0
+  LVL: 4
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
@@ -142,7 +142,7 @@ bash:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage_and_affliction
-    arguments: [0, Cancelled, {'str': 1}, 'stunned']
+    arguments: [0, CANCELLED, {BODY: 1}, 'stunned']
 
   use_perspectives:
     you on you:           'You bash yourself'

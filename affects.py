@@ -9,21 +9,21 @@ class AffectsManager:
 
     def load_affect(self, affect_id):
         if affect_id == 'affect':
-            return Affect(AffType.Basic, self, 'AffectName', 2)
+            return Affect(AffType.BASIC, self, 'AffectName', 2)
         if affect_id == 'dot':
             return AffectDOT(AffType.DOT1, self, 'Poisoned', 10, 1, 'pure')
         if affect_id == 'dot2':
             return AffectDOT(AffType.DOT1, self, 'Bleeding', 10, 1, 'pure')
         if affect_id == 'healamp':
-            return AffectHealAmp(AffType.HealAmp, self, 'Blessed', 10)
+            return AffectHealAmp(AffType.HEALAMP, self, 'Blessed', 10)
         if affect_id == 'powerup':
-            return AffectStatBonus(AffType.PowerUp, self, 'Fortified', 10, {'str':1,'hp':100,'hp_max':100})
+            return AffectStatBonus(AffType.POWERUP, self, 'Fortified', 10, {'str':1,'hp':100,'hp_max':100})
         if affect_id == 'ethereal':
-            return AffectEthereal(AffType.Ethereal, self, 'Ethereal', 10)
+            return AffectEthereal(AffType.ETHEREAL, self, 'Ethereal', 10)
         if affect_id == 'reflect':
-            return AffectReflectDamage(AffType.ReflectDamage, self, 'Reflecting', 20)
+            return AffectReflectDamage(AffType.REFLECTDAMAGE, self, 'Reflecting', 20)
         if affect_id == 'stunned':
-            return AffectStunned(AffType.Stunned, self, 'Stunned', 3)
+            return AffectStunned(AffType.STUNNED, self, 'Stunned', 3)
 
     def set_affect(self, affect):
         if affect.aff_type in self.affects:
@@ -113,14 +113,14 @@ class AffectReflectDamage(Affect):
         return super().info().replace('\n', f'You reflect a portion of physical damage taken\n')
 
     def take_damage(self, source, damage, damage_type):
-        if damage_type == DamageType.Physical: 
+        if damage_type == DamageType.PHYSICAL: 
 
             self.affect_manager.owner.simple_broadcast(
                 f'You reflect a portion of the damage',
                 f'{self.affect_manager.owner.pretty_name()} reflects a portion of the damage'
             )
 
-            source.take_damage(self.affect_manager.owner, damage, DamageType.Pure)
+            source.take_damage(self.affect_manager.owner, damage, DamageType.PURE)
             return damage, damage_type
 
         return super().take_damage(source, damage, damage_type)

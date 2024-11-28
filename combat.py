@@ -1,4 +1,4 @@
-from config import ActorStatusType
+from config import ActorStatusType, StatType
 class Combat:
     def __init__(self, room, participants):
         self.room = room
@@ -61,13 +61,13 @@ class Combat:
             self.next_turn()
             return
 
-        if self.current_actor.status == ActorStatusType.Dead:
+        if self.current_actor.status == ActorStatusType.DEAD:
             self.next_turn()
             return      
 
     def combat_over(self):
         for i in self.participants.values():
-            if i.status == ActorStatusType.Fighting: i.status = ActorStatusType.Normal
+            if i.status == ActorStatusType.FIGHTING: i.status = ActorStatusType.NORMAL
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
 
@@ -78,9 +78,9 @@ class Combat:
         team1_died = True
         team2_died = True
         for i in self.participants.values():
-            if i.status != ActorStatusType.Dead and type(i).__name__ == "Player":
+            if i.status != ActorStatusType.DEAD and type(i).__name__ == "Player":
                 team1_died = False
-            if i.status != ActorStatusType.Dead and type(i).__name__ == "Enemy":
+            if i.status != ActorStatusType.DEAD and type(i).__name__ == "Enemy":
                 team2_died = False
         if team1_died or team2_died:
             self.combat_over()
@@ -97,20 +97,20 @@ class Combat:
 
     def initiative(self):
         for i in self.participants.values():
-            if i.status != ActorStatusType.Dead:
+            if i.status != ActorStatusType.DEAD:
                 self.order.append(i)
 
         for i in self.order:
             if type(i).__name__ == "Player":
                 combat_stats = f'\n@yellowCombat overview (Round {self.round})@normal:'
                 for participant in self.order:
-                    combat_stats = combat_stats + f'\n{participant.pretty_name()} [@red{participant.stats["hp"]}@normal/@red{participant.stats["hp_max"]}@normal]'
+                    combat_stats = combat_stats + f'\n{participant.pretty_name()} [@red{participant.stats[StatType.HP]}@normal/@red{participant.stats[StatType.HPMAX]}@normal]'
                 i.sendLine(combat_stats)
                 #i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
                 
         self.round += 1
         for i in self.order:
-            i.status = ActorStatusType.Fighting
+            i.status = ActorStatusType.FIGHTING
 
         if len(self.order) == 0:
             self.combat_over()

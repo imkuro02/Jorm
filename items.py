@@ -2,16 +2,16 @@ import uuid
 #import skills
 import random
 import copy
-from config import ItemType, EquipmentSlotType
+from config import ItemType, EquipmentSlotType, StatType
 
 
 # load an item either from 
 def load_item(item):
     item = copy.deepcopy(item)
-    item_type = getattr(ItemType, item['item_type'])
+    item_type = item['item_type']
     #print(item_type)
 
-    if item_type == ItemType.Equipment:
+    if item_type == ItemType.EQUIPMENT:
         new_item = Equipment()
         #template = Equipment()
 
@@ -22,13 +22,13 @@ def load_item(item):
         new_item.stats = item['stats']
         new_item.requirements = item['requirements']
 
-        new_item.slot = getattr(EquipmentSlotType, item['slot'])
+        new_item.slot = item['slot']
         new_item.equiped = item['equiped']
         new_item.tags = item['tags']
         new_item.history = item['history']
 
 
-    if item_type == ItemType.Misc:
+    if item_type == ItemType.MISC:
         new_item = Item()
 
         #new_item.item_type = item['item_type']
@@ -37,7 +37,7 @@ def load_item(item):
         new_item.tags = item['tags']
         new_item.history = item['history']
 
-    if item_type == ItemType.Consumable:
+    if item_type == ItemType.CONSUMABLE:
         new_item = Consumable()
 
         #new_item.item_type = item['item_type']
@@ -66,7 +66,7 @@ def save_item(item):
 class Item:
     def __init__(self):
         self.id = str(uuid.uuid4())
-        self.item_type = ItemType.Misc
+        self.item_type = ItemType.MISC
         self.name = 'Name of item'
         self.description = 'Description here'
         self.history = {}
@@ -78,7 +78,7 @@ class Item:
         
         my_dict = {
             'id': self.id,
-            'item_type': ItemType(self.item_type).name,
+            'item_type': self.item_type,
             'name': self.name,
             'description': self.description,
             'history': self.history,
@@ -97,7 +97,7 @@ class Item:
 class Consumable(Item):
     def __init__(self):
         super().__init__()
-        self.item_type = ItemType.Consumable
+        self.item_type = ItemType.CONSUMABLE
         '''
         self.id = str(uuid.uuid4())
         self.item_type = type(self).__name__.lower()
@@ -119,7 +119,7 @@ class Consumable(Item):
     def to_dict(self):
         my_dict = {
             'id': self.id,
-            'item_type': ItemType(self.item_type).name,
+            'item_type': self.item_type,
             'name': self.name,
             'description': self.description,
             'history': self.history,
@@ -143,7 +143,7 @@ class Consumable(Item):
 class Equipment(Item):
     def __init__(self):
         super().__init__()
-        self.item_type = ItemType.Equipment
+        self.item_type = ItemType.EQUIPMENT
         '''
         self.id = str(uuid.uuid4())
         self.item_type = type(self).__name__.lower()
@@ -153,50 +153,41 @@ class Equipment(Item):
         self.tags = []
         '''
 
-        self.slot = EquipmentSlotType.Trinket
+        self.slot = EquipmentSlotType.TRINKET
         self.equiped = False
         
         self.stats = {
-            'hp_max': 0,
-            'mp_max': 0,
+            StatType.HPMAX: 0,
+            StatType.MPMAX: 0,
+            StatType.ARMOR: 0,
+            StatType.MARMOR:0,
+            StatType.BODY: 0,
+            StatType.MIND: 0,
+            StatType.SOUL: 0
 
-            'str': 0,
-            'dex': 0,
-            'int': 0,
-            'luk': 0,
-
-            'armor': 0,
-            'marmor': 0,
-
-            #'damage': 0,
             }
 
         self.requirements = {
-            'hp_max': 0,
-            'mp_max': 0,
-
-            'str': 0,
-            'dex': 0,
-            'int': 0,
-            'luk': 0,
-
-            'armor': 0,
-            'marmor': 0,
-
-            #'damage': 0,
-            'level': 0,
+            StatType.HPMAX: 0,
+            StatType.MPMAX: 0,
+            StatType.ARMOR: 0,
+            StatType.MARMOR:0,
+            StatType.BODY: 0,
+            StatType.MIND: 0,
+            StatType.SOUL: 0,
+            StatType.LVL: 0
             }
 
     def to_dict(self):
         my_dict = {
             'id': self.id,
-            'item_type': ItemType(self.item_type).name,
+            'item_type': self.item_type,
             'name': self.name,
             'description': self.description,
             'history': self.history,
             'tags': self.tags,
             'keep': self.keep,
-            'slot': EquipmentSlotType(self.slot).name,
+            'slot': self.slot,
             'equiped': self.equiped,
             'stats': self.stats,
             'requirements': self.requirements
@@ -208,16 +199,7 @@ class Equipment(Item):
         self.stats[stat] = value
 
     def identify(self):
-        translations = {
-            'hp_max': 'Health',
-            'mp_max': 'Mana',
-            'armor':  'Armor',
-            'marmor': 'Marmor',
-            'str': 'STR',
-            'dex': 'DEX',
-            'int': 'INT',
-            'luk': 'LUK'
-        }
+
 
         #print('identifying')
         output = super().identify()
@@ -225,19 +207,19 @@ class Equipment(Item):
         r = self.requirements
         if self.slot == None:
             return output
-        output += f'Slot: {EquipmentSlotType(self.slot).name} '
+        output += f'Slot: {self.slot} '
         if self.equiped:
             output += f'{"@green(Equiped)@normal"}'
         output += '\n'
-        output += f'Level: {r["level"]}\n'
+        output += f'{StatType.LVL}: {r[StatType.LVL]}\n'
         space = 9
         output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
-        for stat in translations:
+        for stat in self.stats.keys():
             s = self.stats[stat]
             r = self.requirements[stat]
             if r == 0 and s == 0:
                 continue
-            output += f'@normal{translations[stat]:<{space}} {s:<{space}} {r:<{space}}\n'
+            output += f'@normal{stat:<{space}} {s:<{space}} {r:<{space}}\n'
         '''
         output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
         output += f'@normal{"HP":<{space}} {s["hp_max"]:<{space}} {r["hp_max"]:<{space}}\n'

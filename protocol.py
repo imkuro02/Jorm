@@ -2,6 +2,7 @@ from twisted.internet import protocol
 from player import Player
 import items 
 import utils
+from config import StatType
 
 IAC = b'\xff'     # Interpret as Command
 WILL = b'\xfb'    # Will Perform
@@ -132,7 +133,10 @@ class Protocol(protocol.Protocol):
             return False
 
         #print(actor)
-        self.actor.stats.update(actor['stats'])
+        #stats = {}
+        #for s in actor['stats']:
+        #   self.actor.stats[getattr(StatType, s)] = actor['stats'][s]
+        self.actor.stats = actor['stats']
         self.actor.skills = actor['skills']
         self.actor.slots = actor['slots']
         for item in actor['inventory'].values():
@@ -146,6 +150,10 @@ class Protocol(protocol.Protocol):
         inventory = {}
         for i in self.actor.inventory:
             inventory[i] = items.save_item(self.actor.inventory[i])
+        
+        #stats = {}
+        #for s in self.actor.stats:
+        #    stats[s.name] = self.actor.stats[s]
 
         self.factory.db.write_actor(self.actor.name ,{
             'name': self.actor.name,

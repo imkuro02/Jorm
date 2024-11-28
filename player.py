@@ -5,7 +5,7 @@ import copy
 import utils
 import yaml
 import os
-from config import DamageType, ItemType, ActorStatusType
+from config import DamageType, ItemType, ActorStatusType, StatType
 class Player(Actor):
     def __init__(self, protocol, name, room):
         self.protocol = protocol
@@ -97,7 +97,7 @@ class Player(Actor):
 
     def check_your_turn(func):
         def wrapper(self, line):
-            if self.status != ActorStatusType.Fighting:
+            if self.status != ActorStatusType.FIGHTING:
                 return func(self, line)
             if self.room.combat != None:
                 if self.room.combat.current_actor != self:
@@ -108,7 +108,7 @@ class Player(Actor):
 
     def check_alive(func):
         def wrapper(self, line):
-            if self.status == ActorStatusType.Dead:
+            if self.status == ActorStatusType.DEAD:
                 self.sendLine('@redYou are dead@normal')
                 return 
             return func(self, line)
@@ -116,14 +116,14 @@ class Player(Actor):
 
     def check_not_in_combat(func):
         def wrapper(self, line):
-            if self.status == ActorStatusType.Fighting:
+            if self.status == ActorStatusType.FIGHTING:
                 self.sendLine('You can\'t do this in combat')
                 return
             return func(self, line)
         return wrapper
 
     def get_exp_needed_to_level(self):
-        exp_needed = 2 ** self.stats['level']
+        exp_needed = 2 ** self.stats[StatType.LVL]
         return exp_needed
 
     def get_entity(self, line):
@@ -174,7 +174,7 @@ class Player(Actor):
         if search_mode == 'equipment':
             inventory = {}
             for item in self.inventory.values():
-                if item.item_type != ItemType.Equipment:
+                if item.item_type != ItemType.EQUIPMENT:
                     continue 
                 if item.equiped == False:
                     continue 
@@ -184,7 +184,7 @@ class Player(Actor):
         if search_mode == 'equipable':
             inventory = {}
             for item in self.inventory.values():
-                if item.item_type != ItemType.Equipment:
+                if item.item_type != ItemType.EQUIPMENT:
                     continue 
                 if item.equiped == True:
                     continue 
@@ -207,10 +207,10 @@ class Player(Actor):
 
     def inventory_equip(self, item):
         if item.slot != None:
-            if self.slots[item.slot.name] != None:
-                self.inventory_unequip(self.inventory[self.slots[item.slot.name]])
+            if self.slots[item.slot] != None:
+                self.inventory_unequip(self.inventory[self.slots[item.slot]])
             
-            self.slots[item.slot.name] = item.id
+            self.slots[item.slot] = item.id
             
             item.equiped = True 
             for stat_name in item.stats:
@@ -229,7 +229,7 @@ class Player(Actor):
 
     def inventory_unequip(self, item):
         if item.equiped:
-            self.slots[item.slot.name] = None
+            self.slots[item.slot] = None
             item.equiped = False
 
             for stat_name in item.stats:
@@ -249,45 +249,57 @@ class Player(Actor):
 
     @check_not_in_combat
     def command_level_up(self, stat):
-        stat = stat.lower()
+        stat = stat.lower().capitalize()
         exp_needed = self.get_exp_needed_to_level()
-        if self.get_exp_needed_to_level() > self.stats['exp']:
-            self.sendLine(f'You need {exp_needed-self.stats["exp"]}EXP to level up')
+        if self.get_exp_needed_to_level() > self.stats[StatType.EXP]:
+            self.sendLine(f'You need {exp_needed-self.stats[StatType.EXP]}EXP to level up')
             return
 
-        if stat not in 'str dex int luk'.split():
-            self.sendLine('You can only level up STR, DEX, INT or LUK')
-            return
 
-        if stat in self.stats:
-            self.stats['level'] += 1
-            self.stats[stat] += 1
-            self.stats['points'] += 1
 
-            self.stats['hp_max'] += 5
-            self.stats['mp_max'] += 5
+        match stat.lower():
+            case 'body':
+                #self.stats[StatType.BODY] += 1
+                stat = StatType.BODY
+            case 'mind':
+                #self.stats[StatType.MIND] += 1
+                stat = StatType.MIND
+            case 'soul':
+                #self.stats[StatType.SOUL] += 1
+                stat = StatType.SOUL
+            case _:
+                self.sendLine('You can only level up Body Mind or Soul')
+                return
 
-            self.stats['hp_max'] += self.stats['str'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
-            self.stats['mp_max'] += self.stats['int'] + round(self.stats['dex']*.5) + round(self.stats['luk']*.5)
+       
+        self.stats[StatType.LVL] += 1
+        self.stats[stat] += 1
+        self.stats[StatType.PP] += 1
 
-            #self.stats['armor'] += round(self.stats['dex']*.4)
-            #self.stats['marmor'] += round(self.stats['dex']*.4)
-            
-            self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!@normal')
+        self.stats[StatType.HPMAX] += 5
+        self.stats[StatType.MPMAX] += 5
+
+        self.stats[StatType.HPMAX] += self.stats[StatType.BODY] + round(self.stats[StatType.SOUL]*.5)
+        self.stats[StatType.MPMAX] += self.stats[StatType.MIND] + round(self.stats[StatType.SOUL]*.5) 
+
+        #self.stats['armor'] += round(self.stats['dex']*.4)
+        #self.stats['marmor'] += round(self.stats['dex']*.4)
+        
+        self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. You gained a practice point!@normal')
             
     @check_not_in_combat
     def command_practice(self, line):
         
         #print(name_to_id[skill_name])
         if len(line) <= 1:
-            output = f'You have {self.stats["points"]} practice points left.\n'
+            output = f'You have {self.stats[StatType.PP]} practice points left.\n'
             output += f'{"Skill":<20} | {"Learned":<8} | {"Level Req":<5}\n'
             for skill_id in self.factory.config.SKILLS.keys():
                 if skill_id not in self.skills.keys():
                     learned = 0
                 else:
                     learned = self.skills[skill_id]
-                level = self.factory.config.SKILLS[skill_id]['level']
+                level = self.factory.config.SKILLS[skill_id]['LVL']
                 output += (f'{self.factory.config.SKILLS[skill_id]["name"]:<20} | {str(learned) + "":<8} | {str(level):<5} \n')
             self.sendLine(f'{output}')
         else:
@@ -295,7 +307,7 @@ class Player(Actor):
             skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
             skill_id = name_to_id[skill_name]
 
-            if self.stats['points'] <= 0:
+            if self.stats[StatType.PP] <= 0:
                 self.sendLine('@redYou do not have enough points to practice@normal')
                 return
 
@@ -308,22 +320,22 @@ class Player(Actor):
                 if self.skills[skill_id] >= 6:
                     self.sendLine(f'@redYou are already a master at "{skill_name}"@normal')
                     return
-                if self.skills[skill_id] > self.stats['points']:
+                if self.skills[skill_id] > self.stats[StatType.PP]:
                     self.sendLine(f'@redYou need {self.skills[skill_id]} practice points to practice this.@normal')
                     return
 
 
-                self.stats['points'] -= self.skills[skill_id]
+                self.stats[StatType.PP] -= self.skills[skill_id]
                 self.sendLine(f'@greenYou spend {self.skills[skill_id]} practice point on "{skill_name}"@normal')
                 self.skills[skill_id] += 1
                 
             else:
-                if self.stats['level'] < self.factory.config.SKILLS[skill_id]['level']:
+                if self.stats[StatType.LVL] < self.factory.config.SKILLS[skill_id]['LVL']:
                     self.sendLine('@redYou are not high enough level to practice this skill@normal')
                     return
                 self.skills[skill_id] = 1
                 self.sendLine(f'@greenYou learned the skill "{skill_name}"@normal')
-                self.stats['points'] -= 1
+                self.stats[StatType.PP] -= 1
 
             
     def command_skills(self, line):
@@ -355,7 +367,7 @@ class Player(Actor):
                 self.sendLine('@redYou must unequip everything to respec@normal')
                 return
 
-        exp = self.stats['exp']
+        exp = self.stats[StatType.EXP]
         temp_player = Player(None, self.name, None)
         self.stats = temp_player.stats
         self.skills = temp_player.skills
@@ -364,20 +376,20 @@ class Player(Actor):
 
         #self.stats = self.create_new_stats()
         #self.skills = self.create_new_skills()
-        self.stats['exp'] = exp
+        self.stats[StatType.EXP] = exp
         self.sendLine('@greenYou have reset your stats, experience is kept.@normal')
 
     def command_stats(self, line):
         output = f'You are {self.get_character_sheet()}'
         output += f'\n'
-        exp_needed = self.get_exp_needed_to_level() - self.stats['exp']
-        output += f'Level: {self.stats["level"]}\n'
+        exp_needed = self.get_exp_needed_to_level() - self.stats[StatType.EXP]
+        output += f'Level: {self.stats[StatType.LVL]}\n'
         if exp_needed > 0:
             output += f'@redYou need {exp_needed} exp to level up@normal\n'
         else:
             output += f'@greenYou have enough exp to level up@normal\n'
-        output += f'Experience:      {self.stats["exp"]}\n'
-        output += f'Practice Points: {self.stats["points"]}\n'
+        output += f'Experience:      {self.stats[StatType.EXP]}\n'
+        output += f'Practice Points: {self.stats[StatType.PP]}\n'
         self.sendLine(output)
 
     @check_no_empty_line
@@ -419,7 +431,7 @@ class Player(Actor):
             self.sendLine(f'{item.name} is keept')
             return
 
-        if item.item_type == ItemType.Equipment:
+        if item.item_type == ItemType.EQUIPMENT:
             if item.equiped:
                 self.sendLine(f'You can\'t drop worn items')
                 return
@@ -437,9 +449,9 @@ class Player(Actor):
         output = output + 'You look through your inventory and see:\n'
         
         for i in self.inventory:
-            if self.inventory[i].item_type == ItemType.Equipment:     
+            if self.inventory[i].item_type == ItemType.EQUIPMENT:     
                 output = output + f'{self.inventory[i].name}'
-                if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot.name})@normal'
+                if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
                 if self.inventory[i].keep:      output = output + f' @red(K)@normal'
                 output = output + '\n'
 
@@ -472,7 +484,7 @@ class Player(Actor):
                 self.sendLine(f'@redYou do not meet the requirements to wear@normal {item.name}')
                 return
 
-        if item.item_type != ItemType.Equipment:
+        if item.item_type != ItemType.EQUIPMENT:
             self.sendLine(f'This item is not equipable')
             return
 
@@ -499,7 +511,7 @@ class Player(Actor):
             self.sendLine(f'Remove what?')
             return
 
-        if item.item_type != ItemType.Equipment:
+        if item.item_type != ItemType.EQUIPMENT:
             self.sendLine(f'This item is not equipable')
             return
         
@@ -548,9 +560,9 @@ class Player(Actor):
                         pass
                     else:
                         see = see + i.pretty_name() 
-                        if i.status == ActorStatusType.Dead:
+                        if i.status == ActorStatusType.DEAD:
                             see = see + f' @yellow(DEAD)@normal'
-                        if i.status == ActorStatusType.Fighting:
+                        if i.status == ActorStatusType.FIGHTING:
                             see = see + f' @yellow(FIGHTING)@normal'
                         see = see + '\n'
 
@@ -636,7 +648,7 @@ class Player(Actor):
 
         id_to_name, name_to_id = self.use_manager.get_skills()
         list_of_skill_names = [skill for skill in name_to_id.keys()]
-        list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == ItemType.Consumable]
+        list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == ItemType.CONSUMABLE]
         whole_list = list_of_consumables + list_of_skill_names
 
         action = None
@@ -725,11 +737,11 @@ class Player(Actor):
 
     @check_not_in_combat
     def command_rest(self, line):
-        if self.status == ActorStatusType.Dead:
-            self.status = ActorStatusType.Normal
+        if self.status == ActorStatusType.DEAD:
+            self.status = ActorStatusType.NORMAL
 
-            self.stats['hp'] = self.stats['hp_max']
-            self.stats['mp'] = self.stats['mp_max']
+            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
+            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
 
             self.simple_broadcast(
                 'You ressurect',
@@ -740,8 +752,8 @@ class Player(Actor):
                 f'{self.pretty_name()} has ressurected')
         else:
 
-            self.stats['hp'] = self.stats['hp_max']
-            self.stats['mp'] = self.stats['mp_max']
+            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
+            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
 
             if self.room.uid == 'home':
                 self.simple_broadcast(
@@ -766,7 +778,7 @@ class Player(Actor):
     @check_is_admin
     def command_gain_exp(self, exp):
         try:
-            self.stats['exp'] += int(exp)
+            self.stats[StatType.EXP] += int(exp)
         except ValueError:
             print('gain_exp needs a int')
             pass
@@ -809,7 +821,7 @@ class Player(Actor):
                 self.sendLine('@greenUpdated@normal')
                 return
 
-            if self.inventory[item_id].item_type == ItemType.Consumable:
+            if self.inventory[item_id].item_type == ItemType.CONSUMABLE:
                 print(stat, value)
                 if stat in 'skills':
                     if value not in self.factory.config.SKILLS:
@@ -822,7 +834,7 @@ class Player(Actor):
                     self.sendLine('@greenUpdated@normal')
                     return
 
-            if self.inventory[item_id].item_type == ItemType.Equipment:
+            if self.inventory[item_id].item_type == ItemType.EQUIPMENT:
                 if self.inventory[item_id].equiped:
                     self.sendLine(f'command_update_item: dont update items while they are worn!!!')
                     return
@@ -909,7 +921,7 @@ class Player(Actor):
             f'{self.pretty_name()} flees!'
         )
         self.protocol.factory.world.rooms['home'].move_player(self, silent = True)
-        self.status = ActorStatusType.Normal
+        self.status = ActorStatusType.NORMAL
         self.simple_broadcast(
             None,
             f'{self.pretty_name()} comes running in a panic!'
@@ -927,7 +939,7 @@ class Player(Actor):
         if self.room.combat == None:
             self.finish_turn()
             return
-        if self.status != ActorStatusType.Fighting:
+        if self.status != ActorStatusType.FIGHTING:
             self.finish_turn()
             return
         if self.room.combat.current_actor != self:
@@ -974,8 +986,8 @@ class Player(Actor):
         self.sendLine(content)
 
     def prompt(self):
-        output = f'[@red{self.stats["hp"]}@normal/@red{self.stats["hp_max"]}@normal '
-        output += f'@cyan{self.stats["mp"]}@normal/@cyan{self.stats["mp_max"]}@normal]'
+        output = f'[@red{self.stats[StatType.HP]}@normal/@red{self.stats[StatType.HPMAX]}@normal '
+        output += f'@cyan{self.stats[StatType.MP]}@normal/@cyan{self.stats[StatType.MPMAX]}@normal]'
         return utils.add_color(output)
 
     def command_send_prompt(self, line):

@@ -1,7 +1,7 @@
 from copy import deepcopy
 from items import Item
 import affects
-from config import DamageType, ActorStatusType, EquipmentSlotType
+from config import DamageType, ActorStatusType, EquipmentSlotType, StatType
 
 class Actor:
     def __init__(self, name, room):
@@ -14,31 +14,34 @@ class Actor:
 
         self.affect_manager = affects.AffectsManager(self)
 
-        self.status = ActorStatusType.Normal
+        self.status = ActorStatusType.NORMAL
 
-        self.slots = {}
-        for slot in EquipmentSlotType:
-            self.slots[slot.name] = None
+        self.slots = {
+            EquipmentSlotType.HEAD:      None,
+            EquipmentSlotType.NECK:      None,
+            EquipmentSlotType.CHEST:     None,
+            EquipmentSlotType.HANDS:     None,
+            EquipmentSlotType.BELT:      None,
+            EquipmentSlotType.LEGS:      None,
+            EquipmentSlotType.FEET:      None,
+            EquipmentSlotType.TRINKET:   None,
+            EquipmentSlotType.PRIMARY:   None,
+            EquipmentSlotType.SECONDARY: None
+        }
 
         self.stats = {
-            'hp': 10,
-            'hp_max': 10,
-            'mp': 10,
-            'mp_max': 10,
-
-            'str': 0,
-            'dex': 0,
-            'int': 0,
-            'luk': 0,
-
-            'armor': 0,
-            'marmor': 0,
-
-            #'damage': 1,
-
-            'level': 1,
-            'points': 0,
-            'exp': 0
+            StatType.HPMAX: 10,
+            StatType.HP:    10,
+            StatType.MPMAX: 10,
+            StatType.MP:    10,
+            StatType.ARMOR: 0,
+            StatType.MARMOR:0,
+            StatType.BODY: 0,
+            StatType.MIND: 0,
+            StatType.SOUL: 0,
+            StatType.LVL: 1,
+            StatType.EXP: 0,
+            StatType.PP: 0,
             }
 
         self.skills = {
@@ -54,7 +57,7 @@ class Actor:
             case "Player":
                 output = output + f'@cyan{self.name}@normal'
 
-        if self.status == ActorStatusType.Fighting:
+        if self.status == ActorStatusType.FIGHTING:
             output = f'{output}'
 
         
@@ -63,6 +66,13 @@ class Actor:
 
     def get_character_sheet(self):
         output = f'{self.pretty_name()}\n'
+        output += f'{StatType.HP+":":<15} {self.stats[StatType.HP]}/{self.stats[StatType.HPMAX]}\n'
+        output += f'{StatType.MP+":":<15} {self.stats[StatType.MP]}/{self.stats[StatType.MPMAX]}\n'
+        _piss = [StatType.BODY, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
+        for _shit in _piss:
+            output += f'{_shit+":":<15} {self.stats[_shit]}\n'
+            
+        '''
         output += f'Health: @red{self.stats["hp"]}@normal/@red{self.stats["hp_max"]}@normal\n'
         output += f'Mana:   @cyan{self.stats["mp"]}@normal/@cyan{self.stats["mp_max"]}@normal\n'
         #output += f'Damage: {self.stats["damage"]}\n'
@@ -72,6 +82,7 @@ class Actor:
         output += f'DEX:    {self.stats["dex"]}\n'
         output += f'INT:    {self.stats["int"]}\n'
         output += f'LUK:    {self.stats["luk"]}\n'
+        '''
         return output
 
     def tick(self):
@@ -85,17 +96,17 @@ class Actor:
             # meaning the damage was completely cancelled by something
             # the affect should sendLine what exactly happened
             # example: physical damage while ethereal should send "You are ethereal"
-            case DamageType.Cancelled: 
+            case DamageType.CANCELLED: 
                 return 
-            case DamageType.Physical:
-                damage -= self.stats['armor']
-            case DamageType.Magical:
-                damage -= self.stats['marmor']
-            case DamageType.Pure:
+            case DamageType.PHYSICAL:
+                damage -= self.stats[StatType.ARMOR]
+            case DamageType.MAGICAL:
+                damage -= self.stats[StatType.MARMOR]
+            case DamageType.PURE:
                 pass
-            case DamageType.Healing:
+            case DamageType.HEALING:
                 #print('HEALED')
-                self.stats['hp'] += damage
+                self.stats[StatType.HP] += damage
                 self.simple_broadcast(
                     f'You heal for {damage}',
                     f'{self.pretty_name()} heals for {damage}'
@@ -109,18 +120,18 @@ class Actor:
             )
             return
 
-        self.stats['hp'] -= damage
+        self.stats[StatType.HP] -= damage
         self.simple_broadcast(
             f'You take {damage} damage',
             f'{self.pretty_name()} takes {damage} damage'
             )
 
-        if self.stats['hp'] >= self.stats['hp_max']:
-            self.stats['hp'] = self.stats['hp_max']
+        if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
+            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
 
-        if self.stats['hp'] <= 0:
-            self.stats['hp'] = 0
-            self.status = ActorStatusType.Dead
+        if self.stats[StatType.HP] <= 0:
+            self.stats[StatType.HP] = 0
+            self.status = ActorStatusType.DEAD
 
             self.simple_broadcast(
                 f'@redYou died@normal',
