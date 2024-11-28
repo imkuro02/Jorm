@@ -104,6 +104,30 @@ class Affect:
     def take_damage(self, source, damage, damage_type):
         return damage, damage_type
 
+class AffectEthereal(Affect):
+    def __init__(self, aff_type, affect_manager, name, turns):
+        super().__init__(aff_type, affect_manager, name, turns)
+
+    def info(self):
+        return super().info().replace('\n', f'Turn Ethereal, negating all physical damage, but take 140% magical damage\n')
+
+    def take_damage(self, source, damage, damage_type):
+        if damage_type == DamageType.PHYSICAL: 
+
+            self.affect_manager.owner.simple_broadcast(
+                f'You are Ethereal',
+                f'{self.affect_manager.owner.pretty_name()} is Ethereal'
+            )
+
+            
+            return super().take_damage(source, 0, DamageType.CANCELLED)
+
+
+        if damage_type == DamageType.MAGICAL: 
+            return super().take_damage(source, int(damage*1.4), damage_type)
+
+
+        return super().take_damage(source, damage, damage_type)
 
 class AffectReflectDamage(Affect):
     def __init__(self, aff_type, affect_manager, name, turns):

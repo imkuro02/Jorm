@@ -669,7 +669,7 @@ class Player(Actor):
         best_match = utils.match_word(action, whole_list)
 
         # if you are trying to use an item
-        print(best_match)
+        #print(best_match)
         if best_match in list_of_consumables:
             item = self.get_item(action)
 

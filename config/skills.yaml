@@ -1,7 +1,7 @@
 
 swing:
   name: Swing
-  description: Swing at your target dealing 1 physical damage + 70% of strength and 100% dexterity
+  description: Swing at your target dealing 1 physical damage + 70% of Body
   LVL: 0 
   must_be_fighting: True
   target_self_is_valid: True
@@ -29,7 +29,7 @@ swing:
   
 magic missile:
   name: Magic Missile
-  description: Fire a magic missile at your target dealing 2 magical damage + 100% of your ingelligence
+  description: Fire a magic missile at your target dealing 4 magical damage + 100% of your Mind
   LVL: 0
   must_be_fighting: True
   target_self_is_valid: True
@@ -38,7 +38,7 @@ magic missile:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [2, MAGICAL, {MIND: 1}]
+    arguments: [4, MAGICAL, {MIND: 1}]
 
   use_perspectives:
     you on you:           'You point at yourself and fire a magical missile straight to your forehead!'
@@ -81,7 +81,7 @@ brain sap:
 
 cure light wounds:
   name: Cure Light Wounds
-  description: Heal your target for 10 + 100% intelligence
+  description: Heal your target for 10 + 100% Soul
   LVL: 0
   must_be_fighting: False
   target_self_is_valid: True
@@ -142,7 +142,7 @@ bash:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage_and_affliction
-    arguments: [0, CANCELLED, {BODY: 1}, 'stunned']
+    arguments: [0, CANCELLED, [], 'stunned']
 
   use_perspectives:
     you on you:           'You bash yourself'

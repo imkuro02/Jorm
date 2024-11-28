@@ -147,8 +147,8 @@ class UseManager:
             self.error(user, f'{target.name} is in a fight you are not participating in!')
             return
 
-        hp_cost = self.SKILLS[best_match]['hp_cost']
-        mp_cost = self.SKILLS[best_match]['mp_cost']
+        hp_cost = self.SKILLS[best_match]['hp_cost'] * user.skills[best_match]
+        mp_cost = self.SKILLS[best_match]['mp_cost'] * user.skills[best_match]
 
         if hp_cost > user.stats[StatType.HP] + 1:
             self.error(user, f'You need atleast {hp_cost} HP to use {skill_name}')

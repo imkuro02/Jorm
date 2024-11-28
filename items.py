@@ -9,13 +9,10 @@ from config import ItemType, EquipmentSlotType, StatType
 def load_item(item):
     item = copy.deepcopy(item)
     item_type = item['item_type']
-    #print(item_type)
 
     if item_type == ItemType.EQUIPMENT:
         new_item = Equipment()
-        #template = Equipment()
 
-        #new_item.item_type = item['item_type']
         new_item.name = item['name']
         new_item.description = item['description']
 
@@ -31,7 +28,6 @@ def load_item(item):
     if item_type == ItemType.MISC:
         new_item = Item()
 
-        #new_item.item_type = item['item_type']
         new_item.name = item['name']
         new_item.description = item['description']
         new_item.tags = item['tags']
@@ -40,7 +36,6 @@ def load_item(item):
     if item_type == ItemType.CONSUMABLE:
         new_item = Consumable()
 
-        #new_item.item_type = item['item_type']
         new_item.name = item['name']
         new_item.description = item['description']
         new_item.tags = item['tags']
@@ -88,8 +83,6 @@ class Item:
         return my_dict
 
     def identify(self):
-        #output = f'{self.name} {self.id} (@cyan{self.item_type}@normal)\n'
-        #output = f'{self.name} (@cyan{self.item_type}@normal)\n'
         output = f'{self.name}\n'
         output += f'@cyan{self.description}@normal\n'
         return output
@@ -98,14 +91,7 @@ class Consumable(Item):
     def __init__(self):
         super().__init__()
         self.item_type = ItemType.CONSUMABLE
-        '''
-        self.id = str(uuid.uuid4())
-        self.item_type = type(self).__name__.lower()
-        self.name = 'Name of item'
-        self.description = 'Description here'
-        self.history = {}
-        self.tags = []
-        '''
+        
         self.skills = []
         self.use_perspectives = {
             'you on you':           'You drink the vile liquid',
@@ -144,14 +130,6 @@ class Equipment(Item):
     def __init__(self):
         super().__init__()
         self.item_type = ItemType.EQUIPMENT
-        '''
-        self.id = str(uuid.uuid4())
-        self.item_type = type(self).__name__.lower()
-        self.name = 'Name of item'
-        self.description = 'Description here'
-        self.history = {}
-        self.tags = []
-        '''
 
         self.slot = EquipmentSlotType.TRINKET
         self.equiped = False
@@ -200,8 +178,6 @@ class Equipment(Item):
 
     def identify(self):
 
-
-        #print('identifying')
         output = super().identify()
         s = self.stats
         r = self.requirements
@@ -220,18 +196,7 @@ class Equipment(Item):
             if r == 0 and s == 0:
                 continue
             output += f'@normal{stat:<{space}} {s:<{space}} {r:<{space}}\n'
-        '''
-        output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
-        output += f'@normal{"HP":<{space}} {s["hp_max"]:<{space}} {r["hp_max"]:<{space}}\n'
-        output += f'@normal{"MP":<{space}} {s["mp_max"]:<{space}} {r["mp_max"]:<{space}}\n'
-        #output += f'@cyan{"Damage":<{space}} {s["damage"]:<{space}} {r["damage"]:<{space}}\n'
-        output += f'@normal{"Armor":<{space}} {s["armor"]:<{space}} {r["armor"]:<{space}}\n'
-        output += f'@normal{"Marmor":<{space}} {s["marmor"]:<{space}} {r["marmor"]:<{space}}\n'
-        output += f'@normal{"STR":<{space}} {s["str"]:<{space}} {r["str"]:<{space}}\n'
-        output += f'@normal{"DEX":<{space}} {s["dex"]:<{space}} {r["dex"]:<{space}}\n'
-        output += f'@normal{"INT":<{space}} {s["int"]:<{space}} {r["int"]:<{space}}\n'
-        output += f'@normal{"LUK":<{space}} {s["luk"]:<{space}} {r["luk"]:<{space}}\n'
-        '''
+    
         return output
 
 

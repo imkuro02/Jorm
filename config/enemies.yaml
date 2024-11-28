@@ -19,10 +19,12 @@ template:
 
   skills:
     swing: 3
+    
 
   combat_loop:
     - skill: swing 
       target: enemy_random
+    
 
 
 skeleton:
@@ -35,19 +37,22 @@ skeleton:
     Marmor: 0
 
     Body: 1
-    Mind: 2
+    Mind: 0
     Soul: 0
     
-    Experience: 1
+    Experience: 3
 
   loot:
     long sword: 1
 
   skills:
+    magic missile: 4
     swing: 3
 
   combat_loop:
     - skill: swing 
+      target: enemy_random
+    - skill: magic missile 
       target: enemy_random
 
 rat:
