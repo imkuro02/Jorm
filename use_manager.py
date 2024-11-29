@@ -15,12 +15,11 @@ class UseManager:
         affliction = arguments[3]
 
         self.skill_simple_damage(user, target, [base_damage, damage_type, bonus_damages])
-        self.skill_set_afflictions(user, target, [affliction])
+        self.skill_set_affect(user, target, [affliction])
 
-    def skill_set_afflictions(self, user, target, arguments):
-        afflictions = arguments    
-        for aff in afflictions:
-            target.affect_manager.set_affect(target.affect_manager.load_affect(aff))
+    def skill_set_affect(self, user, target, arguments):  
+        for aff in arguments:
+            target.affect_manager.set_affect(aff)
 
     def skill_simple_damage(self, user, target, arguments):
         base_damage = arguments[0]      # int

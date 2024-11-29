@@ -10,7 +10,10 @@ swing:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [1, PHYSICAL, {BODY: 0.7}] 
+    arguments: 
+    - 1 
+    - PHYSICAL 
+    - {BODY: 0.7} 
 
   use_perspectives:
     you on you:           'You swing and hit yourself!'
@@ -24,8 +27,6 @@ swing:
     user on user fail:    '#USER# loses their footing while swinging at themselves'
     user on you fail:     '#USER# loses their footing while swinging at you!'
     user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
-
-
   
 magic missile:
   name: Magic Missile
@@ -38,7 +39,10 @@ magic missile:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [4, MAGICAL, {MIND: 1}]
+    arguments: 
+    - 4 
+    - MAGICAL 
+    - {MIND: 1}
 
   use_perspectives:
     you on you:           'You point at yourself and fire a magical missile straight to your forehead!'
@@ -53,32 +57,6 @@ magic missile:
     user on you fail:     '#USER# loses their concentration while attempting to fire a magical missile at you'
     user on other fail:   '#USER# loses their concentration while attempting to fire a magical missile at #OTHER#'
 
-brain sap:
-  name: Give head
-  description: hoo hoo hee haa
-  level_req: 2
-  must_be_fighting: True
-  target_self_is_valid: False
-  target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 2
-  script_to_run:
-    name_of_script: skill_simple_damage
-    arguments: [2, PURE, []]
-
-  use_perspectives:
-    you on you:           'You swing and hit yourself!'
-    you on other:         'You swing and hit #OTHER#'
-    user on user:         '#USER# swings and hits themselves!'
-    user on you:          '#USER# swings and hits you!'
-    user on other:        '#USER# swings and hits #OTHER#'
-
-    you on you fail:      'You lose your footing while swinging at yourself!'
-    you on other fail:    'You lose your footing while swinging at #OTHER#'
-    user on user fail:    '#USER# loses their footing while swinging at themselves'
-    user on you fail:     '#USER# loses their footing while swinging at you!'
-    user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
-
 cure light wounds:
   name: Cure Light Wounds
   description: Heal your target for 10 + 100% Soul
@@ -90,7 +68,10 @@ cure light wounds:
   mp_cost: 2
   script_to_run:
     name_of_script: skill_simple_damage
-    arguments: [10, HEALING, {SOUL: 1}]
+    arguments: 
+    - 10
+    - HEALING
+    - {SOUL: 1}
 
   use_perspectives:
     you on you:           'You pray for yourself'
@@ -115,8 +96,9 @@ ethereal:
   hp_cost: 0
   mp_cost: 2
   script_to_run:
-    name_of_script: skill_set_afflictions
-    arguments: ['ethereal']
+    name_of_script: skill_set_affect
+    arguments: 
+    - 'ethereal'
 
   use_perspectives:
     you on you:           'You focus, and begin to fade'
@@ -142,7 +124,11 @@ bash:
   mp_cost: 0
   script_to_run:
     name_of_script: skill_simple_damage_and_affliction
-    arguments: [0, CANCELLED, [], 'stunned']
+    arguments: 
+    - 0
+    - CANCELLED
+    - []
+    - stunned
 
   use_perspectives:
     you on you:           'You bash yourself'

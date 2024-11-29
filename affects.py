@@ -10,17 +10,25 @@ class AffectsManager:
         self.affects = {}
 
     def load_affect(self, affect_id):
+        if affect_id not in AffDict:
+            print('WHY',affect_id, AffDict)
+            return
         aff_dict = AffDict[affect_id]
         Aff = globals()[aff_dict['object']]
         aff = Aff(aff_dict['id'], self, aff_dict['name'], aff_dict['description'], aff_dict['turns']+1, aff_dict['args'])
         return aff
 
-    def set_affect(self, affect):
+    def set_affect_object(self, affect):
         if affect.id in self.affects:
             #print('overriding')
             self.affects[affect.id].on_finished(silent = True)
         self.affects[affect.id] = affect
         affect.on_applied()
+
+    def set_affect(self, affect_id):
+        aff = self.load_affect(affect_id)
+        self.set_affect_object(aff)
+
 
     def pop_affect(self, affect):
         del self.affects[affect.id]
@@ -88,6 +96,17 @@ class Affect:
     # called whenever hp updates in any way
     def take_damage(self, source, damage, damage_type):
         return source, damage, damage_type
+
+class AffectStunned(Affect):
+    def __init__(self, _id, affect_manager, name, description, turns, args):
+        super().__init__(_id, affect_manager, name, description, turns, args)
+
+    # called at start of turn
+    def set_turn(self):
+        self.owner.simple_broadcast(
+            f'You are too stunned to act!',
+            f'{self.owner.pretty_name()} is too stunned to act!')
+        self.owner.finish_turn()
 
 class AffectEthereal(Affect):
     def __init__(self, _id, affect_manager, name, description, turns, args):

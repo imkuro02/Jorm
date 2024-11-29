@@ -5,7 +5,8 @@ affect:
     description: test
     type: BASIC
     object: Affect
-    args: Null
+    args: 
+    - Null
 
 
 ethereal:
@@ -17,4 +18,15 @@ ethereal:
     object: AffectEthereal
     args: 
     - 1.5
+    - Null
+
+
+stunned:
+    id: stunned
+    name: Stunned
+    turns: 20
+    description: Cannot act during your turns!
+    type: BASIC
+    object: AffectStunned
+    args: 
     - Null
