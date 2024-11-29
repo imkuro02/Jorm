@@ -125,6 +125,13 @@ class Consumable(Item):
         #output += f'Contents: {self.skills}'
         return output
 
+    def use(self, user, target):
+        for skill in self.skills:
+            script = getattr(user.use_manager, user.use_manager.SKILLS[skill]['script_to_run']['name_of_script'])
+            arguments = user.use_manager.SKILLS[skill]['script_to_run']['arguments']
+            script(user, target, arguments)
+        user.inventory_remove_item(self.id)
+
 
 class Equipment(Item):
     def __init__(self):

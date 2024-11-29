@@ -54,6 +54,13 @@ class StatType:
     LVL = 'Level'
     PP = 'Practice Points'
 
+AffDict = {}
+with open("config/affects.yaml", "r") as file:
+    AFFECTS_UNFILTERED = yaml.safe_load(file)
+    for i in AFFECTS_UNFILTERED:
+        if 'template' not in i:
+            AffDict[i] = AFFECTS_UNFILTERED[i] 
+
 class Config:
     def __init__(self):
         self.ENEMIES = {}
@@ -89,6 +96,8 @@ class Config:
             for i in WORLD_UNFILTERED:
                 if 'template' not in i:
                     self.WORLD[i] = WORLD_UNFILTERED[i]
+
+        
 
         
         

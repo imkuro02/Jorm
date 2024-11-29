@@ -1,0 +1,20 @@
+affect:
+    id: affect
+    name: Test Affect
+    turns: 1
+    description: test
+    type: BASIC
+    object: Affect
+    args: Null
+
+
+ethereal:
+    id: ethereal
+    name: Ethereal
+    turns: 20
+    description: Immunity to physical damage, but amplified magical damage taken.
+    type: BASIC
+    object: AffectEthereal
+    args: 
+    - 1.5
+    - Null

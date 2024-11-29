@@ -62,11 +62,7 @@ def command_use(self, line):
 
         def use_item(item, user, target):
             self.use_manager.use_broadcast(self, target, item.use_perspectives)
-            for skill in item.skills:
-                script = getattr(self.use_manager, self.use_manager.SKILLS[skill]['script_to_run']['name_of_script'])
-                arguments = self.use_manager.SKILLS[skill]['script_to_run']['arguments']
-                script(user, target, arguments)
-            self.inventory_remove_item(item.id)
+            item.use(user, target)
             return
 
         if target == self:

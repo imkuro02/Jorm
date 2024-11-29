@@ -89,7 +89,7 @@ class Actor:
         pass
 
     def take_damage(self, source, damage, damage_type):
-        damage, damage_type = self.affect_manager.take_damage(source, damage, damage_type)
+        source, damage, damage_type = self.affect_manager.take_damage(source, damage, damage_type)
  
         match damage_type:
             # the string 'none' can be returned from affect_manager.take_damage() 
