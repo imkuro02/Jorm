@@ -47,7 +47,7 @@ skeleton:
     long sword: 1
 
   skills:
-    magic missile: 4
+    magic missile: 8
     swing: 3
 
   combat_loop:

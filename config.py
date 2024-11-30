@@ -54,13 +54,6 @@ class StatType:
     LVL = 'Level'
     PP = 'Practice Points'
 
-AffDict = {}
-with open("config/affects.yaml", "r") as file:
-    AFFECTS_UNFILTERED = yaml.safe_load(file)
-    for i in AFFECTS_UNFILTERED:
-        if 'template' not in i:
-            AffDict[i] = AFFECTS_UNFILTERED[i] 
-
 SKILLS = {}
 with open('config/skills.yaml', 'r') as file:
     SKILLS_UNFILTERED = yaml.safe_load(file)

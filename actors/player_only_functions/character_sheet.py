@@ -50,6 +50,10 @@ def command_practice(self, line):
         output = f'You have {self.stats[StatType.PP]} practice points left.\n'
         output += f'{"Skill":<20} | {"Learned":<8} | {"Level Req":<5}\n'
         for skill_id in SKILLS.keys():
+            if not SKILLS[skill_id]['can_be_practiced']:
+                continue
+            if self.stats[StatType.LVL] < SKILLS[skill_id]['level_req'] :
+                continue
             if skill_id not in self.skills.keys():
                 learned = 0
             else:
@@ -68,6 +72,10 @@ def command_practice(self, line):
 
         if skill_id not in SKILLS.keys():
             self.sendLine('This skill does not exist')
+            return
+
+        if not SKILLS[skill_id]['can_be_practiced']:
+            self.sendLine(f'@red{skill_name} cannot be practiced@normal')
             return
 
         if skill_id in self.skills:
@@ -115,7 +123,10 @@ def command_skills(self, line):
         output = 'SKILLS:\n'
         max_length = max(len(skill) for skill in self.skills) + 1
         for skill_id in self.skills:
-            output = output + f'{id_to_name[skill_id] + ":":<{max_length}} {self.skills[skill_id]}\n'
+            cooldown = ""
+            if skill_id in self.cooldown_manager.cooldowns:
+                cooldown = f'({self.cooldown_manager.cooldowns[skill_id]})'
+            output = output + f'{id_to_name[skill_id] + ":":<20} {self.skills[skill_id]} {cooldown}\n'
         self.sendLine(output)
 
 @check_not_in_combat

@@ -3,18 +3,15 @@ swing:
   name: Swing
   description: Swing at your target dealing 1 physical damage + 70% of Body
   level_req: 0 
+  can_be_practiced: True
   must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 0
-  script_to_run:
-    name_of_script: skill_simple_damage
-    arguments: 
-    - 1 
-    - PHYSICAL 
-    - {BODY: 0.7} 
-
+  cooldown: 0
+  script_to_run: Swing
+  
   use_perspectives:
     you on you:           'You swing and hit yourself!'
     you on other:         'You swing and hit #OTHER#'
@@ -32,17 +29,14 @@ magic missile:
   name: Magic Missile
   description: Fire a magic missile at your target dealing 4 magical damage + 100% of your Mind
   level_req: 0
+  can_be_practiced: True
   must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 2
-  script_to_run:
-    name_of_script: skill_simple_damage
-    arguments: 
-    - 4 
-    - MAGICAL 
-    - {MIND: 1}
+  cooldown: 0
+  script_to_run: MagicMissile
 
   use_perspectives:
     you on you:           'You point at yourself and fire a magical missile straight to your forehead!'
@@ -61,17 +55,14 @@ cure light wounds:
   name: Cure Light Wounds
   description: Heal your target for 10 + 100% Soul
   level_req: 0
+  can_be_practiced: True
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 2
-  script_to_run:
-    name_of_script: skill_simple_damage
-    arguments: 
-    - 10
-    - HEALING
-    - {SOUL: 1}
+  cooldown: 2
+  script_to_run: CureLightWounds
 
   use_perspectives:
     you on you:           'You pray for yourself'
@@ -88,17 +79,16 @@ cure light wounds:
 
 ethereal:
   name: Become Ethereal
-  description: You become ethereal
+  description: You become ethereal for 2 + half of your practice level
   level_req: 0
+  can_be_practiced: True
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: False
   hp_cost: 0
   mp_cost: 2
-  script_to_run:
-    name_of_script: skill_set_affect
-    arguments: 
-    - 'ethereal'
+  cooldown: 0
+  script_to_run: BecomeEthereal
 
   use_perspectives:
     you on you:           'You focus, and begin to fade'
@@ -117,18 +107,14 @@ bash:
   name: Bash
   description: Bash your target, stunning them for 1 turn
   level_req: 4
-  must_be_fighting: False
+  can_be_practiced: True
+  must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 0
-  script_to_run:
-    name_of_script: skill_simple_damage_and_affliction
-    arguments: 
-    - 0
-    - CANCELLED
-    - []
-    - stunned
+  cooldown: 3
+  script_to_run: Bash
 
   use_perspectives:
     you on you:           'You bash yourself'
@@ -143,4 +129,54 @@ bash:
     user on you fail:     '#USER# fails to bash you'
     user on other fail:   '#USER# fails to bash #OTHER#'
 
-  
+regen_mp30:
+  name: RegenMP30
+  description: Regenerate 30% of your maximum mana
+  level_req: 0
+  can_be_practiced: False
+  must_be_fighting: False
+  target_self_is_valid: True
+  target_others_is_valid: True
+  hp_cost: 0
+  mp_cost: 0
+  cooldown: 0
+  script_to_run: RegenMP30
+
+  use_perspectives:
+    you on you:           'You bash yourself'
+    you on other:         'You bash #OTHER#'
+    user on user:         '#USER# bashes themselves'
+    user on you:          '#USER# bashes you'
+    user on other:        '#USER# bashes #OTHER#'
+
+    you on you fail:      'You fail to bash yourself'
+    you on other fail:    'You fail to bash #OTHER#'
+    user on user fail:    '#USER# fails to bash themselves'
+    user on you fail:     '#USER# fails to bash you'
+    user on other fail:   '#USER# fails to bash #OTHER#'
+
+regen_hp30:
+  name: RegenHP30
+  description: Regenerate 30% of your maximum hp
+  level_req: 0
+  can_be_practiced: False
+  must_be_fighting: False
+  target_self_is_valid: True
+  target_others_is_valid: True
+  hp_cost: 0
+  mp_cost: 0
+  cooldown: 0
+  script_to_run: RegenHP30
+
+  use_perspectives:
+    you on you:           'You bash yourself'
+    you on other:         'You bash #OTHER#'
+    user on user:         '#USER# bashes themselves'
+    user on you:          '#USER# bashes you'
+    user on other:        '#USER# bashes #OTHER#'
+
+    you on you fail:      'You fail to bash yourself'
+    you on other fail:    'You fail to bash #OTHER#'
+    user on user fail:    '#USER# fails to bash themselves'
+    user on you fail:     '#USER# fails to bash you'
+    user on other fail:   '#USER# fails to bash #OTHER#'

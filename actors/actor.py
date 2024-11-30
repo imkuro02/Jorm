@@ -3,17 +3,39 @@ from items.manager import Item
 from affects.manager import AffectsManager
 from config import DamageType, ActorStatusType, EquipmentSlotType, StatType
 from skills.manager import use_skill
+
+class CooldownManager:
+    def __init__ (self, owner):
+        self.owner = owner
+        self.cooldowns = {}
+
+    def add_cooldown(self, cooldown, turns):
+        self.cooldowns[cooldown] = turns
+
+    def remove_cooldown(self, cooldown):
+        if cooldown in self.cooldowns:
+            del self.cooldowns[cooldown]
+
+    def finish_turn(self):
+        cooldowns_to_remove = []
+        for i in self.cooldowns:
+            self.cooldowns[i] -= 1
+            if self.cooldowns[i] <= 0:
+                cooldowns_to_remove.append(i)
+        for i in cooldowns_to_remove:
+            self.remove_cooldown(i)
+
+
 class Actor:
-    def __init__(self, name, room):
+    def __init__(self, name = None, room = None):
         self.name = name
         #self.protocol = protocol
         self.room = room
         if self.room != None:
             self.factory = self.room.world.factory
-            
 
         self.affect_manager = AffectsManager(self)
-
+        
         self.status = ActorStatusType.NORMAL
 
         self.slots = {
@@ -47,6 +69,8 @@ class Actor:
         self.skills = {
             'swing':3
             }
+
+        self.cooldown_manager = CooldownManager(self)
    
     def pretty_name(self):
         output = ''
@@ -161,6 +185,7 @@ class Actor:
 
     def finish_turn(self):
         self.affect_manager.finish_turn()
+        self.cooldown_manager.finish_turn()
         if self.room == None:
             return
         if self.room.combat == None:

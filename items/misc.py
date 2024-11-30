@@ -12,7 +12,6 @@ class Item:
         self.keep = False
 
     def to_dict(self):
-        
         my_dict = {
             'id': self.id,
             'item_type': self.item_type,

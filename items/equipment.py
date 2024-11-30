@@ -35,19 +35,12 @@ class Equipment(Item):
 
     def to_dict(self):
         my_dict = {
-            'id': self.id,
-            'item_type': self.item_type,
-            'name': self.name,
-            'description': self.description,
-            'history': self.history,
-            'tags': self.tags,
-            'keep': self.keep,
             'slot': self.slot,
             'equiped': self.equiped,
             'stats': self.stats,
             'requirements': self.requirements
-        }
-
+        } | super().to_dict()
+        
         return my_dict
 
     def set_stat(stat, value):

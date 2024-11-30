@@ -3,7 +3,7 @@ import items.manager as items
 import yaml
 import os
 import utils
-from config import ItemType, StatType, EquipmentSlotType
+from config import ItemType, StatType, EquipmentSlotType, SKILLS
 
 def command_help(self, line):
     files = os.listdir('help')
@@ -79,7 +79,7 @@ def command_update_item(self, line):
 
         if self.inventory[item_id].item_type == ItemType.CONSUMABLE:
             if stat in 'skills':
-                if value not in self.factory.config.SKILLS:
+                if value not in SKILLS:
                     self.sendLine('@redNot a valid skill_id@normal')
                     return
                 if str(value).lower() == 'none':

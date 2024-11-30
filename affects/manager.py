@@ -1,6 +1,6 @@
 
 
-from config import AffDict, AffType, DamageType
+from config import AffType, DamageType
 
 
 
@@ -17,14 +17,23 @@ class AffectsManager:
         for aff in aff_to_delete:
             aff.on_finished(silent)
 
-    def load_affect(self, affect_id):
+    '''
+    def load_affect(self, affect_id, turns_override = None):
         if affect_id not in AffDict:
-            print('WHY',affect_id, AffDict)
+            print('affect does not exist? ',affect_id, AffDict)
             return
+
         aff_dict = AffDict[affect_id]
+
+        if turns_override == None:
+            turns = aff_dict['turns']
+        else:
+            turns = turns_override
+
         Aff = globals()[aff_dict['object']]
-        aff = Aff(aff_dict['id'], self, aff_dict['name'], aff_dict['description'], aff_dict['turns']+1, aff_dict['args'])
+        aff = Aff(aff_dict['id'], self, aff_dict['name'], aff_dict['description'], turns+1, aff_dict['args'])
         return aff
+    '''
 
     def set_affect_object(self, affect):
         if affect.id in self.affects:
@@ -33,8 +42,8 @@ class AffectsManager:
         self.affects[affect.id] = affect
         affect.on_applied()
 
-    def set_affect(self, affect_id):
-        aff = self.load_affect(affect_id)
+    def set_affect(self, affect_id, turns_override = None):
+        aff = self.load_affect(affect_id, turns_override)
         self.set_affect_object(aff)
 
 
@@ -66,7 +75,7 @@ class AffectsManager:
         return source, damage, damage_type
         
 class Affect:
-    def __init__(self, _id, affect_manager, name, description, turns, args):
+    def __init__(self, _id, affect_manager, name, description, turns):
         self.id = _id
         self.affect_manager = affect_manager
         self.owner = self.affect_manager.owner
@@ -106,9 +115,6 @@ class Affect:
         return source, damage, damage_type
 
 class AffectStunned(Affect):
-    def __init__(self, _id, affect_manager, name, description, turns, args):
-        super().__init__(_id, affect_manager, name, description, turns, args)
-
     # called at start of turn
     def set_turn(self):
         self.owner.simple_broadcast(
@@ -117,10 +123,9 @@ class AffectStunned(Affect):
         self.owner.finish_turn()
 
 class AffectEthereal(Affect):
-    def __init__(self, _id, affect_manager, name, description, turns, args):
-        super().__init__(_id, affect_manager, name, description, turns, args)
-        self.dmg_amp = args[0]
-        print(args)
+    def __init__(self, _id, affect_manager, name, description, turns, dmg_amp):
+        super().__init__(_id, affect_manager, name, description, turns)
+        self.dmg_amp = dmg_amp
     
     def take_damage(self, source, damage, damage_type):
 
