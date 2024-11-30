@@ -1,7 +1,7 @@
 affect:
     id: affect
     name: Test Affect
-    turns: 1
+    turns: 100
     description: test
     type: BASIC
     object: Affect
@@ -12,7 +12,7 @@ affect:
 ethereal:
     id: ethereal
     name: Ethereal
-    turns: 20
+    turns: 5
     description: Immunity to physical damage, but amplified magical damage taken.
     type: BASIC
     object: AffectEthereal
@@ -24,7 +24,7 @@ ethereal:
 stunned:
     id: stunned
     name: Stunned
-    turns: 20
+    turns: 1
     description: Cannot act during your turns!
     type: BASIC
     object: AffectStunned

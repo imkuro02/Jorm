@@ -61,41 +61,33 @@ with open("config/affects.yaml", "r") as file:
         if 'template' not in i:
             AffDict[i] = AFFECTS_UNFILTERED[i] 
 
-class Config:
-    def __init__(self):
-        self.ENEMIES = {}
-        with open('config/enemies.yaml', 'r') as file:
-            ALL_ENEMIES = yaml.safe_load(file)
-            for i in ALL_ENEMIES:
-                if 'template' not in i:
-                    self.ENEMIES[i] = ALL_ENEMIES[i]
+SKILLS = {}
+with open('config/skills.yaml', 'r') as file:
+    SKILLS_UNFILTERED = yaml.safe_load(file)
+    for i in SKILLS_UNFILTERED:
+        if 'template' not in i:
+            SKILLS[i] = SKILLS_UNFILTERED[i]
 
-        self.SKILLS = {}
-        with open('config/skills.yaml', 'r') as file:
-            SKILLS_UNFILTERED = yaml.safe_load(file)
-            for i in SKILLS_UNFILTERED:
-                if 'template' not in i:
-                    self.SKILLS[i] = SKILLS_UNFILTERED[i]
+ITEMS = {}
+with open("config/items.yaml", "r") as file:
+    ITEMS_UNFILTERED = yaml.safe_load(file)
+    for i in ITEMS_UNFILTERED:
+        if 'template' not in i:
+            ITEMS[i] = ITEMS_UNFILTERED[i]
 
-        self.ITEMS = {}
-        with open("config/items.yaml", "r") as file:
-            ITEMS_UNFILTERED = yaml.safe_load(file)
-            for i in ITEMS_UNFILTERED:
-                if 'template' not in i:
-                    self.ITEMS[i] = ITEMS_UNFILTERED[i]
+ENEMIES = {}
+with open('config/enemies.yaml', 'r') as file:
+    ALL_ENEMIES = yaml.safe_load(file)
+    for i in ALL_ENEMIES:
+        if 'template' not in i:
+            ENEMIES[i] = ALL_ENEMIES[i]
 
-        self.EQUIPMENT_PREFIXES = {}
-        with open("config/equipment_prefixes.yaml", "r") as file:
-            EQUIPMENT_PREFIXES_UNFILTERED = yaml.safe_load(file)
-            for i in EQUIPMENT_PREFIXES_UNFILTERED:
-                self.EQUIPMENT_PREFIXES[i] = EQUIPMENT_PREFIXES_UNFILTERED[i]
-
-        self.WORLD = {}
-        with open("config/world.yaml", "r") as file:
-            WORLD_UNFILTERED = yaml.safe_load(file)
-            for i in WORLD_UNFILTERED:
-                if 'template' not in i:
-                    self.WORLD[i] = WORLD_UNFILTERED[i]
+WORLD = {}
+with open("config/world.yaml", "r") as file:
+    WORLD_UNFILTERED = yaml.safe_load(file)
+    for i in WORLD_UNFILTERED:
+        if 'template' not in i:
+            WORLD[i] = WORLD_UNFILTERED[i]
 
         
 

@@ -33,8 +33,6 @@ class Combat:
                     f'{self.current_actor.name} missed their turn.'
                 )
 
-        
-
             self.time_since_turn_finished = 0
             self.next_turn()
 

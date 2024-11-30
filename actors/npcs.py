@@ -1,34 +1,32 @@
-from actor import Actor
+from actors.actor import Actor
 import random
-import yaml
+
 import copy
-import items
-import copy
-from config import StatType, ItemType
 
+from config import StatType, ItemType, ENEMIES, ITEMS
+from skills.manager import use_skill
+from items.manager import load_item
 
-
-
+from config import ITEMS
 
 def create_enemy(room, enemy_id):
-    if enemy_id not in room.world.factory.config.ENEMIES:
+    if enemy_id not in ENEMIES:
         print(f'error creating enemy: {enemy_id}')
         return
 
-    enemy = room.world.factory.config.ENEMIES[enemy_id]
+    enemy = ENEMIES[enemy_id]
 
     names = 'Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
     name = random.choice(names.split())
     name = name + ' The ' + enemy['name']
-    #stats = {}
-    #for stat in enemy['stats']:
-     #   stat_name = getattr(StatType, stat)
-     #   stats[stat_name] = enemy['stats'][stat]
-    #print(stats)
     stats = enemy['stats']
     skills = enemy['skills']
     combat_loop = enemy['combat_loop']
     loot = enemy['loot']
+    for item in loot.keys():
+        print(loot)
+        if item not in ITEMS:
+            print(item, 'does not exist in loot table for ', enemy_id)
     Enemy(name, room, stats, skills, combat_loop, loot)
 
 
@@ -60,7 +58,8 @@ class Enemy(Actor):
 
         random_target = random.choice([entity for entity in self.room.combat.participants.values() if type(entity).__name__ != type(self).__name__])
         skill_to_use = self.combat_loop[0]
-        self.use_manager.use_skill(self, random_target, self.combat_loop[0]['skill'])
+
+        use_skill(self, random_target, self.combat_loop[0]['skill'])
 
         self.combat_loop.append(self.combat_loop[0])
         self.combat_loop.pop(0)
@@ -72,32 +71,19 @@ class Enemy(Actor):
         self.finish_turn()
 
     def drop_loot(self,entity):
-        all_items = self.room.world.factory.config.ITEMS
+        all_items = ITEMS
         
         for item in self.loot: 
             roll = random.random()
             if roll >= self.loot[item]:
                 continue
 
-            new_item = items.load_item(all_items[item])
+            new_item = load_item(all_items[item])
 
-            if new_item.item_type == ItemType.EQUIPMENT:
-                for i in range(random.randint(0,new_item.requirements[StatType.LVL])):
-                    stat = random.choice([s for s in new_item.stats.keys()])
-                    new_item.stats[stat] = new_item.stats[stat] + 1
-                    #print(stat)
-
-                '''
-                # temp prefix code
-                roll = random.random()
-                if roll<0.1:
-                    prefixes = self.room.world.factory.config.EQUIPMENT_PREFIXES[1]
-                    prefix = random.choice(prefixes)
-                    new_item.name = prefix['prefix_name'] + ' ' + new_item.name
-                    for stat in prefix['stats']:
-                        new_item.stats[stat] = new_item.stats[stat] + prefix['stats'][stat] 
-                #print(prefixes,prefix)
-                '''
+            #if new_item.item_type == ItemType.EQUIPMENT:
+            #    for i in range(random.randint(0,new_item.requirements[StatType.LVL])):
+            #        stat = random.choice([s for s in new_item.stats.keys()])
+            #        new_item.stats[stat] = new_item.stats[stat] + 1
 
             entity.sendLine(f'You loot {new_item.name}')
             entity.inventory_add_item(new_item)   

@@ -1,9 +1,9 @@
-from player_only_functions.checks import check_is_admin, check_no_empty_line
-import items
+from actors.player_only_functions.checks import check_is_admin, check_no_empty_line
+import items.manager as items
 import yaml
 import os
 import utils
-from config import ItemType, StatType
+from config import ItemType, StatType, EquipmentSlotType
 
 def command_help(self, line):
     files = os.listdir('help')
@@ -78,7 +78,6 @@ def command_update_item(self, line):
             return
 
         if self.inventory[item_id].item_type == ItemType.CONSUMABLE:
-            print(stat, value)
             if stat in 'skills':
                 if value not in self.factory.config.SKILLS:
                     self.sendLine('@redNot a valid skill_id@normal')
@@ -96,14 +95,10 @@ def command_update_item(self, line):
                 return
 
             if stat in 'slot':
-                if str(value) in self.slots:
-                    self.inventory[item_id].slot = EquipmentSlotType(stat)
-                    self.sendLine('@greenUpdated@normal')
-                    return
-                if str(value).lower() == 'none':
-                    self.inventory[item_id].slot = None
-                    self.sendLine('@greenUpdated@normal')
-                    return
+                self.inventory[item_id].slot = getattr(EquipmentSlotType, value)
+                self.sendLine('@greenUpdated@normal')
+                return
+               
 
             if str(stat) in self.inventory[item_id].stats:
                 self.inventory[str(item_id)].stats[str(stat)] = int(value)

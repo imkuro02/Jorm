@@ -1,37 +1,38 @@
-from actor import Actor
+from actors.actor import Actor
 import utils
 
 from config import DamageType, ItemType, ActorStatusType, StatType
 
-from player_only_functions.commands import one_letter_commands, commands
-from player_only_functions.movement import command_flee, command_go
-from player_only_functions.checks import *
-from player_only_functions.emotes import command_say
+from actors.player_only_functions.utils import get_entity, get_item
+from actors.player_only_functions.commands import one_letter_commands, commands
+from actors.player_only_functions.movement import command_flee, command_go
+from actors.player_only_functions.checks import *
+from actors.player_only_functions.emotes import command_say
 
-from player_only_functions.combat import (
+from actors.player_only_functions.combat import (
     command_fight, command_pass_turn, 
     command_use, command_rest
 )
 
-from player_only_functions.look import command_look, get_entity
+from actors.player_only_functions.look import command_look
 
-from player_only_functions.equip import (
+from actors.player_only_functions.equip import (
     command_wear, command_remove, command_equipment, 
     inventory_equip, inventory_unequip
 )
 
-from player_only_functions.inventory import (
+from actors.player_only_functions.inventory import (
     raise_item, lower_item, inventory_add_item, inventory_remove_item, 
-    command_keep, command_get, command_drop, command_inventory, get_item, 
+    command_keep, command_get, command_drop, command_inventory, 
     command_identify
 )
 
-from player_only_functions.character_sheet import (
+from actors.player_only_functions.character_sheet import (
     command_level_up, command_practice, command_skills, command_stats, 
     command_respec, command_affects, get_exp_needed_to_level
 )
 
-from player_only_functions.admin import (
+from actors.player_only_functions.admin import (
     command_gain_exp, command_create_item, command_update_item, 
     command_load_item, command_export_item, command_help, prompt, 
     command_send_prompt

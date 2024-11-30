@@ -117,8 +117,8 @@ bash:
   name: Bash
   description: Bash your target, stunning them for 1 turn
   level_req: 4
-  must_be_fighting: True
-  target_self_is_valid: False
+  must_be_fighting: False
+  target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 0

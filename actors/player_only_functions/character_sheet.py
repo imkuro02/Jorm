@@ -1,5 +1,6 @@
-from player_only_functions.checks import check_not_in_combat, check_alive
-from config import StatType
+from actors.player_only_functions.checks import check_not_in_combat, check_alive
+from config import StatType, SKILLS
+from skills.manager import get_skills
 import utils
 @check_not_in_combat
 def command_level_up(self, stat):
@@ -48,16 +49,16 @@ def command_practice(self, line):
     if len(line) <= 1:
         output = f'You have {self.stats[StatType.PP]} practice points left.\n'
         output += f'{"Skill":<20} | {"Learned":<8} | {"Level Req":<5}\n'
-        for skill_id in self.factory.config.SKILLS.keys():
+        for skill_id in SKILLS.keys():
             if skill_id not in self.skills.keys():
                 learned = 0
             else:
                 learned = self.skills[skill_id]
-            level = self.factory.config.SKILLS[skill_id]['level_req']
-            output += (f'{self.factory.config.SKILLS[skill_id]["name"]:<20} | {str(learned) + "":<8} | {str(level):<5} \n')
+            level = SKILLS[skill_id]['level_req']
+            output += (f'{SKILLS[skill_id]["name"]:<20} | {str(learned) + "":<8} | {str(level):<5} \n')
         self.sendLine(f'{output}')
     else:
-        id_to_name, name_to_id = self.use_manager.get_skills()
+        id_to_name, name_to_id = get_skills()
         skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
         skill_id = name_to_id[skill_name]
 
@@ -65,26 +66,30 @@ def command_practice(self, line):
             self.sendLine('@redYou do not have enough points to practice@normal')
             return
 
-        if skill_id not in self.factory.config.SKILLS.keys():
+        if skill_id not in SKILLS.keys():
             self.sendLine('This skill does not exist')
             return
 
         if skill_id in self.skills:
             # do not level beyond 6
-            if self.skills[skill_id] >= 6:
+            if self.skills[skill_id] >= 10:
                 self.sendLine(f'@redYou are already a master at "{skill_name}"@normal')
                 return
-            if self.skills[skill_id] > self.stats[StatType.PP]:
-                self.sendLine(f'@redYou need {self.skills[skill_id]} practice points to practice this.@normal')
+            #if self.skills[skill_id] > self.stats[StatType.PP]:
+            #    self.sendLine(f'@redYou need {self.skills[skill_id]} practice points to practice this.@normal')
+            #    return
+
+            if 0 >= self.stats[StatType.PP]:
+                self.sendLine(f'@redYou need don\'t have any practice points left@normal')
                 return
-
-
-            self.stats[StatType.PP] -= self.skills[skill_id]
-            self.sendLine(f'@greenYou spend {self.skills[skill_id]} practice point(s) on "{skill_name}"@normal')
+            #self.stats[StatType.PP] -= self.skills[skill_id]
+            #self.sendLine(f'@greenYou spend {self.skills[skill_id]} practice point(s) on "{skill_name}"@normal')
+            self.stats[StatType.PP] -= 1
+            self.sendLine(f'@greenYou spend one practice pointon "{skill_name}"@normal')
             self.skills[skill_id] += 1
             
         else:
-            if self.stats[StatType.LVL] < self.factory.config.SKILLS[skill_id]['level_req']:
+            if self.stats[StatType.LVL] < SKILLS[skill_id]['level_req']:
                 self.sendLine('@redYou are not high enough level to practice this skill@normal')
                 return
             self.skills[skill_id] = 1
@@ -93,11 +98,11 @@ def command_practice(self, line):
 
         
 def command_skills(self, line):
-    id_to_name, name_to_id = self.use_manager.get_skills()
+    id_to_name, name_to_id = get_skills()
     if len(line) > 0:
         skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
         skill_id = name_to_id[skill_name]
-        skill = self.factory.config.SKILLS[skill_id]
+        skill = SKILLS[skill_id]
         output = ''
         output += f'{skill["name"]}\n'
         output += f'{skill["description"]}\n'

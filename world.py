@@ -1,11 +1,11 @@
-import npcs
-from player import Player
+from actors.npcs import create_enemy
+from actors.player import Player
 import time
 #from items import Item
 import uuid
 import random
 from combat import Combat
-
+from config import WORLD
 
 class Room:
     def __init__(self, world, uid, name, description, exits, dungeon = None):
@@ -112,110 +112,20 @@ class Room:
             
                 
             #dungeon.reload_room()
-                
-class Dungeon(Room):
-    def __init__(self, world, uid):
-        super().__init__(world, uid, '', '')
-        self.floor = 0
-        self.ticks_passed = 0
-        self.party_is_moving = False
-        self.room_types = [
-            ['Past the entrance','0'],
-            ['Dungeon corridor','1'],
-            ['Sinkhole','2'],
-            ['A kitchen?','3'],
-        ]
-
-        self.traveling_messages = [
-            'Are you walking in circles?',
-            '*BONK* ouch, You should of brought a torch!',
-            'EWWW! #PLAYER# stepped in something gross!',
-            'Are we there yet? - #PLAYER#',
-            'The air is suffecating you...'
-        ]
-
-        self.name = self.room_types[0][0]
-        self.description = self.room_types[0][1]
-        
-    def reload_room(self):
-        # reset the room
-        for i in self.entities.values():
-            if isinstance(i, Player):
-                continue
-
-            del self.entities[i.name]
-            i.room = None
-            
-        self.inventory = {}
-
-        # set moving to false to stop the funny messages
-        self.party_is_moving = False
-
-        # get random room layout
-        index = random.randint(0,len(self.room_types)-1)
-        
-        # set name and description form layout
-        self.name = self.room_types[index][0]
-        self.description = self.room_types[index][1]
-
-        # ---
-        #   insert enemy add code here
-        # ---
-
-        # attempt to start combat
-        self.new_combat()
-
-        # view new room
-        for i in self.entities.values():
-            if isinstance(i, Player):
-                i.command_look('')
-
-    def tick(self):
-        super().tick()
-        self.ticks_passed += 1
-        if self.party_is_moving and self.ticks_passed % 30*2 == 0:
-            load_room = random.randint(0,10)
-            if load_room <= 8:
-                travel_message = random.choice(self.traveling_messages)
-                broadcaster = random.choice([key for key in self.entities.values()])
-                if type(broadcaster).__name__ != "Player":
-                    return
-                #broadcaster = self.entities[broadcaster]
-                broadcaster.simple_broadcast(
-                    '@gray'+travel_message.replace('#PLAYER#','you')+'@normal',
-                    '@gray'+travel_message.replace('#PLAYER#', broadcaster.name)+'@normal'
-                )
-            else:
-                self.reload_room()
-
-    def next(self):
-        self.party_is_moving = True
-        
-
+ 
 class World:
     def __init__(self, factory):
         self.factory = factory
-        '''
-        self.rooms = {
-            'home': Room(self, 'home','Town', 'The recall point'),
-            #'shop': Room(self, 'shop','The Store', 'Buy items, sell loot.'),
-            #'market': Room(self, 'market','Black Market', 'Sell your loot for more...'),
-            #'dungeon1': Room(self, 'dungeon1','A Dungeon Entrance', 'Holy fuck its an actual dungeon what!', True)
-            }
-
-        self.dungeons = {}
-
-        #self.rooms['market'].spawn_enemy()
-        '''
+        
         self.rooms = {}
-        world = self.factory.config.WORLD
+        world = WORLD
         for r in world['world']:
             room = world['world'][r]
             self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
             if 'enemies' in room:
                 for enemy in room['enemies']:
                     #self.rooms[r].spawn_enemy(enemy)
-                    npcs.create_enemy(self.rooms[r], enemy)
+                    create_enemy(self.rooms[r], enemy)
 
     def save_world(self):
         pass

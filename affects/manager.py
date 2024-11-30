@@ -9,6 +9,14 @@ class AffectsManager:
         self.owner = owner
         self.affects = {}
 
+    def unload_all_affects(self, silent = False):
+        # REMOVE ALL AFFECTS VERY IMPORTANT
+        aff_to_delete = []
+        for aff in self.affects.values():
+            aff_to_delete.append(aff)
+        for aff in aff_to_delete:
+            aff.on_finished(silent)
+
     def load_affect(self, affect_id):
         if affect_id not in AffDict:
             print('WHY',affect_id, AffDict)

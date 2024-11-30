@@ -60,12 +60,3 @@ def command_look(self, line):
         sheet = entity.get_character_sheet()
         self.sendLine(f'You are looking at {sheet}')
 
-def get_entity(self, line):
-    return utils.get_match(line, self.room.entities)
-
-    # Return if you cant find a target
-    if not isinstance(target, Actor):
-        self.sendLine(f'Could not find your target {target}')
-        return None
-
-    return target

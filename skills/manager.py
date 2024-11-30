@@ -1,30 +1,37 @@
-'''
-import random
-import yaml
-#from actor import Actor
 import utils
+import random
 
-factory = None
-
-with open('config/skills.yaml', 'r') as file:
-    SKILLS = {}
-    SKILLS_UNFILTERED = yaml.safe_load(file)
-    for i in SKILLS_UNFILTERED:
-        if 'template' not in i:
-            SKILLS[i] = SKILLS_UNFILTERED[i]
+from config import SKILLS, DamageType, ActorStatusType, StatType
 
 
-def skill_simple_damage(user, target, arguments):
+SKILLS = SKILLS
+    
+def skill_simple_damage_and_affliction(user, target, arguments):
     base_damage = arguments[0]      # int
     damage_type = arguments[1]      # string 
     bonus_damages = arguments[2]    # dictionary like {'str': 1.1}
 
+    affliction = arguments[3]
+
+    skill_simple_damage(user, target, [base_damage, damage_type, bonus_damages])
+    skill_set_affect(user, target, [affliction])
+
+def skill_set_affect(user, target, arguments):  
+    for aff in arguments:
+        target.affect_manager.set_affect(aff)
+
+def skill_simple_damage(user, target, arguments):
+    base_damage = arguments[0]      # int
+    damage_type = getattr(DamageType, arguments[1])      # string 
+    bonus_damages = arguments[2]    # dictionary like {'BODY': 1.1}
+
     damage = base_damage
     for i in bonus_damages:
-        damage += user.stats[i] * bonus_damages[i]
+        stat_name = getattr(StatType,i)
+        damage += user.stats[stat_name] * bonus_damages[i]
         
-    damage = int(damage)
-    target.take_damage(damage, damage_type)
+    damage = round(damage)
+    target.take_damage(user, damage, damage_type)
 
 def get_skills():
     name_to_id = {}
@@ -36,13 +43,13 @@ def get_skills():
 
     return id_to_name, name_to_id
 
-def error(user, err):
+def error( user, err):
     if type(user).__name__ == "Player":
         user.sendLine(err)
     else:
         print(err)
 
-def suse_broadcast(user, target, for_self, for_others):
+def use_broadcast(user, target, for_self, for_others):
 
     for i in user.room.entities.values():
         if type(i).__name__ != "Player":
@@ -78,7 +85,7 @@ def suse_broadcast(user, target, for_self, for_others):
             message = message.replace('#TARGET#', target.pretty_name())
             i.sendLine(message)
             continue
-       
+    
 def use_broadcast(user, other, perspectives):
     for perspective in perspectives:
         perspectives[perspective] = perspectives[perspective].replace('#USER#', user.pretty_name())
@@ -105,8 +112,8 @@ def use_broadcast(user, other, perspectives):
             continue
 
 def use_skill(user: "Actor", target: "Actor", skill_name: str):
-    #best_match, best_score = process.extractOne(skill, SKILLS.keys())
-    # match skill_name to users skills
+    #best_match, best_score = process.extractOne(skill, self.SKILLS.keys())
+    # match skill_name to users self.SKILLS
     best_match = utils.match_word(skill_name, user.skills.keys())
     skill_name = SKILLS[best_match]["name"]
 
@@ -120,35 +127,52 @@ def use_skill(user: "Actor", target: "Actor", skill_name: str):
         error(user, f'You can\'t use {skill_name} on yourself')
         return
 
+    # cant target others
+    if target != user and not SKILLS[best_match]['target_others_is_valid']:
+        error(user, f'You can\'t use {skill_name} on others')
+        return
+
     if SKILLS[best_match]['must_be_fighting']:
-        if user.status != 'fighting':
+        if user.status != ActorStatusType.FIGHTING:
             error(user, f'{skill_name} can only be used during a fight')
             return
 
-    if user.status == 'fighting' and target.status != 'fighting':
+    if user.status == ActorStatusType.FIGHTING and target.status != ActorStatusType.FIGHTING:
         error(user, f'You are in a fight but {target.name} is not participating!')
         return
 
-    if user.status != 'fighting' and target.status == 'fighting':
+    if user.status != ActorStatusType.FIGHTING and target.status == ActorStatusType.FIGHTING:
         error(user, f'{target.name} is in a fight you are not participating in!')
         return
 
-    hp_cost = SKILLS[best_match]['hp_cost']
-    mp_cost = SKILLS[best_match]['mp_cost']
+    hp_cost = SKILLS[best_match]['hp_cost'] * user.skills[best_match]
+    mp_cost = SKILLS[best_match]['mp_cost'] * user.skills[best_match]
 
-    if hp_cost > user.stats['hp'] + 1:
+    if hp_cost > user.stats[StatType.HP] + 1:
         error(user, f'You need atleast {hp_cost} HP to use {skill_name}')
         return
     
-    if mp_cost > user.stats['mp']:
+    if mp_cost > user.stats[StatType.MP]:
         error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
         return
 
-    user.stats['hp'] -= hp_cost
-    user.stats['mp'] -= mp_cost
+    user.stats[StatType.HP] -= hp_cost
+    user.stats[StatType.MP] -= mp_cost
 
     roll = random.randint(1,100)
-    success = roll <= user.skills[best_match]
+    level_to_successrate = {
+        1: 10,
+        2: 20,
+        3: 30,
+        4: 40,
+        5: 50,
+        6: 60,
+        7: 70,
+        8: 80,
+        9: 90,
+        10: 95
+    }
+    success = roll <= level_to_successrate[user.skills[best_match]]
 
     use_perspectives = SKILLS[best_match]['use_perspectives']
 
@@ -171,10 +195,8 @@ def use_skill(user: "Actor", target: "Actor", skill_name: str):
     use_broadcast(user, target, perspectives)
     
     if success:
-        script = globals()[SKILLS[best_match]['script_to_run']['name_of_script']]
+        script = globals()[SKILLS[best_match]['script_to_run']['name_of_script']] #globals()[self.SKILLS[best_match]['script_to_run']['name_of_script']]
         arguments = SKILLS[best_match]['script_to_run']['arguments']
         script(user, target, arguments)
 
     return True
-        
-'''

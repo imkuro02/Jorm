@@ -1,8 +1,8 @@
 from copy import deepcopy
-from items import Item
-import affects
+from items.manager import Item
+from affects.manager import AffectsManager
 from config import DamageType, ActorStatusType, EquipmentSlotType, StatType
-
+from skills.manager import use_skill
 class Actor:
     def __init__(self, name, room):
         self.name = name
@@ -10,9 +10,9 @@ class Actor:
         self.room = room
         if self.room != None:
             self.factory = self.room.world.factory
-            self.use_manager = self.factory.use_manager
+            
 
-        self.affect_manager = affects.AffectsManager(self)
+        self.affect_manager = AffectsManager(self)
 
         self.status = ActorStatusType.NORMAL
 
@@ -71,18 +71,6 @@ class Actor:
         _piss = [StatType.BODY, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
         for _shit in _piss:
             output += f'{_shit+":":<15} {self.stats[_shit]}\n'
-            
-        '''
-        output += f'Health: @red{self.stats["hp"]}@normal/@red{self.stats["hp_max"]}@normal\n'
-        output += f'Mana:   @cyan{self.stats["mp"]}@normal/@cyan{self.stats["mp_max"]}@normal\n'
-        #output += f'Damage: {self.stats["damage"]}\n'
-        output += f'Armor:  {self.stats["armor"]}\n'
-        output += f'Marmor: {self.stats["marmor"]}\n'
-        output += f'STR:    {self.stats["str"]}\n'
-        output += f'DEX:    {self.stats["dex"]}\n'
-        output += f'INT:    {self.stats["int"]}\n'
-        output += f'LUK:    {self.stats["luk"]}\n'
-        '''
         return output
 
     def tick(self):

@@ -62,3 +62,29 @@ red potion:
   - cure light wounds
   tags: []
 
+long sword:
+  description: Cool sword bro
+  equiped: false
+  history: {}
+  item_type: Equipment
+  keep: false
+  name: Sword
+  requirements:
+    Armor: 0
+    Body: 0
+    Level: 3
+    Marmor: 0
+    Max Health: 0
+    Max Mana: 0
+    Mind: 0
+    Soul: 0
+  slot: Primary
+  stats:
+    Armor: 0
+    Body: 2
+    Marmor: 0
+    Max Health: 0
+    Max Mana: 0
+    Mind: 0
+    Soul: 1
+  tags: []

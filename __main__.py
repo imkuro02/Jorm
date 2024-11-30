@@ -2,17 +2,12 @@ from twisted.internet import reactor, protocol, ssl, task
 from protocol import Protocol
 from world import World
 from database import Database
-import config
-from use_manager import UseManager
+
+
 import items
 
 class ServerFactory(protocol.Factory):
     def __init__(self):
-        self.config = config.Config()
-        self.use_manager = UseManager(self)
-        items.FACTORY = self
-        
-
         self.protocols = set()
         self.world = World(self)
         self.db = Database()

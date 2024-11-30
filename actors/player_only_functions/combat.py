@@ -1,6 +1,7 @@
-from player_only_functions.checks import check_alive, check_no_empty_line, check_no_empty_line, check_your_turn, check_not_in_combat
+from actors.player_only_functions.checks import check_alive, check_no_empty_line, check_no_empty_line, check_your_turn, check_not_in_combat
 from config import DamageType, ItemType, ActorStatusType, StatType
 import utils
+from skills.manager import get_skills, use_skill
 
 @check_alive
 def command_fight(self, line):
@@ -33,7 +34,7 @@ def command_use(self, line):
         self.sendLine('Use on who?')
         return
 
-    id_to_name, name_to_id = self.use_manager.get_skills()
+    id_to_name, name_to_id = get_skills()
     list_of_skill_names = [skill for skill in name_to_id.keys()]
     list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == ItemType.CONSUMABLE]
     whole_list = list_of_consumables + list_of_skill_names
@@ -61,7 +62,7 @@ def command_use(self, line):
         item = self.get_item(action)
 
         def use_item(item, user, target):
-            self.use_manager.use_broadcast(self, target, item.use_perspectives)
+            #self.use_manager.use_broadcast(self, target, item.use_perspectives)
             item.use(user, target)
             return
 
@@ -88,9 +89,12 @@ def command_use(self, line):
 
 
     elif best_match in list_of_skill_names:
+        if action.lower() not in best_match.lower():
+            self.sendLine('Use what?')
+            return
         skill_id = name_to_id[best_match]
         # if skills.use finished with True statement and there were no errors
-        if self.use_manager.use_skill(self, target, skill_id):
+        if use_skill(self, target, skill_id):
             self.finish_turn()
 
 @check_not_in_combat
@@ -128,4 +132,5 @@ def command_rest(self, line):
                 None,
                 f'{self.pretty_name()} has returned to town to rest'
                 )
+    self.affect_manager.unload_all_affects()
             

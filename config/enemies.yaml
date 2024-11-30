@@ -16,6 +16,7 @@ template:
   loot:
     long sword: 1
     red potion: 0.1
+    
 
   skills:
     swing: 3
@@ -31,7 +32,7 @@ skeleton:
   name: Skeleton
   stats:
     Health: 15
-    Mana: 20
+    Mana: 200
 
     Armor: 0
     Marmor: 0

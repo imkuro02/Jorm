@@ -1,6 +1,6 @@
 from twisted.internet import protocol
-from player import Player
-import items 
+from actors.player import Player
+from items.manager import load_item, save_item
 import utils
 from config import StatType
 
@@ -140,7 +140,7 @@ class Protocol(protocol.Protocol):
         self.actor.skills = actor['skills']
         self.actor.slots = actor['slots']
         for item in actor['inventory'].values():
-            new_item = items.load_item(item)
+            new_item = load_item(item)
             self.actor.inventory[new_item.id] = new_item
 
         self.compare_slots_to_items()
@@ -149,7 +149,7 @@ class Protocol(protocol.Protocol):
     def save_actor(self):
         inventory = {}
         for i in self.actor.inventory:
-            inventory[i] = items.save_item(self.actor.inventory[i])
+            inventory[i] = save_item(self.actor.inventory[i])
         
         #stats = {}
         #for s in self.actor.stats:
@@ -178,12 +178,7 @@ class Protocol(protocol.Protocol):
             
             #self.factory.broadcast(f'{self.actor.name} has disconnected.')
 
-            # REMOVE ALL AFFECTS VERY IMPORTANT
-            aff_to_delete = []
-            for aff in self.actor.affect_manager.affects.values():
-                aff_to_delete.append(aff)
-            for aff in aff_to_delete:
-                aff.on_finished(silent = True)
+            self.actor.affect_manager.unload_all_affects(silent = True)
                 
             self.save_actor()
             # teleport player to town to remove them safely

@@ -1,4 +1,4 @@
-from player_only_functions.checks import check_alive, check_no_empty_line
+from actors.player_only_functions.checks import check_alive, check_no_empty_line
 from config import ItemType
 
 def command_equipment(self, line):
