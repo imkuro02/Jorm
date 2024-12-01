@@ -36,7 +36,8 @@ class Protocol(protocol.Protocol):
 
         self.clear_screen()
 
-        all_colors = utils.print_colors()
+        #all_colors = utils.print_colors()
+        #self.sendLine(all_colors)
         #all_colors = ''
         #for i in range(31,40):
         #    all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
@@ -44,7 +45,7 @@ class Protocol(protocol.Protocol):
         #for i in range(0,255):
         #    all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
 
-        self.sendLine(all_colors)
+        
         self.sendLine('Type "b" to restart login / register process.')
         self.sendLine('Welcome! Please enter your username:')
 

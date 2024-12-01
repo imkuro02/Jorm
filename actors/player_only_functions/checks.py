@@ -17,7 +17,7 @@ def check_is_admin(func):
 def check_no_empty_line(func):
     def wrapper(self, line):
         if line == '':
-            self.sendLine('This command needs arguments')
+            self.sendLine(f'Command "{self.last_command_used}" needs arguments, try "help {self.last_command_used}".')
             return
         else:
             return func(self, line)
@@ -45,7 +45,7 @@ def check_alive(func):
 def check_not_in_combat(func):
     def wrapper(self, line):
         if self.status == ActorStatusType.FIGHTING:
-            self.sendLine('You can\'t do this in combat')
+            self.sendLine(f'You can\'t use command "{self.last_command_used}" in combat, try "help {self.last_command_used}".')
             return
         return func(self, line)
     return wrapper

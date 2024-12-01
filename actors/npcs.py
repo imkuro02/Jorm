@@ -24,7 +24,7 @@ def create_enemy(room, enemy_id):
     combat_loop = enemy['combat_loop']
     loot = enemy['loot']
     for item in loot.keys():
-        print(loot)
+        #print(loot)
         if item not in ITEMS:
             print(item, 'does not exist in loot table for ', enemy_id)
     Enemy(name, room, stats, skills, combat_loop, loot)

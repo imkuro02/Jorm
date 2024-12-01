@@ -1,7 +1,7 @@
 world:
   home:
     name: Town square
-    description: You see a small dried up well which sits right in the middle of a unkept stone path, there are few buildings, most look freshly burnt to the ground, some are still standing, marked with only a few burns
+    description: "A dried up well sits right in the middle of a unkept stone path.\nThere are few buildings, most look freshly burnt to the ground.\nSome are still standing, marked with only a few burns."
     exits:
       north: 1
 

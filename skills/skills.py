@@ -1,6 +1,9 @@
 from config import AffType, DamageType, StatType
+#import affects.manager as aff_manager
+import affects.affects as affects
+
 class Skill:
-    def __init__(self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success, silent_use = False):
+    def __init__(self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False):
         self.skill_id = skill_id
         self.cooldown = cooldown
         self.user = user
@@ -8,6 +11,7 @@ class Skill:
         self.users_skill_level = users_skill_level
         self.use_perspectives = use_perspectives
         self.success = success
+        self.no_cooldown = no_cooldown
         self.silent_use = silent_use
 
 
@@ -53,9 +57,9 @@ class Skill:
                 continue
 
     def use(self):
+        self.user.cooldown_manager.add_cooldown(self.skill_id, self.cooldown)
         if self.silent_use:
             return
-        self.user.cooldown_manager.add_cooldown(self.skill_id, self.cooldown)
         self.use_broadcast()
 
 class SkillSwing(Skill):
@@ -68,13 +72,13 @@ class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.take_damage(self.user, 10 * self.users.stats[StatType.SOUL], DamageType.HEALING)
+            self.other.take_damage(self.user, 10 + self.users_skill_level + self.user.stats[StatType.SOUL], DamageType.HEALING)
 
 class SkillBash(SkillSwing):
     def use(self):
         super().use()
         if self.success:
-            stunned_affect = aff_manager.AffectStunned(
+            stunned_affect = affects.AffectStunned(
                 AffType.STUNNED,
                 self.other.affect_manager,
                 'Stunned', 'Unable to act during combat turns',
@@ -90,16 +94,13 @@ class SkillMagicMissile(Skill):
 
 class SkillBecomeEthereal(Skill):
     def use(self):
-        try:
-            super().use()
-            if self.success:
-                turns = 4 + int(self.users_skill_level*0.3)
-                dmg_amp = 2.4 - self.users_skill_level*0.1
-                ethereal_affect = aff_manager.AffectEthereal(
-                    AffType.ETHEREAL, 
-                    self.user.affect_manager, 
-                    'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
-                    turns, dmg_amp)
-                self.user.affect_manager.set_affect_object(ethereal_affect)
-        except Exception as e:
-            print(e)
+        super().use()
+        if self.success:
+            turns = 4 + int(self.users_skill_level*0.03)
+            dmg_amp = 2.4 - self.users_skill_level*0.01
+            ethereal_affect = affects.AffectEthereal(
+                AffType.ETHEREAL, 
+                self.user.affect_manager, 
+                'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
+                turns, dmg_amp)
+            self.user.affect_manager.set_affect_object(ethereal_affect)

@@ -1,7 +1,9 @@
 Title: Practice
-Syntax: "practice" , "practice <skill name>" 
+Syntax: "practice" , "practice <skill name> <level>" 
  
 You can view how many practice points you have both by using the "stats" command and "practice" command.
+
+When you want to practice a skill, use "practice <skill name> <level>" to practice the skill of your choice "level" is the skill level you wish to practice to
 
 When you have atleast 1 practice point, you can use the "practice" command to learn a skill.
 Or further advance in your knowledge of an already learned skill.

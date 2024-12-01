@@ -31,10 +31,13 @@ colors = {
     '\x1b[0m':      '@normal'
 }
 
-def match_word(word: str, l: list):
+def match_word(word: str, l: list, get_score = False):
     best_match, best_score = process.extractOne(word, l)
     #print(best_match, best_score)
-    return best_match
+    if get_score:
+        return best_match, best_score
+    else:
+        return best_match
     
 
 def get_match(line, things):

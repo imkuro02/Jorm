@@ -1,7 +1,7 @@
 import uuid
 from config import ItemType, SKILLS
 from items.misc import Item
-from skills.manager import use_skill, get_skills
+from skills.manager import use_skill_from_consumable, get_skills
 
 
 class Consumable(Item):
@@ -43,6 +43,5 @@ class Consumable(Item):
     def use(self, user, target):
         first_skill = True
         for skill in self.skills:
-            use_skill(user, target, skill, used_from_consumable = True, forced_perspectives = self.use_perspectives, silent_use = not first_skill)
-            first_skill = False
+            use_skill_from_consumable(user = user, target = target, skill_id = skill, consumable_item = self)
         user.inventory_remove_item(self.id)

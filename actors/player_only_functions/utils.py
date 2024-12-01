@@ -50,8 +50,8 @@ def get_item(self, line, search_mode = 'self'):
         for item in self.inventory.values():
             if item.item_type != ItemType.EQUIPMENT:
                 continue 
-            if item.equiped == True:
-                continue 
+            #if item.equiped == True:
+            #    continue 
             inventory[item.id] = self.inventory[item.id] 
 
     if len(inventory) == 0:

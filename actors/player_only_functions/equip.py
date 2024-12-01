@@ -2,6 +2,17 @@ from actors.player_only_functions.checks import check_alive, check_no_empty_line
 from config import ItemType
 
 def command_equipment(self, line):
+    # if you type equip item, it will wear that item
+    if line != '':
+        item = self.get_item(line, search_mode = 'equipable')
+        if item == None:
+            return
+        if item.equiped:
+            self.inventory_unequip(item)
+        else:
+            self.inventory_equip(item)
+        return
+
     output = 'You are wearing:\n'
     for i in self.slots:
         if None == self.slots[i]:
@@ -30,7 +41,8 @@ def command_wear(self, line):
         return
 
     if item.equiped:
-        self.sendLine(f'{item.name} is already equiped')
+        self.inventory_unequip(item)
+        #self.sendLine(f'{item.name} is already equiped')
         return
 
     #self.inventory_remove_item(item.id)

@@ -75,7 +75,7 @@ rat:
     lucky charm: 1
 
   skills:
-    swing: 1
+    swing: 70
 
   combat_loop:
     - skill: swing

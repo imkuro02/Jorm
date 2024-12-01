@@ -90,6 +90,7 @@ class Player(Actor):
         self.protocol = protocol
         super().__init__(name, room)
         self.last_line_sent = None
+        self.last_command_used = None
 
         if self.room != None:
             self.room.move_player(self)
@@ -117,9 +118,13 @@ class Player(Actor):
             script = getattr(self, one_letter_commands[command])
             script(line)
             return
-
-        best_match = utils.match_word(command, commands.keys())
+        
+        best_match, best_score = utils.match_word(command, commands.keys(), get_score = True)
+        if best_score < 75:
+            self.sendLine(f'You wrote "{command}" did you mean "{best_match}"?\nUse "help {best_match}" to learn more about this command.')
+            return
         script = getattr(self, commands[best_match])
+        self.last_command_used = best_match
         script(line)
 
         

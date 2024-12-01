@@ -67,7 +67,7 @@ class Actor:
             }
 
         self.skills = {
-            'swing':3
+            'swing': 75
             }
 
         self.cooldown_manager = CooldownManager(self)
@@ -186,6 +186,7 @@ class Actor:
     def finish_turn(self):
         self.affect_manager.finish_turn()
         self.cooldown_manager.finish_turn()
+        
         if self.room == None:
             return
         if self.room.combat == None:
@@ -194,6 +195,7 @@ class Actor:
         if self != self.room.combat.current_actor:
             #print('not my turn')
             return
+        
         self.room.combat.next_turn()
 
     def set_turn(self):
