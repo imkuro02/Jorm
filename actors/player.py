@@ -35,7 +35,7 @@ from actors.player_only_functions.character_sheet import (
 from actors.player_only_functions.admin import (
     command_gain_exp, command_create_item, command_update_item, 
     command_load_item, command_export_item, command_help, prompt, 
-    command_send_prompt
+    command_send_prompt, command_debug
 )
 
 class Player(Actor):
@@ -82,6 +82,7 @@ class Player(Actor):
     command_update_item = command_update_item
     command_load_item = command_load_item
     command_export_item = command_export_item
+    command_debug = command_debug
     command_help = command_help
     prompt = prompt 
     command_send_prompt = command_send_prompt
@@ -94,7 +95,7 @@ class Player(Actor):
         self.send_line_buffer = []
 
         if self.room != None:
-            self.room.move_player(self)
+            self.room.move_player(self, silent = True)
 
         self.inventory = {}
         

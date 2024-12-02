@@ -6,10 +6,9 @@ import uuid
 import random
 from combat import Combat
 from config import WORLD
-import copy
 
 class Room:
-    def __init__(self, world, uid, name, description, exits):
+    def __init__(self, world, uid, name, description, exits, dungeon = None):
         self.world = world
         self.uid = uid
         self.name = name
@@ -17,10 +16,13 @@ class Room:
         self.exits = exits
         self.inventory = {}
         
+
         self.combat = None
+        self.dungeon = dungeon
 
         self.entities = {}
-
+        #self.players = {}
+        #self.npcs = {}
 
     def next(self):
         return
@@ -32,6 +34,9 @@ class Room:
             return
         self.combat.tick()
 
+    #def spawn_enemy(self, name):
+    #    _ = Enemy(name, self)
+
     def inventory_add_item(self, item):
         self.inventory[item.id] = item
 
@@ -40,6 +45,7 @@ class Room:
 
     def new_combat(self):
         if self.combat != None:
+            #print('there is combat')
             return 'There is already a fight here!'
 
         participants = {}
@@ -57,40 +63,58 @@ class Room:
         if players_here and npcs_here:
             self.combat = Combat(self, participants)
         
-    def move_player(self, player, silent = False, instanced = False):
-        #if player.room != None:
+    def move_player(self, player, silent = False):
+        #old_room = player.room
+
+        #for p in player.room.entities.values():
+        #    if not silent and p != player and isinstance(p, Player):
+        #        p.sendLine(f'{player.pretty_name()} went to {self.name}.')
+
+        #new_room.move_player(self)
+
         if player in player.room.entities.values():
-            self.remove_player(player)
+            del player.room.entities[player.name]
         player.room = self
         self.entities[player.name] = player
-        if not silent:
-            player.command_look('')
 
-    def remove_player(self, player):
-        del player.room.entities[player.name]
+        #if not silent:
+        #    player.sendLine(f'You arrived at {self.name}.')
+
+        #    for p in player.room.entities.values():
+        #        if p != player and isinstance(p, Player):
+        #            p.sendLine(f'{player.pretty_name()} arrived from {old_room.name}.')
+
+        player.command_look('')
+        #if self.combat == None:
+        #    self.new_combat()
 
     def move_enemy(self, enemy):
+        #if enemy in enemy.room.npcs.values():
+        #    del enemy.room.players[player.name]
         enemy.room = self
         self.entities[enemy.name] = enemy
- 
-class InstancedRoom(Room):
 
-    def move_player(self, player, silent = False, instanced = False):
-        if not instanced:
-            instanced_room_id = self.uid+'/'+player.name
-            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits)
+    def explore(self):
+        if self.dungeon != None:
+            uid = str(uuid.uuid4())
+            dungeon = Dungeon(self.world, uid)
+            self.world.dungeons[uid] = dungeon
+            players_to_move = []
+
+            for i in self.entities.values():
+                if isinstance(i, Player):
+                    players_to_move.append(i)
+
+            for i in players_to_move:
+                i.sendLine(f'You explore {i.room.name}')
+                dungeon.move_player(i, True)
+                
+            for i in players_to_move:
+                i.command_look('')
             
-            room_template = WORLD['world'][self.uid]
-
-            if 'enemies' in room_template:
-                for enemy_id in room_template['enemies']:
-                    create_enemy(self.world.rooms[instanced_room_id], enemy_id)
-
-            self.world.rooms[instanced_room_id].move_player(player, instanced = True)
-
-        else:
-            super().move_player(player)
-        
+                
+            #dungeon.reload_room()
+ 
 class World:
     def __init__(self, factory):
         self.factory = factory
@@ -99,18 +123,11 @@ class World:
         world = WORLD
         for r in world['world']:
             room = world['world'][r]
-            if 'instanced' in room:
-                self.rooms[r] = InstancedRoom(self, r, room['name'], room['description'], room['exits']) 
-            else:
-                self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
-
+            self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
             if 'enemies' in room:
                 for enemy in room['enemies']:
                     #self.rooms[r].spawn_enemy(enemy)
                     create_enemy(self.rooms[r], enemy)
-                    print(r, enemy)
-
-            
 
     def save_world(self):
         pass
@@ -118,3 +135,5 @@ class World:
     def tick(self):
         for i in self.rooms.values():
             i.tick()
+        #for i in self.dungeons.values():
+        #    i.tick()

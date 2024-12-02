@@ -99,7 +99,7 @@ class Protocol(protocol.Protocol):
                 self.clear_screen()
                 
 
-                self.actor = Player(self, self.username, self.factory.world.rooms['home'])
+                self.actor = Player(self, self.username, self.factory.world.rooms['loading'])
                 #self.actor.simple_broadcast(f'You are logged in as "{self.username}"', f'{self.actor.name} logged in.')
                 self.state = self.PLAY
                 #self.sendLine('\u001B[2J')
@@ -109,7 +109,10 @@ class Protocol(protocol.Protocol):
 
                 if not self.load_actor():
                     self.save_actor()
-                
+                    self.actor.room.world.rooms['tutorial'].move_player(self.actor)
+                else:
+                    self.actor.room.world.rooms['home'].move_player(self.actor)
+                     
                 
                 
             else:

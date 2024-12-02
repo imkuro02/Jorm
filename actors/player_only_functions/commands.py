@@ -47,5 +47,6 @@ commands = {
     'miupdate': 'command_update_item',
     'miexport': 'command_export_item',
     'miload':   'command_load_item',
-    'mexp':     'command_gain_exp'
+    'mexp':     'command_gain_exp',
+    'midebug':  'command_debug'
 }

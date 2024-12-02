@@ -1,9 +1,109 @@
 world:
+  loading:
+    name: bruh
+    description: BRUH
+    exits: []
+    
+  tutorial:
+    name: Abyss
+    description: "
+    Welcome. You may go east for a quick tutorial\n
+    Or go west if you know what you are doing\n
+    Use the \"go\" command, for example:\n
+    \"go east\""
+    exits: 
+      east: tutorial2
+      west: home
+    instanced: True
+
+  tutorial2:
+    name: Abyss
+    description: "
+    Directions are not limited to north, west, south and east. \n
+    go somewhere, anywhere"
+    exits: 
+      behind a bush: tutorial3
+      over the mountain: tutorial3
+      towards the river: tutorial3
+      home: tutorial3
+    instanced: True
+
+  tutorial3:
+    name: Abyss
+    description: "
+    You are getting the hang of it\n
+    Lets look at your skills with the \"skills\" command\n
+    Skills are abilities you may use in or out of combat\n
+    To use a skill, type \"use <skill name>\"\n
+    Or \"use <skill name> on <target>\"\n
+    When you are ready, head north."
+    exits: 
+      north: tutorial4
+    
+    instanced: True
+
+  tutorial4:
+    name: Abyss
+    description: "
+    Look! a rat!\n
+    You can fight it with the \"fight\" command\n
+    And remember, to use your skills on it, type \"use <skill name> on <target>\"\n
+    Example: \"use swing at rat\" or \"use swing on rat\"\n
+    After you kill it, head north."
+    exits:
+      north: tutorial5
+    enemies:
+      - tutorial rat
+    instanced: True
+
+  tutorial5:
+    name: Abyss
+    description: "
+    The rat you fought dropped something\n
+    Loot from combat is put into your inventory instantly\n
+    You can view your inventory with the \"inventory\" command\n
+    To identify an item, type \"identify <item name>\"\n
+    To equip an item type \"equip <item name>\"\n\n
+    You can also experiment with the \"wear\" and \"remove\" commands"
+    exits:
+      north: tutorial6
+    instanced: True
+
+  tutorial6:
+    name: Abyss
+    description: "
+    You are nearing the end now\n
+    When you killed that rat, you leveled up!\n
+    Look at your character sheet with the \"stats\" command\n
+    There are 3 main stats you can level up, Body, Mind and Soul\n
+    Type \"level <stat name>\" to level one of them\n\n
+    Once you level up, you also get practice points.\n
+    Use \"practice\" to view skills you can learn, and use\n 
+    \"practice <skill> <amount>\" to level that skill up to your desired level\n
+    (amount is the amount you wish the skill to be at, if your level is 10\n
+    and you type \"practice swing 30\" you will spend 20 practice points)"
+    exits:
+      north: tutorial7
+    instanced: True
+
+  tutorial7:
+    name: An opening
+    description: "
+    The last thing you should know before you venture forth is:\n
+    You can use the \"help\" command to quickly see each command you can use\n
+    \"help <command name>\" \n
+    Will tell you more specific information about that command\n
+    Now go..."
+    exits:
+      north: home
+    instanced: True
+
   home:
     name: Town square
     description: "A dried up well sits right in the middle of a unkept stone path.\nThere are few buildings, most look freshly burnt to the ground.\nSome are still standing, marked with only a few burns."
     exits:
       north: 1
+      south: tutorial
 
   1:
     name: Store

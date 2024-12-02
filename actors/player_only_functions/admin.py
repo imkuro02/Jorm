@@ -145,3 +145,6 @@ def command_export_item(self, line):
     item_dict = {item_dict['name'].lower(): item_dict}
     yaml_text = yaml.dump(item_dict, default_flow_style=False)
     self.sendLine(yaml_text, color = False)
+
+def command_debug(self, line):
+    self.sendLine(self.room.world.rooms)

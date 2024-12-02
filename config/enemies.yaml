@@ -41,7 +41,7 @@ skeleton:
     Mind: 0
     Soul: 0
     
-    Experience: 3
+    Experience: 4
 
   loot:
     long sword: 1
@@ -76,6 +76,32 @@ rat:
 
   skills:
     swing: 70
+
+  combat_loop:
+    - skill: swing
+      target: enemy_random
+
+  
+tutorial rat:
+  name: Rat
+  stats:
+    Health: 3
+    Mana: 20
+
+    Armor: 0
+    Marmor: 0
+
+    Body: 0
+    Mind: 0
+    Soul: 0
+    
+    Experience: 2
+
+  loot: 
+    tutorial rat dagger: 1
+
+  skills:
+    swing: 1
 
   combat_loop:
     - skill: swing
