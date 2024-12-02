@@ -1,11 +1,13 @@
+................................................................................
 Title: Go
 Syntax: "go <place>" 
 
 When you use the "look" command, exits get shown in the output.
-You can "go" to any of these exits, most commonly they are "north" "west" "south" or "east" .
+You can "go" to any of these exits. 
+Most commonly they are "north" "west" "south" or "east" .
 But they can also be special exits like "under the table" or "to the loft" 
 
 The go command will try to find the exit you are looking for.
 and move you to that room while you are not in combat.
 If you are in combat, to leave you need to enter the "flee" command
-
+................................................................................

@@ -1,5 +1,11 @@
+................................................................................
 Title: Death, resting and ressurecting
 
-The "rest" command is used to heal up to full HP and MP, and to get rid of all Afflictions.
-This command can be used to ressurect when you die, or to quickly teleport back to town.
+The "rest" command is very useful, when you "rest" you:
+- Regenerate all HP and MP
+- Ressurect if you are dead
+- Recall back to Town (fast way to travel home)
+
+Rest cannot be used while in combat.
+................................................................................
 

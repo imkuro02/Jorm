@@ -133,6 +133,7 @@ def use_skill(user, target, skill_id, consumable = False):
 
         skill_obj.use()
         del skill_obj
-    return True
+        return True
+    return False
 
 

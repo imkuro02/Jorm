@@ -1,5 +1,7 @@
+................................................................................
 Title: Identify
 Syntax: "identify <item in inventory>" 
 
 Identify is for getting a better look at items.
 The item name, description, stats, and so on will be displayed
+................................................................................

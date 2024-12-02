@@ -1,3 +1,4 @@
+................................................................................
 Title: Fighting
 Syntax: "fight" 
 
@@ -10,3 +11,4 @@ You will be notified when it is your turn
 On your turn, use the "use" command to use your skills. 
 Using "skills" will show all practiced skills you can use.
 Or if you don't like your odds, use the "flee" command to flee the combat
+................................................................................

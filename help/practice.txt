@@ -1,12 +1,13 @@
+................................................................................
 Title: Practice
-Syntax: "practice" , "practice <skill name> <level>" 
+Syntax: "practice" , "practice <skill name> <amount>" 
  
-You can view how many practice points you have both by using the "stats" command and "practice" command.
+You can view the amount of Practice Points you have with "stats" or "practice"
 
-When you want to practice a skill, use "practice <skill name> <level>" to practice the skill of your choice "level" is the skill level you wish to practice to
+When you want to practice a skill, use "practice <skill name> <amount>" 
+The "amount" is the new amount you wish to practice to.
+So if your knowledge of Swing is at a 50, and you want it to be at 60:
+Type "practice swing 60" to spend 10 practice points on swing.
 
-When you have atleast 1 practice point, you can use the "practice" command to learn a skill.
-Or further advance in your knowledge of an already learned skill.
-
-You gain one practice point whenever you level up.
-And you cannot practice any skills beyond 95.
+You cannot practice any skills beyond 95.
+................................................................................

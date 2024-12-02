@@ -91,16 +91,33 @@ class Player(Actor):
         super().__init__(name, room)
         self.last_line_sent = None
         self.last_command_used = None
+        self.send_line_buffer = []
 
         if self.room != None:
             self.room.move_player(self)
 
         self.inventory = {}
         
+    def tick(self):
+        # send buffer
+        if self.factory.ticks_passed % 1 != 0:
+            return
+        if self.send_line_buffer == []:
+            return
+        line = self.send_line_buffer[0]
+        self.protocol.transport.write(line.encode('utf-8'))
+        self.send_line_buffer.pop(0)
+        
+
     def sendLine(self, line, color = True):
         if color:
             line = utils.add_color(f'{line}\n')
-        self.protocol.transport.write(line.encode('utf-8'))
+        #lines = [char for char in line]
+        lines = line.replace('\n','#SPLIT#\n').split('#SPLIT#')
+        #lines = line.replace(' ','#SPLIT# ').split('#SPLIT#')
+        for l in lines:
+            self.send_line_buffer.append(l)
+        
 
     def handle(self, line):
         # empty lines are handled as resend last line

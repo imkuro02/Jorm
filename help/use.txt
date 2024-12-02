@@ -1,6 +1,17 @@
+................................................................................
 Title: Use
 Syntax: "use <skill>" , "use <skill> on <target>" , "use <skill> at <target>" 
+This syntax works for consumable items aswell.
 
-When you want to use a skill on someone or somehting, you "use" the skill.
-Skills will have descriptions whether they can or cannot target allies, combat participants, yourself. etc
+Skills are abilities you can use in and out of combat
+Some grant buffs and debuffs, some can only be used in combat.
+Some can only be used outside of combat.
 
+To use a skill type "use skill" this will attempt to use the skill on yourself.
+Or "use skill on target" this will attempt to
+use your skill on a visible player or enemy.
+
+To use items like potions or scrolls, type "use item" 
+or "use item on target" 
+Remember: items cannot be used on others outside of combat 
+................................................................................

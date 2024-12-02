@@ -1,4 +1,14 @@
+................................................................................
 Title: look
-Syntax: "look" , "look <direction>" , "look <character>" 
+Syntax: "look" , "look <character>" 
 
-Look is a very simple command, you will look and then see the room and all its characters, items, and exits.
+The "look" command without any arguments will display:
+- Room name
+- Room description
+- All players and enemies in room
+- Items on ground
+
+You can look at characters with "look <character>" to view their stats.
+
+To look at an item, use "identify" ( "help identify" )
+................................................................................

@@ -11,12 +11,14 @@ class ServerFactory(protocol.Factory):
         self.protocols = set()
         self.world = World(self)
         self.db = Database()
-
+        self.ticks_passed = 0
         self.tickrate: int = 30
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)
+        
 
     def tick(self):
+        self.ticks_passed += 1
         self.world.tick()
         #for room in self.world.rooms.values():
         #    room.tick()

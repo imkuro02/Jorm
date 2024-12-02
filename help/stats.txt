@@ -1,13 +1,19 @@
+................................................................................
 Title: Stats
 Syntax: "stats" 
 
 View your character stats
-Body: Your physical capabilities, often the stat with most impact on Physical Damage
-Mind: Your mental capabilities, often the stat with the most impact on Magical Damage
-Soul: Your social and spiritual capabilities, affects Both Magical and Physical Damage
-Armor: Flat damage reduction from Physical Damage
-Marmor: Flat damage reduction from Magical Damage
+Body: Your physical capabilities.
+Mind: Your mental capabilities.
+Soul: Your social and spiritual capabilities.
+
+Armor: Flat damage reduction from Physical Damage.
+Marmor: Flat damage reduction from Magical Damage.
+
 Level: Your current level
-Practice Points: whatever man
+Practice Points: Used for practicing skills
+
 To view your skills, use the "skills" command.
-To view ALL skills including those you have not learned yet, use the "practice" command without any arguments.
+To view ALL skills including those you have not learned yet
+use the "practice" command without any arguments.
+................................................................................

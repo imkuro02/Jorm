@@ -94,7 +94,7 @@ def command_use(self, line):
             return
         skill_id = name_to_id[best_match]
         # if skills.use finished with True statement and there were no errors
-        if use_skill(self, target, skill_id):
+        if use_skill(self, target, skill_id) == True:
             self.finish_turn()
 
 @check_not_in_combat

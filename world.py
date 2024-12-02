@@ -28,6 +28,8 @@ class Room:
         return
 
     def tick(self):
+        for e in self.entities.values():
+            e.tick()
         if self.combat == None:
             return
         self.combat.tick()
