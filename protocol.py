@@ -49,6 +49,7 @@ class Protocol(protocol.Protocol):
         self.sendLine('Type "b" to restart login / register process.')
         self.sendLine('Welcome! Please enter your username:')
 
+
     def PLAY(self, line):
         if line == 'save':
             self.save_actor()
@@ -96,7 +97,7 @@ class Protocol(protocol.Protocol):
         else:
             user = self.factory.db.read_user(self.username)
             if user[1] == line:
-                self.clear_screen()
+                #self.clear_screen()
                 
 
                 self.actor = Player(self, self.username, self.factory.world.rooms['loading'])
