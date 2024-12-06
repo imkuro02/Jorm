@@ -1,5 +1,7 @@
 server.crt
 server.key
+docker-client/tt++
+docker-client/ttyd.x86_64
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
