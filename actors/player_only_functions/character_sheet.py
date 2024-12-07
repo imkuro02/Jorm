@@ -60,7 +60,7 @@ def command_practice(self, line):
             else:
                 learned = self.skills[skill_id]
             level = SKILLS[skill_id]['level_req']
-            output += (f'{SKILLS[skill_id]["name"]:<20} | {str(learned) + "":<8} | {str(level):<5} \n')
+            output += (f'{SKILLS[skill_id]["name"]:<20} | {str(learned):<8} | {str(level):<5} \n')
         self.sendLine(f'{output}')
     else:
         line = line.split()

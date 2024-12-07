@@ -34,8 +34,8 @@ world:
     You are getting the hang of it\n
     Lets look at your skills with the \"skills\" command\n
     Skills are abilities you may use in or out of combat\n
-    To use a skill, type \"use <skill name>\"\n
-    Or \"use <skill name> on <target>\"\n
+    To use a skill, type \"use [skill name]\"\n
+    Or \"use [skill name] on [target]\"\n
     When you are ready, head north."
     exits: 
       north: tutorial4
@@ -47,7 +47,7 @@ world:
     description: "
     Look! a rat!\n
     You can fight it with the \"fight\" command\n
-    And remember, to use your skills on it, type \"use <skill name> on <target>\"\n
+    And remember, to use your skills on it, type \"use [skill name] on [target]\"\n
     Example: \"use swing at rat\" or \"use swing on rat\"\n
     After you kill it, head north."
     exits:
@@ -62,8 +62,8 @@ world:
     The rat you fought dropped something\n
     Loot from combat is put into your inventory instantly\n
     You can view your inventory with the \"inventory\" command\n
-    To identify an item, type \"identify <item name>\"\n
-    To equip an item type \"equip <item name>\"\n\n
+    To identify an item, type \"identify [item name]\"\n
+    To equip an item type \"equip [item name]\"\n\n
     You can also experiment with the \"wear\" and \"remove\" commands"
     exits:
       north: tutorial6
@@ -76,10 +76,10 @@ world:
     When you killed that rat, you leveled up!\n
     Look at your character sheet with the \"stats\" command\n
     There are 3 main stats you can level up, Body, Mind and Soul\n
-    Type \"level <stat name>\" to level one of them\n\n
+    Type \"level [stat name]\" to level one of them\n\n
     Once you level up, you also get practice points.\n
     Use \"practice\" to view skills you can learn, and use\n 
-    \"practice <skill> <amount>\" to level that skill up to your desired level\n
+    \"practice [skill] [amount]\" to level that skill up to your desired level\n
     (amount is the amount you wish the skill to be at, if your level is 10\n
     and you type \"practice swing 30\" you will spend 20 practice points)"
     exits:
@@ -91,7 +91,7 @@ world:
     description: "
     The last thing you should know before you venture forth is:\n
     You can use the \"help\" command to quickly see each command you can use\n
-    \"help <command name>\" \n
+    \"help [command name]\" \n
     Will tell you more specific information about that command\n
     Now go..."
     exits:

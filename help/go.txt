@@ -1,6 +1,6 @@
 ................................................................................
 Title: Go
-Syntax: "go <place>" 
+Syntax: "go [place]" 
 
 When you use the "look" command, exits get shown in the output.
 You can "go" to any of these exits. 

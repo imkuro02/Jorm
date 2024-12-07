@@ -22,8 +22,11 @@ class Protocol(protocol.Protocol):
         
 
     def clear_screen(self):
+        return
         self.sendLine('\x1b[0m')
         self.sendLine('\u001B[2J')
+        for i in range(0,32):
+            self.sendLine('~')
 
     def splash_screen(self):
         #def clear_screen(client_socket):
@@ -93,11 +96,11 @@ class Protocol(protocol.Protocol):
                 self.sendLine(f'Creating a new account with name "{self.username}", input password: ')
                 self.state = self.REGISTER
             else:
-                self.sendLine(f'Account exists, input password: ')
+                self.sendLine(f'Account exists, input password: \n')
         else:
             user = self.factory.db.read_user(self.username)
             if user[1] == line:
-                #self.clear_screen()
+                self.clear_screen()
                 
 
                 self.actor = Player(self, self.username, self.factory.world.rooms['loading'])
@@ -195,6 +198,7 @@ class Protocol(protocol.Protocol):
 
     # override
     def dataReceived(self, data):
+
         # interrupt
         if data == b'\xff\xf4\xff\xfd\x06':
             self.disconnect()

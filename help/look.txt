@@ -1,6 +1,6 @@
 ................................................................................
 Title: look
-Syntax: "look" , "look <character>" 
+Syntax: "look" , "look [character]" 
 
 The "look" command without any arguments will display:
 - Room name
@@ -8,7 +8,7 @@ The "look" command without any arguments will display:
 - All players and enemies in room
 - Items on ground
 
-You can look at characters with "look <character>" to view their stats.
+You can look at characters with "look [character]" to view their stats.
 
 To look at an item, use "identify" ( "help identify" )
 ................................................................................

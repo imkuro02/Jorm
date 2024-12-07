@@ -1,10 +1,10 @@
 ................................................................................
 Title: Skills
-Syntax: "skills" , "skills <skill name>" 
+Syntax: "skills" , "skills [skill name]" 
 
 You can view all known skills and their practice amount with "skills"
 Or if you wish to learn about a specific skill before practicing it.
-You can use "skills <skill name>" this gives a detailed description
+You can use "skills [skill name]" this gives a detailed description
 of the skill and what it does.
 
 To "use" skills type "help use"

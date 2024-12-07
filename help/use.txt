@@ -1,6 +1,6 @@
 ................................................................................
 Title: Use
-Syntax: "use <skill>" , "use <skill> on <target>" , "use <skill> at <target>" 
+Syntax: "use [skill]" , "use [skill] on [target]" , "use [skill] at [target]" 
 This syntax works for consumable items aswell.
 
 Skills are abilities you can use in and out of combat
