@@ -22,6 +22,9 @@ def command_flee(self, line):
 @check_not_in_combat
 @check_alive
 def command_go(self, line):
+    if line == '':
+        self.sendLine('Go where?')
+        return
     world = self.protocol.factory.world
     direction = None
     for _exit in self.room.exits:

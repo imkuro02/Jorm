@@ -25,7 +25,7 @@ def command_look(self, line):
                         see = see + f' @yellow(DEAD)@normal'
                     if i.status == ActorStatusType.FIGHTING:
                         see = see + f' @yellow(FIGHTING)@normal'
-                    see = see + '\n'
+                    see = see +'\n'
 
         exits = self.protocol.factory.world.rooms[room.uid].exits
         see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'

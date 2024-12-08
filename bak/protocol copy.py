@@ -22,12 +22,33 @@ class Protocol(protocol.Protocol):
         
 
     def clear_screen(self):
+        return
         self.sendLine('\x1b[0m')
         self.sendLine('\u001B[2J')
-
+        for i in range(0,32):
+            self.sendLine('~')
 
     def splash_screen(self):
+        #def clear_screen(client_socket):
+        ## Send ANSI escape sequence to clear screen
+        
+        #client_socket.send(b"\x1b[2J\x1b[H")
+
+        #self.transport.write(IAC + DO + LINEMODE)
+        #self.transport.write(IAC + WONT + ECHO)
+
         self.clear_screen()
+
+        #all_colors = utils.print_colors()
+        #self.sendLine(all_colors)
+        #all_colors = ''
+        #for i in range(31,40):
+        #    all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
+
+        #for i in range(0,255):
+        #    all_colors = all_colors + f'\x1b[1;{i}m{i}\t'
+
+        
         self.sendLine('Type "b" to restart login / register process.')
         self.sendLine('Welcome! Please enter your username:')
 
@@ -80,8 +101,28 @@ class Protocol(protocol.Protocol):
             user = self.factory.db.read_user(self.username)
             if user[1] == line:
                 self.clear_screen()
-                self.load_actor()
-                
+
+                actor = self.factory.db.read_actor(self.username)
+
+                if actor == None:
+                    self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms['loading'])
+                else:
+                    self.actor = Player(self, _id = actor['id'], name = self.username, room = self.factory.world.rooms['loading'])
+                    self.actor.stats = actor['stats']
+                    self.actor.skills = actor['skills']
+                    self.actor.slots = actor['slots']
+                    for item in actor['inventory'].values():
+                        new_item = load_item(item)
+                        self.actor.inventory[new_item.id] = new_item
+                    self.compare_slots_to_items()
+
+                self.state = self.PLAY
+               
+                if actor == None:
+                    self.save_actor()
+                    self.actor.room.world.rooms['tutorial'].move_player(self.actor)
+                else:
+                    self.actor.room.world.rooms['home'].move_player(self.actor)
                      
                 
                 
@@ -102,33 +143,34 @@ class Protocol(protocol.Protocol):
 
     def load_actor(self):
         
-        actor = self.factory.db.read_actor(self.username)
-
-        if actor == None: # new actor
-            self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms['loading'])
-        else: # load an existing actor
-            self.actor = Player(self, _id = actor['id'], name = self.username, room = self.factory.world.rooms['loading'])
-            self.actor.stats = actor['stats']
-            self.actor.skills = actor['skills']
-            self.actor.slots = actor['slots']
-            for item in actor['inventory'].values():
-                new_item = load_item(item)
-                self.actor.inventory[new_item.id] = new_item
-            self.compare_slots_to_items()
-
-        self.state = self.PLAY
-        
+        actor = self.factory.db.read_actor(self.actor.name)
         if actor == None:
-            self.save_actor()
-            self.actor.room.world.rooms['tutorial'].move_player(self.actor)
-        else:
-            self.actor.room.world.rooms['home'].move_player(self.actor)
+            return False
+
+        #print(actor)
+        #stats = {}
+        #for s in actor['stats']:
+        #   self.actor.stats[getattr(StatType, s)] = actor['stats'][s]
+        self.actor.id = actor['id']
+        self.actor.stats = actor['stats']
+        self.actor.skills = actor['skills']
+        self.actor.slots = actor['slots']
+        for item in actor['inventory'].values():
+            new_item = load_item(item)
+            self.actor.inventory[new_item.id] = new_item
+
+        self.compare_slots_to_items()
+        return True
         
     def save_actor(self):
         self.sendLine('saving..')
         inventory = {}
         for i in self.actor.inventory:
             inventory[i] = save_item(self.actor.inventory[i])
+        
+        #stats = {}
+        #for s in self.actor.stats:
+        #    stats[s.name] = self.actor.stats[s]
 
         self.factory.db.write_actor(self.actor.name ,{
             'id':   self.actor.id,
@@ -145,10 +187,14 @@ class Protocol(protocol.Protocol):
 
     def disconnect(self):
         self.transport.abortConnection()
+        #if self.actor != None:
+           
 
     # override
     def connectionLost(self, reason):
         if self.actor != None:
+            
+            #self.factory.broadcast(f'{self.actor.name} has disconnected.')
 
             self.actor.affect_manager.unload_all_affects(silent = True)
                 

@@ -1,4 +1,4 @@
-# ttys -p 8080 client.py
+# ttyd -p 8080 client.py
 import socket
 import threading
 

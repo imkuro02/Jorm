@@ -87,9 +87,9 @@ class Player(Actor):
     prompt = prompt 
     command_send_prompt = command_send_prompt
 
-    def __init__(self, protocol, name, room):
+    def __init__(self, protocol, name, room, _id = None):
         self.protocol = protocol
-        super().__init__(name, room)
+        super().__init__(name, room, _id)
         self.last_line_sent = None
         self.last_command_used = None
         self.send_line_buffer = []
@@ -133,7 +133,8 @@ class Player(Actor):
         line = " ".join(line.split()[1::]).strip()
 
         if command in one_letter_commands:
-            script = getattr(self, one_letter_commands[command])
+            script = getattr(self, commands[one_letter_commands[command]])
+            self.last_command_used = one_letter_commands[command]
             script(line)
             return
         
@@ -141,6 +142,8 @@ class Player(Actor):
         if best_score < 75:
             self.sendLine(f'You wrote "{command}" did you mean "{best_match}"?\nUse "help {best_match}" to learn more about this command.')
             return
+
+        
         script = getattr(self, commands[best_match])
         self.last_command_used = best_match
         script(line)

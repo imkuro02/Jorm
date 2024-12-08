@@ -55,7 +55,7 @@ class Combat:
 
         if self.current_actor.room != self.room:
             print(self.current_actor.name, 'removed from combat')
-            if self.current_actor.name in self.participants: del self.participants[self.current_actor.name]
+            if self.current_actor.id in self.participants: del self.participants[self.current_actor.id]
             self.next_turn()
             return
 

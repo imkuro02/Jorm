@@ -48,10 +48,10 @@ class Room:
         for i in self.entities.values():
             #print(i)
             if type(i).__name__ == "Player":
-                participants[i.name] = i
+                participants[i.id] = i
                 players_here = True
             if type(i).__name__ == "Enemy":
-                participants[i.name] = i
+                participants[i.id] = i
                 npcs_here = True
 
         if players_here and npcs_here:
@@ -62,16 +62,16 @@ class Room:
         if player in player.room.entities.values():
             self.remove_player(player)
         player.room = self
-        self.entities[player.name] = player
+        self.entities[player.id] = player
         if not silent:
             player.command_look('')
 
     def remove_player(self, player):
-        del player.room.entities[player.name]
+        del player.room.entities[player.id]
 
     def move_enemy(self, enemy):
         enemy.room = self
-        self.entities[enemy.name] = enemy
+        self.entities[enemy.id] = enemy
  
 class InstancedRoom(Room):
 
@@ -108,7 +108,7 @@ class World:
                 for enemy in room['enemies']:
                     #self.rooms[r].spawn_enemy(enemy)
                     create_enemy(self.rooms[r], enemy)
-                    print(r, enemy)
+                    #print(r, enemy)
 
             
 

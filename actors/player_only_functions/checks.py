@@ -37,7 +37,7 @@ def check_your_turn(func):
 def check_alive(func):
     def wrapper(self, line):
         if self.status == ActorStatusType.DEAD:
-            self.sendLine('@redYou are dead@normal')
+            self.sendLine('@redYou are dead, use "rest" command to respawn.@normal')
             return 
         return func(self, line)
     return wrapper

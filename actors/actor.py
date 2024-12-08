@@ -1,4 +1,5 @@
 from copy import deepcopy
+import uuid
 from items.manager import Item
 from affects.manager import AffectsManager
 from config import DamageType, ActorStatusType, EquipmentSlotType, StatType
@@ -25,10 +26,15 @@ class CooldownManager:
         for i in cooldowns_to_remove:
             self.remove_cooldown(i)
 
-
 class Actor:
-    def __init__(self, name = None, room = None):
+    def __init__(self, name = None, room = None, _id = None):
         self.name = name
+
+        if _id == None:
+            self.id = str(uuid.uuid4())
+        else: 
+            self.id = _id
+
         #self.protocol = protocol
         self.room = room
         if self.room != None:
@@ -84,12 +90,10 @@ class Actor:
         if self.status == ActorStatusType.FIGHTING:
             output = f'{output}'
 
-        
-
         return output
 
     def get_character_sheet(self):
-        output = f'{self.pretty_name()}\n'
+        output = f'{self.pretty_name()} ({self.status})\n'
         output += f'{StatType.HP+":":<15} {self.stats[StatType.HP]}/{self.stats[StatType.HPMAX]}\n'
         output += f'{StatType.MP+":":<15} {self.stats[StatType.MP]}/{self.stats[StatType.MPMAX]}\n'
         _piss = [StatType.BODY, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
@@ -163,7 +167,7 @@ class Actor:
         self.room.inventory_add_item(item)
 
         if type(self).__name__ != "Player":
-            del self.room.entities[self.name]
+            del self.room.entities[self.id]
             self.room = None
 
     def simple_broadcast(self, line_self, line_others):

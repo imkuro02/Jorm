@@ -1,13 +1,13 @@
 one_letter_commands = {
-    'i':    'command_inventory',
-    'l':    'command_look',
-    'w':    'command_wear',
-    'r':    'command_remove',
-    's':    'command_say',
-    'g':    'command_go',
-    'e':    'command_equipment',
-    'f':    'command_fight',
-    'p':    'command_send_prompt'
+    'i':    'inventory',
+    'l':    'look',
+    'w':    'wear',
+    'r':    'remove',
+    's':    'say',
+    'g':    'go',
+    'e':    'equipment',
+    'f':    'fight',
+    'p':    'prompt'
 }
 
 commands = {
@@ -42,6 +42,7 @@ commands = {
     'rest':     'command_rest',
     
     'respec':   'command_respec',
+    'prompt':   'command_send_prompt',
 
     'minew':    'command_create_item',
     'miupdate': 'command_update_item',

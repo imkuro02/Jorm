@@ -1,13 +1,10 @@
 ................................................................................
 Title: Practice
-Syntax: "practice" , "practice [skill name] [amount]" 
+Syntax: "practice" , "practice [skill name] [amount]"  
  
-You can view the amount of Practice Points you have with "stats" or "practice"
+You can view the amount of Practice Points you have with "stats" or "practice" 
 
-When you want to practice a skill, use "practice [skill name] [amount]" 
-The "amount" is the new amount you wish to practice to.
-So if your knowledge of Swing is at a 50, and you want it to be at 60:
-Type "practice swing 60" to spend 10 practice points on swing.
-
+When you want to practice a skill, use "practice [skill name] [amount]"   
+For example "practice swing 20" will spend 20 points on the swing skill.
 You cannot practice any skills beyond 95.
 ................................................................................

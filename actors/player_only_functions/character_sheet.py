@@ -2,6 +2,7 @@ from actors.player_only_functions.checks import check_not_in_combat, check_alive
 from config import StatType, SKILLS
 from skills.manager import get_skills
 import utils
+
 @check_not_in_combat
 def command_level_up(self, stat):
     stat = stat.lower().capitalize()
@@ -43,7 +44,7 @@ def command_level_up(self, stat):
     self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. @normal')
         
 
-
+@check_alive
 @check_not_in_combat
 def command_practice(self, line):
     #print(name_to_id[skill_name])
@@ -69,7 +70,7 @@ def command_practice(self, line):
             return
         
         try:
-            new_prac_level = int(''.join(line[-1::1]))
+            pp_to_spend = int(''.join(line[-1::1]))
             line = " ".join(line[:-1:])
         except ValueError as e:
             self.sendLine('@redWrong syntax for practicing@normal')
@@ -92,8 +93,9 @@ def command_practice(self, line):
         if skill_id in self.skills:
             current_prac_level = self.skills[skill_id]
 
-        pp_to_spend = new_prac_level - current_prac_level
-
+        #pp_to_spend = #new_prac_level - current_prac_level
+        new_prac_level = current_prac_level + pp_to_spend
+        
         if pp_to_spend <= 0:
             self.sendLine('@redYou can\'t spend negative amount of Practice Points@normal')
             return
@@ -111,8 +113,6 @@ def command_practice(self, line):
         self.sendLine(f'@greenYou spend {pp_to_spend} Practice Points on "{skill_name}"@normal')
         self.skills[skill_id] = new_prac_level
        
-
-        
 def command_skills(self, line):
     id_to_name, name_to_id = get_skills()
     if len(line) > 0:
@@ -187,8 +187,11 @@ def command_stats(self, line):
         output += f'@greenYou have enough exp to level up@normal\n'
     output += f'Experience:      {self.stats[StatType.EXP]}\n'
     output += f'Practice Points: {self.stats[StatType.PP]}\n'
+    
+    
     self.sendLine(output)
 
+@check_alive
 def command_affects(self, line):
     if len(self.affect_manager.affects) == 0:
         output = 'You are not affected by anything'
@@ -198,24 +201,7 @@ def command_affects(self, line):
         for aff in self.affect_manager.affects.values():
             output += f'{aff.info()}'
     self.sendLine(output)
-    '''
-    output = ''
-    if line == '':
-        if len(self.affect_manager.affects) == 0:
-            output = 'You are not affected by anything'
-        else:
-            output = 'You are affected by:\n' 
-            output += f'{"Affliction":<15} {"For":<3} {"Info"}\n'
-            for aff in self.affect_manager.affects.values():
-                output += f'{aff.info()}'
-    else:
-        output = self.affect_manager.load_affect(line)
-        if output == None:
-            self.sendLine('Could not load affect')
-            return
-        self.affect_manager.set_affect(output)
-    self.sendLine(output)
-    '''
+
 
 def get_exp_needed_to_level(self):
     exp_needed = 2 ** self.stats[StatType.LVL]

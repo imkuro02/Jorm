@@ -72,7 +72,7 @@ class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.take_damage(self.user, 10 + self.users_skill_level + self.user.stats[StatType.SOUL], DamageType.HEALING)
+            self.other.take_damage(self.user, 10 + int(self.users_skill_level*0.1) + self.user.stats[StatType.SOUL], DamageType.HEALING)
 
 class SkillBash(SkillSwing):
     def use(self):
