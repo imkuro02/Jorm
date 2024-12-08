@@ -9,8 +9,9 @@ class Database:
 
         # Create the users table
         self.cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            username TEXT PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS accounts (
+            unique_id TEXT PRIMARY KEY,
+            username TEXT NOT NULL,
             password TEXT NOT NULL
         )
         ''')
@@ -18,54 +19,55 @@ class Database:
         # Create the actors table
         self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS actors (
-            username TEXT PRIMARY KEY,
+            unique_id TEXT PRIMARY KEY,
             data TEXT,
-            FOREIGN KEY(username) REFERENCES users(username)
+            FOREIGN KEY(unique_id) REFERENCES users(unique_id)
         )
         ''')
         
         # Commit changes
         self.conn.commit()
 
-    def write_user(self, username, password):
-        # Insert a new user or update the password if the user already exists
-        self.cursor.execute('''
-        INSERT INTO users (username, password)
-        VALUES (?, ?)
-        ON CONFLICT(username) DO UPDATE SET password = excluded.password
-        ''', (username, password))
+    def find_account_from_username(self, username):
+        self.cursor.execute(
+            '''
+                SELECT unique_id, username, password 
+                FROM accounts WHERE username = ?
+            ''', (username,))
         
-        # Commit the transaction
+        account = self.cursor.fetchone()
+        return account
+        
+    def create_new_account(self, unique_id, username, password):
+        self.cursor.execute('''
+            INSERT INTO accounts (unique_id, username, password)
+            VALUES (?, ?, ?)
+            ON CONFLICT(unique_id) DO UPDATE SET 
+                username = excluded.username,
+                password = excluded.password
+        ''', (unique_id, username, password))
         self.conn.commit()
 
-    def read_user(self, username):
-        # Retrieve user data based on the username
-        self.cursor.execute('''
-        SELECT username, password FROM users WHERE username = ?
-        ''', (username,))
-        
-        user = self.cursor.fetchone()
-        return user  # Returns None if the user doesn't exist, otherwise returns (username, password)
-
-    def write_actor(self, username, actor_data):
+    def write_actor(self, unique_id, actor_data):
         # Serialize the actor_data dictionary to JSON
         actor_data_json = json.dumps(actor_data)
 
         # Insert a new actor or update the data if the actor already exists
         self.cursor.execute('''
-        INSERT INTO actors (username, data)
+        INSERT INTO actors (unique_id, data)
         VALUES (?, ?)
-        ON CONFLICT(username) DO UPDATE SET data = excluded.data
-        ''', (username, actor_data_json))
+        ON CONFLICT(unique_id) DO UPDATE SET data = excluded.data
+        ''', (unique_id, actor_data_json))
         
         # Commit the transaction
+        print(unique_id)
         self.conn.commit()
 
-    def read_actor(self, username):
+    def read_actor(self, unique_id):
         # Retrieve actor data based on the username
         self.cursor.execute('''
-        SELECT data FROM actors WHERE username = ?
-        ''', (username,))
+        SELECT data FROM actors WHERE unique_id = ?
+        ''', (unique_id,))
         
         result = self.cursor.fetchone()
         if result is None:

@@ -3,6 +3,7 @@ from actors.player import Player
 from items.manager import load_item, save_item
 import utils
 from config import StatType
+import uuid
 
 IAC = b'\xff'     # Interpret as Command
 WILL = b'\xfb'    # Will Perform
@@ -16,83 +17,157 @@ LINEMODE = b'\x22' # Line mode
 class Protocol(protocol.Protocol):
     def __init__(self, factory):
         self.factory = factory
-        self.state: callable = self.LOGIN
+        self.state: callable = self.LOGIN_OR_REGISTER
+        
         self.actor = None
+
+        self.account = None
         self.username = None
+        self.password = None
+
+        self.uuid = str(uuid.uuid4())
         
 
     def clear_screen(self):
         self.sendLine('\x1b[0m')
         self.sendLine('\u001B[2J')
 
-
     def splash_screen(self):
         self.clear_screen()
-        self.sendLine('Type "b" to restart login / register process.')
-        self.sendLine('Welcome! Please enter your username:')
+        self.sendLine('SPLASH SCREEN')
 
+    def change_state(self, state):
+        match state:
+            case self.LOGIN_OR_REGISTER:
+                self.sendLine('type @bgreennew@normal to register, type @bgreenlogin@normal to log in.')
+
+            case self.LOGIN_USERNAME:
+                self.sendLine('Your @bgreenusername@normal:')
+
+            case self.LOGIN_PASSWORD:
+                self.sendLine('Your @bgreenpassword@normal:')
+
+            case self.REGISTER_USERNAME:
+                self.sendLine('Creating new account. enter your @bgreenusername@normal:')
+
+            case self.REGISTER_PASSWORD1:
+                self.sendLine('Enter your @bgreenpassword@normal:')
+
+            case self.REGISTER_PASSWORD2:
+                self.sendLine('Enter @bgreenpassword@normal again:')
+
+            case self.PLAY_OR_SETTINGS:
+                self.sendLine(f'You are now logged in as @bcyan{self.username}@normal')
+                self.sendLine(f'Type @bgreenplay@normal to enter the game')
+                self.sendLine(f'Type @bgreenback@normal to log out')
+                self.sendLine(f'...')
+                self.sendLine(f'To set new username or password type:')
+                self.sendLine(f'username "new_username" "current_password"\n(This is NOT your in game name)')
+                self.sendLine(f'password "new_password" "current_password"')
+                
+
+        self.state = state
+            
 
     def PLAY(self, line):
-        if line == 'save':
-            self.save_actor()
-            return
-        if line == 'load':
-            self.load_actor()
-            return
-        if line == 'logout':
-            self.disconnect()
-            return
-        if line == 'clear':
-            self.clear_screen()
-            return
         self.actor.handle(line)
         return
             
-    def REGISTER(self, line):
-        if line == 'b':
-            self.username = None
-            self.splash_screen()
-            self.state = self.LOGIN
+    def REGISTER_USERNAME(self, line):
+        self.account = self.factory.db.find_account_from_username(line)
+        if self.account != None:
+            self.sendLine('This username is already taken')
+            self.change_state(self.REGISTER_USERNAME)
+            return
+        
+        self.username = line
+        self.change_state(self.REGISTER_PASSWORD1)
+
+    def REGISTER_PASSWORD1(self, line):
+        self.password = line
+        self.change_state(self.REGISTER_PASSWORD2)
+
+    def REGISTER_PASSWORD2(self, line):
+        if line != self.password:
+            self.sendLine('Passwords do not match')
+            return
+        
+        self.factory.db.create_new_account(self.uuid, self.username, self.password)
+        self.sendLine('Account created! you can now log in!')
+        self.change_state(self.LOGIN_OR_REGISTER)
+
+    def LOGIN_PASSWORD(self, line):
+        self.password = line
+        if self.account == None:
+            self.sendLine('Wrong username or password')
+            self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        password = line
-        self.factory.db.write_user(self.username, password)
-        self.sendLine(f'Account "{self.username}" registered! input password:')
-        self.state = self.LOGIN
-        #self.username = None
-
-    def LOGIN(self, line):
-        if line == 'b':
-            self.username = None
-            self.splash_screen()
-            self.state = self.LOGIN
+        if self.account[2] != line:
+            self.sendLine('Wrong username or password')
+            self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        if self.username == None:
-            self.username = line
-            user = self.factory.db.read_user(self.username)
-            if user == None:
-                self.sendLine(f'Creating a new account with name "{self.username}", input password: ')
-                self.state = self.REGISTER
-            else:
-                self.sendLine(f'Account exists, input password: \n')
-        else:
-            user = self.factory.db.read_user(self.username)
-            if user[1] == line:
-                self.clear_screen()
-                self.load_actor()
-                
-                     
-                
-                
-            else:
-                self.splash_screen()
-                self.sendLine(f'Wrong password.')
+        self.uuid = self.account[0]
+        self.username = self.account[1]
+        self.password = self.account[2]
 
+        self.change_state(self.PLAY_OR_SETTINGS)
+        #self.sendLine(str(self.account))
+        
+        
+    def LOGIN_USERNAME(self, line):
+        self.account = self.factory.db.find_account_from_username(line)
+        self.username = line
+        self.change_state(self.LOGIN_PASSWORD)
+        return
+
+    def LOGIN_OR_REGISTER(self, line):
+        if line.lower() == 'login'.lower():
+            self.change_state(self.LOGIN_USERNAME)
+            return
+        if line.lower() == 'new'.lower():
+            self.change_state(self.REGISTER_USERNAME)
+            return
+        self.change_state(self.LOGIN_OR_REGISTER)
+        return
+
+    def PLAY_OR_SETTINGS(self, line):
+        if line == 'back':
+            self.change_state(self.LOGIN_OR_REGISTER)
+            return
+
+        if line == 'play':
+            self.load_actor()
+            self.change_state(self.PLAY)
+            return
+
+        vals = line.split('"')
+        setting = vals[0].strip()
+        new_val = vals[1]
+        cur_pwd = vals[3]
+
+        if cur_pwd != self.password:
+            self.sendLine('Wrong password')
+            return
+
+        if setting.lower() == 'username':
+            acc = self.factory.db.find_account_from_username(new_val)
+            print(acc)
+            if acc != None:
+                self.sendLine('@redThis login username is taken@normal')
+                return
+            self.username = new_val
+        if setting.lower() == 'password':
+            self.password = new_val
+
+        self.factory.db.create_new_account(self.uuid, self.username, self.password)
+        self.sendLine('@bgreenAccount updated@normal')
     # override
     def connectionMade(self):
         self.factory.protocols.add(self)
         self.splash_screen()
+        self.change_state(self.LOGIN_OR_REGISTER)
         
     def compare_slots_to_items(self):
         for i in self.actor.slots.values():
@@ -101,13 +176,11 @@ class Protocol(protocol.Protocol):
                 print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{i} is not in inventory?')
 
     def load_actor(self):
-        
-        actor = self.factory.db.read_actor(self.username)
-
+        actor = self.factory.db.read_actor(self.account[0])
         if actor == None: # new actor
             self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms['loading'])
         else: # load an existing actor
-            self.actor = Player(self, _id = actor['id'], name = self.username, room = self.factory.world.rooms['loading'])
+            self.actor = Player(self, _id = actor['id'], name = actor['name'], room = self.factory.world.rooms['loading'])
             self.actor.stats = actor['stats']
             self.actor.skills = actor['skills']
             self.actor.slots = actor['slots']
@@ -130,7 +203,7 @@ class Protocol(protocol.Protocol):
         for i in self.actor.inventory:
             inventory[i] = save_item(self.actor.inventory[i])
 
-        self.factory.db.write_actor(self.actor.name ,{
+        self.factory.db.write_actor(self.account[0] ,{
             'id':   self.actor.id,
             'name': self.actor.name,
             'stats': self.actor.stats,
@@ -140,7 +213,7 @@ class Protocol(protocol.Protocol):
         })
         self.compare_slots_to_items()
 
-        actor = self.factory.db.read_actor(self.username)
+        actor = self.factory.db.read_actor(self.account[0])
         #print(actor)
 
     def disconnect(self):

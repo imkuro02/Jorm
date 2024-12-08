@@ -1,4 +1,5 @@
 # ttyd -p 8080 client.py
+# ttyd -t 'theme={"background": "black"}' -p 8080 python3 client.py 
 import socket
 import threading
 
@@ -47,6 +48,8 @@ def main():
         
     except Exception as e:
         print(f"Error connecting to server: {e}")
+    except KeyboardInterrupt:
+        client_socket.send('*Interrupt*'.encode('utf-8')) 
     finally:
         client_socket.close()
 
