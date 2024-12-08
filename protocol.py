@@ -33,8 +33,27 @@ class Protocol(protocol.Protocol):
         self.sendLine('\u001B[2J')
 
     def splash_screen(self):
+        splash = '''
+ _    _      _                            _            ___                      
+| |  | |    | |                          | |          |_  |                     
+| |  | | ___| | ___ ___  _ __ ___   ___  | |_ ___       | | ___  _ __ _ __ ___  
+| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \ | __/ _ \      | |/ _ \| '__| '_ ` _ \ 
+\  /\  /  __/ | (_| (_) | | | | | |  __/ | || (_) | /\__/ / (_) | |  | | | | | |
+ \/  \/ \___|_|\___\___/|_| |_| |_|\___|  \__\___/  \____/ \___/|_|  |_| |_| |_|
+
+                       .-'~~~-.
+                     .'o  oOOOo`.
+                    :~~~-.oOo   o`.
+                     `. \ ~-.  oOOo.
+                       `.; / ~.  OO:
+                       .'  ;-- `.o.'
+                      ,'  ; ~~--'~
+                      ;  ;
+_______\|/__________\\\\;_\\\\//___\|/___________________\|/_______________________                                                                 
+        '''
         self.clear_screen()
-        self.sendLine('SPLASH SCREEN')
+        splash = f'@bwhite{splash}@normal'
+        self.sendLine(splash)
 
     def change_state(self, state):
         match state:
