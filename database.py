@@ -60,7 +60,7 @@ class Database:
         ''', (unique_id, actor_data_json))
         
         # Commit the transaction
-        print(unique_id)
+        #print(unique_id)
         self.conn.commit()
 
     def read_actor(self, unique_id):

@@ -82,7 +82,7 @@ class SkillBash(SkillSwing):
                 AffType.STUNNED,
                 self.other.affect_manager,
                 'Stunned', 'Unable to act during combat turns',
-                turns = 3
+                turns = 1
             )
             self.other.affect_manager.set_affect_object(stunned_affect)
 
@@ -90,7 +90,7 @@ class SkillMagicMissile(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.take_damage(self.user, self.users_skill_level + self.user.stats[StatType.MIND], DamageType.MAGICAL)
+            self.other.take_damage(self.user, self.user.stats[StatType.MIND], DamageType.MAGICAL)
 
 class SkillBecomeEthereal(Skill):
     def use(self):

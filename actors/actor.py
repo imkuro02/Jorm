@@ -94,11 +94,11 @@ class Actor:
 
     def get_character_sheet(self):
         output = f'{self.pretty_name()} ({self.status})\n'
-        output += f'{StatType.HP+":":<15} {self.stats[StatType.HP]}/{self.stats[StatType.HPMAX]}\n'
-        output += f'{StatType.MP+":":<15} {self.stats[StatType.MP]}/{self.stats[StatType.MPMAX]}\n'
+        output += f'{StatType.name[StatType.HP]+":":<15} {self.stats[StatType.HP]}/{self.stats[StatType.HPMAX]}\n'
+        output += f'{StatType.name[StatType.MP]+":":<15} {self.stats[StatType.MP]}/{self.stats[StatType.MPMAX]}\n'
         _piss = [StatType.BODY, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
         for _shit in _piss:
-            output += f'{_shit+":":<15} {self.stats[_shit]}\n'
+            output += f'{StatType.name[_shit]+":":<15} {self.stats[_shit]}\n'
         return output
 
     def tick(self):

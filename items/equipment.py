@@ -53,19 +53,19 @@ class Equipment(Item):
         r = self.requirements
         if self.slot == None:
             return output
-        output += f'Slot: {self.slot} '
+        output += f'Slot: {EquipmentSlotType.name[self.slot]} '
         if self.equiped:
             output += f'{"@green(Equiped)@normal"}'
         output += '\n'
         output += f'{StatType.LVL}: {r[StatType.LVL]}\n'
-        space = 9
+        space = 12
         output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
         for stat in self.stats.keys():
             s = self.stats[stat]
             r = self.requirements[stat]
             if r == 0 and s == 0:
                 continue
-            output += f'@normal{stat:<{space}} {s:<{space}} {r:<{space}}\n'
+            output += f'@normal{StatType.name[stat]:<{space}} {s:<{space}} {r:<{space}}\n'
     
         return output
 

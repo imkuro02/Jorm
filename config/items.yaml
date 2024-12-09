@@ -3,87 +3,87 @@ tutorial rat dagger:
   description: A dagger... what was the rat doing with a fucking dagger?
   equiped: false
   history: {}
-  item_type: Equipment
+  item_type: equipment
   keep: false
   name: Dagger
   requirements:
-    Armor: 0
-    Body: 0
-    Level: 1
-    Marmor: 0
-    Max Health: 0
-    Max Mana: 0
-    Mind: 0
-    Soul: 0
-  slot: Primary
+    armor: 0
+    body: 0
+    lvl: 1
+    marmor: 0
+    hp_max: 0
+    mp_max: 0
+    mind: 0
+    soul: 0
+  slot: primary
   stats:
-    Armor: 0
-    Body: 1
-    Marmor: 0
-    Max Health: 10
-    Max Mana: 10
-    Mind: 1
-    Soul: 1
+    armor: 0
+    body: 1
+    marmor: 0
+    hp_max: 10
+    mp_max: 10
+    mind: 1
+    soul: 1
   tags: []
 
 sword:
   description: Cool sword bro
   equiped: false
   history: {}
-  item_type: Equipment
+  item_type: equipment
   keep: false
   name: Sword
   requirements:
-    Armor: 0
-    Body: 0
-    Level: 3
-    Marmor: 0
-    Max Health: 0
-    Max Mana: 0
-    Mind: 0
-    Soul: 0
-  slot: Primary
+    armor: 0
+    body: 0
+    lvl: 3
+    marmor: 0
+    hp_max: 0
+    mp_max: 0
+    mind: 0
+    soul: 0
+  slot: primary
   stats:
-    Armor: 0
-    Body: 2
-    Marmor: 0
-    Max Health: 0
-    Max Mana: 0
-    Mind: 0
-    Soul: 1
+    armor: 0
+    body: 2
+    marmor: 0
+    hp_max: 0
+    mp_max: 0
+    mind: 0
+    soul: 1
   tags: []
 
 lucky charm:
   description: Description here
   equiped: false
   history: {}
-  item_type: Equipment
+  item_type: equipment
   keep: false
   name: Lucky Charm
   requirements:
-    Armor: 0
-    Body: 0
-    Level: 3
-    Marmor: 0
-    Max Health: 0
-    Max Mana: 0
-    Mind: 0
-    Soul: 0
-  slot: Trinket
+    armor: 0
+    body: 0
+    lvl: 3
+    marmor: 0
+    hp_max: 0
+    mp_max: 0
+    mind: 0
+    soul: 0
+  slot: trinket
   stats:
-    Armor: 0
-    Body: 0
-    Marmor: 0
-    Max Health: 0
-    Max Mana: 0
-    Mind: 0
-    Soul: 0
+    armor: 0
+    body: 0
+    marmor: 0
+    hp_max: 0
+    mp_max: 0
+    mind: 0
+    soul: 0
   tags: []
 
 red potion:
   description: Just a bottle of cold tomato soup
   history: {}
-  item_type: Consumable
+  item_type: consumable
   keep: false
   name: Red Potion
   skills:
@@ -94,25 +94,25 @@ long sword:
   description: Cool sword bro
   equiped: false
   history: {}
-  item_type: Equipment
+  item_type: equipment
   keep: false
   name: Sword
   requirements:
-    Armor: 0
-    Body: 0
-    Level: 3
-    Marmor: 0
-    Max Health: 0
-    Max Mana: 0
-    Mind: 0
-    Soul: 0
-  slot: Primary
+    armor: 0
+    body: 0
+    lvl: 3
+    marmor: 0
+    hp_max: 0
+    mp_max: 0
+    mind: 0
+    soul: 0
+  slot: primary
   stats:
-    Armor: 0
-    Body: 2
-    Marmor: 0
-    Max Health: 0
-    Max Mana: 0
-    Mind: 0
-    Soul: 1
+    armor: 0
+    body: 2
+    marmor: 0
+    hp_max: 0
+    mp_max: 0
+    mind: 0
+    soul: 1
   tags: []

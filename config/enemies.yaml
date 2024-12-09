@@ -1,17 +1,17 @@
 template:
   name: Skeleton
   stats:
-    Health: 15
-    Mana: 20
+    hp: 3
+    mp: 20
 
-    Armor: 0
-    Marmor: 0
+    armor: 0
+    marmor: 0
 
-    Body: 1
-    Mind: 2
-    Soul: 0
+    body: 0
+    mind: 0
+    soul: 0
     
-    Experience: 1
+    exp: 2
 
   loot:
     long sword: 1
@@ -31,45 +31,43 @@ template:
 skeleton:
   name: Skeleton
   stats:
-    Health: 15
-    Mana: 200
+    hp: 40
+    mp: 60
 
-    Armor: 0
-    Marmor: 0
+    armor: 4
+    marmor: 0
 
-    Body: 1
-    Mind: 0
-    Soul: 0
+    body: 6
+    mind: 0
+    soul: 0
     
-    Experience: 4
+    exp: 5
 
   loot:
-    long sword: 1
+    long sword: 0.1
 
   skills:
-    magic missile: 8
-    swing: 3
+    swing: 75
 
   combat_loop:
     - skill: swing 
       target: enemy_random
-    - skill: magic missile 
-      target: enemy_random
+
 
 rat:
   name: Rat
   stats:
-    Health: 5
-    Mana: 20
+    hp: 3
+    mp: 20
 
-    Armor: 0
-    Marmor: 0
+    armor: 0
+    marmor: 0
 
-    Body: 0
-    Mind: 0
-    Soul: 0
+    body: 0
+    mind: 0
+    soul: 0
     
-    Experience: 1
+    exp: 2
 
   loot: 
     lucky charm: 1
@@ -85,17 +83,17 @@ rat:
 tutorial rat:
   name: Rat
   stats:
-    Health: 3
-    Mana: 20
+    hp: 3
+    mp: 20
 
-    Armor: 0
-    Marmor: 0
+    armor: 0
+    marmor: 0
 
-    Body: 0
-    Mind: 0
-    Soul: 0
+    body: 0
+    mind: 0
+    soul: 0
     
-    Experience: 2
+    exp: 2
 
   loot: 
     tutorial rat dagger: 1

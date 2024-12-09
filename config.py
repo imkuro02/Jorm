@@ -2,9 +2,14 @@ import yaml
 from enum import Enum, auto
 
 class ItemType:
-    MISC = 'Misc'
-    EQUIPMENT = 'Equipment'
-    CONSUMABLE = 'Consumable'
+    MISC = 'misc'
+    EQUIPMENT = 'equipment'
+    CONSUMABLE = 'consumable'
+    name = {
+        MISC: 'Misc',
+        EQUIPMENT: 'Equipment',
+        CONSUMABLE: 'Consumable'
+    }
     
 class AffType:
     BASIC = 1
@@ -21,7 +26,7 @@ class DamageType:
     MAGICAL = 2
     HEALING = 3
     PURE = 4
-    CANCELLED = 5
+    CANCELLED = 5 # Cancels all damage
 
 class ActorStatusType:
     NORMAL = 'Normal'
@@ -29,30 +34,58 @@ class ActorStatusType:
     DEAD = 'Dead'
 
 class EquipmentSlotType:
-    HEAD =      'Head'
-    NECK =      'Neck'
-    CHEST =     'Chest'
-    HANDS =     'Hands'
-    BELT =      'Belt'
-    LEGS =      'Legs'
-    FEET =      'Feet'
-    TRINKET =   'Trinket'
-    PRIMARY =   'Primary'
-    SECONDARY = 'Secondary'
+    HEAD =      'head'
+    NECK =      'neck'
+    CHEST =     'chest'
+    HANDS =     'hands'
+    BELT =      'belt'
+    LEGS =      'legs'
+    FEET =      'feet'
+    TRINKET =   'trinket'
+    PRIMARY =   'primary'
+    SECONDARY = 'secondary'
+    name = {
+        HEAD:      'Head',
+        NECK:      'Neck',
+        CHEST:     'Chest',
+        HANDS:     'Hands',
+        BELT:      'Belt',
+        LEGS:      'Legs',
+        FEET:      'Feet',
+        TRINKET:   'Trinket',
+        PRIMARY:   'Primary',
+        SECONDARY: 'Secondary'
+    }
 
 class StatType:
-    HPMAX = 'Max Health'
-    MPMAX = 'Max Mana'
-    HP = 'Health'
-    MP = 'Mana'
-    BODY = 'Body'
-    MIND = 'Mind'
-    SOUL = 'Soul'
-    ARMOR = 'Armor'
-    MARMOR = 'Marmor'
-    EXP = 'Experience'
-    LVL = 'Level'
-    PP = 'Practice Points'
+    HPMAX =     'hp_max'
+    MPMAX =     'mp_max'
+    HP =        'hp'
+    MP =        'mp'
+    BODY =      'body'
+    MIND =      'mind'
+    SOUL =      'soul'
+    ARMOR =     'armor'
+    MARMOR =    'marmor'
+    EXP =       'exp'
+    LVL =       'lvl'
+    PP =        'pp'
+   # MONEY =     'money'
+    name = {
+        HPMAX:  'Max Health',
+        MPMAX:  'Max Mana',
+        HP:     'Health',
+        MP:     'Mana',
+        BODY:   'Body',
+        MIND:   'Mind',
+        SOUL:   'Soul',
+        ARMOR:  'Armor',
+        MARMOR: 'Magick Armor',
+        EXP:    'Experience',
+        LVL:    'Level',
+        PP:     'Practice Points',
+        #MONEY:  'Gold Pieces'
+    }
 
 SKILLS = {}
 with open('config/skills.yaml', 'r') as file:

@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_alive, check_no_empty_line
-from config import ItemType
+from config import ItemType, EquipmentSlotType
 
 def command_equipment(self, line):
     # if you type equip item, it will wear that item
@@ -16,9 +16,9 @@ def command_equipment(self, line):
     output = 'You are wearing:\n'
     for i in self.slots:
         if None == self.slots[i]:
-            output = output + f'{i + ":":<12} ...\n'
+            output = output + f'{EquipmentSlotType.name[i] + ":":<12} ...\n'
         else:
-            output = output + f'{i + ":":<12} {self.inventory[self.slots[i]].name}\n'
+            output = output + f'{EquipmentSlotType.name[i] + ":":<12} {self.inventory[self.slots[i]].name}\n'
     self.sendLine(output)
 
 @check_no_empty_line

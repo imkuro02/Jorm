@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_no_empty_line, check_not_in_combat, check_alive
-from config import ItemType
+from config import ItemType, StatType
 import utils
 
 def inventory_add_item(self, item):
@@ -63,6 +63,7 @@ def command_drop(self, line):
 def command_inventory(self, line):
     output = ''
     output = output + 'You look through your inventory and see:\n'
+    #output += f'{StatType.name[StatType.MONEY]}: {self.stats[StatType.MONEY]}\n'
     
     for i in self.inventory:
         if self.inventory[i].item_type == ItemType.EQUIPMENT:     

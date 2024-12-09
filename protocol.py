@@ -161,10 +161,18 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.change_state(self.PLAY)
             return
 
-        vals = line.split('"')
-        setting = vals[0].strip()
-        new_val = vals[1]
-        cur_pwd = vals[3]
+        
+        try:
+            vals = line.split('"')
+            setting = vals[0].strip()
+            new_val = vals[1]
+            cur_pwd = vals[3]
+        except IndexError:
+            return
+
+        if setting.lower not in 'username password'.split():
+            self.change_state(self.PLAY_OR_SETTINGS)
+            return
 
         if cur_pwd != self.password:
             self.sendLine('Wrong password')
@@ -172,7 +180,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
 
         if setting.lower() == 'username':
             acc = self.factory.db.find_account_from_username(new_val)
-            print(acc)
+            #print(acc)
             if acc != None:
                 self.sendLine('@redThis login username is taken@normal')
                 return

@@ -32,11 +32,13 @@ def command_level_up(self, stat):
     self.stats[stat] += 1
     self.stats[StatType.PP] += 20
 
-    self.stats[StatType.HPMAX] += 5
-    self.stats[StatType.MPMAX] += 5
-
-    self.stats[StatType.HPMAX] += self.stats[StatType.BODY] + round(self.stats[StatType.SOUL]*.5)
-    self.stats[StatType.MPMAX] += self.stats[StatType.MIND] + round(self.stats[StatType.SOUL]*.5) 
+    hp_bonus = 0 + 5 + self.stats[StatType.BODY] + round(self.stats[StatType.SOUL]*.5)
+    mp_bonus = 0 + 5 + self.stats[StatType.MIND] + round(self.stats[StatType.SOUL]*.5) 
+    self.stats[StatType.HPMAX]  += hp_bonus
+    self.stats[StatType.MPMAX]  += mp_bonus
+    self.stats[StatType.HP]     += hp_bonus
+    self.stats[StatType.MP]     += mp_bonus
+   
 
     #self.stats['armor'] += round(self.stats['dex']*.4)
     #self.stats['marmor'] += round(self.stats['dex']*.4)
@@ -123,11 +125,11 @@ def command_skills(self, line):
         output += f'{skill["name"]}\n'
         output += f'{skill["description"]}\n'
         output += f'\n'
-        output += f'MP cost: {skill["mp_cost"]} | HP cost: {skill["hp_cost"]} \n'
+        output += f'MP cost: {skill["mp_cost"]} | HP cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
         output += f'{"You can use this skill on yourself." if skill["target_self_is_valid"] else "You cannot use this skill on yourself."}\n'
         output += f'{"You can use this skill out of combat." if not skill["must_be_fighting"] else "You can only use this skill in combat."}\n'
         output += f'{"You can use this skill on others." if skill["target_others_is_valid"] else "You cannot use this skill on others."}\n'
-    
+        
 
         self.sendLine(output)
     else:
@@ -165,6 +167,7 @@ def command_respec(self, line):
             return
 
     exp = self.stats[StatType.EXP]
+    #money = self.stats[StatType.MONEY]
     temp_player = Player(None, self.name, None)
     self.stats = temp_player.stats
     self.skills = temp_player.skills
@@ -174,19 +177,21 @@ def command_respec(self, line):
     #self.stats = self.create_new_stats()
     #self.skills = self.create_new_skills()
     self.stats[StatType.EXP] = exp
+    #self.stats[StatType.EXP] = money
     self.sendLine('@greenYou have reset your stats, experience is kept.@normal')
 
 def command_stats(self, line):
     output = f'You are {self.get_character_sheet()}'
     output += f'\n'
     exp_needed = self.get_exp_needed_to_level() - self.stats[StatType.EXP]
-    output += f'Level: {self.stats[StatType.LVL]}\n'
+    output += f'{StatType.name[StatType.LVL]} {self.stats[StatType.LVL]}\n'
     if exp_needed > 0:
         output += f'@redYou need {exp_needed} exp to level up@normal\n'
     else:
         output += f'@greenYou have enough exp to level up@normal\n'
-    output += f'Experience:      {self.stats[StatType.EXP]}\n'
-    output += f'Practice Points: {self.stats[StatType.PP]}\n'
+    output += f'{StatType.name[StatType.EXP]}: {self.stats[StatType.EXP]}\n'
+    output += f'{StatType.name[StatType.PP]}: {self.stats[StatType.PP]}\n'
+    
     
     
     self.sendLine(output)
