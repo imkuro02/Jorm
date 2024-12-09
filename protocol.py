@@ -25,7 +25,7 @@ class Protocol(protocol.Protocol):
         self.username = None
         self.password = None
 
-        self.uuid = str(uuid.uuid4())
+        self.id = str(uuid.uuid4())
         
 
     def clear_screen(self):
@@ -33,7 +33,7 @@ class Protocol(protocol.Protocol):
         self.sendLine('\u001B[2J')
 
     def splash_screen(self):
-        splash = '''
+        splash = f'''
  _    _      _                            _            ___                      
 | |  | |    | |                          | |          |_  |                     
 | |  | | ___| | ___ ___  _ __ ___   ___  | |_ ___       | | ___  _ __ _ __ ___  
@@ -42,7 +42,7 @@ class Protocol(protocol.Protocol):
  \/  \/ \___|_|\___\___/|_| |_| |_|\___|  \__\___/  \____/ \___/|_|  |_| |_| |_|
 
                        .-'~~~-.
-                     .'o  oOOOo`.
+                     .'o  oOOOo`.       CURRENTLY ONLINE: {len(self.factory.protocols)}
                     :~~~-.oOo   o`.
                      `. \ ~-.  oOOo.
                        `.; / ~.  OO:
@@ -111,7 +111,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.sendLine('Passwords do not match')
             return
         
-        self.factory.db.create_new_account(self.uuid, self.username, self.password)
+        self.factory.db.create_new_account(self.id, self.username, self.password)
         self.sendLine('Account created! you can now log in!')
         self.change_state(self.LOGIN_OR_REGISTER)
 
@@ -127,7 +127,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        self.uuid = self.account[0]
+        self.id = self.account[0]
         self.username = self.account[1]
         self.password = self.account[2]
 
@@ -152,11 +152,11 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         return
 
     def PLAY_OR_SETTINGS(self, line):
-        if line == 'back':
+        if line == 'back' or line == 'b':
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        if line == 'play':
+        if line == 'play' or line == 'p':
             self.load_actor()
             self.change_state(self.PLAY)
             return
@@ -188,7 +188,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         if setting.lower() == 'password':
             self.password = new_val
 
-        self.factory.db.create_new_account(self.uuid, self.username, self.password)
+        self.factory.db.create_new_account(self.id, self.username, self.password)
         self.sendLine('@bgreenAccount updated@normal')
     # override
     def connectionMade(self):

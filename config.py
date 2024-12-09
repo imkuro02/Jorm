@@ -73,9 +73,9 @@ class StatType:
    # MONEY =     'money'
     name = {
         HPMAX:  'Max Health',
-        MPMAX:  'Max Mana',
+        MPMAX:  'Max Magicka',
         HP:     'Health',
-        MP:     'Mana',
+        MP:     'Magicka',
         BODY:   'Body',
         MIND:   'Mind',
         SOUL:   'Soul',

@@ -3,11 +3,14 @@ from config import ActorStatusType
 
 def check_is_admin(func):
     def wrapper(self, line):
-        with open('admins.txt', 'r') as file:
-            lines = file.readlines()  # Read all lines into a list
+        #with open('admins.txt', 'r') as file:
+        #    lines = file.readlines()  # Read all lines into a list
         # Check if the target string is in any of the lines
-        found = any(self.name in admin for admin in lines)
-        if not found:
+        #found = any(self.protocol.id in admin for admin in lines)
+        #if not found:
+        #    self.sendLine('You are not an admin')
+        #    return
+        if not self.admin:
             self.sendLine('You are not an admin')
             return
         return func(self, line)

@@ -21,6 +21,7 @@ commands = {
     'level':    'command_level_up',
     'practice': 'command_practice',
 
+    #'name':     'command_name_change',
     'stats':    'command_stats',
     'equipment':'command_equipment',
     'inventory':'command_inventory',

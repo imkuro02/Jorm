@@ -4,6 +4,14 @@ from skills.manager import get_skills
 import utils
 
 @check_not_in_combat
+def command_name_change(self, line):
+    if len(line) < 3:
+        self.sendLine('@redName is too short@normal')
+        return
+    self.sendLine(f'Name changed from "{self.name}" to "{line}"')
+    self.name = line
+
+@check_not_in_combat
 def command_level_up(self, stat):
     stat = stat.lower().capitalize()
     exp_needed = self.get_exp_needed_to_level()
@@ -125,7 +133,7 @@ def command_skills(self, line):
         output += f'{skill["name"]}\n'
         output += f'{skill["description"]}\n'
         output += f'\n'
-        output += f'MP cost: {skill["mp_cost"]} | HP cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
+        output += f'{StatType.name[StatType.HP]} Cost: {skill["mp_cost"]} | {StatType.name[StatType.MP]} Cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
         output += f'{"You can use this skill on yourself." if skill["target_self_is_valid"] else "You cannot use this skill on yourself."}\n'
         output += f'{"You can use this skill out of combat." if not skill["must_be_fighting"] else "You can only use this skill in combat."}\n'
         output += f'{"You can use this skill on others." if skill["target_others_is_valid"] else "You cannot use this skill on others."}\n'
@@ -191,7 +199,7 @@ def command_stats(self, line):
         output += f'@greenYou have enough exp to level up@normal\n'
     output += f'{StatType.name[StatType.EXP]}: {self.stats[StatType.EXP]}\n'
     output += f'{StatType.name[StatType.PP]}: {self.stats[StatType.PP]}\n'
-    
+    output = f'@bblackPlayer:  {self.id}\nAccount: {self.protocol.id}@normal\n' + output
     
     
     self.sendLine(output)

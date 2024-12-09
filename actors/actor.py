@@ -85,7 +85,10 @@ class Actor:
             case "Enemy":
                 output = output + f'@red{self.name}@normal'
             case "Player":
-                output = output + f'@cyan{self.name}@normal'
+                if self.admin:
+                    output = output + f'@cyan{self.name}@normal @yellow(ADMIN)@normal'
+                else:
+                    output = output + f'@cyan{self.name}@normal'
 
         if self.status == ActorStatusType.FIGHTING:
             output = f'{output}'

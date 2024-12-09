@@ -28,6 +28,7 @@ from actors.player_only_functions.inventory import (
 )
 
 from actors.player_only_functions.character_sheet import (
+    command_name_change,
     command_level_up, command_practice, command_skills, command_stats, 
     command_respec, command_affects, get_exp_needed_to_level
 )
@@ -39,6 +40,7 @@ from actors.player_only_functions.admin import (
 )
 
 class Player(Actor):
+    command_name_change = command_name_change
     command_say = command_say
 
     command_look = command_look
@@ -93,12 +95,25 @@ class Player(Actor):
         self.last_line_sent = None
         self.last_command_used = None
         self.send_line_buffer = []
+        self.admin = False
+        self.set_admin()
 
         if self.room != None:
             self.room.move_player(self, silent = True)
 
         self.inventory = {}
-        
+
+    def set_admin(self):
+        if self.protocol == None:
+            return
+        with open('admins.txt', 'r') as file:
+            lines = file.readlines()  # Read all lines into a list
+        # Check if the target string is in any of the lines
+        found = any(self.protocol.id in admin for admin in lines)
+        if found:
+            self.sendLine('You are an admin')
+            self.admin = True
+
     def tick(self):
         # send buffer
         if self.factory.ticks_passed % 1 != 0:
