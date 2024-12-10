@@ -32,7 +32,7 @@ class Consumable(Item):
 
         return my_dict
 
-    def identify(self):
+    def identify(self, identifier = None):
         output = super().identify()
         
         id_to_name, name_to_id = get_skills()
@@ -44,4 +44,4 @@ class Consumable(Item):
         first_skill = True
         for skill in self.skills:
             use_skill_from_consumable(user = user, target = target, skill_id = skill, consumable_item = self)
-        user.inventory_remove_item(self.id)
+        user.inventory_manager.remove_item(self)

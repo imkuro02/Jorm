@@ -17,8 +17,12 @@ def load_item(item):
         new_item.name = item['name']
         new_item.description = item['description']
 
-        new_item.stats = item['stats']
-        new_item.requirements = item['requirements']
+        #new_item.stats = item['stats']
+        for key in new_item.stats:
+            new_item.stats[key] = item['stats'][key]
+        #new_item.requirements = item['requirements']
+        for key in new_item.requirements:
+            new_item.requirements[key] = item['requirements'][key]
 
         new_item.slot = item['slot']
         new_item.equiped = item['equiped']

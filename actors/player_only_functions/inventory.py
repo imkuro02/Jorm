@@ -43,8 +43,25 @@ def command_drop(self, line):
         )
 
 def command_inventory(self, line):
-    output = ''
-    output = output + f'You look through your inventory and see ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n'
+
+    t = utils.Table(1)
+
+    for i in self.inventory_manager.items:
+        output = ''
+        if self.inventory_manager.items[i].item_type == ItemType.EQUIPMENT:     
+            output = output + f'{self.inventory_manager.items[i].name}'
+            if self.inventory_manager.items[i].equiped:   output = output + f' @green(E)@normal'
+            if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
+        else:
+            output = output + f'{self.inventory_manager.items[i].name}'
+            if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
+        t.add_data(output)
+
+    self.sendLine(
+        f'You look through your inventory and see ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n' +
+        t.get_table())
+
+    '''
     for i in self.inventory_manager.items:
         if self.inventory_manager.items[i].item_type == ItemType.EQUIPMENT:     
             output = output + f'{self.inventory_manager.items[i].name}'
@@ -55,8 +72,9 @@ def command_inventory(self, line):
             output = output + f'{self.inventory_manager.items[i].name}'
             if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
             output = output + '\n'
-    
+
     self.sendLine(output)
+    '''
 
 def command_keep(self, line):
     item = self.get_item(line)
@@ -72,7 +90,7 @@ def command_identify(self, line):
     if item == None:
         self.sendLine('Identify what?')
         return
-    output = item.identify()
+    output = item.identify(identifier = self)
     self.sendLine(output)
 
 '''

@@ -68,7 +68,7 @@ lucky charm:
     hp_max: 0
     mp_max: 0
     mind: 0
-    soul: 0
+    soul: 2
   slot: trinket
   stats:
     armor: 0

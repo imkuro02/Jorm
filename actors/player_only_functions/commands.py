@@ -35,8 +35,8 @@ from actors.player_only_functions.admin import (
 one_letter_commands = {
     'i':    'inventory',
     'l':    'look',
-    'w':    'wear',
-    'r':    'remove',
+    #'w':    'wear',
+    #'r':    'remove',
     's':    'say',
     'g':    'go',
     'e':    'equipment',
@@ -68,9 +68,9 @@ commands = {
     'identify': 'command_identify',
     'get':      'command_get',
     'drop':     'command_drop',
-    'wear':     'command_wear',
+    #'wear':     'command_wear',
     'keep':     'command_keep',
-    'remove':   'command_remove',
+    #'remove':   'command_remove',
 
     'use':      'command_use',
     'flee':     'command_flee',

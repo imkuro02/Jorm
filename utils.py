@@ -130,3 +130,103 @@ def add_color(line):
     line = line + '\x1b[0m'
     '''
     return line
+
+class Table:
+    def __init__(self, columns = 0, spaces = 5):
+        self.columns = columns
+        self.data = []
+        self.SPACE = spaces
+
+    def add_data(self, val, col='@normal'):
+        data = {'val': str(val), 'col': str(col)}
+        self.data.append(data)
+
+    def get_table(self):
+        if not self.data:
+            print("No data available to display.")
+            return
+        
+        index = 0
+        i = 0
+        widths = {}
+        for i in range(0,len(self.data)):
+            widths[i] = 0
+
+        i = 0
+        for elem in self.data:
+            #print(widths[i], len(elem['val']))
+            if widths[i] < len(remove_color(elem['val'])) + self.SPACE:
+                widths[i] = len(remove_color(elem['val'])) + self.SPACE
+            #print(index)
+            #print(i,index,elem,widths[index])
+            i += 1
+            if i == self.columns:
+                index += 1
+                i = 0
+
+        output = ''
+        i = 0
+        index = 0
+        for elem in self.data:
+            #print(i,index,elem,widths[i])
+            tmp_output = f'{remove_color(elem["val"]):<{widths[i]}}'
+            tmp_output = tmp_output.replace(remove_color(elem['val']),elem['col']+elem['val']+f'@normal')
+            output += add_color(tmp_output)
+            i += 1
+            if i == self.columns:
+                output += f'\n'
+                index += 1
+                i = 0
+        
+        return output
+
+        
+
+
+if __name__ == '__main__':
+    t = Table(3)
+    t.add_data('a','@red')
+    t.add_data('bc','@green')
+    t.add_data('def','@yellow')
+    t.add_data('12d34','@red')
+    t.add_data('5678','@red')
+    t.add_data('z','@green')
+    t.add_data('xx','@yellow')
+    t.add_data('l','@red')
+    t.get_table()
+
+    t = Table(3)
+    t.add_data('NAME','@red')
+    t.add_data('ADDRESS','@green')
+    t.add_data('POO','@yellow')
+    t.add_data('Charles','@red')
+    t.add_data('Klyve','@red')
+    t.add_data('PE','@green')
+    t.add_data('ADAM OG EVA','@yellow')
+    t.add_data('GJOVIK','@red')
+    t.get_table()
+
+    t = Table(4)
+    t.add_data('SKILL','@yellow')
+    t.add_data('MP COST','@bcyan')
+    t.add_data('HP COST','@bred')
+    t.add_data('COOLDOWN','@green')
+
+    t.add_data('Slash','@red')
+    t.add_data('12','@bcyan')
+    t.add_data('11','@bred')
+    t.add_data('NONE','@green')
+
+    t.add_data('Become Ethereal','@red')
+    t.add_data('1','@bcyan')
+    t.add_data('NONE','@bred')
+    t.add_data('12','@red')
+
+
+
+    t.get_table()
+
+
+                
+
+

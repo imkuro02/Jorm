@@ -10,6 +10,7 @@ class Item:
         self.history = {}
         self.tags = []
         self.keep = False
+        self.owner = None # the inventory manager of this item
 
     def to_dict(self):
         my_dict = {
@@ -23,7 +24,7 @@ class Item:
         }
         return my_dict
 
-    def identify(self):
+    def identify(self, identifier = None):
         output = f'{self.name} {"@red(K)@normal" if self.keep else ""}\n'
         output += f'@cyan{self.description}@normal\n'
         return output

@@ -98,6 +98,10 @@ def command_practice(self, line):
             self.sendLine(f'@red{skill_name} cannot be practiced@normal')
             return
 
+        if self.stats[StatType.LVL] < SKILLS[skill_id]['level_req']:
+            self.sendLine(f'@redYou are not high enough level to practice {skill_name}@normal')
+            return
+
         current_prac_level = 0
 
         if skill_id in self.skills:
