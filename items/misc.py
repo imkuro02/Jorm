@@ -24,6 +24,6 @@ class Item:
         return my_dict
 
     def identify(self):
-        output = f'{self.name}\n'
+        output = f'{self.name} {"@red(K)@normal" if self.keep else ""}\n'
         output += f'@cyan{self.description}@normal\n'
         return output

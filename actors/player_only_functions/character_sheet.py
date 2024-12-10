@@ -133,7 +133,7 @@ def command_skills(self, line):
         output += f'{skill["name"]}\n'
         output += f'{skill["description"]}\n'
         output += f'\n'
-        output += f'{StatType.name[StatType.HP]} Cost: {skill["mp_cost"]} | {StatType.name[StatType.MP]} Cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
+        output += f'{StatType.name[StatType.MP]} Cost: {skill["mp_cost"]} | {StatType.name[StatType.HP]} Cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
         output += f'{"You can use this skill on yourself." if skill["target_self_is_valid"] else "You cannot use this skill on yourself."}\n'
         output += f'{"You can use this skill out of combat." if not skill["must_be_fighting"] else "You can only use this skill in combat."}\n'
         output += f'{"You can use this skill on others." if skill["target_others_is_valid"] else "You cannot use this skill on others."}\n'

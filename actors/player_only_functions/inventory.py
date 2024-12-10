@@ -63,6 +63,19 @@ def command_drop(self, line):
 def command_inventory(self, line):
     output = ''
     output = output + 'You look through your inventory and see:\n'
+    for i in self.inventory:
+        if self.inventory[i].item_type == ItemType.EQUIPMENT:     
+            output = output + f'{self.inventory[i].name}'
+            if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
+            if self.inventory[i].keep:      output = output + f' @red(K)@normal'
+            output = output + '\n'
+        else:
+            output = output + f'{self.inventory[i].name}'
+            if self.inventory[i].keep:      output = output + f' @red(K)@normal'
+            output = output + '\n'
+    
+    self.sendLine(output)
+    return
     #output += f'{StatType.name[StatType.MONEY]}: {self.stats[StatType.MONEY]}\n'
     if line != 'all': 
         inv = {}
