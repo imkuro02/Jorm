@@ -2,6 +2,80 @@ from actors.player_only_functions.checks import check_no_empty_line, check_not_i
 from config import ItemType, StatType
 import utils
 
+@check_no_empty_line
+@check_not_in_combat
+@check_alive
+def command_get(self, line):
+    item = self.get_item(line, search_mode = 'room')
+    if item == None:
+        self.sendLine('Get what?')
+        return
+    if self.inventory_manager.add_item(item):
+        self.room.inventory_manager.remove_item(item)
+        self.simple_broadcast(
+            f'You get {item.name}',
+            f'{self.pretty_name()} gets {item.name}'
+            )
+    else:
+        self.sendLine('Your Inventory is full')
+    
+
+@check_no_empty_line
+@check_not_in_combat
+@check_alive
+def command_drop(self, line):
+    item = self.get_item(line)
+    if item == None:
+        self.sendLine('Drop what?')
+        return
+    if item.keep:
+        self.sendLine('Can\'t drop kept items')
+        return
+    if item.item_type == ItemType.EQUIPMENT:
+        if item.equiped:
+            self.sendLine('Can\'t drop equiped items')
+            return
+    self.room.inventory_manager.add_item(item)
+    self.inventory_manager.remove_item(item)
+    self.simple_broadcast(
+        f'You drop {item.name}',
+        f'{self.pretty_name()} drops {item.name}'
+        )
+
+def command_inventory(self, line):
+    output = ''
+    output = output + f'You look through your inventory and see ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n'
+    for i in self.inventory_manager.items:
+        if self.inventory_manager.items[i].item_type == ItemType.EQUIPMENT:     
+            output = output + f'{self.inventory_manager.items[i].name}'
+            if self.inventory_manager.items[i].equiped:   output = output + f' @green({self.inventory_manager.items[i].slot})@normal'
+            if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
+            output = output + '\n'
+        else:
+            output = output + f'{self.inventory_manager.items[i].name}'
+            if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
+            output = output + '\n'
+    
+    self.sendLine(output)
+
+def command_keep(self, line):
+    item = self.get_item(line)
+    if item == None:
+        self.sendLine('Keep what?')
+        return
+
+    self.sendLine(f'Keeping {item.name}' if not item.keep else f'Unkeeping {item.name}')
+    item.keep = not item.keep
+
+def command_identify(self, line):
+    item = self.get_item(line)
+    if item == None:
+        self.sendLine('Identify what?')
+        return
+    output = item.identify()
+    self.sendLine(output)
+
+'''
 def inventory_add_item(self, item):
     self.inventory[item.id] = item
 
@@ -129,3 +203,4 @@ def lower_item(self, item_id):
     if item_id in self.inventory:
         value = self.inventory.pop(item_id) # remove the keyvalue pair
         self.inventory[item_id] = value     # reconstruct with the item last
+'''

@@ -20,39 +20,39 @@ def get_item(self, line, search_mode = 'self'):
 
     # search whole inventory
     if search_mode == 'self':
-        inventory = self.inventory
+        inventory = self.inventory_manager.items
 
     # only search items that are not kept in inventory
     if search_mode == 'unkept':
         inventory = {}
-        for item in self.inventory.values():
+        for item in self.inventory_manager.items.values():
             if item.keep == True:
                 continue 
-            inventory[item.id] = self.inventory[item.id] 
+            inventory[item.id] = self.inventory_manager.items[item.id] 
 
     # search the rooms inventory
     if search_mode == 'room':
-        inventory = self.room.inventory
+        inventory = self.room.inventory_manager.items
 
     # search only equiped items
     if search_mode == 'equipment':
         inventory = {}
-        for item in self.inventory.values():
+        for item in self.inventory_manager.items.values():
             if item.item_type != ItemType.EQUIPMENT:
                 continue 
             if item.equiped == False:
                 continue 
-            inventory[item.id] = self.inventory[item.id] 
+            inventory[item.id] = self.inventory_manager.items[item.id] 
 
     # search equipement that is not yet equiped
     if search_mode == 'equipable':
         inventory = {}
-        for item in self.inventory.values():
+        for item in self.inventory_manager.items.values():
             if item.item_type != ItemType.EQUIPMENT:
                 continue 
             #if item.equiped == True:
             #    continue 
-            inventory[item.id] = self.inventory[item.id] 
+            inventory[item.id] = self.inventory_manager.items[item.id] 
 
     if len(inventory) == 0:
         return
@@ -64,6 +64,6 @@ def get_item(self, line, search_mode = 'self'):
             if 'slot '+line in 'slot '+slot:
                 if self.slots[slot] == None:
                     continue
-                return self.inventory[self.slots[slot]]
+                return self.inventory_manager.items[self.slots[slot]]
 
     return utils.get_match(line, inventory)

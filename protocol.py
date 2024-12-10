@@ -198,7 +198,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         
     def compare_slots_to_items(self):
         for i in self.actor.slots.values():
-            if i not in self.actor.inventory:
+            if i not in self.actor.inventory_manager.items:
                 if i == None: continue
                 print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{i} is not in inventory?')
 
@@ -213,7 +213,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.actor.slots = actor['slots']
             for item in actor['inventory'].values():
                 new_item = load_item(item)
-                self.actor.inventory[new_item.id] = new_item
+                self.actor.inventory_manager.add_item(new_item)
             self.compare_slots_to_items()
 
         self.state = self.PLAY
@@ -227,8 +227,9 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
     def save_actor(self):
         self.sendLine('saving..')
         inventory = {}
-        for i in self.actor.inventory:
-            inventory[i] = save_item(self.actor.inventory[i])
+        for i in self.actor.inventory_manager.items:
+            inventory[i] = save_item(self.actor.inventory_manager.items[i])
+
 
         self.factory.db.write_actor(self.account[0] ,{
             'id':   self.actor.id,

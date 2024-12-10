@@ -45,17 +45,17 @@ def command_create_item(self, line):
     if line in 'equipment':
         new_item = items.Equipment()
         new_item.name = 'New item'
-        self.inventory_add_item(new_item)
+        self.inventory_manager.add_item(new_item)
 
     if line in 'item':
         new_item = items.Item()
         new_item.name = 'New item'
-        self.inventory_add_item(new_item)
+        self.inventory_manager.add_item(new_item)
 
     if line in 'consumable':
         new_item = items.Consumable()
         new_item.name = 'New item'
-        self.inventory_add_item(new_item)
+        self.inventory_manager.add_item(new_item)
 
 @check_is_admin
 @check_no_empty_line
@@ -68,47 +68,47 @@ def command_update_item(self, line):
         value = " ".join(line.split()[2::])
 
         if stat in 'name':
-            self.inventory[item_id].name = str(value)
+            self.inventory_manager.items[item_id].name = str(value)
             self.sendLine('@greenUpdated@normal')
             return
 
         if stat in 'description':
-            self.inventory[item_id].description = str(value)
+            self.inventory_manager.items[item_id].description = str(value)
             self.sendLine('@greenUpdated@normal')
             return
 
-        if self.inventory[item_id].item_type == ItemType.CONSUMABLE:
+        if self.inventory_manager.items[item_id].item_type == ItemType.CONSUMABLE:
             if stat in 'skills':
                 if value not in SKILLS:
                     self.sendLine('@redNot a valid skill_id@normal')
                     return
                 if str(value).lower() == 'none':
-                    self.inventory[item_id].skills = []
+                    self.inventory_manager.items[item_id].skills = []
                 else:
-                    self.inventory[item_id].skills.append(value)
+                    self.inventory_manager.items[item_id].skills.append(value)
                 self.sendLine('@greenUpdated@normal')
                 return
 
-        if self.inventory[item_id].item_type == ItemType.EQUIPMENT:
-            if self.inventory[item_id].equiped:
+        if self.inventory_manager.items[item_id].item_type == ItemType.EQUIPMENT:
+            if self.inventory_manager.items[item_id].equiped:
                 self.sendLine(f'command_update_item: dont update items while they are worn!!!')
                 return
 
             if stat in 'slot':
-                self.inventory[item_id].slot = getattr(EquipmentSlotType, value)
+                self.inventory_manager.items[item_id].slot = getattr(EquipmentSlotType, value)
                 self.sendLine('@greenUpdated@normal')
                 return
                
 
-            if str(stat) in self.inventory[item_id].stats:
-                self.inventory[str(item_id)].stats[str(stat)] = int(value)
+            if str(stat) in self.inventory_manager.items[item_id].stats:
+                self.inventory_manager.items[str(item_id)].stats[str(stat)] = int(value)
                 self.sendLine('@greenUpdated@normal')
                 return
 
             if stat[0] == 'r':
                 #print(stat, stat[1::])
-                if str(stat[1::]) in self.inventory[item_id].requirements:
-                    self.inventory[str(item_id)].requirements[str(stat[1::])] = int(value)
+                if str(stat[1::]) in self.inventory_manager.items[item_id].requirements:
+                    self.inventory_manager.items[str(item_id)].requirements[str(stat[1::])] = int(value)
                     self.sendLine('@greenUpdated@normal')
                     return
 
@@ -126,7 +126,7 @@ def command_load_item(self, line):
         return
 
     item = items.load_item(data[line])
-    self.inventory_add_item(item)
+    self.inventory_manager.add_item(item)
 
 def command_export_item(self, line):
     item = self.get_item(line)

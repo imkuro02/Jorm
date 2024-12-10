@@ -7,6 +7,7 @@ import random
 from combat import Combat
 from config import WORLD
 import copy
+from inventory import InventoryManager
 
 class Room:
     def __init__(self, world, uid, name, description, exits):
@@ -15,7 +16,7 @@ class Room:
         self.name = name
         self.description = description
         self.exits = exits
-        self.inventory = {}
+        self.inventory_manager = InventoryManager(self, limit = 20)
         
         self.combat = None
 
@@ -31,12 +32,6 @@ class Room:
         if self.combat == None:
             return
         self.combat.tick()
-
-    def inventory_add_item(self, item):
-        self.inventory[item.id] = item
-
-    def inventory_remove_item(self, item_id):
-        del self.inventory[item_id]
 
     def new_combat(self):
         if self.combat != None:

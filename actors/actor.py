@@ -4,6 +4,7 @@ from items.manager import Item
 from affects.manager import AffectsManager
 from config import DamageType, ActorStatusType, EquipmentSlotType, StatType
 from skills.manager import use_skill
+from inventory import InventoryManager
 
 class CooldownManager:
     def __init__ (self, owner):
@@ -41,8 +42,10 @@ class Actor:
             self.factory = self.room.world.factory
 
         self.affect_manager = AffectsManager(self)
+        self.inventory_manager = InventoryManager(self)
         
         self.status = ActorStatusType.NORMAL
+        
 
         self.slots = {
             EquipmentSlotType.HEAD:      None,
@@ -166,7 +169,7 @@ class Actor:
         item = Item()
         item.name = f'Corpse of {self.name}'
         item.description = f'This is the corpse of {self.name}, kinda gross...'
-        self.room.inventory_add_item(item)
+        self.room.inventory_manager.add_item(item)
 
         if type(self).__name__ != "Player":
             del self.room.entities[self.id]

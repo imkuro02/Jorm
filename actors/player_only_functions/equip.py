@@ -18,65 +18,13 @@ def command_equipment(self, line):
         if None == self.slots[i]:
             output = output + f'{EquipmentSlotType.name[i] + ":":<12} ...\n'
         else:
-            output = output + f'{EquipmentSlotType.name[i] + ":":<12} {self.inventory[self.slots[i]].name}\n'
+            output = output + f'{EquipmentSlotType.name[i] + ":":<12} {self.inventory_manager.items[self.slots[i]].name}\n'
     self.sendLine(output)
-
-@check_no_empty_line
-#@check_your_turn
-@check_alive
-def command_wear(self, line):
-
-    item = self.get_item(line, search_mode = 'equipable')
-    if item == None:
-        self.sendLine('Wear what?')
-        return
-
-    for req in item.requirements:
-        if item.requirements[req] > self.stats[req]:
-            self.sendLine(f'@redYou do not meet the requirements to wear@normal {item.name}')
-            return
-
-    if item.item_type != ItemType.EQUIPMENT:
-        self.sendLine(f'This item is not equipable')
-        return
-
-    if item.equiped:
-        self.inventory_unequip(item)
-        #self.sendLine(f'{item.name} is already equiped')
-        return
-
-    #self.inventory_remove_item(item.id)
-    #self.inventory_add_item(item)
-    #self.raise_item(item.id)
-    self.inventory_equip(item)
-
-@check_no_empty_line
-#@check_not_in_combat
-@check_alive
-def command_remove(self, line):
-    if line == '':
-        self.sendLine(f'Remove what?')
-        return
-
-    item = self.get_item(line, search_mode = 'equipment')
-
-    if item == None:
-        self.sendLine(f'Remove what?')
-        return
-
-    if item.item_type != ItemType.EQUIPMENT:
-        self.sendLine(f'This item is not equipable')
-        return
-    
-    if item.equiped == False:
-        self.sendLine(f'{item.name} is not equiped yet')
-        return
-    self.inventory_unequip(item)
 
 def inventory_equip(self, item):
     if item.slot != None:
         if self.slots[item.slot] != None:
-            self.inventory_unequip(self.inventory[self.slots[item.slot]])
+            self.inventory_unequip(self.inventory_manager.items[self.slots[item.slot]])
         
         self.slots[item.slot] = item.id
         

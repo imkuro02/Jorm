@@ -11,14 +11,11 @@ from actors.player_only_functions.combat import (
 from actors.player_only_functions.look import command_look
 
 from actors.player_only_functions.equip import (
-    command_wear, command_remove, command_equipment, 
-    inventory_equip, inventory_unequip
+    command_equipment, inventory_equip, inventory_unequip
 )
 
 from actors.player_only_functions.inventory import (
-    raise_item, lower_item, inventory_add_item, inventory_remove_item, 
-    command_keep, command_get, command_drop, command_inventory, 
-    command_identify
+    command_inventory, command_identify, command_keep, command_get, command_drop
 )
 
 from actors.player_only_functions.character_sheet import (

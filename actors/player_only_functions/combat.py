@@ -36,7 +36,7 @@ def command_use(self, line):
 
     id_to_name, name_to_id = get_skills()
     list_of_skill_names = [skill for skill in name_to_id.keys()]
-    list_of_consumables = [utils.remove_color(item.name) for item in self.inventory.values() if item.item_type == ItemType.CONSUMABLE]
+    list_of_consumables = [utils.remove_color(item.name) for item in self.inventory_manager.items.values() if item.item_type == ItemType.CONSUMABLE]
     whole_list = list_of_consumables + list_of_skill_names
 
     action = None

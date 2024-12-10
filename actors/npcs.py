@@ -85,8 +85,11 @@ class Enemy(Actor):
             #        stat = random.choice([s for s in new_item.stats.keys()])
             #        new_item.stats[stat] = new_item.stats[stat] + 1
 
-            entity.sendLine(f'You loot {new_item.name}')
-            entity.inventory_add_item(new_item)   
+            
+            if entity.inventory_manager.add_item(new_item):   
+                entity.sendLine(f'You loot {new_item.name}')
+            else:
+                entity.sendLine(f'Your inventory is full and you missed out on {new_item.name}')
 
     def die(self):
         if self.room.combat == None:

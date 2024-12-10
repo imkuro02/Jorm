@@ -31,14 +31,19 @@ def command_look(self, line):
         see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         see = see + '\n'
 
+        if not room.inventory_manager.is_empty():
+            see = see + 'On the ground you see:\n'
+            for i in room.inventory_manager.items.values():
+                see = see + f'{i.name}' + '\n'
+        '''
         index = 0
-        if room.inventory != {}:
+        if not room.inventory_manager.is_empty():
             
             see = see + 'On the ground you see:\n'
-            for i in room.inventory.values():
+            for i in room.inventory_manager.items.values():
                 index += 1
                 see = see + f'{index}. {i.name}' + '\n'
-
+        '''
         self.sendLine(see)
 
     if line == '':
