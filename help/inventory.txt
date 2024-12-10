@@ -1,10 +1,10 @@
 ................................................................................
 Title: Inventory
-Syntax: "inventory" 
+Syntax: "inventory" , "inventory all" 
 
-Look through your inventory.
-Items that are worn will display which slot they are worn in.
-Items that are Kept will also display that information.
+Using "inventory" or "i" will display the inventory in short format
+While using "inventory all" / "i all" will show all items;
+Their Kept status and Equiped status.
 
 To take a closer look at an item use the "identify" command.
 To see your worn equipment, use the "equipment" command.

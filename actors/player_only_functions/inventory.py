@@ -64,19 +64,33 @@ def command_inventory(self, line):
     output = ''
     output = output + 'You look through your inventory and see:\n'
     #output += f'{StatType.name[StatType.MONEY]}: {self.stats[StatType.MONEY]}\n'
-    
-    for i in self.inventory:
-        if self.inventory[i].item_type == ItemType.EQUIPMENT:     
-            output = output + f'{self.inventory[i].name}'
-            if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
-            if self.inventory[i].keep:      output = output + f' @red(K)@normal'
-            output = output + '\n'
-        else:
-            output = output + f'{self.inventory[i].name}'
-            if self.inventory[i].keep:      output = output + f' @red(K)@normal'
-            output = output + '\n'
-    
-    self.sendLine(output)
+    if line != 'all': 
+        inv = {}
+        for i in self.inventory.values():
+            if i.name not in inv:
+                inv[i.name] = 1
+            else:
+                inv[i.name] += 1
+
+        for i in inv:
+            output += f'{inv[i]} x {i}\n'
+
+        self.sendLine(output)
+        return
+    else:
+        for i in self.inventory:
+            if self.inventory[i].item_type == ItemType.EQUIPMENT:     
+                output = output + f'{self.inventory[i].name}'
+                if self.inventory[i].equiped:   output = output + f' @green({self.inventory[i].slot})@normal'
+                if self.inventory[i].keep:      output = output + f' @red(K)@normal'
+                output = output + '\n'
+            else:
+                output = output + f'{self.inventory[i].name}'
+                if self.inventory[i].keep:      output = output + f' @red(K)@normal'
+                output = output + '\n'
+        
+        self.sendLine(output)
+        return
 
 @check_no_empty_line
 def command_keep(self, line):

@@ -57,7 +57,7 @@ class Equipment(Item):
         if self.equiped:
             output += f'{"@green(Equiped)@normal"}'
         output += '\n'
-        output += f'{StatType.LVL}: {r[StatType.LVL]}\n'
+        output += f'{StatType.name[StatType.LVL]}: {r[StatType.LVL]}\n'
         space = 12
         output += f'@normal{"Stat":<{space}} {"Bonus":<{space}} {"Req":<{space}}\n'
         for stat in self.stats.keys():
