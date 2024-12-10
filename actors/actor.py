@@ -124,12 +124,14 @@ class Actor:
             case DamageType.PURE:
                 pass
             case DamageType.HEALING:
-                #print('HEALED')
                 self.stats[StatType.HP] += damage
                 self.simple_broadcast(
                     f'You heal for {damage}',
                     f'{self.pretty_name()} heals for {damage}'
                     )
+
+                if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
+                    self.stats[StatType.HP] = self.stats[StatType.HPMAX]
                 return
 
         if damage <= 0:
@@ -144,9 +146,6 @@ class Actor:
             f'You take {damage} damage',
             f'{self.pretty_name()} takes {damage} damage'
             )
-
-        if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
-            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
 
         if self.stats[StatType.HP] <= 0:
             self.stats[StatType.HP] = 0
