@@ -9,8 +9,8 @@ class Affect:
         self.description = description
         self.turns = turns
 
-    def info(self):
-        return f'{self.name:<15} {self.turns:<3} {self.description}\n'
+    #def info(self):
+    #    return f'{self.name:<15} {self.turns:<3} {self.description}\n'
 
     # called when applied 
     def on_applied(self):

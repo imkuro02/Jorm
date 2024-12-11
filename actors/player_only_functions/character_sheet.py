@@ -214,9 +214,19 @@ def command_affects(self, line):
         output = 'You are not affected by anything'
     else:
         output = 'You are affected by:\n' 
-        output += f'{"Affliction":<15} {"For":<3} {"Info"}\n'
+        t = utils.Table(3,1)
+        t.add_data('Aff')
+        t.add_data('x')
+        t.add_data('Description')
+        #output += f'{"Affliction":<15} {"For":<3} {"Info"}\n'
+        
         for aff in self.affect_manager.affects.values():
-            output += f'{aff.info()}'
+            #output += f'{aff.info()}'
+            t.add_data(aff.name)
+            t.add_data(aff.turns)
+            t.add_data(aff.description)
+        output = output + t.get_table()
+
     self.sendLine(output)
 
 
