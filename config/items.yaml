@@ -5,7 +5,7 @@ tutorial rat dagger:
   history: {}
   item_type: equipment
   keep: false
-  name: Dagger
+  name: Chewed up Dagger
   requirements:
     armor: 0
     body: 0
@@ -96,7 +96,7 @@ long sword:
   history: {}
   item_type: equipment
   keep: false
-  name: Sword
+  name: Longsword
   requirements:
     armor: 0
     body: 0

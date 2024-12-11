@@ -58,7 +58,7 @@ def command_inventory(self, line):
         t.add_data(output)
 
     self.sendLine(
-        f'You look through your inventory and see ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n' +
+        f'You carry ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n' +
         t.get_table())
 
     '''

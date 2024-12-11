@@ -48,9 +48,19 @@ class Player(Actor):
     def sendLine(self, line, color = True):
         if color:
             line = utils.add_color(f'{line}\n')
+            self.protocol.transport.write(line.encode('utf-8'))
+        else:
+            self.protocol.transport.write(line.encode('utf-8'))
+        return
+        #   THIS SHOULD BE CLIENT SIDE
+        '''
+        if color:
+            line = utils.add_color(f'{line}\n')
+            
         lines = line.replace('\n','#SPLIT#\n').split('#SPLIT#')
         for l in lines:
             self.send_line_buffer.append(l)
+        '''
         
 
     def handle(self, line):

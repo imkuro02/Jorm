@@ -143,8 +143,8 @@ class Table:
 
     def get_table(self):
         if not self.data:
-            print("No data available to display.")
-            return
+            #print("No data available to display.")
+            return ''
         
         index = 0
         i = 0
