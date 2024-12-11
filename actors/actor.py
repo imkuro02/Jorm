@@ -119,7 +119,7 @@ class Actor:
             # the affect should sendLine what exactly happened
             # example: physical damage while ethereal should send "You are ethereal"
             case DamageType.CANCELLED: 
-                return 
+                return 0
             case DamageType.PHYSICAL:
                 damage -= self.stats[StatType.ARMOR]
             case DamageType.MAGICAL:
@@ -160,6 +160,8 @@ class Actor:
                 )
 
             self.die()
+            
+        return damage
 
     def die(self):
         if self.room.combat != None:

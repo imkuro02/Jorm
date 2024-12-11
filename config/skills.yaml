@@ -9,7 +9,7 @@ swing:
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 0
-  cooldown: 0
+  cooldown: 1
   script_to_run: Swing
   
   use_perspectives:
@@ -35,7 +35,7 @@ magic missile:
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 2
-  cooldown: 0
+  cooldown: 1
   script_to_run: MagicMissile
 
   use_perspectives:
@@ -87,7 +87,7 @@ ethereal:
   target_others_is_valid: False
   hp_cost: 0
   mp_cost: 2
-  cooldown: 0
+  cooldown: 1
   script_to_run: BecomeEthereal
 
   use_perspectives:
@@ -105,7 +105,7 @@ ethereal:
 
 bash:
   name: Bash
-  description: Bash your target, stunning them for 1 turn
+  description: Bash your target, dealing damage as if you used Swing, if damage is above 0, stun the target.
   level_req: 4
   can_be_practiced: True
   must_be_fighting: True

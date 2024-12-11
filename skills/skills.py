@@ -66,8 +66,8 @@ class SkillSwing(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.take_damage(self.user, 1 + self.user.stats[StatType.BODY], DamageType.PHYSICAL)
-
+            damage_dealt = self.other.take_damage(self.user, 1 + self.user.stats[StatType.BODY], DamageType.PHYSICAL)
+            return damage_dealt
 class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
@@ -76,7 +76,7 @@ class SkillCureLightWounds(Skill):
 
 class SkillBash(SkillSwing):
     def use(self):
-        super().use()
+        damage_dealt = super().use()
         if self.success:
             stunned_affect = affects.AffectStunned(
                 AffType.STUNNED,
@@ -84,7 +84,8 @@ class SkillBash(SkillSwing):
                 'Stunned', 'Unable to act during combat turns',
                 turns = 1
             )
-            self.other.affect_manager.set_affect_object(stunned_affect)
+            if damage_dealt != 0:
+                self.other.affect_manager.set_affect_object(stunned_affect)
 
 class SkillMagicMissile(Skill):
     def use(self):

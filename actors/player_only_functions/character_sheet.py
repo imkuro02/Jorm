@@ -138,9 +138,11 @@ def command_skills(self, line):
         output += f'{skill["description"]}\n'
         output += f'\n'
         output += f'{StatType.name[StatType.MP]} Cost: {skill["mp_cost"]} | {StatType.name[StatType.HP]} Cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
-        output += f'{"You can use this skill on yourself." if skill["target_self_is_valid"] else "You cannot use this skill on yourself."}\n'
-        output += f'{"You can use this skill out of combat." if not skill["must_be_fighting"] else "You can only use this skill in combat."}\n'
-        output += f'{"You can use this skill on others." if skill["target_others_is_valid"] else "You cannot use this skill on others."}\n'
+        output += f'{"@greenYou can use this skill on yourself.@normal" if skill["target_self_is_valid"] else "@redYou cannot use this skill on yourself.@normal"}\n'
+        output += f'{"@greenYou can use this skill on others.@normal" if skill["target_others_is_valid"] else "@redYou cannot use this skill on others.@normal"}\n'
+        output += f'{"@greenYou can use this skill out of combat.@normal" if not skill["must_be_fighting"] else "@redYou can only use this skill in combat.@normal"}\n'
+        if skill['can_be_practiced'] == False:
+            output += f'@redThis skill cannot be practied!@normal\n'
         
 
         self.sendLine(output)
@@ -149,9 +151,31 @@ def command_skills(self, line):
             self.sendLine('You do not know any skills...')
             return
 
+        t = utils.Table(4, spaces = 2)
+        t.add_data('Skill')
+        t.add_data('HP')
+        t.add_data('MP')
+        t.add_data('R')
+        #t.add_data('Prac')
+
+        for skill_id in self.skills:
+            t.add_data(id_to_name[skill_id])
+            t.add_data(SKILLS[skill_id]["hp_cost"], '@red')
+            t.add_data(SKILLS[skill_id]["mp_cost"], '@cyan')
+
+           
+            if skill_id not in self.cooldown_manager.cooldowns:
+                t.add_data('Y','@green')
+            else: 
+                t.add_data(f'{self.cooldown_manager.cooldowns[skill_id]}', '@red')
+
+            #t.add_data(self.skills[skill_id])
+        
+        self.sendLine(t.get_table())
+        '''
         output = 'SKILLS:\n'
         max_length = max(len(skill) for skill in self.skills) + 1
-        output += f'{"Skill":<20} {"LVL":<4} {"MP":<4} {"HP":<4} {"Ready":<4}\n'
+        output += f'{"Skill":<20} {"LVL":<4} {"MP":<4} {"HP":<4} {"R":<4}\n'
         for skill_id in self.skills:
             #cooldown = ""
             #if skill_id in self.cooldown_manager.cooldowns:
@@ -162,12 +186,13 @@ def command_skills(self, line):
             output += f'{SKILLS[skill_id]["mp_cost"]:<4} '
             output += f'{SKILLS[skill_id]["hp_cost"]:<4} '
             if skill_id not in self.cooldown_manager.cooldowns:
-                cooldown = "Yes"
+                cooldown = "Y"
             else: 
                 cooldown = f'{self.cooldown_manager.cooldowns[skill_id]}'
             output += f'{cooldown:<4} '
             output += '\n'
         self.sendLine(output)
+        '''
 
 @check_not_in_combat
 @check_alive
