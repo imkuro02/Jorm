@@ -19,8 +19,6 @@ def command_level_up(self, stat):
         self.sendLine(f'You need {exp_needed-self.stats[StatType.EXP]}EXP to level up')
         return
 
-
-
     match stat.lower():
         case 'body':
             #self.stats[StatType.BODY] += 1
@@ -60,6 +58,26 @@ def command_practice(self, line):
     #print(name_to_id[skill_name])
     if len(line) <= 1:
         output = f'You have {self.stats[StatType.PP]} practice points left.\n'
+        t = utils.Table(2)
+        t.add_data('Skill')
+        t.add_data('Level')
+        for skill_id in SKILLS.keys():
+            col = '@red'
+            if skill_id not in self.skills.keys():
+                learned = 0
+            else:
+                learned = self.skills[skill_id]
+            if learned >= 50:
+                col = '@yellow'
+            if learned >= 70:
+                col = '@green'
+            if learned >= 95:
+                col = '@bgreen'
+            t.add_data(SKILLS[skill_id]["name"])
+            t.add_data(learned, col)
+        self.sendLine(t.get_table() + output)
+        '''
+        output = f'You have {self.stats[StatType.PP]} practice points left.\n'
         output += f'{"Skill":<20} | {"Learned":<8} | {"Level Req":<5}\n'
         for skill_id in SKILLS.keys():
             if not SKILLS[skill_id]['can_be_practiced']:
@@ -73,6 +91,7 @@ def command_practice(self, line):
             level = SKILLS[skill_id]['level_req']
             output += (f'{SKILLS[skill_id]["name"]:<20} | {str(learned):<8} | {str(level):<5} \n')
         self.sendLine(f'{output}')
+        '''
     else:
         line = line.split()
         if len(line) < 2:
