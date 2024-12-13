@@ -18,7 +18,17 @@ class CooldownManager:
         if cooldown in self.cooldowns:
             del self.cooldowns[cooldown]
 
+    def unload_all_cooldowns(self, silent = False):
+        cool_to_delete = []
+        for cool in self.cooldowns:
+            cool_to_delete.append(cool)
+        for cool in cool_to_delete:
+            self.remove_cooldown(cool)
+
     def finish_turn(self):
+        pass
+
+    def set_turn(self):
         cooldowns_to_remove = []
         for i in self.cooldowns:
             self.cooldowns[i] -= 1
@@ -108,7 +118,9 @@ class Actor:
         return output
 
     def tick(self):
-        pass
+        if self.status != ActorStatusType.FIGHTING:
+            self.cooldown_manager.unload_all_cooldowns()
+        
 
     def take_damage(self, source, damage, damage_type):
         source, damage, damage_type = self.affect_manager.take_damage(source, damage, damage_type)
@@ -155,7 +167,7 @@ class Actor:
             self.status = ActorStatusType.DEAD
 
             self.simple_broadcast(
-                f'@redYou died@normal',
+                f'@redYou died@normal (Rest to teleport to town)',
                 f'{self.pretty_name()} has died'
                 )
 
@@ -210,9 +222,13 @@ class Actor:
         self.room.combat.next_turn()
 
     def set_turn(self):
-        self.affect_manager.set_turn()
+        
         if type(self).__name__ == "Player":
             output = f'@yellowYour turn.@normal {self.prompt()} @normal'
             self.sendLine(output)
+
+        self.affect_manager.set_turn()
+        self.cooldown_manager.set_turn()
+
     
 

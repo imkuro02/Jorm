@@ -80,9 +80,10 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
                 self.sendLine(f'Type @bgreenplay@normal to enter the game')
                 self.sendLine(f'Type @bgreenback@normal to log out')
                 self.sendLine(f'...')
-                self.sendLine(f'To set new username or password type:')
-                self.sendLine(f'username "new_username" "current_password"\n(This is NOT your in game name)')
-                self.sendLine(f'password "new_password" "current_password"')
+                #self.sendLine(f'To set new username or password type:')
+                #self.sendLine(f'username "new_username" "current_password"\n(This is NOT your in game name)')
+                #self.sendLine(f'username "new_username" "current_password"')
+                self.sendLine(f'Set new password with:\npassword "new_password" "current_password"')
                 
 
         self.state = state
@@ -170,7 +171,8 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         except IndexError:
             return
 
-        if setting.lower not in 'username password'.split():
+        
+        if setting.lower() not in 'username password'.split():
             self.change_state(self.PLAY_OR_SETTINGS)
             return
 
@@ -178,6 +180,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.sendLine('Wrong password')
             return
 
+        '''
         if setting.lower() == 'username':
             acc = self.factory.db.find_account_from_username(new_val)
             #print(acc)
@@ -185,8 +188,10 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
                 self.sendLine('@redThis login username is taken@normal')
                 return
             self.username = new_val
+        '''
         if setting.lower() == 'password':
             self.password = new_val
+        
 
         self.factory.db.create_new_account(self.id, self.username, self.password)
         self.sendLine('@bgreenAccount updated@normal')

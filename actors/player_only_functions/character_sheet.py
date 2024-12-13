@@ -50,48 +50,38 @@ def command_level_up(self, stat):
     #self.stats['marmor'] += round(self.stats['dex']*.4)
     
     self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. @normal')
-        
 
 @check_alive
 @check_not_in_combat
 def command_practice(self, line):
-    #print(name_to_id[skill_name])
     if len(line) <= 1:
         output = f'You have {self.stats[StatType.PP]} practice points left.\n'
-        t = utils.Table(2)
+        t = utils.Table(3)
         t.add_data('Skill')
-        t.add_data('Level')
+        t.add_data('Lvl')
+        t.add_data('Req')
         for skill_id in SKILLS.keys():
+            if SKILLS[skill_id]['can_be_practiced'] == False:
+                continue
+            if SKILLS[skill_id]['level_req'] > self.stats[StatType.LVL]:
+                continue
+
             col = '@red'
             if skill_id not in self.skills.keys():
                 learned = 0
             else:
                 learned = self.skills[skill_id]
-            if learned >= 50:
+            if learned >= 1:
                 col = '@yellow'
-            if learned >= 70:
+            if learned >= 50:
                 col = '@green'
             if learned >= 95:
                 col = '@bgreen'
+
             t.add_data(SKILLS[skill_id]["name"])
             t.add_data(learned, col)
+            t.add_data(SKILLS[skill_id]['level_req'])
         self.sendLine(t.get_table() + output)
-        '''
-        output = f'You have {self.stats[StatType.PP]} practice points left.\n'
-        output += f'{"Skill":<20} | {"Learned":<8} | {"Level Req":<5}\n'
-        for skill_id in SKILLS.keys():
-            if not SKILLS[skill_id]['can_be_practiced']:
-                continue
-            if self.stats[StatType.LVL] < SKILLS[skill_id]['level_req'] :
-                continue
-            if skill_id not in self.skills.keys():
-                learned = 0
-            else:
-                learned = self.skills[skill_id]
-            level = SKILLS[skill_id]['level_req']
-            output += (f'{SKILLS[skill_id]["name"]:<20} | {str(learned):<8} | {str(level):<5} \n')
-        self.sendLine(f'{output}')
-        '''
     else:
         line = line.split()
         if len(line) < 2:
@@ -170,14 +160,17 @@ def command_skills(self, line):
             self.sendLine('You do not know any skills...')
             return
 
-        t = utils.Table(4, spaces = 2)
+        t = utils.Table(5, spaces = 2)
         t.add_data('Skill')
         t.add_data('HP')
         t.add_data('MP')
         t.add_data('R')
-        #t.add_data('Prac')
+        t.add_data('Lvl')
 
-        for skill_id in self.skills:
+        for skill_id in SKILLS:
+            if skill_id not in self.skills:
+                continue # skip unknown skills
+                
             t.add_data(id_to_name[skill_id])
             t.add_data(SKILLS[skill_id]["hp_cost"], '@red')
             t.add_data(SKILLS[skill_id]["mp_cost"], '@cyan')
@@ -189,29 +182,20 @@ def command_skills(self, line):
                 t.add_data(f'{self.cooldown_manager.cooldowns[skill_id]}', '@red')
 
             #t.add_data(self.skills[skill_id])
+            col = '@red'
+            if skill_id not in self.skills.keys():
+                learned = 0
+            else:
+                learned = self.skills[skill_id]
+            if learned >= 1:
+                col = '@yellow'
+            if learned >= 50:
+                col = '@green'
+            if learned >= 95:
+                col = '@bgreen'
+            t.add_data(self.skills[skill_id], col)
         
         self.sendLine(t.get_table())
-        '''
-        output = 'SKILLS:\n'
-        max_length = max(len(skill) for skill in self.skills) + 1
-        output += f'{"Skill":<20} {"LVL":<4} {"MP":<4} {"HP":<4} {"R":<4}\n'
-        for skill_id in self.skills:
-            #cooldown = ""
-            #if skill_id in self.cooldown_manager.cooldowns:
-            #    cooldown = f'({self.cooldown_manager.cooldowns[skill_id]})'
-            #output = output + f'{id_to_name[skill_id] + ":":<20} {self.skills[skill_id]} {cooldown}\n'
-            output += f'{id_to_name[skill_id]:<20} '
-            output += f'{self.skills[skill_id]:<4} '
-            output += f'{SKILLS[skill_id]["mp_cost"]:<4} '
-            output += f'{SKILLS[skill_id]["hp_cost"]:<4} '
-            if skill_id not in self.cooldown_manager.cooldowns:
-                cooldown = "Y"
-            else: 
-                cooldown = f'{self.cooldown_manager.cooldowns[skill_id]}'
-            output += f'{cooldown:<4} '
-            output += '\n'
-        self.sendLine(output)
-        '''
 
 @check_not_in_combat
 @check_alive

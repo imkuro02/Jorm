@@ -58,6 +58,7 @@ class Skill:
 
     def use(self):
         self.user.cooldown_manager.add_cooldown(self.skill_id, self.cooldown)
+
         if self.silent_use:
             return
         self.use_broadcast()

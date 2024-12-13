@@ -37,6 +37,7 @@ class Player(Actor):
 
     def tick(self):
         # Send buffer
+        super().tick()
         if self.factory.ticks_passed % 1 != 0:
             return
         if self.send_line_buffer == []:

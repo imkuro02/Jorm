@@ -30,11 +30,12 @@ class Affect:
 
     # called at start of turn
     def set_turn(self):
+        self.turns -= 1
         pass
 
     # called at end of turn
     def finish_turn(self):
-        self.turns -= 1
+        pass
 
     # called whenever hp updates in any way
     def take_damage(self, source, damage, damage_type):
@@ -43,6 +44,7 @@ class Affect:
 class AffectStunned(Affect):
     # called at start of turn
     def set_turn(self):
+        super().set_turn()
         self.owner.simple_broadcast(
             f'You are too stunned to act!',
             f'{self.owner.pretty_name()} is too stunned to act!')
