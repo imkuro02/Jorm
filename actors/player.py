@@ -25,6 +25,9 @@ class Player(Actor):
         self.inventory = {}
 
     def set_admin(self):
+        self.admin = True
+        return
+        
         if self.protocol == None:
             return
         with open('admins.txt', 'r') as file:

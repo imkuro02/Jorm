@@ -221,6 +221,15 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
                 self.actor.inventory_manager.add_item(new_item)
             self.compare_slots_to_items()
 
+            # actor is loaded without equipment stats on
+            # add them back here
+            for eq in self.actor.slots.values():
+                if eq == None:
+                    continue
+                stats = self.actor.inventory_manager.items[eq].stats
+                for s in stats:
+                    self.actor.stats[s] += stats[s]
+
         self.state = self.PLAY
         
         if actor == None:
@@ -234,6 +243,14 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         inventory = {}
         for i in self.actor.inventory_manager.items:
             inventory[i] = save_item(self.actor.inventory_manager.items[i])
+
+        # removes equipment stats to save only character stats
+        for eq in self.actor.slots.values():
+            if eq == None:
+                continue
+            stats = self.actor.inventory_manager.items[eq].stats
+            for s in stats:
+                self.actor.stats[s] -= stats[s]
 
         self.factory.db.write_actor(self.account[0] ,{
             'id':   self.actor.id,
