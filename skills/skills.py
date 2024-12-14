@@ -14,7 +14,6 @@ class Skill:
         self.no_cooldown = no_cooldown
         self.silent_use = silent_use
 
-
     def use_broadcast(self):
         perspectives = {
             'you on you':       self.use_perspectives['you on you fail'],
@@ -69,6 +68,7 @@ class SkillSwing(Skill):
         if self.success:
             damage_dealt = self.other.take_damage(self.user, 1 + self.user.stats[StatType.BODY], DamageType.PHYSICAL)
             return damage_dealt
+
 class SkillCureLightWounds(Skill):
     def use(self):
         super().use()

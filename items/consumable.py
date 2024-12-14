@@ -10,17 +10,17 @@ class Consumable(Item):
         
         self.skills = []
         self.use_perspectives = {
-            'you on you':           'You drink the vile liquid',
-            'you on other':         'You splash the vile liquid on #OTHER#',
-            'user on user':         '#USER# drinks the vile liquid',
-            'user on you':          '#USER# splashes the vile liquid on you',
-            'user on other':        '#USER# splashes the vile liquid on #OTHER#',
+            'you on you':           'no use perspective, check Consumable Class',
+            'you on other':         'no use perspective, check Consumable Class',
+            'user on user':         'no use perspective, check Consumable Class',
+            'user on you':          'no use perspective, check Consumable Class',
+            'user on other':        'no use perspective, check Consumable Class',
 
-            'you on you fail':           'You fumble and the vile liquid splashes onto the ground',
-            'you on other fail':         'You fumble and the vile liquid splashes onto the ground',
-            'user on user fail':         '#USER# fumbles and the vile liquid splashes onto the ground',
-            'user on you fail':          '#USER# fumbles and the vile liquid splashes onto the ground',
-            'user on other fail':        '#USER# fumbles and the vile liquid splashes onto the ground'
+            'you on you fail':           'no use perspective, check Consumable Class',
+            'you on other fail':         'no use perspective, check Consumable Class',
+            'user on user fail':         'no use perspective, check Consumable Class',
+            'user on you fail':          'no use perspective, check Consumable Class',
+            'user on other fail':        'no use perspective, check Consumable Class'
         }
         
 
@@ -42,5 +42,5 @@ class Consumable(Item):
     def use(self, user, target):
         first_skill = True
         for skill in self.skills:
-            use_skill_from_consumable(user = user, target = target, skill_id = skill, consumable_item = self)
+            use_skill_from_consumable(user = target, target = target, skill_id = skill, consumable_item = self)
         user.inventory_manager.remove_item(self)

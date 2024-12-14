@@ -27,7 +27,7 @@ class Player(Actor):
     def set_admin(self):
         self.admin = True
         return
-        
+
         if self.protocol == None:
             return
         with open('admins.txt', 'r') as file:
@@ -56,6 +56,8 @@ class Player(Actor):
         else:
             self.protocol.transport.write(line.encode('utf-8'))
         return
+
+        
         #   THIS SHOULD BE CLIENT SIDE
         '''
         if color:

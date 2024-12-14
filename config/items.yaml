@@ -103,7 +103,7 @@ whip:
   premade_id: whip
   description: Now watch me.. you know..
   item_type: equipment
-  name: Whip*
+  name: Whip
 
   slot: secondary
   requirements:
@@ -129,9 +129,18 @@ red potion:
   description: Just a bottle of cold tomato soup
   item_type: consumable
   name: Red Potion
-  
+  use_perspectives: potion0
   skills:
   - cure light wounds
+
+translucent scroll:
+  premade_id: translucent scroll
+  description: Its so hard to read...
+  item_type: consumable
+  name: Translucent scroll
+  use_perspectives: scroll0
+  skills:
+  - ethereal
 
 rock:
   premade_id: rock

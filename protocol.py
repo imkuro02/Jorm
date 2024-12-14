@@ -4,6 +4,7 @@ from items.manager import load_item, save_item
 import utils
 from config import StatType
 import uuid
+import copy
 
 IAC = b'\xff'     # Interpret as Command
 WILL = b'\xfb'    # Will Perform
@@ -222,13 +223,15 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
                 new_item.description =  item['description']
                 new_item.keep =         item['keep']
                 new_item.id =           item['id']
-                
+
                 self.actor.inventory_manager.add_item(new_item)
             self.compare_slots_to_items()
 
             # actor is loaded without equipment stats on
             # add them back here
             for item_id in actor['worn_equipment']:
+                if self.actor.inventory_manager.items[item_id].item_type != ItemType.EQUIPMENT:
+                    continue
                 item = self.actor.inventory_manager.items[item_id]
                 self.actor.inventory_equip(item, forced = True)
 
@@ -245,8 +248,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         self.sendLine('saving..')
         inventory = {}
         for i in self.actor.inventory_manager.items:
-            inventory[i] = self.actor.inventory_manager.items[i].save()#save_item(self.actor.inventory_manager.items[i])
-            
+            inventory[i] = self.actor.inventory_manager.items[i].save() #save_item(self.actor.inventory_manager.items[i])
 
         # removes equipment stats to save only character stats
         worn_equipment = []

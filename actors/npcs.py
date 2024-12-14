@@ -41,8 +41,6 @@ class Enemy(Actor):
         self.loot = copy.deepcopy(loot)
         self.room.move_enemy(self)
 
-        #self.inventory = {}    
-
     def tick(self):
         if self.room == None:
             return

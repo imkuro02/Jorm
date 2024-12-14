@@ -59,7 +59,7 @@ class AffectEthereal(Affect):
 
         if damage_type == DamageType.PHYSICAL:
             damage_type = DamageType.CANCELLED
-            self.owner.sendLine(
+            self.owner.simple_broadcast(
                 'The attack goes straight thru you as you are ethereal!',
                 f'The attack goes straight thru {self.owner.pretty_name()} as they are ethereal!')
 

@@ -91,6 +91,7 @@ SKILLS = {}
 ITEMS = {}
 ENEMIES = {}
 WORLD = {}
+CONSUMABLE_USE_PERSPECTIVES = {}
 
 def load():
     #SKILLS = {}
@@ -120,6 +121,12 @@ def load():
         for i in WORLD_UNFILTERED:
             if 'template' not in i:
                 WORLD[i] = WORLD_UNFILTERED[i]
+
+    with open("config/consumable_use_perspectives.yaml", "r") as file:
+        CONSUMABLE_USE_PERSPECTIVES_UNFILTERED = yaml.safe_load(file)
+        for i in CONSUMABLE_USE_PERSPECTIVES_UNFILTERED:
+            if 'template' not in i:
+                CONSUMABLE_USE_PERSPECTIVES[i] = CONSUMABLE_USE_PERSPECTIVES_UNFILTERED[i]
 
 
     print('reloaded')
