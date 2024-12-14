@@ -78,7 +78,7 @@ class Enemy(Actor):
             if roll >= self.loot[item]:
                 continue
 
-            new_item = load_item(all_items[item])
+            new_item = load_item(item)
 
             #if new_item.item_type == ItemType.EQUIPMENT:
             #    for i in range(random.randint(0,new_item.requirements[StatType.LVL])):

@@ -3,7 +3,6 @@ from config import ItemType, SKILLS
 from items.misc import Item
 from skills.manager import use_skill_from_consumable, get_skills
 
-
 class Consumable(Item):
     def __init__(self):
         super().__init__()

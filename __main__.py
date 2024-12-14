@@ -3,6 +3,8 @@ from protocol import Protocol
 from world import World
 from database import Database
 
+import config
+config.load()
 
 import items
 

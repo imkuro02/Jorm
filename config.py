@@ -88,35 +88,41 @@ class StatType:
     }
 
 SKILLS = {}
-with open('config/skills.yaml', 'r') as file:
-    SKILLS_UNFILTERED = yaml.safe_load(file)
-    for i in SKILLS_UNFILTERED:
-        if 'template' not in i:
-            SKILLS[i] = SKILLS_UNFILTERED[i]
-
 ITEMS = {}
-with open("config/items.yaml", "r") as file:
-    ITEMS_UNFILTERED = yaml.safe_load(file)
-    for i in ITEMS_UNFILTERED:
-        if 'template' not in i:
-            ITEMS[i] = ITEMS_UNFILTERED[i]
-
 ENEMIES = {}
-with open('config/enemies.yaml', 'r') as file:
-    ALL_ENEMIES = yaml.safe_load(file)
-    for i in ALL_ENEMIES:
-        if 'template' not in i:
-            ENEMIES[i] = ALL_ENEMIES[i]
-
 WORLD = {}
-with open("config/world.yaml", "r") as file:
-    WORLD_UNFILTERED = yaml.safe_load(file)
-    for i in WORLD_UNFILTERED:
-        if 'template' not in i:
-            WORLD[i] = WORLD_UNFILTERED[i]
 
-        
+def load():
+    #SKILLS = {}
+    with open('config/skills.yaml', 'r') as file:
+        SKILLS_UNFILTERED = yaml.safe_load(file)
+        for i in SKILLS_UNFILTERED:
+            if 'template' not in i:
+                SKILLS[i] = SKILLS_UNFILTERED[i]
 
-        
-        
+    #ITEMS = {}
+    with open("config/items.yaml", "r") as file:
+        ITEMS_UNFILTERED = yaml.safe_load(file)
+        for i in ITEMS_UNFILTERED:
+            if 'template' not in i:
+                ITEMS[i] = ITEMS_UNFILTERED[i]
+
+    #ENEMIES = {}
+    with open('config/enemies.yaml', 'r') as file:
+        ALL_ENEMIES = yaml.safe_load(file)
+        for i in ALL_ENEMIES:
+            if 'template' not in i:
+                ENEMIES[i] = ALL_ENEMIES[i]
+
+    #WORLD = {}
+    with open("config/world.yaml", "r") as file:
+        WORLD_UNFILTERED = yaml.safe_load(file)
+        for i in WORLD_UNFILTERED:
+            if 'template' not in i:
+                WORLD[i] = WORLD_UNFILTERED[i]
+
+
+    print('reloaded')
+
+           
 

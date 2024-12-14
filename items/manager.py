@@ -1,67 +1,51 @@
 
 #import skills
 import copy
-from config import ItemType, EquipmentSlotType
+from config import ItemType, EquipmentSlotType, ITEMS
 
 from items.misc import Item
 from items.consumable import Consumable
 from items.equipment import Equipment
 
-def load_item(item):
-    item = copy.deepcopy(item)
-    item_type = item['item_type']
+def load_item(item_premade_id):
+    try:
+        premade_id = item_premade_id
+        item_type = ITEMS[premade_id]['item_type']
 
-    if item_type == ItemType.EQUIPMENT:
-        new_item = Equipment()
+        if item_type == ItemType.EQUIPMENT:
+            new_item = Equipment()
 
-        new_item.name = item['name']
-        new_item.description = item['description']
+            for key in ITEMS[premade_id]['stats']:
+                new_item.stats[key] = ITEMS[premade_id]['stats'][key]
 
+            for key in ITEMS[premade_id]['requirements']:
+                new_item.requirements[key] = ITEMS[premade_id]['requirements'][key]
 
-        for key in new_item.stats:
-            new_item.stats[key] = item['stats'][key]
-
-        for key in new_item.requirements:
-            new_item.requirements[key] = item['requirements'][key]
-
-        new_item.slot = item['slot']
-        new_item.equiped = item['equiped']
-        new_item.tags = item['tags']
-        new_item.history = item['history']
-
-
-    if item_type == ItemType.MISC:
-        new_item = Item()
-
-        new_item.name = item['name']
-        new_item.description = item['description']
-
-        new_item.tags = item['tags']
-        new_item.history = item['history']
-
-    if item_type == ItemType.CONSUMABLE:
-        new_item = Consumable()
-
-        new_item.name = item['name']
-        new_item.description = item['description']
-
-        new_item.tags = item['tags']
-        new_item.history = item['history']
-        
-        new_item.skills = item['skills']
-        
+            new_item.slot = ITEMS[premade_id]['slot']
     
+        if item_type == ItemType.MISC:
+                new_item = Item()
 
-    # on creation of an item object, it receives a uuid
-    # if there is no uuid present in the item dict received, then that item is being created for the first time
-    # and if there is uuid present, then the item is most likely loaded from the database and should
-    # receive its id, and not get a new randomly generated one
-    if 'id' in item:
-        new_item.id = item['id']
-    if 'keep' in item:
-        new_item.keep = item['keep']
+        if item_type == ItemType.CONSUMABLE:
+            new_item = Consumable()
 
-    return new_item
+            new_item.skills = ITEMS[premade_id]['skills']
+
+        
+        new_item.name = ITEMS[premade_id]['name']
+        new_item.description = ITEMS[premade_id]['description']
+        new_item.premade_id = ITEMS[premade_id]['premade_id']
+
+
+        # on creation of an item object, it receives a uuid
+        # if there is no uuid present in the item dict received, then that item is being created for the first time
+        # and if there is uuid present, then the item is most likely loaded from the database and should
+        # receive its id, and not get a new randomly generated one
+        
+
+        return new_item
+    except Exception as e:
+        print(e,'>>>>>>>..')
 
 def save_item(item):
     return item.to_dict()

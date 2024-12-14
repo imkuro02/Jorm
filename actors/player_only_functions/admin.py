@@ -125,7 +125,7 @@ def command_load_item(self, line):
         self.sendLine(f'{line} is not a premade item')
         return
 
-    item = items.load_item(data[line])
+    item = items.load_item(line)
     self.inventory_manager.add_item(item)
 
 def command_export_item(self, line):
@@ -148,3 +148,7 @@ def command_export_item(self, line):
 
 def command_debug(self, line):
     self.sendLine(self.room.world.rooms)
+
+def command_reload_config(self, line):
+    import config
+    config.load()

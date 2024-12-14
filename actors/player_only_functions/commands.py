@@ -27,7 +27,7 @@ from actors.player_only_functions.character_sheet import (
 from actors.player_only_functions.admin import (
     command_gain_exp, command_create_item, command_update_item, 
     command_load_item, command_export_item, command_help, prompt, 
-    command_send_prompt, command_debug
+    command_send_prompt, command_debug, command_reload_config
 )
 
 # one letter command mapper
@@ -86,6 +86,7 @@ commands = {
     'miexport': 'command_export_item',
     'miload':   'command_load_item',
     'mexp':     'command_gain_exp',
-    'midebug':  'command_debug'
+    'mdebug':  'command_debug',
+    'reload':   'command_reload_config'
 }
 

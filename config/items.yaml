@@ -1,10 +1,8 @@
 
 tutorial rat dagger:
+  premade_id: tutorial rat dagger
   description: A dagger... what was the rat doing with a fucking dagger?
-  equiped: false
-  history: {}
   item_type: equipment
-  keep: false
   name: Chewed up Dagger
   requirements:
     armor: 0
@@ -27,92 +25,117 @@ tutorial rat dagger:
   tags: []
 
 sword:
+  premade_id: sword
   description: Cool sword bro
-  equiped: false
-  history: {}
   item_type: equipment
-  keep: false
   name: Sword
+
+  slot: primary
   requirements:
     armor: 0
     body: 0
-    lvl: 3
+    lvl: 1
     marmor: 0
     hp_max: 0
     mp_max: 0
-    mind: 4
+    mind: 0
     soul: 0
-  slot: primary
   stats:
     armor: 0
     body: 2
     marmor: 0
     hp_max: 0
     mp_max: 0
-    mind: 0
+    mind: 1
     soul: 1
-  tags: []
 
 lucky charm:
-  description: Description here
-  equiped: false
-  history: {}
+  premade_id: lucky charm
+  description: A rabbits foot, how lucky
   item_type: equipment
-  keep: false
-  name: Lucky Charm
-  requirements:
-    armor: 0
-    body: 0
-    lvl: 3
-    marmor: 0
-    hp_max: 0
-    mp_max: 0
-    mind: 0
-    soul: 2
+  name: Lucky charm
+
   slot: trinket
-  stats:
-    armor: 0
-    body: 0
-    marmor: 0
-    hp_max: 0
-    mp_max: 0
-    mind: 0
-    soul: 0
-  tags: []
-
-red potion:
-  description: Just a bottle of cold tomato soup
-  history: {}
-  item_type: consumable
-  keep: false
-  name: Red Potion
-  skills:
-  - cure light wounds
-  tags: []
-
-long sword:
-  description: Cool sword bro
-  equiped: false
-  history: {}
-  item_type: equipment
-  keep: false
-  name: Longsword
   requirements:
-    armor: 0
-    body: 0
-    lvl: 3
-    marmor: 0
+    lvl: 1
     hp_max: 0
     mp_max: 0
+    armor:  0
+    marmor: 0
+    body: 0
     mind: 0
     soul: 0
-  slot: primary
   stats:
-    armor: 0
-    body: 2
+    hp_max: 5
+    mp_max: 5
+    armor:  0
     marmor: 0
-    hp_max: 0
-    mp_max: 0
+    body: 0
     mind: 0
     soul: 1
-  tags: []
+
+long sword:
+  premade_id: long sword
+  description: A looooooooooong sword
+  item_type: equipment
+  name: Longsword
+
+  slot: primary
+  requirements:
+    lvl: 3
+    hp_max: 0
+    mp_max: 0
+    body: 0
+    mind: 0
+    soul: 0
+    armor:  0
+    marmor: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    body: 3
+    mind: 0
+    soul: 0
+    armor:  0
+    marmor: 0
+
+whip:
+  premade_id: whip
+  description: Now watch me.. you know..
+  item_type: equipment
+  name: Whip*
+
+  slot: secondary
+  requirements:
+    lvl: 5
+    hp_max: 0
+    mp_max: 0
+    body: 0
+    mind: 0
+    soul: 0
+    armor:  0
+    marmor: 0
+  stats:
+    hp_max: 0
+    mp_max: 10
+    body: 0
+    mind: 0
+    soul: 3
+    armor:  0
+    marmor: 0
+
+red potion:
+  premade_id: red potion
+  description: Just a bottle of cold tomato soup
+  item_type: consumable
+  name: Red Potion
+  
+  skills:
+  - cure light wounds
+
+rock:
+  premade_id: rock
+  item_type: misc
+  name: Rock
+  description: Just a rock
+  

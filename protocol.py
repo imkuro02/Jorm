@@ -215,20 +215,23 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.actor = Player(self, _id = actor['id'], name = actor['name'], room = self.factory.world.rooms['loading'])
             self.actor.stats = actor['stats']
             self.actor.skills = actor['skills']
-            self.actor.slots = actor['slots']
+
             for item in actor['inventory'].values():
-                new_item = load_item(item)
+                new_item = load_item(item['premade_id'])
+                new_item.name =         item['name']
+                new_item.description =  item['description']
+                new_item.keep =         item['keep']
+                new_item.id =           item['id']
+                
                 self.actor.inventory_manager.add_item(new_item)
             self.compare_slots_to_items()
 
             # actor is loaded without equipment stats on
             # add them back here
-            for eq in self.actor.slots.values():
-                if eq == None:
-                    continue
-                stats = self.actor.inventory_manager.items[eq].stats
-                for s in stats:
-                    self.actor.stats[s] += stats[s]
+            for item_id in actor['worn_equipment']:
+                item = self.actor.inventory_manager.items[item_id]
+                self.actor.inventory_equip(item, forced = True)
+
 
         self.state = self.PLAY
         
@@ -242,12 +245,15 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         self.sendLine('saving..')
         inventory = {}
         for i in self.actor.inventory_manager.items:
-            inventory[i] = save_item(self.actor.inventory_manager.items[i])
+            inventory[i] = self.actor.inventory_manager.items[i].save()#save_item(self.actor.inventory_manager.items[i])
+            
 
         # removes equipment stats to save only character stats
+        worn_equipment = []
         for eq in self.actor.slots.values():
             if eq == None:
                 continue
+            worn_equipment.append(eq)
             stats = self.actor.inventory_manager.items[eq].stats
             for s in stats:
                 self.actor.stats[s] -= stats[s]
@@ -257,8 +263,8 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             'name': self.actor.name,
             'stats': self.actor.stats,
             'skills': self.actor.skills,
-            'slots': self.actor.slots,
-            'inventory': inventory
+            'inventory': inventory,
+            'worn_equipment': worn_equipment
         })
 
         self.compare_slots_to_items()

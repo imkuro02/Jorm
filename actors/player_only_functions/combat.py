@@ -59,7 +59,8 @@ def command_use(self, line):
     # if you are trying to use an item
     #print(best_match)
     if best_match in list_of_consumables:
-        item = self.get_item(action)
+        item = self.get_item(best_match)
+        #print(item.name)
 
         def use_item(item, user, target):
             #self.use_manager.use_broadcast(self, target, item.use_perspectives)

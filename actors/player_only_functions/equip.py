@@ -21,20 +21,21 @@ def command_equipment(self, line):
             output = output + f'{EquipmentSlotType.name[i] + ":":<12} {self.inventory_manager.items[self.slots[i]].name}\n'
     self.sendLine(output)
 
-def inventory_equip(self, item):
+def inventory_equip(self, item, forced = False):
     if item.slot != None:
         if self.slots[item.slot] != None:
             self.inventory_unequip(self.inventory_manager.items[self.slots[item.slot]])
         
         self.slots[item.slot] = item.id
         
+
         req_not_met = False
         for stat_name in item.requirements:
             if self.stats[stat_name] < item.requirements[stat_name]:
-                self.sendLine(f'@redYou do not meet the requirements of {item.requirements[stat_name]} {StatType.name[stat_name]}@normal')
+                if not forced: self.sendLine(f'@redYou do not meet the requirements of {item.requirements[stat_name]} {StatType.name[stat_name]}@normal')
                 req_not_met = True
         
-        if req_not_met:
+        if req_not_met and forced == False:
             return
         
         item.equiped = True 
@@ -44,7 +45,7 @@ def inventory_equip(self, item):
             self.stats[stat_name] += stat_val
             #print(self.stats[stat_name])
         
-        self.simple_broadcast(
+        if not forced: self.simple_broadcast(
             f'You equip {item.name}',
             f'{self.pretty_name()} equips {item.name}'
             )
