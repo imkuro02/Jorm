@@ -235,7 +235,6 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         for i in self.actor.inventory_manager.items:
             inventory[i] = save_item(self.actor.inventory_manager.items[i])
 
-
         self.factory.db.write_actor(self.account[0] ,{
             'id':   self.actor.id,
             'name': self.actor.name,
@@ -244,6 +243,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             'slots': self.actor.slots,
             'inventory': inventory
         })
+
         self.compare_slots_to_items()
 
         actor = self.factory.db.read_actor(self.account[0])

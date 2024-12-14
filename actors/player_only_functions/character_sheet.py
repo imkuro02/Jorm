@@ -231,7 +231,7 @@ def command_stats(self, line):
         output += f'@greenYou have enough exp to level up@normal\n'
     output += f'{StatType.name[StatType.EXP]}: {self.stats[StatType.EXP]}\n'
     output += f'{StatType.name[StatType.PP]}: {self.stats[StatType.PP]}\n'
-    output = f'@bblackPlayer:  {self.id}\nAccount: {self.protocol.id}@normal\n' + output
+    output = f'Player:  {self.id}\nAccount: {self.protocol.id}\n' + output
     
     
     self.sendLine(output)

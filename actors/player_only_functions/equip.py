@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_alive, check_no_empty_line
-from config import ItemType, EquipmentSlotType
+from config import ItemType, EquipmentSlotType, StatType
 
 def command_equipment(self, line):
     # if you type equip item, it will wear that item
@@ -27,6 +27,15 @@ def inventory_equip(self, item):
             self.inventory_unequip(self.inventory_manager.items[self.slots[item.slot]])
         
         self.slots[item.slot] = item.id
+        
+        req_not_met = False
+        for stat_name in item.requirements:
+            if self.stats[stat_name] < item.requirements[stat_name]:
+                self.sendLine(f'@redYou do not meet the requirements of {item.requirements[stat_name]} {StatType.name[stat_name]}@normal')
+                req_not_met = True
+        
+        if req_not_met:
+            return
         
         item.equiped = True 
         for stat_name in item.stats:

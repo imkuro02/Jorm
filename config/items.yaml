@@ -40,7 +40,7 @@ sword:
     marmor: 0
     hp_max: 0
     mp_max: 0
-    mind: 0
+    mind: 4
     soul: 0
   slot: primary
   stats:
