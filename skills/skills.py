@@ -98,11 +98,12 @@ class SkillBecomeEthereal(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns = 4 + int(self.users_skill_level*0.03)
+            turns = 1 + self.user.stats[StatType.SOUL] #+ int(self.users_skill_level*0.03)
             dmg_amp = 2.4 - self.users_skill_level*0.01
+            dmg_amp = 1.4
             ethereal_affect = affects.AffectEthereal(
                 AffType.ETHEREAL, 
                 self.user.affect_manager, 
                 'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
                 turns, dmg_amp)
-            self.user.affect_manager.set_affect_object(ethereal_affect)
+            self.other.affect_manager.set_affect_object(ethereal_affect)

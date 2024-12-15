@@ -79,7 +79,9 @@ cure light wounds:
 
 ethereal:
   name: Become Ethereal
-  description: You become ethereal for 2 + half of your practice level
+  description: 'You become ethereal, you become immune to physical damage, but vurnerable to magical damage.
+                The duration lasts for casters Soul level.
+                The magical damage is amplified by 140%'
   level_req: 0
   can_be_practiced: True
   must_be_fighting: False

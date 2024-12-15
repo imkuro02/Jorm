@@ -42,5 +42,5 @@ class Consumable(Item):
     def use(self, user, target):
         first_skill = True
         for skill in self.skills:
-            use_skill_from_consumable(user = target, target = target, skill_id = skill, consumable_item = self)
+            use_skill_from_consumable(user = user, target = target, skill_id = skill, consumable_item = self)
         user.inventory_manager.remove_item(self)
