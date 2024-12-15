@@ -4,7 +4,7 @@ import time
 #from items import Item
 import uuid
 import random
-from combat import Combat
+from combat.manager import Combat
 from config import WORLD
 import copy
 from inventory import InventoryManager

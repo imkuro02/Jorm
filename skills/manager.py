@@ -109,6 +109,7 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
         
         skill_obj.use()
         del skill_obj
+        
 
 
 def use_skill(user, target, skill_id):
@@ -120,6 +121,7 @@ def use_skill(user, target, skill_id):
         except AttributeError:
             user.sendLine(f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
+        
         users_skill_level = user.skills[skill_id]
         cooldown = skill['cooldown']
         use_perspectives = skill['use_perspectives']

@@ -1,4 +1,57 @@
-from config import ActorStatusType, StatType
+from config import ActorStatusType, StatType, DamageType
+
+class Damage:
+    def __init__(self, 
+                 damage_taker,
+                 damage_source_actor, 
+                 damage_value, damage_type, 
+                 damage_to_stat = StatType.HP):
+        self.damage_taker = damage_taker
+        self.damage_source_actor = damage_source_actor
+        self.damage_value = damage_value
+        self.damage_type = damage_type
+        self.damage_to_stat = damage_to_stat
+
+    def take_damage(self):
+        match self.damage_type:
+            # the string 'none' can be returned from affect_manager.take_damage() 
+            # meaning the damage was completely cancelled by something
+            # the affect should sendLine what exactly happened
+            # example: physical damage while ethereal should send "You are ethereal"
+            case DamageType.CANCELLED: 
+                return 0
+            case DamageType.PHYSICAL:
+                self.damage_value -= self.damage_taker.stats[StatType.ARMOR]
+            case DamageType.MAGICAL:
+                self.damage_value -= self.damage_taker.stats[StatType.MARMOR]
+            case DamageType.PURE:
+                pass
+            case DamageType.HEALING:
+                self.damage_taker.stats[StatType.HP] += self.damage_value
+                self.damage_taker.simple_broadcast(
+                    f'You heal for {self.damage_value}',
+                    f'{self.damage_taker.pretty_name()} heals for {self.damage_value}'
+                    )
+
+                self.damage_taker.hp_mp_clamp_update()
+                return
+
+        if self.damage_value <= 0:
+            self.damage_taker.simple_broadcast(
+            f'You block',
+            f'{self.damage_taker.pretty_name()} blocks'
+            )
+            return
+
+        self.damage_taker.stats[StatType.HP] -= self.damage_value
+        self.damage_taker.simple_broadcast(
+            f'You take {self.damage_value} damage',
+            f'{self.damage_taker.pretty_name()} takes {self.damage_value} damage'
+            )
+
+        self.damage_taker.hp_mp_clamp_update()
+        return self.damage_value
+
 class Combat:
     def __init__(self, room, participants):
         self.room = room

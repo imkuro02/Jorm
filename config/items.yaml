@@ -131,7 +131,16 @@ red potion:
   name: Red Potion
   use_perspectives: potion0
   skills:
-  - cure light wounds
+  - regen_hp30
+
+blue potion:
+  premade_id: blue potion
+  description: Just a bottle of REALLY cold tomato soup
+  item_type: consumable
+  name: Blue Potion
+  use_perspectives: potion0
+  skills:
+  - regen_mp30
 
 translucent scroll:
   premade_id: translucent scroll

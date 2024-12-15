@@ -1,6 +1,7 @@
 from config import AffType, DamageType, StatType
 #import affects.manager as aff_manager
 import affects.affects as affects
+from combat.manager import Damage
 
 class Skill:
     def __init__(self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False):
@@ -66,15 +67,31 @@ class SkillSwing(Skill):
     def use(self):
         super().use()
         if self.success:
-            damage_dealt = self.other.take_damage(self.user, 1 + self.user.stats[StatType.BODY], DamageType.PHYSICAL)
-            return damage_dealt
+            damage_obj = Damage(
+                damage_taker = self.other,
+                damage_source_actor = self.user,
+                damage_value = 1 + self.user.stats[StatType.BODY],
+                damage_type = DamageType.PHYSICAL
+                )
+            self.other.take_damage(damage_obj)
+            
+            
+            #damage_dealt = self.other.take_damage(self.user, 1 + self.user.stats[StatType.BODY], DamageType.PHYSICAL)
+            #return damage_dealt 
 
 class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.take_damage(self.user, 10 + int(self.users_skill_level*0.1) + self.user.stats[StatType.SOUL], DamageType.HEALING)
-
+            #self.other.take_damage(self.user, 10 + int(self.users_skill_level*0.1) + self.user.stats[StatType.SOUL], DamageType.HEALING)
+            damage_obj = Damage(
+                damage_taker = self.other,
+                damage_source_actor = self.user,
+                damage_value = 10 + int(self.user.stats[StatType.SOUL]),
+                damage_type = DamageType.HEALING
+                )
+            self.other.take_damage(damage_obj)
+            
 class SkillBash(SkillSwing):
     def use(self):
         damage_dealt = super().use()
@@ -92,11 +109,18 @@ class SkillMagicMissile(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.take_damage(self.user, 4 + self.user.stats[StatType.MIND], DamageType.MAGICAL)
+            damage_obj = Damage(
+                damage_taker = self.other,
+                damage_source_actor = self.user,
+                damage_value = 4 + int(self.user.stats[StatType.MIND]),
+                damage_type = DamageType.MAGICAL
+                )
+            self.other.take_damage(damage_obj)
 
 class SkillBecomeEthereal(Skill):
     def use(self):
         super().use()
+        
         if self.success:
             turns = 1 + self.user.stats[StatType.SOUL] #+ int(self.users_skill_level*0.03)
             dmg_amp = 2.4 - self.users_skill_level*0.01
@@ -106,10 +130,25 @@ class SkillBecomeEthereal(Skill):
                 self.user.affect_manager, 
                 'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
                 turns, dmg_amp)
-            self.other.affect_manager.set_affect_object(ethereal_affect)
+            self.other.affect_manager.set_affect_object(ethereal_affect)  
 
 class SkillRegenHP30(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)
+            #self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)
+            damage_obj = Damage(
+                damage_taker = self.other,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stats[StatType.HPMAX]*.3),
+                damage_type = DamageType.HEALING
+                )
+            self.user.take_damage(damage_obj)           
+
+class SkillRegenMP30(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            self.other.stats[StatType.MP] += int(self.other.stats[StatType.MPMAX]*.3)
+            self.other.hp_mp_clamp_update()
+            #self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)            

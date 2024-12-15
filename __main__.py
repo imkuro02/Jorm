@@ -18,7 +18,6 @@ class ServerFactory(protocol.Factory):
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)
         
-
     def tick(self):
         self.ticks_passed += 1
         self.world.tick()

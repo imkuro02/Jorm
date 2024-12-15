@@ -121,47 +121,23 @@ class Actor:
         if self.status != ActorStatusType.FIGHTING:
             self.cooldown_manager.unload_all_cooldowns()
         
+        
+    def hp_mp_clamp_update(self):
+        # max
+        if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
+            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
 
-    def take_damage(self, source, damage, damage_type):
-        source, damage, damage_type = self.affect_manager.take_damage(source, damage, damage_type)
- 
-        match damage_type:
-            # the string 'none' can be returned from affect_manager.take_damage() 
-            # meaning the damage was completely cancelled by something
-            # the affect should sendLine what exactly happened
-            # example: physical damage while ethereal should send "You are ethereal"
-            case DamageType.CANCELLED: 
-                return 0
-            case DamageType.PHYSICAL:
-                damage -= self.stats[StatType.ARMOR]
-            case DamageType.MAGICAL:
-                damage -= self.stats[StatType.MARMOR]
-            case DamageType.PURE:
-                pass
-            case DamageType.HEALING:
-                self.stats[StatType.HP] += damage
-                self.simple_broadcast(
-                    f'You heal for {damage}',
-                    f'{self.pretty_name()} heals for {damage}'
-                    )
+        if self.stats[StatType.MP] >= self.stats[StatType.MPMAX]:
+            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
 
-                if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
-                    self.stats[StatType.HP] = self.stats[StatType.HPMAX]
-                return
+        # min 
+        if self.stats[StatType.HP] <= 0:
+            self.stats[StatType.HP] = 0
 
-        if damage <= 0:
-            self.simple_broadcast(
-            f'You block',
-            f'{self.pretty_name()} blocks'
-            )
-            return
+        if self.stats[StatType.MP] <= 0:
+            self.stats[StatType.MP] = 0
 
-        self.stats[StatType.HP] -= damage
-        self.simple_broadcast(
-            f'You take {damage} damage',
-            f'{self.pretty_name()} takes {damage} damage'
-            )
-
+        # death
         if self.stats[StatType.HP] <= 0:
             self.stats[StatType.HP] = 0
             self.status = ActorStatusType.DEAD
@@ -172,8 +148,12 @@ class Actor:
                 )
 
             self.die()
-            
-        return damage
+
+    def take_damage(self, damage_obj: 'Damage'):
+        damage_obj = self.affect_manager.take_damage(damage_obj)
+        damage_obj.take_damage()
+        del damage_obj
+
 
     def die(self):
         if self.room.combat != None:
@@ -207,6 +187,14 @@ class Actor:
                 player.sendLine(f'{line_others}')
 
     def finish_turn(self):
+        # force timers to go down as they go down on 
+        # set turn, not finish turn
+        # BUT only out of combat, otherwise timer would go down 
+        # twice per turn
+        if self.status == ActorStatusType.NORMAL:
+            self.affect_manager.set_turn()
+            self.cooldown_manager.set_turn()
+
         self.affect_manager.finish_turn()
         self.cooldown_manager.finish_turn()
         

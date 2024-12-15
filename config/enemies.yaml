@@ -48,9 +48,10 @@ skeleton:
 
   skills:
     swing: 75
+    magic missile: 75
 
   combat_loop:
-    - skill: swing 
+    - skill: magic missile 
       target: enemy_random
 
 

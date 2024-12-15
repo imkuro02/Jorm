@@ -1,4 +1,5 @@
 from config import DamageType, StatType
+from combat.manager import Damage
 
 class Affect:
     def __init__(self, _id, affect_manager, name, description, turns):
@@ -38,8 +39,8 @@ class Affect:
         pass
 
     # called whenever hp updates in any way
-    def take_damage(self, source, damage, damage_type):
-        return source, damage, damage_type
+    def take_damage(self, damage_obj):
+        return damage_obj
 
 class AffectStunned(Affect):
     # called at start of turn
@@ -55,15 +56,15 @@ class AffectEthereal(Affect):
         super().__init__(_id, affect_manager, name, description, turns)
         self.dmg_amp = dmg_amp
     
-    def take_damage(self, source, damage, damage_type):
+    def take_damage(self, damage_obj: 'Damage'):
+        if damage_obj.damage_type == DamageType.PHYSICAL:
+            damage_obj.damage_type = DamageType.CANCELLED
+            damage_obj.damage_taker.simple_broadcast(
+                    f'You take no damage because you are ethereal',
+                    f'{damage_obj.damage_taker.pretty_name()} takes no damage because they are ethereal'
+                    )
 
-        if damage_type == DamageType.PHYSICAL:
-            damage_type = DamageType.CANCELLED
-            self.owner.simple_broadcast(
-                'The attack goes straight thru you as you are ethereal!',
-                f'The attack goes straight thru {self.owner.pretty_name()} as they are ethereal!')
+        if damage_obj.damage_type == DamageType.MAGICAL:
+            damage_obj.damage_value = int(damage_obj.damage_value * self.dmg_amp)
 
-        if damage_type == DamageType.MAGICAL:
-            damage = int(damage * self.dmg_amp)
-
-        return source, damage, damage_type
+        return damage_obj
