@@ -132,8 +132,8 @@ bash:
     user on other fail:   '#USER# fails to bash #OTHER#'
 
 regen_mp30:
-  name: RegenMP30
-  description: Regenerate 30% of your maximum mana
+  name: Minor Magicka Regen
+  description: Regenerate 30% of your maximum Magicka
   level_req: 0
   can_be_practiced: False
   must_be_fighting: False
@@ -158,8 +158,8 @@ regen_mp30:
     user on other fail:   '#USER# fails to bash #OTHER#'
 
 regen_hp30:
-  name: RegenHP30
-  description: Regenerate 30% of your maximum hp
+  name: Minor Health Regen
+  description: Regenerate 30% of your maximum Health
   level_req: 0
   can_be_practiced: False
   must_be_fighting: False

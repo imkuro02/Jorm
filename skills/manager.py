@@ -74,44 +74,52 @@ def skill_checks(user, target, skill_id):
 
     return True
 
-
-
+'''
 def get_skill_id_from_skill_name(skill_name):
     best_match = utils.match_word(skill_name, SKILLS.keys())
     return best_match
+'''
 
 def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, consumable_item):
-    skill = SKILLS[skill_id]
-    skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
-    users_skill_level = 1
-    cooldown = skill['cooldown']
-    use_perspectives = consumable_item.use_perspectives
-    success = random.randint(1,100) < 70
-    silent_use = False
-    no_cooldown = True
+        skill = SKILLS[skill_id]
+        try:
+            skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
+        except AttributeError:
+            user.sendLine(f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
+            return False
+        
+        users_skill_level = 1
+        cooldown = skill['cooldown']
+        use_perspectives = consumable_item.use_perspectives
+        success = random.randint(1,100) < 70
+        silent_use = False
+        no_cooldown = True
 
-    skill_obj = skill_obj(
-            skill_id = skill_id, 
-            cooldown = cooldown, 
-            user = user, 
-            other = target, 
-            users_skill_level = users_skill_level, 
-            use_perspectives = use_perspectives, 
-            success = success, 
-            silent_use = silent_use, 
-            no_cooldown = no_cooldown
-            )
-    
-    skill_obj.use()
-    del skill_obj
+        skill_obj = skill_obj(
+                skill_id = skill_id, 
+                cooldown = cooldown, 
+                user = user, 
+                other = target, 
+                users_skill_level = users_skill_level, 
+                use_perspectives = use_perspectives, 
+                success = success, 
+                silent_use = silent_use, 
+                no_cooldown = no_cooldown
+                )
+        
+        skill_obj.use()
+        del skill_obj
 
-def use_skill(user, target, skill_id, consumable = False):
-    #skill_id = get_skill_id_from_skill_name(skill_name)
+
+def use_skill(user, target, skill_id):
     skill = SKILLS[skill_id]
 
     if skill_checks(user, target, skill_id):
-
-        skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
+        try:
+            skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
+        except AttributeError:
+            user.sendLine(f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
+            return False
         users_skill_level = user.skills[skill_id]
         cooldown = skill['cooldown']
         use_perspectives = skill['use_perspectives']
@@ -135,5 +143,6 @@ def use_skill(user, target, skill_id, consumable = False):
         del skill_obj
         return True
     return False
+
 
 

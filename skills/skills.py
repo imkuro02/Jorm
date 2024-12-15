@@ -92,7 +92,7 @@ class SkillMagicMissile(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.take_damage(self.user, self.user.stats[StatType.MIND], DamageType.MAGICAL)
+            self.other.take_damage(self.user, 4 + self.user.stats[StatType.MIND], DamageType.MAGICAL)
 
 class SkillBecomeEthereal(Skill):
     def use(self):
@@ -107,3 +107,9 @@ class SkillBecomeEthereal(Skill):
                 'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
                 turns, dmg_amp)
             self.other.affect_manager.set_affect_object(ethereal_affect)
+
+class SkillRegenHP30(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)
