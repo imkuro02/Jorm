@@ -236,7 +236,12 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             # actor is loaded without equipment stats on
             # add them back here
             for item_id in actor['worn_equipment']:
+                # skip if item is somehow not in inventory
+                if item_id not in self.actor.inventory_manager.items:
+                    print(item_id, 'is equiped but not in inventory?')
+                    continue
                 if self.actor.inventory_manager.items[item_id].item_type != ItemType.EQUIPMENT:
+                    print(item_id, 'is equiped but not ItemType.EQUIPMENT')
                     continue
                 item = self.actor.inventory_manager.items[item_id]
                 self.actor.inventory_equip(item, forced = True)
