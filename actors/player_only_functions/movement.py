@@ -52,4 +52,4 @@ def command_go(self, line):
         None,
         f'{self.pretty_name()} arrived'
         )
-    self.finish_turn()
+    self.finish_turn(force_cooldown = True)

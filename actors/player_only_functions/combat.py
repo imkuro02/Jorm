@@ -12,10 +12,10 @@ def command_fight(self, line):
 @check_alive
 def command_pass_turn(self, line):
     if self.room.combat == None:
-        self.finish_turn()
+        self.finish_turn(force_cooldown = True)
         return
     if self.status != ActorStatusType.FIGHTING:
-        self.finish_turn()
+        self.finish_turn(force_cooldown = True)
         return
     if self.room.combat.current_actor != self:
         return

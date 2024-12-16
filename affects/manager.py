@@ -1,8 +1,3 @@
-
-
-from config import AffType, DamageType
-#from affects.affects 
-
 class AffectsManager:
     def __init__(self, owner):
         self.owner = owner
@@ -17,6 +12,7 @@ class AffectsManager:
             aff.on_finished(silent)
 
     def set_affect_object(self, affect):
+
         if affect.id in self.affects:
             #print('overriding')
             self.affects[affect.id].on_finished(silent = True)

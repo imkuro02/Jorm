@@ -120,7 +120,6 @@ class SkillMagicMissile(Skill):
 class SkillBecomeEthereal(Skill):
     def use(self):
         super().use()
-        
         if self.success:
             turns = 1 + self.user.stats[StatType.SOUL] #+ int(self.users_skill_level*0.03)
             dmg_amp = 2.4 - self.users_skill_level*0.01

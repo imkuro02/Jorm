@@ -74,12 +74,6 @@ def skill_checks(user, target, skill_id):
 
     return True
 
-'''
-def get_skill_id_from_skill_name(skill_name):
-    best_match = utils.match_word(skill_name, SKILLS.keys())
-    return best_match
-'''
-
 def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, consumable_item):
         skill = SKILLS[skill_id]
         try:
