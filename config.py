@@ -5,10 +5,12 @@ class ItemType:
     MISC = 'misc'
     EQUIPMENT = 'equipment'
     CONSUMABLE = 'consumable'
+    ERROR = 'error_item'
     name = {
         MISC: 'Misc',
         EQUIPMENT: 'Equipment',
-        CONSUMABLE: 'Consumable'
+        CONSUMABLE: 'Consumable',
+        ERROR: 'Error Item'
     }
     
 class AffType:

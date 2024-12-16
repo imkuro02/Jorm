@@ -13,12 +13,14 @@ def command_name_change(self, line):
 
 @check_not_in_combat
 def command_level_up(self, stat):
+    stat = stat.replace('up', '').strip() # cant trust nobody
     stat = stat.lower().capitalize()
+
     exp_needed = self.get_exp_needed_to_level()
     if self.get_exp_needed_to_level() > self.stats[StatType.EXP]:
         self.sendLine(f'You need {exp_needed-self.stats[StatType.EXP]}EXP to level up')
         return
-
+    
     match stat.lower():
         case 'body':
             #self.stats[StatType.BODY] += 1

@@ -105,8 +105,6 @@ class World:
                     create_enemy(self.rooms[r], enemy)
                     #print(r, enemy)
 
-            
-
     def save_world(self):
         pass
 

@@ -41,6 +41,7 @@ class Player(Actor):
     def tick(self):
         # Send buffer
         super().tick()
+        '''
         if self.factory.ticks_passed % 1 != 0:
             return
         if self.send_line_buffer == []:
@@ -48,6 +49,7 @@ class Player(Actor):
         line = self.send_line_buffer[0]
         self.protocol.transport.write(line.encode('utf-8'))
         self.send_line_buffer.pop(0)
+        '''
         
     def sendLine(self, line, color = True):
         if color:

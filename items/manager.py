@@ -6,14 +6,15 @@ from config import ItemType, EquipmentSlotType, ITEMS, CONSUMABLE_USE_PERSPECTIV
 from items.misc import Item
 from items.consumable import Consumable
 from items.equipment import Equipment
+from items.error import ErrorItem
 
 def load_item(item_premade_id):
 
     premade_id = item_premade_id
     if premade_id not in ITEMS:
-        new_item = Item()
+        new_item = ErrorItem()
         new_item.name = '@yellowERROR@normal'
-        new_item.description = 'id: '+premade_id
+        new_item.description = 'id: '+str(premade_id)
         new_item.premade_id = premade_id
         return new_item
 
