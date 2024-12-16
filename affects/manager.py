@@ -32,13 +32,6 @@ class AffectsManager:
 
     # called at start of turn
     def set_turn(self):
-        # run all affects
-        aff_to_set_turn = []
-        for aff in self.affects.values():
-            aff_to_set_turn.append(aff)
-        for aff in aff_to_set_turn:
-            aff.set_turn()
-
         # pop affects that are expired
         affs_to_pop = []
         for aff in self.affects.values():
@@ -47,6 +40,13 @@ class AffectsManager:
                 affs_to_pop.append(aff)
         for aff in affs_to_pop:
             aff.on_finished(False)
+
+        # run all affects
+        aff_to_set_turn = []
+        for aff in self.affects.values():
+            aff_to_set_turn.append(aff)
+        for aff in aff_to_set_turn:
+            aff.set_turn()
 
     # called at end of turn
     def finish_turn(self):

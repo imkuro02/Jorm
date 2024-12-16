@@ -25,7 +25,7 @@ class Affect:
         if not silent:
             self.affect_manager.owner.simple_broadcast(
                 f'You are no longer {self.name}',
-                f'{self.affect_manager.owner.pretty_name()} is no longer {self.name}\n',
+                f'{self.affect_manager.owner.pretty_name()} is no longer {self.name}',
             )
         self.affect_manager.pop_affect(self)
 
