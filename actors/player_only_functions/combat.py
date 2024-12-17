@@ -36,7 +36,8 @@ def command_use(self, line):
 
     id_to_name, name_to_id = get_skills()
     list_of_skill_names = [skill for skill in name_to_id.keys()]
-    list_of_consumables = [utils.remove_color(item.name) for item in self.inventory_manager.items.values() if item.item_type == ItemType.CONSUMABLE]
+    #list_of_consumables = [utils.remove_color(item.name) for item in self.inventory_manager.items.values() if item.item_type == ItemType.CONSUMABLE]
+    list_of_consumables = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
     whole_list = list_of_consumables + list_of_skill_names
 
     action = None
@@ -85,8 +86,9 @@ def command_use(self, line):
                 self.sendLine(f'You can\'t use items on others while they are not fighting')
                 return
 
-            use_item(item, self, target)
-            self.finish_turn()
+            if use_item(item, self, target):
+                self.finish_turn()
+                return
 
 
     elif best_match in list_of_skill_names:
@@ -97,6 +99,7 @@ def command_use(self, line):
         # if skills.use finished with True statement and there were no errors
         if use_skill(self, target, skill_id) == True:
             self.finish_turn()
+            return
 
 @check_not_in_combat
 def command_rest(self, line):

@@ -81,8 +81,8 @@ class Equipment(Item):
 
             t.add_data(StatType.name[stat])
 
-            if identifier.slots[self.slot] != None and identifier.slots[self.slot] != self.id:
-                eq_id = identifier.slots[self.slot]
+            if identifier.slots_manager.slots[self.slot] != None and identifier.slots_manager.slots[self.slot] != self.id:
+                eq_id = identifier.slots_manager.slots[self.slot]
                 eq_item = identifier.inventory_manager.items[eq_id]
                 
                 eq_stats = eq_item.stats

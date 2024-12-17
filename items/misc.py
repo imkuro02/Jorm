@@ -12,6 +12,9 @@ class Item:
         self.keep = False
         self.owner = None # the inventory manager of this item
     
+    def pretty_name(self):
+        return self.name
+
     def to_dict(self):
         my_dict = {
             'id': self.id,
@@ -39,3 +42,16 @@ class Item:
         output = f'{self.name} {"@red(K)@normal" if self.keep else ""}\n'
         output += f'@cyan{self.description}@normal\n'
         return output
+
+    def use(self, user, target):
+        if user != target:
+            user.simple_broadcast(
+                f'You rub {self.pretty_name()} on {target.pretty_name()}... Nothing happens.',
+                f'{user.pretty_name()} rubs {self.pretty_name()} on {target.pretty_name()}... Nothing happens.'
+            )
+        else:
+            user.simple_broadcast(
+                f'You rub {self.pretty_name()} on yourself... Nothing happens.',
+                f'{user.pretty_name()} rubs {self.pretty_name()} on themselves... Nothing happens.'
+            )
+        return False

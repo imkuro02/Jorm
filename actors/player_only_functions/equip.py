@@ -14,19 +14,19 @@ def command_equipment(self, line):
         return
 
     output = 'You are wearing:\n'
-    for i in self.slots:
-        if None == self.slots[i]:
+    for i in self.slots_manager.slots:
+        if None == self.slots_manager.slots[i]:
             output = output + f'{EquipmentSlotType.name[i] + ":":<12} ...\n'
         else:
-            output = output + f'{EquipmentSlotType.name[i] + ":":<12} {self.inventory_manager.items[self.slots[i]].name}\n'
+            output = output + f'{EquipmentSlotType.name[i] + ":":<12} {self.inventory_manager.items[self.slots_manager.slots[i]].name}\n'
     self.sendLine(output)
 
 def inventory_equip(self, item, forced = False):
     if item.slot != None:
-        if self.slots[item.slot] != None:
-            self.inventory_unequip(self.inventory_manager.items[self.slots[item.slot]])
+        if self.slots_manager.slots[item.slot] != None:
+            self.inventory_unequip(self.inventory_manager.items[self.slots_manager.slots[item.slot]])
         
-        self.slots[item.slot] = item.id
+        self.slots_manager.slots[item.slot] = item.id
         
 
         req_not_met = False
@@ -55,7 +55,7 @@ def inventory_equip(self, item, forced = False):
 
 def inventory_unequip(self, item):
     if item.equiped:
-        self.slots[item.slot] = None
+        self.slots_manager.slots[item.slot] = None
         item.equiped = False
 
         for stat_name in item.stats:

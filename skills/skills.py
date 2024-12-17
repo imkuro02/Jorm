@@ -126,7 +126,7 @@ class SkillBecomeEthereal(Skill):
             dmg_amp = 1.4
             ethereal_affect = affects.AffectEthereal(
                 AffType.ETHEREAL, 
-                self.user.affect_manager, 
+                self.other.affect_manager, 
                 'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
                 turns, dmg_amp)
             self.other.affect_manager.set_affect_object(ethereal_affect)  

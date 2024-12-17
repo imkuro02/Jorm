@@ -10,5 +10,5 @@ class ErrorItem(Item):
         
         #output = super().identify()
         
-        output = f'{self.name}: {self.premade_id}\nTHIS ITEM HAS A FUCKED premade_id, it does not exist in config/items.yaml'
+        output = f'{self.name}: premade_id:{self.premade_id}\nTHIS ITEM HAS A FUCKED premade_id, it does not exist in config/items.yaml'
         return output

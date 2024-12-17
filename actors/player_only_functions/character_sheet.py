@@ -203,7 +203,7 @@ def command_skills(self, line):
 @check_alive
 def command_respec(self, line):
     Player = type(self)
-    for i in self.slots.values():
+    for i in self.slots_manager.slots.values():
         if i != None:
             self.sendLine('@redYou must unequip everything to respec@normal')
             return

@@ -209,7 +209,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         self.change_state(self.LOGIN_OR_REGISTER)
         
     def compare_slots_to_items(self):
-        for i in self.actor.slots.values():
+        for i in self.actor.slots_manager.slots.values():
             if i not in self.actor.inventory_manager.items:
                 if i == None: continue
                 print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{i} is not in inventory?')
@@ -263,7 +263,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
 
         # removes equipment stats to save only character stats
         worn_equipment = []
-        for eq in self.actor.slots.values():
+        for eq in self.actor.slots_manager.slots.values():
             if eq == None:
                 continue
             worn_equipment.append(eq)

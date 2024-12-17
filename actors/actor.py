@@ -37,6 +37,22 @@ class CooldownManager:
         for i in cooldowns_to_remove:
             self.remove_cooldown(i)
 
+class SlotsManager:
+    def __init__(self, owner):
+        self.owner = owner
+        self.slots = {
+            EquipmentSlotType.HEAD:      None,
+            EquipmentSlotType.NECK:      None,
+            EquipmentSlotType.CHEST:     None,
+            EquipmentSlotType.HANDS:     None,
+            EquipmentSlotType.BELT:      None,
+            EquipmentSlotType.LEGS:      None,
+            EquipmentSlotType.FEET:      None,
+            EquipmentSlotType.TRINKET:   None,
+            EquipmentSlotType.PRIMARY:   None,
+            EquipmentSlotType.SECONDARY: None
+        }
+
 class Actor:
     def __init__(self, name = None, room = None, _id = None):
         self.name = name
@@ -53,23 +69,10 @@ class Actor:
 
         self.affect_manager = AffectsManager(self)
         self.inventory_manager = InventoryManager(self)
+        self.slots_manager = SlotsManager(self)
         
         self.status = ActorStatusType.NORMAL
         
-
-        self.slots = {
-            EquipmentSlotType.HEAD:      None,
-            EquipmentSlotType.NECK:      None,
-            EquipmentSlotType.CHEST:     None,
-            EquipmentSlotType.HANDS:     None,
-            EquipmentSlotType.BELT:      None,
-            EquipmentSlotType.LEGS:      None,
-            EquipmentSlotType.FEET:      None,
-            EquipmentSlotType.TRINKET:   None,
-            EquipmentSlotType.PRIMARY:   None,
-            EquipmentSlotType.SECONDARY: None
-        }
-
         self.stats = {
             StatType.HPMAX: 10,
             StatType.HP:    10,

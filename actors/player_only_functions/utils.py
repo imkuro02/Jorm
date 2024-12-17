@@ -59,11 +59,11 @@ def get_item(self, line, search_mode = 'self'):
 
     # let this try and override what you search if you are looking for an item in a equipment slot
     if search_mode not in ['room']:
-        for slot in self.slots.keys():
+        for slot in self.slots_manager.slots.keys():
             #print(slot, line)
             if 'slot '+line in 'slot '+slot:
-                if self.slots[slot] == None:
+                if self.slots_manager.slots[slot] == None:
                     continue
-                return self.inventory_manager.items[self.slots[slot]]
+                return self.inventory_manager.items[self.slots_manager.slots[slot]]
 
     return utils.get_match(line, inventory)
