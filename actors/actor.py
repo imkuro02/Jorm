@@ -102,7 +102,7 @@ class Actor:
                 output = output + f'@red{self.name}@normal'
             case "Player":
                 if self.admin:
-                    output = output + f'@cyan{self.name}@normal @yellow(ADMIN)@normal'
+                    output = output + f'@cyan{self.name}@normal @yellow(A)@normal'
                 else:
                     output = output + f'@cyan{self.name}@normal'
 
@@ -172,14 +172,17 @@ class Actor:
             del self.room.entities[self.id]
             self.room = None
 
-    def simple_broadcast(self, line_self, line_others):
+    def simple_broadcast(self, line_self, line_others, worldwide = False):
         #print(self.name,[line_self,line_others])
         if self.room == None:
             return
+
+        if worldwide:
+            players = [proto.actor for proto in self.factory.protocols]
+        else:
+            players = [entity for entity in self.room.entities.values() if type(entity).__name__ == "Player"]
             
-        for player in self.room.entities.values():
-            if type(player).__name__ != "Player":
-                continue
+        for player in players:
             if player == self:
                 if line_self == None:
                     continue

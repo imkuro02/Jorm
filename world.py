@@ -91,6 +91,7 @@ class World:
         self.factory = factory
         
         self.rooms = {}
+        '''
         world = WORLD
         for r in world['world']:
             room = world['world'][r]
@@ -104,10 +105,42 @@ class World:
                     #self.rooms[r].spawn_enemy(enemy)
                     create_enemy(self.rooms[r], enemy)
                     #print(r, enemy)
+        '''
+
+    def reload(self):
+        print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
+        world = WORLD
+        for r in world['world']:
+            room = world['world'][r]
+
+            if r in self.rooms:
+                players = [entity for entity in self.rooms[r].entities.values() if type(entity).__name__ == "Player"]
+                #print(room['name'], players)
+                if len(players) >= 1:
+                    continue
+                else:
+                    for e in self.rooms[r].entities.values():
+                        e.room = None
+                    del self.rooms[r]
+
+            if 'instanced' in room:
+                self.rooms[r] = InstancedRoom(self, r, room['name'], room['description'], room['exits']) 
+            else:
+                self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
+
+            if 'enemies' in room:
+                for enemy in room['enemies']:
+                    #self.rooms[r].spawn_enemy(enemy)
+                    create_enemy(self.rooms[r], enemy)
+                    #print(r, enemy)
+
+
 
     def save_world(self):
         pass
 
     def tick(self):
+        if self.factory.ticks_passed % (30*120) == 0 or self.factory.ticks_passed == 1:
+            self.reload()
         for i in self.rooms.values():
             i.tick()

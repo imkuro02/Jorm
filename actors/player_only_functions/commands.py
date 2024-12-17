@@ -1,7 +1,7 @@
 from actors.player_only_functions.utils import get_entity, get_item
 from actors.player_only_functions.movement import command_flee, command_go
 from actors.player_only_functions.checks import *
-from actors.player_only_functions.emotes import command_say
+from actors.player_only_functions.emotes import command_say, command_shout
 
 from actors.player_only_functions.combat import (
     command_fight, command_pass_turn, 
@@ -51,6 +51,7 @@ commands = {
     'help':     'command_help',
 
     'say':      'command_say',
+    'shout':    'command_shout',
     'go':       'command_go',
     'look':     'command_look',
     
