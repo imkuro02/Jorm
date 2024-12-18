@@ -41,7 +41,8 @@ one_letter_commands = {
     'g':    'go',
     'e':    'equipment',
     'f':    'fight',
-    'p':    'prompt'
+    'p':    'prompt',
+    'u':    'use'
 }
 
 # command mapper

@@ -216,26 +216,27 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
 
     def load_actor(self):
         actor = self.factory.db.read_actor(self.account[0])
+        #print('>>>',actor)
         if actor == None: # new actor
             self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms['loading'])
         else: # load an existing actor
-            self.actor = Player(self, _id = actor['id'], name = actor['name'], room = self.factory.world.rooms['loading'])
+            self.actor = Player(self, _id = actor['actor_id'], name = actor['actor_name'], room = self.factory.world.rooms['loading'])
             self.actor.stats = actor['stats']
             self.actor.skills = actor['skills']
 
             for item in actor['inventory'].values():
                 new_item = load_item(item['premade_id'])
-                new_item.name =         item['name']
-                new_item.description =  item['description']
-                new_item.keep =         item['keep']
-                new_item.id =           item['id']
+                new_item.name =         item['item_name']
+                new_item.description =  item['item_description']
+                new_item.keep =         item['item_keep']
+                new_item.id =           item['item_id']
 
                 self.actor.inventory_manager.add_item(new_item)
             self.compare_slots_to_items()
 
             # actor is loaded without equipment stats on
             # add them back here
-            for item_id in actor['worn_equipment']:
+            for item_id in actor['equipment']:
                 # skip if item is somehow not in inventory
                 if item_id not in self.actor.inventory_manager.items:
                     print(item_id, 'is equiped but not in inventory?')
@@ -256,34 +257,10 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.actor.room.world.rooms['home'].move_player(self.actor)
         
     def save_actor(self):
-        self.sendLine('saving..')
-        inventory = {}
-        for i in self.actor.inventory_manager.items:
-            inventory[i] = self.actor.inventory_manager.items[i].save() #save_item(self.actor.inventory_manager.items[i])
-
-        # removes equipment stats to save only character stats
-        worn_equipment = []
-        for eq in self.actor.slots_manager.slots.values():
-            if eq == None:
-                continue
-            worn_equipment.append(eq)
-            stats = self.actor.inventory_manager.items[eq].stats
-            for s in stats:
-                self.actor.stats[s] -= stats[s]
-
-        self.factory.db.write_actor(self.account[0] ,{
-            'id':   self.actor.id,
-            'name': self.actor.name,
-            'stats': self.actor.stats,
-            'skills': self.actor.skills,
-            'inventory': inventory,
-            'worn_equipment': worn_equipment
-        })
-
-        self.compare_slots_to_items()
-
-        actor = self.factory.db.read_actor(self.account[0])
-        #print(actor)
+        self.factory.db.write_actor(self.actor)
+        self.factory.db.read_actor(self.id)
+       
+        
 
     def disconnect(self):
         self.transport.abortConnection()
