@@ -18,49 +18,511 @@ tutorial rat dagger:
     armor: 0
     body: 1
     marmor: 0
-    hp_max: 10
-    mp_max: 10
+    hp_max: 0
+    mp_max: 0
     mind: 1
     soul: 1
   tags: []
 
-sword:
-  premade_id: sword
-  description: Cool sword bro
-  item_type: equipment
-  name: Sword
 
-  slot: primary
+# head
+red cap:
+  premade_id: red cap
+  name: Red cap
+  description: A red cap with a sticker on it.
+  item_type: equipment
+  slot: head
   requirements:
-    armor: 0
-    body: 0
-    lvl: 1
-    marmor: 0
+    lvl: 2
     hp_max: 0
     mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
     mind: 0
     soul: 0
   stats:
-    armor: 0
-    body: 2
-    marmor: 0
     hp_max: 0
     mp_max: 0
+    armor: 1
+    marmor: 1
+    body: 1
     mind: 1
     soul: 1
 
-lucky charm:
-  premade_id: lucky charm
-  description: A rabbits foot, how lucky
+bronze koif:
+  premade_id: bronze koif
+  name: Bronze koid
+  description: A koif made of pure bronze, if only it was made of copper you could sell it.
   item_type: equipment
-  name: Lucky charm
+  slot: head
+  requirements:
+    lvl: 3
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 0
+    soul: 0
 
-  slot: trinket
+steel helm:
+  premade_id: steel helm
+  name: Steel helmet
+  description: The vision through this thing is non-existant.
+  item_type: equipment
+  slot: head
+  requirements:
+    lvl: 3
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 0
+    soul: 0
+
+green headband:
+  premade_id: green headband
+  name: Green headband
+  description: A ripped green cloth that goes around the 5head.
+  item_type: equipment
+  slot: head
+  requirements:
+    lvl: 3
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 5
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 1
+
+# neck
+gold chain:
+  premade_id: gold chain
+  name: "@yellowGold chain@normal"
+  description: A heavy gold chain with shadow the hedgehod hanging from it.
+  item_type: equipment
+  slot: neck
+  requirements:
+    lvl: 20
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 2
+    mind: 2
+    soul: 2
+
+# chest
+red t-shirt:
+  premade_id: red t-shirt
+  name: Red t-shirt
+  description: A red tshirt with one white stripe going through the middle.
+  item_type: equipment
+  slot: chest
   requirements:
     lvl: 1
     hp_max: 0
     mp_max: 0
-    armor:  0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 1
+    soul: 1
+
+bronze chainmail:
+  premade_id: bronze chainmail
+  name: Bronze chainmail
+  description: tiny loops of bronze form what look like a pretty heavy t-shirt.
+  item_type: equipment
+  slot: chest
+  requirements:
+    lvl: 5
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 7
+    mp_max: 0
+    armor: 2
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+
+steel chestplate:
+  premade_id: steel chestplate
+  name: Steel chestplate
+  description: Several heavy plates of steel form what looks like a hollow mannequin torso.
+  item_type: equipment
+  slot: chest
+  requirements:
+    lvl: 6
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 10
+    mp_max: 0
+    armor: 2
+    marmor: 0
+    body: 1
+    mind: 0
+    soul: 0
+
+blue robe:
+  premade_id: blue robe
+  name: Blue robe
+  description: This is just a big blue rain coat.
+  item_type: equipment
+  slot: chest
+  requirements:
+    lvl: 3
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 1
+    body: 0
+    mind: 3
+    soul: 1
+
+# hands
+red gloves:
+  premade_id: red globes
+  name: Red gloves
+  description: the material is so thick it looks like mittens.
+  item_type: equipment
+  slot: hands
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 1
+    soul: 1
+
+thieves gloves:
+  premade_id: thieves globes
+  name: Thieves gloves
+  description: Why would a thief wear fingerless gloves?
+  item_type: equipment
+  slot: hands
+  requirements:
+    lvl: 6
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 0
+    soul: 1
+
+steel gloves:
+  premade_id: steel globes
+  name: Steel gloves
+  description: These are so heavy its like wearing bowling balls.
+  item_type: equipment
+  slot: hands
+  requirements:
+    lvl: 8
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 6
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 1
+    marmor: 0
+    body: 2
+    mind: 0
+    soul: 0
+
+lemon gloves:
+  premade_id: lemon globes
+  name: Lemon gloves
+  description: Several lemon peels stitched together to form a pair of gloves, just pray you dont have any papercuts.
+  item_type: equipment
+  slot: hands
+  requirements:
+    lvl: 8
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 6
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 10
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 4
+    soul: 0
+    
+# belt
+red belt:
+  premade_id: red belt
+  name: Red belt
+  description: A red thin latex belt, rawr.
+  item_type: equipment
+  slot: belt
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 1
+    soul: 1
+
+# legs
+red pants:
+  premade_id: red pants
+  name: Red pants
+  description: A fine red pair of pants.
+  item_type: equipment
+  slot: legs
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 1
+    soul: 1
+
+steel kilt:
+  premade_id: steel kilt
+  name: Steel kilt
+  description: No need for underwear with these.
+  item_type: equipment
+  slot: legs
+  requirements:
+    lvl: 7
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 4
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 8
+    mp_max: 2
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 0
+    soul: 0
+
+green cargo pants:
+  premade_id: green cargo pants
+  name: Green cargo pants
+  description: It got so many pockets! can fit a whole steamdeck to play maple on the road!
+  item_type: equipment
+  slot: legs
+  requirements:
+    lvl: 5
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 1
+
+lady underwear:
+  premade_id: lady underwear
+  name: Lady underwear
+  description: You either wear this for the stats, or the fashion.
+  item_type: equipment
+  slot: legs
+  requirements:
+    lvl: 10
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 3
+    mind: 3
+    soul: 3
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 6
+
+# feet
+red shoes:
+  premade_id: red shoes
+  name: Red shoes
+  description: These are so shiny!
+  item_type: equipment
+  slot: feet
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 1
+    soul: 1
+
+steel boots:
+  premade_id: steel boots
+  name: Red shoes
+  description: Fairly sturdy steel plates boots.
+  item_type: equipment
+  slot: feet
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 15
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 0
+    soul: 0
+
+hard leather boots:
+  premade_id: hard leather boots
+  name: Hard leather boots
+  description: They kind of look like military boots, would go well with some green cargo pants.
+  item_type: equipment
+  slot: feet
+  requirements:
+    lvl: 3
+    hp_max: 0
+    mp_max: 0
+    armor: 0
     marmor: 0
     body: 0
     mind: 0
@@ -68,62 +530,404 @@ lucky charm:
   stats:
     hp_max: 5
     mp_max: 5
-    armor:  0
+    armor: 1
     marmor: 0
     body: 0
     mind: 0
     soul: 1
 
-long sword:
-  premade_id: long sword
-  description: A looooooooooong sword
+white flip flops:
+  premade_id: white flip flops
+  name: White Flip Flops
+  description: It sounds like wet pussy when you wear these.
   item_type: equipment
-  name: Longsword
+  slot: feet
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 1
+    soul: 1
 
+# neck
+red scarf:
+  premade_id: red scarf
+  name: Red scarf
+  description: Its so cozy and fluffy.
+  item_type: equipment
+  slot: neck
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 10
+    mp_max: 10
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 1
+    soul: 1
+
+# trinket
+single earing:
+  premade_id: single earing
+  name: Single earing
+  description: A silver earing, just one tho!
+  item_type: equipment
+  slot: trinket
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 1
+    soul: 1
+    
+amethyst earings:
+  premade_id: amethyst earings
+  name: Amethyst earings
+  description: A pair of square amethyst earings.
+  item_type: equipment
+  slot: trinket
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 1
+    mind: 1
+    soul: 0
+    
+# primary
+red whip:
+  premade_id: red whip
+  name: Red whip
+  description: Whack! crack! whap-POW!
+  item_type: equipment
+  slot: primary
+  requirements:
+    lvl: 10
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 3
+    mind: 0
+    soul: 0
+
+wooden mallet:
+  premade_id: wooden mallet
+  name: Wooden mallet
+  description: BONK!
+  item_type: equipment
+  slot: primary
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 5
+    mind: 0
+    soul: 0
+
+field dagger:
+  premade_id: field dagger
+  name: Field dagger
+  description: A large blade with a jagged side
+  item_type: equipment
+  slot: primary
+  requirements:
+    lvl: 2
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 2
+    mind: 1
+    soul: 1
+
+iron axe:
+  premade_id: iron axe
+  name: Iron axe
+  description: A heavy axe blade at the end of the handle, its chipped tho.
+  item_type: equipment
+  slot: primary
+  requirements:
+    lvl: 5
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 4
+    mind: 1
+    soul: 0
+
+spear:
+  premade_id: spear
+  name: Spear
+  description: A long stick with a sharp steel tip!
+  item_type: equipment
   slot: primary
   requirements:
     lvl: 3
     hp_max: 0
     mp_max: 0
+    armor: 0
+    marmor: 0
     body: 0
     mind: 0
     soul: 0
-    armor:  0
-    marmor: 0
   stats:
-    hp_max: 0
-    mp_max: 0
-    body: 3
+    hp_max: 5
+    mp_max: 5
+    armor: 1
+    marmor: 1
+    body: 2
     mind: 0
     soul: 0
-    armor:  0
-    marmor: 0
 
-whip:
-  premade_id: whip
-  description: Now watch me.. you know..
+speared fish:
+  premade_id: speared fish
+  name: Speared fish
+  description: Its a spear with a dead fish at the tip.
   item_type: equipment
-  name: Whip
-
-  slot: secondary
+  slot: primary
   requirements:
     lvl: 5
     hp_max: 0
     mp_max: 0
+    armor: 0
+    marmor: 0
     body: 0
     mind: 0
     soul: 0
-    armor:  0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
     marmor: 0
+    body: 3
+    mind: 0
+    soul: 0
+
+curved stick:
+  premade_id: curved stick
+  name: Curved stick
+  description: The masculine urge to hold a cool stick wins again.
+  item_type: equipment
+  slot: primary
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 2
+    soul: 0
+
+# secondary
+steel shield:
+  premade_id: steel shield
+  name: Steel shield
+  description: A heavy steel shield with a leather strap.
+  item_type: equipment
+  slot: secondary
+  requirements:
+    lvl: 6
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 2
+    mind: 1
+    soul: 0
+
+a girls diary:
+  premade_id: a girls diary
+  name: A girls diary
+  description: This girly diary contains so much lovecraftian horror, sometimes when it closes it sounds like a satisfied chuckle.
+  item_type: equipment
+  slot: secondary
+  requirements:
+    lvl: 10
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 5
+    soul: 5
+
+praying beads:
+  premade_id: praying beads
+  name: Praying beads
+  description: A string with colorful beads, used during prayer.
+  item_type: equipment
+  slot: secondary
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
   stats:
     hp_max: 0
     mp_max: 10
+    armor: 0
+    marmor: 0
     body: 0
     mind: 0
-    soul: 3
-    armor:  0
-    marmor: 0
+    soul: 6
 
+wooden shield:
+  premade_id: wooden shield
+  name: Wooden shield
+  description: Its just a old garden fence ripped out from the ground, theres still grass and dirt at the bottom of it.
+  item_type: equipment
+  slot: secondary
+  requirements:
+    lvl: 3
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 3
+    marmor: 3
+    body: 2
+    mind: 1
+    soul: 1
+
+pan lid:
+  premade_id: pan lid
+  name: Pan lid
+  description: This might protect you from a stray pebble!
+  item_type: equipment
+  slot: secondary
+  requirements:
+    lvl: 1
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 0
+    body: 0
+    mind: 0
+    soul: 0
+  stats:
+    hp_max: 0
+    mp_max: 0
+    armor: 0
+    marmor: 1
+    body: 1
+    mind: 1
+    soul: 1
+
+
+
+
+# consumable
 red potion:
   premade_id: red potion
   description: Just a bottle of cold tomato soup

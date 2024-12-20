@@ -63,6 +63,8 @@ class Skill:
             return
         self.use_broadcast()
 
+
+
 class SkillSwing(Skill):
     def use(self):
         super().use()

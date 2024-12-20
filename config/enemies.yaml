@@ -26,82 +26,100 @@ template:
     - skill: swing 
       target: enemy_random
     
-
-
-skeleton:
-  name: Skeleton
+shroom:
+  name: Shroom
+  description: A tiny orange mushroom. How cute!
   stats:
-    hp: 40
-    mp: 60
-
-    armor: 4
-    marmor: 0
-
-    body: 6
+    hp: 3
+    mp: 0
+    armor: 0
+    marmor: -5
+    body: 0
     mind: 0
     soul: 0
-    
-    exp: 5
-
+    exp: 1
   loot:
-    long sword: 0.1
-
+    red cap: 0.05
+    red t-shirt: 0.05
+    red scarf: 0.05
+    red pants: 0.05
+    red shoes: 0.05
+    field dagger: 0.05
+    red potion: 0.05
   skills:
-    swing: 75
-    magic missile: 75
-
+    nudge: 75
   combat_loop:
-    - skill: magic missile 
+    - skill: nudge
       target: enemy_random
-
-
-rat:
-  name: Rat
-  stats:
-    hp: 3
-    mp: 20
-
-    armor: 0
-    marmor: 0
-
-    body: 0
-    mind: 0
-    soul: 0
-    
-    exp: 2
-
-  loot: 
-    lucky charm: 1
-
-  skills:
-    swing: 70
-
-  combat_loop:
-    - skill: swing
-      target: enemy_random
-
   
-tutorial rat:
-  name: Rat
+orange mushroom:
+  name: Orange Mushroom
+  description: A larger orange mushroom, this one is feisty!
   stats:
-    hp: 3
-    mp: 20
-
-    armor: 0
-    marmor: 0
-
-    body: 0
+    hp: 20
+    mp: 0
+    armor: 2
+    marmor: 1
+    body: 2
     mind: 0
     soul: 0
-    
-    exp: 2
-
-  loot: 
-    tutorial rat dagger: 1
-
+    exp: 3
+  loot:
+    bronze koif: 0.05
+    white flip flops: 0.05
+    spear: 0.05
+    red potion: 0.05
   skills:
-    swing: 1
-
+    nudge: 75
   combat_loop:
-    - skill: swing
+    - skill: nudge
+      target: enemy_random
+
+blue mushroom:
+  name: Blue Mushroom
+  description: A bulky blue mushroom.
+  stats:
+    hp: 60
+    mp: 0
+    armor: 3
+    marmor: 5
+    body: 4
+    mind: 0
+    soul: 0
+    exp: 5
+  loot:
+    field dagger: 0.05
+    spear: 0.05
+    speared fish: 0.05
+    blue potion: 0.05
+    red potion: 0.05
+  skills: 
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: enemy_random
+
+octopus:
+  name: Octopus
+  description: A big slimy floating octopus, atleast you are 50% certain its not a beholder.
+  stats:
+    hp: 100
+    mp: 0
+    armor: 5
+    marmor: 5
+    body: 12
+    mind: 0
+    soul: 0
+    exp: 8
+  loot:
+    wooden mallet: 0.05
+    steel shield: 0.05
+    iron axe: 0.05
+    a girls diary: 0.05
+    blue potion: 0.05
+    red potion: 0.05
+  skills: 
+    nudge: 75
+  combat_loop:
+    - skill: nudge
       target: enemy_random

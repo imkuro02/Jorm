@@ -12,120 +12,147 @@ world:
     Use the \"go\" command, for example:\n
     \"go east\""
     exits: 
-      east: tutorial2
+      east: home
       west: home
     instanced: True
 
-  tutorial2:
-    name: Abyss
-    description: "
-    Directions are not limited to north, west, south and east. \n
-    go somewhere, anywhere"
-    exits: 
-      behind a bush: tutorial3
-      over the mountain: tutorial3
-      towards the river: tutorial3
-      home: tutorial3
-    instanced: True
-
-  tutorial3:
-    name: Abyss
-    description: "
-    You are getting the hang of it\n
-    Lets look at your skills with the \"skills\" command\n
-    Skills are abilities you may use in or out of combat\n
-    To use a skill, type \"use [skill name]\"\n
-    Or \"use [skill name] on [target]\"\n
-    When you are ready, head north."
-    exits: 
-      north: tutorial4
-    
-    instanced: True
-
-  tutorial4:
-    name: Abyss
-    description: "
-    Look! a rat!\n
-    You can fight it with the \"fight\" command\n
-    And remember, to use your skills on it, type \"use [skill name] on [target]\"\n
-    Example: \"use swing at rat\" or \"use swing on rat\"\n
-    After you kill it, head north."
-    exits:
-      north: tutorial5
-    enemies:
-      - tutorial rat
-    instanced: True
-
-  tutorial5:
-    name: Abyss
-    description: "
-    The rat you fought dropped something\n
-    Loot from combat is put into your inventory instantly\n
-    You can view your inventory with the \"inventory\" command\n
-    To identify an item, type \"identify [item name]\"\n
-    To equip an item type \"equip [item name]\"\n\n
-    You can also experiment with the \"wear\" and \"remove\" commands"
-    exits:
-      north: tutorial6
-    instanced: True
-
-  tutorial6:
-    name: Abyss
-    description: "
-    You are nearing the end now\n
-    When you killed that rat, you leveled up!\n
-    Look at your character sheet with the \"stats\" command\n
-    There are 3 main stats you can level up, Body, Mind and Soul\n
-    Type \"level [stat name]\" to level one of them\n\n
-    Once you level up, you also get practice points.\n
-    Use \"practice\" to view skills you can learn, and use\n 
-    \"practice [skill] [amount]\" to level that skill up to your desired level\n
-    (amount is the amount you wish the skill to be at, if your level is 10\n
-    and you type \"practice swing 30\" you will spend 20 practice points)"
-    exits:
-      north: tutorial7
-    instanced: True
-
-  tutorial7:
-    name: An opening
-    description: "
-    The last thing you should know before you venture forth is:\n
-    You can use the \"help\" command to quickly see each command you can use\n
-    \"help [command name]\" \n
-    Will tell you more specific information about that command\n
-    Now go..."
-    exits:
-      north: home
-    instanced: True
-
   home:
-    name: Town square
-    description: "A dried up well sits right in the middle of a unkept stone path.\nThere are few buildings, most look freshly burnt to the ground.\nSome are still standing, marked with only a few burns."
-    exits:
-      north: 1
-      south: tutorial
-
-  1:
-    name: Store
-    description: You see a small counter, shelves which are unstocked, is that a puddle of pee?.. nevermind..
-    exits:
-      south: home
-      down: 2
-    enemies:
-      - rat
-      - rat
-  
-  2:
-    name: Cellar
-    description: spiderwebs between every single crack in the busted up stone walls
-    exits:
-      up: 1
-      further down: 3
-    enemies:
-      - skeleton 
-
-  3: 
-    name: A tunnel 
-    description: a tunnel
+    name: Kerning City
+    description: "
+    You find yourself in the dimly lit streets of Kerning City.\n
+    A sprawling urban jungle. Neon signs flicker and hum.\n
+    Shadows dance along the graffiti covered walls of grimy brick buildings."
     exits: 
-      back up: 2
+      north: kerning_road_to_construction
+
+
+  kerning_road_to_construction:
+    name: The road by a construction site
+    description: "
+    Piles of discarded machinery and rusted barrels line the road.\n
+    The hum of distant power tools and the occasional clang of metal echo faintly.\n
+    A large skeletal framework of a construction site is here.
+    "
+    exits:
+      north: kerning_dark_alley
+      south: home
+      inside the construction site: kerning_construction
+    enemies:
+      - shroom
+      - shroom
+
+  ###
+  kerning_dark_alley:
+    name: Dark Alleyway Behind the Construction
+    description: "
+    The alley is dark and narrow, a faint stench of oil and decay hangs in the air.\n
+    Broken crates and discarded tools clutter the ground.
+    "
+    exits:
+      south: kerning_road_to_construction
+      north: kerning_dark_alley1
+      east: kerning_dark_alley3
+    enemies:
+      - orange mushroom
+  kerning_dark_alley1:
+    name: Dark Alleyway Behind the Construction 1
+    description: "
+    The alley is dark and narrow, a faint stench of oil and decay hangs in the air.\n
+    Broken crates and discarded tools clutter the ground.
+    "
+    exits:
+      south: kerning_dark_alley
+      east: kerning_dark_alley2
+    enemies:
+      - orange mushroom
+  kerning_dark_alley2:
+    name: Dark Alleyway Behind the Construction 2
+    description: "
+    The alley is dark and narrow, a faint stench of oil and decay hangs in the air.\n
+    Broken crates and discarded tools clutter the ground.
+    "
+    exits:
+      west: kerning_dark_alley1
+      south: kerning_dark_alley3
+    enemies:
+      - blue mushroom
+  kerning_dark_alley3:
+    name: Dark Alleyway Behind the Construction 3
+    description: "
+    The alley is dark and narrow, a faint stench of oil and decay hangs in the air.\n
+    Broken crates and discarded tools clutter the ground.
+    "
+    exits:
+      north: kerning_dark_alley2
+      west: kerning_dark_alley
+    enemies:
+      - orange mushroom
+  ###
+
+
+  ###
+  kerning_construction:
+    name: Inside the construction site
+    description: "
+    A chaotic maze of half finished steel scaffolding.\n
+    Piles of concrete rubble and rusted bolts litters the floor.\n
+    Wooden beams are used to close the gaping holes between the floors.
+    "
+    exits:
+      outside: kerning_road_to_construction
+      upwards: kerning_construction_hidden
+      west: kerning_construction1
+      east: kerning_construction2
+    enemies:
+      - orange mushroom
+
+  kerning_construction1:
+    name: Inside the construction site 1
+    description: "
+    A chaotic maze of half finished steel scaffolding.\n
+    Piles of concrete rubble rusted bolts litters the floor.\n
+    Wooden beams are used to close the gaping holes between the floors.
+    "
+    exits:
+      east: kerning_construction
+      west: kerning_construction2
+    enemies:
+      - orange mushroom
+
+  kerning_construction2:
+    name: Inside the construction site 2
+    description: "
+    A chaotic maze of half finished steel scaffolding.\n
+    Piles of concrete rubble rusted bolts litters the floor.\n
+    Wooden beams are used to close the gaping holes between the floors.
+    "
+    exits:
+      east: kerning_construction1
+      west: kerning_construction
+    enemies:
+      - blue mushroom
+  ###
+
+
+  ###
+  kerning_construction_hidden:
+    name: The top of the construction site
+    description: "
+    You reach the top floor of the construction site.\n
+    Perched high above the abondoned chaos below.\n
+    The night sky stretches endlessly above, you can see the city in the distance.\n
+    In the vertical distance...
+    "
+    exits:
+      downwards: kerning_construction
+      jump: home
+
+    enemies:
+      - octopus
+
+  ###
+      
+
+
+
+    
