@@ -118,7 +118,7 @@ def command_update_item(self, line):
 @check_is_admin
 @check_no_empty_line
 def command_load_item(self, line):
-    with open("config/items.yaml", "r") as file:
+    with open("configuration/items.yaml", "r") as file:
         data = yaml.safe_load(file)
 
     if line not in data:
