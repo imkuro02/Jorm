@@ -110,8 +110,10 @@ class World:
     def reload(self):
         print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
         world = WORLD
+        #print('>.', world)
         for r in world['world']:
             room = world['world'][r]
+            
 
             if r in self.rooms:
                 players = [entity for entity in self.rooms[r].entities.values() if type(entity).__name__ == "Player"]

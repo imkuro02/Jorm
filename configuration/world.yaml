@@ -24,6 +24,7 @@ world:
     Shadows dance along the graffiti covered walls of grimy brick buildings."
     exits: 
       north: kerning_road_to_construction
+      
 
 
   kerning_road_to_construction:
