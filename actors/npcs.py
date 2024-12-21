@@ -90,12 +90,15 @@ class Enemy(Actor):
                 entity.sendLine(f'Your inventory is full and you missed out on {new_item.name}')
 
     def die(self):
+        if self.room == None:
+            return
         if self.room.combat == None:
             #print('1no combat')
             return
         if self not in self.room.combat.participants.values():
             #print('not in combat')
             return
+        
         for entity in self.room.combat.participants.values():
             if type(entity).__name__ == "Player":
                 entity.stats[StatType.EXP] += self.stats[StatType.EXP]

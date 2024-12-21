@@ -117,7 +117,17 @@ class SkillMagicMissile(Skill):
                 damage_value = 4 + int(self.user.stats[StatType.MIND]),
                 damage_type = DamageType.MAGICAL
                 )
-            self.other.take_damage(damage_obj)
+            
+            damage = self.other.take_damage(damage_obj)
+
+            damage_obj = Damage(
+                damage_taker = self.user,
+                damage_source_actor = self.user,
+                damage_value = damage,
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MP
+                )
+            self.user.take_damage(damage_obj)
 
 class SkillBecomeEthereal(Skill):
     def use(self):
@@ -150,6 +160,12 @@ class SkillRegenMP30(Skill):
     def use(self):
         super().use()
         if self.success:
-            self.other.stats[StatType.MP] += int(self.other.stats[StatType.MPMAX]*.3)
-            self.other.hp_mp_clamp_update()
-            #self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)            
+            #self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)
+            damage_obj = Damage(
+                damage_taker = self.other,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stats[StatType.MPMAX]*.3),
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MP
+                )
+            self.user.take_damage(damage_obj)                

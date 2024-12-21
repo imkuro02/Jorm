@@ -154,14 +154,19 @@ class Actor:
 
     def take_damage(self, damage_obj: 'Damage'):
         damage_obj = self.affect_manager.take_damage(damage_obj)
-        damage_obj.take_damage()
+        damage_taken = damage_obj.take_damage()
         del damage_obj
+        return damage_taken
 
 
     def die(self):
-        if self.room.combat != None:
-            if self.room.combat.current_actor == self:
-                self.room.combat.next_turn()
+        if self.room == None:
+            return
+        if self.room.combat == None:
+            return
+        
+        if self.room.combat.current_actor == self:
+            self.room.combat.next_turn()
 
         item = Item()
         item.name = f'Corpse of {self.name}'

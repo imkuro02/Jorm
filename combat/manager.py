@@ -27,10 +27,10 @@ class Damage:
             case DamageType.PURE:
                 pass
             case DamageType.HEALING:
-                self.damage_taker.stats[StatType.HP] += self.damage_value
+                self.damage_taker.stats[self.damage_to_stat] += self.damage_value
                 self.damage_taker.simple_broadcast(
-                    f'You heal for {self.damage_value}',
-                    f'{self.damage_taker.pretty_name()} heals for {self.damage_value}'
+                    f'You heal {self.damage_value} {StatType.name[self.damage_to_stat]}',
+                    f'{self.damage_taker.pretty_name()} heals {self.damage_value} {StatType.name[self.damage_to_stat]}'
                     )
 
                 self.damage_taker.hp_mp_clamp_update()
@@ -43,11 +43,20 @@ class Damage:
             )
             return
 
-        self.damage_taker.stats[StatType.HP] -= self.damage_value
-        self.damage_taker.simple_broadcast(
-            f'You take {self.damage_value} damage',
-            f'{self.damage_taker.pretty_name()} takes {self.damage_value} damage'
-            )
+        self.damage_taker.stats[self.damage_to_stat ] -= self.damage_value
+
+        if self.damage_to_stat == StatType.HP:
+            self.damage_taker.simple_broadcast(
+                f'You take {self.damage_value} damage',
+                f'{self.damage_taker.pretty_name()} takes {self.damage_value} damage'
+                )
+            
+        if self.damage_to_stat == StatType.MP:
+            self.damage_taker.simple_broadcast(
+                f'You lose {self.damage_value} Magicka',
+                f'{self.damage_taker.pretty_name()} loses {self.damage_value} Magicka'
+                )
+
 
         self.damage_taker.hp_mp_clamp_update()
         return self.damage_value

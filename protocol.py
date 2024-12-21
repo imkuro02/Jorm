@@ -259,8 +259,6 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
     def save_actor(self):
         self.factory.db.write_actor(self.actor)
         self.factory.db.read_actor(self.id)
-       
-        
 
     def disconnect(self):
         self.transport.abortConnection()
