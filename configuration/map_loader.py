@@ -1,5 +1,7 @@
 import json
 
+# load map.json into trizbort.io and configure it there 
+
 def load_map():
     # Path to the JSON file
     file_path = "configuration/map.json"
