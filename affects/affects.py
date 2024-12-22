@@ -68,3 +68,38 @@ class AffectEthereal(Affect):
             damage_obj.damage_value = int(damage_obj.damage_value * self.dmg_amp)
 
         return damage_obj
+
+class AffectMageArmor(Affect):
+    def __init__(self, _id, affect_manager, name, description, turns, reduction):
+        super().__init__(_id, affect_manager, name, description, turns)
+        self.reduction = reduction
+    
+    def take_damage(self, damage_obj: 'Damage'):
+        match damage_obj.damage_type:
+            case DamageType.CANCELLED:
+                return damage_obj
+            case DamageType.HEALING:
+                return damage_obj
+            case _:
+                hp_dmg = round(damage_obj.damage_value*(1 - self.reduction))
+                mp_dmg = round(damage_obj.damage_value*self.reduction)
+
+                damage_obj.damage_taker.stats[StatType.MP] -= mp_dmg
+                if damage_obj.damage_taker.stats[StatType.MP] <= 0:
+                    hp_dmg += abs(damage_obj.damage_taker.stats[StatType.MP])
+
+                damage_obj.damage_value = hp_dmg
+
+                return damage_obj
+            
+        if damage_obj.damage_type == DamageType.PHYSICAL:
+            damage_obj.damage_type = DamageType.CANCELLED
+            damage_obj.damage_taker.simple_broadcast(
+                    f'You take no damage because you are ethereal',
+                    f'{damage_obj.damage_taker.pretty_name()} takes no damage because they are ethereal'
+                    )
+
+        if damage_obj.damage_type == DamageType.MAGICAL:
+            damage_obj.damage_value = int(damage_obj.damage_value * self.dmg_amp)
+
+        return damage_obj

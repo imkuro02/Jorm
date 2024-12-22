@@ -27,7 +27,7 @@ swing:
 
 nudge:
   name: Nudge
-  description: Swing at your target dealing 1 physical damage + 100% of Body
+  description: Swing at your target dealing 1 physical damage + 70% of Body
   level_req: 0 
   can_be_practiced: False
   must_be_fighting: True
@@ -124,6 +124,35 @@ ethereal:
     user on user:         '#USER# focuses, and begins to fade'
     user on you:          '#USER# focuses, and you begin to fade'
     user on other:        '#USER# focuses, and #OTHER# begins to fade'
+
+    you on you fail:      'You lose your focus'
+    you on other fail:    'You lose your focus on #OTHER#'
+    user on user fail:    '#USER# loses their focus'
+    user on you fail:     '#USER# loses their focus on you'
+    user on other fail:   '#USER# loses their focus on #OTHER#'
+
+mage armor:
+  name: Mage Armor
+  description: >
+    Infuse yourself with Magicka.
+    converting half your practice levels worth of Health damage to Magicka damage for 5 turns.
+
+  level_req: 0
+  can_be_practiced: True
+  must_be_fighting: False
+  target_self_is_valid: True
+  target_others_is_valid: True
+  hp_cost: 0
+  mp_cost: 5
+  cooldown: 1
+  script_to_run: MageArmor
+
+  use_perspectives:
+    you on you:           'You focus a layer of magicka surrounds you'
+    you on other:         'You focus and a layer of magicka surrounds #OTHER# '
+    user on user:         '#USER# focuses and a layer of magicka surrounds them'
+    user on you:          '#USER# focuses and a layer of magicka surrounds you'
+    user on other:        '#USER# focuses and a layer of magicka surrounds #OTHER#'
 
     you on you fail:      'You lose your focus'
     you on other fail:    'You lose your focus on #OTHER#'

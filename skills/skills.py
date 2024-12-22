@@ -72,20 +72,15 @@ class SkillSwing(Skill):
             damage_obj = Damage(
                 damage_taker = self.other,
                 damage_source_actor = self.user,
-                damage_value = 1 + self.user.stats[StatType.BODY],
+                damage_value = 1 + int(self.user.stats[StatType.BODY]*.7),
                 damage_type = DamageType.PHYSICAL
                 )
             self.other.take_damage(damage_obj)
-            
-            
-            #damage_dealt = self.other.take_damage(self.user, 1 + self.user.stats[StatType.BODY], DamageType.PHYSICAL)
-            #return damage_dealt 
 
 class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
         if self.success:
-            #self.other.take_damage(self.user, 10 + int(self.users_skill_level*0.1) + self.user.stats[StatType.SOUL], DamageType.HEALING)
             damage_obj = Damage(
                 damage_taker = self.other,
                 damage_source_actor = self.user,
@@ -141,6 +136,19 @@ class SkillBecomeEthereal(Skill):
                 self.other.affect_manager, 
                 'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
                 turns, dmg_amp)
+            self.other.affect_manager.set_affect_object(ethereal_affect)  
+
+class SkillMageArmor(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            turns = 4 #+ int(self.users_skill_level*0.03)
+            reduction = (self.users_skill_level*0.01)*.7
+            ethereal_affect = affects.AffectMageArmor(
+                AffType.ETHEREAL, 
+                self.other.affect_manager, 
+                'Magically protected', f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
+                turns, reduction)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
 
 class SkillRegenHP30(Skill):
