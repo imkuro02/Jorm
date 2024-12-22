@@ -114,7 +114,7 @@ class SkillMagicMissile(Skill):
                 )
             
             damage = self.other.take_damage(damage_obj)
-
+            '''
             damage_obj = Damage(
                 damage_taker = self.user,
                 damage_source_actor = self.user,
@@ -123,6 +123,7 @@ class SkillMagicMissile(Skill):
                 damage_to_stat = StatType.MP
                 )
             self.user.take_damage(damage_obj)
+            '''
 
 class SkillBecomeEthereal(Skill):
     def use(self):

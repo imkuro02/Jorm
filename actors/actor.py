@@ -1,5 +1,6 @@
 from copy import deepcopy
 import uuid
+from combat.manager import Damage
 from items.manager import Item
 from affects.manager import AffectsManager
 from config import DamageType, ActorStatusType, EquipmentSlotType, StatType
@@ -56,7 +57,7 @@ class SlotsManager:
 class Actor:
     def __init__(self, name = None, room = None, _id = None):
         self.name = name
-
+        self.description = ''
         if _id == None:
             self.id = str(uuid.uuid4())
         else: 
@@ -113,6 +114,7 @@ class Actor:
 
     def get_character_sheet(self):
         output = f'{self.pretty_name()} ({self.status})\n'
+        if self.description != '': output += f'{self.description}\n'
         output += f'{StatType.name[StatType.HP]+":":<15} {self.stats[StatType.HP]}/{self.stats[StatType.HPMAX]}\n'
         output += f'{StatType.name[StatType.MP]+":":<15} {self.stats[StatType.MP]}/{self.stats[StatType.MPMAX]}\n'
         _piss = [StatType.BODY, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
@@ -152,7 +154,7 @@ class Actor:
 
             self.die()
 
-    def take_damage(self, damage_obj: 'Damage'):
+    def take_damage(self, damage_obj: Damage):
         damage_obj = self.affect_manager.take_damage(damage_obj)
         damage_taken = damage_obj.take_damage()
         del damage_obj

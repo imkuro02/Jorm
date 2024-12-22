@@ -27,7 +27,8 @@ def create_enemy(room, enemy_id):
         #print(loot)
         if item not in ITEMS:
             print(item, 'does not exist in loot table for ', enemy_id)
-    Enemy(name, room, stats, skills, combat_loop, loot)
+    e = Enemy(name, room, stats, skills, combat_loop, loot)
+    e.description = enemy['description']
 
 
 class Enemy(Actor):

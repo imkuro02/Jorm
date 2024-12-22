@@ -35,7 +35,7 @@ def load_map():
             
 
             # work on dis yknow
-            room['instanced'] = False
+            #room['instanced'] = False
 
             
 
