@@ -103,7 +103,7 @@ class Actor:
                 output = output + f'@red{self.name}@normal'
             case "Player":
                 if self.admin:
-                    output = output + f'@cyan{self.name}@normal @yellow(A)@normal'
+                    output = output + f'@byellow{self.name}@normal'
                 else:
                     output = output + f'@cyan{self.name}@normal'
 

@@ -259,6 +259,15 @@ def command_affects(self, line):
 
     self.sendLine(output)
 
+def command_show_off_equipment(self, line):
+    item = self.get_item(line, search_mode = 'equipment')
+    if item == None:
+        self.sendLine('Flex what?')
+        return
+    self.simple_broadcast(
+        f'You show off {item.name}',
+        f'''{self.pretty_name()} shows off their {item.name}\n"{item.description}"'''
+    )
 
 def get_exp_needed_to_level(self):
     exp_needed = 2 ** self.stats[StatType.LVL]
