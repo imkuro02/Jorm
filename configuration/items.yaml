@@ -13,7 +13,7 @@ tutorial rat dagger:
     mp_max: 0
     mind: 0
     soul: 0
-  slot: primary
+  slot: weapon
   stats:
     armor: 0
     body: 1
@@ -128,7 +128,7 @@ gold chain:
   name: "@yellowGold chain@normal"
   description: A heavy gold chain with shadow the hedgehod hanging from it.
   item_type: equipment
-  slot: neck
+  slot: trinket
   requirements:
     lvl: 20
     hp_max: 0
@@ -153,7 +153,7 @@ red t-shirt:
   name: Red t-shirt
   description: A red tshirt with one white stripe going through the middle.
   item_type: equipment
-  slot: chest
+  slot: body
   requirements:
     lvl: 1
     hp_max: 0
@@ -177,7 +177,7 @@ bronze chainmail:
   name: Bronze chainmail
   description: tiny loops of bronze form what look like a pretty heavy t-shirt.
   item_type: equipment
-  slot: chest
+  slot: body
   requirements:
     lvl: 5
     hp_max: 0
@@ -201,7 +201,7 @@ steel chestplate:
   name: Steel chestplate
   description: Several heavy plates of steel form what looks like a hollow mannequin torso.
   item_type: equipment
-  slot: chest
+  slot: body
   requirements:
     lvl: 6
     hp_max: 0
@@ -225,7 +225,7 @@ blue robe:
   name: Blue robe
   description: This is just a big blue rain coat.
   item_type: equipment
-  slot: chest
+  slot: body
   requirements:
     lvl: 3
     hp_max: 0
@@ -250,7 +250,7 @@ red gloves:
   name: Red gloves
   description: the material is so thick it looks like mittens.
   item_type: equipment
-  slot: hands
+  slot: trinket
   requirements:
     lvl: 1
     hp_max: 0
@@ -274,7 +274,7 @@ thieves gloves:
   name: Thieves gloves
   description: Why would a thief wear fingerless gloves?
   item_type: equipment
-  slot: hands
+  slot: trinket
   requirements:
     lvl: 6
     hp_max: 0
@@ -298,7 +298,7 @@ steel gloves:
   name: Steel gloves
   description: These are so heavy its like wearing bowling balls.
   item_type: equipment
-  slot: hands
+  slot: trinket
   requirements:
     lvl: 8
     hp_max: 0
@@ -322,7 +322,7 @@ lemon gloves:
   name: Lemon gloves
   description: Several lemon peels stitched together to form a pair of gloves, just pray you dont have any papercuts.
   item_type: equipment
-  slot: hands
+  slot: trinket
   requirements:
     lvl: 8
     hp_max: 0
@@ -347,7 +347,7 @@ red belt:
   name: Red belt
   description: A red thin latex belt, rawr.
   item_type: equipment
-  slot: belt
+  slot: trinket
   requirements:
     lvl: 1
     hp_max: 0
@@ -366,85 +366,13 @@ red belt:
     mind: 1
     soul: 1
 
-# legs
-red pants:
-  premade_id: red pants
-  name: Red pants
-  description: A fine red pair of pants.
-  item_type: equipment
-  slot: legs
-  requirements:
-    lvl: 1
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 0
-  stats:
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 1
-    mind: 1
-    soul: 1
-
-steel kilt:
-  premade_id: steel kilt
-  name: Steel kilt
-  description: No need for underwear with these.
-  item_type: equipment
-  slot: legs
-  requirements:
-    lvl: 7
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 4
-    mind: 0
-    soul: 0
-  stats:
-    hp_max: 8
-    mp_max: 2
-    armor: 0
-    marmor: 0
-    body: 1
-    mind: 0
-    soul: 0
-
-green cargo pants:
-  premade_id: green cargo pants
-  name: Green cargo pants
-  description: It got so many pockets! can fit a whole steamdeck to play maple on the road!
-  item_type: equipment
-  slot: legs
-  requirements:
-    lvl: 5
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 0
-  stats:
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 1
 
 lady underwear:
   premade_id: lady underwear
   name: Lady underwear
   description: You either wear this for the stats, or the fashion.
   item_type: equipment
-  slot: legs
+  slot: trinket
   requirements:
     lvl: 10
     hp_max: 0
@@ -462,128 +390,6 @@ lady underwear:
     body: 0
     mind: 0
     soul: 6
-
-# feet
-red shoes:
-  premade_id: red shoes
-  name: Red shoes
-  description: These are so shiny!
-  item_type: equipment
-  slot: feet
-  requirements:
-    lvl: 1
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 0
-  stats:
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 1
-    mind: 1
-    soul: 1
-
-steel boots:
-  premade_id: steel boots
-  name: Red shoes
-  description: Fairly sturdy steel plates boots.
-  item_type: equipment
-  slot: feet
-  requirements:
-    lvl: 1
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 0
-  stats:
-    hp_max: 15
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 1
-    mind: 0
-    soul: 0
-
-hard leather boots:
-  premade_id: hard leather boots
-  name: Hard leather boots
-  description: They kind of look like military boots, would go well with some green cargo pants.
-  item_type: equipment
-  slot: feet
-  requirements:
-    lvl: 3
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 0
-  stats:
-    hp_max: 5
-    mp_max: 5
-    armor: 1
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 1
-
-white flip flops:
-  premade_id: white flip flops
-  name: White Flip Flops
-  description: It sounds like wet pussy when you wear these.
-  item_type: equipment
-  slot: feet
-  requirements:
-    lvl: 1
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 0
-  stats:
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 1
-    soul: 1
-
-# neck
-red scarf:
-  premade_id: red scarf
-  name: Red scarf
-  description: Its so cozy and fluffy.
-  item_type: equipment
-  slot: neck
-  requirements:
-    lvl: 1
-    hp_max: 0
-    mp_max: 0
-    armor: 0
-    marmor: 0
-    body: 0
-    mind: 0
-    soul: 0
-  stats:
-    hp_max: 10
-    mp_max: 10
-    armor: 0
-    marmor: 0
-    body: 1
-    mind: 1
-    soul: 1
 
 # trinket
 single earing:
@@ -640,7 +446,7 @@ red whip:
   name: Red whip
   description: Whack! crack! whap-POW!
   item_type: equipment
-  slot: primary
+  slot: weapon
   requirements:
     lvl: 10
     hp_max: 0
@@ -664,7 +470,7 @@ wooden mallet:
   name: Wooden mallet
   description: BONK!
   item_type: equipment
-  slot: primary
+  slot: weapon
   requirements:
     lvl: 1
     hp_max: 0
@@ -688,7 +494,7 @@ field dagger:
   name: Field dagger
   description: A large blade with a jagged side
   item_type: equipment
-  slot: primary
+  slot: weapon
   requirements:
     lvl: 2
     hp_max: 0
@@ -712,7 +518,7 @@ iron axe:
   name: Iron axe
   description: A heavy axe blade at the end of the handle, its chipped tho.
   item_type: equipment
-  slot: primary
+  slot: weapon
   requirements:
     lvl: 5
     hp_max: 0
@@ -736,7 +542,7 @@ spear:
   name: Spear
   description: A long stick with a sharp steel tip!
   item_type: equipment
-  slot: primary
+  slot: weapon
   requirements:
     lvl: 3
     hp_max: 0
@@ -760,7 +566,7 @@ speared fish:
   name: Speared fish
   description: Its a spear with a dead fish at the tip.
   item_type: equipment
-  slot: primary
+  slot: weapon
   requirements:
     lvl: 5
     hp_max: 0
@@ -784,7 +590,7 @@ curved stick:
   name: Curved stick
   description: The masculine urge to hold a cool stick wins again.
   item_type: equipment
-  slot: primary
+  slot: weapon
   requirements:
     lvl: 1
     hp_max: 0
@@ -809,7 +615,7 @@ steel shield:
   name: Steel shield
   description: A heavy steel shield with a leather strap.
   item_type: equipment
-  slot: secondary
+  slot: trinket
   requirements:
     lvl: 6
     hp_max: 0
@@ -833,7 +639,7 @@ a girls diary:
   name: A girls diary
   description: This girly diary contains so much lovecraftian horror, sometimes when it closes it sounds like a satisfied chuckle.
   item_type: equipment
-  slot: secondary
+  slot: trinket
   requirements:
     lvl: 10
     hp_max: 0
@@ -857,7 +663,7 @@ praying beads:
   name: Praying beads
   description: A string with colorful beads, used during prayer.
   item_type: equipment
-  slot: secondary
+  slot: trinket
   requirements:
     lvl: 1
     hp_max: 0
@@ -881,7 +687,7 @@ wooden shield:
   name: Wooden shield
   description: Its just a old garden fence ripped out from the ground, theres still grass and dirt at the bottom of it.
   item_type: equipment
-  slot: secondary
+  slot: trinket
   requirements:
     lvl: 3
     hp_max: 0
@@ -905,7 +711,7 @@ pan lid:
   name: Pan lid
   description: This might protect you from a stray pebble!
   item_type: equipment
-  slot: secondary
+  slot: trinket
   requirements:
     lvl: 1
     hp_max: 0

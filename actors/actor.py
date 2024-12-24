@@ -43,15 +43,9 @@ class SlotsManager:
         self.owner = owner
         self.slots = {
             EquipmentSlotType.HEAD:      None,
-            EquipmentSlotType.NECK:      None,
-            EquipmentSlotType.CHEST:     None,
-            EquipmentSlotType.HANDS:     None,
-            EquipmentSlotType.BELT:      None,
-            EquipmentSlotType.LEGS:      None,
-            EquipmentSlotType.FEET:      None,
-            EquipmentSlotType.TRINKET:   None,
-            EquipmentSlotType.PRIMARY:   None,
-            EquipmentSlotType.SECONDARY: None
+            EquipmentSlotType.BODY:      None,
+            EquipmentSlotType.WEAPON:    None,
+            EquipmentSlotType.TRINKET:   None
         }
 
 class Actor:

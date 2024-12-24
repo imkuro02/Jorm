@@ -41,9 +41,6 @@ shroom:
   loot:
     red cap: 0.05
     red t-shirt: 0.05
-    red scarf: 0.05
-    red pants: 0.05
-    red shoes: 0.05
     field dagger: 0.05
     red potion: 0.05
   skills:
@@ -66,7 +63,6 @@ orange mushroom:
     exp: 3
   loot:
     bronze koif: 0.05
-    white flip flops: 0.05
     spear: 0.05
     red potion: 0.05
   skills:

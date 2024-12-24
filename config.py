@@ -38,6 +38,16 @@ class ActorStatusType:
 
 class EquipmentSlotType:
     HEAD =      'head'
+    BODY =  'body'
+    WEAPON =    'weapon'
+    TRINKET =   'trinket'
+    name = {
+        HEAD: 'Head',
+        BODY: 'Body',
+        WEAPON: 'Weapon',
+        TRINKET: 'Trinket'
+    }
+    '''
     NECK =      'neck'
     CHEST =     'chest'
     HANDS =     'hands'
@@ -59,6 +69,7 @@ class EquipmentSlotType:
         PRIMARY:   'Primary',
         SECONDARY: 'Secondary'
     }
+    '''
 
 class StatType:
     HPMAX =     'hp_max'
