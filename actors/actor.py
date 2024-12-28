@@ -75,7 +75,7 @@ class Actor:
             StatType.MP:    10,
             StatType.ARMOR: 0,
             StatType.MARMOR:0,
-            StatType.BODY: 0,
+            StatType.GRIT: 0,
             StatType.MIND: 0,
             StatType.SOUL: 0,
             StatType.LVL: 1,
@@ -111,7 +111,7 @@ class Actor:
         if self.description != '': output += f'{self.description}\n'
         output += f'{StatType.name[StatType.HP]+":":<15} {self.stats[StatType.HP]}/{self.stats[StatType.HPMAX]}\n'
         output += f'{StatType.name[StatType.MP]+":":<15} {self.stats[StatType.MP]}/{self.stats[StatType.MPMAX]}\n'
-        _piss = [StatType.BODY, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
+        _piss = [StatType.GRIT, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
         for _shit in _piss:
             output += f'{StatType.name[_shit]+":":<15} {self.stats[_shit]}\n'
         return output

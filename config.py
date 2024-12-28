@@ -76,7 +76,7 @@ class StatType:
     MPMAX =     'mp_max'
     HP =        'hp'
     MP =        'mp'
-    BODY =      'body'
+    GRIT =      'grit'
     MIND =      'mind'
     SOUL =      'soul'
     ARMOR =     'armor'
@@ -90,7 +90,7 @@ class StatType:
         MPMAX:  'Max Magicka',
         HP:     'Health',
         MP:     'Magicka',
-        BODY:   'Body',
+        GRIT:   'Grit',
         MIND:   'Mind',
         SOUL:   'Soul',
         ARMOR:  'Armor',

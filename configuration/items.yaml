@@ -6,7 +6,7 @@ tutorial rat dagger:
   name: Chewed up Dagger
   requirements:
     armor: 0
-    body: 0
+    grit: 0
     lvl: 1
     marmor: 0
     hp_max: 0
@@ -16,7 +16,7 @@ tutorial rat dagger:
   slot: weapon
   stats:
     armor: 0
-    body: 1
+    grit: 1
     marmor: 0
     hp_max: 0
     mp_max: 0
@@ -38,7 +38,7 @@ red cap:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -46,7 +46,7 @@ red cap:
     mp_max: 0
     armor: 1
     marmor: 1
-    body: 1
+    grit: 1
     mind: 1
     soul: 1
 
@@ -62,7 +62,7 @@ bronze koif:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -70,7 +70,7 @@ bronze koif:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 1
+    grit: 1
     mind: 0
     soul: 0
 
@@ -86,7 +86,7 @@ steel helm:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 1
+    grit: 1
     mind: 0
     soul: 0
   stats:
@@ -94,7 +94,7 @@ steel helm:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 1
+    grit: 1
     mind: 0
     soul: 0
 
@@ -110,7 +110,7 @@ green headband:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -118,7 +118,7 @@ green headband:
     mp_max: 5
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 1
 
@@ -135,7 +135,7 @@ gold chain:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -143,7 +143,7 @@ gold chain:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 2
+    grit: 2
     mind: 2
     soul: 2
 
@@ -153,14 +153,14 @@ red t-shirt:
   name: Red t-shirt
   description: A red tshirt with one white stripe going through the middle.
   item_type: equipment
-  slot: body
+  slot: grit
   requirements:
     lvl: 1
     hp_max: 0
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -168,7 +168,7 @@ red t-shirt:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 1
+    grit: 1
     mind: 1
     soul: 1
 
@@ -177,14 +177,14 @@ bronze chainmail:
   name: Bronze chainmail
   description: tiny loops of bronze form what look like a pretty heavy t-shirt.
   item_type: equipment
-  slot: body
+  slot: grit
   requirements:
     lvl: 5
     hp_max: 0
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -192,7 +192,7 @@ bronze chainmail:
     mp_max: 0
     armor: 2
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
 
@@ -201,14 +201,14 @@ steel chestplate:
   name: Steel chestplate
   description: Several heavy plates of steel form what looks like a hollow mannequin torso.
   item_type: equipment
-  slot: body
+  slot: grit
   requirements:
     lvl: 6
     hp_max: 0
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -216,7 +216,7 @@ steel chestplate:
     mp_max: 0
     armor: 2
     marmor: 0
-    body: 1
+    grit: 1
     mind: 0
     soul: 0
 
@@ -225,14 +225,14 @@ blue robe:
   name: Blue robe
   description: This is just a big blue rain coat.
   item_type: equipment
-  slot: body
+  slot: grit
   requirements:
     lvl: 3
     hp_max: 0
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -240,7 +240,7 @@ blue robe:
     mp_max: 0
     armor: 0
     marmor: 1
-    body: 0
+    grit: 0
     mind: 3
     soul: 1
 
@@ -257,7 +257,7 @@ red gloves:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -265,7 +265,7 @@ red gloves:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 1
+    grit: 1
     mind: 1
     soul: 1
 
@@ -281,7 +281,7 @@ thieves gloves:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -289,7 +289,7 @@ thieves gloves:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 1
+    grit: 1
     mind: 0
     soul: 1
 
@@ -305,7 +305,7 @@ steel gloves:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 6
+    grit: 6
     mind: 0
     soul: 0
   stats:
@@ -313,7 +313,7 @@ steel gloves:
     mp_max: 0
     armor: 1
     marmor: 0
-    body: 2
+    grit: 2
     mind: 0
     soul: 0
 
@@ -329,7 +329,7 @@ lemon gloves:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 6
     soul: 0
   stats:
@@ -337,7 +337,7 @@ lemon gloves:
     mp_max: 10
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 4
     soul: 0
     
@@ -354,7 +354,7 @@ red belt:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -362,7 +362,7 @@ red belt:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 1
+    grit: 1
     mind: 1
     soul: 1
 
@@ -379,7 +379,7 @@ lady underwear:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 3
+    grit: 3
     mind: 3
     soul: 3
   stats:
@@ -387,7 +387,7 @@ lady underwear:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 6
 
@@ -404,7 +404,7 @@ single earing:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -412,7 +412,7 @@ single earing:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 1
     soul: 1
     
@@ -428,7 +428,7 @@ amethyst earings:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -436,7 +436,7 @@ amethyst earings:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 1
+    grit: 1
     mind: 1
     soul: 0
     
@@ -453,7 +453,7 @@ red whip:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -461,7 +461,7 @@ red whip:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 3
+    grit: 3
     mind: 0
     soul: 0
 
@@ -477,7 +477,7 @@ wooden mallet:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -485,7 +485,7 @@ wooden mallet:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 5
+    grit: 5
     mind: 0
     soul: 0
 
@@ -501,7 +501,7 @@ field dagger:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -509,7 +509,7 @@ field dagger:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 2
+    grit: 2
     mind: 1
     soul: 1
 
@@ -525,7 +525,7 @@ iron axe:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -533,7 +533,7 @@ iron axe:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 4
+    grit: 4
     mind: 1
     soul: 0
 
@@ -549,7 +549,7 @@ spear:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -557,7 +557,7 @@ spear:
     mp_max: 5
     armor: 1
     marmor: 1
-    body: 2
+    grit: 2
     mind: 0
     soul: 0
 
@@ -573,7 +573,7 @@ speared fish:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -581,7 +581,7 @@ speared fish:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 3
+    grit: 3
     mind: 0
     soul: 0
 
@@ -597,7 +597,7 @@ curved stick:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 
     soul: 0
   stats:
@@ -605,7 +605,7 @@ curved stick:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 2
     soul: 0
 
@@ -622,7 +622,7 @@ steel shield:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -630,7 +630,7 @@ steel shield:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 2
+    grit: 2
     mind: 1
     soul: 0
 
@@ -646,7 +646,7 @@ a girls diary:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -654,7 +654,7 @@ a girls diary:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 5
     soul: 5
 
@@ -670,7 +670,7 @@ praying beads:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -678,7 +678,7 @@ praying beads:
     mp_max: 10
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 6
 
@@ -694,7 +694,7 @@ wooden shield:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -702,7 +702,7 @@ wooden shield:
     mp_max: 0
     armor: 3
     marmor: 3
-    body: 2
+    grit: 2
     mind: 1
     soul: 1
 
@@ -718,7 +718,7 @@ pan lid:
     mp_max: 0
     armor: 0
     marmor: 0
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
   stats:
@@ -726,7 +726,7 @@ pan lid:
     mp_max: 0
     armor: 0
     marmor: 1
-    body: 1
+    grit: 1
     mind: 1
     soul: 1
 

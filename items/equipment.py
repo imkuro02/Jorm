@@ -16,7 +16,7 @@ class Equipment(Item):
             StatType.MPMAX: 0,
             StatType.ARMOR: 0,
             StatType.MARMOR:0,
-            StatType.BODY: 0,
+            StatType.GRIT: 0,
             StatType.MIND: 0,
             StatType.SOUL: 0
 
@@ -27,7 +27,7 @@ class Equipment(Item):
             StatType.MPMAX: 0,
             StatType.ARMOR: 0,
             StatType.MARMOR:0,
-            StatType.BODY: 0,
+            StatType.GRIT: 0,
             StatType.MIND: 0,
             StatType.SOUL: 0,
             StatType.LVL: 0

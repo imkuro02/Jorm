@@ -31,7 +31,7 @@ class Database:
             mp_max INT NOT NULL,
             hp INT NOT NULL,
             mp INT NOT NULL,
-            body INT NOT NULL,
+            grit INT NOT NULL,
             mind INT NOT NULL,
             soul INT NOT NULL,
             armor INT NOT NULL,
@@ -145,11 +145,11 @@ class Database:
         self.cursor.execute('''
             INSERT INTO stats (
                 actor_id, hp_max, mp_max, hp, mp,
-                armor, marmor, body, mind, soul,
+                armor, marmor, grit, mind, soul,
                 exp, lvl, pp
             ) VALUES (
                 :actor_id, :hp_max, :mp_max, :hp, :mp,
-                :armor, :marmor, :body, :mind, :soul,
+                :armor, :marmor, :grit, :mind, :soul,
                 :exp, :lvl, :pp
             )
             ON CONFLICT(actor_id) DO UPDATE SET
@@ -159,7 +159,7 @@ class Database:
                 mp = excluded.mp,
                 armor = excluded.armor,
                 marmor = excluded.marmor,
-                body = excluded.body,
+                grit = excluded.grit,
                 mind = excluded.mind,
                 soul = excluded.soul,
                 exp = excluded.exp,
@@ -261,7 +261,7 @@ class Database:
             'mp_max': stats[2],
             'hp': stats[3],
             'mp': stats[4],
-            'body':stats[5],
+            'grit':stats[5],
             'mind': stats[6],
             'soul': stats[7],
             'armor': stats[8],
