@@ -94,7 +94,7 @@ class StatType:
         MIND:   'Mind',
         SOUL:   'Soul',
         ARMOR:  'Armor',
-        MARMOR: 'Magick Armor',
+        MARMOR: 'Marmor',
         EXP:    'Experience',
         LVL:    'Level',
         PP:     'Practice Points',

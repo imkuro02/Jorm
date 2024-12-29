@@ -209,33 +209,24 @@ def command_respec(self, line):
             return
 
     exp = self.stats[StatType.EXP]
-    #money = self.stats[StatType.MONEY]
     temp_player = Player(None, self.name, None)
     self.stats = temp_player.stats
     self.skills = temp_player.skills
     #print(temp_player)
     del temp_player
 
-    #self.stats = self.create_new_stats()
-    #self.skills = self.create_new_skills()
+
     self.stats[StatType.EXP] = exp
-    #self.stats[StatType.EXP] = money
     self.sendLine('@greenYou have reset your stats, experience is kept.@normal')
 
 def command_stats(self, line):
     output = f'You are {self.get_character_sheet()}'
-    output += f'\n'
-    exp_needed = self.get_exp_needed_to_level() - self.stats[StatType.EXP]
+    #output += f'\n'
+    #exp_needed = self.get_exp_needed_to_level() - self.stats[StatType.EXP]
     output += f'{StatType.name[StatType.LVL]} {self.stats[StatType.LVL]}\n'
-    #if exp_needed > 0:
-    #    output += f'@redYou need {exp_needed} exp to level up@normal\n'
-    #else:
-    #    output += f'@greenYou have enough exp to level up@normal\n'
     output += f'{StatType.name[StatType.EXP]}: {self.stats[StatType.EXP]}/{self.get_exp_needed_to_level()}\n'
     output += f'{StatType.name[StatType.PP]}: {self.stats[StatType.PP]}\n'
-    #output = f'Player:  {self.id}\nAccount: {self.protocol.id}\n' + output
-    
-    
+
     self.sendLine(output)
 
 @check_alive

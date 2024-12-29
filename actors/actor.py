@@ -107,14 +107,15 @@ class Actor:
 
         return output
 
-    def get_character_equipment(self):
+    def get_character_equipment(self, hide_empty = True):
         t = utils.Table(2, spaces = 1)
         for i in self.slots_manager.slots:
             if None == self.slots_manager.slots[i]:
-                continue
-                t.add_data(EquipmentSlotType.name[i] + ':')
-                t.add_data('...')
-                t.add_data('...')
+                if hide_empty:
+                    continue
+                else:
+                    t.add_data(EquipmentSlotType.name[i] + ':')
+                    t.add_data('---')
             else:
                 t.add_data(EquipmentSlotType.name[i] + ':')
                 t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].name+'')

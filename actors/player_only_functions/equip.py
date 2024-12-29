@@ -13,7 +13,7 @@ def command_equipment(self, line):
             self.inventory_equip(item)
         return
 
-    output = f'You are wearing:\n{self.get_character_equipment()}\n'
+    output = f'You are wearing:\n{self.get_character_equipment(hide_empty = False)}\n'
     '''
     for i in self.slots_manager.slots:
         if None == self.slots_manager.slots[i]:
