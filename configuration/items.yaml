@@ -598,7 +598,7 @@ curved stick:
     armor: 0
     marmor: 0
     grit: 0
-    mind: 
+    mind: 0
     soul: 0
   stats:
     hp_max: 0
@@ -606,7 +606,7 @@ curved stick:
     armor: 0
     marmor: 0
     grit: 0
-    mind: 2
+    mind: 1
     soul: 0
 
 # secondary

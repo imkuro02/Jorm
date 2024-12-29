@@ -43,7 +43,7 @@ class Equipment(Item):
         
         return my_dict
 
-    def set_stat(stat, value):
+    def set_stat(self, stat, value):
         self.stats[stat] = value
 
     def identify(self, identifier = None):

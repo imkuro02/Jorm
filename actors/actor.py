@@ -108,7 +108,7 @@ class Actor:
         return output
 
     def get_character_equipment(self):
-        t = utils.Table(3, spaces = 3)
+        t = utils.Table(2, spaces = 1)
         for i in self.slots_manager.slots:
             if None == self.slots_manager.slots[i]:
                 continue
@@ -117,8 +117,8 @@ class Actor:
                 t.add_data('...')
             else:
                 t.add_data(EquipmentSlotType.name[i] + ':')
-                t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].name+',')
-                t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].description)
+                t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].name+'')
+                #t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].description)
         output = t.get_table()
         return output
 

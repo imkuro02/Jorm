@@ -227,11 +227,11 @@ def command_stats(self, line):
     output += f'\n'
     exp_needed = self.get_exp_needed_to_level() - self.stats[StatType.EXP]
     output += f'{StatType.name[StatType.LVL]} {self.stats[StatType.LVL]}\n'
-    if exp_needed > 0:
-        output += f'@redYou need {exp_needed} exp to level up@normal\n'
-    else:
-        output += f'@greenYou have enough exp to level up@normal\n'
-    output += f'{StatType.name[StatType.EXP]}: {self.stats[StatType.EXP]}\n'
+    #if exp_needed > 0:
+    #    output += f'@redYou need {exp_needed} exp to level up@normal\n'
+    #else:
+    #    output += f'@greenYou have enough exp to level up@normal\n'
+    output += f'{StatType.name[StatType.EXP]}: {self.stats[StatType.EXP]}/{self.get_exp_needed_to_level()}\n'
     output += f'{StatType.name[StatType.PP]}: {self.stats[StatType.PP]}\n'
     #output = f'Player:  {self.id}\nAccount: {self.protocol.id}\n' + output
     
