@@ -153,7 +153,7 @@ red t-shirt:
   name: Red t-shirt
   description: A red tshirt with one white stripe going through the middle.
   item_type: equipment
-  slot: grit
+  slot: body
   requirements:
     lvl: 1
     hp_max: 0
@@ -177,7 +177,7 @@ bronze chainmail:
   name: Bronze chainmail
   description: tiny loops of bronze form what look like a pretty heavy t-shirt.
   item_type: equipment
-  slot: grit
+  slot: body
   requirements:
     lvl: 5
     hp_max: 0
@@ -201,7 +201,7 @@ steel chestplate:
   name: Steel chestplate
   description: Several heavy plates of steel form what looks like a hollow mannequin torso.
   item_type: equipment
-  slot: grit
+  slot: body
   requirements:
     lvl: 6
     hp_max: 0
@@ -220,12 +220,12 @@ steel chestplate:
     mind: 0
     soul: 0
 
-blue robe:
-  premade_id: blue robe
-  name: Blue robe
-  description: This is just a big blue rain coat.
+bathrobe:
+  premade_id: bathrobe
+  name: Bathrobe
+  description: A bathrobe, the fabric is thick and plush, woven from fine cotton that promises warmth and comfort.
   item_type: equipment
-  slot: grit
+  slot: body
   requirements:
     lvl: 3
     hp_max: 0

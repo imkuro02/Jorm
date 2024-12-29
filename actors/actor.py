@@ -6,6 +6,7 @@ from affects.manager import AffectsManager
 from config import DamageType, ActorStatusType, EquipmentSlotType, StatType
 from skills.manager import use_skill
 from inventory import InventoryManager
+import utils
 
 class CooldownManager:
     def __init__ (self, owner):
@@ -106,9 +107,30 @@ class Actor:
 
         return output
 
+    def get_character_equipment(self):
+        t = utils.Table(3, spaces = 3)
+        for i in self.slots_manager.slots:
+            if None == self.slots_manager.slots[i]:
+                continue
+                t.add_data(EquipmentSlotType.name[i] + ':')
+                t.add_data('...')
+                t.add_data('...')
+            else:
+                t.add_data(EquipmentSlotType.name[i] + ':')
+                t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].name+',')
+                t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].description)
+        output = t.get_table()
+        return output
+
     def get_character_sheet(self):
         output = f'{self.pretty_name()} ({self.status})\n'
-        if self.description != '': output += f'{self.description}\n'
+
+        # if no description then ignore
+        if self.description != '': 
+            output += f'@cyan{self.description}@normal\n'
+
+        output += self.get_character_equipment()
+
         output += f'{StatType.name[StatType.HP]+":":<15} {self.stats[StatType.HP]}/{self.stats[StatType.HPMAX]}\n'
         output += f'{StatType.name[StatType.MP]+":":<15} {self.stats[StatType.MP]}/{self.stats[StatType.MPMAX]}\n'
         _piss = [StatType.GRIT, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]

@@ -7,7 +7,7 @@ template:
     armor: 0
     marmor: 0
 
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
     
@@ -34,7 +34,7 @@ shroom:
     mp: 0
     armor: 0
     marmor: -5
-    body: 0
+    grit: 0
     mind: 0
     soul: 0
     exp: 1
@@ -57,7 +57,7 @@ orange mushroom:
     mp: 0
     armor: 2
     marmor: 1
-    body: 3
+    grit: 3
     mind: 0
     soul: 0
     exp: 3
@@ -79,7 +79,7 @@ blue mushroom:
     mp: 0
     armor: 3
     marmor: 5
-    body: 4
+    grit: 4
     mind: 0
     soul: 0
     exp: 5
@@ -103,7 +103,7 @@ octopus:
     mp: 0
     armor: 5
     marmor: 5
-    body: 12
+    grit: 12
     mind: 0
     soul: 0
     exp: 8
