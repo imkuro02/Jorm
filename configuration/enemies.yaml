@@ -41,7 +41,28 @@ shroom:
     soul: 0
     exp: 1
   loot:
-    red potion: 0.05
+    red potion: 0.01
+    blue potion: 0.01
+
+    axe: 0.01
+    field dagger: 0.01
+    curved stick: 0.01
+    wooden mallet: 0.01
+
+    bronze koif: 0.01
+    red cap: 0.01
+    brown wizard hat: 0.01
+    plague doctor mask: 0.01
+
+    bronze chainmail: 0.01
+    red t-shirt: 0.01
+    brown wizard robe: 0.01
+    black raincoat: 0.01
+
+    single earing: 0.01
+    red scarf: 0.01
+    notebook: 0.01
+    prayer beads: 0.01
   skills:
     nudge: 75
   combat_loop:
@@ -61,9 +82,28 @@ orange mushroom:
     soul: 0
     exp: 3
   loot:
-    bronze koif: 0.05
-    axe: 0.05
-    red potion: 0.05
+    red potion: 0.01
+    blue potion: 0.01
+
+    axe: 0.01
+    field dagger: 0.01
+    curved stick: 0.01
+    wooden mallet: 0.01
+
+    bronze koif: 0.01
+    red cap: 0.01
+    brown wizard hat: 0.01
+    plague doctor mask: 0.01
+
+    bronze chainmail: 0.01
+    red t-shirt: 0.01
+    brown wizard robe: 0.01
+    black raincoat: 0.01
+
+    single earing: 0.01
+    red scarf: 0.01
+    notebook: 0.01
+    prayer beads: 0.01
   skills:
     nudge: 75
   combat_loop:
@@ -84,8 +124,28 @@ blue mushroom:
     soul: 0
     exp: 5
   loot:
-    blue potion: 0.05
-    red potion: 0.05
+    red potion: 0.01
+    blue potion: 0.01
+
+    axe: 0.01
+    field dagger: 0.01
+    curved stick: 0.01
+    wooden mallet: 0.01
+
+    bronze koif: 0.01
+    red cap: 0.01
+    brown wizard hat: 0.01
+    plague doctor mask: 0.01
+
+    bronze chainmail: 0.01
+    red t-shirt: 0.01
+    brown wizard robe: 0.01
+    black raincoat: 0.01
+
+    single earing: 0.01
+    red scarf: 0.01
+    notebook: 0.01
+    prayer beads: 0.01
   skills: 
     nudge: 75
   combat_loop:
@@ -106,9 +166,28 @@ octopus:
     soul: 0
     exp: 8
   loot:
-    wooden mallet: 0.05
-    blue potion: 0.05
-    red potion: 0.05
+    red potion: 0.01
+    blue potion: 0.01
+
+    axe: 0.01
+    field dagger: 0.01
+    curved stick: 0.01
+    wooden mallet: 0.01
+
+    bronze koif: 0.01
+    red cap: 0.01
+    brown wizard hat: 0.01
+    plague doctor mask: 0.01
+
+    bronze chainmail: 0.01
+    red t-shirt: 0.01
+    brown wizard robe: 0.01
+    black raincoat: 0.01
+
+    single earing: 0.01
+    red scarf: 0.01
+    notebook: 0.01
+    prayer beads: 0.01
   skills: 
     nudge: 75
   combat_loop:

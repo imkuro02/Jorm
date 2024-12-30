@@ -5,9 +5,10 @@ from skills.manager import get_skills, use_skill
 
 @check_alive
 def command_fight(self, line):
-    error_output = self.room.new_combat()
-    if isinstance(error_output, str):
-        self.sendLine(error_output)
+    #error_output = self.room.new_combat()
+    #if isinstance(error_output, str):
+    #    self.sendLine(error_output)
+    self.room.join_combat(self)
 
 @check_alive
 def command_pass_turn(self, line):

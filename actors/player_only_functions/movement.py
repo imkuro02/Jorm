@@ -1,7 +1,6 @@
 from actors.player_only_functions.checks import check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
 from config import ActorStatusType
 
-@check_alive
 @check_your_turn
 def command_flee(self, line):
     if self.room.combat == None:

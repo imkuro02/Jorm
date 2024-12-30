@@ -71,6 +71,13 @@ class Combat:
         self.round = 1
         self.initiative()
         
+    def add_participant(self, participant):
+        self.participants[participant.id] = participant
+        participant.simple_broadcast(
+            f'You join the combat',
+            f'{participant.pretty_name()} joins the combat',
+        )
+
     def tick(self):
         if self.current_actor == None:
             return
@@ -117,7 +124,9 @@ class Combat:
 
         if self.current_actor.room != self.room:
             print(self.current_actor.name, 'removed from combat')
-            if self.current_actor.id in self.participants: del self.participants[self.current_actor.id]
+            if self.current_actor.id in self.participants: 
+                self.participants[self.current_actor.id].status = ActorStatusType.NORMAL
+                del self.participants[self.current_actor.id]
             self.next_turn()
             return
 
@@ -133,6 +142,7 @@ class Combat:
 
         self.participants = {}
         self.room.combat = None
+        print('combat over')
 
     def next_turn(self):
         team1_died = True

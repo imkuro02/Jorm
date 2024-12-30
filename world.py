@@ -33,6 +33,25 @@ class Room:
             return
         self.combat.tick()
 
+    def join_combat(self, player_participant):
+        if self.combat == None:
+            participants = {}
+            npcs_here = False
+            players_here = False
+            for i in self.entities.values():
+                #print(i)
+                if i == player_participant:
+                    participants[i.id] = i
+                    players_here = True
+                if type(i).__name__ == "Enemy":
+                    participants[i.id] = i
+                    npcs_here = True
+
+            if players_here and npcs_here:
+                self.combat = Combat(self, participants)
+        else:
+            self.combat.add_participant(player_participant)
+
     def new_combat(self):
         if self.combat != None:
             return 'There is already a fight here!'
