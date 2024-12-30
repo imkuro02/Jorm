@@ -23,13 +23,12 @@ def command_level_up(self, stat):
     
     match stat.lower():
         case 'grit':
-            #self.stats[StatType.GRIT] += 1
             stat = StatType.GRIT
+        case 'flow':
+            stat = StatType.FLOW
         case 'mind':
-            #self.stats[StatType.MIND] += 1
             stat = StatType.MIND
         case 'soul':
-            #self.stats[StatType.SOUL] += 1
             stat = StatType.SOUL
         case _:
             self.sendLine('You can only level up Grid, Mind and Soul')
@@ -40,8 +39,8 @@ def command_level_up(self, stat):
     self.stats[stat] += 1
     self.stats[StatType.PP] += 20
 
-    hp_bonus = 0 + 5 + self.stats[StatType.GRIT] + round(self.stats[StatType.SOUL]*.5)
-    mp_bonus = 0 + 5 + self.stats[StatType.MIND] + round(self.stats[StatType.SOUL]*.5) 
+    hp_bonus = 0 + 0 + round(self.stats[StatType.GRIT] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1)
+    mp_bonus = 0 + 0 + round(self.stats[StatType.MIND] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1)
     self.stats[StatType.HPMAX]  += hp_bonus
     self.stats[StatType.MPMAX]  += mp_bonus
     self.stats[StatType.HP]     += hp_bonus

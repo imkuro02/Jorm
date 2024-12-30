@@ -1,6 +1,7 @@
 import yaml
 from enum import Enum, auto
 import configuration.map_loader
+import csv
 
 class ItemType:
     MISC = 'misc'
@@ -77,6 +78,7 @@ class StatType:
     HP =        'hp'
     MP =        'mp'
     GRIT =      'grit'
+    FLOW =      'flow'
     MIND =      'mind'
     SOUL =      'soul'
     ARMOR =     'armor'
@@ -91,6 +93,7 @@ class StatType:
         HP:     'Health',
         MP:     'Magicka',
         GRIT:   'Grit',
+        FLOW:   'Flow',
         MIND:   'Mind',
         SOUL:   'Soul',
         ARMOR:  'Armor',
@@ -121,6 +124,47 @@ def load():
         for i in ITEMS_UNFILTERED:
             if 'template' not in i:
                 ITEMS[i] = ITEMS_UNFILTERED[i]
+
+    # Open and read the CSV file
+    with open('configuration/equipment.csv', mode="r") as file:
+        reader = csv.DictReader(file)  # Reads data as dictionaries
+        items = [row for row in reader]  # Store all rows in a list
+
+    # Print the parsed data
+    for _item in items:
+        #print(item)
+        if _item['premade_id'] == '': 
+            continue
+
+        item = {
+            'premade_id': _item['premade_id'],
+            'name': _item['name'],
+            'description': _item['desc'],
+            'item_type': 'equipment',
+            'slot': _item['slot'],
+            'stats': {
+                'grit':     int(_item['grit']),
+                'hp_max':   int(_item['hp_max']),
+                'mp_max':   int(_item['mp_max']),
+                'armor':    int(_item['armor']),
+                'marmor':   int(_item['marmor']),
+                'flow':     int(_item['flow']),
+                'mind':     int(_item['mind']),
+                'soul':     int(_item['soul'])
+            },
+            'requirements': {
+                'lvl':      int(_item['lvl']),
+                'hp_max':   int(_item['rhp_max']),
+                'mp_max':   int(_item['rmp_max']),
+                'armor':    int(_item['rarmor']),
+                'marmor':   int(_item['rmarmor']),
+                'grit':     int(_item['rgrit']),
+                'flow':     int(_item['rflow']),
+                'mind':     int(_item['rmind']),
+                'soul':     int(_item['rsoul'])
+            }
+        }
+        ITEMS[_item['premade_id']] = item
 
     #ENEMIES = {}
     with open('configuration/enemies.yaml', 'r') as file:

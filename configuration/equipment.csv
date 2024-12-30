@@ -1,0 +1,20 @@
+premade_id,name,hp_max,mp_max,rhp_max,rmp_max,,armor,marmor,rarmor,rmarmor,,grit,flow,mind,soul,,rgrit,rflow,rmind,rsoul,lvl,slot,desc
+axe,Axe,0,0,0,0,,0,0,0,0,,1,0,0,0,,1,0,0,0,1,weapon,-
+field dagger,Field dagger ,0,0,0,0,,0,0,0,0,,0,1,0,0,,0,1,0,0,1,weapon,-
+curved stick,Curved stick,0,0,0,0,,0,0,0,0,,0,0,1,0,,0,0,1,0,1,weapon,-
+wooden mallet,Wooden mallet,0,0,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,weapon,fdsa
+,,,,,,,,,,,,,,,,,,,,,,,
+bronze koif,Bronze koif,0,0,0,0,,1,0,0,0,,1,0,0,0,,1,0,0,0,1,head,-
+red cap,Red cap,0,0,0,0,,1,0,0,0,,0,1,0,0,,0,1,0,0,1,head,-
+brown wizard hat,Brown point hat,0,0,0,0,,0,1,0,0,,0,0,1,0,,0,0,1,0,1,head,-
+plague doctor mask,Plague doctor mask,0,0,0,0,,0,1,0,0,,0,0,0,1,,0,0,0,1,1,head,
+,,,,,,,,,,,,,,,,,,,,,,,-
+bronze chainmail,Bronze chainmail,0,0,0,0,,1,0,0,0,,1,0,0,0,,1,0,0,0,1,body,-
+red t-shirt,Red t-shirt,0,0,0,0,,1,0,0,0,,0,1,0,0,,0,1,0,0,1,body,-
+brown wizard robe,Brown robe,0,0,0,0,,0,1,0,0,,0,0,1,0,,0,0,1,0,1,body,-
+black raincoat,Black raincoat,0,0,0,0,,0,1,0,0,,0,0,0,1,,0,0,0,1,1,body,-
+,,,,,,,,,,,,,,,,,,,,,,,
+single earing,Single earing,15,0,0,0,,0,0,0,0,,1,0,0,0,,1,0,0,0,1,trinket,-
+red scarf,Red scarf,0,0,0,0,,0,1,0,0,,0,1,0,0,,0,1,0,0,1,triniket,-
+notebook,Notebook,0,15,0,0,,0,0,0,0,,0,0,1,0,,0,0,1,0,1,trinket,-
+prayer beads,Prayer beads,10,10,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,trinket,-

@@ -221,7 +221,8 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms['loading'])
         else: # load an existing actor
             self.actor = Player(self, _id = actor['actor_id'], name = actor['actor_name'], room = self.factory.world.rooms['loading'])
-            self.actor.stats = actor['stats']
+
+            self.actor.stats.update(actor['stats'])
             self.actor.skills = actor['skills']
 
             for item in actor['inventory'].values():

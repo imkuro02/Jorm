@@ -32,6 +32,7 @@ class Database:
             hp INT NOT NULL,
             mp INT NOT NULL,
             grit INT NOT NULL,
+            flow INT NOT NULL,
             mind INT NOT NULL,
             soul INT NOT NULL,
             armor INT NOT NULL,
@@ -145,11 +146,11 @@ class Database:
         self.cursor.execute('''
             INSERT INTO stats (
                 actor_id, hp_max, mp_max, hp, mp,
-                armor, marmor, grit, mind, soul,
+                armor, marmor, grit, flow, mind, soul,
                 exp, lvl, pp
             ) VALUES (
                 :actor_id, :hp_max, :mp_max, :hp, :mp,
-                :armor, :marmor, :grit, :mind, :soul,
+                :armor, :marmor, :grit, :flow, :mind, :soul,
                 :exp, :lvl, :pp
             )
             ON CONFLICT(actor_id) DO UPDATE SET
@@ -160,6 +161,7 @@ class Database:
                 armor = excluded.armor,
                 marmor = excluded.marmor,
                 grit = excluded.grit,
+                flow = excluded.flow,
                 mind = excluded.mind,
                 soul = excluded.soul,
                 exp = excluded.exp,
@@ -262,13 +264,14 @@ class Database:
             'hp': stats[3],
             'mp': stats[4],
             'grit':stats[5],
-            'mind': stats[6],
-            'soul': stats[7],
-            'armor': stats[8],
-            'marmor': stats[9],
-            'exp': stats[10],
-            'lvl': stats[11],
-            'pp': stats[12],
+            'flow':stats[6],
+            'mind': stats[7],
+            'soul': stats[8],
+            'armor': stats[9],
+            'marmor': stats[10],
+            'exp': stats[11],
+            'lvl': stats[12],
+            'pp': stats[13],
         }
 
         my_dict['inventory'] = {}

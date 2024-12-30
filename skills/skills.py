@@ -64,7 +64,6 @@ class Skill:
         self.use_broadcast()
 
 
-
 class SkillSwing(Skill):
     def use(self):
         super().use()
@@ -72,7 +71,7 @@ class SkillSwing(Skill):
             damage_obj = Damage(
                 damage_taker = self.other,
                 damage_source_actor = self.user,
-                damage_value = 1 + int(self.user.stats[StatType.BODY]*.7),
+                damage_value = 1 + int(self.user.stats[StatType.GRIT]*.7),
                 damage_type = DamageType.PHYSICAL
                 )
             self.other.take_damage(damage_obj)

@@ -8,6 +8,7 @@ template:
     marmor: 0
 
     grit: 0
+    flow: 0
     mind: 0
     soul: 0
     
@@ -35,13 +36,11 @@ shroom:
     armor: 0
     marmor: -5
     grit: 0
+    flow: 0
     mind: 0
     soul: 0
     exp: 1
   loot:
-    red cap: 0.05
-    red t-shirt: 0.05
-    field dagger: 0.05
     red potion: 0.05
   skills:
     nudge: 75
@@ -55,15 +54,15 @@ orange mushroom:
   stats:
     hp: 20
     mp: 0
-    armor: 2
-    marmor: 1
+    armor: 1
+    marmor: 2
     grit: 3
     mind: 0
     soul: 0
     exp: 3
   loot:
     bronze koif: 0.05
-    spear: 0.05
+    axe: 0.05
     red potion: 0.05
   skills:
     nudge: 75
@@ -77,16 +76,14 @@ blue mushroom:
   stats:
     hp: 60
     mp: 0
-    armor: 3
-    marmor: 5
+    armor: 2
+    marmor: 4
     grit: 4
+    flow: 0
     mind: 0
     soul: 0
     exp: 5
   loot:
-    field dagger: 0.05
-    spear: 0.05
-    speared fish: 0.05
     blue potion: 0.05
     red potion: 0.05
   skills: 
@@ -104,14 +101,12 @@ octopus:
     armor: 5
     marmor: 5
     grit: 12
+    flow: 0
     mind: 0
     soul: 0
     exp: 8
   loot:
     wooden mallet: 0.05
-    steel shield: 0.05
-    iron axe: 0.05
-    a girls diary: 0.05
     blue potion: 0.05
     red potion: 0.05
   skills: 

@@ -117,7 +117,6 @@ class World:
 
             if r in self.rooms:
                 players = [entity for entity in self.rooms[r].entities.values() if type(entity).__name__ == "Player"]
-                #print(room['name'], players)
                 if len(players) >= 1:
                     continue
                 else:
@@ -142,7 +141,7 @@ class World:
         pass
 
     def tick(self):
-        if self.factory.ticks_passed % (30*120) == 0 or self.factory.ticks_passed == 1:
+        if self.factory.ticks_passed % (30*30) == 0 or self.factory.ticks_passed == 1:
             self.reload()
         for i in self.rooms.values():
             i.tick()

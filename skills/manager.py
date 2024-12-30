@@ -85,7 +85,7 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
         users_skill_level = 1
         cooldown = skill['cooldown']
         use_perspectives = consumable_item.use_perspectives
-        success = random.randint(1,100) < 70
+        success = random.randint(1,100) < 85
         silent_use = False
         no_cooldown = True
 
