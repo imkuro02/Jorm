@@ -1,0 +1,5 @@
+launch proxy with 
+python3 .
+
+launch client with 
+python3 -m http.server index.html

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client with ANSI Color</title>
+    <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.1/ansi_up.min.js"></script>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        #output {
+            height: calc(100vh - 100px); 
+            overflow-y: auto;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        #input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>FUCK JAVASCIPRT!!!</h1>
+    <div id="output"></div>
+    <input type="text" id="input" placeholder="Type your message and press Enter">
+    <script>
+        const output = document.getElementById('output');
+        const input = document.getElementById('input');
+        const ansi_up = new AnsiUp(); // Create an instance of AnsiUp for ANSI color parsing
+
+        // Connect to the WebSocket server
+        const socket = new WebSocket('ws://localhost:8001');
+
+        // Handle connection open
+        socket.onopen = () => {
+            appendMessage('Connected to WebSocket server.');
+        };
+
+        // Handle messages from the server
+        socket.onmessage = (event) => {
+            appendAnsiMessage(event.data);
+        };
+
+        // Handle connection close
+        socket.onclose = () => {
+            appendMessage('Disconnected from WebSocket server.');
+        };
+
+        // Handle errors
+        socket.onerror = (error) => {
+            appendMessage('WebSocket error: ' + error.message);
+        };
+
+        // Send message to server on Enter key press
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && input.value.trim() !== '') {
+                socket.send(input.value);
+                input.value = '';
+            }
+        });
+
+        // Append plain text message to output
+        function appendMessage(message) {
+            const div = document.createElement('div');
+            div.textContent = message;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Append ANSI-colored message to output
+        function appendAnsiMessage(message) {
+            const div = document.createElement('div');
+            div.innerHTML = ansi_up.ansi_to_html(message); // Convert ANSI codes to HTML
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+    </script>
+</body>
+</html>
