@@ -1,5 +1,5 @@
 
-from config import ActorStatusType
+from configuration.config import ActorStatusType
 
 def check_is_admin(func):
     def wrapper(self, line):

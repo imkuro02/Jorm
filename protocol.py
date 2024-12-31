@@ -2,7 +2,7 @@ from twisted.internet import protocol
 from actors.player import Player
 from items.manager import load_item, save_item
 import utils
-from config import StatType, ItemType
+from configuration.config import StatType, ItemType
 import uuid
 import copy
 

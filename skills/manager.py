@@ -1,7 +1,7 @@
 import utils
 import random
 
-from config import SKILLS, DamageType, ActorStatusType, StatType, AffType
+from configuration.config import SKILLS, DamageType, ActorStatusType, StatType, AffType
 import skills.skills 
 
 def get_skills():

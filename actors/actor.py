@@ -3,7 +3,7 @@ import uuid
 from combat.manager import Damage
 from items.manager import Item
 from affects.manager import AffectsManager
-from config import DamageType, ActorStatusType, EquipmentSlotType, StatType
+from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType
 from skills.manager import use_skill
 from inventory import InventoryManager
 import utils

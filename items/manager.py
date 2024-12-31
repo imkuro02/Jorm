@@ -1,7 +1,7 @@
 
 #import skills
 import copy
-from config import ItemType, EquipmentSlotType, ITEMS, CONSUMABLE_USE_PERSPECTIVES
+from configuration.config import ItemType, EquipmentSlotType, ITEMS, CONSUMABLE_USE_PERSPECTIVES
 
 from items.misc import Item
 from items.consumable import Consumable

@@ -1,5 +1,5 @@
 import utils
-from config import ItemType
+from configuration.config import ItemType
 
 def get_entity(self, line):
     return utils.get_match(line, self.room.entities)

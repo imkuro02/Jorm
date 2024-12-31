@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_not_in_combat, check_alive
-from config import StatType, SKILLS
+from configuration.config import StatType, SKILLS
 from skills.manager import get_skills
 import utils
 
@@ -31,7 +31,7 @@ def command_level_up(self, stat):
         case 'soul':
             stat = StatType.SOUL
         case _:
-            self.sendLine('You can only level up Grid, Mind and Soul')
+            self.sendLine('You can only level up Grit, Flow, Mind and Soul')
             return
 
     

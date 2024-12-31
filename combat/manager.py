@@ -1,4 +1,4 @@
-from config import ActorStatusType, StatType, DamageType
+from configuration.config import ActorStatusType, StatType, DamageType
 
 class Damage:
     def __init__(self, 

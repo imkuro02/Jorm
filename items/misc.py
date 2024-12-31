@@ -1,5 +1,5 @@
 import uuid
-from config import ItemType
+from configuration.config import ItemType
 
 class Item:
     def __init__(self):

@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_no_empty_line, check_not_in_combat, check_alive
-from config import ItemType, StatType
+from configuration.config import ItemType, StatType
 import utils
 
 @check_no_empty_line

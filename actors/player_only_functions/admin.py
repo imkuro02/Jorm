@@ -1,10 +1,10 @@
 from actors.player_only_functions.checks import check_is_admin, check_no_empty_line
 import items.manager as items
-import config
+import configuration.config as config
 import yaml
 import os
 import utils
-from config import ItemType, StatType, EquipmentSlotType, SKILLS
+from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS
 
 def command_help(self, line):
     files = os.listdir('help')
@@ -150,5 +150,5 @@ def command_debug(self, line):
     self.sendLine(self.room.world.rooms)
 
 def command_reload_config(self, line):
-    import config
+    import configuration.config as config
     config.load()

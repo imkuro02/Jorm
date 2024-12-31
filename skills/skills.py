@@ -1,4 +1,4 @@
-from config import AffType, DamageType, StatType
+from configuration.config import AffType, DamageType, StatType
 #import affects.manager as aff_manager
 import affects.affects as affects
 from combat.manager import Damage

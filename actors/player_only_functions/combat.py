@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_alive, check_no_empty_line, check_no_empty_line, check_your_turn, check_not_in_combat
-from config import DamageType, ItemType, ActorStatusType, StatType
+from configuration.config import DamageType, ItemType, ActorStatusType, StatType
 import utils
 from skills.manager import get_skills, use_skill
 

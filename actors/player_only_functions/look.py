@@ -1,5 +1,5 @@
 
-from config import ActorStatusType
+from configuration.config import ActorStatusType
 import utils
 def command_look(self, line):
     def look_room(self, room_id):

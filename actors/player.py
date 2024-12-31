@@ -14,7 +14,6 @@ class Player(Actor):
 
         self.last_line_sent = None
         self.last_command_used = None
-        self.send_line_buffer = []
 
         self.admin = False
         self.set_admin()
@@ -37,19 +36,6 @@ class Player(Actor):
         if found:
             self.sendLine('You are an admin')
             self.admin = True
-
-    def tick(self):
-        # Send buffer
-        super().tick()
-        '''
-        if self.factory.ticks_passed % 1 != 0:
-            return
-        if self.send_line_buffer == []:
-            return
-        line = self.send_line_buffer[0]
-        self.protocol.transport.write(line.encode('utf-8'))
-        self.send_line_buffer.pop(0)
-        '''
         
     def sendLine(self, line, color = True):
         if color:
@@ -58,18 +44,6 @@ class Player(Actor):
         else:
             self.protocol.transport.write(line.encode('utf-8'))
         return
-
-        
-        #   THIS SHOULD BE CLIENT SIDE
-        '''
-        if color:
-            line = utils.add_color(f'{line}\n')
-            
-        lines = line.replace('\n','#SPLIT#\n').split('#SPLIT#')
-        for l in lines:
-            self.send_line_buffer.append(l)
-        '''
-        
 
     def handle(self, line):
         # empty lines are handled as resend last line

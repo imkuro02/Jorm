@@ -1,5 +1,5 @@
 import uuid
-from config import ItemType, SKILLS
+from configuration.config import ItemType, SKILLS
 from items.misc import Item
 from skills.manager import use_skill_from_consumable, get_skills
 

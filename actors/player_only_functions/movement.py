@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
-from config import ActorStatusType
+from configuration.config import ActorStatusType
 
 @check_your_turn
 def command_flee(self, line):

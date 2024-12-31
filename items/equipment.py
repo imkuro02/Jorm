@@ -1,5 +1,5 @@
 
-from config import ItemType, EquipmentSlotType, StatType
+from configuration.config import ItemType, EquipmentSlotType, StatType
 from items.misc import Item
 from utils import Table
 

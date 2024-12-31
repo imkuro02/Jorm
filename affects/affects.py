@@ -1,4 +1,4 @@
-from config import DamageType, StatType
+from configuration.config import DamageType, StatType
 from combat.manager import Damage
 
 class Affect:

@@ -3,11 +3,11 @@ import random
 
 import copy
 
-from config import StatType, ItemType, ENEMIES, ITEMS
+from configuration.config import StatType, ItemType, ENEMIES, ITEMS
 from skills.manager import use_skill
 from items.manager import load_item
 
-from config import ITEMS
+from configuration.config import ITEMS
 
 def create_enemy(room, enemy_id):
     if enemy_id not in ENEMIES:

@@ -3,7 +3,7 @@ from protocol import Protocol
 from world import World
 from database import Database
 
-import config
+import configuration.config as config
 config.load()
 
 import items

@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_alive, check_no_empty_line
-from config import ItemType, EquipmentSlotType, StatType
+from configuration.config import ItemType, EquipmentSlotType, StatType
 
 def command_equipment(self, line):
     # if you type equip item, it will wear that item
