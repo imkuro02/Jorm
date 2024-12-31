@@ -73,7 +73,7 @@ class Equipment(Item):
         t.add_data('Stat')
         t.add_data('Bonus')
         t.add_data('Req')
-        for stat in [StatType.HPMAX, StatType.MPMAX, StatType.ARMOR, StatType.MARMOR, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL]:
+        for stat in [StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]:
             s = self.stats[stat]
             r = self.requirements[stat]
             #if r == 0 and s == 0:

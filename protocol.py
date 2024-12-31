@@ -44,7 +44,7 @@ class Protocol(protocol.Protocol):
 
                        .-'~~~-.
                      .'o  oOOOo`.       CURRENTLY ONLINE: {len(self.factory.protocols)}
-                    :~~~-.oOo   o`.
+                    :~~~-.oOo   o`.     DISCORD: https://discord.gg/AZ98axtXc6
                      `. \ ~-.  oOOo.
                        `.; / ~.  OO:
                        .'  ;-- `.o.'
@@ -129,6 +129,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
+        utils.logging.debug(self.id + ' -> ' + self.account[0])
         self.id = self.account[0]
         self.username = self.account[1]
         self.password = self.account[2]
@@ -204,6 +205,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         self.sendLine('@bgreenAccount updated@normal')
     # override
     def connectionMade(self):
+        utils.logging.debug(self.id + 'Connection made')
         self.factory.protocols.add(self)
         self.splash_screen()
         self.change_state(self.LOGIN_OR_REGISTER)
@@ -266,6 +268,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
 
     # override
     def connectionLost(self, reason):
+        utils.logging.debug(self.id + ' >> Connection lost')
         if self.actor != None:
 
             self.actor.affect_manager.unload_all_affects(silent = True)
@@ -281,6 +284,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
 
     # override
     def dataReceived(self, data):
+        
 
         # interrupt
         if data == b'\xff\xf4\xff\xfd\x06':
@@ -289,6 +293,10 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
 
         # decode and process input data
         line = data.decode('utf-8', errors='ignore').strip()
+
+        # log account unique ID and what message was sent
+        if self.state == self.PLAY:
+            utils.logging.debug(self.account[0] + ' -> ' + line)
 
         #if line:  # skip empty lines
         if '@' in line:

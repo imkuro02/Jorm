@@ -1,4 +1,20 @@
 from fuzzywuzzy import process
+import logging
+
+logging.basicConfig(
+    filename=   'logs.log',     # Log file name
+    level=      logging.DEBUG,  # Log level
+    format=     '%(asctime)s - %(levelname)s - %(message)s',  # Log message format
+    filemode=   'a'  # Append mode; use 'w' to overwrite
+)
+
+'''
+logging.debug("This is a debug message.")
+logging.info("This is an info message.")
+logging.warning("This is a warning message.")
+logging.error("This is an error message.")
+logging.critical("This is a critical message.")
+'''
 
 colors = {
     '\x1b[0;30m': 	'@black',

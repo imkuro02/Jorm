@@ -2,11 +2,9 @@ from twisted.internet import reactor, protocol, ssl, task
 from protocol import Protocol
 from world import World
 from database import Database
-
+from utils import logging 
 import configuration.config as config
 config.load()
-
-import items
 
 class ServerFactory(protocol.Factory):
     def __init__(self):
@@ -17,6 +15,8 @@ class ServerFactory(protocol.Factory):
         self.tickrate: int = 30
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)
+
+        logging.info('Server started')
         
     def tick(self):
         self.ticks_passed += 1
