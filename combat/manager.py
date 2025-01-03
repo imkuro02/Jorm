@@ -72,6 +72,8 @@ class Combat:
         self.initiative()
         
     def add_participant(self, participant):
+        if participant.id in self.participants:
+            return # already participating in combat
         self.participants[participant.id] = participant
         participant.simple_broadcast(
             f'You join the combat',
