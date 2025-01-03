@@ -3,8 +3,9 @@ Title: Stats
 Syntax: "stats" 
 
 View your character stats
-Body: Your physical capabilities.
-Mind: Your mental capabilities.
+Grit: Your physical power.
+Flow: Your agility and flexibility.
+Mind: Your mental power.
 Soul: Your social and spiritual capabilities.
 
 Armor: Flat damage reduction from Physical Damage.

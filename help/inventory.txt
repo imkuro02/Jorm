@@ -1,6 +1,6 @@
 ................................................................................
 Title: Inventory
-Syntax: "inventory" , "inventory all" 
+Syntax: "inventory" 
 
 Using "inventory" or "i" will display the inventory in short format
 While using "inventory all" / "i all" will show all items;
