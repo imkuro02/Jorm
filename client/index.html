@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket Client with ANSI Color</title>
+    <title>JORM Unchained HD</title>
     <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.1/ansi_up.min.js"></script>
     <style>
         body {
@@ -13,7 +13,7 @@
             padding: 20px;
         }
         #output {
-            height: calc(100vh - 100px); 
+            height: calc(100vh - 175px); 
             overflow-y: auto;
             background-color: #000;
             color: #fff;
@@ -31,7 +31,7 @@
     </style>
 </head>
 <body>
-    <h1>FUCK JAVASCIPRT!!!</h1>
+    <h1>JORM</h1>
     <div id="output"></div>
     <input type="text" id="input" placeholder="Type your message and press Enter">
     <script>
@@ -40,7 +40,7 @@
         const ansi_up = new AnsiUp(); // Create an instance of AnsiUp for ANSI color parsing
 
         // Connect to the WebSocket server
-        const socket = new WebSocket('ws://localhost:8001');
+        const socket = new WebSocket('ws://jorm.kurowski.xyz:8001');
 
         // Handle connection open
         socket.onopen = () => {
