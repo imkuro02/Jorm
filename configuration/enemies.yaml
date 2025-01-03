@@ -78,6 +78,7 @@ orange mushroom:
     armor: 1
     marmor: 2
     grit: 3
+    flow: 0
     mind: 0
     soul: 0
     exp: 3
