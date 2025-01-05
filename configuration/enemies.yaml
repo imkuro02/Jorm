@@ -165,7 +165,7 @@ octopus:
     flow: 0
     mind: 0
     soul: 0
-    exp: 8
+    exp: 12
   loot:
     red potion: 0.01
     blue potion: 0.01

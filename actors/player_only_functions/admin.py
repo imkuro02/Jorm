@@ -1,4 +1,4 @@
-from actors.player_only_functions.checks import check_is_admin, check_no_empty_line
+from actors.player_only_functions.checks import check_is_admin, check_no_empty_line, check_not_in_combat
 import items.manager as items
 import configuration.config as config
 import yaml
@@ -39,7 +39,7 @@ def command_gain_exp(self, exp):
     except ValueError:
         print('gain_exp needs a int')
         pass
-
+'''
 @check_is_admin
 @check_no_empty_line
 def command_create_item(self, line):
@@ -57,7 +57,8 @@ def command_create_item(self, line):
         new_item = items.Consumable()
         new_item.name = 'New item'
         self.inventory_manager.add_item(new_item)
-
+'''
+'''
 @check_is_admin
 @check_no_empty_line
 def command_update_item(self, line):
@@ -115,7 +116,7 @@ def command_update_item(self, line):
 
     except Exception as e:
         self.sendLine(f'something went wrong with updating the item: {e}')
-
+'''
 @check_is_admin
 @check_no_empty_line
 def command_load_item(self, line):
@@ -149,6 +150,40 @@ def command_export_item(self, line):
 def command_debug(self, line):
     self.sendLine(self.room.world.rooms)
 
+@check_is_admin
 def command_reload_config(self, line):
     import configuration.config as config
     config.load()
+
+@check_not_in_combat
+@check_is_admin
+def command_teleport(self, line):
+    user = None
+    for proto in self.protocol.factory.protocols:
+        if line == proto.actor.name:
+            user = proto.actor
+            break
+    if user != None:
+        user.room.move_player(self)
+
+@check_not_in_combat
+@check_is_admin
+def command_kick(self, line):
+    user = None
+    for proto in self.protocol.factory.protocols:
+        if line == proto.actor.name:
+            user = proto.actor
+            break
+    if user != None:
+        user.protocol.disconnect()
+        self.sendLine(f'{user.pretty_name()} kicked')
+
+def command_online(self, line):
+    output = ''
+    t = utils.Table(4,3)
+    for proto in self.protocol.factory.protocols:
+        user = proto.actor
+        t.add_data(user.pretty_name())
+    output = t.get_table()
+    self.sendLine(output)
+
