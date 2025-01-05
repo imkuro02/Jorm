@@ -16,6 +16,13 @@ class Database:
             password TEXT NOT NULL
         )''')
 
+        # Create admins table
+        self.cursor.execute('''          
+            CREATE TABLE IF NOT EXISTS admins (
+                actor_id TEXT,
+                admin_level INT
+        )''')
+
         self.cursor.execute(''' 
         CREATE TABLE IF NOT EXISTS actors (
             unique_id TEXT UNIQUE NOT NULL,
@@ -202,6 +209,8 @@ class Database:
                     )
                     ''', my_dict)
                 
+        self.write_admins(actor)
+
         self.conn.commit()
 
     def read_actor(self, unique_id):
@@ -287,6 +296,32 @@ class Database:
             my_dict['skills'][skill[1]] = skill[2]
 
         return my_dict
+    
+    # write down admin on save
+    # if your admin level is 0 dont need to write it
+    def write_admins(self, actor):
+        self.cursor.execute('''
+            DELETE FROM admins WHERE actor_id = ?
+        ''', (actor.id,))
+
+        if actor.admin >= 1:
+            my_dict = {'actor_id': actor.id, 'admin_level': actor.admin}
+            self.cursor.execute('''
+                INSERT INTO admins (
+                    actor_id, admin_level
+                ) VALUES (
+                    :actor_id, :admin_level
+                )
+                ''', my_dict)
+
+    # read admin level
+    def read_admins(self, actor):
+        self.cursor.execute('''
+            SELECT * FROM admins WHERE actor_id = ?
+        ''', (actor.id, ))
+
+        admins = self.cursor.fetchone()
+        return admins
       
     def close(self):
         # Close the database connection

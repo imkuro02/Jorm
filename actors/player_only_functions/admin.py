@@ -129,26 +129,33 @@ def command_load_item(self, line):
     item = items.load_item(line)
     self.inventory_manager.add_item(item)
 
-def command_export_item(self, line):
-    item = self.get_item(line)
-    if item == None:
-        self.sendLine('cant find this item to export')
-        return
+def command_export(self, line):
+    list_of_entities = [entity.name for entity in self.room.entities.values()]
+    list_of_inventory = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
+    whole_list = list_of_entities + list_of_inventory
 
-    #if line not in self.inventory:
-    #    self.sendLine('Can\'t export this item')
-    #    return
+    best_match = utils.match_word(line, whole_list)
 
-    #item = self.inventory[line]
-    item_dict = item.to_dict()
-    
-    del item_dict['id']
-    item_dict = {item_dict['name'].lower(): item_dict}
-    yaml_text = yaml.dump(item_dict, default_flow_style=False)
-    self.sendLine(yaml_text, color = False)
+    # export item
+    if best_match in list_of_inventory:
+        item = self.get_item(best_match)
+        if item == None:
+            self.sendLine('cant find this item to export')
+            return
 
-def command_debug(self, line):
-    self.sendLine(self.room.world.rooms)
+        item_dict = item.to_dict()
+        
+        del item_dict['id']
+        item_dict = {item_dict['name'].lower(): item_dict}
+        yaml_text = yaml.dump(item_dict, default_flow_style=False)
+        self.sendLine(yaml_text, color = False)
+
+    # export entity
+    if best_match in list_of_entities:
+        entity = self.get_entity(best_match)
+        entity_dict = entity.__dict__
+        self.sendLine(entity_dict)
+
 
 @check_is_admin
 def command_reload_config(self, line):
@@ -186,4 +193,18 @@ def command_online(self, line):
         t.add_data(user.pretty_name())
     output = t.get_table()
     self.sendLine(output)
+
+@check_is_admin
+def command_grant_admin(self, line):
+    try: 
+        name, admin_level = [item.strip('"') for item in line.split()]
+        admin_level = int(admin_level)
+    except ValueError:
+        self.sendLine('Wrong syntax (admin "username" "admin_level")')
+        return
+
+    for proto in self.protocol.factory.protocols:
+        if name == proto.actor.name:
+            proto.actor.admin = admin_level
+
 

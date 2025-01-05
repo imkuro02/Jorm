@@ -25,9 +25,9 @@ from actors.player_only_functions.character_sheet import (
 )
 
 from actors.player_only_functions.admin import (
-    command_gain_exp, command_teleport, command_online, command_kick,
-    command_load_item, command_export_item, command_help, prompt, 
-    command_send_prompt, command_debug, command_reload_config
+    command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin,
+    command_load_item, command_export, command_help, prompt, 
+    command_send_prompt, command_reload_config
 )
 
 # one letter command mapper
@@ -86,11 +86,11 @@ commands = {
     'teleport': 'command_teleport',  
     'online':   'command_online',
     'kick':     'command_kick',
+    'admin':    'command_grant_admin',
 
-    'miexport': 'command_export_item',
-    'miload':   'command_load_item',
-    'mexp':     'command_gain_exp',
-    'mdebug':   'command_debug',
+    'export': 'command_export',
+    'load':   'command_load_item',
+    'mexp':    'command_gain_exp',
     'reload':   'command_reload_config'
 }
 

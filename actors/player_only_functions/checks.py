@@ -10,7 +10,7 @@ def check_is_admin(func):
         #if not found:
         #    self.sendLine('You are not an admin')
         #    return
-        if not self.admin:
+        if self.admin == 0:
             self.sendLine('You are not an admin')
             return
         return func(self, line)

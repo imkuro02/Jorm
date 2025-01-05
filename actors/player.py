@@ -15,28 +15,29 @@ class Player(Actor):
         self.last_line_sent = None
         self.last_command_used = None
 
-        self.admin = False
-        self.set_admin()
+        self.admin = 0
+        self.check_if_admin()
 
         if self.room != None:
             self.room.move_player(self, silent = True)
 
         self.inventory = {}
 
-    def set_admin(self):
-        self.admin = True
-        return
-
-        if self.protocol == None:
-            return
-        with open('admins.txt', 'r') as file:
-            lines = file.readlines()  # Read all lines into a list
-        # Check if the target string is in any of the lines
-        found = any(self.protocol.id in admin for admin in lines)
-        if found:
-            self.sendLine('You are an admin')
-            self.admin = True
+    def check_if_admin(self):
+        admins = self.protocol.factory.db.read_admins(self)
         
+        if admins == None:
+            self.admin = 0
+        else:
+            self.admin = admins[1]
+        
+    def set_admin(self, admin_level):
+        self.admin = admin_level
+
+    def get_character_sheet(self):
+        output = super().get_character_sheet()
+        return output
+
     def sendLine(self, line, color = True):
         if color:
             line = utils.add_color(f'{line}\n')
