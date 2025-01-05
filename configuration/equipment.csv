@@ -1,20 +1,20 @@
 premade_id,name,hp_max,mp_max,rhp_max,rmp_max,,armor,marmor,rarmor,rmarmor,,grit,flow,mind,soul,,rgrit,rflow,rmind,rsoul,lvl,slot,desc
-axe,Axe,0,0,0,0,,0,0,0,0,,1,0,0,0,,1,0,0,0,1,weapon,-
-field dagger,Field dagger ,0,0,0,0,,0,0,0,0,,0,1,0,0,,0,1,0,0,1,weapon,-
-curved stick,Curved stick,0,0,0,0,,0,0,0,0,,0,0,1,0,,0,0,1,0,1,weapon,-
-wooden mallet,Wooden mallet,0,0,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,weapon,fdsa
+axe,Axe,0,0,0,0,,0,0,0,0,,1,0,0,0,,1,0,0,0,1,weapon,"A heavy axe, ideal for chopping wood or foes"
+field dagger,Field dagger ,0,0,0,0,,0,0,0,0,,0,1,0,0,,0,1,0,0,1,weapon,"A lightweight dagger, perfect for quick, precise strikes"
+curved stick,Curved stick,0,0,0,0,,0,0,0,0,,0,0,1,0,,0,0,1,0,1,weapon,"A simple stick with a curved end, useful for training or basic combat"
+wooden mallet,Wooden mallet,0,0,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,weapon,BONK!
 ,,,,,,,,,,,,,,,,,,,,,,,
-bronze koif,Bronze koif,0,0,0,0,,1,0,0,0,,1,0,0,0,,1,0,0,0,1,head,-
-red cap,Red cap,0,0,0,0,,1,0,0,0,,0,1,0,0,,0,1,0,0,1,head,-
-brown wizard hat,Brown point hat,0,0,0,0,,0,1,0,0,,0,0,1,0,,0,0,1,0,1,head,-
-plague doctor mask,Plague doctor mask,0,0,0,0,,0,1,0,0,,0,0,0,1,,0,0,0,1,1,head,
+bronze koif,Bronze koif,0,0,0,0,,1,0,0,0,,1,0,0,0,,1,0,0,0,1,head,A durable koif that offers basic protection for the head
+red cap,Red cap,0,0,0,0,,1,0,0,0,,0,1,0,0,,0,1,0,0,1,head,A stylish red cap that adds a dash of flair to your attire
+brown wizard hat,Brown point hat,0,0,0,0,,0,1,0,0,,0,0,1,0,,0,0,1,0,1,head,A pointy hat favored by novice spellcasters
+plague doctor mask,Plague doctor mask,0,0,0,0,,0,1,0,0,,0,0,0,1,,0,0,0,1,1,head,"A mysterious mask with eerie overtones, often worn by healers"
 ,,,,,,,,,,,,,,,,,,,,,,,-
-bronze chainmail,Bronze chainmail,0,0,0,0,,1,0,0,0,,1,0,0,0,,1,0,0,0,1,body,-
-red t-shirt,Red t-shirt,0,0,0,0,,1,0,0,0,,0,1,0,0,,0,1,0,0,1,body,-
-brown wizard robe,Brown robe,0,0,0,0,,0,1,0,0,,0,0,1,0,,0,0,1,0,1,body,-
-black raincoat,Black raincoat,0,0,0,0,,0,1,0,0,,0,0,0,1,,0,0,0,1,1,body,-
+bronze chainmail,Bronze chainmail,0,0,0,0,,1,0,0,0,,1,0,0,0,,1,0,0,0,1,body,A robust chainmail offering solid defense against attacks
+red t-shirt,Red t-shirt,0,0,0,0,,1,0,0,0,,0,1,0,0,,0,1,0,0,1,body,"A casual t-shirt, more for fashion than function"
+brown wizard robe,Brown robe,0,0,0,0,,0,1,0,0,,0,0,1,0,,0,0,1,0,1,body,"A flowing robe, perfect for those seeking to channel magical energy"
+black raincoat,Black raincoat,0,0,0,0,,0,1,0,0,,0,0,0,1,,0,0,0,1,1,body,A waterproof coat for braving harsh weather conditions
 ,,,,,,,,,,,,,,,,,,,,,,,
-single earing,Single earing,15,0,0,0,,0,0,0,0,,1,0,0,0,,1,0,0,0,1,trinket,-
-red scarf,Red scarf,0,0,0,0,,0,1,0,0,,0,1,0,0,,0,1,0,0,1,triniket,-
-notebook,Notebook,0,15,0,0,,0,0,0,0,,0,0,1,0,,0,0,1,0,1,trinket,-
-prayer beads,Prayer beads,10,10,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,trinket,-
+single earing,Single earing,15,0,0,0,,0,0,0,0,,1,0,0,0,,1,0,0,0,1,trinket,"A single earing, kinda quirky to only wear one"
+red scarf,Red scarf,0,0,0,0,,0,1,0,0,,0,1,0,0,,0,1,0,0,1,trinket,A scarf made of red silk
+notebook,Notebook,0,15,0,0,,0,0,0,0,,0,0,1,0,,0,0,1,0,1,trinket,A bound notebook for jotting down spells or thoughts
+prayer beads,Prayer beads,10,10,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,trinket,A string of beads for meditation and spiritual focus

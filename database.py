@@ -48,8 +48,6 @@ class Database:
             actor_id TEXT NOT NULL,
             premade_id TEXT NOT NULL,
             item_id TEXT NOT NULL,
-            item_name TEXT NOT NULL,
-            item_description TEXT NOT NULL,
             item_keep BOOL NOT NULL,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
@@ -178,16 +176,14 @@ class Database:
         
         for item in actor.inventory_manager.items.values():
             my_dict['item_id'] = item.id
-            my_dict['item_name'] = item.name
-            my_dict['item_description'] = item.description
             my_dict['item_keep'] = item.keep
             my_dict['premade_id'] = item.premade_id
 
             self.cursor.execute('''
                 INSERT INTO inventory (
-                    actor_id, premade_id, item_id, item_name, item_description, item_keep
+                    actor_id, premade_id, item_id, item_keep
                 ) VALUES (
-                    :actor_id, :premade_id, :item_id, :item_name, :item_description, :item_keep
+                    :actor_id, :premade_id, :item_id, :item_keep
                 )
                 ''', my_dict)
 
@@ -276,11 +272,9 @@ class Database:
 
         my_dict['inventory'] = {}
         for item in inventory:
-            my_dict['inventory'][item[2]] = {
-                'item_name': item[3],
+            my_dict['inventory'][item[2]] = {        
                 'item_id': item[2],
-                'item_description': item[4],
-                'item_keep': item[5],
+                'item_keep': item[3],
                 'premade_id': item[1]
             }
 

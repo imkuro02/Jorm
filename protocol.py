@@ -229,8 +229,6 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
 
             for item in actor['inventory'].values():
                 new_item = load_item(item['premade_id'])
-                new_item.name =         item['item_name']
-                new_item.description =  item['item_description']
                 new_item.keep =         item['item_keep']
                 new_item.id =           item['item_id']
 
