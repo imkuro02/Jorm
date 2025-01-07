@@ -1,0 +1,18 @@
+................................................................................
+Title: Admin commands
+
+Teleport to a player
+teleport: "teleport [player name]" teleports you to that player 
+
+Display all information about an entity
+export: "export [item name]" or "export [character name]"
+
+Kick a player
+kick: "kick [player name]"
+
+Grant admin to a player, 0 is not admin, 1+ is admin
+admin: "admin [intiger value"]
+
+Load an item into your inventory
+load: "load [item config name]" 
+................................................................................

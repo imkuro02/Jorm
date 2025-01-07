@@ -5,7 +5,7 @@ import json
 class Database:
     def __init__(self):
         # Connect to the database
-        self.conn = sqlite3.connect('game.db')
+        self.conn = sqlite3.connect('database.db')
         self.cursor = self.conn.cursor()
 
         # Create the users table

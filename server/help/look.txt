@@ -1,5 +1,5 @@
 ................................................................................
-Title: look
+Title: Look
 Syntax: "look" , "look [character]" 
 
 The "look" command without any arguments will display:

@@ -1,7 +1,7 @@
 
 swing:
   name: Swing
-  description: Swing at your target dealing 1 physical damage + 70% of Body
+  description: Swing at your target dealing 1 physical damage + 70% of Grit
   level_req: 0 
   can_be_practiced: True
   must_be_fighting: True
@@ -27,7 +27,7 @@ swing:
 
 nudge:
   name: Nudge
-  description: Swing at your target dealing 1 physical damage + 70% of Body
+  description: Swing at your target dealing 1 physical damage + 70% of Grit
   level_req: 0 
   can_be_practiced: False
   must_be_fighting: True

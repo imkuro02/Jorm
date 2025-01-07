@@ -172,6 +172,9 @@ def command_teleport(self, line):
             break
     if user != None:
         user.room.move_player(self)
+        self.sendLine(f'You teleport to {user.pretty_name()}')
+    else:
+        self.sendLine(f'Cant find "{line}"')
 
 @check_not_in_combat
 @check_is_admin
@@ -189,6 +192,9 @@ def command_online(self, line):
     output = ''
     t = utils.Table(4,3)
     for proto in self.protocol.factory.protocols:
+        # ignore protocols that have not yet signed in
+        if proto.actor == None:
+            continue
         user = proto.actor
         t.add_data(user.pretty_name())
     output = t.get_table()
