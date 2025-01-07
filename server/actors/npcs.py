@@ -1,10 +1,13 @@
 from actors.actor import Actor
+
+import actors.enemy_ai as enemy_ai
+
 import random
 
 import copy
 
 from configuration.config import StatType, ItemType, ENEMIES, ITEMS
-from skills.manager import use_skill
+
 from items.manager import load_item
 
 from configuration.config import ITEMS
@@ -27,47 +30,27 @@ def create_enemy(room, enemy_id):
         #print(loot)
         if item not in ITEMS:
             print(item, 'does not exist in loot table for ', enemy_id)
-    e = Enemy(name, room, stats, skills, combat_loop, loot)
+    e = Enemy(name, room, stats, skills, combat_loop, loot, enemy_ai.AIBasic)
     e.description = enemy['description']
 
 
 class Enemy(Actor):
-    def __init__(self, name, room, stats, skills, combat_loop, loot):
+    def __init__(self, name, room, stats, skills, combat_loop, loot, ai):
         super().__init__(name, room)
         self.stats = copy.deepcopy(stats)
         self.stats[StatType.HPMAX] = self.stats[StatType.HP]
         self.stats[StatType.MPMAX] = self.stats[StatType.MP]
+
         self.skills = copy.deepcopy(skills)
         self.combat_loop = copy.deepcopy(combat_loop)
         self.loot = copy.deepcopy(loot)
+
+        self.ai = ai(self)
+
         self.room.move_enemy(self)
 
     def tick(self):
-        if self.room == None:
-            return
-            
-        if self.room.combat == None:
-            return
-
-        if self.room.combat.current_actor != self:
-            return
-
-        if self.room.combat.time_since_turn_finished <= 30*1:
-            return
-
-        random_target = random.choice([entity for entity in self.room.combat.participants.values() if type(entity).__name__ != type(self).__name__])
-        skill_to_use = self.combat_loop[0]
-
-        use_skill(self, random_target, self.combat_loop[0]['skill'])
-
-        self.combat_loop.append(self.combat_loop[0])
-        self.combat_loop.pop(0)
-
-        #for player in self.room.entities.values():
-        #    if type(player).__name__ ==  "Player":
-        #        player.sendLine(f'{self.pretty_name()} just groans and stands there...')
-
-        self.finish_turn()
+        self.ai.tick()
 
     def drop_loot(self,entity):
         all_items = ITEMS

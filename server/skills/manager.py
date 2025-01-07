@@ -75,6 +75,8 @@ def skill_checks(user, target, skill_id):
     return True
 
 def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, consumable_item):
+        if skill_id not in SKILLS:
+            return False
         skill = SKILLS[skill_id]
         try:
             skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
@@ -107,6 +109,8 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
 
 
 def use_skill(user, target, skill_id):
+    if skill_id not in SKILLS:
+        return False
     skill = SKILLS[skill_id]
 
     if skill_checks(user, target, skill_id):

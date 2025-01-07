@@ -158,8 +158,8 @@ octopus:
   description: A big slimy floating octopus, atleast you are 50% certain its not a beholder.
   stats:
     hp: 100
-    mp: 0
-    armor: 5
+    mp: 100
+    armor: 2
     marmor: 5
     grit: 12
     flow: 0
@@ -191,6 +191,25 @@ octopus:
     prayer beads: 0.01
   skills: 
     nudge: 75
+    mage armor: 100
+
   combat_loop:
     - skill: nudge
-      target: enemy_random
+      target: re
+    - skill: nudge
+      target: re
+    - skill: mage armor
+      target: s
+    - skill: nudge
+      target: re
+    - skill: nudge
+      target: re
+    - skill: nudge
+      target: re
+    - skill: nudge
+      target: re
+    - skill: nudge
+      target: re
+
+
+
