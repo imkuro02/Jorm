@@ -49,6 +49,18 @@
 
         // Handle messages from the server
         socket.onmessage = (event) => {
+            /**
+             * If input is a password, change input type to password.  
+             * This hides it using asterisks.
+             * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password
+             * 
+             * If more things should be hidden, consider adding a flag instead of using the message string itself.
+            **/
+            if(event.data == "Your \u001b[1;32mpassword\u001b[0m:\n") {
+                input.type = "password";
+            } else {
+                input.type = "text";
+            }
             appendAnsiMessage(event.data);
         };
 
