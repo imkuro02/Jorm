@@ -200,6 +200,8 @@ def command_online(self, line):
     output = t.get_table()
     self.sendLine(output)
 
+# sql to create first admin
+# sqlite> insert into admins (actor_id, admin_level) values ("a0cb51d7-4e93-49a2-b3bb-d201cbdfb10b", 100);
 @check_is_admin
 def command_grant_admin(self, line):
     try: 
