@@ -39,8 +39,11 @@
         const input = document.getElementById('input');
         const ansi_up = new AnsiUp(); // Create an instance of AnsiUp for ANSI color parsing
 
+        
+        // Get server hostname
+        const hostname = window.location.hostname;
         // Connect to the WebSocket server
-        const socket = new WebSocket('ws://jorm.kurowski.xyz:8001');
+        const socket = new WebSocket(`ws://${hostname}:8001`);
 
         // Handle connection open
         socket.onopen = () => {
