@@ -25,7 +25,7 @@ template:
 
   combat_loop:
     - skill: swing 
-      target: enemy_random
+      target: re
     
 shroom:
   name: Shroom
@@ -67,7 +67,7 @@ shroom:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: enemy_random
+      target: re
   
 orange mushroom:
   name: Orange Mushroom
@@ -109,7 +109,7 @@ orange mushroom:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: enemy_random
+      target: re
 
 blue mushroom:
   name: Blue Mushroom
@@ -151,7 +151,7 @@ blue mushroom:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: enemy_random
+      target: re
 
 octopus:
   name: Octopus

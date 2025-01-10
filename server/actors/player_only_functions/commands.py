@@ -15,7 +15,7 @@ from actors.player_only_functions.equip import (
 )
 
 from actors.player_only_functions.inventory import (
-    command_inventory, command_identify, command_keep, command_get, command_drop
+    command_inventory, command_identify, command_keep, command_get, command_drop, command_trade
 )
 
 from actors.player_only_functions.character_sheet import (
@@ -55,6 +55,7 @@ commands = {
     'shout':    'command_shout',
     'go':       'command_go',
     'look':     'command_look',
+    'trade':    'command_trade',
     
     'level':    'command_level_up',
     'practice': 'command_practice',

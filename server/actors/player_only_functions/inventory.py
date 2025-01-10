@@ -5,6 +5,12 @@ import utils
 @check_no_empty_line
 @check_not_in_combat
 @check_alive
+def command_trade(self, line):
+    self.trade_manager.handle_trade_message(line)
+
+@check_no_empty_line
+@check_not_in_combat
+@check_alive
 def command_get(self, line):
     item = self.get_item(line, search_mode = 'room')
     if item == None:

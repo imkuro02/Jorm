@@ -1,6 +1,6 @@
 from actors.actor import Actor
 import utils
-
+from trade import TradeManager
 # import commands maps
 from actors.player_only_functions.commands import one_letter_commands, commands
 # import the commands module so all functions can be imported and assigned to player class
@@ -21,7 +21,7 @@ class Player(Actor):
         if self.room != None:
             self.room.move_player(self, silent = True)
 
-        self.inventory = {}
+        self.trade_manager = TradeManager(self)
 
     def check_if_admin(self):
         admins = self.protocol.factory.db.read_admins(self)
