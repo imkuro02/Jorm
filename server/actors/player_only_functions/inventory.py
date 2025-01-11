@@ -1,6 +1,7 @@
-from actors.player_only_functions.checks import check_no_empty_line, check_not_in_combat, check_alive
+from actors.player_only_functions.checks import check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
 from configuration.config import ItemType, StatType
 import utils
+
 
 @check_no_empty_line
 @check_not_in_combat
@@ -8,6 +9,7 @@ import utils
 def command_trade(self, line):
     self.trade_manager.handle_trade_message(line)
 
+@check_not_trading
 @check_no_empty_line
 @check_not_in_combat
 @check_alive
@@ -25,7 +27,7 @@ def command_get(self, line):
     else:
         self.sendLine('Your Inventory is full')
     
-
+@check_not_trading
 @check_no_empty_line
 @check_not_in_combat
 @check_alive
@@ -61,6 +63,11 @@ def command_inventory(self, line):
         else:
             output = output + f'{self.inventory_manager.items[i].name}'
             if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
+
+        if self.trade_manager.trade != None:
+            if i in self.trade_manager.trade.offers1 or i in self.trade_manager.trade.offers2:
+                output = output + f' @yellow(T)@normal'
+
         t.add_data(output)
 
     self.sendLine(
@@ -81,7 +88,8 @@ def command_inventory(self, line):
 
     self.sendLine(output)
     '''
-
+    
+@check_not_trading
 def command_keep(self, line):
     item = self.get_item(line)
     if item == None:

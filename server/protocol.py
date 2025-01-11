@@ -270,7 +270,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         if self.actor != None:
 
             self.actor.affect_manager.unload_all_affects(silent = True)
-                
+            self.actor.trade_manager.trade_stop()
             self.save_actor()
 
             # teleport player to town to remove them safely

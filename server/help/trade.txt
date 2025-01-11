@@ -1,0 +1,14 @@
+................................................................................
+Title: Trading
+
+Syntax: 
+    Start a trade:  "trade with [name]" 
+    Stop a trade:   "trade cancel" 
+    Offer an item:  "trade offer [item]" 
+    Complete trade: "trade accept" 
+    Identify item:  "trade identify [item]" 
+    Overview:       "trade look" 
+
+Remember to always use "trade look" before accepting a trade to get a overview
+Over what you are giving away and receiving back!
+................................................................................

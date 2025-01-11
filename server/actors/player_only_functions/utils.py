@@ -12,11 +12,15 @@ def get_entity(self, line):
     return target
 
 
-def get_item(self, line, search_mode = 'self'):
+def get_item(self, line, search_mode = 'self', inventory = None):
     line = line.strip()
 
     if line == '':
         return 
+
+    # you can input custom inventory
+    if inventory != None:
+        search_mode = None
 
     # search whole inventory
     if search_mode == 'self':

@@ -1,6 +1,7 @@
-from actors.player_only_functions.checks import check_alive, check_no_empty_line
+from actors.player_only_functions.checks import check_alive, check_no_empty_line, check_not_trading
 from configuration.config import ItemType, EquipmentSlotType, StatType
 
+@check_not_trading
 def command_equipment(self, line):
     # if you type equip item, it will wear that item
     if line != '':

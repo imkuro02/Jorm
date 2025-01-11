@@ -16,6 +16,14 @@ def check_is_admin(func):
         return func(self, line)
     return wrapper
             
+def check_not_trading(func):
+    def wrapper(self, line):
+        if self.trade_manager.trade != None:
+            self.sendLine(f'You can\'t do this while trading')
+            return
+        else:
+            return func(self, line)
+    return wrapper
 
 def check_no_empty_line(func):
     def wrapper(self, line):
