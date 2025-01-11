@@ -59,6 +59,10 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
     def change_state(self, state):
         match state:
             case self.LOGIN_OR_REGISTER:
+                self.id = str(uuid.uuid4())
+                self.account = None
+                self.username = None
+                self.password = None
                 self.sendLine('type @bgreennew@normal to register, type @bgreenlogin@normal to log in.')
 
             case self.LOGIN_USERNAME:
