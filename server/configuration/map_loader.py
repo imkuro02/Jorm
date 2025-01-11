@@ -26,6 +26,7 @@ def load_map():
             room['name'] = i['_name']
             room['description'] = i['_description']
             room['exits'] = {}
+            room['secret_exits'] = {}
 
             room['enemies'] = []
             for obj in i['objects']:
@@ -50,10 +51,38 @@ def load_map():
         e1 = objects[i['_dockStart']]['_subtitle']
         e2 = objects[i['_dockEnd']]['_subtitle']
         
-        
-        if i['_startLabel'] != '': rooms[e1]['exits'][i['_startLabel']] = e2
-        if i['_endLabel'] != '': rooms[e2]['exits'][i['_endLabel']] = e1
+        #print(i['_startLabel'], '->' ,objects[i['_dockStart']]['_subtitle'])
+        #print(i['_endLabel'], '->' ,objects[i['_dockEnd']]['_subtitle'])
 
+        room_from_exit = i['_startLabel']
+        room_to_exit = i['_endLabel']
+        room_from_id = objects[i['_dockStart']]['_subtitle']
+        room_to_id = objects[i['_dockEnd']]['_subtitle']
+
+        #print(room_from_id, room_from_exit)
+
+        if room_to_exit != '':
+            if 'secret:' in room_to_exit:
+                room_to_exit = room_to_exit.split(':')[1]
+                rooms[room_to_id]['secret_exits'][room_to_exit] = room_from_id
+            else:
+                rooms[room_to_id]['exits'][room_to_exit] = room_from_id
+
+        if room_from_exit != '':
+            if 'secret:' in room_from_exit:
+                room_from_exit = room_from_exit.split(':')[1]
+                rooms[room_from_id]['secret_exits'][room_from_exit] = room_to_id
+            else:
+                rooms[room_from_id]['exits'][room_from_exit] = room_to_id
+
+        #if i['_startLabel'] != '': 
+        #   rooms[e1]['exits'][i['_startLabel']] = e2
+        #if i['_endLabel'] != '': 
+        #   rooms[e2]['exits'][i['_endLabel']] = e1
+
+        
+
+        
         
 
     #for i in rooms.values():
@@ -63,3 +92,4 @@ def load_map():
 
 if __name__ == '__main__':
     w = load_map()
+    #print(w)

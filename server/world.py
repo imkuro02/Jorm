@@ -10,12 +10,14 @@ import copy
 from inventory import InventoryManager
 
 class Room:
-    def __init__(self, world, uid, name, description, exits):
+    def __init__(self, world, uid, name, description, exits, secret_exits):
         self.world = world
         self.uid = uid
         self.name = name
         self.description = description
         self.exits = exits
+        self.secret_exits = secret_exits
+        
         self.inventory_manager = InventoryManager(self, limit = 20)
         
         self.combat = None
@@ -144,9 +146,9 @@ class World:
                     del self.rooms[r]
 
             if 'instanced' in room:
-                self.rooms[r] = InstancedRoom(self, r, room['name'], room['description'], room['exits']) 
+                self.rooms[r] = InstancedRoom(self, r, room['name'], room['description'], room['exits'], room['secret_exits']) 
             else:
-                self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
+                self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits']) 
 
             if 'enemies' in room:
                 for enemy in room['enemies']:

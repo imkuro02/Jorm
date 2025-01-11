@@ -203,7 +203,8 @@ class Actor:
             return
 
         if worldwide:
-            players = [proto.actor for proto in self.factory.protocols]
+            players = [proto.actor for proto in self.factory.protocols if proto.actor != None]
+
         else:
             players = [entity for entity in self.room.entities.values() if type(entity).__name__ == "Player"]
             

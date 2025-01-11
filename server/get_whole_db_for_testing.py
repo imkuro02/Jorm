@@ -32,5 +32,5 @@ def get_all_tables_and_values(database_path):
     conn.close()
 
 # Example usage
-database_path = 'game.db'  # Path to your SQLite database file
+database_path = 'database.db'  # Path to your SQLite database file
 get_all_tables_and_values(database_path)

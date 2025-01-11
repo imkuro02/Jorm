@@ -26,7 +26,9 @@ def command_go(self, line):
         return
     world = self.protocol.factory.world
     direction = None
-    for _exit in self.room.exits:
+
+    exits = {**self.room.exits, **self.room.secret_exits}
+    for _exit in exits:
         if ' '+line.lower() in ' '+_exit.lower():
             direction = _exit
             break
@@ -38,7 +40,7 @@ def command_go(self, line):
             ) 
         return
 
-    new_room = self.room.exits[direction]
+    new_room = exits[direction]
 
     self.simple_broadcast(
         None,
