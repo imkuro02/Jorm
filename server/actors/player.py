@@ -24,6 +24,9 @@ class Player(Actor):
         self.trade_manager = TradeManager(self)
 
     def check_if_admin(self):
+        if self.protocol == None:
+            return
+        
         admins = self.protocol.factory.db.read_admins(self)
         
         if admins == None:

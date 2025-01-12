@@ -177,6 +177,11 @@ class Actor:
         damage_taken = damage_obj.take_damage()
         del damage_obj
         return damage_taken
+    
+    def deal_damage(self, damage_obj: Damage):
+        damage_obj = self.affect_manager.deal_damage(damage_obj)
+        damage_dealt = damage_obj.damage_taker_actor.take_damage(damage_obj)
+        
 
 
     def die(self):

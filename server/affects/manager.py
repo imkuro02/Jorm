@@ -53,5 +53,10 @@ class AffectsManager:
         for aff in self.affects.values():
             damage_obj = aff.take_damage(damage_obj)
         return damage_obj
+    
+    def deal_damage(self, damage_obj: 'Damage'):
+        for aff in self.affects.values():
+            damage_obj = aff.deal_damage(damage_obj)
+        return damage_obj
         
         

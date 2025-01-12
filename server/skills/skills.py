@@ -69,24 +69,24 @@ class SkillSwing(Skill):
         super().use()
         if self.success:
             damage_obj = Damage(
-                damage_taker = self.other,
+                damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = 1 + int(self.user.stats[StatType.GRIT]*.7),
                 damage_type = DamageType.PHYSICAL
                 )
-            self.other.take_damage(damage_obj)
+            self.user.deal_damage(damage_obj)
 
 class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
         if self.success:
             damage_obj = Damage(
-                damage_taker = self.other,
+                damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = 10 + int(self.user.stats[StatType.SOUL]),
                 damage_type = DamageType.HEALING
                 )
-            self.other.take_damage(damage_obj)
+            self.user.deal_damage(damage_obj)
             
 class SkillBash(SkillSwing):
     def use(self):
@@ -106,16 +106,16 @@ class SkillMagicMissile(Skill):
         super().use()
         if self.success:
             damage_obj = Damage(
-                damage_taker = self.other,
+                damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = 4 + int(self.user.stats[StatType.MIND]),
                 damage_type = DamageType.MAGICAL
                 )
             
-            damage = self.other.take_damage(damage_obj)
+            damage = self.user.deal_damage(damage_obj)
             '''
             damage_obj = Damage(
-                damage_taker = self.user,
+                damage_taker_actor = self.user,
                 damage_source_actor = self.user,
                 damage_value = damage,
                 damage_type = DamageType.HEALING,
@@ -157,12 +157,12 @@ class SkillRegenHP30(Skill):
         if self.success:
             #self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)
             damage_obj = Damage(
-                damage_taker = self.other,
+                damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stats[StatType.HPMAX]*.3),
                 damage_type = DamageType.HEALING
                 )
-            self.user.take_damage(damage_obj)           
+            self.other.take_damage(damage_obj)           
 
 class SkillRegenMP30(Skill):
     def use(self):
@@ -170,10 +170,10 @@ class SkillRegenMP30(Skill):
         if self.success:
             #self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)
             damage_obj = Damage(
-                damage_taker = self.other,
+                damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stats[StatType.MPMAX]*.3),
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MP
                 )
-            self.user.take_damage(damage_obj)                
+            self.other.take_damage(damage_obj)                
