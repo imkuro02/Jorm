@@ -43,7 +43,7 @@
         // Get server hostname
         const hostname = window.location.hostname;
         // Connect to the WebSocket server
-        const socket = new WebSocket(`ws://${hostname}:8001`);
+        const socket = new WebSocket(`wss://${hostname}:8001`);
 
         // Handle connection open
         socket.onopen = () => {
