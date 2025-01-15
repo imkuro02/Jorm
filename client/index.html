@@ -1,14 +1,19 @@
 <!DOCTYPE html>
+
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JORM Unchained HD</title>
     <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.1/ansi_up.min.js"></script>
+    
+    
     <style>
         body {
             font-family: monospace;
-            background-color: #f0f0f0;
+            color: #fbf1c7;
+            background-color: #32302f;
             margin: 0;
             padding: 20px;
         }
@@ -31,7 +36,7 @@
     </style>
 </head>
 <body>
-    <h1>JORM</h1>
+    <h1>Jorm</h1>
     <div id="output"></div>
     <input type="text" id="input" placeholder="Type your message and press Enter">
     <script>
@@ -43,7 +48,7 @@
         // Get server hostname
         const hostname = window.location.hostname;
         // Connect to the WebSocket server
-        const socket = new WebSocket(`wss://${hostname}:8001`);
+        const socket = new WebSocket(`wss://jorm.kurowski.xyz:8001`);
 
         // Handle connection open
         socket.onopen = () => {
@@ -77,11 +82,16 @@
             appendMessage('WebSocket error: ' + error.message);
         };
 
-        // Send message to server on Enter key press
         input.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' && input.value.trim() !== '') {
-                socket.send(input.value);
-                input.value = '';
+            if (event.key === 'Enter') {
+                // Prevent the default Enter key behavior (like submitting a form, if applicable)
+                event.preventDefault();
+
+                // Send the message only if the input is not empty
+                if (input.value.trim() !== '') {
+                    socket.send(input.value);
+                    input.select();
+                }
             }
         });
 
