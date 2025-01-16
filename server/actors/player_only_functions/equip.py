@@ -26,11 +26,6 @@ def command_equipment(self, line):
 
 def inventory_equip(self, item, forced = False):
     if item.slot != None:
-        if self.slots_manager.slots[item.slot] != None:
-            self.inventory_unequip(self.inventory_manager.items[self.slots_manager.slots[item.slot]])
-        
-        self.slots_manager.slots[item.slot] = item.id
-        
 
         req_not_met = False
         for stat_name in item.requirements:
@@ -40,7 +35,12 @@ def inventory_equip(self, item, forced = False):
         
         if req_not_met and forced == False:
             return
-        
+
+        if self.slots_manager.slots[item.slot] != None:
+            self.inventory_unequip(self.inventory_manager.items[self.slots_manager.slots[item.slot]])
+
+        self.slots_manager.slots[item.slot] = item.id
+
         item.equiped = True 
         for stat_name in item.stats:
             stat_val = item.stats[stat_name]

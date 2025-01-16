@@ -31,7 +31,7 @@ shroom:
   name: Shroom
   description: A tiny orange mushroom. How cute!
   stats:
-    hp: 3
+    hp: 30
     mp: 0
     armor: 0
     marmor: -5
@@ -73,7 +73,7 @@ orange mushroom:
   name: Orange Mushroom
   description: A larger orange mushroom, this one is feisty!
   stats:
-    hp: 20
+    hp: 100
     mp: 0
     armor: 1
     marmor: 2
@@ -115,7 +115,7 @@ blue mushroom:
   name: Blue Mushroom
   description: A bulky blue mushroom.
   stats:
-    hp: 60
+    hp: 150
     mp: 0
     armor: 2
     marmor: 4
@@ -157,8 +157,8 @@ octopus:
   name: Octopus
   description: A big slimy floating octopus, atleast you are 50% certain its not a beholder.
   stats:
-    hp: 100
-    mp: 100
+    hp: 300
+    mp: 300
     armor: 2
     marmor: 5
     grit: 12

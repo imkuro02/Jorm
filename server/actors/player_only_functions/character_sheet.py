@@ -39,8 +39,8 @@ def command_level_up(self, stat):
     self.stats[stat] += 1
     self.stats[StatType.PP] += 20
 
-    hp_bonus = 0 + 0 + round(self.stats[StatType.GRIT] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1)
-    mp_bonus = 0 + 0 + round(self.stats[StatType.MIND] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1)
+    hp_bonus = 0 + 0 + round(self.stats[StatType.GRIT] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1) - 20
+    mp_bonus = 0 + 0 + round(self.stats[StatType.MIND] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1) - 20
     self.stats[StatType.HPMAX]  += hp_bonus
     self.stats[StatType.MPMAX]  += mp_bonus
     self.stats[StatType.HP]     += hp_bonus

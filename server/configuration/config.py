@@ -130,6 +130,7 @@ def load():
         reader = csv.DictReader(file)  # Reads data as dictionaries
         items = [row for row in reader]  # Store all rows in a list
 
+
     # Print the parsed data
     for _item in items:
         #print(item)

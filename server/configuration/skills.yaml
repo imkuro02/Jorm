@@ -60,7 +60,7 @@ magic missile:
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
-  mp_cost: 2
+  mp_cost: 20
   cooldown: 1
   script_to_run: MagicMissile
 
@@ -86,7 +86,7 @@ cure light wounds:
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
-  mp_cost: 2
+  mp_cost: 45
   cooldown: 2
   script_to_run: CureLightWounds
 
@@ -114,7 +114,7 @@ ethereal:
   target_self_is_valid: True
   target_others_is_valid: False
   hp_cost: 0
-  mp_cost: 2
+  mp_cost: 20
   cooldown: 1
   script_to_run: BecomeEthereal
 
@@ -143,7 +143,7 @@ mage armor:
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
-  mp_cost: 5
+  mp_cost: 50
   cooldown: 1
   script_to_run: MageArmor
 
