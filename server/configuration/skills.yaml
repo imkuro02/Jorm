@@ -60,7 +60,7 @@ magic missile:
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
-  mp_cost: 20
+  mp_cost: 10
   cooldown: 1
   script_to_run: MagicMissile
 
@@ -80,13 +80,13 @@ magic missile:
 cure light wounds:
   name: Cure Light Wounds
   description: Heal your target for 10 + 100% Soul
-  level_req: 0
+  level_req: 4
   can_be_practiced: True
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: True
   hp_cost: 0
-  mp_cost: 45
+  mp_cost: 25
   cooldown: 2
   script_to_run: CureLightWounds
 

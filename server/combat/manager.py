@@ -141,6 +141,31 @@ class Combat:
             if i.status == ActorStatusType.FIGHTING: i.status = ActorStatusType.NORMAL
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
+              
+            #self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False
+            '''
+            hp = SkillRegenHP30('hp_regen_30',1,self,self,100,None,silent_use=True,no_cooldown=True)
+            mp = SkillRegenHP30('hp_regen_30',1,self,self,100,None,silent_use=True,no_cooldown=True)
+            hp.use()
+            mp.use()
+            '''
+
+            # heal a bit after battle
+            damage_obj = Damage(
+                damage_taker_actor = i,
+                damage_source_actor = i,
+                damage_value = int(i.stats[StatType.HPMAX]*.5),
+                damage_type = DamageType.HEALING
+                )
+            i.take_damage(damage_obj)           
+            damage_obj = Damage(
+                    damage_taker_actor = i,
+                    damage_source_actor = i,
+                    damage_value = int(i.stats[StatType.MPMAX]*.5),
+                    damage_type = DamageType.HEALING,
+                    damage_to_stat = StatType.MP
+                    )
+            i.take_damage(damage_obj)     
 
         self.participants = {}
         self.room.combat = None

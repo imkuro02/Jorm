@@ -3,6 +3,7 @@ from configuration.config import DamageType, ItemType, ActorStatusType, StatType
 import utils
 from skills.manager import get_skills, use_skill
 
+
 @check_alive
 def command_fight(self, line):
     #error_output = self.room.new_combat()

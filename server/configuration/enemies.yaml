@@ -35,7 +35,7 @@ shroom:
     mp: 0
     armor: 0
     marmor: -5
-    grit: 0
+    grit: 5
     flow: 0
     mind: 0
     soul: 0
@@ -43,26 +43,19 @@ shroom:
   loot:
     red potion: 0.01
     blue potion: 0.01
-
-    axe: 0.01
-    field dagger: 0.01
-    curved stick: 0.01
-    wooden mallet: 0.01
-
-    bronze koif: 0.01
-    red cap: 0.01
-    brown wizard hat: 0.01
-    plague doctor mask: 0.01
-
-    bronze chainmail: 0.01
-    red t-shirt: 0.01
-    brown wizard robe: 0.01
-    black raincoat: 0.01
-
-    single earing: 0.01
-    red scarf: 0.01
-    notebook: 0.01
-    prayer beads: 0.01
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+    soul weapon 1: 0.01
   skills:
     nudge: 75
   combat_loop:
@@ -73,38 +66,29 @@ orange mushroom:
   name: Orange Mushroom
   description: A larger orange mushroom, this one is feisty!
   stats:
-    hp: 100
+    hp: 50
     mp: 0
     armor: 1
-    marmor: 2
-    grit: 3
+    marmor: 1
+    grit: 10
     flow: 0
     mind: 0
     soul: 0
     exp: 3
   loot:
-    red potion: 0.01
-    blue potion: 0.01
-
-    axe: 0.01
-    field dagger: 0.01
-    curved stick: 0.01
-    wooden mallet: 0.01
-
-    bronze koif: 0.01
-    red cap: 0.01
-    brown wizard hat: 0.01
-    plague doctor mask: 0.01
-
-    bronze chainmail: 0.01
-    red t-shirt: 0.01
-    brown wizard robe: 0.01
-    black raincoat: 0.01
-
-    single earing: 0.01
-    red scarf: 0.01
-    notebook: 0.01
-    prayer beads: 0.01
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
   skills:
     nudge: 75
   combat_loop:
@@ -115,38 +99,29 @@ blue mushroom:
   name: Blue Mushroom
   description: A bulky blue mushroom.
   stats:
-    hp: 150
+    hp: 80
     mp: 0
     armor: 2
-    marmor: 4
-    grit: 4
+    marmor: 2
+    grit: 12
     flow: 0
     mind: 0
     soul: 0
     exp: 5
   loot:
-    red potion: 0.01
-    blue potion: 0.01
-
-    axe: 0.01
-    field dagger: 0.01
-    curved stick: 0.01
-    wooden mallet: 0.01
-
-    bronze koif: 0.01
-    red cap: 0.01
-    brown wizard hat: 0.01
-    plague doctor mask: 0.01
-
-    bronze chainmail: 0.01
-    red t-shirt: 0.01
-    brown wizard robe: 0.01
-    black raincoat: 0.01
-
-    single earing: 0.01
-    red scarf: 0.01
-    notebook: 0.01
-    prayer beads: 0.01
+    blue potion: 0.1
+    grit head 3: 0.01
+    grit body 3: 0.01
+    grit weapon 3: 0.01
+    flow head 3: 0.01
+    flow body 3: 0.01
+    flow weapon 3: 0.01
+    mind head 3: 0.01
+    mind body 3: 0.01
+    mind weapon 3: 0.01
+    soul head 3: 0.01
+    soul body 3: 0.01
+    soul weapon 3: 0.01
   skills: 
     nudge: 75
   combat_loop:
@@ -157,38 +132,41 @@ octopus:
   name: Octopus
   description: A big slimy floating octopus, atleast you are 50% certain its not a beholder.
   stats:
-    hp: 300
-    mp: 300
-    armor: 2
-    marmor: 5
-    grit: 12
+    hp: 250
+    mp: 40
+    armor: 4
+    marmor: 3
+    grit: 25
     flow: 0
     mind: 0
     soul: 0
     exp: 12
   loot:
-    red potion: 0.01
-    blue potion: 0.01
+    grit head 3: 0.01
+    grit body 3: 0.01
+    grit weapon 3: 0.01
+    flow head 3: 0.01
+    flow body 3: 0.01
+    flow weapon 3: 0.01
+    mind head 3: 0.01
+    mind body 3: 0.01
+    mind weapon 3: 0.01
+    soul head 3: 0.01
+    soul body 3: 0.01
+    soul weapon 3: 0.01
 
-    axe: 0.01
-    field dagger: 0.01
-    curved stick: 0.01
-    wooden mallet: 0.01
-
-    bronze koif: 0.01
-    red cap: 0.01
-    brown wizard hat: 0.01
-    plague doctor mask: 0.01
-
-    bronze chainmail: 0.01
-    red t-shirt: 0.01
-    brown wizard robe: 0.01
-    black raincoat: 0.01
-
-    single earing: 0.01
-    red scarf: 0.01
-    notebook: 0.01
-    prayer beads: 0.01
+    grit head 6: 0.001
+    grit body 6: 0.001
+    grit weapon 6: 0.001
+    flow head 6: 0.001
+    flow body 6: 0.001
+    flow weapon 6: 0.001
+    mind head 6: 0.001
+    mind body 6: 0.001
+    mind weapon 6: 0.001
+    soul head 6: 0.001
+    soul body 6: 0.001
+    soul weapon 6: 0.001
   skills: 
     nudge: 75
     mage armor: 100

@@ -3,6 +3,8 @@ from configuration.config import AffType, DamageType, StatType
 import affects.affects as affects
 from combat.manager import Damage
 
+
+
 class Skill:
     def __init__(self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False):
         self.skill_id = skill_id

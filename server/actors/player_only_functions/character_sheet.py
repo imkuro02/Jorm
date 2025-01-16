@@ -21,15 +21,25 @@ def command_level_up(self, stat):
         self.sendLine(f'You need {exp_needed-self.stats[StatType.EXP]}EXP to level up')
         return
     
+    hp_bonus = 20
+    mp_bonus = 20
     match stat.lower():
         case 'grit':
             stat = StatType.GRIT
+            hp_bonus = 20
+            mp_bonus = 0
         case 'flow':
             stat = StatType.FLOW
+            hp_bonus = 15
+            mp_bonus = 5
         case 'mind':
             stat = StatType.MIND
+            hp_bonus = 0
+            mp_bonus = 20
         case 'soul':
             stat = StatType.SOUL
+            hp_bonus = 5
+            mp_bonus = 15
         case _:
             self.sendLine('You can only level up Grit, Flow, Mind and Soul')
             return
@@ -39,8 +49,8 @@ def command_level_up(self, stat):
     self.stats[stat] += 1
     self.stats[StatType.PP] += 20
 
-    hp_bonus = 0 + 0 + round(self.stats[StatType.GRIT] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1) - 20
-    mp_bonus = 0 + 0 + round(self.stats[StatType.MIND] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1) - 20
+    #hp_bonus = 0 + 0 + round(self.stats[StatType.GRIT] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1) - 20
+    #mp_bonus = 0 + 0 + round(self.stats[StatType.MIND] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1) - 20
     self.stats[StatType.HPMAX]  += hp_bonus
     self.stats[StatType.MPMAX]  += mp_bonus
     self.stats[StatType.HP]     += hp_bonus

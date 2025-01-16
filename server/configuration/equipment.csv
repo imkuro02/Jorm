@@ -26,53 +26,53 @@ prayer beads,Prayer beads,10,10,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,trinket,A strin
 ,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,
-grit head 1,Leather hat,0,0,0,0,,1,1,0,0,,0,0,0,0,,1,0,0,0,1,head,A hat made of cow hide.. moo!
-grit body 1,Leather tunic,0,0,0,0,,1,1,0,0,,0,0,0,0,,1,0,0,0,1,body,"A tunic made of cow hide, you count 6 spots!"
-grit trinket 1,a123,0,0,0,0,,0,0,0,0,,1,0,0,0,,1,0,0,0,1,trinket,c
-grit weapon 1,Pitchfork,0,0,0,0,,0,0,0,0,,1,0,0,0,,1,0,0,0,1,weapon,Landlubber trident
-flow head 1,Ragged hood,0,0,0,0,,1,0,0,0,,0,0,0,0,,0,1,0,0,1,head,"A ragged hood, its so beat up it looks like a mesh"
-flow body 1,Ragged shirt,0,0,0,0,,1,0,0,0,,0,0,0,0,,0,1,0,0,1,body,It has enough holes to fit 6 extra arms
-flow trinket 1,a123,0,0,0,0,,0,0,0,0,,0,1,0,0,,0,1,0,0,1,trinket,c
-flow weapon 1,Dirk,0,0,0,0,,0,0,0,0,,0,1,0,0,,0,1,0,0,1,weapon,All stabby no slashy
-mind head 1,Pointy hat,0,0,0,0,,0,0,0,0,,0,0,0,0,,0,0,1,0,1,head,"A oversized pointed hat, a little crooked at the tip"
-mind body 1,Robe,0,0,0,0,,0,0,0,0,,0,0,0,0,,0,0,1,0,1,body,A long thick robe
-mind trinket 1,a123,0,0,0,0,,0,0,0,0,,0,0,1,0,,0,0,1,0,1,trinket,c
-mind weapon 1,Stick,0,0,0,0,,0,0,0,0,,0,0,1,0,,0,0,1,0,1,weapon,Nothing more magical than finding a cool stick
-soul head 1,Bald cap,0,0,0,0,,0,1,0,0,,0,0,0,0,,0,0,0,1,1,head,Baldy!
-soul body 1,Brown monk robe,0,0,0,0,,0,1,0,0,,0,0,0,0,,0,0,0,1,1,body,Kinda orangy-brownish color?
-soul trinket 1,a123,0,0,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,trinket,c
-soul weapon 1,Prayer beads,0,0,0,0,,0,0,0,0,,0,0,0,1,,0,0,0,1,1,weapon,Wooden beads on a thin thread
+grit head 1,Leather hat,25,0,0,0,,1,1,0,0,,0,0,0,0,,0,0,0,0,1,head,A hat made of cow hide.. moo!
+grit body 1,Leather tunic,25,0,0,0,,1,1,0,0,,0,0,0,0,,0,0,0,0,1,body,"A tunic made of cow hide, you count 6 spots!"
+grit trinket 1,a123,0,0,0,0,,0,0,0,0,,3,0,0,0,,0,0,0,0,1,trinket,c
+grit weapon 1,Pitchfork,0,0,0,0,,0,0,0,0,,3,0,0,0,,0,0,0,0,1,weapon,Landlubber trident
+flow head 1,Ragged hood,0,0,0,0,,1,0,0,0,,0,0,0,0,,0,0,0,0,1,head,"A ragged hood, its so beat up it looks like a mesh"
+flow body 1,Ragged shirt,0,0,0,0,,1,0,0,0,,0,0,0,0,,0,0,0,0,1,body,It has enough holes to fit 6 extra arms
+flow trinket 1,a123,0,0,0,0,,0,0,0,0,,0,3,0,0,,0,0,0,0,1,trinket,c
+flow weapon 1,Dirk,0,0,0,0,,0,0,0,0,,0,3,0,0,,0,0,0,0,1,weapon,All stabby no slashy
+mind head 1,Pointy hat,0,0,0,0,,0,0,0,0,,0,0,0,0,,0,0,0,0,1,head,"A oversized pointed hat, a little crooked at the tip"
+mind body 1,Robe,0,25,0,0,,0,0,0,0,,0,0,0,0,,0,0,0,0,1,body,A long thick robe
+mind trinket 1,a123,0,25,0,0,,0,0,0,0,,0,0,3,0,,0,0,0,0,1,trinket,c
+mind weapon 1,Stick,0,0,0,0,,0,0,0,0,,0,0,3,0,,0,0,0,0,1,weapon,Nothing more magical than finding a cool stick
+soul head 1,Bald cap,0,0,0,0,,0,1,0,0,,0,0,0,0,,0,0,0,0,1,head,Baldy!
+soul body 1,Brown monk robe,0,0,0,0,,0,1,0,0,,0,0,0,0,,0,0,0,0,1,body,Kinda orangy-brownish color?
+soul trinket 1,a123,0,0,0,0,,0,0,0,0,,0,0,0,3,,0,0,0,0,1,trinket,c
+soul weapon 1,Prayer beads,0,0,0,0,,0,0,0,0,,0,0,0,3,,0,0,0,0,1,weapon,Wooden beads on a thin thread
 ,,,,,,,,,,,,,,,,,,,,,,,
-grit head 3,Hard leather helmet,0,0,0,0,,2,1,0,0,,0,0,0,0,,3,0,0,0,3,head,"The leather covers the face, kinky"
-grit body 3,Hard leather tunic,0,0,0,0,,2,1,0,0,,0,0,0,0,,3,0,0,0,3,body,A thick tunic with fastened straps 
-grit trinket 3,a123,0,0,0,0,,0,0,0,0,,2,0,0,0,,3,0,0,0,3,trinket,c
-grit weapon 3,Spear,0,0,0,0,,0,0,0,0,,2,0,0,0,,3,0,0,0,3,weapon,A long stick with a triangular steel tip
-flow head 3,Cloth hood,0,0,0,0,,2,0,0,0,,0,0,0,0,,0,3,0,0,3,head,A cloth hood dyed a dark gray color
-flow body 3,Cloth shirt,0,0,0,0,,2,0,0,0,,0,0,0,0,,0,3,0,0,3,body,A simple shirt dark shirt
-flow trinket 3,a123,0,0,0,0,,0,0,0,0,,0,2,0,0,,0,3,0,0,3,trinket,c
-flow weapon 3,Knife,0,0,0,0,,0,0,0,0,,0,2,0,0,,0,3,0,0,3,weapon,Both stabby and slashy
-mind head 3,Fine pointy hat,0,0,0,0,,0,1,0,0,,0,0,0,0,,0,0,3,0,3,head,A blue tinted pointed hat
-mind body 3,Fine robe,0,0,0,0,,0,1,0,0,,0,0,0,0,,0,0,3,0,3,body,A blue tinted robe
-mind trinket 3,a123,0,0,0,0,,0,0,0,0,,0,0,2,0,,0,0,3,0,3,trinket,c
-mind weapon 3,Polished stick,0,0,0,0,,0,0,0,0,,0,0,2,0,,0,0,3,0,3,weapon,A perfectly polished stick with engraving and a leather handle
-soul head 3,Fine silk hood,0,0,0,0,,0,3,0,0,,0,0,0,0,,0,0,0,3,3,head,A hood made of the finest silk
-soul body 3,Fine silk robe,0,0,0,0,,0,3,0,0,,0,0,0,0,,0,0,0,3,3,body,A robe made of the finest silk
-soul trinket 3,a123,0,0,0,0,,0,0,0,0,,0,0,0,2,,0,0,0,3,3,trinket,c
-soul weapon 3,Holy emblem,0,0,0,0,,0,0,0,0,,0,0,0,2,,0,0,0,3,3,weapon,"The emblem of a long forgotten god, whether they exist or not.. only god knows"
+grit head 3,Hard leather helmet,50,0,0,0,,2,1,0,0,,0,0,0,0,,13,0,0,0,3,head,"The leather covers the face, kinky"
+grit body 3,Hard leather tunic,50,0,0,0,,2,1,0,0,,0,0,0,0,,13,0,0,0,3,body,A thick tunic with fastened straps 
+grit trinket 3,a123,0,0,0,0,,0,0,0,0,,9,0,0,0,,13,0,0,0,3,trinket,c
+grit weapon 3,Spear,0,0,0,0,,0,0,0,0,,9,0,0,0,,13,0,0,0,3,weapon,A long stick with a triangular steel tip
+flow head 3,Cloth hood,0,0,0,0,,2,0,0,0,,0,0,0,0,,0,13,0,0,3,head,A cloth hood dyed a dark gray color
+flow body 3,Cloth shirt,0,0,0,0,,2,0,0,0,,0,0,0,0,,0,13,0,0,3,body,A simple shirt dark shirt
+flow trinket 3,a123,0,0,0,0,,0,0,0,0,,0,9,0,0,,0,13,0,0,3,trinket,c
+flow weapon 3,Knife,0,0,0,0,,0,0,0,0,,0,9,0,0,,0,13,0,0,3,weapon,Both stabby and slashy
+mind head 3,Fine pointy hat,0,50,0,0,,0,1,0,0,,0,0,0,0,,0,0,13,0,3,head,A blue tinted pointed hat
+mind body 3,Fine robe,0,50,0,0,,0,1,0,0,,0,0,0,0,,0,0,13,0,3,body,A blue tinted robe
+mind trinket 3,a123,0,0,0,0,,0,0,0,0,,0,0,9,0,,0,0,13,0,3,trinket,c
+mind weapon 3,Polished stick,0,0,0,0,,0,0,0,0,,0,0,9,0,,0,0,13,0,3,weapon,A perfectly polished stick with engraving and a leather handle
+soul head 3,Fine silk hood,0,0,0,0,,0,3,0,0,,0,0,0,0,,0,0,0,13,3,head,A hood made of the finest silk
+soul body 3,Fine silk robe,0,0,0,0,,0,3,0,0,,0,0,0,0,,0,0,0,13,3,body,A robe made of the finest silk
+soul trinket 3,a123,0,0,0,0,,0,0,0,0,,0,0,0,9,,0,0,0,13,3,trinket,c
+soul weapon 3,Holy emblem,0,0,0,0,,0,0,0,0,,0,0,0,9,,0,0,0,13,3,weapon,"The emblem of a long forgotten god, whether they exist or not.. only god knows"
 ,,,,,,,,,,,,,,,,,,,,,,,
-grit head 6,Steel cap,5,0,0,0,,3,1,0,0,,0,0,0,0,,6,0,0,0,6,head,"A polished steel cap, it distorts your face when you use it like a mirror"
-grit body 6,Steel chainmail,5,0,0,0,,4,2,0,0,,0,0,0,0,,6,0,0,0,6,body,A long shirt made of small steel rings
-grit trinket 6,a123,0,0,0,0,,0,0,0,0,,3,0,0,0,,6,0,0,0,6,trinket,c
-grit weapon 6,Longsword,0,0,0,0,,0,0,0,0,,3,0,0,0,,6,0,0,0,6,weapon,A sword forged of steel with a handle wrapped in a red cloth
-flow head 6,Fine cloth hood,3,2,0,0,,3,0,0,0,,0,0,0,0,,0,6,0,0,6,head,A black hood of excellent quality
-flow body 6,Fine cloth cloak,3,2,0,0,,3,0,0,0,,0,0,0,0,,0,6,0,0,6,body,A long black cloak of excellent quality
-flow trinket 6,a123,0,0,0,0,,0,0,0,0,,0,3,0,0,,0,6,0,0,6,trinket,c
-flow weapon 6,Field dagger ,0,0,0,0,,0,0,0,0,,0,3,0,0,,0,6,0,0,6,weapon,"A lightweight dagger, perfect for quick, precise strikes"
-mind head 6,Apprentice hat,0,5,0,0,,0,2,0,0,,0,0,0,0,,0,0,6,0,6,head,A beautiful blue pointed hat
-mind body 6,Apprentice robe,0,5,0,0,,0,2,0,0,,0,0,0,0,,0,0,6,0,6,body,A beautiful blue robe with golden threads
-mind trinket 6,a123,0,0,0,0,,0,0,0,0,,0,0,3,0,,0,0,6,0,6,trinket,c
-mind weapon 6,Copper wand,0,0,0,0,,0,0,0,0,,0,0,3,0,,0,0,6,0,6,weapon,An engraved copper rod engraved with strange symbols
-soul head 6,Circlet,0,0,0,0,,0,4,0,0,,0,0,0,0,,0,0,0,6,6,head,A circlet made of silver
-soul body 6,White robe,0,0,0,0,,0,4,0,0,,0,0,0,0,,0,0,0,6,6,body,A blindingly white robe of silk
-soul trinket 6,a123,2,3,0,0,,0,0,0,0,,0,0,0,3,,0,0,0,6,6,trinket,c
-soul weapon 6,Clerics mace,2,3,0,0,,0,0,0,0,,0,0,0,3,,0,0,0,6,6,weapon,Who is cleric?
+grit head 6,Steel cap,100,0,0,0,,3,1,0,0,,0,0,0,0,,16,0,0,0,6,head,"A polished steel cap, it distorts your face when you use it like a mirror"
+grit body 6,Steel chainmail,100,0,0,0,,4,2,0,0,,0,0,0,0,,16,0,0,0,6,body,A long shirt made of small steel rings
+grit trinket 6,a123,0,0,0,0,,0,0,0,0,,13,0,0,0,,16,0,0,0,6,trinket,c
+grit weapon 6,Longsword,0,0,0,0,,0,0,0,0,,13,0,0,0,,16,0,0,0,6,weapon,A sword forged of steel with a handle wrapped in a red cloth
+flow head 6,Fine cloth hood,80,20,0,0,,3,0,0,0,,0,0,0,0,,0,16,0,0,6,head,A black hood of excellent quality
+flow body 6,Fine cloth cloak,80,20,0,0,,3,0,0,0,,0,0,0,0,,0,16,0,0,6,body,A long black cloak of excellent quality
+flow trinket 6,a123,0,0,0,0,,0,0,0,0,,0,13,0,0,,0,16,0,0,6,trinket,c
+flow weapon 6,Field dagger ,0,0,0,0,,0,0,0,0,,0,13,0,0,,0,16,0,0,6,weapon,"A lightweight dagger, perfect for quick, precise strikes"
+mind head 6,Apprentice hat,-100,200,0,0,,0,2,0,0,,0,0,0,0,,0,0,16,0,6,head,A beautiful blue pointed hat
+mind body 6,Apprentice robe,-100,200,0,0,,0,2,0,0,,0,0,0,0,,0,0,16,0,6,body,A beautiful blue robe with golden threads
+mind trinket 6,a123,0,0,0,0,,0,0,0,0,,0,0,13,0,,0,0,16,0,6,trinket,c
+mind weapon 6,Copper wand,0,0,0,0,,0,0,0,0,,0,0,13,0,,0,0,16,0,6,weapon,An engraved copper rod engraved with strange symbols
+soul head 6,Circlet,0,0,0,0,,0,4,0,0,,0,0,0,0,,0,0,0,16,6,head,A circlet made of silver
+soul body 6,White robe,0,0,0,0,,0,4,0,0,,0,0,0,0,,0,0,0,16,6,body,A blindingly white robe of silk
+soul trinket 6,a123,50,200,0,0,,0,0,0,0,,0,0,0,13,,0,0,0,16,6,trinket,c
+soul weapon 6,Clerics mace,50,200,0,0,,0,0,0,0,,0,0,0,13,,0,0,0,16,6,weapon,Who is cleric?

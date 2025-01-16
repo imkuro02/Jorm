@@ -108,12 +108,13 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
         
 
 
-def use_skill(user, target, skill_id):
+def use_skill(user, target, skill_id, no_checks = False):
     if skill_id not in SKILLS:
         return False
     skill = SKILLS[skill_id]
 
-    if skill_checks(user, target, skill_id):
+
+    if skill_checks(user, target, skill_id) or no_checks:
         try:
             skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
         except AttributeError:

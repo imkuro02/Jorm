@@ -70,10 +70,10 @@ class Actor:
         self.status = ActorStatusType.NORMAL
         
         self.stats = {
-            StatType.HPMAX: 100,
-            StatType.HP:    100,
-            StatType.MPMAX: 100,
-            StatType.MP:    100,
+            StatType.HPMAX: 30,
+            StatType.HP:    30,
+            StatType.MPMAX: 30,
+            StatType.MP:    30,
             StatType.ARMOR: 0,
             StatType.MARMOR:0,
             StatType.GRIT: 10,
