@@ -44,9 +44,10 @@ class Player(Actor):
     def sendLine(self, line, color = True):
         if color:
             line = utils.add_color(f'{line}\n')
-            self.protocol.transport.write(line.encode('utf-8'))
+            # send null byte several times to indicate new line
+            self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
         else:
-            self.protocol.transport.write(line.encode('utf-8'))
+            self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
         return
 
     def handle(self, line):
