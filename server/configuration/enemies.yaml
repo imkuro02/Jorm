@@ -192,6 +192,31 @@ octopus:
     - skill: nudge
       target: re
       
+#list of mobs
+# mobs level 1
+#shroom
+#rat
+#spore
+#wood_stump
+#snail
+
+# mobs level 3
+#orange mushroom
+#spider
+#green_slime
+#wandering_rock
+#blue_slime
+
+# mobs level 6
+#red_slime
+#blue mushroom
+
+# mini boss
+#octopus
+
+
+
+
 # level 1 mob
 rat:
   name: Rat
@@ -329,40 +354,6 @@ snail:
       target: re
 
 # level 3 mob
-wandering_rock:
-  name: Wandering Rock
-  description: A pile of rocks seemingly glued together. Wait its moving?!
-  stats:
-    hp: 50
-    mp: 0
-    armor: 2
-    marmor: 1
-    grit: 7
-    flow: 0
-    mind: 0
-    soul: 0
-    exp: 3
-  loot:
-    red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
-  skills:
-    nudge: 75
-  combat_loop:
-    - skill: nudge
-      target: re
-
-# level 3 mob
 green_slime:
   name: Green Slime
   description: A small glob of goo.
@@ -378,18 +369,18 @@ green_slime:
     exp: 3
   loot:
     red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+    grit head 3: 0.01
+    grit body 3: 0.01
+    grit weapon 3: 0.01
+    flow head 3: 0.01
+    flow body 3: 0.01
+    flow weapon 3: 0.01
+    mind head 3: 0.01
+    mind body 3: 0.01
+    mind weapon 3: 0.01
+    soul head 3: 0.01
+    soul body 3: 0.01
+    soul weapon 3: 0.01
   skills:
     nudge: 75
   combat_loop:
@@ -412,18 +403,86 @@ spider:
     exp: 3
   loot:
     red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+    grit head 3: 0.01
+    grit body 3: 0.01
+    grit weapon 3: 0.01
+    flow head 3: 0.01
+    flow body 3: 0.01
+    flow weapon 3: 0.01
+    mind head 3: 0.01
+    mind body 3: 0.01
+    mind weapon 3: 0.01
+    soul head 3: 0.01
+    soul body 3: 0.01
+    soul weapon 3: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+
+# level 3 mob
+wandering_rock:
+  name: Wandering Rock
+  description: A pile of rocks seemingly glued together. Wait its moving?!
+  stats:
+    hp: 50
+    mp: 0
+    armor: 2
+    marmor: 1
+    grit: 7
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 3
+  loot:
+    red potion: 0.1
+    grit head 3: 0.01
+    grit body 3: 0.01
+    grit weapon 3: 0.01
+    flow head 3: 0.01
+    flow body 3: 0.01
+    flow weapon 3: 0.01
+    mind head 3: 0.01
+    mind body 3: 0.01
+    mind weapon 3: 0.01
+    soul head 3: 0.01
+    soul body 3: 0.01
+    soul weapon 3: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+
+# level 3 mob
+pig:
+  name: Pig
+  description: A pink rotunt dog.
+  stats:
+    hp: 50
+    mp: 0
+    armor: 1
+    marmor: 1
+    grit: 9
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 3
+  loot:
+    red potion: 0.1
+    grit head 3: 0.01
+    grit body 3: 0.01
+    grit weapon 3: 0.01
+    flow head 3: 0.01
+    flow body 3: 0.01
+    flow weapon 3: 0.01
+    mind head 3: 0.01
+    mind body 3: 0.01
+    mind weapon 3: 0.01
+    soul head 3: 0.01
+    soul body 3: 0.01
+    soul weapon 3: 0.01
   skills:
     nudge: 75
   combat_loop:
@@ -446,18 +505,18 @@ blue_slime:
     exp: 6
   loot:
     red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+    grit head 6: 0.01
+    grit body 6: 0.01
+    grit weapon 6: 0.01
+    flow head 6: 0.01
+    flow body 6: 0.01
+    flow weapon 6: 0.01
+    mind head 6: 0.01
+    mind body 6: 0.01
+    mind weapon 6: 0.01
+    soul head 6: 0.01
+    soul body 6: 0.01
+    soul weapon 6: 0.01
   skills:
     nudge: 75
   combat_loop:
@@ -480,22 +539,23 @@ red_slime:
     exp: 6
   loot:
     red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+    grit head 6: 0.01
+    grit body 6: 0.01
+    grit weapon 6: 0.01
+    flow head 6: 0.01
+    flow body 6: 0.01
+    flow weapon 6: 0.01
+    mind head 6: 0.01
+    mind body 6: 0.01
+    mind weapon 6: 0.01
+    soul head 6: 0.01
+    soul body 6: 0.01
+    soul weapon 6: 0.01
   skills:
     nudge: 75
   combat_loop:
     - skill: nudge
       target: re
+
 
 
