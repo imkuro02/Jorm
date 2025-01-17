@@ -151,21 +151,22 @@ class Combat:
             '''
 
             # heal a bit after battle
-            damage_obj = Damage(
-                damage_taker_actor = i,
-                damage_source_actor = i,
-                damage_value = int(i.stats[StatType.HPMAX]*.5),
-                damage_type = DamageType.HEALING
-                )
-            i.take_damage(damage_obj)           
-            damage_obj = Damage(
+            if i.status != ActorStatusType.DEAD:
+                damage_obj = Damage(
                     damage_taker_actor = i,
                     damage_source_actor = i,
-                    damage_value = int(i.stats[StatType.MPMAX]*.5),
-                    damage_type = DamageType.HEALING,
-                    damage_to_stat = StatType.MP
+                    damage_value = int(i.stats[StatType.HPMAX]*.5),
+                    damage_type = DamageType.HEALING
                     )
-            i.take_damage(damage_obj)     
+                i.take_damage(damage_obj)           
+                damage_obj = Damage(
+                        damage_taker_actor = i,
+                        damage_source_actor = i,
+                        damage_value = int(i.stats[StatType.MPMAX]*.5),
+                        damage_type = DamageType.HEALING,
+                        damage_to_stat = StatType.MP
+                        )
+                i.take_damage(damage_obj)     
 
         self.participants = {}
         self.room.combat = None
