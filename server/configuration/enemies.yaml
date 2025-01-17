@@ -26,7 +26,8 @@ template:
   combat_loop:
     - skill: swing 
       target: re
-    
+
+# level 1 mob
 shroom:
   name: Shroom
   description: A tiny orange mushroom. How cute!
@@ -61,7 +62,8 @@ shroom:
   combat_loop:
     - skill: nudge
       target: re
-  
+
+# level 3 mob
 orange mushroom:
   name: Orange Mushroom
   description: A larger orange mushroom, this one is feisty!
@@ -95,6 +97,7 @@ orange mushroom:
     - skill: nudge
       target: re
 
+# level 6 mob
 blue mushroom:
   name: Blue Mushroom
   description: A bulky blue mushroom.
@@ -188,6 +191,311 @@ octopus:
       target: re
     - skill: nudge
       target: re
+      
+# level 1 mob
+rat:
+  name: Rat
+  description: A small stinky rat. Ew!
+  stats:
+    hp: 30
+    mp: 0
+    armor: 0
+    marmor: 0
+    grit: 5
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 1
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
 
+# level 1 mob
+Spore:
+  name: Spore
+  description: A ball of fluff.
+  stats:
+    hp: 30
+    mp: 0
+    armor: 0
+    marmor: 0
+    grit: 5
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 1
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+
+# level 1 mob
+wood_stump:
+  name: Wood Stump
+  description: A moving table?
+  stats:
+    hp: 30
+    mp: 0
+    armor: 0
+    marmor: 0
+    grit: 5
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 1
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+
+# level 1 mob
+snail:
+  name: Snail
+  description: A slow moving house.
+  stats:
+    hp: 30
+    mp: 0
+    armor: 0
+    marmor: 0
+    grit: 5
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 1
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+
+# level 3 mob
+wandering_rock:
+  name: Wandering Rock
+  description: A pile of rocks seemingly glued together. Wait its moving?!
+  stats:
+    hp: 50
+    mp: 0
+    armor: 2
+    marmor: 1
+    grit: 7
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 3
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+
+# level 3 mob
+green_slime:
+  name: Green Slime
+  description: A small glob of goo.
+  stats:
+    hp: 50
+    mp: 0
+    armor: 1
+    marmor: 1
+    grit: 8
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 3
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+
+# level 3 mob
+spider:
+  name: Spider
+  description: A eight eyed, eight legged creature. What more to say?
+  stats:
+    hp: 50
+    mp: 0
+    armor: 1
+    marmor: 1
+    grit: 8
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 3
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+
+# level 6 mob
+blue_slime:
+  name: Blue Slime
+  description: A slimy blue glob stinks of sewage.
+  stats:
+    hp: 80
+    mp: 0
+    armor: 2
+    marmor: 2
+    grit: 12
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 6
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
+  
+# level 6 mob
+red_slime:
+  name: Red Slime
+  description: A red glob of heat. Is it on fire?
+  stats:
+    hp: 80
+    mp: 0
+    armor: 2
+    marmor: 2
+    grit: 12
+    flow: 0
+    mind: 0
+    soul: 0
+    exp: 6
+  loot:
+    red potion: 0.1
+    grit head 1: 0.01
+    grit body 1: 0.01
+    grit weapon 1: 0.01
+    flow head 1: 0.01
+    flow body 1: 0.01
+    flow weapon 1: 0.01
+    mind head 1: 0.01
+    mind body 1: 0.01
+    mind weapon 1: 0.01
+    soul head 1: 0.01
+    soul body 1: 0.01
+    soul weapon 1: 0.01
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: re
 
 
