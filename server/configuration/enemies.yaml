@@ -227,7 +227,7 @@ rat:
       target: re
 
 # level 1 mob
-Spore:
+spore:
   name: Spore
   description: A ball of fluff.
   stats:
