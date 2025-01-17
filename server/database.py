@@ -28,6 +28,7 @@ class Database:
             unique_id TEXT UNIQUE NOT NULL,
             actor_id TEXT PRIMARY KEY NOT NULL,
             actor_name TEXT NOT NULL,
+            actor_recall_site TEXT NOT NULL,
             FOREIGN KEY(unique_id) REFERENCES users(unique_id)
         )''')
 
@@ -104,19 +105,20 @@ class Database:
         my_dict['unique_id'] = actor.protocol.id
         my_dict['actor_id'] = actor_id
         my_dict['actor_name'] = actor.protocol.username
-
-        #print(my_dict)
+        my_dict['actor_recall_site'] = actor.recall_site
 
         self.cursor.execute('''
             INSERT INTO actors (
-                unique_id, actor_id, actor_name
+                unique_id, actor_id, actor_name, actor_recall_site
             ) VALUES (
-                :unique_id, :actor_id, :actor_name
+                :unique_id, :actor_id, :actor_name, :actor_recall_site
             )
             ON CONFLICT(unique_id) DO UPDATE SET
-                actor_id = excluded.actor_id
+                actor_id = excluded.actor_id,
+                actor_name = excluded.actor_name,
+                actor_recall_site = excluded.actor_recall_site
         ''', my_dict)
-
+        
         self.cursor.execute('''
             DELETE FROM equipment WHERE actor_id = ?
         ''', (actor_id,))
@@ -210,7 +212,6 @@ class Database:
                     ''', my_dict)
                 
         self.write_admins(actor)
-
         self.conn.commit()
 
     def read_actor(self, unique_id):
@@ -228,8 +229,11 @@ class Database:
             SELECT actor_name FROM actors WHERE unique_id = ?
         ''', (unique_id,))
         actor_name = self.cursor.fetchone()[0]
-        
-        #print(actor_id)
+
+        self.cursor.execute('''
+            SELECT actor_recall_site FROM actors WHERE unique_id = ?
+        ''', (unique_id,))
+        actor_recall_site = self.cursor.fetchone()[0]
 
         self.cursor.execute('''
             SELECT * FROM stats WHERE actor_id = ?
@@ -262,6 +266,7 @@ class Database:
         my_dict = {}
         my_dict['actor_id'] = actor_id
         my_dict['actor_name'] = actor_name
+        my_dict['actor_recall_site'] = actor_recall_site
 
         my_dict['stats'] = {
             'hp_max': stats[1],

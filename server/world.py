@@ -10,13 +10,14 @@ import copy
 from inventory import InventoryManager
 
 class Room:
-    def __init__(self, world, uid, name, description, exits, secret_exits):
+    def __init__(self, world, uid, name, description, exits, secret_exits, can_be_recall_site):
         self.world = world
         self.uid = uid
         self.name = name
         self.description = description
         self.exits = exits
         self.secret_exits = secret_exits
+        self.can_be_recall_site = can_be_recall_site
         
         self.inventory_manager = InventoryManager(self, limit = 20)
         
@@ -82,6 +83,9 @@ class Room:
         if not silent:
             player.command_look('')
 
+        if player.recall_site == 'tutorial' and self.can_be_recall_site:
+            player.command_rest('set')
+
     def remove_player(self, player):
         del player.room.entities[player.id]
 
@@ -146,9 +150,9 @@ class World:
                     del self.rooms[r]
 
             if 'instanced' in room:
-                self.rooms[r] = InstancedRoom(self, r, room['name'], room['description'], room['exits'], room['secret_exits']) 
+                self.rooms[r] = InstancedRoom(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
             else:
-                self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits']) 
+                self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
 
             if 'enemies' in room:
                 for enemy in room['enemies']:

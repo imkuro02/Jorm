@@ -223,10 +223,12 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
     def load_actor(self):
         actor = self.factory.db.read_actor(self.account[0])
         #print('>>>',actor)
+
         if actor == None: # new actor
             self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms['loading'])
         else: # load an existing actor
             self.actor = Player(self, _id = actor['actor_id'], name = actor['actor_name'], room = self.factory.world.rooms['loading'])
+            self.actor.recall_site = actor['actor_recall_site'] 
 
             self.actor.stats.update(actor['stats'])
             self.actor.skills = actor['skills']
@@ -252,18 +254,20 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
                 item = self.actor.inventory_manager.items[item_id]
                 self.actor.inventory_equip(item, forced = True)
 
-
         self.state = self.PLAY
-        
+
         if actor == None:
             self.save_actor()
-            self.actor.room.world.rooms['tutorial'].move_player(self.actor)
+            self.actor.recall_site = 'tutorial'
         else:
-            self.actor.room.world.rooms['home'].move_player(self.actor)
+            if self.actor.recall_site not in self.actor.room.world.rooms:
+                self.actor.recall_site = 'tutorial'
+
+        self.actor.room.world.rooms[self.actor.recall_site].move_player(self.actor)
         
     def save_actor(self):
         self.factory.db.write_actor(self.actor)
-        self.factory.db.read_actor(self.id)
+        a = self.factory.db.read_actor(self.id)
 
     def disconnect(self):
         self.transport.abortConnection()

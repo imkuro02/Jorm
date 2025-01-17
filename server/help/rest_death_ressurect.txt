@@ -4,7 +4,10 @@ Title: Death, resting and ressurecting
 The "rest" command is very useful, when you "rest" you:
 - Regenerate all HP and MP
 - Ressurect if you are dead
-- Recall back to Town (fast way to travel home)
+- Recall back to your resting spot (fast way to travel home)
+
+Use "rest set" to set your resting spot.
+Use "rest now" to go and rest.
 
 Rest cannot be used while in combat.
 ................................................................................

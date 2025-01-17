@@ -54,3 +54,5 @@ def command_go(self, line):
         f'{self.pretty_name()} arrived'
         )
     self.finish_turn(force_cooldown = True)
+
+

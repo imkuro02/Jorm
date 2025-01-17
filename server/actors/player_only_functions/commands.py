@@ -55,6 +55,8 @@ commands = {
     'say':      'command_say',
     'shout':    'command_shout',
     'go':       'command_go',
+    #'setcall':  'command_recall_set',
+    #'gocall':   'command_recall_go',
     'look':     'command_look',
     'trade':    'command_trade',
     

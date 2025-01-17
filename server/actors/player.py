@@ -18,10 +18,15 @@ class Player(Actor):
         self.admin = 0
         self.check_if_admin()
 
+        self.recall_site = 'tutorial'
+        self.trade_manager = TradeManager(self)
+
         if self.room != None:
             self.room.move_player(self, silent = True)
 
-        self.trade_manager = TradeManager(self)
+       
+
+        
 
     def check_if_admin(self):
         if self.protocol == None:

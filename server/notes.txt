@@ -8,3 +8,19 @@ openssl req -new -x509 -key server.key -out server.crt -days 365
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=US/ST=State/L=City/O=Organization/OU=IT/CN=example.com"
 
 insert into admins (actor_id, admin_level) values ("08c36e97-dfaf-4602-8798-a1aba34242e0",100);
+
+-- Rename the existing table
+ALTER TABLE actors RENAME TO actors_old;
+
+-- Create the new table with an additional column 'actors_recall_site'
+CREATE TABLE actors (
+    unique_id TEXT PRIMARY KEY,
+    actor_id TEXT NOT NULL,
+    actor_name TEXT NOT NULL,
+    actor_recall_site TEXT NOT NULL
+);
+
+-- Copy data from the old table to the new table, with NULL for the new column
+INSERT INTO actors (unique_id, actor_id, actor_name, actor_recall_site)
+SELECT unique_id, actor_id, actor_name, 'tutorial'
+FROM actors_old;

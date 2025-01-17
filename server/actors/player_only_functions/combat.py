@@ -103,40 +103,83 @@ def command_use(self, line):
             self.finish_turn()
             return
 
+
+
+'''
+def command_recall_set(self, line):
+    self.recall_site = self.room.uid
+    self.sendLine(self.recall_site)
+
+def command_recall_go(self, line):
+    rooms = self.room.world.rooms
+    if self.recall_site not in rooms:
+        self.sendLine('recall site broked')
+        return
+
+    rooms[self.recall_site].move_player(self)
+'''
+
 @check_not_in_combat
 def command_rest(self, line):
-    if self.status == ActorStatusType.DEAD:
-        self.status = ActorStatusType.NORMAL
+    if line == '':
+        if self.recall_site not in self.room.world.rooms:
+            self.recall_site = 'home'
 
-        self.stats[StatType.HP] = self.stats[StatType.HPMAX]
-        self.stats[StatType.MP] = self.stats[StatType.MPMAX]
+        self.sendLine(f'Your resting spot is {self.room.world.rooms[self.recall_site].name}')
+        return
 
-        self.simple_broadcast(
-            'You ressurect',
-            f'{self.pretty_name()} ressurects')
-        self.protocol.factory.world.rooms['home'].move_player(self)
-        self.simple_broadcast(
-            None,
-            f'{self.pretty_name()} has ressurected')
-    else:
+    if line.lower() in 'set':
+        if not self.room.can_be_recall_site:
+            self.sendLine('@redThis is not a suitable rest spot.@normal')
+            return
+        self.recall_site = self.room.uid
+        self.sendLine(f'@green{self.room.name} is now your rest spot.@normal')
+        return
 
-        self.stats[StatType.HP] = self.stats[StatType.HPMAX]
-        self.stats[StatType.MP] = self.stats[StatType.MPMAX]
+    if line.lower() in 'now':
+        if self.status == ActorStatusType.DEAD:
+            self.status = ActorStatusType.NORMAL
 
-        if self.room.uid == 'home':
+            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
+            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
+
             self.simple_broadcast(
-                f'You rest',
-                f'{self.pretty_name()} rests'
-                )
-        else:
-            self.simple_broadcast(
-                f'You return to town to rest',
-                f'{self.pretty_name()} returns back to town to rest'
-                )
-            self.protocol.factory.world.rooms['home'].move_player(self)
+                'You ressurect',
+                f'{self.pretty_name()} ressurects')
+
+            #tp home
+            if self.recall_site not in self.protocol.factory.world.rooms:
+                self.recall_site = 'tutorial'
+            self.protocol.factory.world.rooms[self.recall_site].move_player(self)
+
             self.simple_broadcast(
                 None,
-                f'{self.pretty_name()} has returned to town to rest'
-                )
-    self.affect_manager.unload_all_affects()
+                f'{self.pretty_name()} has ressurected')
+        else:
+
+            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
+            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
+
+            if self.room.uid == self.recall_site:
+                self.simple_broadcast(
+                    f'You rest',
+                    f'{self.pretty_name()} rests'
+                    )
+            else:
+                self.simple_broadcast(
+                    f'You return to rest',
+                    f'{self.pretty_name()} returns back to rest'
+                    )
+
+                #tp home
+                if self.recall_site not in self.protocol.factory.world.rooms:
+                    self.recall_site = 'tutorial'
+                self.protocol.factory.world.rooms[self.recall_site].move_player(self)
+
+                self.simple_broadcast(
+                    None,
+                    f'{self.pretty_name()} has returned to rest'
+                    )
+        self.affect_manager.unload_all_affects()
+        return
             

@@ -18,7 +18,11 @@ def load_map():
     rooms = {}
     connectors = {}
     for i in objects.values():
+        
         if i['_type'] == 'Room':
+            
+           
+
             rooms[i['_subtitle']] = {}
             room = rooms[i['_subtitle']]
 
@@ -27,6 +31,10 @@ def load_map():
             room['description'] = i['_description']
             room['exits'] = {}
             room['secret_exits'] = {}
+            room['can_be_recall_site'] = False
+            if '_fillColor' in i:
+                #print(i['_subtitle'], i['_fillColor'])
+                room['can_be_recall_site'] = i['_fillColor'] == 'rgb(213, 229, 214)'
 
             room['enemies'] = []
             for obj in i['objects']:
