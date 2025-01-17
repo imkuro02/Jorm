@@ -24,3 +24,6 @@ CREATE TABLE actors (
 INSERT INTO actors (unique_id, actor_id, actor_name, actor_recall_site)
 SELECT unique_id, actor_id, actor_name, 'tutorial'
 FROM actors_old;
+
+-- Add admin --
+INSERT INTO admins (actor_id, admin_level) VALUES ("STR",INT);
