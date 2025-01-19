@@ -37,7 +37,8 @@ def create_enemy(room, enemy_id):
 class Enemy(Actor):
     def __init__(self, name, room, stats, skills, combat_loop, loot, ai):
         super().__init__(name, room)
-        self.stats = copy.deepcopy(stats)
+        self.stats = {**self.stats, **stats}
+        #self.stats = 
         self.stats[StatType.HPMAX] = self.stats[StatType.HP]
         self.stats[StatType.MPMAX] = self.stats[StatType.MP]
 
