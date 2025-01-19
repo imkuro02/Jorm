@@ -232,7 +232,7 @@ def command_stats(self, line):
     output = f'You are {self.get_character_sheet()}'
     #output += f'\n'
     #exp_needed = self.get_exp_needed_to_level() - self.stats[StatType.EXP]
-    output += f'{StatType.name[StatType.LVL]} {self.stats[StatType.LVL]}\n'
+    #output += f'{StatType.name[StatType.LVL]} {self.stats[StatType.LVL]}\n'
     output += f'{StatType.name[StatType.EXP]}: {self.stats[StatType.EXP]}/{self.get_exp_needed_to_level()}\n'
     output += f'{StatType.name[StatType.PP]}: {self.stats[StatType.PP]}\n'
 

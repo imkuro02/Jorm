@@ -231,6 +231,7 @@ rat:
     mind: 0
     soul: 0
     exp: 1
+    lvl: 100000
   loot:
     red potion: 0.1
     grit head 1: 0.01

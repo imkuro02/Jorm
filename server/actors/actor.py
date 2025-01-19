@@ -126,7 +126,6 @@ class Actor:
 
     def get_character_sheet(self):
         output = f'{self.pretty_name()} ({self.status})\n'
-
         # if no description then ignore
         if self.description != '': 
             output += f'@cyan{self.description}@normal\n'
@@ -138,6 +137,8 @@ class Actor:
         _piss = [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
         for _shit in _piss:
             output += f'{StatType.name[_shit]+":":<15} {self.stats[_shit]}\n'
+        output += f'{StatType.name[StatType.LVL]}: {self.stats[StatType.LVL]}\n'
+        
         return output
 
     def tick(self):
