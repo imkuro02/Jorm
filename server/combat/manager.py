@@ -5,12 +5,14 @@ class Damage:
                  damage_taker_actor,
                  damage_source_actor, 
                  damage_value, damage_type, 
-                 damage_to_stat = StatType.HP):
+                 damage_to_stat = StatType.HP,
+                 silent = False):
         self.damage_taker_actor = damage_taker_actor
         self.damage_source_actor = damage_source_actor
         self.damage_value = damage_value
         self.damage_type = damage_type
         self.damage_to_stat = damage_to_stat
+        self.silent = silent
 
     def take_damage(self):
         match self.damage_type:
@@ -28,34 +30,39 @@ class Damage:
                 pass
             case DamageType.HEALING:
                 self.damage_taker_actor.stats[self.damage_to_stat] += self.damage_value
-                self.damage_taker_actor.simple_broadcast(
-                    f'You heal {self.damage_value} {StatType.name[self.damage_to_stat]}',
-                    f'{self.damage_taker_actor.pretty_name()} heals {self.damage_value} {StatType.name[self.damage_to_stat]}'
-                    )
+                if not self.silent:
+                    self.damage_taker_actor.simple_broadcast(
+                        f'You heal {self.damage_value} {StatType.name[self.damage_to_stat]}',
+                        f'{self.damage_taker_actor.pretty_name()} heals {self.damage_value} {StatType.name[self.damage_to_stat]}'
+                        )
 
                 self.damage_taker_actor.hp_mp_clamp_update()
                 return
 
+        
         if self.damage_value <= 0:
-            self.damage_taker_actor.simple_broadcast(
-            f'You block',
-            f'{self.damage_taker_actor.pretty_name()} blocks'
-            )
+            if not self.silent:
+                self.damage_taker_actor.simple_broadcast(
+                f'You block',
+                f'{self.damage_taker_actor.pretty_name()} blocks'
+                )
             return
 
         self.damage_taker_actor.stats[self.damage_to_stat ] -= self.damage_value
 
         if self.damage_to_stat == StatType.HP:
-            self.damage_taker_actor.simple_broadcast(
-                f'You take {self.damage_value} damage',
-                f'{self.damage_taker_actor.pretty_name()} takes {self.damage_value} damage'
-                )
+            if not self.silent:
+                self.damage_taker_actor.simple_broadcast(
+                    f'You take {self.damage_value} damage',
+                    f'{self.damage_taker_actor.pretty_name()} takes {self.damage_value} damage'
+                    )
             
         if self.damage_to_stat == StatType.MP:
-            self.damage_taker_actor.simple_broadcast(
-                f'You lose {self.damage_value} Magicka',
-                f'{self.damage_taker_actor.pretty_name()} loses {self.damage_value} Magicka'
-                )
+            if not self.silent:
+                self.damage_taker_actor.simple_broadcast(
+                    f'You lose {self.damage_value} Magicka',
+                    f'{self.damage_taker_actor.pretty_name()} loses {self.damage_value} Magicka'
+                    )
 
 
         self.damage_taker_actor.hp_mp_clamp_update()
@@ -156,7 +163,8 @@ class Combat:
                     damage_taker_actor = i,
                     damage_source_actor = i,
                     damage_value = int(i.stats[StatType.HPMAX]*.5),
-                    damage_type = DamageType.HEALING
+                    damage_type = DamageType.HEALING,
+                    silent = True
                     )
                 i.take_damage(damage_obj)           
                 damage_obj = Damage(
@@ -164,7 +172,8 @@ class Combat:
                         damage_source_actor = i,
                         damage_value = int(i.stats[StatType.MPMAX]*.5),
                         damage_type = DamageType.HEALING,
-                        damage_to_stat = StatType.MP
+                        damage_to_stat = StatType.MP,
+                        silent = True
                         )
                 i.take_damage(damage_obj)     
 

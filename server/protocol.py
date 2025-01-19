@@ -277,12 +277,13 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
         utils.logging.debug(self.id + ' >> Connection lost')
         if self.actor != None:
 
+            self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
             self.actor.affect_manager.unload_all_affects(silent = True)
             self.actor.trade_manager.trade_stop()
             self.save_actor()
 
-            # teleport player to town to remove them safely
-            self.factory.world.rooms['home'].move_player(self.actor)
+            # teleport player to loading to remove them safely
+            self.factory.world.rooms['loading'].move_player(self.actor)
             # remove player from combat
             del self.actor.room.entities[self.actor.id]
             

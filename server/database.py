@@ -144,7 +144,7 @@ class Database:
 
         for eq_id in actor.slots_manager.slots.values():
             if eq_id != None:
-                actor.inventory_unequip(actor.inventory_manager.items[eq_id])
+                actor.inventory_unequip(actor.inventory_manager.items[eq_id], silent = True)
 
         my_dict = {}
         my_dict = actor.stats

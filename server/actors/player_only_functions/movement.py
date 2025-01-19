@@ -7,13 +7,13 @@ def command_flee(self, line):
         self.sendLine('You are not in combat, you don\'t need to flee')
         return
     self.simple_broadcast(
-        f'You have fled back to town',
+        None,
         f'{self.pretty_name()} flees!'
     )
-    self.protocol.factory.world.rooms['home'].move_player(self, silent = True)
+    self.protocol.factory.world.rooms[self.recall_site].move_player(self, silent = True)
     self.status = ActorStatusType.NORMAL
     self.simple_broadcast(
-        None,
+        f'You have fled back to {self.room.name}',
         f'{self.pretty_name()} comes running in a panic!'
     )
 

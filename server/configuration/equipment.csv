@@ -68,8 +68,8 @@ flow head 6,Fine cloth hood,80,20,0,0,,3,0,0,0,,0,0,0,0,,0,16,0,0,6,head,A black
 flow body 6,Fine cloth cloak,80,20,0,0,,3,0,0,0,,0,0,0,0,,0,16,0,0,6,body,A long black cloak of excellent quality
 flow trinket 6,a123,0,0,0,0,,0,0,0,0,,0,13,0,0,,0,16,0,0,6,trinket,c
 flow weapon 6,Field dagger ,0,0,0,0,,0,0,0,0,,0,13,0,0,,0,16,0,0,6,weapon,"A lightweight dagger, perfect for quick, precise strikes"
-mind head 6,Apprentice hat,-100,200,0,0,,0,2,0,0,,0,0,0,0,,0,0,16,0,6,head,A beautiful blue pointed hat
-mind body 6,Apprentice robe,-100,200,0,0,,0,2,0,0,,0,0,0,0,,0,0,16,0,6,body,A beautiful blue robe with golden threads
+mind head 6,Apprentice hat,-20,40,50,0,,0,2,0,0,,0,0,0,0,,0,0,16,0,6,head,A beautiful blue pointed hat
+mind body 6,Apprentice robe,-20,40,50,0,,0,2,0,0,,0,0,0,0,,0,0,16,0,6,body,A beautiful blue robe with golden threads
 mind trinket 6,a123,0,0,0,0,,0,0,0,0,,0,0,13,0,,0,0,16,0,6,trinket,c
 mind weapon 6,Copper wand,0,0,0,0,,0,0,0,0,,0,0,13,0,,0,0,16,0,6,weapon,An engraved copper rod engraved with strange symbols
 soul head 6,Circlet,0,0,0,0,,0,4,0,0,,0,0,0,0,,0,0,0,16,6,head,A circlet made of silver
