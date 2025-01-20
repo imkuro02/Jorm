@@ -31,6 +31,7 @@ def command_pass_turn(self, line):
 @check_your_turn
 @check_alive
 def command_use(self, line):
+    _line = line
 
     if line.endswith((' on', ' at')):
         self.sendLine('Use on who?')
@@ -39,71 +40,55 @@ def command_use(self, line):
     id_to_name, name_to_id = get_skills()
     list_of_skill_names = [skill for skill in name_to_id.keys()]
     #list_of_consumables = [utils.remove_color(item.name) for item in self.inventory_manager.items.values() if item.item_type == ItemType.CONSUMABLE]
-    list_of_consumables = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
-    whole_list = list_of_consumables + list_of_skill_names
+    list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
+    whole_list = list_of_items + list_of_skill_names
+    list_of_entities = [entity.name for entity in self.room.entities.values()]
 
     action = None
-    target = self
+    target = None
 
     # target yourself if not trying to target anything else
     if ' on ' not in line and ' at ' not in line:
         action = line
-        target = self
+        action = utils.match_word(action, list_of_items + list_of_skill_names)
+        target = self.name
+
     # if you are targetting something else set target to that
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
-        target = self.get_entity(target)
-        # if no target is found then return
-        if target == None:
-            return
+        action = utils.match_word(action, list_of_items + list_of_skill_names)
+        target = utils.match_word(target, list_of_items + list_of_entities)
 
-    best_match = utils.match_word(action, whole_list)
 
-    # if you are trying to use an item
-    #print(best_match)
-    if best_match in list_of_consumables:
-        item = self.get_item(best_match)
-        #print(item.name)
+    _action = None
+    _target = None
 
-        def use_item(item, user, target):
-            #self.use_manager.use_broadcast(self, target, item.use_perspectives)
-            item.use(user, target)
-            return
+    if action in list_of_items:
+        _action = self.get_item(action)
+    if action in list_of_skill_names:
+        _action = name_to_id[action]
+    #if target in list_of_items:
+    #    _target = self.get_item(target)
+    if target in list_of_entities:
+        _target = self.get_entity(target)
 
-        if target == self:
-            use_item(item, self, target)
+    if _action == None:
+        self.sendLine('Use what?')
+        return
+
+    if _target == None:
+        self.sendLine('On who?')
+        return
+
+    if action in list_of_skill_names:
+        if use_skill(self, _target, _action):
             self.finish_turn()
             return
 
-        elif target != self:
-            if self.room.combat == None:
-                self.sendLine('You can\'t use items on others out of combat')
-                return
-
-            if self not in self.room.combat.participants.values():
-                self.sendLine(f'You can\'t use items on others while you are not in combat')
-                return
-
-            if target not in self.room.combat.participants.values():
-                self.sendLine(f'You can\'t use items on others while they are not fighting')
-                return
-
-            if use_item(item, self, target):
-                self.finish_turn()
-                return
-
-
-    elif best_match in list_of_skill_names:
-        if action.lower() not in best_match.lower():
-            self.sendLine('Use what?')
-            return
-        skill_id = name_to_id[best_match]
-        # if skills.use finished with True statement and there were no errors
-        if use_skill(self, target, skill_id) == True:
+    if action in list_of_items:
+        if _action.use(self, _target):
             self.finish_turn()
             return
-
-
 
 '''
 def command_recall_set(self, line):

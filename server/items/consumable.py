@@ -40,7 +40,22 @@ class Consumable(Item):
         return output
 
     def use(self, user, target):
+        # do these checks if the user is attempting to use the item on something else
+        if user is not target:
+            if user.room.combat == None:
+                user.sendLine('You can\'t use items on others out of combat')
+                return
+
+            if user not in user.room.combat.participants.values():
+                user.sendLine(f'You can\'t use items on others while you are not in combat')
+                return
+
+            if target not in user.room.combat.participants.values():
+                user.sendLine(f'You can\'t use items on others while they are not fighting')
+                return
+
         first_skill = True
         for skill in self.skills:
             use_skill_from_consumable(user = user, target = target, skill_id = skill, consumable_item = self)
         user.inventory_manager.remove_item(self)
+        return True
