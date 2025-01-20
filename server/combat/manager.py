@@ -162,7 +162,7 @@ class Combat:
                 damage_obj = Damage(
                     damage_taker_actor = i,
                     damage_source_actor = i,
-                    damage_value = int(i.stats[StatType.HPMAX]*.5),
+                    damage_value = int(i.stats[StatType.HPMAX]*.25),
                     damage_type = DamageType.HEALING,
                     silent = True
                     )
@@ -170,12 +170,13 @@ class Combat:
                 damage_obj = Damage(
                         damage_taker_actor = i,
                         damage_source_actor = i,
-                        damage_value = int(i.stats[StatType.MPMAX]*.5),
+                        damage_value = int(i.stats[StatType.MPMAX]*.25),
                         damage_type = DamageType.HEALING,
                         damage_to_stat = StatType.MP,
                         silent = True
                         )
                 i.take_damage(damage_obj)     
+                #i.simple_broadcast('')
 
         self.participants = {}
         self.room.combat = None

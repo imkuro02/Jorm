@@ -25,6 +25,32 @@ swing:
     user on you fail:     '#USER# loses their footing while swinging at you!'
     user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
 
+double whack:
+  name: Double whack
+  description: Whack your target twice, dealing physical damage equal to 50% of Flow.
+  level_req: 4
+  can_be_practiced: True
+  must_be_fighting: True
+  target_self_is_valid: False
+  target_others_is_valid: True
+  hp_cost: 0
+  mp_cost: 0
+  cooldown: 2
+  script_to_run: DoubleWhack
+  
+  use_perspectives:
+    you on you:           'You whack yourself!'
+    you on other:         'You whack #OTHER#'
+    user on user:         '#USER# whacks themselves!'
+    user on you:          '#USER# whacks you!'
+    user on other:        '#USER# whacks #OTHER#'
+
+    you on you fail:      'You fail to whack yourself!'
+    you on other fail:    'You fail to whack #OTHER#'
+    user on user fail:    '#USER# fails to whack themselves'
+    user on you fail:     '#USER# fails to whack you!'
+    user on other fail:   '#USER# fails to whack #OTHER#'
+
 nudge:
   name: Nudge
   description: Swing at your target dealing 1 physical damage + 70% of Grit
@@ -57,7 +83,7 @@ magic missile:
   level_req: 0
   can_be_practiced: True
   must_be_fighting: True
-  target_self_is_valid: True
+  target_self_is_valid: False
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 10
@@ -105,9 +131,7 @@ cure light wounds:
 
 ethereal:
   name: Become Ethereal
-  description: 'You become ethereal, you become immune to physical damage, but vurnerable to magical damage.
-                The duration lasts for casters Soul level.
-                The magical damage is amplified by 140%'
+  description: 'You become ethereal for 5 turns, you become immune to physical damage, but vurnerable to magical damage.'
   level_req: 0
   can_be_practiced: True
   must_be_fighting: False

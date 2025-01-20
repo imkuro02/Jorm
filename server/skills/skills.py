@@ -3,7 +3,7 @@ from configuration.config import AffType, DamageType, StatType
 import affects.affects as affects
 from combat.manager import Damage
 
-
+import random
 
 class Skill:
     def __init__(self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False):
@@ -103,6 +103,21 @@ class SkillBash(SkillSwing):
             if damage_dealt != 0:
                 self.other.affect_manager.set_affect_object(stunned_affect)
 
+class SkillDoubleWhack(Skill):
+    def use(self):
+        for i in range(0,2):
+            damage_obj = Damage(
+                    damage_taker_actor = self.other,
+                    damage_source_actor = self.user,
+                    damage_value = int(self.user.stats[StatType.FLOW]*.5),
+                    damage_type = DamageType.PHYSICAL
+                )
+            
+            self.success = random.randint(1,100) <= self.users_skill_level
+            super().use()
+            if self.success:
+                self.user.deal_damage(damage_obj)
+
 class SkillMagicMissile(Skill):
     def use(self):
         super().use()
@@ -130,7 +145,7 @@ class SkillBecomeEthereal(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns = 1 + self.user.stats[StatType.SOUL] #+ int(self.users_skill_level*0.03)
+            turns = 5 #1 + self.user.stats[StatType.SOUL] #+ int(self.users_skill_level*0.03)
             dmg_amp = 2.4 - self.users_skill_level*0.01
             dmg_amp = 1.4
             ethereal_affect = affects.AffectEthereal(

@@ -17,6 +17,7 @@ class Equipment(Item):
             StatType.ARMOR: 0,
             StatType.MARMOR:0,
             StatType.GRIT: 0,
+            StatType.FLOW: 0,
             StatType.MIND: 0,
             StatType.SOUL: 0
 
@@ -28,6 +29,7 @@ class Equipment(Item):
             StatType.ARMOR: 0,
             StatType.MARMOR:0,
             StatType.GRIT: 0,
+            StatType.FLOW: 0,
             StatType.MIND: 0,
             StatType.SOUL: 0,
             StatType.LVL: 0

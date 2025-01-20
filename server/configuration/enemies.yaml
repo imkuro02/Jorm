@@ -363,10 +363,10 @@ green_slime:
     mp: 0
     armor: 1
     marmor: 1
-    grit: 8
-    flow: 0
-    mind: 0
-    soul: 0
+    grit: 12
+    flow: 10
+    mind: 10
+    soul: 10
     exp: 3
   loot:
     red potion: 0.1
@@ -384,8 +384,11 @@ green_slime:
     soul weapon 3: 0.01
   skills:
     nudge: 75
+    double whack: 75
   combat_loop:
     - skill: nudge
+      target: re
+    - skill: double whack
       target: re
 
 # level 3 mob
@@ -397,10 +400,10 @@ spider:
     mp: 0
     armor: 1
     marmor: 1
-    grit: 8
-    flow: 0
-    mind: 0
-    soul: 0
+    grit: 10
+    flow: 12
+    mind: 10
+    soul: 10
     exp: 3
   loot:
     red potion: 0.1
@@ -418,8 +421,11 @@ spider:
     soul weapon 3: 0.01
   skills:
     nudge: 75
+    double whack: 75
   combat_loop:
     - skill: nudge
+      target: re
+    - skill: double whack
       target: re
 
 # level 3 mob
@@ -431,10 +437,10 @@ wandering_rock:
     mp: 0
     armor: 2
     marmor: 1
-    grit: 7
-    flow: 0
-    mind: 0
-    soul: 0
+    grit: 12
+    flow: 10
+    mind: 10
+    soul: 10
     exp: 3
   loot:
     red potion: 0.1
@@ -452,8 +458,11 @@ wandering_rock:
     soul weapon 3: 0.01
   skills:
     nudge: 75
+    double whack: 75
   combat_loop:
     - skill: nudge
+      target: re
+    - skill: double whack
       target: re
 
 # level 3 mob
@@ -486,8 +495,11 @@ pig:
     soul weapon 3: 0.01
   skills:
     nudge: 75
+    double whack: 75
   combat_loop:
     - skill: nudge
+      target: re
+    - skill: double whack
       target: re
 
 # level 6 mob
