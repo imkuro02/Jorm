@@ -145,31 +145,10 @@ octopus:
     soul: 0
     exp: 12
   loot:
-    grit head 3: 0.01
-    grit body 3: 0.01
-    grit weapon 3: 0.01
-    flow head 3: 0.01
-    flow body 3: 0.01
-    flow weapon 3: 0.01
-    mind head 3: 0.01
-    mind body 3: 0.01
-    mind weapon 3: 0.01
-    soul head 3: 0.01
-    soul body 3: 0.01
-    soul weapon 3: 0.01
-
-    grit head 6: 0.001
-    grit body 6: 0.001
-    grit weapon 6: 0.001
-    flow head 6: 0.001
-    flow body 6: 0.001
-    flow weapon 6: 0.001
-    mind head 6: 0.001
-    mind body 6: 0.001
-    mind weapon 6: 0.001
-    soul head 6: 0.001
-    soul body 6: 0.001
-    soul weapon 6: 0.001
+    grit trinket 9: 0.1
+    flow trinket 9: 0.1
+    mind trinket 9: 0.1
+    soul trinket 6: 0.1
   skills: 
     nudge: 75
     mage armor: 100
