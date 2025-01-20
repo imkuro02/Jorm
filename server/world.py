@@ -46,6 +46,17 @@ class Room:
                 if i == player_participant:
                     participants[i.id] = i
                     players_here = True
+
+                    ### PARTY CODE - invite entire party to the fight
+                    if player_participant.party_manager.party != None:
+                        for par in player_participant.party_manager.party.participants.values():
+                            if par == player_participant:
+                                continue
+                            else:
+                                participants[par.id] = par
+                                players_here = True
+                    ### PARTY CODE
+
                 if type(i).__name__ == "Enemy":
                     participants[i.id] = i
                     npcs_here = True

@@ -100,7 +100,7 @@ class TradeManager:
         else:
             self.pending = other
             self.actor.simple_broadcast(
-                f'You ask {other.pretty_name()} to trade',
+                f'You ask {other.pretty_name()} to trade (waiting for response)',
                 f'{self.actor.pretty_name()} asks you to trade ("trade with {self.actor.name}" or ignore to decline)'
             )
 

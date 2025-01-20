@@ -280,7 +280,9 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
             self.actor.affect_manager.unload_all_affects(silent = True)
             self.actor.trade_manager.trade_stop()
+            self.actor.party_manager.party_leave()
             self.save_actor()
+            
 
             # teleport player to loading to remove them safely
             self.factory.world.rooms['loading'].move_player(self.actor)

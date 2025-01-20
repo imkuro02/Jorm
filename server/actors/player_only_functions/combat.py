@@ -9,7 +9,13 @@ def command_fight(self, line):
     #error_output = self.room.new_combat()
     #if isinstance(error_output, str):
     #    self.sendLine(error_output)
-    self.room.join_combat(self)
+    if self.party_manager.party == None:
+        self.room.join_combat(self)
+    else:
+        if self.party_manager.party.owner == self:
+            self.room.join_combat(self)
+        else:
+            self.sendLine('You are not the party leader')
 
 @check_alive
 def command_pass_turn(self, line):
@@ -167,4 +173,10 @@ def command_rest(self, line):
                     )
         self.affect_manager.unload_all_affects()
         return
+
+
+@check_not_in_combat
+@check_alive
+def command_party(self, line):
+    self.party_manager.handle_party_message(line)
             

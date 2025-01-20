@@ -5,7 +5,7 @@ from actors.player_only_functions.emotes import command_say, command_shout
 
 from actors.player_only_functions.combat import (
     command_fight, command_pass_turn, 
-    command_use, command_rest
+    command_use, command_rest, command_party
 )
 
 from actors.player_only_functions.look import command_look
@@ -83,6 +83,7 @@ commands = {
     'fight':    'command_fight',
     'pass':     'command_pass_turn',
     'rest':     'command_rest',
+    'party':    'command_party',
     
     'respec':   'command_respec',
     'prompt':   'command_send_prompt',

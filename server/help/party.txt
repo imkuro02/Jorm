@@ -1,0 +1,21 @@
+................................................................................
+Title: Party
+
+Syntax: 
+    Create a party:    "party create" 
+    Invite to party:   "party invite [player name]" 
+    Join a party:      "party join [inviters name]" 
+    Kick from party:   "party kick [player name]" 
+    Leave party:       "party leave" 
+    Promote to leader: "party leader [player name]" **Work in progress**    
+    View party stats:  "party" 
+
+The party leader controls the movement of all members.
+Members can freely choose to walk in another direction,
+But will tag along where the leader goes whenever they are visible.
+
+Party leaders can start fights, all members join on turn one.
+Party members cannot start fights.
+
+Parties get disbanded when the leader leaves.
+................................................................................

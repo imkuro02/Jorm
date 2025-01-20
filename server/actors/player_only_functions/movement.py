@@ -55,4 +55,12 @@ def command_go(self, line):
         )
     self.finish_turn(force_cooldown = True)
 
+    if self.party_manager.party != None:
+        if self.party_manager.party.owner == self:
+            for par in self.party_manager.party.participants.values():
+                if par == self:
+                    continue
+                par.command_go(line)
+
+
 

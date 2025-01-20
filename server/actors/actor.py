@@ -7,6 +7,7 @@ from configuration.config import DamageType, ActorStatusType, EquipmentSlotType,
 from skills.manager import use_skill
 from inventory import InventoryManager
 import utils
+from party import PartyManager
 
 class CooldownManager:
     def __init__ (self, owner):
@@ -66,7 +67,7 @@ class Actor:
         self.affect_manager = AffectsManager(self)
         self.inventory_manager = InventoryManager(self)
         self.slots_manager = SlotsManager(self)
-        
+        self.party_manager = PartyManager(self)
         self.status = ActorStatusType.NORMAL
         
         self.stats = {
@@ -167,7 +168,7 @@ class Actor:
             self.status = ActorStatusType.DEAD
 
             self.simple_broadcast(
-                f'@redYou died@normal (Rest to teleport to town)',
+                f'@redYou died@normal "help rest"',
                 f'{self.pretty_name()} has died'
                 )
 
