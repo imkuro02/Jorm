@@ -36,7 +36,7 @@ flow trinket 1,Pocket knife,5,5,0,0,,0,0,0,0,,0,1,0,0,,0,0,0,0,1,trinket,A campe
 flow weapon 1,Dirk,0,0,0,0,,0,0,0,0,,0,2,0,0,,0,0,0,0,1,weapon,All stabby no slashy
 mind head 1,Pointy hat,5,0,0,0,,0,1,0,0,,0,0,0,0,,0,0,0,0,1,head,"A oversized pointed hat, a little crooked at the tip"
 mind body 1,Robe,5,20,0,0,,0,1,0,0,,0,0,0,0,,0,0,0,0,1,body,A long thick robe
-mind trinket 1,Piece of paper,,20,0,0,,0,0,0,0,,0,0,1,0,,0,0,0,0,1,trinket,Now you can write down your spells
+mind trinket 1,Piece of paper,5,20,0,0,,0,0,0,0,,0,0,1,0,,0,0,0,0,1,trinket,Now you can write down your spells
 mind weapon 1,Stick,0,0,0,0,,0,0,0,0,,0,0,2,0,,0,0,0,0,1,weapon,Nothing more magical than finding a cool stick
 soul head 1,Bald cap,10,10,0,0,,0,1,0,0,,0,0,0,0,,0,0,0,0,1,head,Baldy!
 soul body 1,Brown monk robe,10,10,0,0,,0,1,0,0,,0,0,0,0,,0,0,0,0,1,body,Kinda orangy-brownish color?
