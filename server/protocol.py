@@ -115,6 +115,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
     def REGISTER_PASSWORD2(self, line):
         if line != self.password:
             self.sendLine('Passwords do not match')
+            self.change_state(self.LOGIN_OR_REGISTER)
             return
         
         self.factory.db.create_new_account(self.id, self.username, self.password)

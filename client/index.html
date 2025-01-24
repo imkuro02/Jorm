@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JORM Unchained HD</title>
+    <title>JORM Uncaaahained HD</title>
     <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.1/ansi_up.min.js"></script>
     
     
@@ -64,11 +64,21 @@
              * 
              * If more things should be hidden, consider adding a flag instead of using the message string itself.
             **/
-            if(event.data == "Your \u001b[1;32mpassword\u001b[0m:\n") {
+           var prev_type = input.type;
+
+           if (event.data === "Your \u001b[1;32mpassword\u001b[0m:\n" || 
+               event.data === "Enter your \u001b[1;32mpassword\u001b[0m:\n" ||
+               event.data === "Enter \u001b[1;32mpassword\u001b[0m again:\n") {
                 input.type = "password";
+                input.value = "";
             } else {
                 input.type = "text";
             }
+
+            if(input.type != prev_type){
+                input.value = "";
+            }
+
             appendAnsiMessage(event.data);
         };
 
