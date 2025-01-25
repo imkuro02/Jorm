@@ -1,7 +1,7 @@
 
 swing:
   name: Swing
-  description: Swing at your target dealing 1 physical damage + 70% of Grit
+  description: Swing at your target dealing 1 physical damage + 70% of whichever stat is highest between Grit and FLow.
   level_req: 0 
   can_be_practiced: True
   must_be_fighting: True
@@ -34,23 +34,49 @@ double whack:
   target_self_is_valid: False
   target_others_is_valid: True
   hp_cost: 0
-  mp_cost: 0
-  cooldown: 2
+  mp_cost: 10
+  cooldown: 1
   script_to_run: DoubleWhack
+  use_perspectives:
+    you on you:           'You whack and hit yourself!'
+    you on other:         'You whack and hit #OTHER#'
+    user on user:         '#USER# whacks and hits themselves!'
+    user on you:          '#USER# whacks and hits you!'
+    user on other:        '#USER# whacks and hits #OTHER#'
+
+    you on you fail:      'You lose your footing while whacking at yourself!'
+    you on other fail:    'You lose your footing while whacking at #OTHER#'
+    user on user fail:    '#USER# loses their footing while whacking at themselves'
+    user on you fail:     '#USER# loses their footing while whacking at you!'
+    user on other fail:   '#USER# loses their footing while whacking at #OTHER#'
+
+smite:
+  name: Smite
+  description: Smite your target, dealing 1 magical damage + 75% Soul.
+  level_req: 0
+  can_be_practiced: True
+  must_be_fighting: True
+  target_self_is_valid: False
+  target_others_is_valid: True
+  hp_cost: 0
+  mp_cost: 5
+  cooldown: 1
+  script_to_run: Smite
   
   use_perspectives:
-    you on you:           'You whack yourself!'
-    you on other:         'You whack #OTHER#'
-    user on user:         '#USER# whacks themselves!'
-    user on you:          '#USER# whacks you!'
-    user on other:        '#USER# whacks #OTHER#'
+    you on you:           'You smite yourself!'
+    you on other:         'You smite #OTHER#'
+    user on user:         '#USER# smites themselves!'
+    user on you:          '#USER# smites you!'
+    user on other:        '#USER# smites #OTHER#'
 
-    you on you fail:      'You fail to whack yourself!'
-    you on other fail:    'You fail to whack #OTHER#'
-    user on user fail:    '#USER# fails to whack themselves'
-    user on you fail:     '#USER# fails to whack you!'
-    user on other fail:   '#USER# fails to whack #OTHER#'
+    you on you fail:      'You fail to smite yourself!'
+    you on other fail:    'You fail to smite #OTHER#'
+    user on user fail:    '#USER# fails to smites themselves'
+    user on you fail:     '#USER# fails to smites you!'
+    user on other fail:   '#USER# fails to smites #OTHER#'
 
+# enemy only skill
 nudge:
   name: Nudge
   description: Swing at your target dealing 1 physical damage + 70% of Grit
@@ -79,7 +105,7 @@ nudge:
   
 magic missile:
   name: Magic Missile
-  description: Fire a magic missile at your target dealing 4 magical damage + 100% of your Mind
+  description: Fire a magic missile at your target dealing 1 magical damage + 100% of your Mind
   level_req: 0
   can_be_practiced: True
   must_be_fighting: True

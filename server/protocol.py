@@ -50,7 +50,7 @@ class Protocol(protocol.Protocol):
                        .'  ;-- `.o.'
                       ,'  ; ~~--'~
                       ;  ;
-_______\|/__________\\\\;_\\\\//___\|/___________________\|/_______________________                                                                 
+_______\|/__________\\\\;_\\\\//___\|/___________________\|/_______________________                                               
         '''
         self.clear_screen()
         splash = f'@bwhite{splash}@normal'
@@ -72,9 +72,11 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
                 self.sendLine('Your @bgreenpassword@normal:')
 
             case self.REGISTER_USERNAME:
+                self.sendLine('Please use a unique username, not linking your Jorm account to anything private')
                 self.sendLine('Creating new account. enter your @bgreenusername@normal:')
 
             case self.REGISTER_PASSWORD1:
+                self.sendLine('Please use a unique password, only for Jorm')
                 self.sendLine('Enter your @bgreenpassword@normal:')
 
             case self.REGISTER_PASSWORD2:
@@ -105,10 +107,25 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
             self.change_state(self.REGISTER_USERNAME)
             return
         
+        if len(line) >= 21 or len(line) <= 5:
+            self.sendLine('Username must be between 4 and 20 characters long')
+            self.change_state(self.REGISTER_USERNAME)
+            return
+
+        if not line.isalnum():
+            self.sendLine('Username can only contain letters and numbers')
+            self.change_state(self.REGISTER_USERNAME)
+            return
+
         self.username = line
         self.change_state(self.REGISTER_PASSWORD1)
 
     def REGISTER_PASSWORD1(self, line):
+        if len(line) < 6:
+            self.sendLine('Your password must be a minimum of 6 character')
+            self.change_state(self.REGISTER_PASSWORD1)
+            return
+
         self.password = line
         self.change_state(self.REGISTER_PASSWORD2)
 

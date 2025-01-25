@@ -68,12 +68,19 @@ class Skill:
 
 class SkillSwing(Skill):
     def use(self):
+        grit = int(self.user.stats[StatType.GRIT]*.7)
+        flow = int(self.user.stats[StatType.FLOW]*.7)
+
+        bonus_damage = grit
+        if flow > grit: 
+            bonus_damage = flow
+
         super().use()
         if self.success:
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = 1 + int(self.user.stats[StatType.GRIT]*.7),
+                damage_value = 1 + bonus_damage,
                 damage_type = DamageType.PHYSICAL
                 )
             self.user.deal_damage(damage_obj)
@@ -125,7 +132,7 @@ class SkillMagicMissile(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = 4 + int(self.user.stats[StatType.MIND]),
+                damage_value = 4 + int(self.user.stats[StatType.MIND] * .75),
                 damage_type = DamageType.MAGICAL
                 )
             
@@ -140,6 +147,19 @@ class SkillMagicMissile(Skill):
                 )
             self.user.take_damage(damage_obj)
             '''
+
+class SkillSmite(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_actor = self.user,
+                damage_value = 1 + int(self.user.stats[StatType.SOUL]),
+                damage_type = DamageType.MAGICAL
+                )
+            
+            damage = self.user.deal_damage(damage_obj)
 
 class SkillBecomeEthereal(Skill):
     def use(self):
