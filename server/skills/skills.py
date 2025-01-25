@@ -155,7 +155,7 @@ class SkillSmite(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = 1 + int(self.user.stats[StatType.SOUL]),
+                damage_value = 1 + int(self.user.stats[StatType.SOUL * .75]),
                 damage_type = DamageType.MAGICAL
                 )
             
