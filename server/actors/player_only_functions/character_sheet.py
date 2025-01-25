@@ -26,20 +26,20 @@ def command_level_up(self, stat):
     match stat.lower():
         case 'grit':
             stat = StatType.GRIT
-            hp_bonus = 20
-            mp_bonus = 5
+            hp_bonus = 12
+            mp_bonus = 3
         case 'flow':
             stat = StatType.FLOW
-            hp_bonus = 20
+            hp_bonus = 10
             mp_bonus = 5
         case 'mind':
             stat = StatType.MIND
-            hp_bonus = 5
-            mp_bonus = 20
+            hp_bonus = 3
+            mp_bonus = 12
         case 'soul':
             stat = StatType.SOUL
-            hp_bonus = 10
-            mp_bonus = 15
+            hp_bonus = 7
+            mp_bonus = 8
         case _:
             self.sendLine('You can only level up Grit, Flow, Mind and Soul')
             return
