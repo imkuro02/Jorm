@@ -1,0 +1,43 @@
+# WIP
+
+loot_1:
+  grit head 1: 0.01
+  grit body 1: 0.01
+  grit weapon 1: 0.01
+  flow head 1: 0.01
+  flow body 1: 0.01
+  flow weapon 1: 0.01
+  mind head 1: 0.01
+  mind body 1: 0.01
+  mind weapon 1: 0.01
+  soul head 1: 0.01
+  soul body 1: 0.01
+  soul weapon 1: 0.01
+
+loot_3:
+  grit head 3: 0.01
+  grit body 3: 0.01
+  grit weapon 3: 0.01
+  flow head 3: 0.01
+  flow body 3: 0.01
+  flow weapon 3: 0.01
+  mind head 3: 0.01
+  mind body 3: 0.01
+  mind weapon 3: 0.01
+  soul head 3: 0.01
+  soul body 3: 0.01
+  soul weapon 3: 0.01
+
+loot_6:
+  grit head 6: 0.01
+  grit body 6: 0.01
+  grit weapon 6: 0.01
+  flow head 6: 0.01
+  flow body 6: 0.01
+  flow weapon 6: 0.01
+  mind head 6: 0.01
+  mind body 6: 0.01
+  mind weapon 6: 0.01
+  soul head 6: 0.01
+  soul body 6: 0.01
+  soul weapon 6: 0.01

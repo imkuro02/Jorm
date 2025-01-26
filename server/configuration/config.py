@@ -2,6 +2,7 @@ import yaml
 from enum import Enum, auto
 import configuration.map_loader
 import csv
+import os
 
 class ItemType:
     MISC = 'misc'
@@ -112,11 +113,16 @@ CONSUMABLE_USE_PERSPECTIVES = {}
 
 def load():
     #SKILLS = {}
-    with open('configuration/skills.yaml', 'r') as file:
-        SKILLS_UNFILTERED = yaml.safe_load(file)
-        for i in SKILLS_UNFILTERED:
-            if 'template' not in i:
-                SKILLS[i] = SKILLS_UNFILTERED[i]
+    SKILLS_DIRECTORY = 'configuration/skills/'
+    for root, dirs, files in os.walk(SKILLS_DIRECTORY):
+        for filename in files:
+            if filename.endswith('.yaml'):
+                file_path = os.path.join(root, filename)
+                with open(file_path, 'r') as file:
+                    ALL_SKILLS = yaml.safe_load(file)
+                    for i in ALL_SKILLS:
+                        if 'template' not in i:
+                            SKILLS[i] = ALL_SKILLS[i]
 
     #ITEMS = {}
     with open("configuration/items.yaml", "r") as file:
@@ -168,11 +174,16 @@ def load():
         ITEMS[_item['premade_id']] = item
 
     #ENEMIES = {}
-    with open('configuration/enemies.yaml', 'r') as file:
-        ALL_ENEMIES = yaml.safe_load(file)
-        for i in ALL_ENEMIES:
-            if 'template' not in i:
-                ENEMIES[i] = ALL_ENEMIES[i]
+    ENEMIES_DIRECTORY = 'configuration/enemies/'
+    for root, dirs, files in os.walk(ENEMIES_DIRECTORY):
+        for filename in files:
+            if filename.endswith('.yaml'):
+                file_path = os.path.join(root, filename)
+                with open(file_path, 'r') as file:
+                    ALL_ENEMIES = yaml.safe_load(file)
+                    for i in ALL_ENEMIES:
+                        if 'template' not in i:
+                            ENEMIES[i] = ALL_ENEMIES[i]
 
     '''
     #WORLD = {}

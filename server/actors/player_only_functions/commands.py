@@ -26,7 +26,7 @@ from actors.player_only_functions.character_sheet import (
 
 from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin,
-    command_load_item, command_export, command_help, prompt, 
+    command_load_item, command_load_npcs, command_export, command_help, prompt, 
     command_send_prompt, command_reload_config
 )
 
@@ -94,7 +94,8 @@ commands = {
     'admin':    'command_grant_admin',
 
     'export': 'command_export',
-    'load':   'command_load_item',
+    'item':   'command_load_item',
+    'npcs':   'command_load_npcs',
     'mexp':    'command_gain_exp',
     'reload':   'command_reload_config'
 }

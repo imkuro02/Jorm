@@ -121,13 +121,21 @@ def command_update_item(self, line):
 @check_no_empty_line
 def command_load_item(self, line):
     data = config.ITEMS
-
     if line not in data:
         self.sendLine(f'{line} is not a premade item')
         return
-
     item = items.load_item(line)
     self.inventory_manager.add_item(item)
+
+@check_is_admin
+@check_no_empty_line
+def command_load_npcs(self, line):
+    data = config.ENEMIES
+    if line not in data:
+        self.sendLine(f'{line} is not a premade npc')
+        return
+    from actors.npcs import create_enemy
+    create_enemy(self.room, line)
 
 def command_export(self, line):
     list_of_entities = [entity.name for entity in self.room.entities.values()]

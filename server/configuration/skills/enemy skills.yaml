@@ -1,0 +1,25 @@
+nudge:
+  name: Nudge
+  description: Swing at your target dealing 1 physical damage + 70% of Grit
+  level_req: 0 
+  can_be_practiced: False
+  must_be_fighting: True
+  target_self_is_valid: False
+  target_others_is_valid: True
+  hp_cost: 0
+  mp_cost: 0
+  cooldown: 1
+  script_to_run: Swing
+  
+  use_perspectives:
+    you on you:           'You nudge yourself!'
+    you on other:         'You nudge #OTHER#'
+    user on user:         '#USER# nudges themselves!'
+    user on you:          '#USER# nudges you!'
+    user on other:        '#USER# nudges #OTHER#'
+
+    you on you fail:      'You fails to nudge yourself!'
+    you on other fail:    'You fails to nudge #OTHER#'
+    user on user fail:    '#USER# fails to nudge themselves'
+    user on you fail:     '#USER# fails to nudge you!'
+    user on other fail:   '#USER# fails to nudge #OTHER#'
