@@ -11,3 +11,26 @@ def command_shout(self, line):
         f'You shout "{line}"',
         f'{self.pretty_name()} shouts from {self.room.name} "{line}"',
         worldwide = True)
+
+import random
+def command_roll(self, line):
+    rmin = 0
+    rmax = 100
+
+    if line != '':
+        try:
+            line = int(line)
+            rmax = line
+        except Exception as e:
+            self.sendLine('The roll argument must be an intiger')
+            return
+
+    if rmax <= 0:
+        self.sendLine('The roll argument must be 1 or higher')
+        return
+
+    roll = random.randint(rmin,rmax)
+    self.simple_broadcast(
+        f'You roll: @green{roll}@normal',
+        f'{self.pretty_name()} rolls: @green{roll}@normal')
+    
