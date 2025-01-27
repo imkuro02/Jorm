@@ -24,6 +24,8 @@ class Player(Actor):
         if self.room != None:
             self.room.move_player(self, silent = True)
 
+        
+
        
 
         

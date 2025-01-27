@@ -91,6 +91,8 @@ class Actor:
             }
 
         self.cooldown_manager = CooldownManager(self)
+
+        self.recently_send_message_count = 0
    
     def pretty_name(self):
         output = ''
@@ -143,6 +145,8 @@ class Actor:
         return output
 
     def tick(self):
+        if self.recently_send_message_count > 0:
+            self.recently_send_message_count -= 1
         if self.status != ActorStatusType.FIGHTING:
             self.cooldown_manager.unload_all_cooldowns()
         
@@ -205,7 +209,11 @@ class Actor:
             self.room = None
 
     def simple_broadcast(self, line_self, line_others, worldwide = False):
-        #print(self.name,[line_self,line_others])
+        self.recently_send_message_count += 100
+        if self.recently_send_message_count >= 500:
+            self.recently_send_message_count = 1000
+            return
+
         if self.room == None:
             return
 
