@@ -3,7 +3,7 @@ octopus:
   description: A big slimy floating octopus, atleast you are 50% certain its not a beholder.
   stats:
     hp: 250
-    mp: 40
+    mp: 400
     armor: 4
     marmor: 3
     grit: 25
@@ -11,22 +11,17 @@ octopus:
     mind: 0
     soul: 0
     exp: 12
-  loot:
-    grit trinket 9: 0.1
-    flow trinket 9: 0.1
-    mind trinket 9: 0.1
-    soul trinket 6: 0.1
-  skills: 
+  loot: level_9
+  skills:
     nudge: 75
-    mage armor: 100
-
+    mage armor: 80
   combat_loop:
-    - skill: nudge
-      target: re
-    - skill: nudge
-      target: re
     - skill: mage armor
       target: s
+    - skill: nudge
+      target: re
+    - skill: nudge
+      target: re
     - skill: nudge
       target: re
     - skill: nudge

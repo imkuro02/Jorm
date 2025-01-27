@@ -77,3 +77,4 @@ class AIBasic(AI):
         self.actor.combat_loop.pop(0)
 
         self.actor.finish_turn()
+

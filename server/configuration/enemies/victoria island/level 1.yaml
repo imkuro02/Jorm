@@ -13,22 +13,7 @@ shroom:
     mind: 0
     soul: 0
     exp: 1
-  loot:
-    red potion: 0.01
-    blue potion: 0.01
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
-    soul weapon 1: 0.01
+  loot: level_1
   skills:
     nudge: 75
   combat_loop:
@@ -50,20 +35,7 @@ rat:
     soul: 0
     exp: 1
     lvl: 100000
-  loot:
-    red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+  loot: level_1
   skills:
     nudge: 75
   combat_loop:
@@ -84,20 +56,7 @@ spore:
     mind: 0
     soul: 0
     exp: 1
-  loot:
-    red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+  loot: level_1
   skills:
     nudge: 75
   combat_loop:
@@ -118,20 +77,7 @@ wood_stump:
     mind: 0
     soul: 0
     exp: 1
-  loot:
-    red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+  loot: level_1
   skills:
     nudge: 75
   combat_loop:
@@ -152,20 +98,7 @@ snail:
     mind: 0
     soul: 0
     exp: 1
-  loot:
-    red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+  loot: level_1
   skills:
     nudge: 75
   combat_loop:

@@ -13,20 +13,7 @@ orange mushroom:
     mind: 0
     soul: 0
     exp: 3
-  loot:
-    red potion: 0.1
-    grit head 1: 0.01
-    grit body 1: 0.01
-    grit weapon 1: 0.01
-    flow head 1: 0.01
-    flow body 1: 0.01
-    flow weapon 1: 0.01
-    mind head 1: 0.01
-    mind body 1: 0.01
-    mind weapon 1: 0.01
-    soul head 1: 0.01
-    soul body 1: 0.01
-    soul weapon 1: 0.01
+  loot: level_3
   skills:
     nudge: 75
   combat_loop:
@@ -47,27 +34,11 @@ green_slime:
     mind: 10
     soul: 10
     exp: 3
-  loot:
-    red potion: 0.1
-    grit head 3: 0.01
-    grit body 3: 0.01
-    grit weapon 3: 0.01
-    flow head 3: 0.01
-    flow body 3: 0.01
-    flow weapon 3: 0.01
-    mind head 3: 0.01
-    mind body 3: 0.01
-    mind weapon 3: 0.01
-    soul head 3: 0.01
-    soul body 3: 0.01
-    soul weapon 3: 0.01
+  loot: level_3
   skills:
     nudge: 75
-    double whack: 75
   combat_loop:
     - skill: nudge
-      target: re
-    - skill: double whack
       target: re
 
 # level 3 mob
@@ -84,27 +55,11 @@ spider:
     mind: 10
     soul: 10
     exp: 3
-  loot:
-    red potion: 0.1
-    grit head 3: 0.01
-    grit body 3: 0.01
-    grit weapon 3: 0.01
-    flow head 3: 0.01
-    flow body 3: 0.01
-    flow weapon 3: 0.01
-    mind head 3: 0.01
-    mind body 3: 0.01
-    mind weapon 3: 0.01
-    soul head 3: 0.01
-    soul body 3: 0.01
-    soul weapon 3: 0.01
+  loot: level_3
   skills:
     nudge: 75
-    double whack: 75
   combat_loop:
     - skill: nudge
-      target: re
-    - skill: double whack
       target: re
 
 # level 3 mob
@@ -121,27 +76,11 @@ wandering_rock:
     mind: 10
     soul: 10
     exp: 3
-  loot:
-    red potion: 0.1
-    grit head 3: 0.01
-    grit body 3: 0.01
-    grit weapon 3: 0.01
-    flow head 3: 0.01
-    flow body 3: 0.01
-    flow weapon 3: 0.01
-    mind head 3: 0.01
-    mind body 3: 0.01
-    mind weapon 3: 0.01
-    soul head 3: 0.01
-    soul body 3: 0.01
-    soul weapon 3: 0.01
+  loot: level_3
   skills:
     nudge: 75
-    double whack: 75
   combat_loop:
     - skill: nudge
-      target: re
-    - skill: double whack
       target: re
 
 # level 3 mob
@@ -158,27 +97,11 @@ pig:
     mind: 0
     soul: 0
     exp: 3
-  loot:
-    red potion: 0.1
-    grit head 3: 0.01
-    grit body 3: 0.01
-    grit weapon 3: 0.01
-    flow head 3: 0.01
-    flow body 3: 0.01
-    flow weapon 3: 0.01
-    mind head 3: 0.01
-    mind body 3: 0.01
-    mind weapon 3: 0.01
-    soul head 3: 0.01
-    soul body 3: 0.01
-    soul weapon 3: 0.01
+  loot: level_3
   skills:
     nudge: 75
-    double whack: 75
   combat_loop:
     - skill: nudge
-      target: re
-    - skill: double whack
       target: re
 
 

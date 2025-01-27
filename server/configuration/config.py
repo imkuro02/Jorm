@@ -109,6 +109,7 @@ SKILLS = {}
 ITEMS = {}
 ENEMIES = {}
 WORLD = {}
+LOOT = {}
 CONSUMABLE_USE_PERSPECTIVES = {}
 
 def load():
@@ -123,6 +124,18 @@ def load():
                     for i in ALL_SKILLS:
                         if 'template' not in i:
                             SKILLS[i] = ALL_SKILLS[i]
+
+    #SKILLS = {}
+    LOOT_DIRECTORY = 'configuration/loot_tables/'
+    for root, dirs, files in os.walk(LOOT_DIRECTORY):
+        for filename in files:
+            if filename.endswith('.yaml'):
+                file_path = os.path.join(root, filename)
+                with open(file_path, 'r') as file:
+                    ALL_LOOT = yaml.safe_load(file)
+                    for i in ALL_LOOT:
+                        if 'template' not in i:
+                            LOOT[i] = ALL_LOOT[i]
 
     #ITEMS = {}
     with open("configuration/items.yaml", "r") as file:

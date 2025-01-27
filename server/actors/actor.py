@@ -209,10 +209,7 @@ class Actor:
             self.room = None
 
     def simple_broadcast(self, line_self, line_others, worldwide = False):
-        self.recently_send_message_count += 100
-        if self.recently_send_message_count >= 500:
-            self.recently_send_message_count = 1000
-            return
+        
 
         if self.room == None:
             return

@@ -10,7 +10,7 @@ from configuration.config import StatType, ItemType, ENEMIES, ITEMS
 
 from items.manager import load_item
 
-from configuration.config import ITEMS
+from configuration.config import ITEMS, LOOT
 
 def create_enemy(room, enemy_id):
     if enemy_id not in ENEMIES:
@@ -25,28 +25,34 @@ def create_enemy(room, enemy_id):
     stats = enemy['stats']
     skills = enemy['skills']
     combat_loop = enemy['combat_loop']
-    loot = enemy['loot']
+    _loot = enemy['loot']
+    loot = {}
+    #print(enemy['name'],LOOT[_loot],'XD')
+    loot = LOOT[_loot]
+        
+
     for item in loot.keys():
         #print(loot)
         if item not in ITEMS:
             print(item, 'does not exist in loot table for ', enemy_id)
-    e = Enemy(name, room, stats, skills, combat_loop, loot, enemy_ai.AIBasic)
+    e = Enemy(name, room, stats, loot, skills, combat_loop)
     e.description = enemy['description']
 
 
+
 class Enemy(Actor):
-    def __init__(self, name, room, stats, skills, combat_loop, loot, ai):
+    def __init__(self, name, room, stats, loot, skills, combat_loop):
         super().__init__(name, room)
         self.stats = {**self.stats, **stats}
         #self.stats = 
         self.stats[StatType.HPMAX] = self.stats[StatType.HP]
         self.stats[StatType.MPMAX] = self.stats[StatType.MP]
 
+        self.loot = copy.deepcopy(loot)
         self.skills = copy.deepcopy(skills)
         self.combat_loop = copy.deepcopy(combat_loop)
-        self.loot = copy.deepcopy(loot)
 
-        self.ai = ai(self)
+        self.ai = enemy_ai.AIBasic(self)
 
         self.room.move_enemy(self)
 

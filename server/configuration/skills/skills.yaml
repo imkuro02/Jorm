@@ -22,6 +22,7 @@ ethereal:
     user on user fail:    '#USER# loses their focus'
     user on you fail:     '#USER# loses their focus on you'
     user on other fail:   '#USER# loses their focus on #OTHER#'
+  
 
 bash:
   name: Bash
