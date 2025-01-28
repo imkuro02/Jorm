@@ -60,10 +60,10 @@ soul body 3,Fine silk robe,20,20,0,0,,1,2,0,0,,0,0,0,0,,0,0,0,11,3,body,A robe m
 soul trinket 3,Sigil,5,15,0,0,,1,1,0,0,,0,0,0,2,,0,0,0,11,3,trinket,May your faith protect you
 soul weapon 3,Holy emblem,0,0,0,0,,0,0,0,0,,0,0,0,4,,0,0,0,11,3,weapon,"The emblem of a long forgotten god, whether they exist or not.. only god knows"
 ,,,,,,,,,,,,,,,,,,,,,,,
-grit head 6,Iron cap,45,-10,0,20,,3,1,0,0,,0,0,0,0,,13,0,0,0,6,head,"A polished Iron cap, it distorts your face when you use it like a mirror"
-grit body 6,Iron chainmail,45,-10,0,20,,4,2,0,0,,0,0,0,0,,13,0,0,0,6,body,A long shirt made of small Iron rings
+grit head 6,Iron cap,45,-10,0,20,,3,1,0,0,,0,0,0,0,,13,0,0,0,6,head,"A polished iron cap, it distorts your face when you use it like a mirror"
+grit body 6,Iron chainmail,45,-10,0,20,,4,2,0,0,,0,0,0,0,,13,0,0,0,6,body,A long shirt made of small iron rings
 grit trinket 6,Iron shield,20,-5,0,20,,2,1,0,0,,3,0,0,0,,13,0,0,0,6,trinket,"An iron shield, strong yet balanced. It feels solid in hand"
-grit weapon 6,Longsword,0,0,0,0,,0,0,0,0,,6,0,0,0,,13,0,0,0,6,weapon,A sword forged of Iron with a handle wrapped in a red cloth
+grit weapon 6,Longsword,0,0,0,0,,0,0,0,0,,6,0,0,0,,13,0,0,0,6,weapon,A sword forged of iron with a handle wrapped in a red cloth
 flow head 6,Fine cloth hood,25,15,0,0,,2,1,0,0,,0,0,0,0,,0,13,0,0,6,head,A black hood of excellent quality
 flow body 6,Fine cloth cloak,25,15,0,0,,2,1,0,0,,0,0,0,0,,0,13,0,0,6,body,A long black cloak of excellent quality
 flow trinket 6,Field dagger,5,5,0,0,,0,0,0,0,,0,4,0,0,,0,13,0,0,6,trinket,"A lightweight dagger, perfect for quick, precise strikes"
