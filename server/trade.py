@@ -115,6 +115,10 @@ class TradeManager:
 
 
     def trade_accept(self, line):
+        if self.trade == None:
+            self.sendLine('You are not in a trade')
+            return
+        
         self.trade.accept(self.actor)
 
     def trade_offer(self, line):

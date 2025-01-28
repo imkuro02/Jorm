@@ -11,6 +11,7 @@ class Item:
 
         self.keep = False
         self.owner = None # the inventory manager of this item
+        self.new = True # show if item is newly added to inv
     
     def pretty_name(self):
         return self.name
@@ -41,6 +42,7 @@ class Item:
     def identify(self, identifier = None):
         output = f'{self.name} {"@red(K)@normal" if self.keep else ""}\n'
         output += f'@cyan{self.description}@normal\n'
+        self.new = False
         return output
 
     def use(self, user, target):

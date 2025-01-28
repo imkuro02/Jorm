@@ -272,6 +272,7 @@ _______\|/__________\\\\;_\\\\//___\|/___________________\|/____________________
                 item = self.actor.inventory_manager.items[item_id]
                 self.actor.inventory_equip(item, forced = True)
 
+        self.actor.inventory_manager.all_items_set_new(False)
         self.state = self.PLAY
 
         if actor == None:
