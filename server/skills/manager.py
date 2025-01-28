@@ -44,7 +44,8 @@ def skill_checks(user, target, skill_id):
             error(user, f'{skill_name} can only be used during a fight')
             return False
 
-    if user.status == ActorStatusType.FIGHTING and target.status != ActorStatusType.FIGHTING:
+    # allow using skills on dead targets
+    if user.status == ActorStatusType.FIGHTING and (target.status != ActorStatusType.FIGHTING and target.status != ActorStatusType.DEAD):
         error(user, f'You are in a fight but {target.name} is not participating!')
         return False
 

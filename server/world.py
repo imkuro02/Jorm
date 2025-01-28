@@ -89,6 +89,7 @@ class Room:
         #if player.room != None:
         if player in player.room.entities.values():
             self.remove_player(player)
+            
         player.room = self
         self.entities[player.id] = player
         if not silent:

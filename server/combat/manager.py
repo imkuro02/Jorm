@@ -79,6 +79,7 @@ class Combat:
         self.initiative()
         
     def add_participant(self, participant):
+        participant.status = ActorStatusType.FIGHTING
         if participant.id in self.participants:
             return # already participating in combat
         self.participants[participant.id] = participant

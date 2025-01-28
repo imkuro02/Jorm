@@ -60,7 +60,7 @@ class PartyManager:
    
     def party_create(self, line):
         if self.party != None:
-            self.owner.sendLine('You are already in a party')
+            self.actor.sendLine('You are already in a party')
         self.party = Party(self.actor)
         self.actor.sendLine('You create a party')
         self.clear_invites()
@@ -96,6 +96,7 @@ class PartyManager:
         if self.party != None:
             self.owner.sendLine('You are already in a party')
             return
+        
         inviter = self.actor.get_entity(line)
         if inviter == None:
             return
@@ -103,7 +104,7 @@ class PartyManager:
         for i in self.invitations:
             if i.owner == inviter:
                 i.add_participant(self.actor)
-        self.clear_invites()
+                self.clear_invites()
 
     def party_kick(self, line):
         if self.party == None:

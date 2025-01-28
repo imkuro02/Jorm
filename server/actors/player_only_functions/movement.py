@@ -40,6 +40,7 @@ def command_go(self, line):
             ) 
         return
 
+    old_room = self.room
     new_room = exits[direction]
 
     self.simple_broadcast(
@@ -59,6 +60,8 @@ def command_go(self, line):
         if self.party_manager.party.owner == self:
             for par in self.party_manager.party.participants.values():
                 if par == self:
+                    continue
+                if par.room != old_room:
                     continue
                 par.command_go(line)
 

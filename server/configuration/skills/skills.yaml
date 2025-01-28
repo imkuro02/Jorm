@@ -194,3 +194,28 @@ swing:
     user on user fail:    '#USER# loses their footing while swinging at themselves'
     user on you fail:     '#USER# loses their footing while swinging at you!'
     user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
+
+
+ressurect:
+  name: Ressurect
+  description: 'You become ethereal for 5 turns, you become immune to physical damage, but vurnerable to magical damage.'
+  level_req: 1
+  can_be_practiced: False
+  must_be_fighting: False
+  target_self_is_valid: False
+  target_others_is_valid: True
+  hp_cost: 0
+  mp_cost: 0
+  cooldown: 1
+  script_to_run: Ressurect
+  use_perspectives:
+    you on you:           'You focus, and begin to fade'
+    you on other:         'You focus, and #OTHER# begins to fade'
+    user on user:         '#USER# focuses, and begins to fade'
+    user on you:          '#USER# focuses, and you begin to fade'
+    user on other:        '#USER# focuses, and #OTHER# begins to fade'
+    you on you fail:      'You lose your focus'
+    you on other fail:    'You lose your focus on #OTHER#'
+    user on user fail:    '#USER# loses their focus'
+    user on you fail:     '#USER# loses their focus on you'
+    user on other fail:   '#USER# loses their focus on #OTHER#'

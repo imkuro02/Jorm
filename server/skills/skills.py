@@ -1,4 +1,4 @@
-from configuration.config import AffType, DamageType, StatType
+from configuration.config import AffType, DamageType, StatType, ActorStatusType
 #import affects.manager as aff_manager
 import affects.affects as affects
 from combat.manager import Damage
@@ -187,6 +187,21 @@ class SkillMageArmor(Skill):
                 'Magically protected', f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
                 turns, reduction)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
+
+
+class SkillRessurect(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            res_power = self.users_skill_level*.5
+            if self.other.status == ActorStatusType.DEAD:
+                self.other.status = self.user.status
+                self.other.stats[StatType.HP] = int(self.other.stats[StatType.HPMAX] * res_power)
+                self.other.stats[StatType.MP] = int(self.other.stats[StatType.MPMAX] * res_power)
+                self.other.simple_broadcast('@yellowYou ressurect!@normal',f'{self.other.pretty_name()} ressurects')
+            else:
+                self.user.simple_broadcast('You chant but your ressurection does nothing',f'{self.user.pretty_name()} fails to ressurect')
+
 
 class SkillRegenHP30(Skill):
     def use(self):
