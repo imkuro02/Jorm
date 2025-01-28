@@ -93,3 +93,5 @@ soul head 9,Mitre,30,30,0,0,,2,3,0,0,,0,0,0,0,,0,0,0,15,9,head,A hat symbolizing
 soul body 9,White cloak,30,30,0,0,,2,3,0,0,,0,0,0,0,,0,0,0,15,9,body,A fine white cloak with gold linings
 soul trinket 9,Totem of undying,50,50,0,0,,3,3,0,0,,0,0,0,4,,0,0,0,15,9,trinket,It looks like a mandrake�
 soul weapon 9,White scepter,0,0,0,0,,0,0,0,0,,0,0,0,8,,0,0,0,15,9,weapon,A silver staff with an emblem of the sun on top
+my relic,RELIC OF RELIX,20,0,0,0,,1,1,0,0,,0,0,0,0,,0,0,0,0,99,relic,"and thy them relicet across the room very relicantly" - shadow
+
