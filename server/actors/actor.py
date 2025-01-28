@@ -47,7 +47,8 @@ class SlotsManager:
             EquipmentSlotType.HEAD:      None,
             EquipmentSlotType.BODY:      None,
             EquipmentSlotType.WEAPON:    None,
-            EquipmentSlotType.TRINKET:   None
+            EquipmentSlotType.TRINKET:   None,
+            EquipmentSlotType.RELIC:     None
         }
 
 class Actor:

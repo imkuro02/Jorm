@@ -40,14 +40,16 @@ class ActorStatusType:
 
 class EquipmentSlotType:
     HEAD =      'head'
-    BODY =  'body'
+    BODY =      'body'
     WEAPON =    'weapon'
     TRINKET =   'trinket'
+    RELIC   =   'relic'
     name = {
         HEAD: 'Head',
         BODY: 'Body',
         WEAPON: 'Weapon',
-        TRINKET: 'Trinket'
+        TRINKET: 'Trinket',
+        RELIC:   'Relic'
     }
     '''
     NECK =      'neck'
