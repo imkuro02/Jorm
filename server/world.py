@@ -1,5 +1,6 @@
 from actors.npcs import create_enemy
 from actors.player import Player
+from items.manager import load_item
 import time
 #from items import Item
 import uuid
@@ -85,7 +86,7 @@ class Room:
         if players_here and npcs_here:
             self.combat = Combat(self, participants)
         
-    def move_player(self, player, silent = False, instanced = False):
+    def move_player(self, player, silent = False):
         #if player.room != None:
         if player in player.room.entities.values():
             self.remove_player(player)
@@ -107,42 +108,29 @@ class Room:
  
 class InstancedRoom(Room):
 
-    def move_player(self, player, silent = False, instanced = False):
-        if not instanced:
-            instanced_room_id = self.uid+'/'+player.name
-            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits)
-            
-            room_template = WORLD['world'][self.uid]
+    def move_player(self, player, silent = False):
+        instanced_room_id = self.uid+'/'+player.name
+        self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.secret_exits, self.can_be_recall_site)
+        room_template = WORLD['world'][self.uid]
 
-            if 'enemies' in room_template:
-                for enemy_id in room_template['enemies']:
-                    create_enemy(self.world.rooms[instanced_room_id], enemy_id)
+        if 'enemies' in room_template:
+            for enemy_id in room_template['enemies']:
+                create_enemy(self.world.rooms[instanced_room_id], enemy_id)
 
-            self.world.rooms[instanced_room_id].move_player(player, instanced = True)
+        if 'items' in room_template:
+            for item_id in room_template['items']:
+                item = load_item(item_id)
+                self.world.rooms[instanced_room_id].inventory_manager.add_item(item)
 
-        else:
-            super().move_player(player)
+
+        self.world.rooms[instanced_room_id].move_player(player)
+
+
         
 class World:
     def __init__(self, factory):
         self.factory = factory
-        
         self.rooms = {}
-        '''
-        world = WORLD
-        for r in world['world']:
-            room = world['world'][r]
-            if 'instanced' in room:
-                self.rooms[r] = InstancedRoom(self, r, room['name'], room['description'], room['exits']) 
-            else:
-                self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits']) 
-
-            if 'enemies' in room:
-                for enemy in room['enemies']:
-                    #self.rooms[r].spawn_enemy(enemy)
-                    create_enemy(self.rooms[r], enemy)
-                    #print(r, enemy)
-        '''
 
     def reload(self):
         print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
@@ -161,16 +149,19 @@ class World:
                         e.room = None
                     del self.rooms[r]
 
-            if 'instanced' in room:
+            if room['instanced'] == True:
                 self.rooms[r] = InstancedRoom(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
             else:
                 self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
 
             if 'enemies' in room:
                 for enemy in room['enemies']:
-                    #self.rooms[r].spawn_enemy(enemy)
                     create_enemy(self.rooms[r], enemy)
-                    #print(r, enemy)
+
+            if 'items' in room:
+                for item_id in room['items']:
+                    item = load_item(item_id)
+                    self.rooms[r].inventory_manager.add_item(item)
 
 
 

@@ -21,7 +21,7 @@ def load_map():
         
         if i['_type'] == 'Room':
             
-           
+            #print(i['_subtitle'] == 'loading',i['_subtitle'] )
 
             rooms[i['_subtitle']] = {}
             room = rooms[i['_subtitle']]
@@ -32,15 +32,26 @@ def load_map():
             room['exits'] = {}
             room['secret_exits'] = {}
             room['can_be_recall_site'] = False
+            room['instanced'] = False
+
             if '_fillColor' in i:
                 #print(i['_subtitle'], i['_fillColor'])
                 room['can_be_recall_site'] = i['_fillColor'] == 'rgb(213, 229, 214)'
+                room['instanced'] = i['_fillColor'] == '#F6D5D5'
+                #print(room['instanced'])
 
             room['enemies'] = []
             for obj in i['objects']:
                 obj_name = obj['_name']
                 if 'enemy:' in obj_name:
                     room['enemies'].append(obj['_name'].replace('enemy:',''))
+
+            room['items'] = []
+            for obj in i['objects']:
+                obj_name = obj['_name']
+                if 'item:' in obj_name:
+                    room['items'].append(obj['_name'].replace('item:',''))
+                
             
 
             # work on dis yknow

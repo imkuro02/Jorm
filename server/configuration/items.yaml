@@ -58,3 +58,21 @@ rock:
   name: Rock
   description: Just a rock
   
+tutorial_paper_1:
+  premade_id: tutorial_paper_1
+  item_type: misc
+  name: A piece of paper
+  description: |
+    This little note reads
+    "not all exits are obvious, some are hidden, go north to proceed"...
+
+tutorial_paper_2:
+  premade_id: tutorial_paper_2
+  item_type: misc
+  name: Another piece of paper
+  description: |
+    This little note read
+    "You already figured it out, but loot dropped from enemies goes
+    directly into your inventory, you also got a new weapon!
+    Identify it and equip it with "equip [item name]... 
+    Then proceed north like last time"...
