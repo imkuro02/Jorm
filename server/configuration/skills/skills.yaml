@@ -106,7 +106,7 @@ cure light wounds:
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 25
-  cooldown: 2
+  cooldown: 1
   script_to_run: CureLightWounds
   use_perspectives:
     you on you:           'You pray for yourself'
