@@ -78,7 +78,7 @@ class Combat:
         self.round = 1
 
         # reset threat
-        for p in self.participant.values():
+        for p in self.participants.values():
             p.stats[StatType.THREAT] = 0 
 
         self.initiative()
