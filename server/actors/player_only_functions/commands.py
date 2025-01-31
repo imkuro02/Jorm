@@ -26,7 +26,7 @@ from actors.player_only_functions.character_sheet import (
 
 from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin,
-    command_load_item, command_load_npcs, command_export, command_help, prompt, 
+    command_load_item, command_load_npcs, command_export, command_help, prompt, command_ranks,
     command_send_prompt, command_reload_config
 )
 
@@ -51,7 +51,7 @@ one_letter_commands = {
 commands = {
     # da rest
     'help':     'command_help',
-
+    'ranks':    'command_ranks',
     'say':      'command_say',
     'shout':    'command_shout',
     'roll':     'command_roll',

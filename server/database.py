@@ -87,6 +87,37 @@ class Database:
         
         account = self.cursor.fetchone()
         return account
+
+    def find_all_accounts(self):
+        self.cursor.execute(
+            '''
+                SELECT unique_id, username, password 
+                FROM accounts 
+            ''')
+        
+        accounts = self.cursor.fetchall()
+
+        actor_objs = []
+        # Iterate through each account and create the actor object
+        for acc in accounts:
+            # Fetch account details
+            actor = self.read_actor(acc[0])  # Assuming acc[0] is the account ID or relevant identifier
+            
+            # Create actor_obj and append to the list
+            actor_obj = {
+                'name': acc[1],  # Assuming acc[1] is the account's name
+                'exp': actor['stats']['exp'],  # Extract experience points from actor stats
+                'lvl': actor['stats']['lvl']   # Extract level from actor stats
+            }
+            actor_objs.append(actor_obj)
+
+        # Sort actor_objs list from most experience to least experience
+        sorted_actor_objs = sorted(actor_objs, key=lambda x: x['exp'], reverse=True)
+
+        # Print the sorted list of actor objects
+        #for actor in sorted_actor_objs:
+        #    print(actor)
+        return sorted_actor_objs
         
     def create_new_account(self, unique_id, username, password):
         self.cursor.execute('''
@@ -331,3 +362,4 @@ class Database:
     def close(self):
         # Close the database connection
         self.conn.close()
+

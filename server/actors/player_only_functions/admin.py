@@ -23,6 +23,33 @@ def command_help(self, line):
 
     self.sendLine(content)
 
+def command_ranks(self, line):
+    limit = 20
+    if limit >= 50: limit = 50
+    if limit <= 1: limit = 1
+    t = utils.Table(4, 3)
+    ranks = self.factory.ranks
+    print(ranks)
+
+    t.add_data('Rank')
+    t.add_data('Level')
+    t.add_data('Name')
+    t.add_data('EXP')
+    
+    length = len(ranks)
+    if length >= limit:
+        length = limit
+    for i in range(0,length):
+        t.add_data(f'{i+1}. ')
+        t.add_data(ranks[i]['lvl'])
+        t.add_data(ranks[i]['name'])
+        t.add_data(ranks[i]['exp'])
+        
+    
+    output = t.get_table()
+    self.sendLine(output)
+
+
 def prompt(self):
     output = f'[@red{self.stats[StatType.HP]}@normal/@red{self.stats[StatType.HPMAX]}@normal '
     output += f'@cyan{self.stats[StatType.MP]}@normal/@cyan{self.stats[StatType.MPMAX]}@normal]'

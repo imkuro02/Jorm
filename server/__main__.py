@@ -6,6 +6,7 @@ from utils import logging
 import configuration.config as config
 config.load()
 
+
 class ServerFactory(protocol.Factory):
     def __init__(self):
         self.protocols = set()
@@ -17,12 +18,17 @@ class ServerFactory(protocol.Factory):
         tickloop.start(1 / self.tickrate)
 
         logging.info('Server started')
+
+        # where the actors will be stored for rank command
+        self.ranks = {}
         
     def tick(self):
         self.ticks_passed += 1
         self.world.tick()
         #for room in self.world.rooms.values():
         #    room.tick()
+        if self.ticks_passed % (30 * 120) == 0 or self.ticks_passed == 10:
+            self.ranks = self.db.find_all_accounts()
 
     def buildProtocol(self, addr):
         return Protocol(self)
