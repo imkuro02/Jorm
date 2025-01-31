@@ -76,6 +76,11 @@ class Combat:
         self.current_actor = None
         self.time_since_turn_finished = 0
         self.round = 1
+
+        # reset threat
+        for p in self.participant.values():
+            p.stats[StatType.THREAT] = 0 
+
         self.initiative()
         
     def add_participant(self, participant):
