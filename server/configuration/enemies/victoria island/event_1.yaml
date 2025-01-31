@@ -20,9 +20,9 @@ event_1:
     smite: 100
   combat_loop:
     - skill: mage armor
-      target: s
+      target: S
     - skill: cure light wounds
-      target: s
+      target: S
     - skill: double whack
       target: ER
     - skill: nudge
