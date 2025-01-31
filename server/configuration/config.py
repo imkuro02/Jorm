@@ -89,7 +89,10 @@ class StatType:
     EXP =       'exp'
     LVL =       'lvl'
     PP =        'pp'
-   # MONEY =     'money'
+
+    # not saved in db
+    THREAT =    'threat'
+    
     name = {
         HPMAX:  'Max Health',
         MPMAX:  'Max Magicka',
@@ -104,7 +107,9 @@ class StatType:
         EXP:    'Experience',
         LVL:    'Level',
         PP:     'Practice Points',
-        #MONEY:  'Gold Pieces'
+
+        # not saved in db
+        THREAT: 'Threat'
     }
 
 SKILLS = {}

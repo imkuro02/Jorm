@@ -34,7 +34,7 @@ bash:
   target_others_is_valid: True
   hp_cost: 0
   mp_cost: 0
-  cooldown: 3
+  cooldown: 6
   script_to_run: Bash
   use_perspectives:
     you on you:           'You bash yourself'

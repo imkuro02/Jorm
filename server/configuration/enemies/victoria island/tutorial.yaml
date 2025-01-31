@@ -17,4 +17,4 @@ tutorial_enemy_1:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: re
+      target: EHT

@@ -1,15 +1,31 @@
 import random
 from skills.manager import use_skill
 from configuration.config import ActorStatusType
-
+from configuration.config import StatType
 class Targets:
-    SELF =          's'
-    RANDOM_ENEMY =  're'
-    RANDOM_ALLY =   'ra'
-    LOWEST_ENEMY =  'le'
-    LOWEST_ALLY =   'la'
-    HIGHEST_ENEMY = 'he'
-    HIGHEST_ALLY =  'ha'
+    SELF =                  'S'     #
+    ENEMY_RANDOM =          'ER'    #
+    ENEMY_HIGHEST_HP =      'EHH'   #
+    ENEMY_LOWEST_HP =       'ELH'
+    ENEMY_HIGHEST_MP    =   'EHM'
+    ENEMY_LOWEST_MP     =   'ELM'
+    ENEMY_HIGHEST_THREAT =  'EHT'
+    ENEMY_LOWEST_THREAT =   'ELT'
+
+    ALLY_RANDOM =           'AR'
+    ALLY_HIGHEST_HP =       'AHH'   
+    ALLY_LOWEST_HP =        'ALH'
+    ALLY_HIGHEST_MP =       'AHM'
+    ALLY_LOWEST_MP =        'ALM'
+    ALLY_HIGHEST_THREAT =   'AHT'
+    ALLY_LOWEST_THREAT =    'ALT'
+  
+    
+   
+    
+    
+    
+    
 
 class AI:
     def __init__(self, actor):
@@ -30,8 +46,8 @@ class AI:
             return False
         return True
     
-    def get_target(self, target = Targets.RANDOM_ENEMY):
-        
+    def get_target(self, target = Targets.ENEMY_RANDOM):
+
         if target == Targets.SELF:
             return self.actor
         
@@ -41,11 +57,14 @@ class AI:
 
         match target:
 
-            case Targets.RANDOM_ENEMY:
+            case Targets.ENEMY_RANDOM:
                 return random.choice(enemies)
-            case Targets.RANDOM_ALLY:
+            case Targets.ALLY_RANDOM:
                 return random.choice(allies)
-
+            case Targets.ENEMY_HIGHEST_HP:
+                return max(enemies, key=lambda char: char.stats[StatType.HP])
+            case Targets.ENEMY_HIGHEST_THREAT:
+                return max(enemies, key=lambda char: char.stats[StatType.THREAT])
             #case Targets.LOWEST_ENEMY:
 
             #case Targets.LOWEST_ALLY:

@@ -37,7 +37,7 @@ class Damage:
                         )
 
                 self.damage_taker_actor.hp_mp_clamp_update()
-                return
+                return self.damage_value
 
         
         if self.damage_value <= 0:
@@ -46,7 +46,7 @@ class Damage:
                 f'You block',
                 f'{self.damage_taker_actor.pretty_name()} blocks'
                 )
-            return
+            return self.damage_value
 
         self.damage_taker_actor.stats[self.damage_to_stat ] -= self.damage_value
 
@@ -87,6 +87,8 @@ class Combat:
             f'You join the combat',
             f'{participant.pretty_name()} joins the combat',
         )
+        # reset threat to 0 at start of combat
+        participant.stats[StatType.THREAT] = 0 
 
     def tick(self):
         if self.current_actor == None:

@@ -18,7 +18,7 @@ shroom:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: re
+      target: ER
 
 # level 1 mob
 rat:
@@ -40,7 +40,7 @@ rat:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: re
+      target: ER
 
 # level 1 mob
 spore:
@@ -61,7 +61,7 @@ spore:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: re
+      target: ER
 
 # level 1 mob
 wood_stump:
@@ -82,7 +82,7 @@ wood_stump:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: re
+      target: ER
 
 # level 1 mob
 snail:
@@ -103,6 +103,6 @@ snail:
     nudge: 75
   combat_loop:
     - skill: nudge
-      target: re
+      target: ER
 
 

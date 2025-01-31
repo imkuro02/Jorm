@@ -17,19 +17,19 @@ octopus:
     mage armor: 80
   combat_loop:
     - skill: mage armor
-      target: s
+      target: S
     - skill: nudge
-      target: re
+      target: ER
     - skill: nudge
-      target: re
+      target: ER
     - skill: nudge
-      target: re
+      target: ER
     - skill: nudge
-      target: re
+      target: ER
     - skill: nudge
-      target: re
+      target: ER
     - skill: nudge
-      target: re
+      target: ER
     - skill: nudge
-      target: re
+      target: ER
 

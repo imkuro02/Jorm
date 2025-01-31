@@ -85,6 +85,8 @@ class Actor:
             StatType.LVL: 1,
             StatType.EXP: 0,
             StatType.PP: 0,
+
+            StatType.THREAT: 0
             }
 
         self.skills = {
@@ -188,6 +190,8 @@ class Actor:
     def deal_damage(self, damage_obj: Damage):
         damage_obj = self.affect_manager.deal_damage(damage_obj)
         damage_dealt = damage_obj.damage_taker_actor.take_damage(damage_obj)
+        print(damage_dealt)
+        self.stats[StatType.THREAT] += damage_dealt
         
 
 

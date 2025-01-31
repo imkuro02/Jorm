@@ -24,9 +24,9 @@ event_1:
     - skill: cure light wounds
       target: s
     - skill: double whack
-      target: re
+      target: ER
     - skill: nudge
-      target: re
+      target: ER
     - skill: nudge
-      target: re
+      target: ER
    
