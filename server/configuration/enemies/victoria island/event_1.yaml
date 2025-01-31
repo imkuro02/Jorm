@@ -4,10 +4,10 @@ event_1:
   stats:
     hp: 300
     mp: 400
-    armor: 6
-    marmor: 6
-    grit: 65
-    flow: 65
+    armor: 2
+    marmor: 2
+    grit: 30
+    flow: 30
     mind: 100
     soul: 100
     exp: 100
