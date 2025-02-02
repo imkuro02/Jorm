@@ -7,11 +7,11 @@ blue mushroom:
     mp: 0
     armor: 2
     marmor: 2
-    grit: 12
-    flow: 0
-    mind: 0
-    soul: 0
-    exp: 5
+    grit: 18
+    flow: 10
+    mind: 10
+    soul: 10
+    exp: 6
   loot: level_6
   skills:
     nudge: 75
@@ -28,9 +28,9 @@ octopus:
     armor: 4
     marmor: 3
     grit: 25
-    flow: 0
-    mind: 0
-    soul: 0
+    flow: 10
+    mind: 10
+    soul: 10
     exp: 12
   loot: level_6
   skills:
@@ -48,10 +48,10 @@ blue_slime:
     mp: 0
     armor: 2
     marmor: 2
-    grit: 12
-    flow: 0
-    mind: 0
-    soul: 0
+    grit: 18
+    flow: 10
+    mind: 10
+    soul: 10
     exp: 6
   loot: level_6
   skills:
@@ -69,10 +69,10 @@ red_slime:
     mp: 0
     armor: 2
     marmor: 2
-    grit: 12
-    flow: 0
-    mind: 0
-    soul: 0
+    grit: 18
+    flow: 10
+    mind: 10
+    soul: 10
     exp: 6
   loot: level_6
   skills:
