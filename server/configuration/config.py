@@ -118,8 +118,12 @@ ENEMIES = {}
 WORLD = {}
 LOOT = {}
 CONSUMABLE_USE_PERSPECTIVES = {}
+SPLASH_SCREENS = {}
 
 def load():
+    from configuration.splashscreens.splash import splash_screens
+    SPLASH_SCREENS['screens'] = splash_screens
+
     #SKILLS = {}
     SKILLS_DIRECTORY = 'configuration/skills/'
     for root, dirs, files in os.walk(SKILLS_DIRECTORY):

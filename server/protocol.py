@@ -2,9 +2,10 @@ from twisted.internet import protocol
 from actors.player import Player
 from items.manager import load_item, save_item
 import utils
-from configuration.config import StatType, ItemType
+from configuration.config import StatType, ItemType, SPLASH_SCREENS
 import uuid
 import copy
+import random
 
 IAC = b'\xff'     # Interpret as Command
 WILL = b'\xfb'    # Will Perform
@@ -34,25 +35,10 @@ class Protocol(protocol.Protocol):
         self.sendLine('\u001B[2J')
 
     def splash_screen(self):
-        splash = f'''
- _    _      _                            _            ___                      
-| |  | |    | |                          | |          |_  |                     
-| |  | | ___| | ___ ___  _ __ ___   ___  | |_ ___       | | ___  _ __ _ __ ___  
-| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \ | __/ _ \      | |/ _ \| '__| '_ ` _ \ 
-\  /\  /  __/ | (_| (_) | | | | | |  __/ | || (_) | /\__/ / (_) | |  | | | | | |
- \/  \/ \___|_|\___\___/|_| |_| |_|\___|  \__\___/  \____/ \___/|_|  |_| |_| |_|
-
-                       .-'~~~-.
-                     .'o  oOOOo`.       CURRENTLY ONLINE: {len(self.factory.protocols)}
-                    :~~~-.oOo   o`.     DISCORD: https://discord.gg/AZ98axtXc6
-                     `. \ ~-.  oOOo.
-                       `.; / ~.  OO:
-                       .'  ;-- `.o.'
-                      ,'  ; ~~--'~
-                      ;  ;
-_______\|/__________\\\\;_\\\\//___\|/___________________\|/_______________________                                               
-        '''
-        self.clear_screen()
+        splash = random.choice(SPLASH_SCREENS['screens'])
+        splash = 'Art source: https://www.asciiart.eu/plants/mushroom\n' + splash
+        splash = splash.replace('#DISCORD#','https://discord.gg/AZ98axtXc6')
+        splash = splash.replace('#ONLINE#',f'{len(self.factory.protocols)}')
         splash = f'@bwhite{splash}@normal'
         self.sendLine(splash)
 
