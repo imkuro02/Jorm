@@ -93,7 +93,7 @@ class Protocol(protocol.Protocol):
             self.change_state(self.REGISTER_USERNAME)
             return
         
-        if len(line) >= 21 or len(line) <= 4:
+        if len(line) >= 21 or len(line) <= 3:
             self.sendLine('Username must be between 4 and 20 characters long')
             self.change_state(self.REGISTER_USERNAME)
             return
