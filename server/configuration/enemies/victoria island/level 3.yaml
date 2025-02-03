@@ -8,10 +8,10 @@ orange mushroom:
     mp: 0
     armor: 1
     marmor: 1
-    grit: 10
-    flow: 0
-    mind: 0
-    soul: 0
+    grit: 12
+    flow: 10
+    mind: 10
+    soul: 10
     exp: 3
   loot: level_3
   skills:
@@ -92,10 +92,10 @@ pig:
     mp: 0
     armor: 1
     marmor: 1
-    grit: 9
-    flow: 0
-    mind: 0
-    soul: 0
+    grit: 12
+    flow: 10
+    mind: 10
+    soul: 10
     exp: 3
   loot: level_3
   skills:
