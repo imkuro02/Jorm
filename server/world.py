@@ -53,9 +53,10 @@ class Room:
                         for par in player_participant.party_manager.party.participants.values():
                             if par == player_participant:
                                 continue
-                            else:
-                                participants[par.id] = par
-                                players_here = True
+                            if par.room != self:
+                                continue
+                            participants[par.id] = par
+                            players_here = True
                     ### PARTY CODE
 
                 if type(i).__name__ == "Enemy":

@@ -66,6 +66,7 @@ class TradeManager:
    
     def trade_request(self, line):
         other = self.actor.get_entity(line)
+        print(other.name)
         # dont trade if no target found
         if other == None:
             self.actor.sendLine('Trade with who?')
@@ -93,16 +94,13 @@ class TradeManager:
 
         if self.actor == other.trade_manager.pending: 
             self.open_trade(other)
-            self.actor.simple_broadcast(
-                f'You accept {other.pretty_name()}\'s trade',
-                f'{self.actor.pretty_name()} accepts your trade request!'
-            )
+            self.actor.sendLine(f'You accept {other.pretty_name()}\'s trade')
+            other.sendLine(f'{self.actor.pretty_name()} accepts your trade request!')
         else:
             self.pending = other
-            self.actor.simple_broadcast(
-                f'You ask {other.pretty_name()} to trade (waiting for response)',
-                f'{self.actor.pretty_name()} asks you to trade ("trade with {self.actor.name}" or ignore to decline)'
-            )
+            self.actor.sendLine(f'You ask {other.pretty_name()} to trade (waiting for response)')
+            other.sendLine(f'{self.actor.pretty_name()} asks you to trade ("trade with {self.actor.name}" or ignore to decline)')
+
 
     def open_trade(self, other):
         # reset pending trades

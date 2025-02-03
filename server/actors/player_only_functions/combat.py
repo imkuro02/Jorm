@@ -174,9 +174,6 @@ def command_rest(self, line):
         self.affect_manager.unload_all_affects()
         return
 
-
-@check_not_in_combat
-@check_alive
 def command_party(self, line):
     self.party_manager.handle_party_message(line)
             
