@@ -1,0 +1,83 @@
+# level 9 mob
+skeleton_1:
+  name: Skeleton
+  description: A plain looking skeleton.
+  stats:
+    hp: 100
+    mp: 0
+    armor: 3
+    marmor: 3
+    grit: 26
+    flow: 10
+    mind: 10
+    soul: 10
+    exp: 9
+  loot: level_9
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: ER
+      
+# level 9 mob
+evil_eye:
+  name: Evil eye
+  description: A one eyed snake with two arms.
+  stats:
+    hp: 100
+    mp: 0
+    armor: 3
+    marmor: 3
+    grit: 10
+    flow: 26
+    mind: 10
+    soul: 10
+    exp: 9
+  loot: level_9
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: ER
+
+# level 9 mob
+thief:
+  name: Thief
+  description: A ragged man with a dull knife.
+  stats:
+    hp: 100
+    mp: 0
+    armor: 3
+    marmor: 3
+    grit: 10
+    flow: 26
+    mind: 10
+    soul: 10
+    exp: 9
+  loot: level_9
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: ER
+
+# level 9 mob
+horned_mushroom:
+  name: Horned Mushroom
+  description: A big mushroom with spiky horns growing out of its blue cap.
+  stats:
+    hp: 100
+    mp: 0
+    armor: 3
+    marmor: 3
+    grit: 26
+    flow: 10
+    mind: 10
+    soul: 10
+    exp: 9
+  loot: level_9
+  skills:
+    nudge: 75
+  combat_loop:
+    - skill: nudge
+      target: ER
