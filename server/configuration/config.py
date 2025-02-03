@@ -1,6 +1,6 @@
 import yaml
 from enum import Enum, auto
-import configuration.map_loader
+import configuration.map.map_loader
 import csv
 import os
 
@@ -145,14 +145,14 @@ def load():
                             LOOT[i] = ALL_LOOT[i]
 
     #ITEMS = {}
-    with open("configuration/items.yaml", "r") as file:
+    with open("configuration/items/items.yaml", "r") as file:
         ITEMS_UNFILTERED = yaml.safe_load(file)
         for i in ITEMS_UNFILTERED:
             if 'template' not in i:
                 ITEMS[i] = ITEMS_UNFILTERED[i]
 
     # Open and read the CSV file
-    with open('configuration/equipment.csv', mode="r") as file:
+    with open('configuration/items/equipment.csv', mode="r") as file:
         reader = csv.DictReader(file)  # Reads data as dictionaries
         items = [row for row in reader]  # Store all rows in a list
 
@@ -213,10 +213,10 @@ def load():
             if 'template' not in i:
                 WORLD[i] = WORLD_UNFILTERED[i]
     '''
-    WORLD['world'] = configuration.map_loader.load_map()
+    WORLD['world'] = configuration.map.map_loader.load_map()
     #print(WORLD)
 
-    with open("configuration/consumable_use_perspectives.yaml", "r") as file:
+    with open("configuration/items/consumable_use_perspectives.yaml", "r") as file:
         CONSUMABLE_USE_PERSPECTIVES_UNFILTERED = yaml.safe_load(file)
         for i in CONSUMABLE_USE_PERSPECTIVES_UNFILTERED:
             if 'template' not in i:

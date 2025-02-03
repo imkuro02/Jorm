@@ -1,4 +1,4 @@
-from actors.npcs import create_enemy
+from actors.enemy import create_enemy
 from actors.player import Player
 from items.manager import load_item
 import time

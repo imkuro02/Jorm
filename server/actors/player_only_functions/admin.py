@@ -160,7 +160,7 @@ def command_load_npcs(self, line):
     if line not in data:
         self.sendLine(f'{line} is not a premade npc')
         return
-    from actors.npcs import create_enemy
+    from actors.enemy import create_enemy
     create_enemy(self.room, line)
 
 def command_export(self, line):

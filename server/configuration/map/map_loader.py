@@ -4,7 +4,7 @@ import json
 
 def load_map():
     # Path to the JSON file
-    file_path = "configuration/map.json"
+    file_path = "configuration/map/map.json"
     data = ''
     # Open and read the JSON file
     with open(file_path, "r") as file:
