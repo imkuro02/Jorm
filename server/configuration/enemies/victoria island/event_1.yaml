@@ -1,6 +1,8 @@
 event_1:
-  name: Boss
-  description: boss boss boss boss
+  name: Doomed buccaneer
+  description: |
+    A towering, skeletal pirate captain wearing a tattered navy coat with golden trim. 
+    It's hollow eye sockets glow an eerie blue. while the body flickers like a fading memory.
   stats:
     hp: 300
     mp: 400
@@ -13,7 +15,7 @@ event_1:
     exp: 100
   loot: event_1
   skills:
-    nudge: 95
+    swing: 95
     mage armor: 100
     cure light wounds: 100
     double whack: 100
@@ -25,8 +27,8 @@ event_1:
       target: S
     - skill: double whack
       target: ER
-    - skill: nudge
+    - skill: swing
       target: ER
-    - skill: nudge
+    - skill: swing
       target: ER
    

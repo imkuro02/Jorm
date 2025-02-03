@@ -91,7 +91,8 @@ mind trinket 9,Ink and quill,0,40,0,0,,0,0,0,0,,0,0,4,0,,0,0,15,0,9,trinket,A bo
 mind weapon 9,Mage wand,0,0,0,0,,0,0,0,0,,0,0,8,0,,0,0,15,0,9,weapon,A gold engraved sliver rod with strange symbols engraved in the gold
 soul head 9,Mitre,30,30,0,0,,2,3,0,0,,0,0,0,0,,0,0,0,15,9,head,A hat symbolizing faith
 soul body 9,White cloak,30,30,0,0,,2,3,0,0,,0,0,0,0,,0,0,0,15,9,body,A fine white cloak with gold linings
-soul trinket 9,Totem of undying,50,50,0,0,,3,3,0,0,,0,0,0,4,,0,0,0,15,9,trinket,It looks like a mandrake�
+soul trinket 9,Totem of undying,50,50,0,0,,3,3,0,0,,0,0,0,4,,0,0,0,15,9,trinket,It looks like a mandrake
 soul weapon 9,White scepter,0,0,0,0,,0,0,0,0,,0,0,0,8,,0,0,0,15,9,weapon,A silver staff with an emblem of the sun on top
-event_1,Boss relic,20,0,0,0,,1,1,0,0,,0,0,0,0,,0,0,0,0,99,relic,"and thy them relicet across the room very relicantly" - shadow
-
+event_1,Old coin,10,10,0,0,,0,0,0,0,,1,1,1,1,,0,0,0,0,1,relic,"Holding this tarnished coin fills you with an unsettling sense of both luck and dread. 
+«And he who sailed never reached the harbor, for the harbor was yet to come in a future patch.» 
+  - kuro february 3rd 2025"
