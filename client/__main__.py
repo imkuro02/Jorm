@@ -12,7 +12,7 @@ SSL_KEY_FILE = "../server/server.key"  # Path to your SSL private key file
 
 async def handle_websocket(websocket):
     # Connect to the Telnet server
-    reader, writer = await telnetlib3.open_connection(MUD_SERVER, MUD_PORT)
+    reader, writer = await telnetlib3.open_connection(MUD_SERVER, MUD_PORT, encoding='utf8', force_binary=True)
 
     # Handle communication
     async def read_from_telnet():
