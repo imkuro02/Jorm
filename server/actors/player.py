@@ -6,6 +6,10 @@ from actors.player_only_functions.commands import one_letter_commands, commands
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands 
 
+import time
+
+
+
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
         self.protocol = protocol
@@ -24,10 +28,10 @@ class Player(Actor):
         if self.room != None:
             self.room.move_player(self, silent = True)
 
-        
-
-       
-
+        # meta data
+        self.date_of_creation = utils.get_unix_timestamp()
+        self.date_of_last_login = utils.get_unix_timestamp()
+        self.time_in_game = 0
         
 
     def check_if_admin(self):

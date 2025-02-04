@@ -233,6 +233,9 @@ class Protocol(protocol.Protocol):
         else: # load an existing actor
             self.actor = Player(self, _id = actor['actor_id'], name = actor['actor_name'], room = self.factory.world.rooms['loading'])
             self.actor.recall_site = actor['actor_recall_site'] 
+            self.actor.date_of_creation = actor['meta_data']['date_of_creation']
+            self.actor.time_in_game = actor['meta_data']['time_in_game']
+            #self.actor.date_of_last_login = actor['meta_data']['date_of_last_login']
 
             self.actor.stats.update(actor['stats'])
             self.actor.skills = actor['skills']

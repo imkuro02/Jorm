@@ -1,6 +1,6 @@
 import sqlite3
 import json
-
+import utils
 
 class Database:
     def __init__(self):
@@ -29,6 +29,9 @@ class Database:
             actor_id TEXT PRIMARY KEY NOT NULL,
             actor_name TEXT NOT NULL,
             actor_recall_site TEXT NOT NULL,
+            actor_date_of_creation INT NOT NULL,
+            actor_date_of_last_login INT NOT NULL,
+            actor_time_in_game INT NOT NULL,
             FOREIGN KEY(unique_id) REFERENCES users(unique_id)
         )''')
 
@@ -84,8 +87,10 @@ class Database:
                 SELECT unique_id, username, password 
                 FROM accounts WHERE username = ?
             ''', (username,))
-        
+
         account = self.cursor.fetchone()
+        
+        
         return account
 
     def find_all_accounts(self):
@@ -100,19 +105,21 @@ class Database:
         actor_objs = []
         # Iterate through each account and create the actor object
         for acc in accounts:
-            try:
-                # Fetch account details
-                actor = self.read_actor(acc[0])  # Assuming acc[0] is the account ID or relevant identifier
-                
-                # Create actor_obj and append to the list
-                actor_obj = {
-                    'name': acc[1],  # Assuming acc[1] is the account's name
-                    'exp': actor['stats']['exp'],  # Extract experience points from actor stats
-                    'lvl': actor['stats']['lvl']   # Extract level from actor stats
-                }
-                actor_objs.append(actor_obj)
-            except Exception as e:
-                print(e,acc)
+
+            # Fetch account details
+            actor = self.read_actor(acc[0])  # Assuming acc[0] is the account ID or relevant identifier
+            
+            # Create actor_obj and append to the list
+            actor_obj = {
+                'name': acc[1],  # Assuming acc[1] is the account's name
+                'exp': actor['stats']['exp'],  # Extract experience points from actor stats
+                'lvl': actor['stats']['lvl'],  # Extract level from actor stats
+                'date_of_creation': actor['meta_data']['date_of_creation'],
+                'date_of_last_login': actor['meta_data']['date_of_last_login'],
+                'time_in_game': actor['meta_data']['time_in_game']
+            }
+            actor_objs.append(actor_obj)
+
 
         # Sort actor_objs list from most experience to least experience
         sorted_actor_objs = sorted(actor_objs, key=lambda x: x['exp'], reverse=True)
@@ -140,17 +147,24 @@ class Database:
         my_dict['actor_id'] = actor_id
         my_dict['actor_name'] = actor.protocol.username
         my_dict['actor_recall_site'] = actor.recall_site
+        my_dict['actor_date_of_creation'] = actor.date_of_creation
+        my_dict['actor_date_of_last_login'] = actor.date_of_last_login
+        # append time spent in game
+        my_dict['actor_time_in_game'] = actor.time_in_game + (utils.get_unix_timestamp() - actor.date_of_last_login)
 
         self.cursor.execute('''
             INSERT INTO actors (
-                unique_id, actor_id, actor_name, actor_recall_site
+                unique_id, actor_id, actor_name, actor_recall_site, actor_date_of_creation, actor_date_of_last_login, actor_time_in_game
             ) VALUES (
-                :unique_id, :actor_id, :actor_name, :actor_recall_site
+                :unique_id, :actor_id, :actor_name, :actor_recall_site, :actor_date_of_creation, :actor_date_of_last_login, :actor_time_in_game
             )
             ON CONFLICT(unique_id) DO UPDATE SET
                 actor_id = excluded.actor_id,
                 actor_name = excluded.actor_name,
-                actor_recall_site = excluded.actor_recall_site
+                actor_recall_site = excluded.actor_recall_site,
+                actor_date_of_creation = excluded.actor_date_of_creation,
+                actor_date_of_last_login = excluded.actor_date_of_last_login,
+                actor_time_in_game = excluded.actor_time_in_game
         ''', my_dict)
         
         self.cursor.execute('''
@@ -176,8 +190,10 @@ class Database:
             DELETE FROM skills WHERE actor_id = ?
         ''', (actor_id,))
 
+        unequiped = []
         for eq_id in actor.slots_manager.slots.values():
             if eq_id != None:
+                unequiped.append(eq_id)
                 actor.inventory_unequip(actor.inventory_manager.items[eq_id], silent = True)
 
         my_dict = {}
@@ -209,6 +225,9 @@ class Database:
                 lvl = excluded.lvl,
                 pp = excluded.pp
         ''', my_dict)
+
+        for eq_id in unequiped:
+            actor.inventory_equip(actor.inventory_manager.items[eq_id], forced = True)
 
         my_dict = {}
         my_dict['actor_id'] = actor_id
@@ -249,6 +268,8 @@ class Database:
         self.conn.commit()
 
     def read_actor(self, unique_id):
+
+        
 
         self.cursor.execute('''
             SELECT actor_id FROM actors WHERE unique_id = ?
@@ -302,6 +323,18 @@ class Database:
         my_dict['actor_name'] = actor_name
         my_dict['actor_recall_site'] = actor_recall_site
 
+        self.cursor.execute('''
+            SELECT actor_date_of_creation, actor_date_of_last_login, actor_time_in_game FROM actors WHERE actor_id = ?
+        ''', (actor_id,))
+        
+        dates = self.cursor.fetchone()
+
+        my_dict['meta_data'] = {
+            'date_of_creation': dates[0],
+            'date_of_last_login':  dates[1],
+            'time_in_game': dates[2]
+        }
+
         my_dict['stats'] = {
             'hp_max': stats[1],
             'mp_max': stats[2],
@@ -333,6 +366,8 @@ class Database:
         my_dict['skills'] = {}
         for skill in skills:
             my_dict['skills'][skill[1]] = skill[2]
+
+       
 
         return my_dict
     

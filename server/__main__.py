@@ -28,6 +28,9 @@ class ServerFactory(protocol.Factory):
         #for room in self.world.rooms.values():
         #    room.tick()
         if self.ticks_passed % (30 * 120) == 0 or self.ticks_passed == 10:
+            for i in self.protocols:
+                if i.actor != None:
+                    self.db.write_actor(i.actor)
             self.ranks = self.db.find_all_accounts()
 
     def buildProtocol(self, addr):

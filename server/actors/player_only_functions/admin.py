@@ -27,13 +27,16 @@ def command_ranks(self, line):
     limit = 20
     if limit >= 50: limit = 50
     if limit <= 1: limit = 1
-    t = utils.Table(4, 3)
+    t = utils.Table(7, 3)
     ranks = self.factory.ranks
 
     t.add_data('Rank')
     t.add_data('Level')
     t.add_data('Name')
     t.add_data('EXP')
+    t.add_data('Created')
+    t.add_data('Last Login')
+    t.add_data('In game time')
     
     length = len(ranks)
     if length >= limit:
@@ -43,6 +46,9 @@ def command_ranks(self, line):
         t.add_data(ranks[i]['lvl'])
         t.add_data(ranks[i]['name'])
         t.add_data(ranks[i]['exp'])
+        t.add_data(utils.get_datetime_from_unix(ranks[i]['date_of_creation']))
+        t.add_data(utils.get_datetime_ago_from_unix(ranks[i]['date_of_last_login']))
+        t.add_data(utils.seconds_to_dhms(ranks[i]['time_in_game']))
         
     
     output = t.get_table()
