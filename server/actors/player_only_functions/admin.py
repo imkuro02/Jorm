@@ -43,7 +43,8 @@ def command_ranks(self, line):
     if length >= limit:
         length = limit
     for i in range(0,length):
-        t.add_data(f'{len(ranks)-i}. ')
+        #t.add_data(f'{len(ranks)-i}. ')
+        t.add_data(f'{i}. ')
         t.add_data(ranks[i]['lvl'])
         t.add_data(ranks[i]['name'])
         t.add_data(ranks[i]['exp'])
