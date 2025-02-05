@@ -29,7 +29,7 @@ def command_ranks(self, line):
     if limit <= 1: limit = 1
     t = utils.Table(7, 3)
     ranks = self.factory.ranks
-    ranks = ranks[::-1]
+    #ranks = ranks[::-1]
     
     t.add_data('Rank')
     t.add_data('Level')
