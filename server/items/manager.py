@@ -1,14 +1,15 @@
 
 #import skills
 import copy
-from configuration.config import ItemType, EquipmentSlotType, ITEMS, CONSUMABLE_USE_PERSPECTIVES
+from configuration.config import ItemType, EquipmentSlotType, ITEMS, CONSUMABLE_USE_PERSPECTIVES, StatType
 
 from items.misc import Item
 from items.consumable import Consumable
 from items.equipment import Equipment
 from items.error import ErrorItem
 
-def load_item(item_premade_id):
+import random
+def load_item(item_premade_id, unique_id = None): # unique_id is used for equipment seeds
 
     premade_id = item_premade_id
     if premade_id not in ITEMS:
@@ -23,11 +24,28 @@ def load_item(item_premade_id):
     if item_type == ItemType.EQUIPMENT:
         new_item = Equipment()
 
+        
+        
+
         for key in ITEMS[premade_id]['stats']:
             new_item.stats[key] = ITEMS[premade_id]['stats'][key]
 
         for key in ITEMS[premade_id]['requirements']:
             new_item.requirements[key] = ITEMS[premade_id]['requirements'][key]
+
+        # set unique ID now for the seed
+        rng_seed = str(unique_id)
+        myrandom = random.Random(rng_seed)
+        for i in range(0,myrandom.randrange(new_item.requirements[StatType.LVL])):
+            stat_to_affect = myrandom.choice([key for key in new_item.stats])
+            boost = myrandom.choice([-1,1,2])
+            if stat_to_affect in [StatType.HPMAX, StatType.MPMAX]:
+                boost = boost * 5
+            new_item.stats[stat_to_affect] += boost
+            new_item.requirements[stat_to_affect] += abs(boost) 
+        
+            
+        
 
         new_item.slot = ITEMS[premade_id]['slot']
 

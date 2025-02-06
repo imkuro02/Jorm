@@ -10,6 +10,10 @@
     
     
     <style>
+        @font-face {
+                font-family: myFirstFont;
+                src:url("MEK-Mono.otf");
+            }
         body {
             font-family: monospace;
             color: #fbf1c7;
@@ -18,6 +22,7 @@
             padding: 20px;
         }
         #output {
+            font-family: myFirstFont;
             height: calc(100vh - 175px); 
             overflow-y: auto;
             background-color: #000;
@@ -26,7 +31,7 @@
             border: 1px solid #ccc;
             margin-bottom: 10px;
             white-space: pre-wrap;
-            font-family: monospace;
+            
         }
         #input {
             width: 100%;

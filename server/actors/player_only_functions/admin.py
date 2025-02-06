@@ -185,12 +185,15 @@ def command_export(self, line):
             self.sendLine('cant find this item to export')
             return
 
+        self.sendLine(item.__dict__)
+        '''
         item_dict = item.to_dict()
         
         del item_dict['id']
         item_dict = {item_dict['name'].lower(): item_dict}
         yaml_text = yaml.dump(item_dict, default_flow_style=False)
         self.sendLine(yaml_text, color = False)
+        '''
 
     # export entity
     if best_match in list_of_entities:
