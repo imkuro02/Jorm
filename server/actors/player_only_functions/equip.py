@@ -46,6 +46,8 @@ def inventory_equip(self, item, forced = False):
         for stat_name in item.stats:
             stat_val = item.stats[stat_name]
             #print(stat_name, item.stats[stat_name])
+            if stat_name == StatType.HPMAX: self.stats[StatType.HP] += stat_val
+            if stat_name == StatType.MPMAX: self.stats[StatType.MP] += stat_val
             self.stats[stat_name] += stat_val
             #print(self.stats[stat_name])
         
@@ -68,7 +70,10 @@ def inventory_unequip(self, item, silent = False):
 
         for stat_name in item.stats:
             stat_val = item.stats[stat_name]
+            if stat_name == StatType.HPMAX: self.stats[StatType.HP] -= stat_val
+            if stat_name == StatType.MPMAX: self.stats[StatType.MP] -= stat_val
             self.stats[stat_name] -= stat_val
+            self.hp_mp_clamp_update()
 
         if silent:
             return
