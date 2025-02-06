@@ -34,6 +34,9 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
             new_item.requirements[key] = ITEMS[premade_id]['requirements'][key]
 
         # set unique ID now for the seed
+        if unique_id == None:
+            unique_id = new_item.id
+            
         rng_seed = str(unique_id)
         myrandom = random.Random(rng_seed)
         for i in range(0,myrandom.randrange(new_item.requirements[StatType.LVL])):
