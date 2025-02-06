@@ -57,18 +57,25 @@ def skill_checks(user, target, skill_id):
         error(user, f'{skill_name} is on cooldown!')
         return False
 
-    users_skill_level = user.skills[skill_id]
+    users_skill_level = 0
+    _users_skill_level = user.skills[skill_id]
+    for i in range(0,len(skill['script_values']['levels'])):
+        if _users_skill_level >= skill['script_values']['levels'][i]:
+            users_skill_level = i
 
-    hp_cost = skill['hp_cost'] 
-    mp_cost = skill['mp_cost'] 
+    hp_cost = 0
+    mp_cost = 0
 
-    if hp_cost > user.stats[StatType.HP] + 1:
-        error(user, f'You need atleast {hp_cost} HP to use {skill_name}')
-        return False
-    
-    if mp_cost > user.stats[StatType.MP]:
-        error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
-        return False
+    if 'mp_cost' in skill['script_values']:
+        if hp_cost > user.stats[StatType.HP] + 1:
+            hp_cost = skill['script_values']['hp_cost']['values'][users_skill_level]
+            error(user, f'You need atleast {hp_cost} HP to use {skill_name}')
+            return False
+    if 'mp_cost' in skill['script_values']:
+        mp_cost = skill['script_values']['mp_cost']['values'][users_skill_level]
+        if mp_cost > user.stats[StatType.MP]:
+            error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
+            return False
 
     user.stats[StatType.HP] -= hp_cost 
     user.stats[StatType.MP] -= mp_cost 
@@ -85,23 +92,20 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
             user.sendLine(f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
         
-        users_skill_level = 1
-        cooldown = skill['cooldown']
+        users_skill_level = 0
         use_perspectives = consumable_item.use_perspectives
-        success = random.randint(1,100) < 85
+        success = random.randint(1,100) < skill['script_values']['chance'][users_skill_level]
         silent_use = False
         no_cooldown = True
-
         skill_obj = skill_obj(
                 skill_id = skill_id, 
-                cooldown = cooldown, 
+                script_values = skill['script_values'], 
                 user = user, 
                 other = target, 
                 users_skill_level = users_skill_level, 
                 use_perspectives = use_perspectives, 
                 success = success, 
                 silent_use = silent_use, 
-                no_cooldown = no_cooldown
                 )
         
         skill_obj.use()
@@ -122,23 +126,27 @@ def use_skill(user, target, skill_id, no_checks = False):
             user.sendLine(f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
         
-        users_skill_level = user.skills[skill_id]
-        cooldown = skill['cooldown']
         use_perspectives = skill['use_perspectives']
-        success = random.randint(1,100) < user.skills[skill_id]
+
+        users_skill_level = 0
+        _users_skill_level = user.skills[skill_id]
+        for i in range(0,len(skill['script_values']['levels'])):
+            if _users_skill_level >= skill['script_values']['levels'][i]:
+                users_skill_level = i
+
+        success = random.randint(1,100) < skill['script_values']['levels'][i]
         silent_use = False
         no_cooldown = False
 
         skill_obj = skill_obj(
             skill_id = skill_id, 
-            cooldown = cooldown, 
+            script_values = skill['script_values'], 
             user = user, 
             other = target, 
             users_skill_level = users_skill_level, 
             use_perspectives = use_perspectives, 
             success = success, 
             silent_use = silent_use, 
-            no_cooldown = no_cooldown
             )
 
         skill_obj.use()

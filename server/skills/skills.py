@@ -6,15 +6,14 @@ from combat.manager import Damage
 import random
 
 class Skill:
-    def __init__(self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False):
+    def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False):
         self.skill_id = skill_id
-        self.cooldown = cooldown
+        self.script_values = script_values
         self.user = user
         self.other = other
         self.users_skill_level = users_skill_level
         self.use_perspectives = use_perspectives
         self.success = success
-        self.no_cooldown = no_cooldown
         self.silent_use = silent_use
 
     def use_broadcast(self):
@@ -59,7 +58,8 @@ class Skill:
                 continue
 
     def use(self):
-        self.user.cooldown_manager.add_cooldown(self.skill_id, self.cooldown)
+        cool = self.script_values['cooldown']['values'][self.users_skill_level]
+        self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
 
         if self.silent_use:
             return
@@ -68,8 +68,8 @@ class Skill:
 
 class SkillSwing(Skill):
     def use(self):
-        grit = int(self.user.stats[StatType.GRIT]*.7)
-        flow = int(self.user.stats[StatType.FLOW]*.7)
+        grit = int(self.user.stats[StatType.GRIT]*self.script_values['damage']['values'][self.users_skill_level])
+        flow = int(self.user.stats[StatType.FLOW]*self.script_values['damage']['values'][self.users_skill_level])
 
         bonus_damage = grit
         if flow > grit: 
@@ -116,11 +116,10 @@ class SkillDoubleWhack(Skill):
             damage_obj = Damage(
                     damage_taker_actor = self.other,
                     damage_source_actor = self.user,
-                    damage_value = int(self.user.stats[StatType.FLOW]*.5),
+                    damage_value = int(self.user.stats[StatType.FLOW]*self.script_values['damage']['values'][self.users_skill_level]),
                     damage_type = DamageType.PHYSICAL
                 )
-            
-            self.success = random.randint(1,100) <= self.users_skill_level
+            self.success = random.randint(1,100) <= 40
             super().use()
             if self.success:
                 self.user.deal_damage(damage_obj)
@@ -132,7 +131,7 @@ class SkillMagicMissile(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = 4 + int(self.user.stats[StatType.MIND] * .75),
+                damage_value = int(self.user.stats[StatType.MIND]*self.script_values['damage']['values'][self.users_skill_level]),
                 damage_type = DamageType.MAGICAL
                 )
             
@@ -155,7 +154,7 @@ class SkillSmite(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = 1 + int(self.user.stats[StatType.SOUL] * .75),
+                damage_value = int(self.user.stats[StatType.MIND]*self.script_values['damage']['values'][self.users_skill_level]),
                 damage_type = DamageType.MAGICAL
                 )
             
@@ -165,9 +164,8 @@ class SkillBecomeEthereal(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns = 5 #1 + self.user.stats[StatType.SOUL] #+ int(self.users_skill_level*0.03)
-            dmg_amp = 2.4 - self.users_skill_level*0.01
-            dmg_amp = 1.4
+            turns = int(self.script_values['duration']['values'][self.users_skill_level])
+            dmg_amp = self.script_values['damage']['values'][self.users_skill_level]
             ethereal_affect = affects.AffectEthereal(
                 AffType.ETHEREAL, 
                 self.other.affect_manager, 
@@ -179,8 +177,8 @@ class SkillMageArmor(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns = 4 #+ int(self.users_skill_level*0.03)
-            reduction = (self.users_skill_level*0.01)*.7
+            turns = int(self.script_values['duration']['values'][self.users_skill_level])
+            reduction = self.script_values['damage']['values'][self.users_skill_level]
             ethereal_affect = affects.AffectMageArmor(
                 AffType.ETHEREAL, 
                 self.other.affect_manager, 

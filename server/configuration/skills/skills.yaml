@@ -1,4 +1,39 @@
 
+swing:
+  name: Swing
+  description: Swing at your target dealing 1 physical damage + 70% of whichever stat is highest between Grit and FLow.
+  level_req: 0 
+  can_be_practiced: True
+  must_be_fighting: True
+  target_self_is_valid: False
+  target_others_is_valid: True
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,1,80,95]
+    mp_cost:
+      name: MP cost
+      values: [0,0,5,10]
+    damage:
+      name: Damage amp
+      values: [0.70, 0.80, 0.90, 1.00]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
+
+  script_to_run: Swing
+  use_perspectives:
+    you on you:           'You swing and hit yourself!'
+    you on other:         'You swing and hit #OTHER#'
+    user on user:         '#USER# swings and hits themselves!'
+    user on you:          '#USER# swings and hits you!'
+    user on other:        '#USER# swings and hits #OTHER#'
+    you on you fail:      'You lose your footing while swinging at yourself!'
+    you on other fail:    'You lose your footing while swinging at #OTHER#'
+    user on user fail:    '#USER# loses their footing while swinging at themselves'
+    user on you fail:     '#USER# loses their footing while swinging at you!'
+    user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
+
+
 ethereal:
   name: Become Ethereal
   description: 'You become ethereal for 5 turns, you become immune to physical damage, but vurnerable to magical damage.'
@@ -7,9 +42,21 @@ ethereal:
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: False
-  hp_cost: 0
-  mp_cost: 20
-  cooldown: 1
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,1,80,95]
+    mp_cost:
+      name: MP cost
+      values: [0,0,5,10]
+    damage:
+      name: Damage amp
+      values: [3,2.5,2,1.5]
+    duration:
+      name: Duration
+      values: [5,5,5,5]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
   script_to_run: BecomeEthereal
   use_perspectives:
     you on you:           'You focus, and begin to fade'
@@ -32,9 +79,18 @@ bash:
   must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 0
-  cooldown: 6
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,1,80,95]
+    mp_cost:
+      name: MP cost
+      values: [0,0,5,10]
+    damage:
+      name: Damage amp
+      values: [0.70, 0.80, 0.90, 1.00]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
   script_to_run: Bash
   use_perspectives:
     you on you:           'You bash yourself'
@@ -56,9 +112,18 @@ double whack:
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 10
-  cooldown: 1
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,1,80,95]
+    mp_cost:
+      name: MP cost
+      values: [0,0,5,10]
+    damage:
+      name: Damage amp
+      values: [0.70, 0.80, 0.90, 1.00]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
   script_to_run: DoubleWhack
   use_perspectives:
     you on you:           'You whack and hit yourself!'
@@ -80,9 +145,18 @@ smite:
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 5
-  cooldown: 1
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,1,80,95]
+    mp_cost:
+      name: MP cost
+      values: [0,0,5,10]
+    damage:
+      name: Damage amp
+      values: [0.70, 0.80, 0.90, 1.00]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
   script_to_run: Smite
   use_perspectives:
     you on you:           'You smite yourself!'
@@ -104,9 +178,18 @@ cure light wounds:
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 25
-  cooldown: 1
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,1,80,95]
+    mp_cost:
+      name: MP cost
+      values: [0,0,5,10]
+    damage:
+      name: Damage amp
+      values: [0.70, 0.80, 0.90, 1.00]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
   script_to_run: CureLightWounds
   use_perspectives:
     you on you:           'You pray for yourself'
@@ -125,15 +208,27 @@ mage armor:
   description: >
     Infuse yourself with Magicka.
     converting half your practice levels worth of Health damage to Magicka damage for 5 turns.
-
   level_req: 1
   can_be_practiced: True
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 50
-  cooldown: 1
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,80,90,90]
+    mp_cost:
+      name: MP cost
+      values: [20,30,35,40]
+    damage:
+      name: Damage amp
+      values: [.5,.7,.8,.9]
+    duration:
+      name: Duration
+      values: [5,5,6,6]
+    cooldown: 
+      name: Cooldown
+      values: [10,7,5,3]
+
   script_to_run: MageArmor
   use_perspectives:
     you on you:           'You focus a layer of magicka surrounds you'
@@ -155,9 +250,20 @@ magic missile:
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 10
-  cooldown: 1
+  
+  script_values:
+    levels: [100,200,300,500]
+    chance: [100,100,100,100]
+    mp_cost:
+      name: MP cost
+      values: [15,20,25,30]
+    damage:
+      name: Damage amp
+      values: [1.1, 1.2, 1.3, 1.5]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
+
   script_to_run: MagicMissile
   use_perspectives:
     you on you:           'You point at yourself and fire a magical missile straight to your forehead!'
@@ -171,30 +277,6 @@ magic missile:
     user on you fail:     '#USER# loses their concentration while attempting to fire a magical missile at you'
     user on other fail:   '#USER# loses their concentration while attempting to fire a magical missile at #OTHER#'
 
-swing:
-  name: Swing
-  description: Swing at your target dealing 1 physical damage + 70% of whichever stat is highest between Grit and FLow.
-  level_req: 0 
-  can_be_practiced: True
-  must_be_fighting: True
-  target_self_is_valid: False
-  target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 0
-  cooldown: 1
-  script_to_run: Swing
-  use_perspectives:
-    you on you:           'You swing and hit yourself!'
-    you on other:         'You swing and hit #OTHER#'
-    user on user:         '#USER# swings and hits themselves!'
-    user on you:          '#USER# swings and hits you!'
-    user on other:        '#USER# swings and hits #OTHER#'
-    you on you fail:      'You lose your footing while swinging at yourself!'
-    you on other fail:    'You lose your footing while swinging at #OTHER#'
-    user on user fail:    '#USER# loses their footing while swinging at themselves'
-    user on you fail:     '#USER# loses their footing while swinging at you!'
-    user on other fail:   '#USER# loses their footing while swinging at #OTHER#'
-
 
 ressurect:
   name: Ressurect
@@ -204,9 +286,18 @@ ressurect:
   must_be_fighting: False
   target_self_is_valid: False
   target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 0
-  cooldown: 1
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,1,80,95]
+    mp_cost:
+      name: MP cost
+      values: [0,0,5,10]
+    damage:
+      name: Damage amp
+      values: [0.70, 0.80, 0.90, 1.00]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
   script_to_run: Ressurect
   use_perspectives:
     you on you:           'You focus, and begin to fade'

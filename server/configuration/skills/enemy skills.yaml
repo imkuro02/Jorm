@@ -6,11 +6,21 @@ nudge:
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
-  hp_cost: 0
-  mp_cost: 0
-  cooldown: 1
+
   script_to_run: Swing
-  
+  script_values:
+    levels: [1,75,100,150]
+    chance: [70,75,80,95]
+    mp_cost:
+      name: MP cost
+      values: [0,0,5,10]
+    damage:
+      name: Damage amp
+      values: [0.70, 0.80, 0.90, 1.00]
+    cooldown: 
+      name: Cooldown
+      values: [1,1,1,1]
+
   use_perspectives:
     you on you:           'You nudge yourself!'
     you on other:         'You nudge #OTHER#'

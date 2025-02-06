@@ -134,8 +134,8 @@ def command_practice(self, line):
             self.sendLine('@redYou can\'t spend negative amount of Practice Points@normal')
             return
         
-        if new_prac_level > 95:
-            self.sendLine('@redYou can\'t practice a skill beyond level 95@normal')
+        if new_prac_level > SKILLS[skill_id]['script_values']['levels'][-1]:
+            self.sendLine(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]['script_values']['levels'][-1]}@normal')
             return
 
         if pp_to_spend > self.stats[StatType.PP]:
@@ -157,7 +157,27 @@ def command_skills(self, line):
         output += f'{skill["name"]}\n'
         output += f'{skill["description"]}\n'
         output += f'\n'
-        output += f'{StatType.name[StatType.MP]} Cost: {skill["mp_cost"]} | {StatType.name[StatType.HP]} Cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
+
+        t = utils.Table(len(skill['script_values']['levels']) + 1 ,4)
+        t.add_data('Lvl:')
+        for i in skill['script_values']['levels']:
+            t.add_data(i)
+        t.add_data('Chance%:')
+        for i in skill['script_values']['chance']:
+            t.add_data(i)
+
+        for other_value in skill['script_values']:
+            
+            if other_value in ['levels','chance']:
+                continue
+
+            t.add_data(skill['script_values'][other_value]['name'])
+            for i in skill['script_values'][other_value]['values']:
+                t.add_data(i)
+
+        output += t.get_table()
+
+        #output += f'{StatType.name[StatType.MP]} Cost: {skill["mp_cost"]} | {StatType.name[StatType.HP]} Cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
         output += f'{"@greenYou can use this skill on yourself.@normal" if skill["target_self_is_valid"] else "@redYou cannot use this skill on yourself.@normal"}\n'
         output += f'{"@greenYou can use this skill on others.@normal" if skill["target_others_is_valid"] else "@redYou cannot use this skill on others.@normal"}\n'
         output += f'{"@greenYou can use this skill out of combat.@normal" if not skill["must_be_fighting"] else "@redYou can only use this skill in combat.@normal"}\n'
@@ -171,10 +191,8 @@ def command_skills(self, line):
             self.sendLine('You do not know any skills...')
             return
 
-        t = utils.Table(5, spaces = 2)
+        t = utils.Table(3, spaces = 2)
         t.add_data('Skill')
-        t.add_data('HP')
-        t.add_data('MP')
         t.add_data('R')
         t.add_data('Lvl')
 
@@ -183,10 +201,6 @@ def command_skills(self, line):
                 continue # skip unknown skills
                 
             t.add_data(id_to_name[skill_id])
-            t.add_data(SKILLS[skill_id]["hp_cost"], '@red')
-            t.add_data(SKILLS[skill_id]["mp_cost"], '@cyan')
-
-           
             if skill_id not in self.cooldown_manager.cooldowns:
                 t.add_data('Y','@green')
             else: 
