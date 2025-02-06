@@ -2,7 +2,7 @@
 #import skills
 import copy
 from configuration.config import ItemType, EquipmentSlotType, ITEMS, CONSUMABLE_USE_PERSPECTIVES, StatType
-
+import uuid
 from items.misc import Item
 from items.consumable import Consumable
 from items.equipment import Equipment
@@ -23,7 +23,7 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
 
     if item_type == ItemType.EQUIPMENT:
         new_item = Equipment()
-
+        new_item.new = True
         
         
 
@@ -33,11 +33,16 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
         for key in ITEMS[premade_id]['requirements']:
             new_item.requirements[key] = ITEMS[premade_id]['requirements'][key]
 
+        
         # set unique ID now for the seed
         if unique_id == None:
             unique_id = new_item.id
             
-        rng_seed = str(unique_id)
+        #print(unique_id)
+        uuid_str = str(unique_id)  # Example UUID
+        uuid_int = int(uuid.UUID(uuid_str))
+
+        rng_seed = int(uuid_int)
         myrandom = random.Random(rng_seed)
         for i in range(0,myrandom.randrange(new_item.requirements[StatType.LVL])):
             stat_to_affect = myrandom.choice([key for key in new_item.stats])
@@ -49,7 +54,7 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
         
             
         
-
+        new_item.new = False
         new_item.slot = ITEMS[premade_id]['slot']
 
     if item_type == ItemType.MISC:

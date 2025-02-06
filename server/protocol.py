@@ -241,7 +241,7 @@ class Protocol(protocol.Protocol):
             self.actor.skills = actor['skills']
 
             for item in actor['inventory'].values():
-                new_item = load_item(item_premade_id = item['premade_id'], unique_id = item)
+                new_item = load_item(item_premade_id = item['premade_id'], unique_id = item['item_id'])
                 new_item.keep =         item['item_keep']
                 new_item.id =           item['item_id']
 
