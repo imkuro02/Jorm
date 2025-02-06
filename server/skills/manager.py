@@ -20,6 +20,15 @@ def error(user, err):
     else:
         print(err)
 
+def get_user_skill_level_as_index(user,skill_id):
+    skill = SKILLS[skill_id]
+    users_skill_level = 0
+    _users_skill_level = user.skills[skill_id]
+    for i in range(0,len(skill['script_values']['levels'])):
+        if _users_skill_level >= skill['script_values']['levels'][i]:
+            users_skill_level = i
+    return users_skill_level
+
 def skill_checks(user, target, skill_id):
     skill = SKILLS[skill_id]
     skill_name = skill['name']
@@ -57,11 +66,8 @@ def skill_checks(user, target, skill_id):
         error(user, f'{skill_name} is on cooldown!')
         return False
 
-    users_skill_level = 0
-    _users_skill_level = user.skills[skill_id]
-    for i in range(0,len(skill['script_values']['levels'])):
-        if _users_skill_level >= skill['script_values']['levels'][i]:
-            users_skill_level = i
+
+    users_skill_level = get_user_skill_level_as_index(user,skill_id)
 
     hp_cost = 0
     mp_cost = 0
@@ -94,7 +100,7 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
         
         users_skill_level = 0
         use_perspectives = consumable_item.use_perspectives
-        success = random.randint(1,100) < skill['script_values']['chance'][users_skill_level]
+        success = random.randint(1,100) < skill['script_values']['chance'][users_skill_level]*100
         silent_use = False
         no_cooldown = True
         skill_obj = skill_obj(
@@ -128,13 +134,9 @@ def use_skill(user, target, skill_id, no_checks = False):
         
         use_perspectives = skill['use_perspectives']
 
-        users_skill_level = 0
-        _users_skill_level = user.skills[skill_id]
-        for i in range(0,len(skill['script_values']['levels'])):
-            if _users_skill_level >= skill['script_values']['levels'][i]:
-                users_skill_level = i
+        users_skill_level = get_user_skill_level_as_index(user,skill_id)
 
-        success = random.randint(1,100) < skill['script_values']['levels'][i]
+        success = random.randint(1,100) < skill['script_values']['levels'][users_skill_level]*100
         silent_use = False
         no_cooldown = False
 

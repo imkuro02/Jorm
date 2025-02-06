@@ -1,6 +1,6 @@
 from actors.player_only_functions.checks import check_not_in_combat, check_alive
-from configuration.config import StatType, SKILLS
-from skills.manager import get_skills
+from configuration.config import StatType, SKILLS, SkillScriptValuesToNames
+from skills.manager import get_skills, get_user_skill_level_as_index
 import utils
 
 @check_not_in_combat
@@ -135,7 +135,7 @@ def command_practice(self, line):
             return
         
         if new_prac_level > SKILLS[skill_id]['script_values']['levels'][-1]:
-            self.sendLine(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]['script_values']['levels'][-1]}@normal')
+            self.sendLine(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]["script_values"]["levels"][-1]}@normal')
             return
 
         if pp_to_spend > self.stats[StatType.PP]:
@@ -154,36 +154,70 @@ def command_skills(self, line):
         skill_id = name_to_id[skill_name]
         skill = SKILLS[skill_id]
         output = ''
-        output += f'{skill["name"]}\n'
-        output += f'{skill["description"]}\n'
-        output += f'\n'
+        output += f'@yellow{skill["name"]}\n@normal'
+        output += f'@cyan{skill["description"]}@normal'
 
-        t = utils.Table(len(skill['script_values']['levels']) + 1 ,4)
-        t.add_data('Lvl:')
-        for i in skill['script_values']['levels']:
-            t.add_data(i)
-        t.add_data('Chance%:')
-        for i in skill['script_values']['chance']:
-            t.add_data(i)
+        skill_learned = skill_id in self.skills
+        if skill_learned:
+            users_skill_level = get_user_skill_level_as_index(self, skill_id)
+        else:
+            users_skill_level = 0
 
-        for other_value in skill['script_values']:
+        t = utils.Table(2,1)
+        t.add_data('Practiced:')
+        if skill_learned:
+            t.add_data(self.skills[skill_id],'@green')
+        else:
+            t.add_data('No','@red')
+
+        t.add_data('Target self:')
+        if skill["target_self_is_valid"]:
+            t.add_data('Yes','@yellow')
+        else:
+            t.add_data('No','@red')
             
-            if other_value in ['levels','chance']:
-                continue
+        t.add_data('Target others:')
+        if skill["target_others_is_valid"]:
+            t.add_data('Yes','@yellow')
+        else:
+            t.add_data('No','@red')
 
-            t.add_data(skill['script_values'][other_value]['name'])
-            for i in skill['script_values'][other_value]['values']:
-                t.add_data(i)
+        t.add_data('Combat only:')
+        if skill["must_be_fighting"]:
+            t.add_data('Yes','@yellow')
+        else:
+            t.add_data('No','@red')
 
         output += t.get_table()
-
-        #output += f'{StatType.name[StatType.MP]} Cost: {skill["mp_cost"]} | {StatType.name[StatType.HP]} Cost: {skill["hp_cost"]} | Cooldown: {skill["cooldown"]}\n'
-        output += f'{"@greenYou can use this skill on yourself.@normal" if skill["target_self_is_valid"] else "@redYou cannot use this skill on yourself.@normal"}\n'
-        output += f'{"@greenYou can use this skill on others.@normal" if skill["target_others_is_valid"] else "@redYou cannot use this skill on others.@normal"}\n'
-        output += f'{"@greenYou can use this skill out of combat.@normal" if not skill["must_be_fighting"] else "@redYou can only use this skill in combat.@normal"}\n'
         if skill['can_be_practiced'] == False:
             output += f'@redThis skill cannot be practied!@normal\n'
-        
+
+        if 'script_values' in skill:
+            t = utils.Table(len(skill['script_values']['levels']) + 1 ,4)
+
+            
+            for val_nam in SkillScriptValuesToNames:
+                dic = SkillScriptValuesToNames
+                if val_nam in skill['script_values']:
+                    t.add_data(dic[val_nam]+':')
+                    index = 0
+                    for val in skill['script_values'][val_nam]:
+                        # floats are most likely percentages
+                        # so convert them to string and add "%"
+                        if isinstance(val, int):
+                            pass
+                        if isinstance(val, float):
+                            val = int(val*100)
+                            val = str(val)+'%'
+
+                        if index == users_skill_level and skill_learned:
+                            t.add_data(val, col = '@green') 
+                        else:
+                            t.add_data(val) 
+                        index += 1
+
+            output += t.get_table()
+
 
         self.sendLine(output)
     else:

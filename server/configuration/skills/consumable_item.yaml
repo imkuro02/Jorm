@@ -1,7 +1,8 @@
 
 regen_mp30:
   name: Minor Magicka Regen
-  description: Regenerate 30% of your maximum Magicka
+  description: |
+    Regenerate 30% of your maximum Magicka
   level_req: 0
   can_be_practiced: False
   must_be_fighting: False
@@ -10,17 +11,9 @@ regen_mp30:
 
   script_to_run: RegenMP30
   script_values:
-    levels: [1]
-    chance: [100]
-    mp_cost:
-      name: MP cost
-      values: [0]
-    heal:
-      name: Damage amp
-      values: [30]
-    cooldown: 
-      name: Cooldown
-      values: [1]
+    levels:   [1]
+    chance:   [1.00]
+    cooldown: [1]
 
   use_perspectives:
     you on you:           'You bash yourself'
@@ -37,7 +30,8 @@ regen_mp30:
 
 regen_hp30:
   name: Minor Health Regen
-  description: Regenerate 30% of your maximum Health
+  description: |
+    Regenerate 30% of your maximum Health
   level_req: 0
   can_be_practiced: False
   must_be_fighting: False
@@ -46,17 +40,9 @@ regen_hp30:
 
   script_to_run: RegenHP30
   script_values:
-    levels: [1]
-    chance: [100]
-    mp_cost:
-      name: MP cost
-      values: [0]
-    heal:
-      name: Damage amp
-      values: [30]
-    cooldown: 
-      name: Cooldown
-      values: [1]
+    levels:   [1]
+    chance:   [1.00]
+    cooldown: [1]
 
   use_perspectives:
     you on you:           'You bash yourself'

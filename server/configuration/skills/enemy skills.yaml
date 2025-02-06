@@ -1,6 +1,6 @@
 nudge:
   name: Nudge
-  description: Swing at your target dealing 1 physical damage + 70% of Grit
+  description: The monster variant of a swing!
   level_req: 0 
   can_be_practiced: False
   must_be_fighting: True
@@ -9,17 +9,10 @@ nudge:
 
   script_to_run: Swing
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,75,80,95]
-    mp_cost:
-      name: MP cost
-      values: [0,0,5,10]
-    damage:
-      name: Damage amp
-      values: [0.70, 0.80, 0.90, 1.00]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1, 75, 100, 150, 200, 300]
+    chance:   [.70,.75,.80,.85,.88,.90]
+    damage:   [0.70, 0.80, 0.90, 1.00, 1.2, 1.5]
+    cooldown: [1,1,1,1,1,1]
 
   use_perspectives:
     you on you:           'You nudge yourself!'

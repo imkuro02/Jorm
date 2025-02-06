@@ -1,24 +1,20 @@
 
 swing:
   name: Swing
-  description: Swing at your target dealing 1 physical damage + 70% of whichever stat is highest between Grit and FLow.
+  description: |
+    Swing at your target dealing physical damage.
+    Damage equals whichever stat is highest between Grit and Flow. 
+    Amplified by DMG-AMP.
   level_req: 0 
   can_be_practiced: True
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,1,80,95]
-    mp_cost:
-      name: MP cost
-      values: [0,0,5,10]
-    damage:
-      name: Damage amp
-      values: [0.70, 0.80, 0.90, 1.00]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1, 75, 100, 150, 200, 300]
+    chance:   [.70,.75,.80,.85,.90,.90]
+    damage:   [0.70, 0.80, 0.90, 1.00, 1.2, 1.5]
+    cooldown: [1,1,1,1,1,1]
 
   script_to_run: Swing
   use_perspectives:
@@ -36,27 +32,23 @@ swing:
 
 ethereal:
   name: Become Ethereal
-  description: 'You become ethereal for 5 turns, you become immune to physical damage, but vurnerable to magical damage.'
+  description: |
+    Become ethereal for DURATION turns.
+    Receive no physical damage.
+    Amplify all magical damage by DMG-AMP.
   level_req: 8
   can_be_practiced: True
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: False
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,1,80,95]
-    mp_cost:
-      name: MP cost
-      values: [0,0,5,10]
-    damage:
-      name: Damage amp
-      values: [3,2.5,2,1.5]
-    duration:
-      name: Duration
-      values: [5,5,5,5]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1,75,100,150]
+    chance:   [.70,.75,.80,.95]
+    mp_cost:  [0,0,5,10]
+    damage:   [3.0,2.5,2.0,1.5]
+    duration: [5,5,5,5]
+    cooldown: [1,1,1,1]
+
   script_to_run: BecomeEthereal
   use_perspectives:
     you on you:           'You focus, and begin to fade'
@@ -73,24 +65,23 @@ ethereal:
 
 bash:
   name: Bash
-  description: Bash your target, dealing damage as if you used Swing, if damage is above 0, stun the target.
+  description: |
+    Swing at your target.
+    If damage is dealt:
+    Stun them for DURATION turns.
   level_req: 8
   can_be_practiced: True
   must_be_fighting: True
   target_self_is_valid: True
   target_others_is_valid: True
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,1,80,95]
-    mp_cost:
-      name: MP cost
-      values: [0,0,5,10]
-    damage:
-      name: Damage amp
-      values: [0.70, 0.80, 0.90, 1.00]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1,75,100,150]
+    chance:   [.70,.75,.80,.95]
+    mp_cost:  [0,0,5,10]
+    damage:   [0.70, 0.80, 0.90, 1.00]
+    duration: [1,1,2,3]
+    cooldown: [1,1,1,1]
+
   script_to_run: Bash
   use_perspectives:
     you on you:           'You bash yourself'
@@ -106,24 +97,22 @@ bash:
 
 double whack:
   name: Double whack
-  description: Whack your target twice, dealing physical damage equal to 50% of Flow.
+  description: |
+    Swiftly land two attacks.
+    Dealing physical damage amplified by DMG-AMP.
+    Hit chance on the second attack is 45% always.
   level_req: 4
   can_be_practiced: True
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,1,80,95]
-    mp_cost:
-      name: MP cost
-      values: [0,0,5,10]
-    damage:
-      name: Damage amp
-      values: [0.70, 0.80, 0.90, 1.00]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1,75,100,150]
+    chance:   [.70,.75,.80,.95]
+    mp_cost:  [0,0,5,10]
+    damage:   [0.70, 0.80, 0.90, 1.00]
+    cooldown: [1,1,1,1]
+
   script_to_run: DoubleWhack
   use_perspectives:
     you on you:           'You whack and hit yourself!'
@@ -139,24 +128,21 @@ double whack:
 
 smite:
   name: Smite
-  description: Smite your target, dealing 1 magical damage + 75% Soul.
+  description: |
+    Smite your target.
+    Dealing pure damage amplified by DMG-AMP.
   level_req: 1
   can_be_practiced: True
   must_be_fighting: True
   target_self_is_valid: False
   target_others_is_valid: True
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,1,80,95]
-    mp_cost:
-      name: MP cost
-      values: [0,0,5,10]
-    damage:
-      name: Damage amp
-      values: [0.70, 0.80, 0.90, 1.00]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1,75,100,150,200,300]
+    chance:   [.35,.75,.80,.95,.95,.95]
+    mp_cost:  [0,0,5,5,10,10]
+    damage:   [0.70, 0.80, 0.90, 1.00, 1.3, 1.5]
+    cooldown: [1,1,1,1,1,1]
+
   script_to_run: Smite
   use_perspectives:
     you on you:           'You smite yourself!'
@@ -172,24 +158,21 @@ smite:
 
 cure light wounds:
   name: Cure Light Wounds
-  description: Heal your target for 10 + 100% Soul
+  description: |
+    Heal your target for 10 HP
+    + Soul Amplified by DMG-AMP.
   level_req: 1
   can_be_practiced: True
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: True
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,1,80,95]
-    mp_cost:
-      name: MP cost
-      values: [0,0,5,10]
-    damage:
-      name: Damage amp
-      values: [0.70, 0.80, 0.90, 1.00]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1,75,100,150]
+    chance:   [.70,.75,.80,.95]
+    mp_cost:  [0,0,5,10]
+    damage:   [1.5, 2.0, 2.5, 3.00]
+    cooldown: [1,1,1,1]
+
   script_to_run: CureLightWounds
   use_perspectives:
     you on you:           'You pray for yourself'
@@ -205,29 +188,21 @@ cure light wounds:
 
 mage armor:
   name: Mage Armor
-  description: >
-    Infuse yourself with Magicka.
-    converting half your practice levels worth of Health damage to Magicka damage for 5 turns.
+  description: |
+    Infuse yourself with magicka.
+    Convert DMG-AMP damage received to magicka drain.
   level_req: 1
   can_be_practiced: True
   must_be_fighting: False
   target_self_is_valid: True
   target_others_is_valid: True
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,80,90,90]
-    mp_cost:
-      name: MP cost
-      values: [20,30,35,40]
-    damage:
-      name: Damage amp
-      values: [.5,.7,.8,.9]
-    duration:
-      name: Duration
-      values: [5,5,6,6]
-    cooldown: 
-      name: Cooldown
-      values: [10,7,5,3]
+    levels:   [1,75,100,150]
+    chance:   [.70,.80,.90,.90]
+    mp_cost:  [20,30,35,40]
+    damage:   [.5,.7,.8,.9]
+    duration: [5,5,6,6]
+    cooldown: [10,7,5,3]
 
   script_to_run: MageArmor
   use_perspectives:
@@ -244,7 +219,9 @@ mage armor:
 
 magic missile:
   name: Magic Missile
-  description: Fire a magic missile at your target dealing 1 magical damage + 100% of your Mind
+  description: |
+    Fire a magic missile whick always hits.
+    Deal magical damage amplified by DMG-AMP. 
   level_req: 1
   can_be_practiced: True
   must_be_fighting: True
@@ -252,17 +229,11 @@ magic missile:
   target_others_is_valid: True
   
   script_values:
-    levels: [100,200,300,500]
-    chance: [100,100,100,100]
-    mp_cost:
-      name: MP cost
-      values: [15,20,25,30]
-    damage:
-      name: Damage amp
-      values: [1.1, 1.2, 1.3, 1.5]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1,50,75,150]
+    chance:   [1.00,1.00,1.00,1.00]
+    mp_cost:  [15,20,25,30]
+    damage:   [1.1, 1.2, 1.3, 1.5]
+    cooldown: [1,1,1,1]
 
   script_to_run: MagicMissile
   use_perspectives:
@@ -287,17 +258,11 @@ ressurect:
   target_self_is_valid: False
   target_others_is_valid: True
   script_values:
-    levels: [1,75,100,150]
-    chance: [70,1,80,95]
-    mp_cost:
-      name: MP cost
-      values: [0,0,5,10]
-    damage:
-      name: Damage amp
-      values: [0.70, 0.80, 0.90, 1.00]
-    cooldown: 
-      name: Cooldown
-      values: [1,1,1,1]
+    levels:   [1,75,100,150]
+    chance:   [.70,.75,.80,.95]
+    mp_cost:  [0,0,5,10]
+    damage:   [0.70, 0.80, 0.90, 1.00]
+    cooldown: [1,1,1,1]
   script_to_run: Ressurect
   use_perspectives:
     you on you:           'You focus, and begin to fade'

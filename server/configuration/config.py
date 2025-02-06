@@ -4,6 +4,16 @@ import configuration.map.map_loader
 import csv
 import os
 
+SkillScriptValuesToNames = {
+    'levels':       'LEVEL',
+    'damage':       'DMG-AMP',
+    'chance':       'CHANCE',
+    'hp_cost':      'HP-COST',
+    'mp_cost':      'MP-COST',
+    'duration':     'DURATION',
+    'cooldown':     'COOLDOWN'
+}
+
 class ItemType:
     MISC = 'misc'
     EQUIPMENT = 'equipment'
@@ -27,11 +37,11 @@ class AffType:
     STUNNED = 8
 
 class DamageType:
-    PHYSICAL = 1
-    MAGICAL = 2
-    HEALING = 3
-    PURE = 4
-    CANCELLED = 5 # Cancels all damage
+    PHYSICAL = 'physical'
+    MAGICAL = 'magical'
+    HEALING = 'healing'
+    PURE = 'pure'
+    CANCELLED = 'cancelled' # Cancels all damage
 
 class ActorStatusType:
     NORMAL = 'Normal'
