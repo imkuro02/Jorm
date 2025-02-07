@@ -103,7 +103,7 @@ def command_look(self, line):
                     grid[_loc] = 'PATH'
 
 
-        print(grid)
+        #print(grid)
         for _x in range(0,(VIEW_RANGE*2)+1):
             for _y in range(0,(VIEW_RANGE*2)+1):
                 """
@@ -135,7 +135,7 @@ def command_look(self, line):
                     continue
 
                 room = self.protocol.factory.world.rooms[grid[loc]]
-                print(room)
+                #print(room)
                 # left
                 if 'up' in room.exits:
                     cell += Art.STAIRS_UP
