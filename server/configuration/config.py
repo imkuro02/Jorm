@@ -27,7 +27,10 @@ class ItemType:
     }
     
 class AffType:
+    
     BASIC = 1
+
+    
     DOT1 = 2
     DOT2 = 3
     HEALAMP = 4

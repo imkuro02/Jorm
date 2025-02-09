@@ -24,6 +24,12 @@ tutorial rat dagger:
     soul: 1
   tags: []
 
+corpse: 
+  premade_id: corpse
+  name: Corpse
+  description: Skin and bones
+  item_type: misc
+  
 # consumable
 red potion:
   premade_id: red potion

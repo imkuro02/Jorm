@@ -26,7 +26,7 @@ class Player(Actor):
         self.trade_manager = TradeManager(self)
 
         if self.room != None:
-            self.room.move_player(self, silent = True)
+            self.room.move_entity(self, silent = True)
 
         # meta data
         self.date_of_creation = utils.get_unix_timestamp()
