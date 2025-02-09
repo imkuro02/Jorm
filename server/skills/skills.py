@@ -1,4 +1,4 @@
-from configuration.config import AffType, DamageType, StatType, ActorStatusType
+from configuration.config import DamageType, StatType, ActorStatusType
 #import affects.manager as aff_manager
 import affects.affects as affects
 from combat.manager import Damage
@@ -102,7 +102,6 @@ class SkillBash(SkillSwing):
         damage_dealt = super().use()
         if self.success:
             stunned_affect = affects.AffectStunned(
-                AffType.STUNNED,
                 self.other.affect_manager,
                 'Stunned', 'Unable to act during combat turns',
                 turns = 1
@@ -167,7 +166,6 @@ class SkillBecomeEthereal(Skill):
             turns = int(self.script_values['duration'][self.users_skill_level])
             dmg_amp = self.script_values['damage'][self.users_skill_level]
             ethereal_affect = affects.AffectEthereal(
-                AffType.ETHEREAL, 
                 self.other.affect_manager, 
                 'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
                 turns, dmg_amp)
@@ -180,10 +178,9 @@ class SkillMageArmor(Skill):
             turns = int(self.script_values['duration'][self.users_skill_level])
             reduction = self.script_values['damage'][self.users_skill_level]
             ethereal_affect = affects.AffectMageArmor(
-                AffType.ETHEREAL, 
-                self.other.affect_manager, 
-                'Magically protected', f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
-                turns, reduction)
+                affect_manager = self.other.affect_manager, 
+                name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
+                turns = turns, reduction = reduction)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
 
 

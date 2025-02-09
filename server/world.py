@@ -184,8 +184,8 @@ class World:
             if r in self.rooms:
                 # skip if there are any entities in this room
                 # and the room is not instanced
-                if len(self.rooms[r].entities) >= 1 and not room['instanced']:
-                    continue
+                #if len(self.rooms[r].entities) >= 1 and not room['instanced']:
+                #    continue
                 
                 # skip if there are any players in this room
                 players = [entity for entity in self.rooms[r].entities.values() if type(entity).__name__ == "Player"]

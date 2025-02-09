@@ -25,19 +25,6 @@ class ItemType:
         CONSUMABLE: 'Consumable',
         ERROR: 'Error Item'
     }
-    
-class AffType:
-    
-    BASIC = 1
-
-    
-    DOT1 = 2
-    DOT2 = 3
-    HEALAMP = 4
-    POWERUP = 5
-    ETHEREAL = 6
-    REFLECTDAMAGE = 7
-    STUNNED = 8
 
 class DamageType:
     PHYSICAL = 'physical'
