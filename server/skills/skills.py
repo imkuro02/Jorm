@@ -182,22 +182,7 @@ class SkillMageArmor(Skill):
                 name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
                 turns = turns, reduction = reduction)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
-
-
-class SkillRessurect(Skill):
-    def use(self):
-        super().use()
-        if self.success:
-            res_power = self.users_skill_level*.5
-            if self.other.status == ActorStatusType.DEAD:
-                self.other.status = self.user.status
-                self.other.stats[StatType.HP] = int(self.other.stats[StatType.HPMAX] * res_power)
-                self.other.stats[StatType.MP] = int(self.other.stats[StatType.MPMAX] * res_power)
-                self.other.simple_broadcast('@yellowYou ressurect!@normal',f'{self.other.pretty_name()} ressurects')
-            else:
-                self.user.simple_broadcast('You chant but your ressurection does nothing',f'{self.user.pretty_name()} fails to ressurect')
-
-
+            
 class SkillRegenHP30(Skill):
     def use(self):
         super().use()
