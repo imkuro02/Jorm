@@ -270,6 +270,7 @@ class Protocol(protocol.Protocol):
             self.actor.recall_site = 'tutorial'
         else:
             if self.actor.recall_site not in self.actor.room.world.rooms:
+                self.save_actor()
                 self.actor.recall_site = 'tutorial'
 
         self.actor.room.world.rooms[self.actor.recall_site].move_entity(self.actor)
