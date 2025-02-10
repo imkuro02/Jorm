@@ -215,6 +215,11 @@ def load():
         for enemy_id in ENEMY_COMBAT_LOOP:
             ENEMIES[enemy_id]['combat_loop'] = ENEMY_COMBAT_LOOP[enemy_id]
 
+        whole_dict = {
+            'enemies': ENEMIES,
+            'skills': SKILLS,
+            'items': ITEMS,
+        }
         return ENEMIES
     
 if __name__ == '__main__':
