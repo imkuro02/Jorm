@@ -1,5 +1,6 @@
 import pandas as pd
-file_path = 'config.ods'
+from math import isnan
+file_path = 'configuration/config.ods'
 SHEET = {}
 
 # ORDER MATTERS
@@ -39,6 +40,15 @@ def load():
                     x['value9'][index]
                 ]
             }
+
+            tmp = d_vals[x['value_name'][index]]
+            d_vals = { x['value_name'][index]: [] }
+            for i in tmp:
+                if isnan(i):
+                    continue
+                d_vals[x['value_name'][index]].append(i)
+
+            print(d_vals)
 
             if x['skill_id'][index] in SKILL_SCRIPT_VALUES:
                 # concate the previous dict with new a new value
@@ -82,6 +92,10 @@ def load():
                 'level_req':                x['level_req'][index],
                 'use_perspectives':         USE_PERSPECTIVES[x['use_perspectives'][index]]
             }
+
+    for skill in SKILLS:
+        SKILLS[skill]['script_values'] = SKILL_SCRIPT_VALUES[skill]
+    
 
     ITEMS = {}
     for row in SHEET['items_misc']:
@@ -186,6 +200,28 @@ def load():
         for loot_table in LOOT:
             ENEMIES[loot_table]['loot'] = LOOT[loot_table]
 
+
+        ENEMY_SKILLS = {}
+        for row in SHEET['enemy_skills']:
+            x = SHEET['enemy_skills']
+            for index in range(0,len(x[row])):
+                d_vals = {
+                    x['skill_id'][index]: int(x['practice'][index])
+                }
+
+                if x['enemy_id'][index] in ENEMY_SKILLS:
+                    # concate the previous dict with new a new value
+                    ENEMY_SKILLS[x['enemy_id'][index]] = ENEMY_SKILLS[x['enemy_id'][index]] | d_vals
+                else:
+                    # create a fresh dict
+                    ENEMY_SKILLS[x['enemy_id'][index]] = {
+                        x['skill_id'][index]: d_vals
+                    }
+
+        for enemy_id in ENEMY_SKILLS:
+            ENEMIES[enemy_id]['skills'] = ENEMY_SKILLS[enemy_id]
+
+
         TEMP_ENEMY_COMBAT_LOOP = {}
         for row in SHEET['enemy_combat_loop']:
             x = SHEET['enemy_combat_loop']
@@ -220,7 +256,7 @@ def load():
             'skills': SKILLS,
             'items': ITEMS,
         }
-        return ENEMIES
+        return whole_dict
     
 if __name__ == '__main__':
     print(load())

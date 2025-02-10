@@ -1,7 +1,7 @@
 
 #import skills
 import copy
-from configuration.config import ItemType, EquipmentSlotType, ITEMS, CONSUMABLE_USE_PERSPECTIVES, StatType
+from configuration.config import ItemType, EquipmentSlotType, ITEMS, StatType
 import uuid
 from items.misc import Item
 from items.consumable import Consumable
@@ -65,7 +65,7 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
 
         
         new_item.skills = ITEMS[premade_id]['skills']
-        new_item.use_perspectives = CONSUMABLE_USE_PERSPECTIVES[ITEMS[premade_id]['use_perspectives']]
+        new_item.use_perspectives = ITEMS[premade_id]['use_perspectives']
 
 
     
