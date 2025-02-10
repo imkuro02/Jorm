@@ -1,6 +1,6 @@
 # level 1 mob
 tutorial_enemy_1:
-  name: Shroom
+  name: Tiny shroom
   description: A tiny orange mushroom. How cute!
   stats:
     hp: 30

@@ -126,7 +126,7 @@ class Room:
                 entity.simple_broadcast('',f'{entity.pretty_name()} has left.')
 
             entity.room = instanced_room
-            self.entities[entity.id] = entity
+            instanced_room.entities[entity.id] = entity
 
             if not silent:
                 entity.simple_broadcast('',f'{entity.pretty_name()} has arrived.')
