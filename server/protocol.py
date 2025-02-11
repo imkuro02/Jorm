@@ -7,13 +7,13 @@ import uuid
 import copy
 import random
 
-IAC = b'\xff'     # Interpret as Command
-WILL = b'\xfb'    # Will Perform
-WONT = b'\xfc'    # Will Not Perform
-DO = b'\xfd'      # Please Do
-DONT = b'\xfe'    # Please Don’t
-ECHO = b'\x01'    # Echo
-LINEMODE = b'\x22' # Line mode
+IAC = b'\xff'       # Interpret as Command
+WILL = b'\xfb'      # Will Perform
+WONT = b'\xfc'      # Will Not Perform
+DO = b'\xfd'        # Please Do
+DONT = b'\xfe'      # Please Don’t
+ECHO = b'\x01'      # Echo
+LINEMODE = b'\x22'  # Line mode
 #GMCP = b'\x'
 
 class Protocol(protocol.Protocol):
@@ -137,7 +137,7 @@ class Protocol(protocol.Protocol):
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        utils.logging.debug(self.id + ' -> ' + self.account[0])
+        #utils.logging.debug(self.id + ' -> ' + self.account[0])
         self.id = self.account[0]
         self.username = self.account[1]
         self.password = self.account[2]
@@ -213,7 +213,7 @@ class Protocol(protocol.Protocol):
         self.sendLine('@bgreenAccount updated@normal')
     # override
     def connectionMade(self):
-        utils.logging.debug(self.id + 'Connection made')
+        #utils.logging.debug(self.id + 'Connection made')
         self.factory.protocols.add(self)
         self.splash_screen()
         self.change_state(self.LOGIN_OR_REGISTER)
@@ -285,7 +285,7 @@ class Protocol(protocol.Protocol):
 
     # override
     def connectionLost(self, reason):
-        utils.logging.debug(self.id + ' >> Connection lost')
+        #utils.logging.debug(self.id + ' >> Connection lost')
         if self.actor != None:
 
             self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
@@ -315,8 +315,8 @@ class Protocol(protocol.Protocol):
         line = data.decode('utf-8', errors='ignore').strip()
 
         # log account unique ID and what message was sent
-        if self.state == self.PLAY:
-            utils.logging.debug(self.account[0] + ' -> ' + line)
+        #if self.state == self.PLAY:
+            #utils.logging.debug(self.account[0] + ' -> ' + line)
 
         #if line:  # skip empty lines
         if '@' in line:

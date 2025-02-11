@@ -54,3 +54,24 @@ insert into actors
 select unique_id, actor_id, actor_name, actor_recall_site, 0, 0, 0
 from actors_old;
 
+
+
+
+----- excel stuff
+
+=IFERROR(VLOOKUP($A2; skills.$A:$B; 2; 0),VLOOKUP($A2; items_consumable.$A:$B; 2; 0))
+
+=IFERROR(  
+	IFERROR(   
+		VLOOKUP(A2; items_equipment.A:B; 2; 0);   
+		VLOOKUP(A2; items_misc.A:B; 2; 0)   
+	);  
+	VLOOKUP(A2; items_consumable.A:B; 2; 0)  
+)
+
+=IFERROR(   
+		VLOOKUP(A2; skills.A:B; 2; 0);   
+		VLOOKUP(A2; consumable.A:B; 2; 0)   
+	);  
+
+=VLOOKUP(I2; use_perspectives.A:B; 2; 0) 
