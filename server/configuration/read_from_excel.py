@@ -21,6 +21,10 @@ SHEET['loot'] =                pd.read_excel(file_path, sheet_name = 'loot').to_
 SHEET['enemies'] =             pd.read_excel(file_path, sheet_name = 'enemies').to_dict(orient='dict')
 SHEET['enemy_combat_loop'] =   pd.read_excel(file_path, sheet_name = 'enemy_combat_loop').to_dict(orient='dict')
 
+def str_with_newlines(s):
+    s = s.replace('#END#','\n')
+    return s
+
 def load():
     SKILL_SCRIPT_VALUES = {}
     for row in SHEET['skill_script_values']:
@@ -46,6 +50,10 @@ def load():
             for i in tmp:
                 if isnan(i):
                     continue
+                if x['value_name'][index] in ['chance','damage',]:
+                    i = float(i)
+                else:
+                    i = int(i)
                 d_vals[x['value_name'][index]].append(i)
 
             print(d_vals)
@@ -80,10 +88,11 @@ def load():
     for row in SHEET['skills']:
         x = SHEET['skills']
         for index in range(0, len(x[row])):
+
             SKILLS[x['skill_id'][index]] = {
                 'skill_id':                 x['skill_id'][index],
                 'name':                     x['name'][index],
-                'description':              x['description'][index],
+                'description':              str_with_newlines(x['description'][index]),
                 'script_to_run':            x['script_to_run'][index],
                 'target_others_is_valid':   bool(x['target_others_is_valid'][index]),
                 'target_self_is_valid':     bool(x['target_self_is_valid'][index]),
@@ -104,7 +113,7 @@ def load():
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':       x['premade_id'][index],
                 'name':             x['name'][index],
-                'description':      x['description'][index],
+                'description':      str_with_newlines(x['description'][index]),
                 'item_type':        'misc'
             }
 
@@ -116,7 +125,7 @@ def load():
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':       x['premade_id'][index],
                 'name':             x['name'][index],
-                'description':      x['description'][index],
+                'description':      str_with_newlines(x['description'][index]),
                 'skill':            x['skill'][index],
                 'use_perspectives': USE_PERSPECTIVES[x['use_perspectives'][index]],
                 'item_type':        'consumable'
@@ -129,7 +138,7 @@ def load():
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':   x['premade_id'][index],
                 'name':         x['name'][index],
-                'description':  x['desc'][index],
+                'description':  str_with_newlines(x['description'][index]),
                 'item_type':    'equipment',
                 'slot':         x['slot'][index],
                 'stats': {
