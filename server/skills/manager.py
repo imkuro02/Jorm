@@ -1,7 +1,7 @@
 import utils
 import random
 
-from configuration.config import SKILLS, DamageType, ActorStatusType, StatType, AffType
+from configuration.config import SKILLS, DamageType, ActorStatusType, StatType
 import skills.skills 
 
 def get_skills():
@@ -136,7 +136,7 @@ def use_skill(user, target, skill_id, no_checks = False):
 
         users_skill_level = get_user_skill_level_as_index(user,skill_id)
 
-        success = random.randint(1,100) < skill['script_values']['levels'][users_skill_level]*100
+        success = random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
         silent_use = False
         no_cooldown = False
 

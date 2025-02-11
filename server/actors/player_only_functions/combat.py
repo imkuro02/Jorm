@@ -107,7 +107,7 @@ def command_recall_go(self, line):
         self.sendLine('recall site broked')
         return
 
-    rooms[self.recall_site].move_player(self)
+    rooms[self.recall_site].move_entity(self)
 '''
 
 @check_not_in_combat
@@ -141,7 +141,7 @@ def command_rest(self, line):
             #tp home
             if self.recall_site not in self.protocol.factory.world.rooms:
                 self.recall_site = 'tutorial'
-            self.protocol.factory.world.rooms[self.recall_site].move_player(self)
+            self.protocol.factory.world.rooms[self.recall_site].move_entity(self)
 
             self.simple_broadcast(
                 None,
@@ -165,7 +165,7 @@ def command_rest(self, line):
                 #tp home
                 if self.recall_site not in self.protocol.factory.world.rooms:
                     self.recall_site = 'tutorial'
-                self.protocol.factory.world.rooms[self.recall_site].move_player(self)
+                self.protocol.factory.world.rooms[self.recall_site].move_entity(self)
 
                 self.simple_broadcast(
                     None,

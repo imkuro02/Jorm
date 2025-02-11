@@ -270,9 +270,11 @@ class Protocol(protocol.Protocol):
             self.actor.recall_site = 'tutorial'
         else:
             if self.actor.recall_site not in self.actor.room.world.rooms:
+                self.save_actor()
                 self.actor.recall_site = 'tutorial'
 
-        self.actor.room.world.rooms[self.actor.recall_site].move_player(self.actor)
+        self.actor.room.world.rooms[self.actor.recall_site].move_entity(self.actor)
+        self.actor.command_look('')
         
     def save_actor(self):
         self.factory.db.write_actor(self.actor)
@@ -294,7 +296,7 @@ class Protocol(protocol.Protocol):
             
 
             # teleport player to loading to remove them safely
-            self.factory.world.rooms['loading'].move_player(self.actor)
+            self.factory.world.rooms['loading'].move_entity(self.actor)
             # remove player from combat
             del self.actor.room.entities[self.actor.id]
             

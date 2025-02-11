@@ -216,7 +216,7 @@ def command_teleport(self, line):
             user = proto.actor
             break
     if user != None:
-        user.room.move_player(self)
+        user.room.move_entity(self)
         self.sendLine(f'You teleport to {user.pretty_name()}')
     else:
         self.sendLine(f'Cant find "{line}"')

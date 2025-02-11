@@ -10,7 +10,7 @@ def command_flee(self, line):
         None,
         f'{self.pretty_name()} flees!'
     )
-    self.protocol.factory.world.rooms[self.recall_site].move_player(self, silent = True)
+    self.protocol.factory.world.rooms[self.recall_site].move_entity(self, silent = True)
     self.status = ActorStatusType.NORMAL
     self.simple_broadcast(
         f'You have fled back to {self.room.name}',
@@ -43,17 +43,14 @@ def command_go(self, line):
     old_room = self.room
     new_room = exits[direction]
 
-    self.simple_broadcast(
-        None,
-        f'{self.pretty_name()} went {direction}'
-        )
+    
 
-    world.rooms[new_room].move_player(self)
+    world.rooms[new_room].move_entity(self)
+    self.command_look('')
 
-    self.simple_broadcast(
-        None,
-        f'{self.pretty_name()} arrived'
-        )
+    if self.recall_site == 'tutorial' and self.room.can_be_recall_site:
+        self.command_rest('set')
+   
     self.finish_turn(force_cooldown = True)
 
     if self.party_manager.party != None:

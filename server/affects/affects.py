@@ -2,8 +2,7 @@ from configuration.config import DamageType, StatType
 from combat.manager import Damage
 
 class Affect:
-    def __init__(self, _id, affect_manager, name, description, turns):
-        self.id = _id
+    def __init__(self, affect_manager, name, description, turns):
         self.affect_manager = affect_manager
         self.owner = self.affect_manager.owner
         self.name = name
@@ -56,8 +55,8 @@ class AffectStunned(Affect):
         self.owner.finish_turn()
 
 class AffectEthereal(Affect):
-    def __init__(self, _id, affect_manager, name, description, turns, dmg_amp):
-        super().__init__(_id, affect_manager, name, description, turns)
+    def __init__(self, affect_manager, name, description, turns, dmg_amp):
+        super().__init__(affect_manager, name, description, turns)
         self.dmg_amp = dmg_amp
     
     def take_damage(self, damage_obj: Damage):
@@ -83,8 +82,8 @@ class AffectEthereal(Affect):
         return damage_obj
 
 class AffectMageArmor(Affect):
-    def __init__(self, _id, affect_manager, name, description, turns, reduction):
-        super().__init__(_id, affect_manager, name, description, turns)
+    def __init__(self, affect_manager, name, description, turns, reduction):
+        super().__init__(affect_manager, name, description, turns)
         self.reduction = reduction
     
     def take_damage(self, damage_obj: 'Damage'):

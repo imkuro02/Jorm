@@ -108,6 +108,8 @@ class Database:
 
             # Fetch account details
             actor = self.read_actor(acc[0])  # Assuming acc[0] is the account ID or relevant identifier
+            if actor == None:
+                continue
             
             # Create actor_obj and append to the list
             actor_obj = {

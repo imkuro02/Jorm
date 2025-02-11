@@ -13,10 +13,15 @@ class AffectsManager:
 
     def set_affect_object(self, affect):
 
-        if affect.id in self.affects:
+        #if affect.id in self.affects:
             #print('overriding')
-            self.affects[affect.id].on_finished(silent = True)
-        self.affects[affect.id] = affect
+        #    self.affects[affect.id].on_finished(silent = True)
+        #self.affects[affect.id] = affect
+
+        if affect.name in self.affects:
+            self.affects[affect.name].on_finished()
+
+        self.affects[affect.name] = affect
         affect.on_applied()
 
     def set_affect(self, affect_id, turns_override = None):
@@ -24,7 +29,7 @@ class AffectsManager:
         self.set_affect_object(aff)
 
     def pop_affect(self, affect):
-        del self.affects[affect.id]
+        del self.affects[affect.name]
 
     # called at start of turn
     def set_turn(self):

@@ -10,7 +10,7 @@ from configuration.config import StatType, ItemType, ENEMIES, ITEMS
 
 from items.manager import load_item
 
-from configuration.config import ITEMS, LOOT
+from configuration.config import ITEMS
 
 def create_enemy(room, enemy_id):
     if enemy_id not in ENEMIES:
@@ -26,9 +26,9 @@ def create_enemy(room, enemy_id):
     skills = enemy['skills']
     combat_loop = enemy['combat_loop']
     _loot = enemy['loot']
-    loot = {}
+    loot = _loot
     #print(enemy['name'],LOOT[_loot],'XD')
-    loot = LOOT[_loot]
+
         
 
     for item in loot.keys():

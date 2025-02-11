@@ -1,6 +1,6 @@
 # level 1 mob
 tutorial_enemy_1:
-  name: Shroom
+  name: Tiny shroom
   description: A tiny orange mushroom. How cute!
   stats:
     hp: 30
@@ -15,6 +15,4 @@ tutorial_enemy_1:
   loot: tutorial_2
   skills:
     nudge: 75
-  combat_loop:
-    - skill: nudge
-      target: EHT
+  combat_loop: [{skill: nudge, target: EHT}]
