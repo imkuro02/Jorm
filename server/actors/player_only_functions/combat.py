@@ -57,15 +57,15 @@ def command_use(self, line):
     if ' on ' not in line and ' at ' not in line:
         action = line
         action = utils.match_word(action, list_of_items + list_of_skill_names)
-        target = self.name
+        target = self
 
     # if you are targetting something else set target to that
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
         action = utils.match_word(action, list_of_items + list_of_skill_names)
-        target = utils.match_word(target, list_of_items + list_of_entities)
+        #target = utils.match_word(target, list_of_items + list_of_entities)
 
-
+    print(target)
     _action = None
     _target = None
 
@@ -73,10 +73,14 @@ def command_use(self, line):
         _action = self.get_item(action)
     if action in list_of_skill_names:
         _action = name_to_id[action]
-    #if target in list_of_items:
-    #    _target = self.get_item(target)
-    if target in list_of_entities:
+
+    if isinstance(target, str): 
+        #if target in list_of_items:
+        #    _target = self.get_item(target)
+        
         _target = self.get_entity(target)
+    else:
+        _target = target
 
     if _action == None:
         self.sendLine('Use what?')

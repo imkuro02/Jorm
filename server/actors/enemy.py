@@ -19,7 +19,7 @@ def create_enemy(room, enemy_id):
 
     enemy = ENEMIES[enemy_id]
 
-    names = 'Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
+    names = 'kuro'
     name = random.choice(names.split())
     name = name + ' The ' + enemy['name']
     stats = enemy['stats']
