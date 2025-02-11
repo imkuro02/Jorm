@@ -174,8 +174,8 @@ def load():
                     'description':  x['description'][index],
                     'stats': {
                         'grit':     int(x['grit'][index]),
-                        'hp_max':   int(x['hp_max'][index]),
-                        'mp_max':   int(x['mp_max'][index]),
+                        'hp':       int(x['hp_max'][index]),
+                        'mp':       int(x['mp_max'][index]),
                         'armor':    int(x['armor'][index]),
                         'marmor':   int(x['marmor'][index]),
                         'flow':     int(x['flow'][index]),
