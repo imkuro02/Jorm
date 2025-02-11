@@ -47,6 +47,8 @@ def load():
 
             tmp = d_vals[x['value_name'][index]]
             d_vals = { x['value_name'][index]: [] }
+            # convert values that are supposed to be displayed as % to float
+            # also remove any "NaN" values
             for i in tmp:
                 if isnan(i):
                     continue
@@ -55,8 +57,6 @@ def load():
                 else:
                     i = int(i)
                 d_vals[x['value_name'][index]].append(i)
-
-            print(d_vals)
 
             if x['skill_id'][index] in SKILL_SCRIPT_VALUES:
                 # concate the previous dict with new a new value
@@ -184,11 +184,12 @@ def load():
                         'exp':      int(x['exp'][index]),
                         'lvl':      int(x['lvl'][index])
                     },
-                    'skills': {},
-                    'loot': {},
-                    'combat_loop': {}
+                    'skills': {},       # EMPTY DICT TO STORE SKILLS
+                    'loot': {},         # EMPTY DICT TO STORE LOOT
+                    'combat_loop': {}   # EMPTY DICT TO STORE COMBAT LOOP
                 }
 
+        # ADD ENEMY LOOT
         LOOT = {}
         for row in SHEET['loot']:
             x = SHEET['loot']
@@ -209,7 +210,7 @@ def load():
         for loot_table in LOOT:
             ENEMIES[loot_table]['loot'] = LOOT[loot_table]
 
-
+        # ADD ENEMY SKILLS
         ENEMY_SKILLS = {}
         for row in SHEET['enemy_skills']:
             x = SHEET['enemy_skills']
@@ -230,7 +231,7 @@ def load():
         for enemy_id in ENEMY_SKILLS:
             ENEMIES[enemy_id]['skills'] = ENEMY_SKILLS[enemy_id]
 
-
+        # ADD ENEMY COMBAT LOOP
         TEMP_ENEMY_COMBAT_LOOP = {}
         for row in SHEET['enemy_combat_loop']:
             x = SHEET['enemy_combat_loop']
@@ -260,6 +261,7 @@ def load():
         for enemy_id in ENEMY_COMBAT_LOOP:
             ENEMIES[enemy_id]['combat_loop'] = ENEMY_COMBAT_LOOP[enemy_id]
 
+        # PACK IT ALL UP
         whole_dict = {
             'enemies': ENEMIES,
             'skills': SKILLS,
