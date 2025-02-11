@@ -65,7 +65,7 @@ def command_use(self, line):
         action = utils.match_word(action, list_of_items + list_of_skill_names)
         #target = utils.match_word(target, list_of_items + list_of_entities)
 
-    print(target)
+
     _action = None
     _target = None
 
