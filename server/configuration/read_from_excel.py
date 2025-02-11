@@ -126,7 +126,7 @@ def load():
                 'premade_id':       x['premade_id'][index],
                 'name':             x['name'][index],
                 'description':      str_with_newlines(x['description'][index]),
-                'skill':            x['skill'][index],
+                'skills':           [x['skill'][index]],
                 'use_perspectives': USE_PERSPECTIVES[x['use_perspectives'][index]],
                 'item_type':        'consumable'
             }
