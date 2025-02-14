@@ -38,8 +38,6 @@ def create_enemy(room, enemy_id):
     e = Enemy(name, room, stats, loot, skills, combat_loop)
     e.description = enemy['description']
 
-
-
 class Enemy(Actor):
     def __init__(self, name, room, stats, loot, skills, combat_loop):
         super().__init__(name, room)
@@ -55,6 +53,7 @@ class Enemy(Actor):
         self.ai = enemy_ai.AIBasic(self)
 
         self.room.move_enemy(self)
+
 
     def tick(self):
         self.ai.tick()
