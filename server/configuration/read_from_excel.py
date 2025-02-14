@@ -1,31 +1,39 @@
 import pandas as pd
 from math import isnan
-file_path = 'configuration/config.ods'
-SHEET = {}
 
-# ORDER MATTERS
-SHEET['use_perspectives'] =    pd.read_excel(file_path, sheet_name = 'use_perspectives').to_dict(orient='dict')
-
-SHEET['items_consumable'] =    pd.read_excel(file_path, sheet_name = 'items_consumable').to_dict(orient='dict')
-
-SHEET['skill_script_values'] = pd.read_excel(file_path, sheet_name = 'skill_script_values').to_dict(orient='dict')
-SHEET['skills'] =              pd.read_excel(file_path, sheet_name = 'skills').to_dict(orient='dict')
+#SHEET = {}
 
 
-SHEET['items_equipment'] =     pd.read_excel(file_path, sheet_name = 'items_equipment').to_dict(orient='dict')
-SHEET['items_misc'] =          pd.read_excel(file_path, sheet_name = 'items_misc').to_dict(orient='dict')
-
-
-SHEET['enemy_skills'] =        pd.read_excel(file_path, sheet_name = 'enemy_skills').to_dict(orient='dict')
-SHEET['loot'] =                pd.read_excel(file_path, sheet_name = 'loot').to_dict(orient='dict')
-SHEET['enemies'] =             pd.read_excel(file_path, sheet_name = 'enemies').to_dict(orient='dict')
-SHEET['enemy_combat_loop'] =   pd.read_excel(file_path, sheet_name = 'enemy_combat_loop').to_dict(orient='dict')
 
 def str_with_newlines(s):
     s = s.replace('#END#','\n')
     return s
 
+def read_from_ods_file():
+    file_path = 'configuration/config.ods'
+    SHEET = {}
+    # ORDER MATTERS
+    SHEET['use_perspectives'] =    pd.read_excel(file_path, sheet_name = 'use_perspectives').to_dict(orient='dict')
+
+    SHEET['items_consumable'] =    pd.read_excel(file_path, sheet_name = 'items_consumable').to_dict(orient='dict')
+
+    SHEET['skill_script_values'] = pd.read_excel(file_path, sheet_name = 'skill_script_values').to_dict(orient='dict')
+    SHEET['skills'] =              pd.read_excel(file_path, sheet_name = 'skills').to_dict(orient='dict')
+
+
+    SHEET['items_equipment'] =     pd.read_excel(file_path, sheet_name = 'items_equipment').to_dict(orient='dict')
+    SHEET['items_misc'] =          pd.read_excel(file_path, sheet_name = 'items_misc').to_dict(orient='dict')
+
+
+    SHEET['enemy_skills'] =        pd.read_excel(file_path, sheet_name = 'enemy_skills').to_dict(orient='dict')
+    SHEET['loot'] =                pd.read_excel(file_path, sheet_name = 'loot').to_dict(orient='dict')
+    SHEET['enemies'] =             pd.read_excel(file_path, sheet_name = 'enemies').to_dict(orient='dict')
+    SHEET['enemy_combat_loop'] =   pd.read_excel(file_path, sheet_name = 'enemy_combat_loop').to_dict(orient='dict')
+
+    return SHEET
+
 def load():
+    SHEET = read_from_ods_file()
     SKILL_SCRIPT_VALUES = {}
     for row in SHEET['skill_script_values']:
         x = SHEET['skill_script_values']

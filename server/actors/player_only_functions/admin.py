@@ -204,6 +204,7 @@ def command_export(self, line):
 
 @check_is_admin
 def command_reload_config(self, line):
+    self.sendLine('Reloading config')
     import configuration.config as config
     config.load()
 

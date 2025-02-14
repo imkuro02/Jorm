@@ -302,7 +302,8 @@ def command_look(self, line):
                
         output = t.get_table()
         '''
-        self.sendLine(output)
+        return output
+        #self.sendLine(output)
 
 
     def look_room(self, room_id):
@@ -312,6 +313,7 @@ def command_look(self, line):
             see = f'You are in @yellow{room.name}@normal\n'
         else:
             see = f'You look at @yellow{room.name}@normal\n'
+        see += draw_local_area(self, room_id)
         see = see + f'@cyan{room.description}@normal\n'
 
 
@@ -340,7 +342,7 @@ def command_look(self, line):
                 see = see + f'{i.name}' + '\n'
         
         
-        draw_local_area(self, room_id)
+        
         
 
 

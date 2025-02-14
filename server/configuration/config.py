@@ -113,29 +113,30 @@ class StatType:
         THREAT: 'Threat'
     }
 
-data = rfe.load()
-ITEMS = data['items']
-ENEMIES = data['enemies']
-SKILLS = data['skills']
+#data = rfe.load()
+ITEMS = {}
+ENEMIES = {}
+SKILLS = {}
 
 WORLD = {}
 SPLASH_SCREENS = {}
 
 def load():
+    global ITEMS
+    global ENEMIES
+    global SKILLS  # Declare the global variables here
+    data = rfe.load()
+    for k in data['items']:
+        ITEMS[k] = data['items'][k]
+    for k in data['enemies']:
+        ENEMIES[k] = data['enemies'][k]
+    for k in data['skills']:
+        SKILLS[k] = data['skills'][k]
+
     from configuration.splashscreens.splash import splash_screens
     SPLASH_SCREENS['screens'] = splash_screens
 
-    '''
-    #WORLD = {}
-    with open("configuration/world.yaml", "r") as file:
-        WORLD_UNFILTERED = yaml.safe_load(file)
-        for i in WORLD_UNFILTERED:
-            if 'template' not in i:
-                WORLD[i] = WORLD_UNFILTERED[i]
-    '''
     WORLD['world'] = configuration.map.map_loader.load_map()
-    #print(WORLD)
-
 
     print('reloaded')
 

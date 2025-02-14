@@ -122,6 +122,12 @@ WORLD = {}
 SPLASH_SCREENS = {}
 
 def load():
+    print('reloading')
+    data = rfe.load()
+    ITEMS = data['items']
+    ENEMIES = data['enemies']
+    SKILLS = data['skills']
+
     from configuration.splashscreens.splash import splash_screens
     SPLASH_SCREENS['screens'] = splash_screens
 
