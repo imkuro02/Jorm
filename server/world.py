@@ -235,7 +235,8 @@ class World:
                     item = load_item(item_id)
                     self.rooms[r].inventory_manager.add_item(item)
 
-        self.spawn_boss()
+        if 1<=random.randint(0,20):
+            self.spawn_boss()
             
 
 
@@ -245,7 +246,7 @@ class World:
 
     def tick(self):
 
-        if self.factory.ticks_passed % (30*60) == 0 or self.factory.ticks_passed == 1:
+        if self.factory.ticks_passed % (30*120) == 0 or self.factory.ticks_passed == 1:
             self.reload()
         for i in self.rooms.values():
             i.tick()
