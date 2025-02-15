@@ -55,7 +55,24 @@ select unique_id, actor_id, actor_name, actor_recall_site, 0, 0, 0
 from actors_old;
 
 
+...
 
+ALTER TABLE inventory RENAME TO inventory_old;
+
+CREATE TABLE IF NOT EXISTS inventory (
+	actor_id TEXT NOT NULL,
+	premade_id TEXT ,
+	item_id TEXT NOT NULL,
+	item_keep BOOL NOT NULL,
+	item_stack INT NOT NULL,
+	FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+);
+
+INSERT INTO inventory (actor_id, premade_id, item_id, item_keep, item_stack)
+SELECT actor_id, premade_id, item_id, item_keep, 1 from inventory_old;
+ 
+ 
+...
 
 ----- excel stuff
 
