@@ -1,3 +1,5 @@
+from configuration.config import ItemType
+
 class InventoryManager:
     def __init__(self, owner, limit = 20):
         self.owner = owner
@@ -12,7 +14,18 @@ class InventoryManager:
             return True
         return False
 
-    def add_item(self, item):
+    def add_item(self, item, stack_items = True):
+        if stack_items:
+            for _i in self.items.values():
+                if item.premade_id != _i.premade_id:
+                    continue
+                if item.item_type != ItemType.MISC:
+                    continue
+                if _i.item_type != ItemType.MISC:
+                    continue
+                _i.stack += item.stack
+                return True
+            
         if len(self.items) >= self.limit:
             return False
         self.items[item.id] = item

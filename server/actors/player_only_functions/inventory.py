@@ -50,6 +50,34 @@ def command_drop(self, line):
         f'{self.pretty_name()} drops {item.name}'
         )
 
+from items.manager import load_item
+def command_split(self, line):
+    all_words = line.split(' ')
+    if len(all_words) <= 0:
+        self.sendLine('Command "splits" needs an item, and a value')
+        return
+    
+    
+    
+    value = 0
+    for i in [all_words[0], all_words[-1]]:
+        if not i.isnumeric():
+            continue
+        all_words.remove(i)
+        value = int(i)
+    
+    item = self.get_item(' '.join(all_words))
+
+    if item.stack <= 1:
+        self.sendLine('Can\'t split this')
+        return
+    
+    new_item = load_item(item.premade_id)
+    item.stack -= value
+    new_item.stack = value
+    self.inventory_manager.add_item(new_item, stack_items = False) 
+    
+
 def command_inventory(self, line):
 
     t = utils.Table(1)
@@ -57,12 +85,12 @@ def command_inventory(self, line):
     for i in self.inventory_manager.items:
         output = ''
         if self.inventory_manager.items[i].item_type == ItemType.EQUIPMENT:     
-            output = output + f'{self.inventory_manager.items[i].name}'
+            output = output + f'{self.inventory_manager.items[i].pretty_name()}'
             if self.inventory_manager.items[i].equiped:   output = output + f' @green(E)@normal'
             if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
             if self.inventory_manager.items[i].new:       output = output + f' @yellow(N)@yellow'
         else:
-            output = output + f'{self.inventory_manager.items[i].name}'
+            output = output + f'{self.inventory_manager.items[i].pretty_name()}'
             if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
             if self.inventory_manager.items[i].new:       output = output + f' @yellow(N)@yellow'
 

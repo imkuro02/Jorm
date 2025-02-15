@@ -339,7 +339,7 @@ def command_look(self, line):
         if not room.inventory_manager.is_empty():
             see = see + 'On the ground you see:\n'
             for i in room.inventory_manager.items.values():
-                see = see + f'{i.name}' + '\n'
+                see = see + f'{i.pretty_name()}' + '\n'
         
         
         

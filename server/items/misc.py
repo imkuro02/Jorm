@@ -8,14 +8,16 @@ class Item:
         self.item_type = ItemType.MISC
         self.name = 'Name of item'
         self.description = 'Description here'
-
+        self.stack = 1
         self.keep = False
         self.owner = None # the inventory manager of this item
         self.new = True # show if item is newly added to inv
     
     def pretty_name(self):
-        return self.name
-
+        if self.stack >= 2:
+            return f'@white{self.name}@normal ({self.stack})'
+        else:
+            return f'@white{self.name}@normal'
     def to_dict(self):
         my_dict = {
             'id': self.id,
@@ -40,7 +42,7 @@ class Item:
         return my_dict
 
     def identify(self, identifier = None):
-        output = f'{self.name} {"@red(K)@normal" if self.keep else ""}\n'
+        output = f'{self.pretty_name()} {"@red(K)@normal" if self.keep else ""}\n'
         output += f'@cyan{self.description}@normal\n'
         self.new = False
         return output
