@@ -60,6 +60,7 @@ class Database:
             premade_id TEXT NOT NULL,
             item_id TEXT NOT NULL,
             item_keep BOOL NOT NULL,
+            item_stack INT NOT NULL,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
@@ -242,12 +243,13 @@ class Database:
             my_dict['item_id'] = item.id
             my_dict['item_keep'] = item.keep
             my_dict['premade_id'] = item.premade_id
+            my_dict['item_stack'] = item.stack
 
             self.cursor.execute('''
                 INSERT INTO inventory (
-                    actor_id, premade_id, item_id, item_keep
+                    actor_id, premade_id, item_id, item_keep, item_stack
                 ) VALUES (
-                    :actor_id, :premade_id, :item_id, :item_keep
+                    :actor_id, :premade_id, :item_id, :item_keep, :item_stack
                 )
                 ''', my_dict)
 
@@ -358,7 +360,8 @@ class Database:
             my_dict['inventory'][item[2]] = {        
                 'item_id': item[2],
                 'item_keep': item[3],
-                'premade_id': item[1]
+                'premade_id': item[1],
+                'item_stack': item[4]
             }
 
         my_dict['equipment'] = []

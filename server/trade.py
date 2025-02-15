@@ -120,8 +120,10 @@ class TradeManager:
         self.trade.accept(self.actor)
 
     def trade_offer(self, line):
-        if self.trade != None:
-            self.trade.refresh()
+        if self.trade == None:
+            self.actor.sendLine('You are not in a trade')
+            return
+        self.trade.refresh()
             
         item = self.actor.get_item(line)
         if item == None:

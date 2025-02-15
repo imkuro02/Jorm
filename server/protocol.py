@@ -244,6 +244,7 @@ class Protocol(protocol.Protocol):
                 new_item = load_item(item_premade_id = item['premade_id'], unique_id = item['item_id'])
                 new_item.keep =         item['item_keep']
                 new_item.id =           item['item_id']
+                new_item.stack =        item['item_stack']
 
 
                 self.actor.inventory_manager.add_item(new_item)

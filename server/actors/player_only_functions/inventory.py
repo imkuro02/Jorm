@@ -54,7 +54,7 @@ from items.manager import load_item
 def command_split(self, line):
     all_words = line.split(' ')
     if len(all_words) <= 0:
-        self.sendLine('Command "splits" needs an item, and a value')
+        self.sendLine('Command "split" needs an item, and a value')
         return
     
     
@@ -67,6 +67,10 @@ def command_split(self, line):
         value = int(i)
     
     item = self.get_item(' '.join(all_words))
+
+    if item == None:
+        self.sendLine('Split what?')
+        return
 
     if item.stack <= 1:
         self.sendLine('Can\'t split this')
