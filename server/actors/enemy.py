@@ -52,7 +52,7 @@ class Enemy(Actor):
 
         self.ai = enemy_ai.AIBasic(self)
 
-        self.room.move_enemy(self)
+        self.room.move_entity(self)
 
 
     def tick(self):

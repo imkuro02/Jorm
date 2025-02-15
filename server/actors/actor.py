@@ -60,6 +60,12 @@ class Actor:
         else: 
             self.id = _id
 
+        # npcs have dialog trees that they create a copy of
+        # and give to players on talk command
+        self.dialog_tree = None
+        # playrs rcive the dialog tree here
+        self.current_dialog = None
+
         #self.protocol = protocol
         self.room = room
         if self.room != None:
@@ -97,6 +103,11 @@ class Actor:
 
         self.recently_send_message_count = 0
    
+    def talk_to(self, talker):
+        if self.dialog_tree == None:
+            talker.sendLine('There is nothing to talk about.')
+            return
+        
     def pretty_name(self):
         output = ''
         
@@ -108,6 +119,8 @@ class Actor:
                     output = output + f'@byellow{self.name}@normal'
                 else:
                     output = output + f'@cyan{self.name}@normal'
+            case "Npc":
+                output = output + f'@yellow{self.name}@normal'
 
         if self.status == ActorStatusType.FIGHTING:
             output = f'{output}'

@@ -51,6 +51,12 @@ def load_map():
                 obj_name = obj['_name']
                 if 'item:' in obj_name:
                     room['items'].append(obj['_name'].replace('item:',''))
+
+            room['npcs'] = []
+            for obj in i['objects']:
+                obj_name = obj['_name']
+                if 'npc:' in obj_name:
+                    room['npcs'].append(obj['_name'].replace('npc:',''))
                 
             
 

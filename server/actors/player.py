@@ -63,6 +63,11 @@ class Player(Actor):
 
     def handle(self, line):
         # empty lines are handled as resend last line
+
+        if self.current_dialog != None:
+            self.current_dialog.answer(line)
+            return
+        
         if not line: 
             line = self.last_line_sent
             if not line:

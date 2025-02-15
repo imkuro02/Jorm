@@ -1,0 +1,27 @@
+kerning: 
+  name: Edgelord Edgar
+  description: | 
+    Edgar is leaning his back against the wall.
+    Arms crossed, his pants sagging, and his swag lacking.
+  tree:
+    start:
+      dialog: |
+        He glances at you, then looks away.
+      options:
+        a: 
+          say: Hello
+          goto: a
+        b:
+          say: Who are you?
+          goto: a
+    a:
+      dialog: |
+        Don't speak to me, you are not worth my time
+      options:
+        a: 
+          say: Ok 
+          goto: end
+    end:
+      dialog: |
+        he waves you good bye lol
+        

@@ -117,7 +117,7 @@ class StatType:
 ITEMS = {}
 ENEMIES = {}
 SKILLS = {}
-
+NPCS = {}
 WORLD = {}
 SPLASH_SCREENS = {}
 
@@ -132,6 +132,18 @@ def load():
         ENEMIES[k] = data['enemies'][k]
     for k in data['skills']:
         SKILLS[k] = data['skills'][k]
+
+    #SKILLS = {}
+    NPCS_DIRECTORY = 'configuration/npcs/'
+    for root, dirs, files in os.walk(NPCS_DIRECTORY):
+        for filename in files:
+            if filename.endswith('.yaml'):
+                file_path = os.path.join(root, filename)
+                with open(file_path, 'r') as file:
+                    ALL_NPCS = yaml.safe_load(file)
+                    for i in ALL_NPCS:
+                        if 'template' not in i:
+                            NPCS[i] = ALL_NPCS[i]
 
     from configuration.splashscreens.splash import splash_screens
     SPLASH_SCREENS['screens'] = splash_screens
