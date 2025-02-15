@@ -7,7 +7,7 @@ import time
 import uuid
 import random
 from combat.manager import Combat
-from configuration.config import WORLD
+from configuration.config import WORLD, StatType, ActorStatusType
 import copy
 from inventory import InventoryManager
 
@@ -162,6 +162,27 @@ class World:
         self.factory = factory
         self.rooms = {}
 
+    def spawn_boss(self):
+        all_mobs = []
+        for i in self.rooms:
+            if self.rooms[i].instanced: 
+                continue
+            for x in self.rooms[i].entities:
+                if type(self.rooms[i].entities[x]).__name__ != 'Enemy':
+                    continue
+                if self.rooms[i].entities[x].status != ActorStatusType.NORMAL:
+                    continue 
+                all_mobs.append(self.rooms[i].entities[x])
+        
+        boss_mob = random.choice(all_mobs)
+        boss_mob.name = '<!>' + boss_mob.name + '<!>'
+        boss_mob.simple_broadcast('',
+        f'{boss_mob.pretty_name()} is terrorizing {boss_mob.room.name}', worldwide = True)
+        for s in boss_mob.stats:
+            boss_mob.stats[s] = boss_mob.stats[s] * 2
+        boss_mob.stats[StatType.EXP] = boss_mob.stats[StatType.EXP] * 5
+
+
     def reload(self):
         print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
         world = WORLD
@@ -196,6 +217,7 @@ class World:
 
         if self.factory.ticks_passed % (30*(60*1)) == 0 or self.factory.ticks_passed == 3:
             self.reload()
+            self.spawn_boss()
         #if self.factory.ticks_passed % (30*(60*10)) == 0 or self.factory.ticks_passed == 1:
         #    for i in self.rooms.values():
         #        i.respawn_enemies()

@@ -3,7 +3,7 @@ from math import isnan
 
 #SHEET = {}
 
-
+import time
 
 def str_with_newlines(s):
     s = s.replace('#END#','\n')
@@ -13,6 +13,7 @@ def read_from_ods_file():
     file_path = 'configuration/config.ods'
     SHEET = {}
     # ORDER MATTERS
+    start = time.time()
     SHEET['use_perspectives'] =    pd.read_excel(file_path, sheet_name = 'use_perspectives').to_dict(orient='dict')
 
     SHEET['items_consumable'] =    pd.read_excel(file_path, sheet_name = 'items_consumable').to_dict(orient='dict')
@@ -29,11 +30,15 @@ def read_from_ods_file():
     SHEET['loot'] =                pd.read_excel(file_path, sheet_name = 'loot').to_dict(orient='dict')
     SHEET['enemies'] =             pd.read_excel(file_path, sheet_name = 'enemies').to_dict(orient='dict')
     SHEET['enemy_combat_loop'] =   pd.read_excel(file_path, sheet_name = 'enemy_combat_loop').to_dict(orient='dict')
+    end = time.time()
+    print(end - start,'LOADING OF CONFIG.ODS')
 
     return SHEET
 
 def load():
     SHEET = read_from_ods_file()
+
+    start = time.time()
     SKILL_SCRIPT_VALUES = {}
     for row in SHEET['skill_script_values']:
         x = SHEET['skill_script_values']
@@ -74,10 +79,11 @@ def load():
                 SKILL_SCRIPT_VALUES[x['skill_id'][index]] = {
                     x['value_name'][index]:        d_vals
                 }
-
+    end = time.time()
+    print(end - start,'SKILL_SCRIPT_VALUES')
     
 
-    
+    start = time.time()
     USE_PERSPECTIVES = {}
     for row in SHEET['use_perspectives']:
         x = SHEET['use_perspectives']
@@ -91,7 +97,10 @@ def load():
                     'use_case_name':        x['use_case_name'][index],
                     x['key'][index]:        x['value'][index] 
                 }
+    end = time.time()
+    print(end - start,'USE_PERSPECTIVES')
 
+    start = time.time()
     SKILLS = {}
     for row in SHEET['skills']:
         x = SHEET['skills']
@@ -112,8 +121,11 @@ def load():
 
     for skill in SKILLS:
         SKILLS[skill]['script_values'] = SKILL_SCRIPT_VALUES[skill]
+    end = time.time()
+    print(end - start,'SKILL_SCRIPT_VALUES')
     
 
+    start = time.time()
     ITEMS = {}
     for row in SHEET['items_misc']:
         x = SHEET['items_misc']
@@ -171,7 +183,11 @@ def load():
                     'soul':     int(x['rsoul'][index])
                 }
             }
+
+        end = time.time()
+        print(end - start,'ITEMS')
         
+        start = time.time()
         ENEMIES = {}
         for row in SHEET['enemies']:
             x = SHEET['enemies']
@@ -197,6 +213,10 @@ def load():
                     'combat_loop': {}   # EMPTY DICT TO STORE COMBAT LOOP
                 }
 
+        end = time.time()
+        print(end - start,'ENEMIES')
+
+        start = time.time()
         # ADD ENEMY LOOT
         LOOT = {}
         for row in SHEET['loot']:
@@ -218,6 +238,11 @@ def load():
         for loot_table in LOOT:
             ENEMIES[loot_table]['loot'] = LOOT[loot_table]
 
+        end = time.time()
+        print(end - start,'LOOT')
+
+
+        start = time.time()
         # ADD ENEMY SKILLS
         ENEMY_SKILLS = {}
         for row in SHEET['enemy_skills']:
@@ -238,7 +263,11 @@ def load():
 
         for enemy_id in ENEMY_SKILLS:
             ENEMIES[enemy_id]['skills'] = ENEMY_SKILLS[enemy_id]
+        
+        end = time.time()
+        print(end - start,'ENEMY_SKILLS')
 
+        start = time.time()
         # ADD ENEMY COMBAT LOOP
         TEMP_ENEMY_COMBAT_LOOP = {}
         for row in SHEET['enemy_combat_loop']:
@@ -268,6 +297,9 @@ def load():
 
         for enemy_id in ENEMY_COMBAT_LOOP:
             ENEMIES[enemy_id]['combat_loop'] = ENEMY_COMBAT_LOOP[enemy_id]
+
+        end = time.time()
+        print(end - start,'ENEMY COMBAT_LOOP')
 
         # PACK IT ALL UP
         whole_dict = {

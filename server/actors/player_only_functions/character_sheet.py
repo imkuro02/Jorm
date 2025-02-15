@@ -121,7 +121,9 @@ def command_practice(self, line):
         if self.stats[StatType.LVL] < SKILLS[skill_id]['level_req']:
             self.sendLine(f'@redYou are not high enough level to practice {skill_name}@normal')
             return
-
+        
+        #print(SKILLS[skill_id])
+        minimum_practice_req = SKILLS[skill_id]['script_values']['levels'][0]
         current_prac_level = 0
 
         if skill_id in self.skills:
@@ -132,6 +134,10 @@ def command_practice(self, line):
         
         if pp_to_spend <= 0:
             self.sendLine('@redYou can\'t spend negative amount of Practice Points@normal')
+            return
+        
+        if pp_to_spend < minimum_practice_req and current_prac_level == 0:
+            self.sendLine(f'@redYou must practice {skill_name} to a minium of {minimum_practice_req}@normal')
             return
         
         if new_prac_level > SKILLS[skill_id]['script_values']['levels'][-1]:

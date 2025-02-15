@@ -96,7 +96,7 @@ class Actor:
             }
 
         self.skills = {
-            'swing': 75
+            'swing': 20
             }
 
         self.cooldown_manager = CooldownManager(self)

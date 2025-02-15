@@ -122,7 +122,7 @@ class SkillDoubleWhack(Skill):
             super().use()
             if self.success:
                 self.user.deal_damage(damage_obj)
-
+"""
 class SkillMagicMissile(Skill):
     def use(self):
         super().use()
@@ -158,6 +158,32 @@ class SkillSmite(Skill):
                 )
             
             damage = self.user.deal_damage(damage_obj)
+"""
+
+class SkillDamage(Skill):
+     def use(self, my_dmg_scaling = StatType.GRIT, my_dmg_type = DamageType.PHYSICAL):
+        super().use()
+        if self.success:
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stats[my_dmg_scaling]*self.script_values['damage'][self.users_skill_level]),
+                damage_type = my_dmg_type
+                )
+            damage = self.user.deal_damage(damage_obj)
+            
+class SkillDamageByGrit(SkillDamage):
+    def use(self):
+        super().use(StatType.GRIT, DamageType.PHYSICAL)
+class SkillDamageByFlow(SkillDamage):
+    def use(self):
+        super().use(StatType.FLOW, DamageType.PHYSICAL)
+class SkillDamageByMind(SkillDamage):
+    def use(self):
+        super().use(StatType.MIND, DamageType.MAGICAL)
+class SkillDamageBySoul(SkillDamage):
+    def use(self):
+        super().use(StatType.SOUL, DamageType.MAGICAL)
 
 class SkillBecomeEthereal(Skill):
     def use(self):
