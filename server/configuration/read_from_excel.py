@@ -1,5 +1,6 @@
 import pandas as pd
 from math import isnan
+from pandas_ods_reader import read_ods
 
 #SHEET = {}
 
@@ -14,30 +15,22 @@ def read_from_ods_file():
     SHEET = {}
     # ORDER MATTERS
     start = time.time()
-    SHEET['use_perspectives'] =    pd.read_excel(file_path, sheet_name = 'use_perspectives').to_dict(orient='dict')
-
-    SHEET['items_consumable'] =    pd.read_excel(file_path, sheet_name = 'items_consumable').to_dict(orient='dict')
-
+    SHEET['use_perspectives'] =    read_ods(file_path, 'use_perspectives')
+    SHEET['items_consumable'] =    read_ods(file_path, 'items_consumable')
     SHEET['skill_script_values'] = pd.read_excel(file_path, sheet_name = 'skill_script_values').to_dict(orient='dict')
-    SHEET['skills'] =              pd.read_excel(file_path, sheet_name = 'skills').to_dict(orient='dict')
-
-
-    SHEET['items_equipment'] =     pd.read_excel(file_path, sheet_name = 'items_equipment').to_dict(orient='dict')
-    SHEET['items_misc'] =          pd.read_excel(file_path, sheet_name = 'items_misc').to_dict(orient='dict')
-
-
-    SHEET['enemy_skills'] =        pd.read_excel(file_path, sheet_name = 'enemy_skills').to_dict(orient='dict')
-    SHEET['loot'] =                pd.read_excel(file_path, sheet_name = 'loot').to_dict(orient='dict')
-    SHEET['enemies'] =             pd.read_excel(file_path, sheet_name = 'enemies').to_dict(orient='dict')
-    SHEET['enemy_combat_loop'] =   pd.read_excel(file_path, sheet_name = 'enemy_combat_loop').to_dict(orient='dict')
+    SHEET['skills'] =              read_ods(file_path, 'skills')
+    SHEET['items_equipment'] =     read_ods(file_path, 'items_equipment')
+    SHEET['items_misc'] =          read_ods(file_path, 'items_misc')
+    SHEET['enemy_skills'] =        read_ods(file_path, 'enemy_skills')
+    SHEET['loot'] =                read_ods(file_path, 'loot')
+    SHEET['enemies'] =             read_ods(file_path, 'enemies')
+    SHEET['enemy_combat_loop'] =   read_ods(file_path, 'enemy_combat_loop')
     end = time.time()
     print(end - start,'LOADING OF CONFIG.ODS')
 
     return SHEET
 
-def load():
-    SHEET = read_from_ods_file()
-
+def configure_skill_script_values(SHEET):
     start = time.time()
     SKILL_SCRIPT_VALUES = {}
     for row in SHEET['skill_script_values']:
@@ -79,10 +72,12 @@ def load():
                 SKILL_SCRIPT_VALUES[x['skill_id'][index]] = {
                     x['value_name'][index]:        d_vals
                 }
+
     end = time.time()
     print(end - start,'SKILL_SCRIPT_VALUES')
-    
+    return SKILL_SCRIPT_VALUES
 
+def configure_USE_PERSPECTIVES(SHEET):
     start = time.time()
     USE_PERSPECTIVES = {}
     for row in SHEET['use_perspectives']:
@@ -98,8 +93,10 @@ def load():
                     x['key'][index]:        x['value'][index] 
                 }
     end = time.time()
-    print(end - start,'USE_PERSPECTIVES')
+    print(end - start,'USE_PERSPECTIVES')   
+    return USE_PERSPECTIVES
 
+def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
     start = time.time()
     SKILLS = {}
     for row in SHEET['skills']:
@@ -122,9 +119,10 @@ def load():
     for skill in SKILLS:
         SKILLS[skill]['script_values'] = SKILL_SCRIPT_VALUES[skill]
     end = time.time()
-    print(end - start,'SKILL_SCRIPT_VALUES')
-    
+    print(end - start,'SKILL')
+    return SKILLS
 
+def configure_ITEMS(SHEET, USE_PERSPECTIVES):
     start = time.time()
     ITEMS = {}
     for row in SHEET['items_misc']:
@@ -184,131 +182,147 @@ def load():
                 }
             }
 
-        end = time.time()
-        print(end - start,'ITEMS')
+    end = time.time()
+    print(end - start,'ITEMS')
+    return ITEMS
+
+def configure_ENEMIES(SHEET):
+    start = time.time()
+    ENEMIES = {}
+    for row in SHEET['enemies']:
+        x = SHEET['enemies']
+        for index in range(0, len(x[row])):
+            ENEMIES[x['enemy_id'][index]] = {
+                'enemy_id':     x['enemy_id'][index],
+                'name':         x['name'][index],
+                'description':  x['description'][index],
+                'stats': {
+                    'grit':     int(x['grit'][index]),
+                    'hp':       int(x['hp_max'][index]),
+                    'mp':       int(x['mp_max'][index]),
+                    'armor':    int(x['armor'][index]),
+                    'marmor':   int(x['marmor'][index]),
+                    'flow':     int(x['flow'][index]),
+                    'mind':     int(x['mind'][index]),
+                    'soul':     int(x['soul'][index]),
+                    'exp':      int(x['exp'][index]),
+                    'lvl':      int(x['lvl'][index])
+                },
+                'skills': {},       # EMPTY DICT TO STORE SKILLS
+                'loot': {},         # EMPTY DICT TO STORE LOOT
+                'combat_loop': {}   # EMPTY DICT TO STORE COMBAT LOOP
+            }
+
+    end = time.time()
+    print(end - start,'ENEMIES')
+
+    start = time.time()
+    # ADD ENEMY LOOT
+    LOOT = {}
+    for row in SHEET['loot']:
+        x = SHEET['loot']
+        for index in range(0,len(x[row])):
+            d_vals = {
+                x['item_id'][index]: float(x['drop_rate'][index])
+            }
+
+            if x['enemy_id'][index] in LOOT:
+                # concate the previous dict with new a new value
+                LOOT[x['enemy_id'][index]] = LOOT[x['enemy_id'][index]] | d_vals
+            else:
+                # create a fresh dict
+                LOOT[x['enemy_id'][index]] = {
+                    x['item_id'][index]: d_vals
+                }
+
+    for loot_table in LOOT:
+        ENEMIES[loot_table]['loot'] = LOOT[loot_table]
+
+    end = time.time()
+    print(end - start,'LOOT')
+
+
+    start = time.time()
+    # ADD ENEMY SKILLS
+    ENEMY_SKILLS = {}
+    for row in SHEET['enemy_skills']:
+        x = SHEET['enemy_skills']
+        for index in range(0,len(x[row])):
+            d_vals = {
+                x['skill_id'][index]: int(x['practice'][index])
+            }
+
+            if x['enemy_id'][index] in ENEMY_SKILLS:
+                # concate the previous dict with new a new value
+                ENEMY_SKILLS[x['enemy_id'][index]] = ENEMY_SKILLS[x['enemy_id'][index]] | d_vals
+            else:
+                # create a fresh dict
+                ENEMY_SKILLS[x['enemy_id'][index]] = {
+                    x['skill_id'][index]: d_vals
+                }
+
+    for enemy_id in ENEMY_SKILLS:
+        ENEMIES[enemy_id]['skills'] = ENEMY_SKILLS[enemy_id]
+    
+    end = time.time()
+    print(end - start,'ENEMY_SKILLS')
+
+    start = time.time()
+    # ADD ENEMY COMBAT LOOP
+    TEMP_ENEMY_COMBAT_LOOP = {}
+    for row in SHEET['enemy_combat_loop']:
+        x = SHEET['enemy_combat_loop']
+        for index in range(0,len(x[row])):
+            d_vals = { 
+                x['order'][index]: {
+                    'target':   str(x['target'][index]),
+                    'skill':    str(x['skill_id'][index])
+                }
+            }
+
+            if x['enemy_id'][index] in TEMP_ENEMY_COMBAT_LOOP:
+                # concate the previous dict with new a new value
+                TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] = TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] | d_vals
+            else:
+                # create a fresh dict
+                TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] = {
+                    x['order'][index]: d_vals
+                }
+
+    ENEMY_COMBAT_LOOP = {}
+    for loop in TEMP_ENEMY_COMBAT_LOOP:
+        ENEMY_COMBAT_LOOP[loop] = []
+        for i in dict(sorted(TEMP_ENEMY_COMBAT_LOOP[loop].items())):
+            ENEMY_COMBAT_LOOP[loop].append(TEMP_ENEMY_COMBAT_LOOP[loop][i])
+
+    for enemy_id in ENEMY_COMBAT_LOOP:
+        ENEMIES[enemy_id]['combat_loop'] = ENEMY_COMBAT_LOOP[enemy_id]
+
+    end = time.time()
+    print(end - start,'ENEMY_COMBAT_LOOP')
+
+    return ENEMIES
+
+def load():
+    SHEET = read_from_ods_file()
+    SKILL_SCRIPT_VALUES =     configure_skill_script_values(SHEET)
+    USE_PERSPECTIVES =        configure_USE_PERSPECTIVES(SHEET)
+    SKILLS =                  configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES)
+    ITEMS =                   configure_ITEMS(SHEET, USE_PERSPECTIVES)
+    ENEMIES =                 configure_ENEMIES(SHEET)
         
-        start = time.time()
-        ENEMIES = {}
-        for row in SHEET['enemies']:
-            x = SHEET['enemies']
-            for index in range(0, len(x[row])):
-                ENEMIES[x['enemy_id'][index]] = {
-                    'enemy_id':     x['enemy_id'][index],
-                    'name':         x['name'][index],
-                    'description':  x['description'][index],
-                    'stats': {
-                        'grit':     int(x['grit'][index]),
-                        'hp':       int(x['hp_max'][index]),
-                        'mp':       int(x['mp_max'][index]),
-                        'armor':    int(x['armor'][index]),
-                        'marmor':   int(x['marmor'][index]),
-                        'flow':     int(x['flow'][index]),
-                        'mind':     int(x['mind'][index]),
-                        'soul':     int(x['soul'][index]),
-                        'exp':      int(x['exp'][index]),
-                        'lvl':      int(x['lvl'][index])
-                    },
-                    'skills': {},       # EMPTY DICT TO STORE SKILLS
-                    'loot': {},         # EMPTY DICT TO STORE LOOT
-                    'combat_loop': {}   # EMPTY DICT TO STORE COMBAT LOOP
-                }
+    
 
-        end = time.time()
-        print(end - start,'ENEMIES')
+    
 
-        start = time.time()
-        # ADD ENEMY LOOT
-        LOOT = {}
-        for row in SHEET['loot']:
-            x = SHEET['loot']
-            for index in range(0,len(x[row])):
-                d_vals = {
-                    x['item_id'][index]: float(x['drop_rate'][index])
-                }
-
-                if x['enemy_id'][index] in LOOT:
-                    # concate the previous dict with new a new value
-                    LOOT[x['enemy_id'][index]] = LOOT[x['enemy_id'][index]] | d_vals
-                else:
-                    # create a fresh dict
-                    LOOT[x['enemy_id'][index]] = {
-                        x['item_id'][index]: d_vals
-                    }
-
-        for loot_table in LOOT:
-            ENEMIES[loot_table]['loot'] = LOOT[loot_table]
-
-        end = time.time()
-        print(end - start,'LOOT')
-
-
-        start = time.time()
-        # ADD ENEMY SKILLS
-        ENEMY_SKILLS = {}
-        for row in SHEET['enemy_skills']:
-            x = SHEET['enemy_skills']
-            for index in range(0,len(x[row])):
-                d_vals = {
-                    x['skill_id'][index]: int(x['practice'][index])
-                }
-
-                if x['enemy_id'][index] in ENEMY_SKILLS:
-                    # concate the previous dict with new a new value
-                    ENEMY_SKILLS[x['enemy_id'][index]] = ENEMY_SKILLS[x['enemy_id'][index]] | d_vals
-                else:
-                    # create a fresh dict
-                    ENEMY_SKILLS[x['enemy_id'][index]] = {
-                        x['skill_id'][index]: d_vals
-                    }
-
-        for enemy_id in ENEMY_SKILLS:
-            ENEMIES[enemy_id]['skills'] = ENEMY_SKILLS[enemy_id]
-        
-        end = time.time()
-        print(end - start,'ENEMY_SKILLS')
-
-        start = time.time()
-        # ADD ENEMY COMBAT LOOP
-        TEMP_ENEMY_COMBAT_LOOP = {}
-        for row in SHEET['enemy_combat_loop']:
-            x = SHEET['enemy_combat_loop']
-            for index in range(0,len(x[row])):
-                d_vals = { 
-                    x['order'][index]: {
-                        'target':   str(x['target'][index]),
-                        'skill':    str(x['skill_id'][index])
-                    }
-                }
-
-                if x['enemy_id'][index] in TEMP_ENEMY_COMBAT_LOOP:
-                    # concate the previous dict with new a new value
-                    TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] = TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] | d_vals
-                else:
-                    # create a fresh dict
-                    TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] = {
-                        x['order'][index]: d_vals
-                    }
-
-        ENEMY_COMBAT_LOOP = {}
-        for loop in TEMP_ENEMY_COMBAT_LOOP:
-            ENEMY_COMBAT_LOOP[loop] = []
-            for i in dict(sorted(TEMP_ENEMY_COMBAT_LOOP[loop].items())):
-                ENEMY_COMBAT_LOOP[loop].append(TEMP_ENEMY_COMBAT_LOOP[loop][i])
-
-        for enemy_id in ENEMY_COMBAT_LOOP:
-            ENEMIES[enemy_id]['combat_loop'] = ENEMY_COMBAT_LOOP[enemy_id]
-
-        end = time.time()
-        print(end - start,'ENEMY COMBAT_LOOP')
-
-        # PACK IT ALL UP
-        whole_dict = {
-            'enemies': ENEMIES,
-            'skills': SKILLS,
-            'items': ITEMS,
-        }
-        return whole_dict
+    # PACK IT ALL UP
+    whole_dict = {
+        'enemies': ENEMIES,
+        'skills': SKILLS,
+        'items': ITEMS,
+    }
+    return whole_dict
     
 if __name__ == '__main__':
-    print(load())
+    load()
     
