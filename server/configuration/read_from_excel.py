@@ -7,6 +7,9 @@ from pandas_ods_reader import read_ods
 import time
 
 def str_with_newlines(s):
+    if s == None:
+        s = 'None'
+        return s
     s = s.replace('#END#','\n')
     return s
 
@@ -58,7 +61,7 @@ def configure_skill_script_values(SHEET):
             for i in tmp:
                 if isnan(i):
                     continue
-                if x['value_name'][index] in ['chance','damage',]:
+                if x['value_name'][index] in ['chance','damage','bonus']:
                     i = float(i)
                 else:
                     i = int(i)

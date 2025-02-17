@@ -115,3 +115,21 @@ class AffectMageArmor(Affect):
             damage_obj.damage_value = int(damage_obj.damage_value * self.dmg_amp)
 
         return damage_obj
+    
+class AffectEnrage(Affect):
+    def __init__(self, affect_manager, name, description, turns, extra_hp):
+        super().__init__(affect_manager, name, description, turns)
+        self.extra_hp = extra_hp
+        self.bonus_hp = 0
+
+    def on_applied(self):
+        super().on_applied()
+        self.bonus_hp = int( self.owner.stats[StatType.HPMAX] * self.extra_hp )
+        self.owner.stats[StatType.HPMAX] += self.bonus_hp
+        self.owner.stats[StatType.HP] +=    self.bonus_hp
+
+    def on_finished(self, silent=False):
+        self.owner.stats[StatType.HPMAX] -= self.bonus_hp
+        self.owner.stats[StatType.HP] -=    self.bonus_hp
+        self.owner.hp_mp_clamp_update()
+        return super().on_finished(silent)

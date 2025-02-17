@@ -12,7 +12,8 @@ SkillScriptValuesToNames = {
     'hp_cost':      'HP-COST',
     'mp_cost':      'MP-COST',
     'duration':     'DURATION',
-    'cooldown':     'COOLDOWN'
+    'cooldown':     'COOLDOWN',
+    'bonus':        'BONUS'
 }
 
 class ItemType:

@@ -208,6 +208,19 @@ class SkillMageArmor(Skill):
                 name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
                 turns = turns, reduction = reduction)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
+
+class SkillEnrage(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            turns =         int(self.script_values['duration'][self.users_skill_level])
+            extra_hp =      self.script_values['bonus'][self.users_skill_level]
+            print(extra_hp)
+            enrage_affect = affects.AffectEnrage(
+                affect_manager = self.other.affect_manager, 
+                name = 'Enraged', description = f'Temporary {int(extra_hp*100)}% Health', 
+                turns = turns, extra_hp = extra_hp)
+            self.user.affect_manager.set_affect_object(enrage_affect)  
             
 class SkillRegenHP30(Skill):
     def use(self):
@@ -235,3 +248,4 @@ class SkillRegenMP30(Skill):
                 damage_to_stat = StatType.MP
                 )
             self.other.take_damage(damage_obj)                
+
