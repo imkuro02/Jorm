@@ -4,14 +4,17 @@ cffi==1.17.1
 constantly==23.10.4
 cryptography==44.0.0
 defusedxml==0.7.1
+ezodf==0.3.2
 fuzzywuzzy==0.18.0
 hyperlink==21.0.0
 idna==3.10
 incremental==24.7.2
 Levenshtein==0.26.1
+lxml==5.3.1
 numpy==2.2.2
 odfpy==1.4.1
 pandas==2.2.3
+pandas-ods-reader==1.0.1
 pycparser==2.22
 pyOpenSSL==24.3.0
 python-dateutil==2.9.0.post0

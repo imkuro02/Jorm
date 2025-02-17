@@ -56,12 +56,13 @@ def inventory_equip(self, item, forced = False):
                 f'You equip {item.name}',
                 f'{self.pretty_name()} equips {item.name}'
             )
+            self.hp_mp_clamp_update()
 
         #self.slots[item.slot] = item.id
         #print(self.slots[item.slot])
 
         # clamp the max mp and hp
-        self.hp_mp_clamp_update()
+        
 
 def inventory_unequip(self, item, silent = False):
     if item.equiped:
@@ -73,11 +74,12 @@ def inventory_unequip(self, item, silent = False):
             if stat_name == StatType.HPMAX: self.stats[StatType.HP] -= stat_val
             if stat_name == StatType.MPMAX: self.stats[StatType.MP] -= stat_val
             self.stats[stat_name] -= stat_val
-        self.hp_mp_clamp_update()
+        
 
         if silent:
             return
-        
+            
+        self.hp_mp_clamp_update()
         self.simple_broadcast(
             f'You unequip {item.name}',
             f'{self.pretty_name()} unequips {item.name}'
