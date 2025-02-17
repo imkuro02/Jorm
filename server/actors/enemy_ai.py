@@ -12,7 +12,7 @@ class Targets:
     ENEMY_LOWEST_HP =       'ELH'
     ENEMY_HIGHEST_MP    =   'EHM'
     ENEMY_LOWEST_MP     =   'ELM'
-    ENEMY_HIGHEST_THREAT =  'EHT'
+    ENEMY_HIGHEST_THREAT =  'EHT'   #
     ENEMY_LOWEST_THREAT =   'ELT'
 
     ALLY_RANDOM =           'AR'
