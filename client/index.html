@@ -113,7 +113,7 @@
         // Append plain text message to output
         function appendMessage(message) {
             const div = document.createElement('div');
-            // Pattern for matching https:// and http:// URLs. May not want http://
+            // Pattern for matching https://
             const urlPattern = /(https:\/\/[^\s]+)/g;
             const parts = message.split(urlPattern);
 
