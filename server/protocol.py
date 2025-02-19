@@ -286,7 +286,7 @@ class Protocol(protocol.Protocol):
 
     # override
     def connectionLost(self, reason):
-        #utils.logging.debug(self.id + ' >> Connection lost')
+        utils.logging.debug(self.id + f' Connection lost: {reason}')
         if self.actor != None:
 
             self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
