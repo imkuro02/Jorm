@@ -91,7 +91,7 @@ def command_practice(self, line):
 
             t.add_data(SKILLS[skill_id]["name"])
             t.add_data(learned, col)
-            t.add_data(SKILLS[skill_id]['level_req'])
+            t.add_data(int(SKILLS[skill_id]['level_req']))
         self.sendLine(t.get_table() + output)
     else:
         line = line.split()

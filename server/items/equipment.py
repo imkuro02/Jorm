@@ -10,6 +10,8 @@ class Equipment(Item):
 
         self.slot = EquipmentSlotType.TRINKET
         self.equiped = False
+
+        self.rank = 0 
         
         self.stats = {
             StatType.HPMAX: 0,
@@ -56,8 +58,6 @@ class Equipment(Item):
         if self.slot == None:
             return output
         output += f'Slot: {EquipmentSlotType.name[self.slot]} '
-        if self.equiped:
-            output += f'{"@green(Equiped)@normal"}'
         output += '\n'
         #output += f'{StatType.name[StatType.LVL]}: {r[StatType.LVL]}\n'
         

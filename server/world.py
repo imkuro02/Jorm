@@ -217,7 +217,8 @@ class World:
 
         if self.factory.ticks_passed % (30*(60*1)) == 0 or self.factory.ticks_passed == 3:
             self.reload()
-            self.spawn_boss()
+            #self.spawn_boss()
+            
         #if self.factory.ticks_passed % (30*(60*10)) == 0 or self.factory.ticks_passed == 1:
         #    for i in self.rooms.values():
         #        i.respawn_enemies()

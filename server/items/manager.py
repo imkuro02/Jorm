@@ -44,16 +44,18 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
 
         rng_seed = int(uuid_int)
         myrandom = random.Random(rng_seed)
+        rank = 0
         for i in range(0,myrandom.randrange(new_item.requirements[StatType.LVL])):
             stat_to_affect = myrandom.choice([key for key in new_item.stats])
             boost = myrandom.choice([-1,1,2])
+            rank += boost
             if stat_to_affect in [StatType.HPMAX, StatType.MPMAX]:
                 boost = boost * 5
             new_item.stats[stat_to_affect] += boost
             new_item.requirements[stat_to_affect] += abs(boost) 
-        
+
             
-        
+        new_item.rank = rank
         new_item.new = False
         new_item.slot = ITEMS[premade_id]['slot']
 

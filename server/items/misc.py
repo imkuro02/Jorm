@@ -13,11 +13,33 @@ class Item:
         self.owner = None # the inventory manager of this item
         self.new = True # show if item is newly added to inv
     
-    def pretty_name(self):
-        if self.stack >= 2:
-            return f'@white{self.name}@normal ({self.stack})'
+    def pretty_name(self, rank_only = False):
+        output = f'@white{self.name}@normal'
+        if rank_only:
+            if self.item_type == ItemType.EQUIPMENT:  
+                if self.rank != 0: 
+                    if self.rank > 0:
+                        output = output + f' (@green+{self.rank}@normal)'
+                    else:
+                        output = output + f' (@red{self.rank}@normal)'
+                return output
+                
+        if self.item_type == ItemType.EQUIPMENT:     
+            if self.rank != 0: 
+                if self.rank > 0:
+                    output = output + f' (@green+{self.rank}@normal)'
+                else:
+                    output = output + f' (@red{self.rank}@normal)'
+            if self.equiped:   output = output + f' (@greenE@normal)'
+            if self.keep:      output = output + f' (@redK@normal)'
+            if self.new:       output = output + f' (@yellowN@normal)'
         else:
-            return f'@white{self.name}@normal'
+            if self.stack != 1: output = output + f' x{self.stack}'
+            if self.keep:      output = output + f' (@redK@normal)'
+            if self.new:       output = output + f' (@yellowN@normal)'
+
+        return output
+       
     def to_dict(self):
         my_dict = {
             'id': self.id,
@@ -42,7 +64,7 @@ class Item:
         return my_dict
 
     def identify(self, identifier = None):
-        output = f'{self.pretty_name()} {"@red(K)@normal" if self.keep else ""}\n'
+        output = f'{self.pretty_name()}\n'
         output += f'@cyan{self.description}@normal\n'
         self.new = False
         return output

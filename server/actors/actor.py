@@ -138,8 +138,43 @@ class Actor:
                     t.add_data('---')
             else:
                 t.add_data(EquipmentSlotType.name[i] + ':')
-                t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].name+'')
+                t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].pretty_name(rank_only = True))
+        '''
+        t = utils.Table(10, spaces = 1)
+        # SLOT
+        # NAME
+        # HP
+        # MP
+        # GRIT
+        # FLOW
+        # MIND
+        # SOUL
+        # ARMOR 
+        # MARMOR
+        
+        for i in self.slots_manager.slots:
+            if None == self.slots_manager.slots[i]:
+                if hide_empty:
+                    continue
+                else:
+                    t.add_data(EquipmentSlotType.name[i] + ':')
+                    t.add_data('---')
+                    for i in range(0,8):
+                        t.add_data('')
+            else:
+                eq = self.inventory_manager.items[self.slots_manager.slots[i]]
+                t.add_data(EquipmentSlotType.name[i] + ':')
+                t.add_data(eq.pretty_name(rank_only = True)+'')
+                t.add_data(eq.stats[StatType.HPMAX])
+                t.add_data(eq.stats[StatType.MPMAX])
+                t.add_data(eq.stats[StatType.GRIT])
+                t.add_data(eq.stats[StatType.FLOW])
+                t.add_data(eq.stats[StatType.MIND])
+                t.add_data(eq.stats[StatType.SOUL])
+                t.add_data(eq.stats[StatType.ARMOR])
+                t.add_data(eq.stats[StatType.MARMOR])
                 #t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].description)
+        '''
         output = t.get_table()
         return output
 
@@ -150,13 +185,18 @@ class Actor:
             output += f'@cyan{self.description}@normal\n'
 
         output += self.get_character_equipment()
-
-        output += f'{StatType.name[StatType.HP]+":":<15} {self.stats[StatType.HP]}/{self.stats[StatType.HPMAX]}\n'
-        output += f'{StatType.name[StatType.MP]+":":<15} {self.stats[StatType.MP]}/{self.stats[StatType.MPMAX]}\n'
-        _piss = [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
+        t = utils.Table(2,1)
+        t.add_data(StatType.name[StatType.HP])
+        t.add_data(f'(@red{self.stats[StatType.HP]}@normal/@red{self.stats[StatType.HPMAX]}@normal)')
+        t.add_data(StatType.name[StatType.MP])
+        t.add_data(f'(@cyan{self.stats[StatType.MP]}@normal/@cyan{self.stats[StatType.MPMAX]}@normal)')
+        _piss = [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR, StatType.LVL]
         for _shit in _piss:
-            output += f'{StatType.name[_shit]+":":<15} {self.stats[_shit]}\n'
-        output += f'{StatType.name[StatType.LVL]}: {self.stats[StatType.LVL]}\n'
+            t.add_data(StatType.name[_shit]+':')
+            t.add_data(self.stats[_shit])
+
+        output += t.get_table()
+       
         
         return output
 

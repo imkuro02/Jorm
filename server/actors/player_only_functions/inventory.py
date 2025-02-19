@@ -87,20 +87,12 @@ def command_inventory(self, line):
     t = utils.Table(1)
 
     for i in self.inventory_manager.items:
-        output = ''
-        if self.inventory_manager.items[i].item_type == ItemType.EQUIPMENT:     
-            output = output + f'{self.inventory_manager.items[i].pretty_name()}'
-            if self.inventory_manager.items[i].equiped:   output = output + f' @green(E)@normal'
-            if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
-            if self.inventory_manager.items[i].new:       output = output + f' @yellow(N)@yellow'
-        else:
-            output = output + f'{self.inventory_manager.items[i].pretty_name()}'
-            if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
-            if self.inventory_manager.items[i].new:       output = output + f' @yellow(N)@yellow'
+        output = self.inventory_manager.items[i].pretty_name()
+        
 
         if self.trade_manager.trade != None:
             if i in self.trade_manager.trade.offers1 or i in self.trade_manager.trade.offers2:
-                output = output + f' @yellow(T)@normal'
+                output = output + f' (@yellowT@normal)'
 
         t.add_data(output)
 
