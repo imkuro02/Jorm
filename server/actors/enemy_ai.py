@@ -41,7 +41,7 @@ class AI:
 
         x = 1
         if self.actor.factory.ticks_passed % (30 * 1) == 0:
-            x = random.randrange(0,100)
+            x = random.randrange(0,500)
 
         if x >= 1:
             return
@@ -73,8 +73,11 @@ class AI:
         if self.actor.room == None:
             return False
             
-        if self.actor.room.combat == None:
+        if self.actor.status == ActorStatusType.NORMAL:
             self.wander()
+            return False
+        
+        if self.actor.room.combat == None:
             return False
 
         if self.actor.room.combat.current_actor != self.actor:

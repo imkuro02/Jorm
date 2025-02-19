@@ -29,6 +29,11 @@ class Room:
 
         self.entities = {}
 
+    def is_an_instance(self):
+        if '/' in self.uid:
+            return True
+        return False
+
     def populate(self):
         # get room from dict
         my_id = self.uid

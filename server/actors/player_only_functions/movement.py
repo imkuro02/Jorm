@@ -21,6 +21,18 @@ def command_flee(self, line):
 @check_not_in_combat
 @check_alive
 def command_go(self, line):
+
+    if self.room.is_an_instance():
+        can_move = True
+        for e in self.room.entities.values():
+            if type(e).__name__ == 'Enemy':
+                can_move = False
+                break
+
+        if not can_move:
+            self.sendLine('Its not safe to go further.')
+            return
+        
     if line == '':
         self.sendLine('Go where?')
         return
@@ -60,7 +72,10 @@ def command_go(self, line):
                     continue
                 if par.room != old_room:
                     continue
-                par.command_go(line)
+                #par.command_go(line)
+                self.room.move_entity(par, silent = True)
+                par.sendLine('You follow.')
+                par.command_look('')
 
 
 

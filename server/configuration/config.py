@@ -7,7 +7,7 @@ import configuration.read_from_excel as rfe
 
 SkillScriptValuesToNames = {
     'levels':       'LEVEL',
-    'damage':       'DMG-AMP',
+    'damage':       'DAMAGE',
     'chance':       'CHANCE',
     'hp_cost':      'HP-COST',
     'mp_cost':      'MP-COST',
