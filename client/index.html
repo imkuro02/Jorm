@@ -113,7 +113,23 @@
         // Append plain text message to output
         function appendMessage(message) {
             const div = document.createElement('div');
-            div.textContent = message;
+            // Pattern for matching https://
+            const urlPattern = /(https:\/\/[^\s]+)/g;
+            const parts = message.split(urlPattern);
+
+            parts.forEach(part => {
+                if (urlPattern.test(part)) {
+                    const link = document.createElement('a');
+                    link.href = part;
+                    // Open links in a new tab
+                    link.target = '_blank';
+                    link.textContent = part;
+                    div.appendChild(link);
+                } else {
+                    div.appendChild(document.createTextNode(part));
+                }
+            });
+
             output.appendChild(div);
             output.scrollTop = output.scrollHeight;
         }
@@ -121,7 +137,24 @@
         // Append ANSI-colored message to output
         function appendAnsiMessage(message) {
             const div = document.createElement('div');
-            div.innerHTML = ansi_up.ansi_to_html(message); // Convert ANSI codes to HTML
+            // Convert ANSI codes to HTML
+            let htmlMessage = ansi_up.ansi_to_html(message);
+            // Pattern for matching https://
+            const urlPattern = /(https:\/\/[^\s]+)/g;
+            const parts = htmlMessage.split(urlPattern);
+            parts.forEach(part => {
+                if (urlPattern.test(part)) {
+                    const link = document.createElement('a');
+                    link.href = part;
+                    // Open links in a new tab
+                    link.target = '_blank';
+                    link.innerHTML = part;
+                    div.appendChild(link);
+                } else {
+                    div.innerHTML += part;
+                }
+            });
+
             output.appendChild(div);
             output.scrollTop = output.scrollHeight;
         }
