@@ -68,31 +68,37 @@ class Skill:
 
 class SkillSwing(Skill):
     def use(self):
-        grit = int(self.user.stats[StatType.GRIT]*self.script_values['damage'][self.users_skill_level])
-        flow = int(self.user.stats[StatType.FLOW]*self.script_values['damage'][self.users_skill_level])
+        grit = int(self.user.stats[StatType.GRIT])
+        flow = int(self.user.stats[StatType.FLOW])
 
-        bonus_damage = grit
+        my_dmg_scaling = StatType.GRIT
         if flow > grit: 
-            bonus_damage = flow
+            my_dmg_scaling = StatType.FLOW
 
         super().use()
         if self.success:
+            amp = int(self.user.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
+            base = self.script_values['damage'][self.users_skill_level]
+            dmg = base + amp
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = bonus_damage,
+                damage_value = dmg,
                 damage_type = DamageType.PHYSICAL
                 )
-            self.user.deal_damage(damage_obj)
+            damage = self.user.deal_damage(damage_obj)
 
 class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
         if self.success:
+            amp = int(self.user.stats[StatType.SOUL]*self.script_values['bonus'][self.users_skill_level])
+            base = self.script_values['damage'][self.users_skill_level]
+            dmg = base + amp
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = 10 + int(self.user.stats[StatType.SOUL]*self.script_values['damage'][self.users_skill_level]),
+                damage_value = dmg,
                 damage_type = DamageType.HEALING
                 )
             self.user.deal_damage(damage_obj)
@@ -109,69 +115,40 @@ class SkillBash(SkillSwing):
             if damage_dealt != 0:
                 self.other.affect_manager.set_affect_object(stunned_affect)
 
-class SkillDoubleWhack(Skill):
-    def use(self):
-        for i in range(0,2):
-            damage_obj = Damage(
-                    damage_taker_actor = self.other,
-                    damage_source_actor = self.user,
-                    damage_value = int(self.user.stats[StatType.FLOW]*self.script_values['damage'][self.users_skill_level]),
-                    damage_type = DamageType.PHYSICAL
-                )
-            self.success = random.randint(1,100) <= 40
-            super().use()
-            if self.success:
-                self.user.deal_damage(damage_obj)
-"""
-class SkillMagicMissile(Skill):
-    def use(self):
-        super().use()
-        if self.success:
-            damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stats[StatType.MIND]*self.script_values['damage'][self.users_skill_level]),
-                damage_type = DamageType.MAGICAL
-                )
-            
-            damage = self.user.deal_damage(damage_obj)
-            '''
-            damage_obj = Damage(
-                damage_taker_actor = self.user,
-                damage_source_actor = self.user,
-                damage_value = damage,
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.MP
-                )
-            self.user.take_damage(damage_obj)
-            '''
 
-class SkillSmite(Skill):
-    def use(self):
-        super().use()
-        if self.success:
-            damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stats[StatType.SOUL]*self.script_values['damage'][self.users_skill_level]),
-                damage_type = DamageType.MAGICAL
-                )
-            
-            damage = self.user.deal_damage(damage_obj)
-"""
 
 class SkillDamage(Skill):
      def use(self, my_dmg_scaling = StatType.GRIT, my_dmg_type = DamageType.PHYSICAL):
         super().use()
         if self.success:
+            amp = int(self.user.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
+            base = self.script_values['damage'][self.users_skill_level]
+            dmg = base + amp
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = int(self.user.stats[my_dmg_scaling]*self.script_values['damage'][self.users_skill_level]),
+                damage_value = dmg,
                 damage_type = my_dmg_type
                 )
             damage = self.user.deal_damage(damage_obj)
-            
+
+class SkillDoubleWhack(Skill):
+    def use(self):
+        for i in range(0,2):
+            amp = int(self.user.stats[StatType.FLOW]*self.script_values['bonus'][self.users_skill_level])
+            base = self.script_values['damage'][self.users_skill_level]
+            dmg = base + amp
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_actor = self.user,
+                damage_value = dmg,
+                damage_type = self.user.stats[StatType.FLOW]
+                )
+            #damage = self.user.deal_damage(damage_obj)
+            self.user.deal_damage(damage_obj)
+            if self.success:
+                self.user.deal_damage(damage_obj)
+
 class SkillDamageByGrit(SkillDamage):
     def use(self):
         super().use(StatType.GRIT, DamageType.PHYSICAL)
@@ -190,7 +167,7 @@ class SkillBecomeEthereal(Skill):
         super().use()
         if self.success:
             turns = int(self.script_values['duration'][self.users_skill_level])
-            dmg_amp = self.script_values['damage'][self.users_skill_level]
+            dmg_amp = self.script_values['bonus'][self.users_skill_level]
             ethereal_affect = affects.AffectEthereal(
                 self.other.affect_manager, 
                 'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
@@ -202,7 +179,7 @@ class SkillMageArmor(Skill):
         super().use()
         if self.success:
             turns = int(self.script_values['duration'][self.users_skill_level])
-            reduction = self.script_values['damage'][self.users_skill_level]
+            reduction = self.script_values['bonus'][self.users_skill_level]
             ethereal_affect = affects.AffectMageArmor(
                 affect_manager = self.other.affect_manager, 
                 name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
@@ -215,7 +192,6 @@ class SkillEnrage(Skill):
         if self.success:
             turns =         int(self.script_values['duration'][self.users_skill_level])
             extra_hp =      self.script_values['bonus'][self.users_skill_level]
-            print(extra_hp)
             enrage_affect = affects.AffectEnrage(
                 affect_manager = self.other.affect_manager, 
                 name = 'Enraged', description = f'Temporary {int(extra_hp*100)}% Health', 

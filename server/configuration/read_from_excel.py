@@ -59,12 +59,21 @@ def configure_skill_script_values(SHEET):
             # convert values that are supposed to be displayed as % to float
             # also remove any "NaN" values
             for i in tmp:
-                if isnan(i):
-                    continue
-                if x['value_name'][index] in ['chance','damage','bonus']:
-                    i = float(i)
+                if type(i).__name__ == 'float':
+                    if isnan(i):
+                        continue
+                i = str(i)
+                if ',' in i:
+                    i = float(i.replace(',','.'))
                 else:
                     i = int(i)
+
+                if isnan(i):
+                    continue
+                #if x['value_name'][index] in ['chance','damage','bonus']:
+                #    i = float(i)
+                #else:
+                #    i = int(i)
                 d_vals[x['value_name'][index]].append(i)
 
             if x['skill_id'][index] in SKILL_SCRIPT_VALUES:
