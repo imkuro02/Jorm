@@ -121,8 +121,28 @@ SKILLS = {}
 NPCS = {}
 WORLD = {}
 SPLASH_SCREENS = {}
+LORE = {}
+
+def load_lore():
+    LORE['enemies'] = {}
+    LORE['items'] = {}
+    LORE['items_name_to_id'] = {}
+    LORE['rooms'] = {}
+
+    for i in WORLD['world']:
+        LORE['rooms'][ WORLD['world'][i]['name'] ] = WORLD['world'][i]
+
+    for i in ITEMS:
+        LORE['items'][ITEMS[i]['name']]  = ITEMS[i]
+        LORE['items_name_to_id'][ITEMS[i]['premade_id']]  = ITEMS[i]['name']
+
+    for i in ENEMIES:
+        LORE['enemies'][ENEMIES[i]['name']]  = ENEMIES[i]
+
+    return LORE 
 
 def load():
+    global LORE
     global ITEMS
     global ENEMIES
     global SKILLS  # Declare the global variables here
@@ -151,7 +171,10 @@ def load():
 
     WORLD['world'] = configuration.map.map_loader.load_map()
 
+    LORE = load_lore()
+
     print('reloaded')
+
 
            
 

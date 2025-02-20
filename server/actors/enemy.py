@@ -12,16 +12,19 @@ from items.manager import load_item
 
 from configuration.config import ITEMS
 
-def create_enemy(room, enemy_id):
+def create_enemy(room, enemy_id, spawn_for_lore = False):
     if enemy_id not in ENEMIES:
         print(f'error creating enemy: {enemy_id}')
         return
 
     enemy = ENEMIES[enemy_id]
-
-    names = 'Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
-    name = random.choice(names.split())
-    name = name + ' The ' + enemy['name']
+    name = ''
+    if not spawn_for_lore:
+        names = 'Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
+        name = random.choice(names.split())
+        name = name + ' The ' + enemy['name']
+    else:
+        name = enemy['name']
     stats = enemy['stats']
     skills = enemy['skills']
     combat_loop = enemy['combat_loop']
@@ -38,6 +41,8 @@ def create_enemy(room, enemy_id):
     e = Enemy(name, room, stats, loot, skills, combat_loop)
     e.description = enemy['description']
 
+    return e
+
 class Enemy(Actor):
     def __init__(self, name, room, stats, loot, skills, combat_loop):
         super().__init__(name, room)
@@ -51,7 +56,6 @@ class Enemy(Actor):
         self.combat_loop = copy.deepcopy(combat_loop)
 
         self.ai = enemy_ai.AIBasic(self)
-
         self.room.move_entity(self)
 
 
@@ -80,19 +84,22 @@ class Enemy(Actor):
                 entity.sendLine(f'Your inventory is full and you missed out on {new_item.name}')
 
     def die(self):
+        
         if self.room == None:
+            super().die()
             return
         if self.room.combat == None:
-            #print('1no combat')
+            super().die()
             return
         if self not in self.room.combat.participants.values():
-            #print('not in combat')
+            super().die()
             return
         
         for entity in self.room.combat.participants.values():
             if type(entity).__name__ == "Player":
                 entity.stats[StatType.EXP] += self.stats[StatType.EXP]
                 self.drop_loot(entity)
+                
         super().die()
 
 

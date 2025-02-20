@@ -245,16 +245,14 @@ class Actor:
         damage_dealt = damage_obj.damage_taker_actor.take_damage(damage_obj)
         self.stats[StatType.THREAT] += damage_dealt
         
-
-
     def die(self):
         if self.room == None:
-            return
-        if self.room.combat == None:
+            print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
             return
         
-        if self.room.combat.current_actor == self:
-            self.room.combat.next_turn()
+        if self.room.combat != None:
+            if self.room.combat.current_actor == self:
+                self.room.combat.next_turn()
 
         # create a temporary corpse item 
         # this items name and description is NOT stored in db

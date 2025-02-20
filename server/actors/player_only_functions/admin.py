@@ -4,7 +4,7 @@ import configuration.config as config
 import yaml
 import os
 import utils
-from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS
+from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE
 
 def command_help(self, line):
     files = os.listdir('help')
@@ -265,3 +265,93 @@ def command_grant_admin(self, line):
             proto.actor.admin = admin_level
 
 
+from actors.enemy import create_enemy
+@check_no_empty_line
+def command_lore(self, line):
+    
+
+    list_of_enemies = [enemy for enemy in LORE['enemies']]
+    list_of_items = [item for item in LORE['items']]
+    list_of_rooms = [room for room in LORE['rooms']]
+    
+    whole_list = list_of_enemies + list_of_items + list_of_rooms
+
+    to_find = utils.match_word(line, whole_list)
+    
+    self.sendLine(to_find)
+    
+    if to_find in list_of_enemies:
+        e_id = LORE['enemies'][to_find]['enemy_id']
+        e = create_enemy(self.room.world.rooms['loading'], e_id, spawn_for_lore = True)
+        
+        
+        all_rooms_e_spawns_in = []
+        for room in LORE['rooms'].values():
+            if e_id in room['enemies']:
+                all_rooms_e_spawns_in.append(room['name'])
+
+        t = utils.Table(3,3)
+        for room in all_rooms_e_spawns_in:
+            t.add_data(room)
+        output_room_spawns = t.get_table()
+        
+
+
+        all_loot_they_drop = {}
+        for loot in e.loot:
+            all_loot_they_drop[LORE['items_name_to_id'][loot]] = str(float(e.loot[loot])*100)+'%'
+
+        
+        t = utils.Table(4,3)
+        for loot in all_loot_they_drop:
+            t.add_data(loot)
+            t.add_data(all_loot_they_drop[loot])
+        output_loot_drops = t.get_table()
+
+        # IF THE AMOUNT OF ROOMS DOES NOT COMPLETELY COVER THE GRID
+        # THEN THE TABLE WILL HAVE TWO \n INSTEAD OF ONE
+
+        # THIS IS AN ISSUE WIT DA GUUUUH WID DA GUUUH
+        # WIT DA utils.Table CODE
+        output = '@yellowYou are pondering: @normal'
+        output += e.get_character_sheet()+'\n'
+        output += '@yellowRoaming area:@normal\n'
+        output += output_room_spawns+'\n'+'\n'
+        output += '@yellowPotential drops:@normal\n'
+        output += output_loot_drops+'\n'+'\n'
+
+        self.sendLine(output)
+
+        e.die()
+        return
+    
+    if to_find in list_of_items:
+        return
+    
+    if to_find in list_of_rooms:
+        return
+    
+    return
+
+
+    # target yourself if not trying to target anything else
+    if ' on ' not in line and ' at ' not in line:
+        action = line
+        action = utils.match_word(action, list_of_items + list_of_skill_names)
+        target = self
+
+    # if you are targetting something else set target to that
+    else:
+        action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
+        action = utils.match_word(action, list_of_items + list_of_skill_names)
+        #target = utils.match_word(target, list_of_items + list_of_entities)
+
+
+    _action = None
+    _target = None
+
+    if action in list_of_items:
+        _action = self.get_item(action)
+    if action in list_of_skill_names:
+        _action = name_to_id[action]
+    
