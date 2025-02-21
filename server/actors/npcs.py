@@ -1,6 +1,7 @@
 from actors.actor import Actor
-from configuration.config import NPCS
-
+from configuration.config import NPCS, StatType
+from items.manager import load_item
+from quest import QUEST_STATE_TYPES
 def create_npc(room, npc_id):
     
     npc = Npc(npc_id, room)
@@ -15,30 +16,75 @@ class Dialog:
     def __init__(self, player, dialog_tree):
         self.player = player
         self.dialog_tree = dialog_tree
-        self.current_line = 'start'
-        self.print_dialog()    
-
+        self.current_line = 'start' 
 
     def get_valid_options(self):
         options = []
         if 'options' not in self.dialog_tree[self.current_line]:
+            # dont return anything if this is the last line bcuz
+            # the players wont be able to access it because of end_dialog() anyway
+            if self.current_line == 'end':
+                return options
+            options.append({'index':0, 'say': 'bye', 'goto': 'end'})
             return options
 
         i = 1
         for option in self.dialog_tree[self.current_line]['options']:
-            options.append({'index':i,'say': option['say'], 'goto': option['goto']})
+            dic = {}
+            if 'quest_check' in option:
+                this_option_is_good = True
+                for check in option['quest_check']:
+                    quest_id =      check['id']
+                    quest_state =   check['state']
+
+                    if not self.player.quest_manager.check_quest_state(quest_id) == quest_state:
+                        this_option_is_good = False
+
+                if not this_option_is_good:
+                    continue
+
+            dic['index'] = i
+            dic['say'] = option['say']
+            dic['goto'] = option['goto']
+
+            if 'quest_turn_in' in option:
+                quest_id =      option['quest_turn_in']['id']
+                if not self.player.quest_manager.check_quest_state(quest_id) == QUEST_STATE_TYPES.COMPLETED:
+                    continue
+                    
+                dic['quest_turn_in'] =   {'id':quest_id}
+                dic['reward'] =          option['quest_turn_in']['reward']
+                dic['reward_exp'] =      option['quest_turn_in']['reward_exp'] 
+
+            if 'quest_start' in option:
+                quest_id =              option['quest_start']['id']
+                dic['quest_start'] =    {'id':quest_id}
+        
+            options.append(dic)
+
             i += 1
 
-        options.append({'index':0, 'say': 'bye', 'goto': 'bye'})
+        options.append({'index':0, 'say': 'bye', 'goto': 'end'})
         return options
 
     def print_dialog(self):
-        output = self.dialog_tree[self.current_line]['dialog']
-        output += str(self.get_valid_options())
+        output = '@yellow'+self.dialog_tree[self.current_line]['dialog']+'@normal'
+        
+        # if there is only one option, that option is end
+        # so dont print anything dialogue should end
+        if len(self.get_valid_options()) >= 2:
+            for i in self.get_valid_options():
+                output += f'{i["index"]}: @cyan{i["say"]}@normal\n'
+
+
         self.player.sendLine(output)
 
-        if self.current_line == 'end':
+        # if this is the end, or there is only one option
+        # end dialogue
+        if len(self.get_valid_options()) <= 1:
             self.end_dialog()
+
+        
         
     def answer(self, line):
         try:
@@ -46,68 +92,47 @@ class Dialog:
         except ValueError:
             line = 0
         
+        answer = None
         options = self.get_valid_options()
-        if line not in range(0,len(options)):
-            line = 0
 
-        # pick the last line that is BYE
-        if line == 0:
-            line = len(options) - 1
+        for index, option in enumerate(options):
+            if line == option['index']:
+                answer = option
+                break
+                
+        if answer == None:
+            last_index = len(options)-1
+            answer = options[last_index]
 
-        option_chosen = options[line]
 
-        self.player.sendLine(option_chosen['say'])
-        self.current_line = option_chosen['goto']
+        self.player.sendLine(answer['say'])
+        self.current_line = answer['goto']
+
+        if 'quest_start' in answer:
+            self.player.quest_manager.start_quest(answer['quest_start']['id'])
+
+        if 'quest_turn_in' in answer:
+            self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
+            
+        if 'reward' in answer:
+            for item_id in answer['reward']:
+                item = load_item(item_id)
+                if item == None:
+                    continue
+                self.player.inventory_manager.add_item(item)
+                self.player.sendLine(f'You got: {item.pretty_name()}')
+
+        if 'reward_exp' in answer:
+            self.player.stats[StatType.EXP] += answer['reward_exp']
+            self.player.sendLine(f'You got: {answer["reward_exp"]} Experience')
+
         self.print_dialog()
 
     def end_dialog(self):
+        self.player.sendLine(('###END###', self.current_line))
         self.player.current_dialog = None
         self.player = None
-
-'''    
-class Dialog:
-    def __init__(self, player, dialog_tree):
-        self.player = player
-        self.dialog_tree = dialog_tree
-        self.start_dialog()    
-
-    def get_branch(self):
-        return self.dialog_tree[self.current_line]
-    
-    def start_dialog(self):
-        self.current_line = 'start'
-        self.print_dialog()
-
-    def print_dialog(self):
-        output = ''
-        output += f'@yellow{self.get_branch()["dialog"]}@normal\n'
-        if 'options' in self.get_branch():
-            for option in range(0,len(self.get_branch()['options'])):
-                output += f'{option}: @cyan{self.get_branch()["options"][option]["say"]}@normal\n' 
-
-        self.player.sendLine(output)
-
-        if self.current_line == 'end':
-            self.end_dialog()
-
-    def end_dialog(self):
-        self.player.current_dialog = None
-        self.player = None
-
-    def answer(self,line):
-        if 'options' not in self.get_branch():
-            self.print_dialog()
-            self.end_dialog()
-            return
         
-        line = int(line)
-        if line in range(0,len(self.get_branch()['options'])):
-            self.player.sendLine(f'@cyan{self.get_branch()["options"][line]["say"]}@normal')
-            self.current_line = self.get_branch()["options"][line]["goto"]
-            self.print_dialog()
-            return
-        self.print_dialog()
-'''
 
         
 class Npc(Actor):
@@ -124,7 +149,9 @@ class Npc(Actor):
         if self.dialog_tree == None:
             talker.sendLine('There is nothing to talk about.')
             return
+            
         talker.current_dialog = Dialog(talker, self.dialog_tree)
+        talker.current_dialog.print_dialog()
 
     def get_character_sheet(self):
         output = f'{self.pretty_name()}\n'

@@ -67,6 +67,7 @@ class Player(Actor):
         if self.current_dialog != None:
             self.current_dialog.answer(line)
             return
+            
         
         if not line: 
             line = self.last_line_sent

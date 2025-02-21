@@ -1,31 +1,4 @@
-kerning11: 
-  name: Edgelord Edgar
-  description: | 
-    Edgar is leaning his back against the wall.
-    Arms crossed, his pants sagging, and his swag lacking.
-  tree:
-    start:
-      dialog: |
-        He glances at you, then looks away.
-      options:
-        a: 
-          say: Hello
-          goto: a
-        b:
-          say: Who are you?
-          goto: a
-    a:
-      dialog: |
-        Don't speak to me, you are not worth my time
-      options:
-        a: 
-          say: Ok 
-          goto: end
-    end:
-      dialog: |
-        he waves you good bye lol
-
-kerning: 
+kerning:
   name: Rat hunter Edward
   description: | 
     Edward is peeking from behind a trash can at something right around the corner of a street.
@@ -36,30 +9,33 @@ kerning:
       options:
         - say: Rat hunter?
           goto: rat_hunter
+          quest_check:
+            - id: rat_hunter
+              state: not started
 
         - say: I want to hunt rats too
           goto: rat_hunter_start
           quest_check:
-            id: rat_hunter
-            state: not started
+            - id: rat_hunter
+              state: not started
 
         - say: I killed the rats
-          goto: rat_hunter_finish
+          goto: rat_hunter_end
           quest_check:
+            - id: rat_hunter
+              state: completed
+          quest_turn_in:
             id: rat_hunter
-            state: completed
+            reward: 
+              - grit weapon 3
+              - red potion
+            reward_exp: 10
 
         - say: I killed the rats
           goto: rat_hunter_lie
           quest_check:
-            id: rat_hunter
-            state: in progress
-
-        - say: I killed the rats
-          goto: already_completed_rat_hunter
-          quest_check:
-            id: rat_hunter
-            state: turned in
+            - id: rat_hunter
+              state: in progress
           
     rat_hunter:
       dialog: |
@@ -68,8 +44,8 @@ kerning:
         - say: I want to hunt rats too
           goto: rat_hunter_start
           quest_check:
-            id: rat_hunter
-            state: not started
+            - id: rat_hunter
+              state: not started
     
     rat_hunter_lie: 
       dialog: |
@@ -80,24 +56,16 @@ kerning:
         Great! all you need to do is kill some rats for me!
       options:
         - say: cool
-          goto: bye
+          goto: end
           quest_start:
             id: rat_hunter
-      
-    rat_hunter_finish:
-      dialog: |
-        Great job! here is your reward!
-      options: 
-        - say: ok
-          goto: bye
-          quest_turn_in:
-            id: rat_hunter
-            reward: 
-            - red potion
-            - red potion
-            reward_exp: 10
 
-    bye:
+    rat_hunter_end:
+      dialog: | 
+        You will make a fine rat hunter someday!
+
+  
+    end:
       dialog: |
         He waves you good bye
 
