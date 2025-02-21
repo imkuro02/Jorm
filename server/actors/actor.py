@@ -8,6 +8,7 @@ from skills.manager import use_skill
 from inventory import InventoryManager
 import utils
 from party import PartyManager
+from quest import QuestManager
 
 class CooldownManager:
     def __init__ (self, owner):
@@ -75,6 +76,7 @@ class Actor:
         self.inventory_manager = InventoryManager(self)
         self.slots_manager = SlotsManager(self)
         self.party_manager = PartyManager(self)
+        self.quest_manager = QuestManager(self)
         self.status = ActorStatusType.NORMAL
         
         self.stats = {

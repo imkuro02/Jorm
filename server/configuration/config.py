@@ -122,6 +122,7 @@ NPCS = {}
 WORLD = {}
 SPLASH_SCREENS = {}
 LORE = {}
+QUESTS = {}
 
 def load_lore():
     LORE['enemies'] = {}
@@ -142,6 +143,7 @@ def load_lore():
     return LORE 
 
 def load():
+    global QUESTS
     global LORE
     global ITEMS
     global ENEMIES
@@ -153,6 +155,19 @@ def load():
         ENEMIES[k] = data['enemies'][k]
     for k in data['skills']:
         SKILLS[k] = data['skills'][k]
+
+
+    QUESTS_DIRECTORY = 'configuration/quests/'
+    
+    for root, dirs, files in os.walk(QUESTS_DIRECTORY):
+        for filename in files:
+            if filename.endswith('.yaml'):
+                file_path = os.path.join(root, filename)
+                with open(file_path, 'r') as file:
+                    ALL_QUESTS = yaml.safe_load(file)
+                    for i in ALL_QUESTS:
+                        if 'template' not in i:
+                            QUESTS[i] = ALL_QUESTS[i]
 
     #SKILLS = {}
     NPCS_DIRECTORY = 'configuration/npcs/'

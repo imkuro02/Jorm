@@ -1,4 +1,4 @@
-kerning: 
+kerning11: 
   name: Edgelord Edgar
   description: | 
     Edgar is leaning his back against the wall.
@@ -24,4 +24,81 @@ kerning:
     end:
       dialog: |
         he waves you good bye lol
+
+kerning: 
+  name: Rat hunter Edward
+  description: | 
+    Edward is peeking from behind a trash can at something right around the corner of a street.
+  tree:
+    start:
+      dialog: |
+        He glances at you, then looks away. "shhh, do you hear it? rats.."
+      options:
+        - say: Rat hunter?
+          goto: rat_hunter
+
+        - say: I want to hunt rats too
+          goto: rat_hunter_start
+          quest_check:
+            id: rat_hunter
+            state: not started
+
+        - say: I killed the rats
+          goto: rat_hunter_finish
+          quest_check:
+            id: rat_hunter
+            state: completed
+
+        - say: I killed the rats
+          goto: rat_hunter_lie
+          quest_check:
+            id: rat_hunter
+            state: in progress
+
+        - say: I killed the rats
+          goto: already_completed_rat_hunter
+          quest_check:
+            id: rat_hunter
+            state: turned in
+          
+    rat_hunter:
+      dialog: |
+        Yerp! thats right! 
+      options:
+        - say: I want to hunt rats too
+          goto: rat_hunter_start
+          quest_check:
+            id: rat_hunter
+            state: not started
+    
+    rat_hunter_lie: 
+      dialog: |
+        LIAR! there are still rats roaming around!!
+
+    rat_hunter_start:
+      dialog: |
+        Great! all you need to do is kill some rats for me!
+      options:
+        - say: cool
+          goto: bye
+          quest_start:
+            id: rat_hunter
+      
+    rat_hunter_finish:
+      dialog: |
+        Great job! here is your reward!
+      options: 
+        - say: ok
+          goto: bye
+          quest_turn_in:
+            id: rat_hunter
+            reward: 
+            - red potion
+            - red potion
+            reward_exp: 10
+
+    bye:
+      dialog: |
+        He waves you good bye
+
         

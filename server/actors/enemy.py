@@ -12,6 +12,8 @@ from items.manager import load_item
 
 from configuration.config import ITEMS
 
+from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
+
 def create_enemy(room, enemy_id, spawn_for_lore = False):
     if enemy_id not in ENEMIES:
         print(f'error creating enemy: {enemy_id}')
@@ -38,15 +40,17 @@ def create_enemy(room, enemy_id, spawn_for_lore = False):
         #print(loot)
         if item not in ITEMS:
             print(item, 'does not exist in loot table for ', enemy_id)
-    e = Enemy(name, room, stats, loot, skills, combat_loop)
+    e = Enemy(enemy_id, name, room, stats, loot, skills, combat_loop)
     e.description = enemy['description']
 
     return e
 
 class Enemy(Actor):
-    def __init__(self, name, room, stats, loot, skills, combat_loop):
+    def __init__(self, enemy_id, name, room, stats, loot, skills, combat_loop):
         super().__init__(name, room)
+        self.enemy_id = enemy_id
         self.stats = {**self.stats, **stats}
+        
         #self.stats = 
         self.stats[StatType.HPMAX] = self.stats[StatType.HP]
         self.stats[StatType.MPMAX] = self.stats[StatType.MP]
@@ -99,6 +103,8 @@ class Enemy(Actor):
             if type(entity).__name__ == "Player":
                 entity.stats[StatType.EXP] += self.stats[StatType.EXP]
                 self.drop_loot(entity)
+                proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.enemy_id, 1)
+                entity.quest_manager.propose_objective_count_addition(proposal)
                 
         super().die()
 

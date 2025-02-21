@@ -264,6 +264,37 @@ def command_grant_admin(self, line):
         if name == proto.actor.name:
             proto.actor.admin = admin_level
 
+from quest import OBJECTIVE_TYPES
+def command_quest(self, line):
+    if line == '':
+        t = utils.Table(2,3)
+        t.add_data('Quest')
+        t.add_data('State')
+        for quest in self.quest_manager.quests.values():
+            t.add_data(quest.quest_name)
+            t.add_data(quest.get_state(as_string = True))
+           
+
+        self.sendLine(t.get_table())
+        return # show all quests
+
+    lines = line.split(' ')
+    if len(lines) < 2:
+        self.sendLine('Too few arguments')
+        return
+
+    command = lines[0]
+    quest_name = ' '.join(lines[1:])
+
+    match command:
+        case 'add':
+            self.quest_manager.start_quest(quest_name)
+            
+        case 'view':
+            self.quest_manager.view(quest_name)
+    
+
+
 
 from actors.enemy import create_enemy
 @check_no_empty_line
