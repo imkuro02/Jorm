@@ -278,10 +278,15 @@ def command_quest(self, line):
         self.sendLine(t.get_table())
         return # show all quests
 
+    self.quest_manager.view(line)
+    return
+
     lines = line.split(' ')
     if len(lines) < 2:
         self.sendLine('Too few arguments')
         return
+
+    
 
     command = lines[0]
     quest_name = ' '.join(lines[1:])

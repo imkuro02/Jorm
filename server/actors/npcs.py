@@ -129,7 +129,6 @@ class Dialog:
         self.print_dialog()
 
     def end_dialog(self):
-        self.player.sendLine(('###END###', self.current_line))
         self.player.current_dialog = None
         self.player = None
         

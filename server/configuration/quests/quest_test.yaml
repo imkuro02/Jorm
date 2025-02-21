@@ -8,16 +8,6 @@ debug_quest:
       objective: rat
       completed_at: 2
 
-rat_hunter:
-  name: Kill some rats
-  description: Edward asked me to kill some rats
-  #def __init__(self, quest_id, objective_name, objective_type, objective_objective, objective_completed_at)
-  objectives:
-    Kill the shroom:
-      type: kill_x
-      objective: rat
-      completed_at: 2
-
 rat_hunter2:
   name: Kill some more rats
   description: Edward asked me to kill some more rats
