@@ -29,6 +29,10 @@ class InventoryManager:
                 if _i.item_type != ItemType.MISC:
                     continue
                 _i.stack += item.stack
+                if not dont_send_objective_proposal and type(self.owner).__name__ == 'Player':
+                    self.owner.quest_manager.propose_objective_count_addition(
+                        ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item.premade_id, item.stack)
+                    )
                 return True
             
         if len(self.items) >= self.limit:
