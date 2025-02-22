@@ -50,14 +50,12 @@ def command_drop(self, line):
         f'{self.pretty_name()} drops {item.name}'
         )
 
-from items.manager import load_item
+
 def command_split(self, line):
     all_words = line.split(' ')
-    if len(all_words) <= 0:
+    if len(all_words) <= 1:
         self.sendLine('Command "split" needs an item, and a value')
         return
-    
-    
     
     value = 0
     for i in [all_words[0], all_words[-1]]:
@@ -76,10 +74,8 @@ def command_split(self, line):
         self.sendLine('Can\'t split this')
         return
     
-    new_item = load_item(item.premade_id)
-    item.stack -= value
-    new_item.stack = value
-    self.inventory_manager.add_item(new_item, stack_items = False) 
+    self.inventory_manager.split_stack(item, value)
+    
     
 
 def command_inventory(self, line):

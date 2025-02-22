@@ -1,7 +1,8 @@
 
 
-from configuration.config import QUESTS, ENEMIES
+from configuration.config import QUESTS, ENEMIES, ITEMS
 import utils
+from items.manager import load_item
 
 class OBJECTIVE_TYPES:
     KILL_X =        'kill_x'        # kill x amount of mobs
@@ -20,6 +21,26 @@ class QuestManager:
         self.actor = actor
         self.quests = {}
 
+    def get_quest_id_from_quest_name(self, quest_name):
+        quest_name = utils.match_word(quest_name, [quest.name for quest in self.quests.values()])
+        quest_id = None
+
+        for quest in self.quests.values():
+            if quest.name == quest_name:
+                quest_id = quest.id
+                break
+
+        return quest_id
+    
+    def drop(self, quest_name):
+        quest_id = self.get_quest_id_from_quest_name(quest_name)
+        if quest_id == None:
+            self.actor.sendLine('Drop what quest?')
+            return
+        
+        self.actor.sendLine(f'You drop {self.quests[quest_id].name}')
+        del self.quests[quest_id]
+
     def check_quest_state(self, quest_id):
         if quest_id not in self.quests:
             return QUEST_STATE_TYPES.NOT_STARTED
@@ -30,10 +51,41 @@ class QuestManager:
             self.actor.sendLine('You can\'t turn in a quest you dont have')
             return
 
-
         proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.TURNED_IN, OBJECTIVE_TYPES.TURNED_IN, 1)
-        self.quests[quest_id].propose_objective_count_addition(proposal)
+        proposal_accepted = self.quests[quest_id].propose_objective_count_addition(proposal)
 
+        # turn in quest items
+        if proposal_accepted:
+            items = {}
+
+            for item in self.actor.inventory_manager.items.values():
+                items[item.id] = item
+
+            for objective in self.quests[quest_id].objectives.values():
+                if objective.type != OBJECTIVE_TYPES.COLLECT_X:
+                    continue
+                
+                stacks_to_remove = objective.goal
+                for item in items.values():
+                    if objective.requirement_id == item.premade_id:
+                        # if stack is exact, remove that item
+                        if item.stack == stacks_to_remove:
+                            self.actor.inventory_manager.remove_item(item)
+                            break
+                        # if stack is bigger than requirement, remove only x of that 
+                        if item.stack > stacks_to_remove:
+                            self.actor.inventory_manager.items[item.id].stack -= stacks_to_remove
+                            stacks_to_remove -= stacks_to_remove
+                            break
+                        # if stack is less than required, remove the item, and loop again with requirement-stack
+                        if item.stack < stacks_to_remove:
+                            stacks_to_remove -= item.stack
+                            self.actor.inventory_manager.remove_item(item)
+                            continue
+                        # if you have turned in all items then escape
+                        if stacks_to_remove == 0:
+                            break
+                
     def start_quest(self, quest_id):
         if quest_id in self.quests:
             self.actor.sendLine('You already have this quest')
@@ -49,21 +101,15 @@ class QuestManager:
             return
 
         self.quests[quest_id] = quest
-        self.actor.sendLine(f'New quest: {quest.quest_name}')
+        self.actor.sendLine(f'New quest: {quest.name}')
+        self.actor.inventory_manager.count_quest_items()
 
     def view(self, quest_name):
         if len(self.quests) == 0:
             self.actor.sendLine('You got no quests')
             return
 
-        quest_name = utils.match_word(quest_name, [quest.quest_name for quest in self.quests.values()])
-        quest_id = None
-
-        for quest in self.quests.values():
-            if quest.quest_name == quest_name:
-                quest_id = quest.quest_id
-                break
-
+        quest_id = self.get_quest_id_from_quest_name(quest_name)
         if quest_id == None:
             self.sendLine('View what quest?')
             return
@@ -82,33 +128,40 @@ class QuestManager:
         return True
 
     def propose_objective_count_addition(self, objective_count_proposal: 'ObjectiveCountProposal'):
+        proposal_accepted = False
         for quest in self.quests.values():
             if quest.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
                 continue
-            quest.propose_objective_count_addition(objective_count_proposal)
+            proposal_accepted = quest.propose_objective_count_addition(objective_count_proposal)
+            if proposal_accepted:
+                break
+        return proposal_accepted
 
 class Quest:
-    def __init__(self, quest_id, quest_name, quest_description = ''):
-        self.quest_id = quest_id
-        self.quest_manager = None
-        self.quest_name = quest_name
-        self.quest_description = quest_description
+    def __init__(self, _id, _name, _description = ''):
+        self.id = _id
+        self.manager = None
+        self.name = _name
+        self.description = _description
         self.objectives = {}
 
     def view(self):
         output = ''
-        output += '@yellow' + self.quest_name + '@normal' + '\n'
-        output += '@cyan' + self.quest_description + '@normal\n'
+        output += '@yellow' + self.name + '@normal' + '\n'
+        output += '@cyan' + self.description + '@normal\n'
         for objective in self.objectives.values():
             #print(objective.__dict__)
-            if objective.objective_type == OBJECTIVE_TYPES.TURNED_IN:
+            if objective.type == OBJECTIVE_TYPES.TURNED_IN:
                 continue
-
-            match objective.objective_type:
-                case OBJECTIVE_TYPES.KILL_X:
-                    enemy_name = ENEMIES[objective.objective_objective]['name']
-                    output += f'Kill @red{enemy_name}@normal: {objective.objective_count}/{objective.objective_completed_at}' + '\n'
-
+            
+            if not self.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
+                match objective.type:
+                    case OBJECTIVE_TYPES.KILL_X:
+                        enemy_name = ENEMIES[objective.requirement_id]['name']
+                        output += f'Kill @red{enemy_name}@normal: {objective.count}/{objective.goal}' + '\n'
+                    case OBJECTIVE_TYPES.COLLECT_X:
+                        enemy_name = ITEMS[objective.requirement_id]['name']
+                        output += f'Collect @white{enemy_name}@normal: {objective.count}/{objective.goal}' + '\n'
 
         output += self.get_state(as_string = True) + '\n'
         return output
@@ -134,44 +187,68 @@ class Quest:
 
     def is_completed(self):
         for objective in self.objectives.values():
-            if objective.objective_type == OBJECTIVE_TYPES.TURNED_IN:
+            if objective.type == OBJECTIVE_TYPES.TURNED_IN:
                 continue
             if not objective.is_completed():
                 return False
         return True
 
     def propose_objective_count_addition(self, objective_count_proposal: 'ObjectiveCountProposal'):
+        proposal_accepted = False
         for objective in self.objectives.values():
-            objective.propose_objective_count_addition(objective_count_proposal)
+            proposal_accepted = objective.propose_objective_count_addition(objective_count_proposal)
+            if proposal_accepted:
+                continue
+
+        return proposal_accepted
 
     def add_objective(self, objective: 'Objective'):
-        objective.quest_manager = self.quest_manager
-        self.objectives[objective.objective_name] = objective
-        
+        objective.manager =                 self.manager
+        self.objectives[objective.name] =   objective
+
+# this is the object killing, or ooting items, will create, and send to players quest managers
+# to see if any quests can go up in objective_count
+class ObjectiveCountProposal:
+    def __init__(self, 
+                 _type, 
+                 _requirement_id, 
+                 _to_add = 1
+                 ):
+        self.type =             _type               # what kind of objective this is
+        self.requirement_id =   _requirement_id     # the id of whatever is required
+        self.to_add =           _to_add             # how much to add 
 
 # a singular objective of a quest
 class Objective:
-    def __init__(self, quest_id, objective_name, objective_type, objective_objective, objective_completed_at):
-        self.quest_id = quest_id                                    # the quest id for the quest
-        self.quest_manager = None
-        self.objective_name = objective_name                        # the name of the objective for db purposes
-        self.objective_type = objective_type                        # the type of objective
-        self.objective_objective = objective_objective              # the "objective" like an item etc
-        self.objective_completed_at = objective_completed_at        # the value of when this objective is is_completed
-        self.objective_count = 0                                    # the current value of the objective
+    def __init__(self, 
+                 _quest_id,
+                 _name, 
+                 _type, 
+                 _requirement_id, 
+                 _goal
+                 ):
+        
+        self.quest_id =         _quest_id           # the quest id for the quest
+        self.manager =          None                # quest manager
+        self.name =             _name               # the name of the objective for db purposes
+        self.type =             _type               # the type of objective
+        self.requirement_id =   _requirement_id     # the "objective" like an item etc
+        self.goal =             _goal               # the value of when this objective is is_completed
+        self.count = 0                              # the current value of the objective
 
     def is_completed(self):
-        if self.objective_completed_at <= self.objective_count:
+        if self.goal <= self.count:
             return True
 
         return False
 
     def propose_objective_count_addition(self, objective_count_proposal: 'ObjectiveCountProposal'):
-        if objective_count_proposal.objective_objective != self.objective_objective:
-            return
-        if objective_count_proposal.objective_type != self.objective_type:
-            return
-        self.objective_count += objective_count_proposal.to_add
+        if objective_count_proposal.requirement_id != self.requirement_id:
+            return False
+        if objective_count_proposal.type != self.type:
+            return False
+        self.count += objective_count_proposal.to_add
+        return True
         
 def create_quest(quest_id):
     if quest_id not in  QUESTS:
@@ -189,13 +266,7 @@ def create_quest(quest_id):
     quest.add_objective( Objective(quest_id, OBJECTIVE_TYPES.TURNED_IN, OBJECTIVE_TYPES.TURNED_IN, OBJECTIVE_TYPES.TURNED_IN, 1) )
     return quest
 
-# this is the object killing, or ooting items, will create, and send to players quest managers
-# to see if any quests can go up in objective_count
-class ObjectiveCountProposal:
-    def __init__(self, objective_type, objective_objective, to_add = 1):
-        self.objective_type = objective_type
-        self.objective_objective = objective_objective
-        self.to_add = to_add
+
  
 if __name__ == '__main__':
     from configuration.config import load

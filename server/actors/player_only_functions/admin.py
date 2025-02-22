@@ -264,39 +264,59 @@ def command_grant_admin(self, line):
         if name == proto.actor.name:
             proto.actor.admin = admin_level
 
-from quest import OBJECTIVE_TYPES
-def command_quest(self, line):
-    if line == '':
+from quest import OBJECTIVE_TYPES, QUEST_STATE_TYPES
+def command_quest(self, line = 'list'):
+    lines = line.split(' ')
+    command = lines[0]
+    
+
+    if command.lower() in 'list':
+        count = 0
         t = utils.Table(2,3)
         t.add_data('Quest')
         t.add_data('State')
         for quest in self.quest_manager.quests.values():
-            t.add_data(quest.quest_name)
+            if quest.get_state() == QUEST_STATE_TYPES.TURNED_IN:
+                continue
+            count += 1
+            t.add_data(quest.name)
             t.add_data(quest.get_state(as_string = True))
-           
-
+        if count == 0:
+            self.sendLine('You got no quests')
+            return
         self.sendLine(t.get_table())
         return # show all quests
-
-    self.quest_manager.view(line)
-    return
-
-    lines = line.split(' ')
+        
+    if command.lower() in 'all':
+        count = 0
+        t = utils.Table(2,3)
+        t.add_data('Quest')
+        t.add_data('State')
+        for quest in self.quest_manager.quests.values():
+            t.add_data(quest.name)
+            t.add_data(quest.get_state(as_string = True))
+            count += 1
+        if count == 0:
+            self.sendLine('You got no quests')
+            return
+        self.sendLine(t.get_table())
+        return 
+    
     if len(lines) < 2:
         self.sendLine('Too few arguments')
         return
-
-    
-
-    command = lines[0]
     quest_name = ' '.join(lines[1:])
 
-    match command:
-        case 'add':
-            self.quest_manager.start_quest(quest_name)
-            
-        case 'view':
-            self.quest_manager.view(quest_name)
+    if command.lower() in 'add':
+        self.quest_manager.start_quest(quest_name)
+        return
+    if command.lower() in 'view':
+        self.quest_manager.view(quest_name)
+        return
+    if command.lower() in 'drop':
+        self.quest_manager.drop(quest_name)
+        return
+    
     
 
 

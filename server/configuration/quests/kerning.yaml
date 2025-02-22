@@ -2,9 +2,12 @@ rat_hunter:
   name: Kill some rats
   description: Edward asked me to kill some rats
   objectives:
-    Kill the shroom:
-      type: kill_x
-      objective: rat
-      completed_at: 2
-
+    #Kill the shroom:
+    #  type: kill_x
+    #  objective: rat
+    #  completed_at: 2
+    Collect some rocks:
+      type: collect_x
+      objective: rock
+      completed_at: 20
       
