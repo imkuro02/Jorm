@@ -156,7 +156,12 @@ class Quest:
     def view(self):
         output = ''
         output += '@yellow' + self.name + '@normal' + '\n'
-        output += '@cyan' + self.description + '@normal\n'
+        output += '@cyan' + self.description['in progress'] + '@normal\n'
+        if self.is_completed():
+            output += '@cyan' + self.description['completed'] + '@normal\n'
+        if self.is_turned_in():
+            output += '@cyan' + self.description['turned in'] + '@normal\n'
+
         for objective in self.objectives.values():
             #print(objective.__dict__)
             if objective.type == OBJECTIVE_TYPES.TURNED_IN:

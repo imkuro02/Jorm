@@ -18,7 +18,12 @@ tutorial_1:
           quest_check:
             - id: tutorial_1
               state: in progress
-        
+
+        - say: How do I get out?
+          goto: quest_already_turned_in
+          quest_check:
+            - id: tutorial_1
+              state: turned in
 
         - say: I got your corpse
           goto: quest_turn_in_failed
@@ -35,12 +40,6 @@ tutorial_1:
             id: tutorial_1
             reward_exp: 4
 
-        - say: How do I get out?
-          goto: quest_already_turned_in
-          quest_check:
-            - id: tutorial_1
-              state: turned in
-
         - say: What can you teach me?
           goto: help_me
           quest_check:
@@ -49,8 +48,11 @@ tutorial_1:
             
     help_level:
       dialog: |
-        says "Ah! use the "level", you can level 1 of 4 stats,
+        says "Ah! use the "level" command to level up.
+        You can level one of four main stats,
         Grit, Flow, Mind and Soul
+
+        You can type "stats" to view your current stats
 
         type "level grit" to level up grit.
         type "level soul" to level up soul.
@@ -63,15 +65,16 @@ tutorial_1:
 
     help_practice:
       dialog: |
-        says "simple! use the "practice" command to view all skills you
-        can practice, then use "skill [skill name]" to view the detais.
+        says "Whenever you level up, you get 20 practice points.
+        Type "practice" to view all skills you can practice.
+        When you find a skill that sounds interesting, type "skill [skill name]"
+        This will show you more information about the skill.
 
-        to actually practice a skill, type "practice [skill name] [points]"
-        "points" are "practice points"
+        Then to actually practice;
+        You need to type "practice [skill name] [amount]"
 
-        you get a set amount on level up.
-
-        type for example "practice swing 20" this will level your swing by 20 points.
+        You gain 20 points per level up. Try practicing now
+        Type "practice swing 20" this will make you spend 20 points in swing"
       options: 
         - say: What else?
           goto: help_me
@@ -96,11 +99,14 @@ tutorial_1:
           goto: help_practice
         - say: What else?
           goto: help_help
+        - say: I just want to leave
+          goto: quest_already_turned_in
       
       
     quest_already_turned_in:
       dialog: |
-        says "just type "go crossroads" here, and you will make your way out"
+        says "just go to the south-east corner. 
+        Then type "go crossroad" to leave"
 
     quest_turn_in_failed:
       dialog: |
@@ -111,15 +117,13 @@ tutorial_1:
     quest_turn_in_success:
       dialog: |
         says "Ah! perfect, this will make a fine snack"
-        they take the corpse and point behind them 
-        "type "go crossroads" and you should find your way out of here"
-
         They smile "but before you go, You should level up first"
 
       options: 
         - say: Level up?
-          goto: help_me
-
+          goto: help_level
+        - say: I just want to leave
+          goto: quest_already_turned_in
 
     tutorial_1_in_progress_help:
       dialog: |
@@ -145,12 +149,13 @@ tutorial_1:
 
     how_to_fight:
       dialog: |
-        says "fighting is very simple,
-        to start a fight type "fight", this will put you in combat with all enemies in the room.
+        says "fighting is very simple.
+        To start a fight type "fight". 
+        This will put you in combat with all enemies in the room.
+
         to actually fight them, you need to use your skills during your turn.
         type "skills" to view all your skills.
-        and when in combat type "use [skill] on [enemy]" to use your skills on them.
-        afterwards, its their turn, and back and forth it goes until you either win.. or lose.."
+        and when in combat type "use [skill] on [enemy]" to use your skills on them."
 
     why_fight:
       dialog: |

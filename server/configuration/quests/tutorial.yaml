@@ -1,6 +1,19 @@
 tutorial_1:
-  name: Get a corpse
-  description: Some weirdo asked me to get them a corpse if I want to get out of wherever THIS is.
+  name: Escape the tutorial
+  description: A shadow figure asked me to bring them a corpse?
+  description:
+    in progress: |
+      Im stuck in some weird empty place, here I met someone
+      They asked me to bring them a corpse?
+      I can find something to kill in the "hole" by 
+      the northern wall they said. 
+    completed: |
+      I got the corpse, I should probably go back to 
+      the shadowy figure and give it to them...
+      They are by the south-west corner.
+    turned in: |
+      I got them the corpse of a mouse, they told me to head to the 
+      south-east corner, and type "go crossroad" to get out of here.
   objectives:
     Get a corpse:
       type: collect_x
