@@ -1,6 +1,7 @@
 import json
 import os
 # load map.json into trizbort.io and configure it there 
+import random
 
 def load_map():
     # Path to the JSON file
@@ -56,19 +57,25 @@ def load_map():
                             for obj in i['objects']:
                                 obj_name = obj['_name']
                                 if 'enemy:' in obj_name:
-                                    room['enemies'].append(obj['_name'].replace('enemy:',''))
+                                    enemies = obj_name.replace('enemy:','').split(',')
+                                    picked_enemy = random.choice(enemies).strip()
+                                    room['enemies'].append(picked_enemy)
 
                             room['items'] = []
                             for obj in i['objects']:
                                 obj_name = obj['_name']
                                 if 'item:' in obj_name:
-                                    room['items'].append(obj['_name'].replace('item:',''))
+                                    items = obj_name.replace('item:','').split(',')
+                                    item_picked = random.choice(items).strip()
+                                    room['items'].append(item_picked)
 
                             room['npcs'] = []
                             for obj in i['objects']:
                                 obj_name = obj['_name']
                                 if 'npc:' in obj_name:
-                                    room['npcs'].append(obj['_name'].replace('npc:',''))
+                                    npcs = obj_name.replace('npc:','').split(',')
+                                    npc_picked = random.choice(npcs).strip()
+                                    room['npcs'].append(npc_picked)
                                 
                             
 

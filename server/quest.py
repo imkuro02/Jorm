@@ -90,7 +90,8 @@ class QuestManager:
                         # if you have turned in all items then escape
                         if stacks_to_remove == 0:
                             break
-                
+        
+        
     def start_quest(self, quest_id):
         if quest_id in self.quests:
             self.actor.sendLine('You already have this quest')

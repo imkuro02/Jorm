@@ -258,12 +258,12 @@ class Actor:
 
         # create a temporary corpse item 
         # this items name and description is NOT stored in db
-        item = Item()
-        item.name = f'Corpse of {self.name}'
-        item.premade_id = 'corpse'
-        item.item_type = 'misc'
-        item.description = f'This is the corpse of {self.name}, kinda gross...'
-        self.room.inventory_manager.add_item(item)
+        #item = Item()
+        #item.name = f'Corpse of {self.name}'
+        #item.premade_id = 'corpse'
+        #item.item_type = 'misc'
+        #item.description = f'This is the corpse of {self.name}, kinda gross...'
+        #self.room.inventory_manager.add_item(item)
 
         if type(self).__name__ != "Player":
             del self.room.entities[self.id]

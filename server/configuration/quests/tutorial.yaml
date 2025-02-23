@@ -4,6 +4,6 @@ tutorial_1:
   objectives:
     Get a corpse:
       type: collect_x
-      objective: corpse
+      objective: tutorial_quest_item_1
       completed_at: 1
       

@@ -52,7 +52,8 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
             if stat_to_affect in [StatType.HPMAX, StatType.MPMAX]:
                 boost = boost * 5
             new_item.stats[stat_to_affect] += boost
-            new_item.requirements[stat_to_affect] += abs(boost) 
+            if stat_to_affect not in [StatType.ARMOR, StatType.MARMOR]:
+                new_item.requirements[stat_to_affect] += abs(boost) 
 
             
         new_item.rank = rank
