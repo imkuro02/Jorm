@@ -98,16 +98,14 @@ class QuestManager:
 
         quest = create_quest(quest_id)
         if quest == None:
-            self.actor.sendLine('invalid quest id')
+            self.actor.sendLine(f'@redError starting quest@normal: "{quest_id}"')
             return
         
         quest.quest_manager = self
         for objective in quest.objectives.values():
             objective.quest_manager = self
         
-        if quest == None:
-            self.actor.sendLine('could not start this quest')
-            return
+        
 
         self.quests[quest_id] = quest
         self.actor.sendLine(f'@greenNew quest@normal: {quest.name}')
