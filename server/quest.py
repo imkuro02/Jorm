@@ -22,8 +22,13 @@ class QuestManager:
         self.quests = {}
 
     def get_quest_id_from_quest_name(self, quest_name):
-        quest_name = utils.match_word(quest_name, [quest.name for quest in self.quests.values()])
         quest_id = None
+
+        if len(self.quests) == 0:
+            return quest_id 
+        
+        quest_name = utils.match_word(quest_name, [quest.name for quest in self.quests.values()])
+        
 
         for quest in self.quests.values():
             if quest.name == quest_name:
@@ -92,6 +97,10 @@ class QuestManager:
             return
 
         quest = create_quest(quest_id)
+        if quest == None:
+            self.actor.sendLine('invalid quest id')
+            return
+        
         quest.quest_manager = self
         for objective in quest.objectives.values():
             objective.quest_manager = self
@@ -101,7 +110,7 @@ class QuestManager:
             return
 
         self.quests[quest_id] = quest
-        self.actor.sendLine(f'New quest: {quest.name}')
+        self.actor.sendLine(f'@greenNew quest@normal: {quest.name}')
         self.actor.inventory_manager.count_quest_items()
 
     def view(self, quest_name):

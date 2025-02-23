@@ -1,0 +1,9 @@
+tutorial_1:
+  name: Get a corpse
+  description: Some weirdo asked me to get them a corpse if I want to get out of wherever THIS is.
+  objectives:
+    Get a corpse:
+      type: collect_x
+      objective: corpse
+      completed_at: 1
+      

@@ -13,9 +13,10 @@ def create_npc(room, npc_id):
 
 
 class Dialog:
-    def __init__(self, player, dialog_tree):
-        self.player = player
-        self.dialog_tree = dialog_tree
+    def __init__(self, _player, _npc, _dialog_tree):
+        self.player = _player
+        self.npc = _npc
+        self.dialog_tree = _dialog_tree
         self.current_line = 'start' 
 
     def get_valid_options(self):
@@ -53,8 +54,10 @@ class Dialog:
                     continue
                     
                 dic['quest_turn_in'] =   {'id':quest_id}
-                dic['reward'] =          option['quest_turn_in']['reward']
-                dic['reward_exp'] =      option['quest_turn_in']['reward_exp'] 
+                if 'reward' in option['quest_turn_in']:
+                    dic['reward'] =          option['quest_turn_in']['reward']
+                if 'reward_exp' in option['quest_turn_in']: 
+                    dic['reward_exp'] =      option['quest_turn_in']['reward_exp'] 
 
             if 'quest_start' in option:
                 quest_id =              option['quest_start']['id']
@@ -68,16 +71,16 @@ class Dialog:
         return options
 
     def print_dialog(self):
-        output = '@yellow'+self.dialog_tree[self.current_line]['dialog']+'@normal'
+        output = f'{self.npc.pretty_name()} '+self.dialog_tree[self.current_line]['dialog']+'@normal'
         
         # if there is only one option, that option is end
         # so dont print anything dialogue should end
         if len(self.get_valid_options()) >= 2:
             for i in self.get_valid_options():
-                output += f'{i["index"]}: @cyan{i["say"]}@normal\n'
+                output += f'{i["index"]}: {i["say"]}\n'
 
 
-        self.player.sendLine(output)
+        self.player.sendLine(f'{output}')
 
         # if this is the end, or there is only one option
         # end dialogue
@@ -105,7 +108,7 @@ class Dialog:
             answer = options[last_index]
 
 
-        self.player.sendLine(answer['say'])
+        self.player.sendLine('You say "'+answer['say']+'"')
         self.current_line = answer['goto']
 
         if 'quest_start' in answer:
@@ -149,7 +152,7 @@ class Npc(Actor):
             talker.sendLine('There is nothing to talk about.')
             return
             
-        talker.current_dialog = Dialog(talker, self.dialog_tree)
+        talker.current_dialog = Dialog(talker, self, self.dialog_tree)
         talker.current_dialog.print_dialog()
 
     def get_character_sheet(self):
