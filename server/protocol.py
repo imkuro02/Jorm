@@ -229,9 +229,9 @@ class Protocol(protocol.Protocol):
         #print('>>>',actor)
 
         if actor == None: # new actor
-            self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms['loading'])
+            self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms['overworld#loading'])
         else: # load an existing actor
-            self.actor = Player(self, _id = actor['actor_id'], name = actor['actor_name'], room = self.factory.world.rooms['loading'])
+            self.actor = Player(self, _id = actor['actor_id'], name = actor['actor_name'], room = self.factory.world.rooms['overworld#loading'])
             self.actor.recall_site = actor['actor_recall_site'] 
             self.actor.date_of_creation = actor['meta_data']['date_of_creation']
             self.actor.time_in_game = actor['meta_data']['time_in_game']
@@ -268,11 +268,11 @@ class Protocol(protocol.Protocol):
 
         if actor == None:
             self.save_actor()
-            self.actor.recall_site = 'tutorial'
+            self.actor.recall_site = 'tutorial#start'
         else:
             if self.actor.recall_site not in self.actor.room.world.rooms:
                 self.save_actor()
-                self.actor.recall_site = 'tutorial'
+                self.actor.recall_site = 'tutorial#start'
 
         self.actor.room.world.rooms[self.actor.recall_site].move_entity(self.actor)
         self.actor.command_look('')
@@ -297,7 +297,7 @@ class Protocol(protocol.Protocol):
             
 
             # teleport player to loading to remove them safely
-            self.factory.world.rooms['loading'].move_entity(self.actor)
+            self.factory.world.rooms['overworld#loading'].move_entity(self.actor)
             # remove player from combat
             del self.actor.room.entities[self.actor.id]
             

@@ -11,25 +11,25 @@ tutorial_1:
           goto: where_am_i
           quest_check:
             - id: tutorial_1
-              state: not started
+              state: not_started
 
         - say: How do I get out?
           goto: tutorial_1_in_progress_help
           quest_check:
             - id: tutorial_1
-              state: in progress
+              state: in_progress
 
         - say: How do I get out?
           goto: quest_already_turned_in
           quest_check:
             - id: tutorial_1
-              state: turned in
+              state: turned_in
 
         - say: I got your corpse
           goto: quest_turn_in_failed
           quest_check:
             - id: tutorial_1
-              state: in progress
+              state: in_progress
 
         - say: I got your corpse
           goto: quest_turn_in_success
@@ -44,7 +44,7 @@ tutorial_1:
           goto: help_me
           quest_check:
             - id: tutorial_1
-              state: turned in
+              state: turned_in
             
     help_level:
       dialog: |
@@ -173,7 +173,7 @@ tutorial_1:
           goto: start_tutorial_1
           quest_check:
             - id: tutorial_1
-              state: not started
+              state: not_started
           quest_start:
             id: tutorial_1
 

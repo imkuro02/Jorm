@@ -8,13 +8,13 @@ class OBJECTIVE_TYPES:
     KILL_X =        'kill_x'        # kill x amount of mobs
     COLLECT_X =     'collect_x'     # collect x amount of y items
     CONVERSATION =  'conversation'  # npcs can trigger this upon correct dialogue
-    TURNED_IN    =  'turned_in'     # whether this quest has been turned in or not
+    TURNED_IN    =  'turned_in'     # whether this quest has been turned_in or not
 
 class QUEST_STATE_TYPES:
-    IN_PROGRESS = 'in progress'
-    COMPLETED = 'completed'
-    TURNED_IN = 'turned in'
-    NOT_STARTED = 'not started'
+    IN_PROGRESS =   'in_progress'
+    COMPLETED =     'completed'
+    TURNED_IN =     'turned_in'
+    NOT_STARTED =   'not_started'
 
 class QuestManager:
     def __init__(self, actor):
@@ -87,7 +87,7 @@ class QuestManager:
                             stacks_to_remove -= item.stack
                             self.actor.inventory_manager.remove_item(item)
                             continue
-                        # if you have turned in all items then escape
+                        # if you have turned_in all items then escape
                         if stacks_to_remove == 0:
                             break
         
@@ -156,11 +156,11 @@ class Quest:
     def view(self):
         output = ''
         output += '@yellow' + self.name + '@normal' + '\n'
-        output += '@cyan' + self.description['in progress'] + '@normal\n'
+        output += '@cyan' + self.description['in_progress'] + '@normal\n'
         if self.is_completed():
             output += '@cyan' + self.description['completed'] + '@normal\n'
         if self.is_turned_in():
-            output += '@cyan' + self.description['turned in'] + '@normal\n'
+            output += '@cyan' + self.description['turned_in'] + '@normal\n'
 
         for objective in self.objectives.values():
             #print(objective.__dict__)

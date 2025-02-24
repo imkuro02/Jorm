@@ -11,13 +11,13 @@ kerning:
           goto: rat_hunter
           quest_check:
             - id: rat_hunter
-              state: not started
+              state: not_started
 
         - say: I want to hunt rats too
           goto: rat_hunter_start
           quest_check:
             - id: rat_hunter
-              state: not started
+              state: not_started
 
         - say: I killed the rats
           goto: rat_hunter_end
@@ -35,7 +35,7 @@ kerning:
           goto: rat_hunter_lie
           quest_check:
             - id: rat_hunter
-              state: in progress
+              state: in_progress
           
     rat_hunter:
       dialog: |
@@ -45,7 +45,7 @@ kerning:
           goto: rat_hunter_start
           quest_check:
             - id: rat_hunter
-              state: not started
+              state: not_started
     
     rat_hunter_lie: 
       dialog: |

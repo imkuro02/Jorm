@@ -2,7 +2,7 @@ import json
 import os
 # load map.json into trizbort.io and configure it there 
 import random
-
+import uuid
 def load_map():
     # Path to the JSON file
     #file_path = "configuration/map/map.json"
@@ -12,6 +12,7 @@ def load_map():
     #    data = json.load(file)
 
     rooms = {}
+    connectors = {}
     MAP_DIRECTORY = 'configuration/map/'
     for root, dirs, files in os.walk(MAP_DIRECTORY):
         for filename in files:
@@ -20,26 +21,29 @@ def load_map():
                 print(file_path)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
+                    file_path = file_path.replace('configuration/map/','').replace('.json','')
                     
                     objects = {}
                     elems = data ['elements']
                     for i in elems:
                         objects[i['id']] = i
 
-                    connectors = {}
                     for i in objects.values():
                         if i['_type'] == 'Room':
-                            
+                            if '#' in i['_subtitle']:
+                                continue
+
+                            ROOM_ID = file_path+'#'+i['_subtitle']
                             #print(i['_subtitle'] == 'loading',i['_subtitle'] )
                             
                             # skip if this room has already been loaded
-                            if i['_subtitle'] in rooms:
+                            if ROOM_ID in rooms:
                                 continue
 
-                            rooms[i['_subtitle']] = {}
-                            room = rooms[i['_subtitle']]
+                            rooms[ROOM_ID] = {}
+                            room = rooms[ROOM_ID]
 
-                            room['id'] = i['_subtitle']
+                            room['id'] = ROOM_ID
                             room['name'] = i['_name']
                             room['description'] = i['_description']
                             room['exits'] = {}
@@ -85,53 +89,50 @@ def load_map():
                             
 
                         if i['_type'] == 'Connector':
-                            connectors[i['id']] = i
 
-                    for i in connectors.values():
-                        
-                        #if i['_dockStart'] == i['_dockEnd']:
-                        #    print('THIS CONNECTOR HAS NO START NOR END', i)
-                        
-                        e1 = objects[i['_dockStart']]['_subtitle']
-                        e2 = objects[i['_dockEnd']]['_subtitle']
-                        
-                        #print(i['_startLabel'], '->' ,objects[i['_dockStart']]['_subtitle'])
-                        #print(i['_endLabel'], '->' ,objects[i['_dockEnd']]['_subtitle'])
+                            from_id = objects[i['_dockEnd']]['_subtitle']
+                            if '#' not in from_id:
+                                from_id= file_path+'#'+from_id
 
-                        room_from_exit = i['_startLabel']
-                        room_to_exit = i['_endLabel']
-                        room_from_id = objects[i['_dockStart']]['_subtitle']
-                        room_to_id = objects[i['_dockEnd']]['_subtitle']
+                            to_id = objects[i['_dockStart']]['_subtitle']
+                            if '#' not in to_id:
+                                to_id = file_path+'#'+to_id
 
-                        #print(room_from_id, room_from_exit)
+                            conn = {
+                                    'from':{
+                                        'direction': i['_endLabel'],
+                                        'room_id': from_id
+                                    },
+                                    'to': {
+                                        'direction': i['_startLabel'],
+                                        'room_id': to_id
+                                    }
+                                }
+                            
+                            connectors[uuid.uuid4()] = conn
+                            
+    for conn in connectors.values():
+        if 'tutorial' in conn['from']['room_id'] or 'tutorial'  in conn['from']['room_id']:
+            print(conn)
 
-                        if room_to_exit != '':
-                            if 'secret:' in room_to_exit:
-                                room_to_exit = room_to_exit.split(':')[1]
-                                rooms[room_to_id]['secret_exits'][room_to_exit] = room_from_id
-                            else:
-                                rooms[room_to_id]['exits'][room_to_exit] = room_from_id
+        if conn['from']['direction'] != '':
+            if 'secret:' not in conn['from']['direction']:
+                rooms[conn['from']['room_id']]['exits'][conn['from']['direction']] = conn['to']['room_id']
+            else:
+                rooms[conn['from']['room_id']]['secret_exits'][conn['from']['direction'].replace('secret:','')] = conn['to']['room_id']
 
-                        if room_from_exit != '':
-                            if 'secret:' in room_from_exit:
-                                room_from_exit = room_from_exit.split(':')[1]
-                                rooms[room_from_id]['secret_exits'][room_from_exit] = room_to_id
-                            else:
-                                rooms[room_from_id]['exits'][room_from_exit] = room_to_id
+        if conn['to']['direction'] != '':
+            if 'secret:' not in conn['to']['direction']:
+                rooms[conn['to']['room_id']]['exits'][conn['to']['direction']] = conn['from']['room_id']
+            else:
+                rooms[conn['to']['room_id']]['secret_exits'][conn['to']['direction'].replace('secret:','')] = conn['from']['room_id']
 
-                        #if i['_startLabel'] != '': 
-                        #   rooms[e1]['exits'][i['_startLabel']] = e2
-                        #if i['_endLabel'] != '': 
-                        #   rooms[e2]['exits'][i['_endLabel']] = e1
-
-                        
-
-                        
-                        
-
-                    #for i in rooms.values():
-                    #    print(i['name'],i['exits'])
-
+    for r in rooms.values():
+        if 'tutorial' not in r['id']:
+            continue 
+        print(r)
+            
+                    
     return(rooms)
 
 if __name__ == '__main__':

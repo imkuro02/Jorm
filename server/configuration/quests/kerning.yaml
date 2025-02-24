@@ -1,13 +1,22 @@
 rat_hunter:
   name: Kill some rats
-  description: Edward asked me to kill some rats
+  description: 
+    in_progress: |
+      Rat hunter Edward has asked me to kill some rats for them
+      I wonder if I get to become a rat hunter when im finished!
+    completed: |
+      That was a workout! But now I've killed enough rats to 
+      prove that im worthy of the rat hunter title!
+    turned_in: |
+      I told Edward about my rat genocide.
+      They were very happy!
   objectives:
-    #Kill the shroom:
-    #  type: kill_x
-    #  objective: rat
-    #  completed_at: 2
-    Collect some rocks:
-      type: collect_x
-      objective: rock
+    kill the rats:
+      type: kill_x
+      objective: rat
       completed_at: 20
+    #Collect some rocks:
+    #  type: collect_x
+    #  objective: rock
+    #  completed_at: 20
       
