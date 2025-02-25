@@ -23,6 +23,7 @@ colors = {
     '\x1b[0;31m': 	'@red',
     '\x1b[0;32m': 	'@green',
     '\x1b[0;33m': 	'@yellow',
+    #'\x1b[0;33m': 	'@tip',         #
     '\x1b[0;34m': 	'@blue',
     '\x1b[0;35m': 	'@purple',
     '\x1b[0;36m': 	'@cyan',
@@ -46,7 +47,8 @@ colors = {
     '\x1b[1;36m': 	'@bcyan',
     '\x1b[1;37m': 	'@bwhite',
 
-    '\x1b[0m':      '@normal'
+    '\x1b[0m':      '@normal',
+    '!BACK!':       '@back'
 }
 
 def match_word(word: str, l: list, get_score = False):
@@ -113,17 +115,8 @@ def match_word_get_list(word: str, l: list):
 def remove_color(line):
     for color_code in colors:
         line = line.replace(colors[color_code], '')
-    '''
-    line = line.replace('@red','')
-    line = line.replace('@green','')
-    line = line.replace('@brown','')
-    line = line.replace('@yellow','')
-    line = line.replace('@blue','')
-    line = line.replace('@pink','')
-    line = line.replace('@cyan','')
-    line = line.replace('@gray','')
-    line = line.replace('@normal','')
-    '''
+    
+    
     return line
 
 def print_colors():
@@ -133,20 +126,41 @@ def print_colors():
     return line
 
 def add_color(line):
+    ### ORIGINAL
+
+    #for color_code in colors:
+    #    line = line.replace(colors[color_code], color_code)
+    
+    ###
+
+    split = line.split('@')
+    colors_used = []
+    for word in split:
+        for color_code in colors:
+            if (colors[color_code] in '@'+word):
+                colors_used.append(colors[color_code])
+                
+    for index, col in enumerate(colors_used):
+        if col == '@back':
+            if index >= 2:
+                colors_used[index] = colors_used[index-2]
+            else:
+                colors_used[index] = '@normal'
+            
+    
     for color_code in colors:
-        line = line.replace(colors[color_code], color_code)
-    '''
-    line = line.replace('@red','\x1b[1;31m')
-    line = line.replace('@green','\x1b[1;32m')
-    line = line.replace('@brown','\x1b[1;33m')
-    line = line.replace('@yellow','\x1b[1;93m')
-    line = line.replace('@blue','\x1b[1;34m')
-    line = line.replace('@pink','\x1b[1;35m')
-    line = line.replace('@cyan','\x1b[1;36m')
-    line = line.replace('@gray','\x1b[1;90m')
-    line = line.replace('@normal','\x1b[0m')
-    line = line + '\x1b[0m'
-    '''
+        line = line.replace(colors[color_code], '#INSERT_COLOR#')
+
+    inverted_colors = {v: k for k, v in colors.items()}
+
+    for index, col in enumerate(colors_used):
+        line = line.replace('#INSERT_COLOR#',inverted_colors.get(col),1)
+
+    #for color_code in colors:
+    #    line = line.replace(colors[color_code], '#INSERT_COLOR#')
+
+    
+
     return line
 
 class Table:
@@ -243,47 +257,9 @@ def seconds_to_dhms(seconds, return_as_dict = False):
     #    days, hours, minutes, seconds))
 
 if __name__ == '__main__':
-    t = Table(3)
-    t.add_data('a','@red')
-    t.add_data('bc','@green')
-    t.add_data('def','@yellow')
-    t.add_data('12d34','@red')
-    t.add_data('5678','@red')
-    t.add_data('z','@green')
-    t.add_data('xx','@yellow')
-    t.add_data('l','@red')
-    t.get_table()
-
-    t = Table(3)
-    t.add_data('NAME','@red')
-    t.add_data('ADDRESS','@green')
-    t.add_data('POO','@yellow')
-    t.add_data('Charles','@red')
-    t.add_data('Klyve','@red')
-    t.add_data('PE','@green')
-    t.add_data('ADAM OG EVA','@yellow')
-    t.add_data('GJOVIK','@red')
-    t.get_table()
-
-    t = Table(4)
-    t.add_data('SKILL','@yellow')
-    t.add_data('MP COST','@bcyan')
-    t.add_data('HP COST','@bred')
-    t.add_data('COOLDOWN','@green')
-
-    t.add_data('Slash','@red')
-    t.add_data('12','@bcyan')
-    t.add_data('11','@bred')
-    t.add_data('NONE','@green')
-
-    t.add_data('Become Ethereal','@red')
-    t.add_data('1','@bcyan')
-    t.add_data('NONE','@bred')
-    t.add_data('12','@red')
-
-
-
-    t.get_table()
+    
+    line = '@reda@backb@redhello@greenchat@backwhatsup'
+    print(add_color(line))
 
 
                 

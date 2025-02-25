@@ -150,12 +150,12 @@ tutorial_1:
     how_to_fight:
       dialog: |
         says "fighting is very simple.
-        To start a fight type "fight". 
+        To start a fight type @tip"fight"@back. 
         This will put you in combat with all enemies in the room.
 
         to actually fight them, you need to use your skills during your turn.
-        type "skills" to view all your skills.
-        and when in combat type "use [skill] on [enemy]" to use your skills on them."
+        type @tip"skills"@back to view all your skills.
+        and when in combat type @tip"use [skill] on [enemy]"@back to use your skills on them."
 
     why_fight:
       dialog: |
