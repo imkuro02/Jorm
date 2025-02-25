@@ -53,7 +53,7 @@ def load_map():
 
                             if '_fillColor' in i:
                                 #print(i['_subtitle'], i['_fillColor'])
-                                room['can_be_recall_site'] = i['_fillColor'] == 'rgb(213, 229, 214)'
+                                room['can_be_recall_site'] = i['_fillColor'] == 'rgb(213, 229, 214)' or i['_fillColor'] == '#D5E5D6'
                                 room['instanced'] = i['_fillColor'] == '#F6D5D5'
                                 #print(room['instanced'])
 
@@ -112,8 +112,8 @@ def load_map():
                             connectors[uuid.uuid4()] = conn
                             
     for conn in connectors.values():
-        if 'tutorial' in conn['from']['room_id'] or 'tutorial'  in conn['from']['room_id']:
-            print(conn)
+        #if 'tutorial' in conn['from']['room_id'] or 'tutorial'  in conn['from']['room_id']:
+            #print(conn)
 
         if conn['from']['direction'] != '':
             if 'secret:' not in conn['from']['direction']:
@@ -127,10 +127,10 @@ def load_map():
             else:
                 rooms[conn['to']['room_id']]['secret_exits'][conn['to']['direction'].replace('secret:','')] = conn['from']['room_id']
 
-    for r in rooms.values():
-        if 'tutorial' not in r['id']:
-            continue 
-        print(r)
+    #for r in rooms.values():
+    #    if 'tutorial' not in r['id']:
+    #        continue 
+        #print(r)
             
                     
     return(rooms)

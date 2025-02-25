@@ -2,7 +2,7 @@ from actors.actor import Actor
 import utils
 from trade import TradeManager
 # import commands maps
-from actors.player_only_functions.commands import one_letter_commands, commands
+from actors.player_only_functions.commands import one_letter_commands, commands, shortcuts_to_commands
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands 
 
@@ -79,12 +79,16 @@ class Player(Actor):
         command = line.split()[0]
         line = " ".join(line.split()[1::]).strip()
 
+        if command in shortcuts_to_commands:
+            self.handle(shortcuts_to_commands[command])
+            return
+
         if command in one_letter_commands:
             script = getattr(self, commands[one_letter_commands[command]])
             self.last_command_used = one_letter_commands[command]
             script(line)
             return
-        
+
         best_match, best_score = utils.match_word(command, commands.keys(), get_score = True)
         if best_score < 75:
             self.sendLine(f'You wrote "{command}" did you mean "{best_match}"?\nUse "help {best_match}" to learn more about this command.')

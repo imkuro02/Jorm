@@ -60,7 +60,7 @@ def command_go(self, line):
     world.rooms[new_room].move_entity(self)
     self.command_look('')
 
-    if self.recall_site == 'tutorial' and self.room.can_be_recall_site:
+    if self.recall_site == 'tutorial#start' and self.room.can_be_recall_site:
         self.command_rest('set')
    
     self.finish_turn(force_cooldown = True)

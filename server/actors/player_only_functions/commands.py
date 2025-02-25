@@ -31,6 +31,13 @@ from actors.player_only_functions.admin import (
     command_send_prompt, command_reload_config, command_lore, command_quest
 )
 
+shortcuts_to_commands = {
+    'n':    'go north',
+    'e':    'go east',
+    's':    'go south',
+    'w':    'go west'
+
+}
 # one letter command mapper
 # this sets priority for commands with same starting letter
 one_letter_commands = {
@@ -40,11 +47,11 @@ one_letter_commands = {
     #'r':    'remove',
     's':    'say',
     'g':    'go',
-    'e':    'equipment',
+    'eq':   'equipment',
     'f':    'fight',
     'p':    'prompt',
     'u':    'use',
-    't':    'trade'
+    't':    'trade',
 }
 
 # command mapper
