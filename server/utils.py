@@ -19,36 +19,26 @@ logging.critical("This is a critical message.")
 '''
 
 colors = {
-    '\x1b[0;30m': 	'@black',
-    '\x1b[0;31m': 	'@red',
-    '\x1b[0;32m': 	'@green',
-    '\x1b[0;33m': 	'@yellow',
-    #'\x1b[0;33m': 	'@tip',         #
-    '\x1b[0;34m': 	'@blue',
-    '\x1b[0;35m': 	'@purple',
-    '\x1b[0;36m': 	'@cyan',
-    '\x1b[0;37m': 	'@white',
-
-    #'\x1b[0;40m': 	'@bgblack',
-    #'\x1b[1;41m': 	'@bgred',
-    #'\x1b[1;42m': 	'@bggreen',
-    #'\x1b[1;43m': 	'@bgyellow',
-    #'\x1b[1;44m': 	'@bgblue',
-    #'\x1b[1;45m': 	'@bgpurple',
-    #'\x1b[1;46m': 	'@bgcyan',
-    #'\x1b[1;47m': 	'@bgwhite',
-
-    '\x1b[1;30m': 	'@bblack',
-    '\x1b[1;31m': 	'@bred',
-    '\x1b[1;32m': 	'@bgreen',
-    '\x1b[1;33m': 	'@byellow',
-    '\x1b[1;34m': 	'@bblue',
-    '\x1b[1;35m': 	'@bpurple',
-    '\x1b[1;36m': 	'@bcyan',
-    '\x1b[1;37m': 	'@bwhite',
-
-    '\x1b[0m':      '@normal',
-    '!BACK!':       '@back'
+    '@black': '\x1b[0;30m', 
+    '@red': '\x1b[0;31m', 
+    '@green': '\x1b[0;32m', 
+    '@yellow': '\x1b[0;33m', 
+    '@blue': '\x1b[0;34m', 
+    '@purple': '\x1b[0;35m', 
+    '@cyan': '\x1b[0;36m', 
+    '@white': '\x1b[0;37m', 
+    '@bblack': '\x1b[1;30m', 
+    '@bred': '\x1b[1;31m', 
+    '@bgreen': '\x1b[1;32m', 
+    '@byellow': '\x1b[1;33m', 
+    '@bblue': '\x1b[1;34m', 
+    '@bpurple': '\x1b[1;35m', 
+    '@bcyan': '\x1b[1;36m', 
+    '@bwhite': '\x1b[1;37m', 
+    '@normal': '\x1b[0m', 
+    '@back': '\x1b[0;00x',
+    '@tip': '\x1b[1;33m',
+    '@color': '\x1b[0;00y'
 }
 
 def match_word(word: str, l: list, get_score = False):
@@ -114,7 +104,7 @@ def match_word_get_list(word: str, l: list):
 
 def remove_color(line):
     for color_code in colors:
-        line = line.replace(colors[color_code], '')
+        line = line.replace(color_code, '')
     
     
     return line
@@ -126,41 +116,31 @@ def print_colors():
     return line
 
 def add_color(line):
-    ### ORIGINAL
-
     #for color_code in colors:
-    #    line = line.replace(colors[color_code], color_code)
-    
-    ###
-
+    #    line = line.replace(color_code, colors[color_code])
+    #return line
+    t = time.time()
     split = line.split('@')
     colors_used = []
     for word in split:
+        word = '@'+word
         for color_code in colors:
-            if (colors[color_code] in '@'+word):
-                colors_used.append(colors[color_code])
-                
+            if (color_code in word):
+                colors_used.append(color_code)
+
     for index, col in enumerate(colors_used):
         if col == '@back':
             if index >= 2:
                 colors_used[index] = colors_used[index-2]
             else:
                 colors_used[index] = '@normal'
-            
     
     for color_code in colors:
-        line = line.replace(colors[color_code], '#INSERT_COLOR#')
-
-    inverted_colors = {v: k for k, v in colors.items()}
+        line = line.replace(color_code, '@color')
 
     for index, col in enumerate(colors_used):
-        line = line.replace('#INSERT_COLOR#',inverted_colors.get(col),1)
-
-    #for color_code in colors:
-    #    line = line.replace(colors[color_code], '#INSERT_COLOR#')
-
-    
-
+        line = line.replace('@color',colors[col],1)
+    print(time.time()-t)
     return line
 
 class Table:
