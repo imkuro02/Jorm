@@ -29,7 +29,7 @@ kerning:
             reward: 
               - grit weapon 3
               - red potion
-            reward_exp: 10
+            reward_exp: 50
 
         - say: I killed the rats
           goto: rat_hunter_lie

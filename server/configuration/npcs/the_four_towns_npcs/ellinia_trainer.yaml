@@ -1,0 +1,58 @@
+ellinia_trainer:
+  name: Grendel the really old
+  description: |
+    An old man in a blue tinted robe nods at you.
+  tree:
+    start:
+      dialog: |
+        says "Hello traveler".
+      options:
+        - say: I want to become a mage
+          goto: quest_start_apprentice_emblem
+          quest_check:
+            - id: apprentice_emblem_mage
+              state: not_started
+          quest_start:
+            id: apprentice_emblem_mage
+
+        - say: I want to become a mage
+          goto: quest_not_completed_apprentice_emblem
+          quest_check:
+            - id: apprentice_emblem_mage
+              state: in_progress
+
+        - say: I want to become a mage
+          goto: quest_turn_in_apprentice_emblem
+          quest_check:
+            - id: apprentice_emblem_mage
+              state: completed
+          quest_turn_in:
+            id: apprentice_emblem_mage
+            reward: 
+              - mind relic 1
+            reward_exp: 20
+
+    end:
+      dialog: |
+        says "farewell"
+        
+    quest_turn_in_apprentice_emblem:
+      dialog: |
+        says "Mhmm yes, you are ready"
+        They nod at you once again
+        "Take this emblem, I hope it helps you focus on your studies"
+
+    quest_not_completed_apprentice_emblem:
+      dialog: |
+        says "Hmm, no you have not finished your homework. 
+        You should read your quest journal.
+        Type @tip"help quest"@back, that should help you."
+
+    quest_start_apprentice_emblem:
+      dialog: |
+        says "A mage you say? yes, 
+        all you need to do is prove your worth in combat.
+        I'll write down what you need to do in your quest journal.
+        Type @tip"help quest"@back to figure out what to do"
+
+    

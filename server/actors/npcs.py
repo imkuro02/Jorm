@@ -86,6 +86,8 @@ class Dialog:
         # end dialogue
         if len(self.get_valid_options()) <= 1:
             self.end_dialog()
+        if self.current_line == 'end':
+            self.end_dialog()
 
         
         
@@ -112,29 +114,42 @@ class Dialog:
         self.current_line = answer['goto']
 
         if 'quest_start' in answer:
+            self.print_dialog()
             self.player.quest_manager.start_quest(answer['quest_start']['id'])
+            return
 
         if 'quest_turn_in' in answer:
+            if 'reward' in answer:
+                if len(answer['reward']) > self.player.inventory_manager.item_free_space():
+                    self.player.sendLine('You need more space in your inventory')
+                    self.end_dialog()
+                    return
+
+            self.print_dialog()
             self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
             self.player.sendLine(f'@greenQuest turned in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
-            
-        if 'reward' in answer:
-            for item_id in answer['reward']:
-                item = load_item(item_id)
-                if item == None:
-                    continue
-                self.player.inventory_manager.add_item(item)
-                self.player.sendLine(f'You got: {item.pretty_name()}')
 
-        if 'reward_exp' in answer:
-            self.player.stats[StatType.EXP] += answer['reward_exp']
-            self.player.sendLine(f'You got: {answer["reward_exp"]} Experience')
+            if 'reward' in answer:
+                for item_id in answer['reward']:
+                    item = load_item(item_id)
+                    if item == None:
+                        continue
+                    self.player.inventory_manager.add_item(item)
+                    self.player.sendLine(f'You got: {item.pretty_name()}')
+
+            if 'reward_exp' in answer:
+                self.player.stats[StatType.EXP] += answer['reward_exp']
+                self.player.sendLine(f'You got: {answer["reward_exp"]} Experience')
+
+            
+            return
+            
 
         self.print_dialog()
 
     def end_dialog(self):
         self.player.current_dialog = None
-        self.player = None
+        #self.player = None
         
 
         

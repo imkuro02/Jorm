@@ -307,9 +307,9 @@ def command_quest(self, line = 'list'):
         return
     quest_name = ' '.join(lines[1:])
 
-    if command.lower() in 'add':
-        self.quest_manager.start_quest(quest_name)
-        return
+    #if command.lower() in 'add':
+    #    self.quest_manager.start_quest(quest_name)
+    #    return
     if command.lower() in 'view':
         self.quest_manager.view(quest_name)
         return
@@ -338,7 +338,7 @@ def command_lore(self, line):
     
     if to_find in list_of_enemies:
         e_id = LORE['enemies'][to_find]['enemy_id']
-        e = create_enemy(self.room.world.rooms['loading'], e_id, spawn_for_lore = True)
+        e = create_enemy(self.room.world.rooms['overworld#loading'], e_id, spawn_for_lore = True)
         
         
         all_rooms_e_spawns_in = []

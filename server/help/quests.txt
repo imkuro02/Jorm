@@ -1,0 +1,20 @@
+................................................................................
+Title: Quest
+Syntax: "quest" "quest all" "quest view [quest name]" "quest drop [quest name]" 
+
+Quests are objectives NPC's give out.
+You must complete all objectives in a quest before you can turn it in to 
+the quest giver.
+
+You can view all quests with "quest all" 
+this will show even your turned in quests.
+
+You can view quests that are started but not yet turned in
+with the "quest" command.
+
+You can also look at a specific quest with "quest view [quest name]" to
+see what you need to do to complete the quest.
+
+You can also drop quests you are not planning on finishing 
+with "quest drop [quest name]" 
+................................................................................

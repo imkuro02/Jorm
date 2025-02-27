@@ -14,6 +14,9 @@ class InventoryManager:
     def item_count(self):
         return len(self.items)
 
+    def item_free_space(self):
+        return self.limit - len(self.items)
+
     def is_empty(self):
         if len(self.items) == 0: 
             return True

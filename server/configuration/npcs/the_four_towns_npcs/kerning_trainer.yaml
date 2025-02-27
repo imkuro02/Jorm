@@ -1,0 +1,58 @@
+kerning_trainer:
+  name: Edge Lord
+  description: |
+    A shadow figure looks you up and down, they seem strangely familiar.
+  tree:
+    start:
+      dialog: |
+        says "Hello there..." then enters a fighting stance.
+      options:
+        - say: I want to become a rogue
+          goto: quest_start_apprentice_emblem
+          quest_check:
+            - id: apprentice_emblem_rogue
+              state: not_started
+          quest_start:
+            id: apprentice_emblem_rogue
+
+        - say: I want to become a rogue
+          goto: quest_not_completed_apprentice_emblem
+          quest_check:
+            - id: apprentice_emblem_rogue
+              state: in_progress
+
+        - say: I want to become a rogue
+          goto: quest_turn_in_apprentice_emblem
+          quest_check:
+            - id: apprentice_emblem_rogue
+              state: completed
+          quest_turn_in:
+            id: apprentice_emblem_rogue
+            reward: 
+             - flow relic 1
+            reward_exp: 20
+    end:
+      dialog: |
+        says "farewell"
+        
+    quest_turn_in_apprentice_emblem:
+      dialog: |
+        says "Great work!
+        Here is your reward, and remember, sniches.. get stiches!!"
+        They swing their arms at you, in a futile attemt at intimidation
+        "Eh... just leave now ok?"
+
+    quest_not_completed_apprentice_emblem:
+      dialog: |
+        says "Hm? I think not, 
+        You should read your quest journal.
+        Type @tip"help quest"@back, that should set you on the right path"
+
+    quest_start_apprentice_emblem:
+      dialog: |
+        says "A rogue eh?, 
+        all you need to do is prove your worth in combat.
+        I'll write down what you need to do in your quest journal.
+        Type @tip"help quest"@back to figure out what to do"
+
+    
