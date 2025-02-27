@@ -119,7 +119,7 @@ def add_color(line):
     #for color_code in colors:
     #    line = line.replace(color_code, colors[color_code])
     #return line
-    t = time.time()
+
     split = line.split('@')
     colors_used = []
     for word in split:
@@ -140,7 +140,7 @@ def add_color(line):
 
     for index, col in enumerate(colors_used):
         line = line.replace('@color',colors[col],1)
-    print(time.time()-t)
+
     return line
 
 class Table:
