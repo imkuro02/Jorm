@@ -14,9 +14,21 @@ rat_hunter:
     kill the rats:
       type: kill_x
       objective: rat
-      completed_at: 50
-    #Collect some rocks:
-    #  type: collect_x
-    #  objective: rock
-    #  completed_at: 20
+      completed_at: 1
+
       
+rat_hunter2:
+  name: Kill more rats
+  description: 
+    in_progress: |
+      I spoke with Rat hunter Edward.
+      Im tasked to kill more rats
+    completed: |
+      Ive killed a lot of rats, I should return now
+    turned_in: |
+      Edward was very happy with my rat cleansing!
+  objectives:
+    kill the rats:
+      type: kill_x
+      objective: rat
+      completed_at: 1

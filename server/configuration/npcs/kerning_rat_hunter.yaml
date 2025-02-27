@@ -1,4 +1,4 @@
-kerning:
+rat_hunter:
   name: Rat hunter Edward
   description: | 
     Edward is peeking from behind a trash can at something right around the corner of a street.
@@ -7,28 +7,25 @@ kerning:
       dialog: |
         He glances at you, then looks away. "shhh, do you hear it? rats.."
       options:
-        - say: Rat hunter?
-          goto: rat_hunter
-          quest_check:
-            - id: rat_hunter
-              state: not_started
+        - say: Who are you?
+          goto: who_are_you
 
+        # rat hunter quest
         - say: I want to hunt rats too
           goto: rat_hunter_start
           quest_check:
             - id: rat_hunter
               state: not_started
+          quest_start:
+              id: rat_hunter
 
         - say: I killed the rats
-          goto: rat_hunter_end
+          goto: rat_hunter_turn_in
           quest_check:
             - id: rat_hunter
               state: completed
           quest_turn_in:
             id: rat_hunter
-            reward: 
-              - grit weapon 3
-              - red potion
             reward_exp: 50
 
         - say: I killed the rats
@@ -36,37 +33,59 @@ kerning:
           quest_check:
             - id: rat_hunter
               state: in_progress
-          
-    rat_hunter:
-      dialog: |
-        Yerp! thats right! 
-      options:
-        - say: I want to hunt rats too
+
+        # rat hunter quest 2
+        - say: I want to kill more rats
           goto: rat_hunter_start
           quest_check:
-            - id: rat_hunter
+            - id: rat_hunter2
               state: not_started
-    
-    rat_hunter_lie: 
-      dialog: |
-        LIAR! there are still rats roaming around!!
-
-    rat_hunter_start:
-      dialog: |
-        Great! all you need to do is kill some rats for me!
-      options:
-        - say: cool
-          goto: end
+            - id: rat_hunter
+              state: turned_in
           quest_start:
-            id: rat_hunter
+            id: rat_hunter2
 
-    rat_hunter_end:
-      dialog: | 
-        You will make a fine rat hunter someday!
+        - say: I killed more rats
+          goto: rat_hunter_turn_in
+          quest_check:
+            - id: rat_hunter2
+              state: completed
+          quest_turn_in:
+            id: rat_hunter2
+            reward_exp: 50
 
-  
+        - say: I killed more rats
+          goto: rat_hunter_lie
+          quest_check:
+            - id: rat_hunter2
+              state: in_progress
+
     end:
       dialog: |
         He waves you good bye
+
+    who_are_you:
+      dialog: |
+        says "Im Edward! a rat hunter... AAARGH!!!"
+      options:
+        - say: cool
+          goto: start
+
+    # rat hunter quest
+    rat_hunter_start:
+      dialog: |
+        says "Go on hurry then! kill them!" 
+    
+    rat_hunter_in_progress: 
+      dialog: |
+        screams at you "LIAR! there are still rats roaming around!!"
+
+    rat_hunter_turn_in:
+      dialog: | 
+        yells "Great job, guy!"
+
+
+  
+    
 
         

@@ -7,6 +7,7 @@ perion_trainer:
       dialog: |
         says "What do you want?".
       options:
+        # quest for fighter emblem
         - say: I want to become a fighter
           goto: quest_start_apprentice_emblem
           quest_check:
@@ -37,6 +38,7 @@ perion_trainer:
       dialog: |
         says "farewell"
         
+    # quest for fighter emblem
     quest_turn_in_apprentice_emblem:
       dialog: |
         says "Good job.

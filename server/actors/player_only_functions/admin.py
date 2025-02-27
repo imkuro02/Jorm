@@ -272,15 +272,20 @@ def command_quest(self, line = 'list'):
 
     if command.lower() in 'list':
         count = 0
-        t = utils.Table(2,3)
+        t = utils.Table(3,3)
         t.add_data('Quest')
         t.add_data('State')
+        t.add_data('')
         for quest in self.quest_manager.quests.values():
             if quest.get_state() == QUEST_STATE_TYPES.TURNED_IN:
                 continue
             count += 1
             t.add_data(quest.name)
             t.add_data(quest.get_state(as_string = True))
+            if quest.get_state() == QUEST_STATE_TYPES.IN_PROGRESS:
+                t.add_data(f'{quest.get_progress_percentage()}%')
+            else:
+                t.add_data('')
         if count == 0:
             self.sendLine('You got no quests')
             return
@@ -289,12 +294,18 @@ def command_quest(self, line = 'list'):
         
     if command.lower() in 'all':
         count = 0
-        t = utils.Table(2,3)
+        t = utils.Table(3,3)
         t.add_data('Quest')
         t.add_data('State')
+        t.add_data('')
         for quest in self.quest_manager.quests.values():
             t.add_data(quest.name)
             t.add_data(quest.get_state(as_string = True))
+            if quest.get_state() == QUEST_STATE_TYPES.IN_PROGRESS:
+                print('WHART')
+                t.add_data(f'{quest.get_progress_percentage()}%')
+            else:
+                t.add_data('')
             count += 1
         if count == 0:
             self.sendLine('You got no quests')

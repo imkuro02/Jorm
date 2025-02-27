@@ -184,7 +184,7 @@ class Quest:
             if self.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
                 return '@greenTurned in@normal'
             if self.is_completed():
-                return '@yellowCompleted@normal'
+                return '@greenCompleted@normal'
             return '@yellowIn Progress@normal'
         else:     
             if self.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
@@ -192,6 +192,23 @@ class Quest:
             if self.is_completed():
                 return QUEST_STATE_TYPES.COMPLETED
             return QUEST_STATE_TYPES.IN_PROGRESS
+        
+    def get_progress_percentage(self):
+        count = 0
+        goal = 0
+        for objective in self.objectives.values():
+            if objective.type == OBJECTIVE_TYPES.TURNED_IN:
+                continue
+            _count = objective.count
+            _goal = objective.goal
+            if _count > _goal:
+                _count = _goal
+            count += _count
+            goal += _goal
+            
+        if goal == 0:
+            return 'ERROR'
+        return int((count/goal)*100)
 
     def is_turned_in(self):
         if self.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
