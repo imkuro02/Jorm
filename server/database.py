@@ -79,6 +79,15 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES inventory(actor_id)
         )''')
 
+        self.cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS quests (
+            actor_id TEXT NOT NULL,
+            quest_id TEXT NOT NULL,
+            objective_id TEXT NOT NULL,
+            objective_count INT NOT NULL,
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        )''')
+
         # Commit changes
         self.conn.commit()
 
@@ -268,12 +277,27 @@ class Database:
                     )
                     ''', my_dict)
                 
+        my_dict = {}
+        my_dict['actor_id'] = actor_id
+
+        for quest in actor.quest_manager.quests.values():
+            for objective in quest.objectives.values():
+                #print(objective)
+                my_dict['quest_id'] = objective.quest_id
+                my_dict['objective_id'] = objective.name
+                my_dict['objective_count'] = objective.count
+                self.cursor.execute('''
+                    INSERT INTO quests (
+                        actor_id, quest_id, objective_id, objective_count
+                    ) VALUES (
+                        :actor_id, :quest_id, :objective_id, :objective_count
+                    )
+                    ''', my_dict)
+                
         self.write_admins(actor)
         self.conn.commit()
 
     def read_actor(self, unique_id):
-
-        
 
         self.cursor.execute('''
             SELECT actor_id FROM actors WHERE unique_id = ?
@@ -321,6 +345,13 @@ class Database:
 
         skills = self.cursor.fetchall()
         #print('skills',skills)
+
+        self.cursor.execute('''
+            SELECT * FROM quests WHERE actor_id = ?
+        ''', (actor_id,))
+
+        quests = self.cursor.fetchall()
+        #print('quests',quests)
 
         my_dict = {}
         my_dict['actor_id'] = actor_id
@@ -372,8 +403,16 @@ class Database:
         for skill in skills:
             my_dict['skills'][skill[1]] = skill[2]
 
+        my_dict['quests'] = {}
+        for quest in quests:
+            
+            if quest[1] in my_dict['quests']:
+                
+                my_dict['quests'][quest[1]] = my_dict['quests'][quest[1]] | {quest[2]: quest[3]}
+            else:
+                my_dict['quests'][quest[1]] = {quest[2]: quest[3]}
        
-
+        #print(my_dict['quests'])
         return my_dict
     
     # write down admin on save

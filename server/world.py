@@ -11,6 +11,87 @@ from configuration.config import WORLD, StatType, ActorStatusType
 import copy
 from inventory import InventoryManager
 
+class Spawner:
+    def __init__(self, room):
+        self.room = room
+        self.room_dict = self.get_room_dict()
+        
+
+        self.spawn_points_enemies = {}
+        self.spawn_points_items = {}
+        self.spawn_points_npcs = {}
+
+        
+
+        for i in range(0,len(self.room_dict['enemies'])):
+            self.spawn_points_enemies[i] = None
+        for i in range(0,len(self.room_dict['items'])):
+            self.spawn_points_items[i] = None
+        for i in range(0,len(self.room_dict['npcs'])):
+            self.spawn_points_npcs[i] = None
+
+        #print(self.spawn_points_items)
+        self.respawn_all()
+
+    def get_room_dict(self):
+        room_id = self.room.uid
+        if room_id not in WORLD['world']:
+            # remove the username affix on instanced rooms
+            room_id = room_id.split('/')[0]
+
+        room = WORLD['world'][room_id]
+        return room
+    
+    def respawn_all(self, forced = True):
+        for i in self.spawn_points_enemies:
+            if self.spawn_points_enemies[i] == None:
+                continue
+            if self.spawn_points_enemies[i].room == None:
+                self.spawn_points_enemies[i] = None
+
+        for i in self.spawn_points_items:
+            if self.spawn_points_items[i] == None:
+                continue
+            if self.spawn_points_items[i] not in self.room.inventory_manager.items.values():
+                self.spawn_points_items[i] = None      
+
+        for i in self.spawn_points_npcs:
+            if self.spawn_points_npcs[i] == None:
+                continue
+            if self.spawn_points_npcs[i].room == None:
+                self.spawn_points_npcs[i] = None      
+
+        if 'enemies' in self.room_dict:
+            for i, _list in enumerate(self.room_dict['enemies']):
+                if self.spawn_points_enemies[i] != None:
+                    continue
+                _selected = random.choice(_list)
+                enemy = create_enemy(self.room, _selected)
+                self.spawn_points_enemies[i] = enemy
+                
+        if 'items' in self.room_dict:
+            for i, _list in enumerate(self.room_dict['items']):
+                if self.spawn_points_items[i] != None:
+                    continue
+                _selected = random.choice(_list)
+                item = load_item(_selected)
+                self.room.inventory_manager.add_item(item)
+                self.spawn_points_items[i] = item
+                
+        if 'npcs' in self.room_dict:
+            for i, _list in enumerate(self.room_dict['npcs']):
+                if self.spawn_points_npcs[i] != None:
+                    continue
+                _selected = random.choice(_list)
+                npc = create_npc(self.room,_selected)
+                self.spawn_points_npcs[i] = npc
+
+
+    def tick(self):
+        if self.room.world.factory.ticks_passed % 120 == 0:
+            self.respawn_all()
+
+
 class Room:
     def __init__(self, world, uid, name, description, exits, secret_exits, can_be_recall_site, instanced):
         self.world = world
@@ -20,43 +101,21 @@ class Room:
         self.exits = exits
         self.secret_exits = secret_exits
         self.can_be_recall_site = can_be_recall_site
-
         self.instanced = instanced
-        
         self.inventory_manager = InventoryManager(self, limit = 20)
-        
         self.combat = None
-
         self.entities = {}
+        self.spawner = Spawner(self)
 
     def is_an_instance(self):
         if '/' in self.uid:
             return True
         return False
 
-    def populate(self):
-        # get room from dict
-        my_id = self.uid
-        if my_id not in WORLD['world']:
-            # remove the username affix on instanced rooms
-            my_id = my_id.split('/')[0]
-        room = WORLD['world'][my_id]
-
-        if 'enemies' in room:
-            for enemy_id in room['enemies']:
-                create_enemy(self, enemy_id)
-
-        if 'items' in room:
-            for item_id in room['items']:
-                item = load_item(item_id)
-                self.inventory_manager.add_item(item)
-
-        if 'npcs' in room:
-            for npc_id in room['npcs']:
-                create_npc(self,npc_id)
 
     def tick(self):
         actors = {}
+        self.spawner.tick()
         for a in self.entities.values():
             actors[a.id] = a
 
@@ -66,6 +125,7 @@ class Room:
         if self.combat == None:
             return
         self.combat.tick()
+        
 
     def join_combat(self, player_participant):
         if self.combat == None:
@@ -120,7 +180,7 @@ class Room:
     def move_entity(self, entity, silent = False):
         if not self.instanced:
             self.remove_entity(entity)
-            if not silent:
+            if not silent and entity.room != self:
                 entity.simple_broadcast('',f'{entity.pretty_name()} has left.')
 
             entity.room = self
@@ -130,14 +190,16 @@ class Room:
                 entity.simple_broadcast('',f'{entity.pretty_name()} has arrived.')
         
         else:
+            if type(entity).__name__ != 'Player':
+                return
             instanced_room_id = self.uid+'/'+entity.name
             self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.secret_exits, self.can_be_recall_site, instanced=False)
             instanced_room = self.world.rooms[instanced_room_id]
        
-            instanced_room.populate()
+            #instanced_room.populate()
 
             self.remove_entity(entity)
-            if not silent:
+            if not silent and entity.room != self:
                 entity.simple_broadcast('',f'{entity.pretty_name()} has left.')
 
             entity.room = instanced_room
@@ -166,6 +228,7 @@ class World:
     def __init__(self, factory):
         self.factory = factory
         self.rooms = {}
+        self.reload()
 
     def spawn_boss(self):
         all_mobs = []
@@ -210,7 +273,7 @@ class World:
             self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site'], room['instanced']) 
             #else:
             #    self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
-            self.rooms[r].populate()
+            #self.rooms[r].populate()
             
 
 
@@ -219,9 +282,8 @@ class World:
         pass
 
     def tick(self):
-
-        if self.factory.ticks_passed % (30*(60*1)) == 0 or self.factory.ticks_passed == 3:
-            self.reload()
+        #if self.factory.ticks_passed % (30*(60*1)) == 0 or self.factory.ticks_passed == 3:
+        #    self.reload()
             #self.spawn_boss()
             
         #if self.factory.ticks_passed % (30*(60*10)) == 0 or self.factory.ticks_passed == 1:

@@ -10,10 +10,11 @@ config.load()
 class ServerFactory(protocol.Factory):
     def __init__(self):
         self.protocols = set()
-        self.world = World(self)
+        
         self.db = Database()
         self.ticks_passed = 0
         self.tickrate: int = 30
+        self.world = World(self)
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)
 

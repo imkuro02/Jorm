@@ -6,6 +6,7 @@ from configuration.config import StatType, ItemType, SPLASH_SCREENS
 import uuid
 import copy
 import random
+from quest import OBJECTIVE_TYPES
 
 IAC = b'\xff'       # Interpret as Command
 WILL = b'\xfb'      # Will Perform
@@ -235,6 +236,20 @@ class Protocol(protocol.Protocol):
             self.actor.recall_site = actor['actor_recall_site'] 
             self.actor.date_of_creation = actor['meta_data']['date_of_creation']
             self.actor.time_in_game = actor['meta_data']['time_in_game']
+
+            # add quests
+            for quest in actor['quests']:
+                if self.actor.quest_manager.start_quest(quest):
+                    for objective in actor['quests'][quest]:
+                        if objective not in self.actor.quest_manager.quests[quest].objectives:
+                            continue
+                        if self.actor.quest_manager.quests[quest].objectives[objective].type == OBJECTIVE_TYPES.COLLECT_X:
+                            continue
+                        self.actor.quest_manager.quests[quest].objectives[objective].count = actor['quests'][quest][objective]
+
+
+
+
             #self.actor.date_of_last_login = actor['meta_data']['date_of_last_login']
 
             self.actor.stats.update(actor['stats'])

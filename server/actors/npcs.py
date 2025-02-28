@@ -10,7 +10,7 @@ def create_npc(room, npc_id):
     npc.name = _npc['name']
     npc.description = _npc['description']
     npc.dialog_tree = _npc['tree']
-
+    return npc
 
 class Dialog:
     def __init__(self, _player, _npc, _dialog_tree):

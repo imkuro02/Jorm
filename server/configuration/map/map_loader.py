@@ -61,25 +61,25 @@ def load_map():
                             for obj in i['objects']:
                                 obj_name = obj['_name']
                                 if 'enemy:' in obj_name:
-                                    enemies = obj_name.replace('enemy:','').split(',')
-                                    picked_enemy = random.choice(enemies).strip()
-                                    room['enemies'].append(picked_enemy)
+                                    enemies = obj_name.replace('enemy:','').split(', ')
+                                    #picked_enemy = random.choice(enemies).strip()
+                                    room['enemies'].append(enemies)
 
                             room['items'] = []
                             for obj in i['objects']:
                                 obj_name = obj['_name']
                                 if 'item:' in obj_name:
-                                    items = obj_name.replace('item:','').split(',')
-                                    item_picked = random.choice(items).strip()
-                                    room['items'].append(item_picked)
+                                    items = obj_name.replace('item:','').split(', ')
+                                    #item_picked = random.choice(items).strip()
+                                    room['items'].append(items)
 
                             room['npcs'] = []
                             for obj in i['objects']:
                                 obj_name = obj['_name']
                                 if 'npc:' in obj_name:
-                                    npcs = obj_name.replace('npc:','').split(',')
-                                    npc_picked = random.choice(npcs).strip()
-                                    room['npcs'].append(npc_picked)
+                                    npcs = obj_name.replace('npc:','').split(', ')
+                                    #npc_picked = random.choice(npcs).strip()
+                                    room['npcs'].append(npcs)
                                 
                             
 

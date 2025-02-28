@@ -302,7 +302,7 @@ def command_quest(self, line = 'list'):
             t.add_data(quest.name)
             t.add_data(quest.get_state(as_string = True))
             if quest.get_state() == QUEST_STATE_TYPES.IN_PROGRESS:
-                print('WHART')
+                #print('WHART')
                 t.add_data(f'{quest.get_progress_percentage()}%')
             else:
                 t.add_data('')

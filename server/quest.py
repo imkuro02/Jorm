@@ -95,12 +95,12 @@ class QuestManager:
     def start_quest(self, quest_id):
         if quest_id in self.quests:
             self.actor.sendLine('You already have this quest')
-            return
+            return False
 
         quest = create_quest(quest_id)
         if quest == None:
             self.actor.sendLine(f'@redError starting quest@normal: "{quest_id}"')
-            return
+            return False
         
         quest.quest_manager = self
         for objective in quest.objectives.values():
@@ -111,6 +111,8 @@ class QuestManager:
         self.quests[quest_id] = quest
         self.actor.sendLine(f'@greenNew quest@normal: {quest.name}')
         self.actor.inventory_manager.count_quest_items()
+
+        return True # if quest was started succesfully
 
     def view(self, quest_name):
         if len(self.quests) == 0:
