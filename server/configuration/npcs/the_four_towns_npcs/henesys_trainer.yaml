@@ -7,6 +7,8 @@ henesys_trainer:
       dialog: |
         says "Hello traveler".
       options:
+
+        # quest for cleric emblem
         - say: I want to become a cleric
           goto: quest_start_apprentice_emblem
           quest_check:
@@ -36,6 +38,7 @@ henesys_trainer:
       dialog: |
         says "farewell"
         
+    # quest for cleric emblem
     quest_turn_in_apprentice_emblem:
       dialog: |
         says "Ah how exciting!" she smiles.

@@ -7,6 +7,8 @@ kerning_trainer:
       dialog: |
         says "Hello there..." then enters a fighting stance.
       options:
+        
+        # quest for rogue emblem
         - say: I want to become a rogue
           goto: quest_start_apprentice_emblem
           quest_check:
@@ -35,6 +37,7 @@ kerning_trainer:
       dialog: |
         says "farewell"
         
+    # quest for rogue emblem
     quest_turn_in_apprentice_emblem:
       dialog: |
         says "Great work!

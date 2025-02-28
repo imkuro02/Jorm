@@ -7,6 +7,8 @@ ellinia_trainer:
       dialog: |
         says "Hello traveler".
       options:
+      
+        # quest for mage emblem
         - say: I want to become a mage
           goto: quest_start_apprentice_emblem
           quest_check:
@@ -36,6 +38,7 @@ ellinia_trainer:
       dialog: |
         says "farewell"
         
+    # quest for mage emblem
     quest_turn_in_apprentice_emblem:
       dialog: |
         says "Mhmm yes, you are ready"
