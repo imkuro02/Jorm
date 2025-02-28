@@ -18,7 +18,7 @@
             padding: 20px;
         }
         #output {
-	    font-family: monospace;
+            font-family: monospace;
             height: calc(100vh - 175px); 
             overflow-y: auto;
             background-color: #000;
@@ -27,7 +27,6 @@
             border: 1px solid #ccc;
             margin-bottom: 10px;
             white-space: pre-wrap;
-            
         }
         #input {
             width: 100%;
@@ -44,7 +43,7 @@
         const output = document.getElementById('output');
         const input = document.getElementById('input');
         const ansi_up = new AnsiUp(); // Create an instance of AnsiUp for ANSI color parsing
-
+        const maxLines = 1000; // Maximum number of lines allowed in the output
         
         // Get server hostname
         const hostname = window.location.hostname;
@@ -127,6 +126,7 @@
             });
 
             output.appendChild(div);
+            maintainLineLimit();
             output.scrollTop = output.scrollHeight;
         }
 
@@ -152,7 +152,16 @@
             });
 
             output.appendChild(div);
+            maintainLineLimit();
             output.scrollTop = output.scrollHeight;
+        }
+
+        // Maintain the maximum number of lines in the output
+        function maintainLineLimit() {
+            const lines = output.querySelectorAll('div');
+            if (lines.length > maxLines) {
+                output.removeChild(lines[0]); // Remove the topmost line
+            }
         }
     </script>
 </body>
