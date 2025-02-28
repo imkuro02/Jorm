@@ -5,11 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JORM Uncaaahained HD</title>
+    <title>Jorm</title>
     <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.1/ansi_up.min.js"></script>
     
     
     <style>
+        a {
+            color: cyan;
+            background-color: transparent;
+            text-decoration: none;
+        }
         body {
             font-family: monospace;
             color: #fbf1c7;
@@ -19,9 +24,9 @@
         }
         #output {
             font-family: monospace;
-            height: calc(100vh - 175px); 
+            height:  calc(100vh - 115px); 
             overflow-y: auto;
-            background-color: #000;
+            background-color: #080808;
             color: #fff;
             padding: 10px;
             border: 1px solid #ccc;
@@ -36,9 +41,8 @@
     </style>
 </head>
 <body>
-    <h1>Jorm</h1>
     <div id="output"></div>
-    <input type="text" id="input" placeholder="Type your message and press Enter">
+    <input type="text" id="input" placeholder="Input">
     <script>
         const output = document.getElementById('output');
         const input = document.getElementById('input');
