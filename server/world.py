@@ -115,7 +115,8 @@ class Room:
 
     def tick(self):
         actors = {}
-        self.spawner.tick()
+        if not self.is_an_instance():
+            self.spawner.tick()
         for a in self.entities.values():
             actors[a.id] = a
 
