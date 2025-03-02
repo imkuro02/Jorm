@@ -280,6 +280,10 @@ class Database:
         my_dict = {}
         my_dict['actor_id'] = actor_id
 
+        self.cursor.execute('''
+            DELETE FROM quests WHERE actor_id = ?
+        ''', (actor_id,))
+        
         for quest in actor.quest_manager.quests.values():
             for objective in quest.objectives.values():
                 #print(objective)
