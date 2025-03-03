@@ -31,7 +31,6 @@ perion_trainer:
             id: apprentice_emblem_fighter
             reward: 
               - grit relic 1
-              - grit relic 1
             reward_exp: 20
 
     end:
