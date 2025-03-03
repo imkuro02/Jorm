@@ -10,6 +10,16 @@
     
     
     <style>
+        iframe {
+            width: 200px;
+            height: 250px;
+        }
+        #iframeContainer {
+            border: none;
+            position: fixed;
+            top: 25px;
+            right: 25px;
+        }
         a {
             color: cyan;
             background-color: transparent;
@@ -41,6 +51,10 @@
     </style>
 </head>
 <body>
+    <div id="iframeContainer">
+        <iframe src="jorm_audio.html"></iframe>
+    </div>
+    
     <div id="output"></div>
     <input type="text" id="input" placeholder="Input">
     <script>

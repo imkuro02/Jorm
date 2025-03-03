@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        a {
+            text-decoration: none;
+            color: seashell;
+        }
+        body {
+            color: seashell;
+            text-align: center;
+        }
+        #titleLink {
+            font-size: 12px;
+            text-decoration: none;
+            display: block;
+            margin: 20px auto;
+        }
+        #volumeSlider, #progressSlider {
+            display: flex;
+            justify-content: center;
+            margin: 10px auto;
+            width: 80%;
+        }
+        #pauseButton {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: seashell;
+            color: black;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        #pauseButton:hover {
+            background-color: gray;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://www.youtube.com/@N.A.W.A.K">N.A.W.A.K Radio</a>
+    <a id="titleLink" href="#" target="_blank">Loading...</a>
+    <div id="player"></div>
+    <input type="range" id="progressSlider" min="0" max="100" value="0" step="1">
+    <input type="range" id="volumeSlider" min="0" max="100" value="100" step="1">
+    <button id="pauseButton">></button>
+    <script>
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        var videoIds = ['n0w8VQhQyUU', '3mx_NtYV08k', '7Cv5_W6ol70', 'nMgJHaPTI3I', 'bCnekpEhle0', 'tGtNGt7k-fo', '5OStuQLfJf8']; // List of video IDs
+        var currentVideoId = getRandomVideoId();
+        var progressSlider = document.getElementById('progressSlider');
+        var titleLink = document.getElementById('titleLink');
+        var pauseButton = document.getElementById('pauseButton');
+        var volumeSlider = document.getElementById('volumeSlider');
+
+        function getRandomVideoId() {
+            return videoIds[Math.floor(Math.random() * videoIds.length)];
+        }
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: currentVideoId,
+                playerVars: { autoplay: 0, mute: 0 },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            player.setVolume(100);
+            volumeSlider.value = 100;
+            fetchVideoTitle(currentVideoId);
+            setInterval(updateProgress, 1000);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                loadNewVideo();
+            }
+        }
+
+        function updateProgress() {
+            var duration = player.getDuration();
+            var currentTime = player.getCurrentTime();
+            progressSlider.value = (currentTime / duration) * 100;
+        }
+
+        progressSlider.addEventListener('input', function() {
+            var duration = player.getDuration();
+            var seekTime = (progressSlider.value / 100) * duration;
+            player.seekTo(seekTime, true);
+        });
+
+        volumeSlider.addEventListener('input', function() {
+            player.setVolume(this.value);
+        });
+
+        pauseButton.addEventListener('click', function() {
+            if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                player.pauseVideo();
+                pauseButton.textContent = ">";
+            } else {
+                player.playVideo();
+                pauseButton.textContent = "||";
+            }
+        });
+
+        function fetchVideoTitle(videoId) {
+            fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.title) {
+                        titleLink.textContent = data.title;
+                        titleLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+                    } else {
+                        titleLink.textContent = "Video Title Not Found";
+                    }
+                })
+                .catch(() => {
+                    titleLink.textContent = "Failed to Load Title";
+                });
+        }
+
+        function loadNewVideo() {
+            currentVideoId = getRandomVideoId();
+            player.loadVideoById(currentVideoId);
+            fetchVideoTitle(currentVideoId);
+        }
+    </script>
+</body>
+</html>
