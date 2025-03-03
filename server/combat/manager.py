@@ -155,7 +155,8 @@ class Combat:
         for i in self.participants.values():
             if i.status == ActorStatusType.FIGHTING: i.status = ActorStatusType.NORMAL
             if type(i).__name__ == "Player":
-                i.sendLine('@yellowCombat over!@normal')
+                #i.sendLine('@yellowCombat over!@normal')
+                i.combat_over_prompt()
               
             #self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False
             '''

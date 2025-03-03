@@ -5,7 +5,7 @@ from trade import TradeManager
 from actors.player_only_functions.commands import one_letter_commands, commands, shortcuts_to_commands
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands 
-
+from configuration.config import StatType
 import time
 
 
@@ -52,6 +52,12 @@ class Player(Actor):
         output = super().get_character_sheet()
         return output
 
+    def combat_over_prompt(self):
+        self.sendLine('@yellowCombat over!@normal')
+        if (self.stats[StatType.EXP] >= self.get_exp_needed_to_level()):
+            self.sendLine('@greenYou can level up!@back')
+        else:
+            self.sendLine(f'@yellowNext level@back: @green{int((self.stats[StatType.EXP]/self.get_exp_needed_to_level())*100)}@back%')
     def sendLine(self, line, color = True):
         if color:
             line = utils.add_color(f'{line}\n')
