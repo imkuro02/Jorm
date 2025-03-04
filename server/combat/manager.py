@@ -66,7 +66,7 @@ class Damage:
 
 
         self.damage_taker_actor.hp_mp_clamp_update()
-        return self.damage_value
+        return self
 
 class Combat:
     def __init__(self, room, participants):

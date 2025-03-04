@@ -198,6 +198,22 @@ class SkillEnrage(Skill):
                 turns = turns, extra_hp = extra_hp)
             self.user.affect_manager.set_affect_object(enrage_affect)  
             
+class SkillLeech(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            leech_power = self.script_values['bonus'][self.users_skill_level]
+            #affect_manager, name, description, turns
+            leech_affect = affects.Leech(
+                affect_manager = self.other.affect_manager,
+                name = 'Leeching',
+                description = f'Convert {int(leech_power*100)}% of physical damage dealt to healing',
+                turns = int(self.script_values['duration'][self.users_skill_level]),
+                leech_power = leech_power
+            )
+
+            self.user.affect_manager.set_affect_object(leech_affect)  
+
 class SkillRegenHP30(Skill):
     def use(self):
         super().use()

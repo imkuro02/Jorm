@@ -244,8 +244,9 @@ class Actor:
     
     def deal_damage(self, damage_obj: Damage):
         damage_obj = self.affect_manager.deal_damage(damage_obj)
-        damage_dealt = damage_obj.damage_taker_actor.take_damage(damage_obj)
-        self.stats[StatType.THREAT] += damage_dealt
+        damage_obj = damage_obj.damage_taker_actor.take_damage(damage_obj)
+        self.affect_manager.dealt_damage(damage_obj)
+        self.stats[StatType.THREAT] += damage_obj.damage_value
         
     def die(self):
         if self.room == None:

@@ -43,6 +43,9 @@ class Affect:
     
     def deal_damage(self, damage_obj):
         return damage_obj
+    
+    def dealt_damage(self, damage_obj):
+        return damage_obj
 
 
 class AffectStunned(Affect):
@@ -54,6 +57,25 @@ class AffectStunned(Affect):
             f'{self.owner.pretty_name()} is too stunned to act!')
         self.owner.finish_turn()
 
+class Leech(Affect):
+    def __init__(self, affect_manager, name, description, turns, leech_power):
+        super().__init__(affect_manager, name, description, turns)
+        self.leech_power = leech_power
+
+    def dealt_damage(self, damage_obj):
+        if damage_obj.damage_value == 0:
+            return damage_obj
+        
+        leech_heal_damage_obj = Damage(
+            damage_source_actor = self.owner,
+            damage_taker_actor = self.owner,
+            damage_value = round(damage_obj.damage_value * self.leech_power),
+            damage_type = DamageType.HEALING
+        )
+        
+        self.owner.take_damage(leech_heal_damage_obj)
+        return damage_obj
+    
 class AffectEthereal(Affect):
     def __init__(self, affect_manager, name, description, turns, dmg_amp):
         super().__init__(affect_manager, name, description, turns)
