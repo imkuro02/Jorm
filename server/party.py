@@ -55,6 +55,11 @@ class PartyManager:
         self.party = None
         self.invitations = []
 
+    def get_party_id(self):
+        if self.party != None:
+            return self.party.owner.id
+        return self.actor.id
+        
     def clear_invites(self):
         self.invitations = []
    

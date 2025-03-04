@@ -221,7 +221,8 @@ class Combat:
             if type(i).__name__ == "Player":
                 combat_stats = f'\n@yellowCombat overview (Round {self.round})@normal:'
                 for participant in self.order:
-                    combat_stats = combat_stats + f'\n{participant.pretty_name()} [@red{participant.stats[StatType.HP]}@normal/@red{participant.stats[StatType.HPMAX]}@normal]'
+                    #combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stats[StatType.HP]}@normal/@red{participant.stats[StatType.HPMAX]}@normal] {participant.party_manager.get_party_id()}'''
+                    combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stats[StatType.HP]}@normal/@red{participant.stats[StatType.HPMAX]}@normal]'''
                 i.sendLine(combat_stats)
                 #i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
         

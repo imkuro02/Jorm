@@ -94,8 +94,8 @@ class AI:
             return self.actor
         
         entities = self.actor.room.combat.participants.values()
-        enemies = [entity for entity in entities if type(entity).__name__ != type(self.actor).__name__ and entity.status == ActorStatusType.FIGHTING]
-        allies =  [entity for entity in entities if type(entity).__name__ == type(self.actor).__name__ and entity.status == ActorStatusType.FIGHTING]
+        enemies = [entity for entity in entities if entity.party_manager.get_party_id() != self.actor.party_manager.get_party_id() and entity.status == ActorStatusType.FIGHTING]
+        allies =  [entity for entity in entities if entity.party_manager.get_party_id() == self.actor.party_manager.get_party_id()  and entity.status == ActorStatusType.FIGHTING]
 
         match target:
 
