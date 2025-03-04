@@ -10,6 +10,54 @@ import utils
 from party import PartyManager
 from quest import QuestManager
 
+class ActorStatManager:
+    def __init__(self, owner):
+        self.owner = owner
+        self.stats = {
+            StatType.HPMAX: 30,
+            StatType.HP:    30,
+            StatType.MPMAX: 30,
+            StatType.MP:    30,
+            StatType.ARMOR: 0,
+            StatType.MARMOR:0,
+            StatType.GRIT: 10,
+            StatType.FLOW: 10,
+            StatType.MIND: 10,
+            StatType.SOUL: 10,
+            StatType.LVL: 1,
+            StatType.EXP: 0,
+            StatType.PP: 0,
+
+            StatType.THREAT: 0
+            }
+        
+    def hp_mp_clamp_update(self):
+        # max
+        if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
+            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
+
+        if self.stats[StatType.MP] >= self.stats[StatType.MPMAX]:
+            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
+
+        # min 
+        if self.stats[StatType.HP] <= 0:
+            self.stats[StatType.HP] = 0
+
+        if self.stats[StatType.MP] <= 0:
+            self.stats[StatType.MP] = 0
+
+        # death
+        if self.stats[StatType.HP] <= 0:
+            self.stats[StatType.HP] = 0
+            self.status = ActorStatusType.DEAD
+
+            self.owner.simple_broadcast(
+                f'@redYou died@normal "help rest"',
+                f'{self.owner.pretty_name()} has died'
+                )
+
+            self.owner.die()
+
 class CooldownManager:
     def __init__ (self, owner):
         self.owner = owner
@@ -72,30 +120,13 @@ class Actor:
         if self.room != None:
             self.factory = self.room.world.factory
 
-        self.affect_manager = AffectsManager(self)
-        self.inventory_manager = InventoryManager(self)
-        self.slots_manager = SlotsManager(self)
-        self.party_manager = PartyManager(self)
-        self.quest_manager = QuestManager(self)
-        self.status = ActorStatusType.NORMAL
-        
-        self.stats = {
-            StatType.HPMAX: 30,
-            StatType.HP:    30,
-            StatType.MPMAX: 30,
-            StatType.MP:    30,
-            StatType.ARMOR: 0,
-            StatType.MARMOR:0,
-            StatType.GRIT: 10,
-            StatType.FLOW: 10,
-            StatType.MIND: 10,
-            StatType.SOUL: 10,
-            StatType.LVL: 1,
-            StatType.EXP: 0,
-            StatType.PP: 0,
-
-            StatType.THREAT: 0
-            }
+        self.affect_manager =       AffectsManager(self)
+        self.inventory_manager =    InventoryManager(self)
+        self.slots_manager =        SlotsManager(self)
+        self.party_manager =        PartyManager(self)
+        self.quest_manager =        QuestManager(self)
+        self.stat_manager =         ActorStatManager(self)
+        self.status =               ActorStatusType.NORMAL
 
         self.skills = {
             'swing': 20
@@ -141,42 +172,6 @@ class Actor:
             else:
                 t.add_data(EquipmentSlotType.name[i] + ':')
                 t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].pretty_name(rank_only = True))
-        '''
-        t = utils.Table(10, spaces = 1)
-        # SLOT
-        # NAME
-        # HP
-        # MP
-        # GRIT
-        # FLOW
-        # MIND
-        # SOUL
-        # ARMOR 
-        # MARMOR
-        
-        for i in self.slots_manager.slots:
-            if None == self.slots_manager.slots[i]:
-                if hide_empty:
-                    continue
-                else:
-                    t.add_data(EquipmentSlotType.name[i] + ':')
-                    t.add_data('---')
-                    for i in range(0,8):
-                        t.add_data('')
-            else:
-                eq = self.inventory_manager.items[self.slots_manager.slots[i]]
-                t.add_data(EquipmentSlotType.name[i] + ':')
-                t.add_data(eq.pretty_name(rank_only = True)+'')
-                t.add_data(eq.stats[StatType.HPMAX])
-                t.add_data(eq.stats[StatType.MPMAX])
-                t.add_data(eq.stats[StatType.GRIT])
-                t.add_data(eq.stats[StatType.FLOW])
-                t.add_data(eq.stats[StatType.MIND])
-                t.add_data(eq.stats[StatType.SOUL])
-                t.add_data(eq.stats[StatType.ARMOR])
-                t.add_data(eq.stats[StatType.MARMOR])
-                #t.add_data(self.inventory_manager.items[self.slots_manager.slots[i]].description)
-        '''
         output = t.get_table()
         return output
 
@@ -189,13 +184,13 @@ class Actor:
         output += self.get_character_equipment()
         t = utils.Table(2,1)
         t.add_data(StatType.name[StatType.HP])
-        t.add_data(f'(@red{self.stats[StatType.HP]}@normal/@red{self.stats[StatType.HPMAX]}@normal)')
+        t.add_data(f'(@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal)')
         t.add_data(StatType.name[StatType.MP])
-        t.add_data(f'(@cyan{self.stats[StatType.MP]}@normal/@cyan{self.stats[StatType.MPMAX]}@normal)')
+        t.add_data(f'(@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal)')
         _piss = [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR, StatType.LVL]
         for _shit in _piss:
             t.add_data(StatType.name[_shit]+':')
-            t.add_data(self.stats[_shit])
+            t.add_data(self.stat_manager.stats[_shit])
 
         output += t.get_table()
        
@@ -209,32 +204,7 @@ class Actor:
             self.cooldown_manager.unload_all_cooldowns()
         
         
-    def hp_mp_clamp_update(self):
-        # max
-        if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
-            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
-
-        if self.stats[StatType.MP] >= self.stats[StatType.MPMAX]:
-            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
-
-        # min 
-        if self.stats[StatType.HP] <= 0:
-            self.stats[StatType.HP] = 0
-
-        if self.stats[StatType.MP] <= 0:
-            self.stats[StatType.MP] = 0
-
-        # death
-        if self.stats[StatType.HP] <= 0:
-            self.stats[StatType.HP] = 0
-            self.status = ActorStatusType.DEAD
-
-            self.simple_broadcast(
-                f'@redYou died@normal "help rest"',
-                f'{self.pretty_name()} has died'
-                )
-
-            self.die()
+    
 
     def take_damage(self, damage_obj: Damage):
         damage_obj = self.affect_manager.take_damage(damage_obj)
@@ -246,7 +216,7 @@ class Actor:
         damage_obj = self.affect_manager.deal_damage(damage_obj)
         damage_obj = damage_obj.damage_taker_actor.take_damage(damage_obj)
         self.affect_manager.dealt_damage(damage_obj)
-        self.stats[StatType.THREAT] += damage_obj.damage_value
+        self.stat_manager.stats[StatType.THREAT] += damage_obj.damage_value
         
     def die(self):
         if self.room == None:
@@ -256,6 +226,8 @@ class Actor:
         if self.room.combat != None:
             if self.room.combat.current_actor == self:
                 self.room.combat.next_turn()
+
+        self.status = ActorStatusType.DEAD
 
         # create a temporary corpse item 
         # this items name and description is NOT stored in db

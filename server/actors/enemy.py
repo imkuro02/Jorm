@@ -49,11 +49,11 @@ class Enemy(Actor):
     def __init__(self, enemy_id, name, room, stats, loot, skills, combat_loop):
         super().__init__(name, room)
         self.enemy_id = enemy_id
-        self.stats = {**self.stats, **stats}
+        self.stat_manager.stats = {**self.stat_manager.stats, **stats}
         
-        #self.stats = 
-        self.stats[StatType.HPMAX] = self.stats[StatType.HP]
-        self.stats[StatType.MPMAX] = self.stats[StatType.MP]
+        #self.stat_manager.stats = 
+        self.stat_manager.stats[StatType.HPMAX] = self.stat_manager.stats[StatType.HP]
+        self.stat_manager.stats[StatType.MPMAX] = self.stat_manager.stats[StatType.MP]
 
         self.loot = copy.deepcopy(loot)
         self.skills = copy.deepcopy(skills)
@@ -77,9 +77,9 @@ class Enemy(Actor):
             new_item = load_item(item)
 
             #if new_item.item_type == ItemType.EQUIPMENT:
-            #    for i in range(random.randint(0,new_item.requirements[StatType.LVL])):
-            #        stat = random.choice([s for s in new_item.stats.keys()])
-            #        new_item.stats[stat] = new_item.stats[stat] + 1
+            #    for i in range(random.randint(0,new_item.stat_manager.reqs[StatType.LVL])):
+            #        stat = random.choice([s for s in new_item.stat_manager.stats.keys()])
+            #        new_item.stat_manager.stats[stat] = new_item.stat_manager.stats[stat] + 1
 
             
             if entity.inventory_manager.add_item(new_item):   
@@ -101,7 +101,7 @@ class Enemy(Actor):
         
         for entity in self.room.combat.participants.values():
             if type(entity).__name__ == "Player":
-                entity.stats[StatType.EXP] += self.stats[StatType.EXP]
+                entity.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
                 self.drop_loot(entity)
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.enemy_id, 1)
                 entity.quest_manager.propose_objective_count_addition(proposal)

@@ -17,8 +17,8 @@ def command_level_up(self, stat):
     stat = stat.lower().capitalize()
 
     exp_needed = self.get_exp_needed_to_level()
-    if self.get_exp_needed_to_level() > self.stats[StatType.EXP]:
-        self.sendLine(f'You need {exp_needed-self.stats[StatType.EXP]}EXP to level up')
+    if self.get_exp_needed_to_level() > self.stat_manager.stats[StatType.EXP]:
+        self.sendLine(f'You need {exp_needed-self.stat_manager.stats[StatType.EXP]}EXP to level up')
         return
     
     hp_bonus = 20000000000000000000
@@ -45,28 +45,28 @@ def command_level_up(self, stat):
             return
 
     
-    self.stats[StatType.LVL] += 1
-    self.stats[stat] += 1
-    self.stats[StatType.PP] += 20
+    self.stat_manager.stats[StatType.LVL] += 1
+    self.stat_manager.stats[stat] += 1
+    self.stat_manager.stats[StatType.PP] += 20
 
-    #hp_bonus = 0 + 0 + round(self.stats[StatType.GRIT] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1) - 20
-    #mp_bonus = 0 + 0 + round(self.stats[StatType.MIND] * 2) + round(self.stats[StatType.SOUL]*1) + round(self.stats[StatType.FLOW]*1) - 20
-    self.stats[StatType.HPMAX]  += hp_bonus
-    self.stats[StatType.MPMAX]  += mp_bonus
-    self.stats[StatType.HP]     += hp_bonus
-    self.stats[StatType.MP]     += mp_bonus
+    #hp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.GRIT] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
+    #mp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.MIND] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
+    self.stat_manager.stats[StatType.HPMAX]  += hp_bonus
+    self.stat_manager.stats[StatType.MPMAX]  += mp_bonus
+    self.stat_manager.stats[StatType.HP]     += hp_bonus
+    self.stat_manager.stats[StatType.MP]     += mp_bonus
    
 
-    #self.stats['armor'] += round(self.stats['dex']*.4)
-    #self.stats['marmor'] += round(self.stats['dex']*.4)
+    #self.stat_manager.stats['armor'] += round(self.stat_manager.stats['dex']*.4)
+    #self.stat_manager.stats['marmor'] += round(self.stat_manager.stats['dex']*.4)
     
-    self.sendLine(f'@green{stat} {self.stats[stat]-1} -> {self.stats[stat]}. @normal')
+    self.sendLine(f'@green{stat} {self.stat_manager.stats[stat]-1} -> {self.stat_manager.stats[stat]}. @normal')
 
 @check_alive
 @check_not_in_combat
 def command_practice(self, line):
     if len(line) <= 1:
-        output = f'You have {self.stats[StatType.PP]} practice points left.\n'
+        output = f'You have {self.stat_manager.stats[StatType.PP]} practice points left.\n'
         t = utils.Table(3)
         t.add_data('Skill')
         t.add_data('Lvl')
@@ -74,7 +74,7 @@ def command_practice(self, line):
         for skill_id in SKILLS.keys():
             if SKILLS[skill_id]['can_be_practiced'] == False:
                 continue
-            if SKILLS[skill_id]['level_req'] > self.stats[StatType.LVL]:
+            if SKILLS[skill_id]['level_req'] > self.stat_manager.stats[StatType.LVL]:
                 continue
 
             col = '@red'
@@ -118,7 +118,7 @@ def command_practice(self, line):
             self.sendLine(f'@red{skill_name} cannot be practiced@normal')
             return
 
-        if self.stats[StatType.LVL] < SKILLS[skill_id]['level_req']:
+        if self.stat_manager.stats[StatType.LVL] < SKILLS[skill_id]['level_req']:
             self.sendLine(f'@redYou are not high enough level to practice {skill_name}@normal')
             return
         
@@ -144,12 +144,12 @@ def command_practice(self, line):
             self.sendLine(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]["script_values"]["levels"][-1]}@normal')
             return
 
-        if pp_to_spend > self.stats[StatType.PP]:
+        if pp_to_spend > self.stat_manager.stats[StatType.PP]:
             self.sendLine('@redYou don\'t have enough Practice Points@normal')
             return
 
         
-        self.stats[StatType.PP] -= pp_to_spend
+        self.stat_manager.stats[StatType.PP] -= pp_to_spend
         self.sendLine(f'@greenYou spend {pp_to_spend} Practice Points on "{skill_name}"@normal')
         self.skills[skill_id] = new_prac_level
        
@@ -271,24 +271,24 @@ def command_respec(self, line):
             self.sendLine('@redYou must unequip everything to respec@normal')
             return
 
-    exp = self.stats[StatType.EXP]
+    exp = self.stat_manager.stats[StatType.EXP]
     temp_player = Player(None, self.name, None)
-    self.stats = temp_player.stats
+    self.stat_manager.stats = temp_player.stat_manager.stats
     self.skills = temp_player.skills
     #print(temp_player)
     del temp_player
 
 
-    self.stats[StatType.EXP] = exp
+    self.stat_manager.stats[StatType.EXP] = exp
     self.sendLine('@greenYou have reset your stats, experience is kept.@normal')
 
 def command_stats(self, line):
     output = f'You are {self.get_character_sheet()}'
     #output += f'\n'
-    #exp_needed = self.get_exp_needed_to_level() - self.stats[StatType.EXP]
-    #output += f'{StatType.name[StatType.LVL]} {self.stats[StatType.LVL]}\n'
-    output += f'{StatType.name[StatType.EXP]}: {self.stats[StatType.EXP]}/{self.get_exp_needed_to_level()}\n'
-    output += f'{StatType.name[StatType.PP]}: {self.stats[StatType.PP]}\n'
+    #exp_needed = self.get_exp_needed_to_level() - self.stat_manager.stats[StatType.EXP]
+    #output += f'{StatType.name[StatType.LVL]} {self.stat_manager.stats[StatType.LVL]}\n'
+    output += f'{StatType.name[StatType.EXP]}: {self.stat_manager.stats[StatType.EXP]}/{self.get_exp_needed_to_level()}\n'
+    output += f'{StatType.name[StatType.PP]}: {self.stat_manager.stats[StatType.PP]}\n'
 
     self.sendLine(output)
 
@@ -316,6 +316,6 @@ def command_affects(self, line):
     self.sendLine(output)
 
 def get_exp_needed_to_level(self):
-    l = self.stats[StatType.LVL]
-    exp_needed = int(3 + ( l ** 3.5 )) #int(2 ** self.stats[StatType.LVL]) + (self.stats[StatType.LVL]*self.stats[StatType.LVL])
+    l = self.stat_manager.stats[StatType.LVL]
+    exp_needed = int(3 + ( l ** 3.5 )) #int(2 ** self.stat_manager.stats[StatType.LVL]) + (self.stat_manager.stats[StatType.LVL]*self.stat_manager.stats[StatType.LVL])
     return exp_needed

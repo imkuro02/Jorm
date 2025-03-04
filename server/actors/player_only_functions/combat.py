@@ -135,8 +135,8 @@ def command_rest(self, line):
         if self.status == ActorStatusType.DEAD:
             self.status = ActorStatusType.NORMAL
 
-            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
-            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
+            self.stat_manager.stats[StatType.HP] = self.stat_manager.stats[StatType.HPMAX]
+            self.stat_manager.stats[StatType.MP] = self.stat_manager.stats[StatType.MPMAX]
 
             self.simple_broadcast(
                 'You ressurect',
@@ -152,8 +152,8 @@ def command_rest(self, line):
                 f'{self.pretty_name()} has ressurected')
         else:
 
-            self.stats[StatType.HP] = self.stats[StatType.HPMAX]
-            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
+            self.stat_manager.stats[StatType.HP] = self.stat_manager.stats[StatType.HPMAX]
+            self.stat_manager.stats[StatType.MP] = self.stat_manager.stats[StatType.MPMAX]
 
             if self.room.uid == self.recall_site:
                 self.simple_broadcast(

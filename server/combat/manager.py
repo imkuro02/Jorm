@@ -16,27 +16,27 @@ class Damage:
 
     def take_damage(self):
         match self.damage_type:
-            # the string 'none' can be returned from affect_manager.take_damage() 
             # meaning the damage was completely cancelled by something
             # the affect should sendLine what exactly happened
             # example: physical damage while ethereal should send "You are ethereal"
             case DamageType.CANCELLED: 
-                return 0
+                self.damage_value = 0
+                return self
             case DamageType.PHYSICAL:
-                self.damage_value -= self.damage_taker_actor.stats[StatType.ARMOR]
+                self.damage_value -= self.damage_taker_actor.stat_manager.stats[StatType.ARMOR]
             case DamageType.MAGICAL:
-                self.damage_value -= self.damage_taker_actor.stats[StatType.MARMOR]
+                self.damage_value -= self.damage_taker_actor.stat_manager.stats[StatType.MARMOR]
             case DamageType.PURE:
                 pass
             case DamageType.HEALING:
-                self.damage_taker_actor.stats[self.damage_to_stat] += self.damage_value
+                self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] += self.damage_value
                 if not self.silent:
                     self.damage_taker_actor.simple_broadcast(
                         f'You heal {self.damage_value} {StatType.name[self.damage_to_stat]}',
                         f'{self.damage_taker_actor.pretty_name()} heals {self.damage_value} {StatType.name[self.damage_to_stat]}'
                         )
 
-                self.damage_taker_actor.hp_mp_clamp_update()
+                self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
                 return self.damage_value
 
         
@@ -46,9 +46,9 @@ class Damage:
                 f'You block',
                 f'{self.damage_taker_actor.pretty_name()} blocks'
                 )
-            return self.damage_value
+            return self
 
-        self.damage_taker_actor.stats[self.damage_to_stat ] -= self.damage_value
+        self.damage_taker_actor.stat_manager.stats[self.damage_to_stat ] -= self.damage_value
 
         if self.damage_to_stat == StatType.HP:
             if not self.silent:
@@ -65,7 +65,7 @@ class Damage:
                     )
 
 
-        self.damage_taker_actor.hp_mp_clamp_update()
+        self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
         return self
 
 class Combat:
@@ -79,7 +79,7 @@ class Combat:
 
         # reset threat
         for p in self.participants.values():
-            p.stats[StatType.THREAT] = 0 
+            p.stat_manager.stats[StatType.THREAT] = 0 
 
         self.initiative()
         
@@ -93,7 +93,7 @@ class Combat:
             f'{participant.pretty_name()} joins the combat',
         )
         # reset threat to 0 at start of combat
-        participant.stats[StatType.THREAT] = 0 
+        participant.stat_manager.stats[StatType.THREAT] = 0 
 
     def tick(self):
         if self.current_actor == None:
@@ -171,7 +171,7 @@ class Combat:
                 damage_obj = Damage(
                     damage_taker_actor = i,
                     damage_source_actor = i,
-                    damage_value = int(i.stats[StatType.HPMAX]*.25),
+                    damage_value = int(i.stat_manager.stats[StatType.HPMAX]*.25),
                     damage_type = DamageType.HEALING,
                     silent = True
                     )
@@ -179,7 +179,7 @@ class Combat:
                 damage_obj = Damage(
                         damage_taker_actor = i,
                         damage_source_actor = i,
-                        damage_value = int(i.stats[StatType.MPMAX]*.25),
+                        damage_value = int(i.stat_manager.stats[StatType.MPMAX]*.25),
                         damage_type = DamageType.HEALING,
                         damage_to_stat = StatType.MP,
                         silent = True
@@ -221,8 +221,8 @@ class Combat:
             if type(i).__name__ == "Player":
                 combat_stats = f'\n@yellowCombat overview (Round {self.round})@normal:'
                 for participant in self.order:
-                    #combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stats[StatType.HP]}@normal/@red{participant.stats[StatType.HPMAX]}@normal] {participant.party_manager.get_party_id()}'''
-                    combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stats[StatType.HP]}@normal/@red{participant.stats[StatType.HPMAX]}@normal]'''
+                    #combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stat_manager.stats[StatType.HP]}@normal/@red{participant.stat_manager.stats[StatType.HPMAX]}@normal] {participant.party_manager.get_party_id()}'''
+                    combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stat_manager.stats[StatType.HP]}@normal/@red{participant.stat_manager.stats[StatType.HPMAX]}@normal]'''
                 i.sendLine(combat_stats)
                 #i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
         

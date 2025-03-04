@@ -29,9 +29,9 @@ def inventory_equip(self, item, forced = False):
     if item.slot != None:
 
         req_not_met = False
-        for stat_name in item.requirements:
-            if self.stats[stat_name] < item.requirements[stat_name]:
-                if not forced: self.sendLine(f'@redYou do not meet the requirements of {item.requirements[stat_name]} {StatType.name[stat_name]}@normal')
+        for stat_name in item.stat_manager.reqs:
+            if self.stat_manager.stats[stat_name] < item.stat_manager.reqs[stat_name]:
+                if not forced: self.sendLine(f'@redYou do not meet the requirements of {item.stat_manager.reqs[stat_name]} {StatType.name[stat_name]}@normal')
                 req_not_met = True
         
         if req_not_met and forced == False:
@@ -43,20 +43,20 @@ def inventory_equip(self, item, forced = False):
         self.slots_manager.slots[item.slot] = item.id
 
         item.equiped = True 
-        for stat_name in item.stats:
-            stat_val = item.stats[stat_name]
-            #print(stat_name, item.stats[stat_name])
-            if stat_name == StatType.HPMAX: self.stats[StatType.HP] += stat_val
-            if stat_name == StatType.MPMAX: self.stats[StatType.MP] += stat_val
-            self.stats[stat_name] += stat_val
-            #print(self.stats[stat_name])
+        for stat_name in item.stat_manager.stats:
+            stat_val = item.stat_manager.stats[stat_name]
+            #print(stat_name, item.stat_manager.stats[stat_name])
+            if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] += stat_val
+            if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] += stat_val
+            self.stat_manager.stats[stat_name] += stat_val
+            #print(self.stat_manager.stats[stat_name])
         
         if not forced: 
             self.simple_broadcast(
                 f'You equip {item.name}',
                 f'{self.pretty_name()} equips {item.name}'
             )
-            self.hp_mp_clamp_update()
+            self.stat_manager.hp_mp_clamp_update()
 
         #self.slots[item.slot] = item.id
         #print(self.slots[item.slot])
@@ -69,17 +69,17 @@ def inventory_unequip(self, item, silent = False):
         self.slots_manager.slots[item.slot] = None
         item.equiped = False
 
-        for stat_name in item.stats:
-            stat_val = item.stats[stat_name]
-            if stat_name == StatType.HPMAX: self.stats[StatType.HP] -= stat_val
-            if stat_name == StatType.MPMAX: self.stats[StatType.MP] -= stat_val
-            self.stats[stat_name] -= stat_val
+        for stat_name in item.stat_manager.stats:
+            stat_val = item.stat_manager.stats[stat_name]
+            if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] -= stat_val
+            if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] -= stat_val
+            self.stat_manager.stats[stat_name] -= stat_val
         
 
         if silent:
             return
             
-        self.hp_mp_clamp_update()
+        self.stat_manager.hp_mp_clamp_update()
         self.simple_broadcast(
             f'You unequip {item.name}',
             f'{self.pretty_name()} unequips {item.name}'

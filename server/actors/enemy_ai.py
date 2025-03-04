@@ -104,9 +104,9 @@ class AI:
             case Targets.ALLY_RANDOM:
                 return random.choice(allies)
             case Targets.ENEMY_HIGHEST_HP:
-                return max(enemies, key=lambda char: char.stats[StatType.HP])
+                return max(enemies, key=lambda char: char.stat_manager.stats[StatType.HP])
             case Targets.ENEMY_HIGHEST_THREAT:
-                return max(enemies, key=lambda char: char.stats[StatType.THREAT])
+                return max(enemies, key=lambda char: char.stat_manager.stats[StatType.THREAT])
             #case Targets.LOWEST_ENEMY:
 
             #case Targets.LOWEST_ALLY:

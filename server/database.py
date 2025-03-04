@@ -209,7 +209,7 @@ class Database:
                 actor.inventory_unequip(actor.inventory_manager.items[eq_id], silent = True)
 
         my_dict = {}
-        my_dict = actor.stats
+        my_dict = actor.stat_manager.stats
         my_dict['actor_id'] = actor_id
 
         self.cursor.execute('''

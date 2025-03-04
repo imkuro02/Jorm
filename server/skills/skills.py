@@ -68,8 +68,8 @@ class Skill:
 
 class SkillSwing(Skill):
     def use(self):
-        grit = int(self.user.stats[StatType.GRIT])
-        flow = int(self.user.stats[StatType.FLOW])
+        grit = int(self.user.stat_manager.stats[StatType.GRIT])
+        flow = int(self.user.stat_manager.stats[StatType.FLOW])
 
         my_dmg_scaling = StatType.GRIT
         if flow > grit: 
@@ -77,7 +77,7 @@ class SkillSwing(Skill):
 
         super().use()
         if self.success:
-            amp = int(self.user.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
+            amp = int(self.user.stat_manager.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
             base = self.script_values['damage'][self.users_skill_level]
             dmg = base + amp
             damage_obj = Damage(
@@ -86,13 +86,13 @@ class SkillSwing(Skill):
                 damage_value = dmg,
                 damage_type = DamageType.PHYSICAL
                 )
-            damage = self.user.deal_damage(damage_obj)
+            self.user.deal_damage(damage_obj)
 
 class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
         if self.success:
-            amp = int(self.user.stats[StatType.SOUL]*self.script_values['bonus'][self.users_skill_level])
+            amp = int(self.user.stat_manager.stats[StatType.SOUL]*self.script_values['bonus'][self.users_skill_level])
             base = self.script_values['damage'][self.users_skill_level]
             dmg = base + amp
             damage_obj = Damage(
@@ -121,7 +121,7 @@ class SkillDamage(Skill):
      def use(self, my_dmg_scaling = StatType.GRIT, my_dmg_type = DamageType.PHYSICAL):
         super().use()
         if self.success:
-            amp = int(self.user.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
+            amp = int(self.user.stat_manager.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
             base = self.script_values['damage'][self.users_skill_level]
             dmg = base + amp
             damage_obj = Damage(
@@ -135,14 +135,14 @@ class SkillDamage(Skill):
 class SkillDoubleWhack(Skill):
     def use(self):
         for i in range(0,2):
-            amp = int(self.user.stats[StatType.FLOW]*self.script_values['bonus'][self.users_skill_level])
+            amp = int(self.user.stat_manager.stats[StatType.FLOW]*self.script_values['bonus'][self.users_skill_level])
             base = self.script_values['damage'][self.users_skill_level]
             dmg = base + amp
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = dmg,
-                damage_type = self.user.stats[StatType.FLOW]
+                damage_type = self.user.stat_manager.stats[StatType.FLOW]
                 )
             #damage = self.user.deal_damage(damage_obj)
             self.user.deal_damage(damage_obj)
@@ -218,11 +218,11 @@ class SkillRegenHP30(Skill):
     def use(self):
         super().use()
         if self.success:
-            #self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)
+            #self.other.take_damage(self.user, int(self.user.stat_manager.stats[StatType.HPMAX]*.3), DamageType.HEALING)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = int(self.user.stats[StatType.HPMAX]*.3),
+                damage_value = int(self.user.stat_manager.stats[StatType.HPMAX]*.3),
                 damage_type = DamageType.HEALING
                 )
             self.other.take_damage(damage_obj)           
@@ -231,11 +231,11 @@ class SkillRegenMP30(Skill):
     def use(self):
         super().use()
         if self.success:
-            #self.other.take_damage(self.user, int(self.user.stats[StatType.HPMAX]*.3), DamageType.HEALING)
+            #self.other.take_damage(self.user, int(self.user.stat_manager.stats[StatType.HPMAX]*.3), DamageType.HEALING)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_value = int(self.user.stats[StatType.MPMAX]*.3),
+                damage_value = int(self.user.stat_manager.stats[StatType.MPMAX]*.3),
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MP
                 )

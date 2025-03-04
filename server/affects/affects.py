@@ -118,9 +118,9 @@ class AffectMageArmor(Affect):
                 hp_dmg = round(damage_obj.damage_value*(1 - self.reduction))
                 mp_dmg = round(damage_obj.damage_value*self.reduction)
 
-                damage_obj.damage_taker_actor.stats[StatType.MP] -= mp_dmg
-                if damage_obj.damage_taker_actor.stats[StatType.MP] <= 0:
-                    hp_dmg += abs(damage_obj.damage_taker_actor.stats[StatType.MP])
+                damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP] -= mp_dmg
+                if damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP] <= 0:
+                    hp_dmg += abs(damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP])
 
                 damage_obj.damage_value = hp_dmg
 
@@ -146,12 +146,12 @@ class AffectEnrage(Affect):
 
     def on_applied(self):
         super().on_applied()
-        self.bonus_hp = int( self.owner.stats[StatType.HPMAX] * self.extra_hp )
-        self.owner.stats[StatType.HPMAX] += self.bonus_hp
-        self.owner.stats[StatType.HP] +=    self.bonus_hp
+        self.bonus_hp = int( self.owner.stat_manager.stats[StatType.HPMAX] * self.extra_hp )
+        self.owner.stat_manager.stats[StatType.HPMAX] += self.bonus_hp
+        self.owner.stat_manager.stats[StatType.HP] +=    self.bonus_hp
 
     def on_finished(self, silent=False):
-        self.owner.stats[StatType.HPMAX] -= self.bonus_hp
-        self.owner.stats[StatType.HP] -=    self.bonus_hp
-        self.owner.hp_mp_clamp_update()
+        self.owner.stat_manager.stats[StatType.HPMAX] -= self.bonus_hp
+        self.owner.stat_manager.stats[StatType.HP] -=    self.bonus_hp
+        self.owner.stat_manager.hp_mp_clamp_update()
         return super().on_finished(silent)

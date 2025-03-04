@@ -54,10 +54,10 @@ class Player(Actor):
 
     def combat_over_prompt(self):
         self.sendLine('@yellowCombat over!@normal')
-        if (self.stats[StatType.EXP] >= self.get_exp_needed_to_level()):
+        if (self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level()):
             self.sendLine('@greenYou can level up!@back')
         else:
-            self.sendLine(f'@yellowNext level@back: @green{int((self.stats[StatType.EXP]/self.get_exp_needed_to_level())*100)}@back%')
+            self.sendLine(f'@yellowNext level@back: @green{int((self.stat_manager.stats[StatType.EXP]/self.get_exp_needed_to_level())*100)}@back%')
     def sendLine(self, line, color = True):
         if color:
             line = utils.add_color(f'{line}\n')

@@ -138,7 +138,7 @@ class Dialog:
                     self.player.sendLine(f'You got: {item.pretty_name()}')
 
             if 'reward_exp' in answer:
-                self.player.stats[StatType.EXP] += answer['reward_exp']
+                self.player.stat_manager.stats[StatType.EXP] += answer['reward_exp']
                 self.player.sendLine(f'You got: {answer["reward_exp"]} Experience')
 
             

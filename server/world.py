@@ -247,9 +247,9 @@ class World:
         boss_mob.name = '<!>' + boss_mob.name + '<!>'
         boss_mob.simple_broadcast('',
         f'{boss_mob.pretty_name()} is terrorizing {boss_mob.room.name}', worldwide = True)
-        for s in boss_mob.stats:
-            boss_mob.stats[s] = boss_mob.stats[s] * 2
-        boss_mob.stats[StatType.EXP] = boss_mob.stats[StatType.EXP] * 5
+        for s in boss_mob.stat_manager.stats:
+            boss_mob.stat_manager.stats[s] = boss_mob.stat_manager.stats[s] * 2
+        boss_mob.stat_manager.stats[StatType.EXP] = boss_mob.stat_manager.stats[StatType.EXP] * 5
 
 
     def reload(self):

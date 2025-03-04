@@ -204,7 +204,7 @@ def command_inventory(self, line):
     
     self.sendLine(output)
     return
-    #output += f'{StatType.name[StatType.MONEY]}: {self.stats[StatType.MONEY]}\n'
+    #output += f'{StatType.name[StatType.MONEY]}: {self.stat_manager.stats[StatType.MONEY]}\n'
     if line != 'all': 
         inv = {}
         for i in self.inventory.values():

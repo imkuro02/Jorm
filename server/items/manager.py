@@ -28,10 +28,10 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
         
 
         for key in ITEMS[premade_id]['stats']:
-            new_item.stats[key] = ITEMS[premade_id]['stats'][key]
+            new_item.stat_manager.stats[key] = ITEMS[premade_id]['stats'][key]
 
         for key in ITEMS[premade_id]['requirements']:
-            new_item.requirements[key] = ITEMS[premade_id]['requirements'][key]
+            new_item.stat_manager.reqs[key] = ITEMS[premade_id]['requirements'][key]
 
         
         # set unique ID now for the seed
@@ -45,15 +45,15 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
         rng_seed = int(uuid_int)
         myrandom = random.Random(rng_seed)
         rank = 0
-        for i in range(0,myrandom.randrange(new_item.requirements[StatType.LVL])):
-            stat_to_affect = myrandom.choice([key for key in new_item.stats])
+        for i in range(0,myrandom.randrange(new_item.stat_manager.reqs[StatType.LVL])):
+            stat_to_affect = myrandom.choice([key for key in new_item.stat_manager.stats])
             boost = myrandom.choice([-1,1,2])
             rank += boost
             if stat_to_affect in [StatType.HPMAX, StatType.MPMAX]:
                 boost = boost * 5
-            new_item.stats[stat_to_affect] += boost
+            new_item.stat_manager.stats[stat_to_affect] += boost
             if stat_to_affect not in [StatType.ARMOR, StatType.MARMOR]:
-                new_item.requirements[stat_to_affect] += abs(boost) 
+                new_item.stat_manager.reqs[stat_to_affect] += abs(boost) 
 
             
         new_item.rank = rank

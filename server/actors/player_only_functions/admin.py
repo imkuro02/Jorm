@@ -58,8 +58,8 @@ def command_ranks(self, line):
 
 
 def prompt(self):
-    output = f'[@red{self.stats[StatType.HP]}@normal/@red{self.stats[StatType.HPMAX]}@normal '
-    output += f'@cyan{self.stats[StatType.MP]}@normal/@cyan{self.stats[StatType.MPMAX]}@normal]'
+    output = f'[@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal '
+    output += f'@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal]'
     return utils.add_color(output)
 
 def command_send_prompt(self, line):
@@ -69,7 +69,7 @@ def command_send_prompt(self, line):
 @check_is_admin
 def command_gain_exp(self, exp):
     try:
-        self.stats[StatType.EXP] += int(exp)
+        self.stat_manager.stats[StatType.EXP] += int(exp)
     except ValueError:
         print('gain_exp needs a int')
         pass
@@ -136,15 +136,15 @@ def command_update_item(self, line):
                 return
                
 
-            if str(stat) in self.inventory_manager.items[item_id].stats:
-                self.inventory_manager.items[str(item_id)].stats[str(stat)] = int(value)
+            if str(stat) in self.inventory_manager.items[item_id].stat_manager.stats:
+                self.inventory_manager.items[str(item_id)].stat_manager.stats[str(stat)] = int(value)
                 self.sendLine('@greenUpdated@normal')
                 return
 
             if stat[0] == 'r':
                 #print(stat, stat[1::])
-                if str(stat[1::]) in self.inventory_manager.items[item_id].requirements:
-                    self.inventory_manager.items[str(item_id)].requirements[str(stat[1::])] = int(value)
+                if str(stat[1::]) in self.inventory_manager.items[item_id].stat_manager.reqs:
+                    self.inventory_manager.items[str(item_id)].stat_manager.reqs[str(stat[1::])] = int(value)
                     self.sendLine('@greenUpdated@normal')
                     return
 
