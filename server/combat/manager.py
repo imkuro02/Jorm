@@ -1,73 +1,6 @@
 from configuration.config import ActorStatusType, StatType, DamageType
-
-class Damage:
-    def __init__(self, 
-                 damage_taker_actor,
-                 damage_source_actor, 
-                 damage_value, damage_type, 
-                 damage_to_stat = StatType.HP,
-                 silent = False):
-        self.damage_taker_actor = damage_taker_actor
-        self.damage_source_actor = damage_source_actor
-        self.damage_value = damage_value
-        self.damage_type = damage_type
-        self.damage_to_stat = damage_to_stat
-        self.silent = silent
-
-    def take_damage(self):
-        match self.damage_type:
-            # meaning the damage was completely cancelled by something
-            # the affect should sendLine what exactly happened
-            # example: physical damage while ethereal should send "You are ethereal"
-            case DamageType.CANCELLED: 
-                self.damage_value = 0
-                return self
-            case DamageType.PHYSICAL:
-                self.damage_value -= self.damage_taker_actor.stat_manager.stats[StatType.ARMOR]
-            case DamageType.MAGICAL:
-                self.damage_value -= self.damage_taker_actor.stat_manager.stats[StatType.MARMOR]
-            case DamageType.PURE:
-                pass
-            case DamageType.HEALING:
-                self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] += self.damage_value
-                if not self.silent:
-                    self.damage_taker_actor.simple_broadcast(
-                        f'You heal {self.damage_value} {StatType.name[self.damage_to_stat]}',
-                        f'{self.damage_taker_actor.pretty_name()} heals {self.damage_value} {StatType.name[self.damage_to_stat]}'
-                        )
-
-                self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
-                return self.damage_value
-
-        
-        if self.damage_value <= 0:
-            if not self.silent:
-                self.damage_taker_actor.simple_broadcast(
-                f'You block',
-                f'{self.damage_taker_actor.pretty_name()} blocks'
-                )
-            return self
-
-        self.damage_taker_actor.stat_manager.stats[self.damage_to_stat ] -= self.damage_value
-
-        if self.damage_to_stat == StatType.HP:
-            if not self.silent:
-                self.damage_taker_actor.simple_broadcast(
-                    f'You take {self.damage_value} damage',
-                    f'{self.damage_taker_actor.pretty_name()} takes {self.damage_value} damage'
-                    )
-            
-        if self.damage_to_stat == StatType.MP:
-            if not self.silent:
-                self.damage_taker_actor.simple_broadcast(
-                    f'You lose {self.damage_value} Magicka',
-                    f'{self.damage_taker_actor.pretty_name()} loses {self.damage_value} Magicka'
-                    )
-
-
-        self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
-        return self
-
+from combat.combat_event import CombatEvent
+from combat.damage_event import Damage
 class Combat:
     def __init__(self, room, participants):
         self.room = room
@@ -175,7 +108,7 @@ class Combat:
                     damage_type = DamageType.HEALING,
                     silent = True
                     )
-                i.take_damage(damage_obj)           
+                damage_obj.run()          
                 damage_obj = Damage(
                         damage_taker_actor = i,
                         damage_source_actor = i,
@@ -184,7 +117,7 @@ class Combat:
                         damage_to_stat = StatType.MP,
                         silent = True
                         )
-                i.take_damage(damage_obj)     
+                damage_obj.run()   
                 #i.simple_broadcast('')
 
         self.participants = {}

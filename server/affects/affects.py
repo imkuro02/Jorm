@@ -1,5 +1,5 @@
 from configuration.config import DamageType, StatType
-from combat.manager import Damage
+from combat.damage_event import Damage
 
 class Affect:
     def __init__(self, affect_manager, name, description, turns):
@@ -63,6 +63,9 @@ class Leech(Affect):
         self.leech_power = leech_power
 
     def dealt_damage(self, damage_obj):
+        if damage_obj.damage_type != DamageType.PHYSICAL:
+            return damage_obj
+
         if damage_obj.damage_value == 0:
             return damage_obj
         
@@ -70,12 +73,34 @@ class Leech(Affect):
             damage_source_actor = self.owner,
             damage_taker_actor = self.owner,
             damage_value = round(damage_obj.damage_value * self.leech_power),
-            damage_type = DamageType.HEALING
+            damage_type = DamageType.HEALING,
+            combat_event = damage_obj.combat_event
         )
         
-        self.owner.take_damage(leech_heal_damage_obj)
         return damage_obj
     
+class Thorns(Affect):
+    def __init__(self, affect_manager, name, description, turns, damage_reflected_power):
+        super().__init__(affect_manager, name, description, turns)
+        self.damage_reflected_power = damage_reflected_power # how much in % to reflect
+
+    def take_damage(self, damage_obj):
+        if damage_obj.damage_type != DamageType.PHYSICAL:
+            return damage_obj
+
+        if damage_obj.damage_value <= 0:
+            return damage_obj
+        
+        thorns_damage = Damage(
+            damage_source_actor = self.owner,
+            damage_taker_actor = damage_obj.damage_source_actor,
+            damage_value = int(damage_obj.damage_value * self.damage_reflected_power),
+            damage_type = DamageType.PURE,
+            combat_event = damage_obj.combat_event
+        )
+        
+        return damage_obj
+
 class AffectEthereal(Affect):
     def __init__(self, affect_manager, name, description, turns, dmg_amp):
         super().__init__(affect_manager, name, description, turns)

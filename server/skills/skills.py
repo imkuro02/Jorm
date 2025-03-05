@@ -1,7 +1,7 @@
 from configuration.config import DamageType, StatType, ActorStatusType
 #import affects.manager as aff_manager
 import affects.affects as affects
-from combat.manager import Damage
+from combat.damage_event import Damage
 
 import random
 
@@ -86,7 +86,7 @@ class SkillSwing(Skill):
                 damage_value = dmg,
                 damage_type = DamageType.PHYSICAL
                 )
-            self.user.deal_damage(damage_obj)
+            damage_obj.run()
 
 class SkillCureLightWounds(Skill):
     def use(self):
@@ -207,12 +207,27 @@ class SkillLeech(Skill):
             leech_affect = affects.Leech(
                 affect_manager = self.other.affect_manager,
                 name = 'Leeching',
-                description = f'Convert {int(leech_power*100)}% of physical damage dealt to healing',
+                description = f'Convert {int(leech_power*100)}% of physical damage dealt to healing.',
                 turns = int(self.script_values['duration'][self.users_skill_level]),
                 leech_power = leech_power
             )
 
-            self.user.affect_manager.set_affect_object(leech_affect)  
+            self.other.affect_manager.set_affect_object(leech_affect)  
+
+class SkillThorns(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            damage_reflected_power = self.script_values['bonus'][self.users_skill_level]
+            thorns_affect = affects.Thorns(
+                affect_manager = self.other.affect_manager,
+                name = 'Thorny',
+                description = f'Reflect {int(damage_reflected_power*100)}% of physical damage back. ',
+                turns = int(self.script_values['duration'][self.users_skill_level]),
+                damage_reflected_power = damage_reflected_power
+            ) 
+            self.other.affect_manager.set_affect_object(thorns_affect)  
+
 
 class SkillRegenHP30(Skill):
     def use(self):

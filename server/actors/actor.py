@@ -1,6 +1,6 @@
 from copy import deepcopy
 import uuid
-from combat.manager import Damage
+from combat.damage_event import Damage
 from items.manager import Item
 from affects.manager import AffectsManager
 from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType
@@ -202,21 +202,22 @@ class Actor:
             self.recently_send_message_count -= 1
         if self.status != ActorStatusType.FIGHTING:
             self.cooldown_manager.unload_all_cooldowns()
-        
-        
-    
 
-    def take_damage(self, damage_obj: Damage):
-        damage_obj = self.affect_manager.take_damage(damage_obj)
-        damage_taken = damage_obj.take_damage()
-        del damage_obj
-        return damage_taken
-    
+    '''
     def deal_damage(self, damage_obj: Damage):
         damage_obj = self.affect_manager.deal_damage(damage_obj)
         damage_obj = damage_obj.damage_taker_actor.take_damage(damage_obj)
+        damage_obj.calculate()
         self.affect_manager.dealt_damage(damage_obj)
         self.stat_manager.stats[StatType.THREAT] += damage_obj.damage_value
+        return damage_obj
+
+    def take_damage(self, damage_obj: Damage):
+        damage_obj = self.affect_manager.take_damage(damage_obj)
+        return damage_obj
+    '''
+    
+    
         
     def die(self):
         if self.room == None:
