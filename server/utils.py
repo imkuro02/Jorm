@@ -245,7 +245,7 @@ def seconds_to_dhms(seconds, return_as_dict = False):
 
 import re
 
-def add_line_breaks(input_string, max_width=80):
+def chunkate(input_string, max_width=80):
     # Regex to match a color code (e.g., @red, @green, etc.) or a word
     color_code_regex = r'@[\w]+'
 
@@ -307,7 +307,16 @@ def add_line_breaks(input_string, max_width=80):
         # Add the chunk (whether it's a color code or normal text) to the output
         output += chunk
         line_length += word_length
+    return output
 
+def add_line_breaks(input_string, max_width=80):
+    output = ''
+    lines = input_string.split('\n')
+    for l in lines:
+        if len(remove_color(l)) >= max_width:
+            output += chunkate(l)+'\n'
+        else:
+            output += l+'\n'
     return output
 
 if __name__ == '__main__':

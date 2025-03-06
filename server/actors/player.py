@@ -61,9 +61,12 @@ class Player(Actor):
     
     def sendLine(self, line, color = True):
         if color:
+            start = time.time()
             line = utils.add_line_breaks(line)
+            print((time.time()-start)*1000)
             line = utils.add_color(line)
-            line += '\n'
+            line += f'\n'
+
             
             # send null byte several times to indicate new line
             self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
