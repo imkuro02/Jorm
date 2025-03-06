@@ -65,7 +65,7 @@ class Player(Actor):
             line = utils.add_line_breaks(line)
             #print((time.time()-start)*1000)
             line = utils.add_color(line)
-            line += f'\n'
+            #line += f'\n'
 
             
             # send null byte several times to indicate new line
