@@ -2,6 +2,7 @@ from fuzzywuzzy import process
 import logging
 import datetime
 import time
+import re
 
 logging.basicConfig(
     filename=   'logs.log',     # Log file name
@@ -19,26 +20,29 @@ logging.critical("This is a critical message.")
 '''
 
 colors = {
-    '@black': '\x1b[0;30m', 
-    '@red': '\x1b[0;31m', 
-    '@green': '\x1b[0;32m', 
-    '@yellow': '\x1b[0;33m', 
-    '@blue': '\x1b[0;34m', 
-    '@purple': '\x1b[0;35m', 
-    '@cyan': '\x1b[0;36m', 
-    '@white': '\x1b[0;37m', 
-    '@bblack': '\x1b[1;30m', 
-    '@bred': '\x1b[1;31m', 
-    '@bgreen': '\x1b[1;32m', 
+    '@black':   '\x1b[0;30m', 
+    '@red':     '\x1b[0;31m', 
+    '@green':   '\x1b[0;32m', 
+    '@yellow':  '\x1b[0;33m', 
+    '@blue':    '\x1b[0;34m', 
+    '@purple':  '\x1b[0;35m', 
+    '@cyan':    '\x1b[0;36m', 
+    '@white':   '\x1b[0;37m', 
+    '@bblack':  '\x1b[1;30m', 
+    '@bred':    '\x1b[1;31m', 
+    '@bgreen':  '\x1b[1;32m', 
     '@byellow': '\x1b[1;33m', 
-    '@bblue': '\x1b[1;34m', 
+    '@bblue':   '\x1b[1;34m', 
     '@bpurple': '\x1b[1;35m', 
-    '@bcyan': '\x1b[1;36m', 
-    '@bwhite': '\x1b[1;37m', 
-    '@normal': '\x1b[0m', 
-    '@back': '\x1b[0;00x',
-    '@tip': '\x1b[1;33m',
-    '@color': '\x1b[0;00y'
+    '@bcyan':   '\x1b[1;36m', 
+    '@bwhite':  '\x1b[1;37m', 
+
+    '@bgred':   '\x1b[0;46m',
+
+    '@normal':  '\x1b[0m', 
+    '@back':    '\x1b[0;00x',
+    '@tip':     '\x1b[1;33m',
+    '@color':   '\x1b[0;00y'
 }
 
 def match_word(word: str, l: list, get_score = False):
@@ -183,7 +187,9 @@ class Table:
             #print(i,index,elem,widths[i])
             tmp_output = f'{remove_color(elem["val"]):<{widths[i]}}'
             tmp_output = tmp_output.replace(remove_color(elem['val']),elem['col']+elem['val']+f'@normal')
-            output += add_color(tmp_output)
+            #output += add_color(tmp_output)
+            
+            output += tmp_output
             i += 1
             if i == self.columns:
                 output += f'\n'
@@ -236,10 +242,86 @@ def seconds_to_dhms(seconds, return_as_dict = False):
     #return("{0:.0f}:{1:.0f}:{2:.0f}:{3:.0f}".format(
     #    days, hours, minutes, seconds))
 
+
+import re
+
+def add_line_breaks(input_string, max_width=80):
+    # Regex to match a color code (e.g., @red, @green, etc.) or a word
+    color_code_regex = r'@[\w]+'
+
+    # Split the string into chunks of color codes and normal text
+    chunks = []
+    i = 0
+    while i < len(input_string):
+        match = re.match(color_code_regex, input_string[i:])
+        if match:
+            # Found a color code
+            chunks.append(match.group(0))
+            i += len(match.group(0))
+        elif input_string[i] in ' \n':
+            # Found whitespace or newline, add it as a separate chunk
+            chunks.append(input_string[i])
+            i += 1
+        else:
+            # Found normal text
+            start = i
+            while i < len(input_string) and input_string[i] not in ' \n' and not re.match(color_code_regex, input_string[i:]):
+                i += 1
+            chunks.append(input_string[start:i])
+
+    # Now we have a list of chunks, which could be either color codes or regular text.
+    output = ''
+    line_length = 0
+    #print(chunks)
+    for chunk in chunks:
+        #print(repr(chunk))
+        # If it's a color code, we don't add its length to the line length but just append it
+        if chunk.startswith('@'):
+            word_length = 0
+            _chunk = chunk
+            for col in colors:
+                _chunk = _chunk.replace(col,'')
+            word_length = len(_chunk)
+            #print(repr(chunk))
+            #word_length = len(chunk) - len(colors.get(chunk, ''))  # Subtract the length of the color code itself
+        elif chunk == '\n':
+            word_length = 0
+        else:
+            # Normal word length is just the length of the word
+            word_length = len(chunk)
+
+        if chunk == '\n':
+            #print('RESET CHUNJ')
+            #output += str('R'*(max_width-(line_length+word_length)))
+            line_length = 0
+            
+
+        # Check if the word fits in the current line
+        if line_length + word_length > max_width:
+            # If it doesn't, add a line break
+            #print('NEW LINE')
+            #output += str('N'*(max_width-(line_length)))
+            output += '\n'
+            line_length = 0  # Reset line length
+
+        # Add the chunk (whether it's a color code or normal text) to the output
+        output += chunk
+        line_length += word_length
+
+    return output
+
 if __name__ == '__main__':
     
     line = '@reda@backb@redhello@greenchat@backwhatsup'
     print(add_color(line))
+
+    input_string = "This this is a test @redtest\n of the line breaking @greenwith\n color and @back new ttt lines wo. This is a test @redtest of the line breaking @greenwith color and @back new lines. This is a test @redtest of"
+    formatted_string = add_color(add_line_breaks(input_string))
+
+    print(formatted_string)
+    strings = formatted_string.split('\n')
+    for s in strings:
+        print(len(s))
 
 
                 

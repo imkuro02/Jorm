@@ -7,6 +7,7 @@ import uuid
 import copy
 import random
 from quest import OBJECTIVE_TYPES
+import textwrap
 
 IAC = b'\xff'       # Interpret as Command
 WILL = b'\xfb'      # Will Perform
@@ -341,5 +342,9 @@ class Protocol(protocol.Protocol):
         return
 
     def sendLine(self, line):
+       
+
+            
+
         line = utils.add_color(line)
         self.transport.write(f'{line}\n'.encode('utf-8'))

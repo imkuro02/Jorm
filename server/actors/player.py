@@ -58,9 +58,13 @@ class Player(Actor):
             self.sendLine('@greenYou can level up!@back')
         else:
             self.sendLine(f'@yellowNext level@back: @green{int((self.stat_manager.stats[StatType.EXP]/self.get_exp_needed_to_level())*100)}@back%')
+    
     def sendLine(self, line, color = True):
         if color:
-            line = utils.add_color(f'{line}\n')
+            line = utils.add_line_breaks(line)
+            line = utils.add_color(line)
+            line += '\n'
+            
             # send null byte several times to indicate new line
             self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
         else:
