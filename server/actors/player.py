@@ -61,9 +61,9 @@ class Player(Actor):
     
     def sendLine(self, line, color = True):
         if color:
-            start = time.time()
+            #start = time.time()
             line = utils.add_line_breaks(line)
-            print((time.time()-start)*1000)
+            #print((time.time()-start)*1000)
             line = utils.add_color(line)
             line += f'\n'
 
