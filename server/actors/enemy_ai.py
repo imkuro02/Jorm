@@ -116,6 +116,56 @@ class AI:
             #case Targets.HIGHEST_ALLY:
 
         return False
+    
+    def get_best_skill(self):
+        ally = self.get_target(Targets.ALLY_RANDOM)
+        enemy = self.get_target(Targets.ENEMY_HIGHEST_THREAT)
+
+        best_skill = None
+        best_score = -1000000
+
+        for skill in self.actor.skills:
+            s = SKILLS[skill]
+
+            # skip if on cooldown
+            if skill in self.actor.cooldown_manager.cooldowns:
+                continue
+
+            # dont try to use a skill on an ally if you cant use it on them
+            if ally != self and not s['target_others_is_valid']:
+                continue
+            
+            ally_stats =    ally.stat_manager.stats
+            enemy_stats =   enemy.stat_manager.stats
+            
+            score = 0
+
+            score_low_hp_ally   = s['weight_low_hp_ally']   * (((ally_stats[StatType.HPMAX] - ally_stats[StatType.HP])/ally_stats[StatType.HPMAX])* 100)
+            score_high_hp_ally  = s['weight_high_hp_ally']  * ((ally_stats[StatType.HP] / ally_stats[StatType.HPMAX]) * 100)                                 
+            score_low_hp_enemy  = s['weight_low_hp_enemy']  * (((enemy_stats[StatType.HPMAX] - enemy_stats[StatType.HP])/enemy_stats[StatType.HPMAX])* 100)
+            score_high_hp_enemy = s['weight_high_hp_enemy'] * ((enemy_stats[StatType.HP] / enemy_stats[StatType.HPMAX]) * 100)                          
+
+            print([score_low_hp_ally , score_high_hp_ally , score_low_hp_enemy , score_high_hp_enemy])
+            score = score_low_hp_ally + score_high_hp_ally + score_low_hp_enemy + score_high_hp_enemy
+            print(skill, score)
+            if score > best_score:
+                best_score = score
+                best_skill = skill
+                
+
+        if best_skill == None:
+            return None
+        
+        if SKILLS[best_skill]['is_offensive']:
+            target = enemy
+        else:
+            target = ally
+
+        return (best_skill, target)
+
+
+
+
 
         
 
@@ -124,7 +174,18 @@ class AIBasic(AI):
         # early return if not in combat
         if not super().tick():
             return
+        
 
+        action = self.get_best_skill()
+        
+        if action == None:
+            return
+        
+        use_skill(self.actor, action[1], action[0])
+
+        self.actor.finish_turn()
+
+        '''
         self_missing_hp = (self.actor.stat_manager.stats[StatType.HP]/self.actor.stat_manager.stats[StatType.HPMAX])
         self_missing_hp = abs(1-self_missing_hp)
         print(self_missing_hp)
@@ -153,5 +214,6 @@ class AIBasic(AI):
         self.actor.combat_loop.append(skill_to_use)
         self.actor.combat_loop.pop(0)
 
-        self.actor.finish_turn()
+        
+        '''
 

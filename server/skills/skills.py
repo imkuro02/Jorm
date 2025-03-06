@@ -101,7 +101,7 @@ class SkillCureLightWounds(Skill):
                 damage_value = dmg,
                 damage_type = DamageType.HEALING
                 )
-            self.user.deal_damage(damage_obj)
+            damage_obj.run()
             
 class SkillBash(SkillSwing):
     def use(self):
@@ -130,7 +130,7 @@ class SkillDamage(Skill):
                 damage_value = dmg,
                 damage_type = my_dmg_type
                 )
-            damage = self.user.deal_damage(damage_obj)
+            damage_obj.run()
 
 class SkillDoubleWhack(Skill):
     def use(self):
@@ -145,9 +145,9 @@ class SkillDoubleWhack(Skill):
                 damage_type = self.user.stat_manager.stats[StatType.FLOW]
                 )
             #damage = self.user.deal_damage(damage_obj)
-            self.user.deal_damage(damage_obj)
+            damage_obj.run()
             if self.success:
-                self.user.deal_damage(damage_obj)
+                damage_obj.run()
 
 class SkillDamageByGrit(SkillDamage):
     def use(self):
@@ -240,7 +240,7 @@ class SkillRegenHP30(Skill):
                 damage_value = int(self.user.stat_manager.stats[StatType.HPMAX]*.3),
                 damage_type = DamageType.HEALING
                 )
-            self.other.take_damage(damage_obj)           
+            damage_obj.run()         
 
 class SkillRegenMP30(Skill):
     def use(self):
@@ -254,5 +254,5 @@ class SkillRegenMP30(Skill):
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MP
                 )
-            self.other.take_damage(damage_obj)                
+            damage_obj.run()               
 

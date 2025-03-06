@@ -201,7 +201,7 @@ def command_export(self, line):
     # export entity
     if best_match in list_of_entities:
         entity = self.get_entity(best_match)
-        entity_dict = entity.__dict__
+        entity_dict = str(entity.__dict__)
         self.sendLine(entity_dict)
 
 
