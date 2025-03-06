@@ -125,7 +125,10 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
                 'must_be_fighting':         bool(x['must_be_fighting'][index]),
                 'can_be_practiced':         bool(x['can_be_practiced'][index]),
                 'level_req':                x['level_req'][index],
-                'use_perspectives':         USE_PERSPECTIVES[x['use_perspectives'][index]]
+                'use_perspectives':         USE_PERSPECTIVES[x['use_perspectives'][index]],
+                'is_healing':               x['is_healing'][index],
+                'is_damage':                x['is_damage'][index],
+                'is_buff':                  x['is_buff'][index]
             }
 
     for skill in SKILLS:

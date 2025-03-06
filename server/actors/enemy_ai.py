@@ -1,7 +1,7 @@
 import random
 from skills.manager import use_skill
 from configuration.config import ActorStatusType
-from configuration.config import StatType
+from configuration.config import StatType, SKILLS
 
 import random
 
@@ -125,6 +125,21 @@ class AIBasic(AI):
         if not super().tick():
             return
 
+        self_missing_hp = (self.actor.stat_manager.stats[StatType.HP]/self.actor.stat_manager.stats[StatType.HPMAX])
+        self_missing_hp = abs(1-self_missing_hp)
+        print(self_missing_hp)
+        skills_to_pick_from = {}
+        for skill in self.actor.skills:
+            s = {
+                'id':skill, 
+                'is_healing': SKILLS[skill]['is_healing'],
+                'is_damage': SKILLS[skill]['is_damage'],
+                'is_buff': SKILLS[skill]['is_buff']
+                }
+            skills_to_pick_from[s['id']] = s
+
+        for s in skills_to_pick_from.values():
+            print(s)
         
         #random_target = random.choice([entity for entity in self.actor.room.combat.participants.values() if type(entity).__name__ != type(self.actor).__name__])
         skill_to_use = self.actor.combat_loop[0]

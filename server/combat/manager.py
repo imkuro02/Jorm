@@ -12,7 +12,10 @@ class Combat:
 
         # reset threat
         for p in self.participants.values():
-            p.stat_manager.stats[StatType.THREAT] = 0 
+            if type(p).__name__ == 'Player':
+                p.stat_manager.stats[StatType.THREAT] = 20 
+            else: 
+                p.stat_manager.stats[StatType.THREAT] = 0  
 
         self.initiative()
         
