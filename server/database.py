@@ -78,7 +78,7 @@ class Database:
             bonus_type TEXT NOT NULL,
             bonus_key TEXT NOT NULL,
             bonus_val TEXT NOT NULL,
-            FOREIGN KEY(item_id) REFERENCES inventory(item_id)
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
         self.cursor.execute(''' 
