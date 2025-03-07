@@ -83,7 +83,7 @@ class PartyManager:
         if invited == None:
             self.actor.sendLine('Invite who?')
             return
-        if invited.party != None:
+        if invited.party_manager.party != None:
             self.actor.sendLine(f'{invited.pretty_name()} is already in a party')
             return
         if invited == self.actor:
