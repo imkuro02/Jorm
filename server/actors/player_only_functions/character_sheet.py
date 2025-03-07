@@ -47,7 +47,7 @@ def command_level_up(self, stat):
     
     self.stat_manager.stats[StatType.LVL] += 1
     self.stat_manager.stats[stat] += 1
-    self.stat_manager.stats[StatType.PP] += 20
+    #self.stat_manager.stats[StatType.PP] += 20
 
     #hp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.GRIT] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
     #mp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.MIND] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
@@ -78,10 +78,10 @@ def command_practice(self, line):
                 continue
 
             col = '@red'
-            if skill_id not in self.skills.keys():
+            if skill_id not in self.skill_manager.skills.keys():
                 learned = 0
             else:
-                learned = self.skills[skill_id]
+                learned = self.skill_manager.skills[skill_id]
             if learned >= 1:
                 col = '@yellow'
             if learned >= 50:
@@ -126,8 +126,8 @@ def command_practice(self, line):
         minimum_practice_req = SKILLS[skill_id]['script_values']['levels'][0]
         current_prac_level = 0
 
-        if skill_id in self.skills:
-            current_prac_level = self.skills[skill_id]
+        if skill_id in self.skill_manager.skills:
+            current_prac_level = self.skill_manager.skills[skill_id]
 
         #pp_to_spend = #new_prac_level - current_prac_level
         new_prac_level = current_prac_level + pp_to_spend
@@ -136,9 +136,9 @@ def command_practice(self, line):
             self.sendLine('@redYou can\'t spend negative amount of Practice Points@normal')
             return
         
-        if pp_to_spend < minimum_practice_req and current_prac_level == 0:
-            self.sendLine(f'@redYou must practice {skill_name} to a minium of {minimum_practice_req}@normal')
-            return
+        #if pp_to_spend < minimum_practice_req and current_prac_level == 0:
+        #    self.sendLine(f'@redYou must practice {skill_name} to a minium of {minimum_practice_req}@normal')
+        #    return
         
         if new_prac_level > SKILLS[skill_id]['script_values']['levels'][-1]:
             self.sendLine(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]["script_values"]["levels"][-1]}@normal')
@@ -151,7 +151,7 @@ def command_practice(self, line):
         
         self.stat_manager.stats[StatType.PP] -= pp_to_spend
         self.sendLine(f'@greenYou spend {pp_to_spend} Practice Points on "{skill_name}"@normal')
-        self.skills[skill_id] = new_prac_level
+        self.skill_manager.skills[skill_id] = new_prac_level
        
 def command_skills(self, line):
     id_to_name, name_to_id = get_skills()
@@ -163,7 +163,7 @@ def command_skills(self, line):
         output += f'@yellow{skill["name"]}\n@normal'
         output += f'@cyan{skill["description"]}@normal'
 
-        skill_learned = skill_id in self.skills
+        skill_learned = skill_id in self.skill_manager.skills
         if skill_learned:
             users_skill_level = get_user_skill_level_as_index(self, skill_id)
         else:
@@ -172,7 +172,7 @@ def command_skills(self, line):
         t = utils.Table(2,1)
         t.add_data('Practiced:')
         if skill_learned:
-            t.add_data(self.skills[skill_id],'@green')
+            t.add_data(self.skill_manager.skills[skill_id],'@green')
         else:
             t.add_data('No','@red')
 
@@ -227,7 +227,7 @@ def command_skills(self, line):
 
         self.sendLine(output)
     else:
-        if len(self.skills) == 0:
+        if len(self.skill_manager.skills) == 0:
             self.sendLine('You do not know any skills...')
             return
 
@@ -237,7 +237,7 @@ def command_skills(self, line):
         t.add_data('Lvl')
 
         for skill_id in SKILLS:
-            if skill_id not in self.skills:
+            if skill_id not in self.skill_manager.skills:
                 continue # skip unknown skills
                 
             t.add_data(id_to_name[skill_id])
@@ -246,19 +246,19 @@ def command_skills(self, line):
             else: 
                 t.add_data(f'{self.cooldown_manager.cooldowns[skill_id]}', '@red')
 
-            #t.add_data(self.skills[skill_id])
+            #t.add_data(self.skill_manager.skills[skill_id])
             col = '@red'
-            if skill_id not in self.skills.keys():
+            if skill_id not in self.skill_manager.skills.keys():
                 learned = 0
             else:
-                learned = self.skills[skill_id]
+                learned = self.skill_manager.skills[skill_id]
             if learned >= 1:
                 col = '@yellow'
             if learned >= 50:
                 col = '@green'
             if learned >= 95:
                 col = '@bgreen'
-            t.add_data(self.skills[skill_id], col)
+            t.add_data(self.skill_manager.skills[skill_id], col)
         
         self.sendLine(t.get_table())
 
@@ -266,21 +266,31 @@ def command_skills(self, line):
 @check_alive
 def command_respec(self, line):
     Player = type(self)
+    #for i in self.slots_manager.slots.values():
+    #    if i != None:
+    #        self.sendLine('@redYou must unequip everything to respec@normal')
+    #        return
+
+    list_of_requips = []
     for i in self.slots_manager.slots.values():
         if i != None:
-            self.sendLine('@redYou must unequip everything to respec@normal')
-            return
+            list_of_requips.append(i)
+            self.inventory_unequip(self.inventory_manager.items[i], silent = True)
 
     exp = self.stat_manager.stats[StatType.EXP]
     temp_player = Player(None, self.name, None)
     self.stat_manager.stats = temp_player.stat_manager.stats
-    self.skills = temp_player.skills
+    self.skill_manager.skills = temp_player.skill_manager.skills
     #print(temp_player)
     del temp_player
 
 
     self.stat_manager.stats[StatType.EXP] = exp
     self.sendLine('@greenYou have reset your stats, experience is kept.@normal')
+
+    for i in list_of_requips:
+        self.inventory_equip(self.inventory_manager.items[i], forced = True)
+
 
 def command_stats(self, line):
     output = f'You are {self.get_character_sheet()}'

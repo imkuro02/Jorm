@@ -254,7 +254,7 @@ class Protocol(protocol.Protocol):
             #self.actor.date_of_last_login = actor['meta_data']['date_of_last_login']
 
             self.actor.stat_manager.stats.update(actor['stats'])
-            self.actor.skills = actor['skills']
+            self.actor.skill_manager.skills = actor['skills']
 
             for item in actor['inventory'].values():
                 new_item = load_item(item_premade_id = item['premade_id'], unique_id = item['item_id'])

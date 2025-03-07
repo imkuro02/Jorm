@@ -5,7 +5,7 @@ from configuration.config import ItemType, EquipmentSlotType, ITEMS, StatType
 import uuid
 from items.misc import Item
 from items.consumable import Consumable
-from items.equipment import Equipment
+from items.equipment import Equipment, EquipmentBonus
 from items.error import ErrorItem
 
 import random
@@ -28,16 +28,24 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
         
 
         for key in ITEMS[premade_id]['stats']:
-            new_item.stat_manager.stats[key] = ITEMS[premade_id]['stats'][key]
+            new_item.stat_manager.stats[key] += ITEMS[premade_id]['stats'][key]
 
         for key in ITEMS[premade_id]['requirements']:
-            new_item.stat_manager.reqs[key] = ITEMS[premade_id]['requirements'][key]
+            new_item.stat_manager.reqs[key] += ITEMS[premade_id]['requirements'][key]
 
         
         # set unique ID now for the seed
         if unique_id == None:
             unique_id = new_item.id
+
+        # 0 is the placeholder for no skill
+        if ITEMS[premade_id]['base_skill'] != 0:
+            boon = EquipmentBonus(  bonus_type = 'skill_level', 
+                                    bonus_key = ITEMS[premade_id]['base_skill'], 
+                                    bonus_val = 1)
+            new_item.bonus_manager.add_bonus(boon)
             
+        '''
         #print(unique_id)
         uuid_str = str(unique_id)  # Example UUID
         uuid_int = int(uuid.UUID(uuid_str))
@@ -54,9 +62,9 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
             new_item.stat_manager.stats[stat_to_affect] += boost
             if stat_to_affect not in [StatType.ARMOR, StatType.MARMOR]:
                 new_item.stat_manager.reqs[stat_to_affect] += abs(boost) 
-
-            
         new_item.rank = rank
+        '''
+
         new_item.new = False
         new_item.slot = ITEMS[premade_id]['slot']
 
@@ -67,7 +75,7 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
         new_item = Consumable()
 
         
-        new_item.skills = ITEMS[premade_id]['skills']
+        new_item.skill_manager.skills = ITEMS[premade_id]['skills']
         new_item.use_perspectives = ITEMS[premade_id]['use_perspectives']
 
 

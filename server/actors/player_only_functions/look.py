@@ -80,27 +80,32 @@ def command_look(self, line):
         for r in grid:
             _grid[r] = grid[r]
             
-        for room_loc in _grid:
-            if grid[room_loc] == 'PATH':
-                continue
-            room = self.protocol.factory.world.rooms[grid[room_loc]]
-            _x = int(room_loc.split(',')[0])
-            _y = int(room_loc.split(',')[1])
-            for _exit in room.exits:
-                if _exit not in offsets:
+        for r in range(0,1):
+            for room_loc in _grid:
+                if grid[room_loc] == 'PATH':
                     continue
-                x = _x
-                y = _y
-                x += offsets[_exit][1] 
-                y += offsets[_exit][0] 
-                _loc = f'{x},{y}'
+                room = self.protocol.factory.world.rooms[grid[room_loc]]
+                _x = int(room_loc.split(',')[0])
+                _y = int(room_loc.split(',')[1])
+                for _exit in room.exits:
+                    if _exit not in offsets:
+                        continue
+                    x = _x
+                    y = _y
+                    x += offsets[_exit][1] 
+                    y += offsets[_exit][0] 
+                    _loc = f'{x},{y}'
 
-                grid[_loc] = room.exits[_exit]
-                x += -offsets_path[_exit][1]
-                y += -offsets_path[_exit][0]
-                _loc = f'{x},{y}'
-                if _loc not in grid:
-                    grid[_loc] = 'PATH'
+                    grid[_loc] = room.exits[_exit]
+                    x += -offsets_path[_exit][1]
+                    y += -offsets_path[_exit][0]
+                    _loc = f'{x},{y}'
+                    if _loc not in grid:
+                        grid[_loc] = 'PATH'
+
+            _grid = {}
+            for r in grid:
+                _grid[r] = grid[r]
 
 
         #print(grid)

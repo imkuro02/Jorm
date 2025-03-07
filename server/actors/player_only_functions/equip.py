@@ -51,6 +51,9 @@ def inventory_equip(self, item, forced = False):
             self.stat_manager.stats[stat_name] += stat_val
             #print(self.stat_manager.stats[stat_name])
         
+        for skill in item.skill_manager.skills:
+            self.skill_manager.learn(skill, item.skill_manager.skills[skill])
+
         if not forced: 
             self.simple_broadcast(
                 f'You equip {item.name}',
@@ -75,6 +78,8 @@ def inventory_unequip(self, item, silent = False):
             if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] -= stat_val
             self.stat_manager.stats[stat_name] -= stat_val
         
+        for skill in item.skill_manager.skills:
+            self.skill_manager.unlearn(skill, item.skill_manager.skills[skill])
 
         if silent:
             return

@@ -124,7 +124,7 @@ class AI:
         best_skill = None
         best_score = -1000000
 
-        for skill in self.actor.skills:
+        for skill in self.actor.skill_manager.skills:
             s = SKILLS[skill]
 
             # skip if on cooldown
@@ -190,7 +190,7 @@ class AIBasic(AI):
         self_missing_hp = abs(1-self_missing_hp)
         print(self_missing_hp)
         skills_to_pick_from = {}
-        for skill in self.actor.skills:
+        for skill in self.actor.skill_manager.skills:
             s = {
                 'id':skill, 
                 'is_healing': SKILLS[skill]['is_healing'],

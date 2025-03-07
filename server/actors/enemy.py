@@ -56,7 +56,7 @@ class Enemy(Actor):
         self.stat_manager.stats[StatType.MPMAX] = self.stat_manager.stats[StatType.MP]
 
         self.loot = copy.deepcopy(loot)
-        self.skills = copy.deepcopy(skills)
+        self.skill_manager.skills = copy.deepcopy(skills)
         self.combat_loop = copy.deepcopy(combat_loop)
 
         self.ai = enemy_ai.AIBasic(self)

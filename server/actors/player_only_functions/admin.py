@@ -1,5 +1,6 @@
 from actors.player_only_functions.checks import check_is_admin, check_no_empty_line, check_not_in_combat
 import items.manager as items
+from items.manager import load_item
 import configuration.config as config
 import yaml
 import os
@@ -119,9 +120,9 @@ def command_update_item(self, line):
                     self.sendLine('@redNot a valid skill_id@normal')
                     return
                 if str(value).lower() == 'none':
-                    self.inventory_manager.items[item_id].skills = []
+                    self.inventory_manager.items[item_id].skill_manager.skills = []
                 else:
-                    self.inventory_manager.items[item_id].skills.append(value)
+                    self.inventory_manager.items[item_id].skill_manager.skills.append(value)
                 self.sendLine('@greenUpdated@normal')
                 return
 
@@ -345,7 +346,7 @@ def command_lore(self, line):
 
     to_find = utils.match_word(line, whole_list)
     
-    self.sendLine(to_find)
+    #self.sendLine(to_find)
     
     if to_find in list_of_enemies:
         e_id = LORE['enemies'][to_find]['enemy_id']
@@ -354,8 +355,9 @@ def command_lore(self, line):
         
         all_rooms_e_spawns_in = []
         for room in LORE['rooms'].values():
-            if e_id in room['enemies']:
-                all_rooms_e_spawns_in.append(room['name'])
+            for spawn_points in room['enemies']:
+                if e_id in spawn_points:
+                    all_rooms_e_spawns_in.append(room['name'])
 
         t = utils.Table(3,3)
         for room in all_rooms_e_spawns_in:
@@ -380,11 +382,11 @@ def command_lore(self, line):
 
         # THIS IS AN ISSUE WIT DA GUUUUH WID DA GUUUH
         # WIT DA utils.Table CODE
-        output = '@yellowYou are pondering: @normal'
+        output = '@yellowYou are pondering@normal: '
         output += e.get_character_sheet()+'\n'
-        output += '@yellowRoaming area:@normal\n'
+        output += '@yellowRoaming area@normal:\n'
         output += output_room_spawns+'\n'+'\n'
-        output += '@yellowPotential drops:@normal\n'
+        output += '@yellowPotential drops@normal:\n'
         output += output_loot_drops+'\n'+'\n'
 
         self.sendLine(output)
@@ -393,6 +395,18 @@ def command_lore(self, line):
         return
     
     if to_find in list_of_items:
+        #print(LORE['items'][to_find])
+        output = '@yellowYou are pondering@normal: '
+        if to_find in LORE['items']:
+            item_id = LORE['items'][to_find]['premade_id']
+            i = load_item(item_id)
+            output += i.identify(self) + '\n'
+            output += '@yellowLooted from@normal: '
+            for e in LORE['enemies']:
+                if item_id in LORE['enemies'][e]['loot']:
+                    output += f'{e}: {float(LORE["enemies"][e]["loot"][item_id]*100)}%, '
+            output[-2] == '.'
+        self.sendLine(output)
         return
     
     if to_find in list_of_rooms:

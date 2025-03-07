@@ -72,6 +72,16 @@ class Database:
         )''')
 
         self.cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS equipment_bonus (
+            actor_id TEXT NOT NULL,
+            item_id TEXT NOT NULL,
+            bonus_type TEXT NOT NULL,
+            bonus_key TEXT NOT NULL,
+            bonus_val TEXT NOT NULL,
+            FOREIGN KEY(item_id) REFERENCES inventory(item_id)
+        )''')
+
+        self.cursor.execute(''' 
         CREATE TABLE IF NOT EXISTS skills (
             actor_id TEXT NOT NULL,
             skill_id TEXT NOT NULL,
@@ -238,8 +248,7 @@ class Database:
                 pp = excluded.pp
         ''', my_dict)
 
-        for eq_id in unequiped:
-            actor.inventory_equip(actor.inventory_manager.items[eq_id], forced = True)
+        
 
         my_dict = {}
         my_dict['actor_id'] = actor_id
@@ -265,9 +274,9 @@ class Database:
         my_dict = {}
         my_dict['actor_id'] = actor_id
 
-        for skill_id in actor.skills:
+        for skill_id in actor.skill_manager.skills:
             my_dict['skill_id'] = skill_id
-            my_dict['skill_lvl'] = actor.skills[skill_id]
+            my_dict['skill_lvl'] = actor.skill_manager.skills[skill_id]
             if skill_id != None:
                 self.cursor.execute('''
                     INSERT INTO skills (
@@ -277,6 +286,9 @@ class Database:
                     )
                     ''', my_dict)
                 
+        for eq_id in unequiped:
+            actor.inventory_equip(actor.inventory_manager.items[eq_id], forced = True)
+            
         my_dict = {}
         my_dict['actor_id'] = actor_id
 

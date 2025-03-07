@@ -3,12 +3,17 @@ from configuration.config import ItemType, SKILLS
 from items.misc import Item
 from skills.manager import use_skill_from_consumable, get_skills
 
+class ConsumableSkillManager:
+    def __init__(self, owner):
+        self.owner = owner
+        self.skills = []
 class Consumable(Item):
     def __init__(self):
         super().__init__()
         self.item_type = ItemType.CONSUMABLE
         
-        self.skills = []
+        self.skill_manager = ConsumableSkillManager(self)
+        
         self.use_perspectives = {
             'you on you':           'no use perspective, check Consumable Class',
             'you on other':         'no use perspective, check Consumable Class',
@@ -26,7 +31,7 @@ class Consumable(Item):
 
     def to_dict(self):
         my_dict = {
-            'skills': self.skills
+            'skills': self.skill_manager.skills
         } | super().to_dict()
 
         return my_dict
@@ -35,8 +40,8 @@ class Consumable(Item):
         output = super().identify()
         
         id_to_name, name_to_id = get_skills()
-        output += f'Contents: {[id_to_name[skill_id] for skill_id in self.skills]}'
-        #output += f'Contents: {self.skills}'
+        output += f'Contents: {[id_to_name[skill_id] for skill_id in self.skill_manager.skills]}'
+        #output += f'Contents: {self.skill_manager.skills}'
         return output
 
     def use(self, user, target):
@@ -55,7 +60,7 @@ class Consumable(Item):
                 return
 
         first_skill = True
-        for skill in self.skills:
+        for skill in self.skill_manager.skills:
             use_skill_from_consumable(user = user, target = target, skill_id = skill, consumable_item = self)
         user.inventory_manager.remove_item(self)
         return True

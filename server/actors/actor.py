@@ -58,6 +58,32 @@ class ActorStatManager:
 
             self.owner.die()
 
+class SkillManager:
+    def __init__(self, owner):
+        self.owner = owner
+        self.skills = {
+            'swing': 1
+        }
+
+    def learn(self, skill_id, amount = 1):
+        if skill_id not in self.skills:
+            self.skills[skill_id] = amount
+        else:
+            self.skills[skill_id] += amount
+    
+    def unlearn(self, skill_id, amount = 1):
+        if skill_id not in self.skills:
+            print(f'{self.owner.name} cant unlearn {skill_id} because it is not learned')
+            return
+        
+        if amount == self.skills[skill_id]:
+            del self.skills[skill_id]
+            return
+
+        self.skills[skill_id] -= amount
+
+
+
 class CooldownManager:
     def __init__ (self, owner):
         self.owner = owner
@@ -127,10 +153,7 @@ class Actor:
         self.quest_manager =        QuestManager(self)
         self.stat_manager =         ActorStatManager(self)
         self.status =               ActorStatusType.NORMAL
-
-        self.skills = {
-            'swing': 20
-            }
+        self.skill_manager =        SkillManager(self)
 
         self.cooldown_manager = CooldownManager(self)
 

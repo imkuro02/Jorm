@@ -22,8 +22,8 @@ def error(user, err):
 
 def get_user_skill_level_as_index(user,skill_id):
     skill = SKILLS[skill_id]
-    users_skill_level = 0
-    _users_skill_level = user.skills[skill_id]
+    users_skill_level = -1
+    _users_skill_level = user.skill_manager.skills[skill_id]
     for i in range(0,len(skill['script_values']['levels'])):
         if _users_skill_level >= skill['script_values']['levels'][i]:
             users_skill_level = i
@@ -34,7 +34,7 @@ def skill_checks(user, target, skill_id):
     skill_name = skill['name']
 
     # return if learned skill does not actually exist
-    if skill_id not in user.skills.keys():
+    if skill_id not in user.skill_manager.skills.keys():
         error(user, f'{skill_name} is not learned yet')
         return False
 
@@ -93,14 +93,14 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
             return False
         skill = SKILLS[skill_id]
         try:
-            skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
+            skill_obj = getattr(skills.skill_manager.skills, f'Skill{skill["script_to_run"]}')
         except AttributeError:
             user.sendLine(f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
         
         users_skill_level = 0
         use_perspectives = consumable_item.use_perspectives
-        success = random.randint(1,100) < skill['script_values']['chance'][users_skill_level]*100
+        success = True # random.randint(1,100) < skill['script_values']['chance'][users_skill_level]*100
         silent_use = False
         no_cooldown = True
         skill_obj = skill_obj(
@@ -124,19 +124,30 @@ def use_skill(user, target, skill_id, no_checks = False):
         return False
     skill = SKILLS[skill_id]
 
+    if skill_id not in user.skill_manager.skills:
+        user.sendLine(f'You do not know {skill["name"]}')
+        return
+
+    users_skill_level = get_user_skill_level_as_index(user,skill_id)
+
+    if users_skill_level == -1:
+        user.sendLine(f'You do not know {skill["name"]}')
+        return
 
     if skill_checks(user, target, skill_id) or no_checks:
         try:
             skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
         except AttributeError:
-            user.sendLine(f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
+            user.simple_broadcast(
+                f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal',
+                f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
         
         use_perspectives = skill['use_perspectives']
 
-        users_skill_level = get_user_skill_level_as_index(user,skill_id)
+        
 
-        success = random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
+        success = True #random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
         silent_use = False
         no_cooldown = False
 
