@@ -62,6 +62,8 @@ class Enemy(Actor):
         self.ai = enemy_ai.AIBasic(self)
         self.room.move_entity(self)
 
+    def sendLine(line):
+        print(f'sendLine called in a enemy function? line: {line}')
 
     def tick(self):
         self.ai.tick()
