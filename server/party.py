@@ -79,11 +79,12 @@ class PartyManager:
             self.actor.sendLine('You are not the leader')
             return
         invited = self.actor.get_entity(line)
-        if invited.party != None:
-            self.actor.sendLine(f'{invited.pretty_name()} is already in a party')
-            return
+        
         if invited == None:
             self.actor.sendLine('Invite who?')
+            return
+        if invited.party != None:
+            self.actor.sendLine(f'{invited.pretty_name()} is already in a party')
             return
         if invited == self.actor:
             self.actor.sendLine('You can\'t invite yourself')
