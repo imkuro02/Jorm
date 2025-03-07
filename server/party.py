@@ -71,9 +71,7 @@ class PartyManager:
         self.clear_invites()
     
     def party_invite(self, line):
-        if invited.party != None:
-            self.actor.sendLine(f'{invited.pretty_name()} is already in a party')
-            return
+        
         if self.party == None:
             self.actor.sendLine('You are not in a party')
             return
@@ -81,6 +79,9 @@ class PartyManager:
             self.actor.sendLine('You are not the leader')
             return
         invited = self.actor.get_entity(line)
+        if invited.party != None:
+            self.actor.sendLine(f'{invited.pretty_name()} is already in a party')
+            return
         if invited == None:
             self.actor.sendLine('Invite who?')
             return
