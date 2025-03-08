@@ -95,8 +95,8 @@ tutorial_1:
       options:
         - say: How do I level up?
           goto: help_level
-        - say: How do I practice skills?
-          goto: help_practice
+        #- say: How do I practice skills?
+        #  goto: help_practice
         - say: What else?
           goto: help_help
         - say: I just want to leave

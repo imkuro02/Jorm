@@ -298,7 +298,7 @@ def command_stats(self, line):
     #exp_needed = self.get_exp_needed_to_level() - self.stat_manager.stats[StatType.EXP]
     #output += f'{StatType.name[StatType.LVL]} {self.stat_manager.stats[StatType.LVL]}\n'
     output += f'{StatType.name[StatType.EXP]}: {self.stat_manager.stats[StatType.EXP]}/{self.get_exp_needed_to_level()}\n'
-    output += f'{StatType.name[StatType.PP]}: {self.stat_manager.stats[StatType.PP]}\n'
+    #output += f'{StatType.name[StatType.PP]}: {self.stat_manager.stats[StatType.PP]}\n'
 
     self.sendLine(output)
 

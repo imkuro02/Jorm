@@ -180,15 +180,15 @@ class Equipment(Item):
 
         output += t.get_table()
         t = Table(columns = 4, spaces = 3)
-        t.add_data('Stats')
+        t.add_data('Bonuses ')
         t.add_data('')
         t.add_data('')
         t.add_data('')
+        #t.add_data('')
 
-        t.add_data('')
-        t.add_data('Stat')
-        t.add_data('Bonus')
-        t.add_data('Req')
+        #t.add_data('Stat')
+        #t.add_data('Bonus')
+        #t.add_data('Req')
         for stat in [StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]:
             s = self.stat_manager.stats[stat]
             r = self.stat_manager.reqs[stat]

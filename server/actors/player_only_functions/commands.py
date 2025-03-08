@@ -75,7 +75,7 @@ commands = {
     'trade':    'command_trade',
     
     'level':    'command_level_up',
-    'practice': 'command_practice',
+    #'practice': 'command_practice',
 
     #'name':     'command_name_change',
     'stats':    'command_stats',
@@ -108,10 +108,10 @@ commands = {
     'kick':     'command_kick',
     'admin':    'command_grant_admin',
 
-    'export': 'command_export',
-    'item':   'command_load_item',
-    'npcs':   'command_load_npcs',
-    'mexp':    'command_gain_exp',
+    'export':   'command_export',
+    'item':     'command_load_item',
+    'npcs':     'command_load_npcs',
+    'mexp':     'command_gain_exp',
     'reload':   'command_reload_config'
 }
 

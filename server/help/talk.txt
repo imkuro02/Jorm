@@ -1,0 +1,9 @@
+................................................................................
+Title: Talk
+Syntax: "talk [npc name]" 
+
+Attempt to start a conversation with an npc.
+When speaking with npc's, you will see available responses at very end
+of what they just said to you, you can answer back to them simply by 
+typing the number next to the available response.
+................................................................................
