@@ -181,11 +181,11 @@ class AIBasic(AI):
         action = self.get_best_skill()
         
         if action == None:
-            return
+            self.actor.finish_turn()
         
         use_skill(self.actor, action[1], action[0])
-
         self.actor.finish_turn()
+        
 
         '''
         self_missing_hp = (self.actor.stat_manager.stats[StatType.HP]/self.actor.stat_manager.stats[StatType.HPMAX])
