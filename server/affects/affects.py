@@ -52,9 +52,9 @@ class AffectStunned(Affect):
     # called at start of turn
     def set_turn(self):
         super().set_turn()
-        self.owner.simple_broadcast(
-            f'You are too stunned to act!',
-            f'{self.owner.pretty_name()} is too stunned to act!')
+        #self.owner.simple_broadcast(
+        #    f'You are too stunned to act!',
+        #    f'{self.owner.pretty_name()} is too stunned to act!')
         self.owner.finish_turn()
 
 class Leech(Affect):

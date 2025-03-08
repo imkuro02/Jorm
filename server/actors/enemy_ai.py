@@ -1,5 +1,5 @@
 import random
-from skills.manager import use_skill
+from skills.manager import use_skill, get_user_skill_level_as_index
 from configuration.config import ActorStatusType
 from configuration.config import StatType, SKILLS
 
@@ -141,11 +141,11 @@ class AI:
             enemy_stats =   enemy.stat_manager.stats
             
             score = 0
-
-            score_low_hp_ally   = s['weight_low_hp_ally']   * (((ally_stats[StatType.HPMAX] - ally_stats[StatType.HP])/ally_stats[StatType.HPMAX])* 100)
-            score_high_hp_ally  = s['weight_high_hp_ally']  * ((ally_stats[StatType.HP] / ally_stats[StatType.HPMAX]) * 100)                                 
-            score_low_hp_enemy  = s['weight_low_hp_enemy']  * (((enemy_stats[StatType.HPMAX] - enemy_stats[StatType.HP])/enemy_stats[StatType.HPMAX])* 100)
-            score_high_hp_enemy = s['weight_high_hp_enemy'] * ((enemy_stats[StatType.HP] / enemy_stats[StatType.HPMAX]) * 100)                          
+            level = get_user_skill_level_as_index(self.actor, skill)
+            score_low_hp_ally   = s['weight_low_hp_ally']   * (((ally_stats[StatType.HPMAX] - ally_stats[StatType.HP])/ally_stats[StatType.HPMAX])* 100) * s['script_values']['cooldown'][level]
+            score_high_hp_ally  = s['weight_high_hp_ally']  * ((ally_stats[StatType.HP] / ally_stats[StatType.HPMAX]) * 100)                                 * s['script_values']['cooldown'][level]
+            score_low_hp_enemy  = s['weight_low_hp_enemy']  * (((enemy_stats[StatType.HPMAX] - enemy_stats[StatType.HP])/enemy_stats[StatType.HPMAX])* 100)* s['script_values']['cooldown'][level]
+            score_high_hp_enemy = s['weight_high_hp_enemy'] * ((enemy_stats[StatType.HP] / enemy_stats[StatType.HPMAX]) * 100)                          * s['script_values']['cooldown'][level]
 
             print([score_low_hp_ally , score_high_hp_ally , score_low_hp_enemy , score_high_hp_enemy])
             score = score_low_hp_ally + score_high_hp_ally + score_low_hp_enemy + score_high_hp_enemy

@@ -34,8 +34,9 @@ def command_pass_turn(self, line):
     self.finish_turn()
 
 @check_no_empty_line
-@check_your_turn
+#@check_your_turn
 @check_alive
+@check_not_in_combat
 def command_use(self, line):
     _line = line
 
