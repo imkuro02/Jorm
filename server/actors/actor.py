@@ -221,10 +221,30 @@ class Actor:
         return output
 
     def tick(self):
+        
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
         if self.status != ActorStatusType.FIGHTING:
             self.cooldown_manager.unload_all_cooldowns()
+
+            if self.status != ActorStatusType.DEAD and self.factory.ticks_passed % 30 == 0:
+                damage_obj = Damage(
+                    damage_taker_actor = self,
+                    damage_source_actor = self,
+                    damage_value = 10,
+                    damage_type = DamageType.HEALING,
+                    silent = True
+                    )
+                damage_obj.run()          
+                damage_obj = Damage(
+                    damage_taker_actor = self,
+                    damage_source_actor = self,
+                    damage_value = 10,
+                    damage_type = DamageType.HEALING,
+                    damage_to_stat = StatType.MP,
+                    silent = True
+                    )
+                damage_obj.run()   
 
     '''
     def deal_damage(self, damage_obj: Damage):

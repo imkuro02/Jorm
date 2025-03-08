@@ -35,7 +35,9 @@ class AI:
         self.actor = actor
         self.wandered = 0
 
-    def wander(self):
+    def wander(self): # wandering disabled for now
+        return
+    
         room = self.actor.room
         l = [*room.exits.values()]
 

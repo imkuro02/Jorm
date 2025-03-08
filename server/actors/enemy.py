@@ -66,6 +66,7 @@ class Enemy(Actor):
         print(f'sendLine called in a enemy function? line: {line}')
 
     def tick(self):
+        super().tick()
         self.ai.tick()
 
     def drop_loot(self,entity):

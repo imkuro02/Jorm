@@ -101,7 +101,7 @@ class Combat:
             hp.use()
             mp.use()
             '''
-
+            '''
             # heal a bit after battle
             if i.status != ActorStatusType.DEAD:
                 damage_obj = Damage(
@@ -122,6 +122,7 @@ class Combat:
                         )
                 damage_obj.run()   
                 #i.simple_broadcast('')
+            '''
 
         self.participants = {}
         self.room.combat = None
