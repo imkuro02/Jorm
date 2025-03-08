@@ -182,6 +182,7 @@ class AIBasic(AI):
         
         if action == None:
             self.actor.finish_turn()
+            return
         
         use_skill(self.actor, action[1], action[0])
         self.actor.finish_turn()
