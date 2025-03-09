@@ -46,7 +46,7 @@ async def main():
 
     # Start the WebSocket server with SSL
     print(f"WebSocket server running on wss://0.0.0.0:{WEBSOCKET_PORT}")
-    async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT):
+    async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT, ssl=ssl_context):
         await asyncio.Future()  # Keep the server running indefinitely
 
 # Start the server
