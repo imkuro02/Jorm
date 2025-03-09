@@ -20,7 +20,7 @@ class Skill:
         if 'crit' not in self.script_values or stat_type == None:
             dmg = self.script_values['damage'][self.users_skill_level]
         else:
-            dmg = self.script_values['damage'][self.users_skill_level] + int(self.user.stat_manager.stats[stat_type] * (random.randint(0,self.script_values['crit'][self.users_skill_level]*100)/100))
+            dmg = self.script_values['damage'][self.users_skill_level] + int(self.user.stat_manager.stats[stat_type] * (random.randint(0,int(self.script_values['crit'][self.users_skill_level]*100))/100))
         return dmg
     
     def use_broadcast(self):
