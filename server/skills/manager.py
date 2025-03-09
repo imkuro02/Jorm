@@ -93,9 +93,11 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
             return False
         skill = SKILLS[skill_id]
         try:
-            skill_obj = getattr(skills.skill_manager.skills, f'Skill{skill["script_to_run"]}')
+            skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
         except AttributeError:
-            user.sendLine(f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
+            user.simple_broadcast(
+                f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal',
+                f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
         
         users_skill_level = 0
