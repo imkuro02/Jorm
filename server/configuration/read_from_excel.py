@@ -66,14 +66,14 @@ def configure_skill_script_values(SHEET):
                 if ',' in i:
                     i = float(i.replace(',','.'))
                 else:
-                    i = int(i)
+                    i = float(i)
 
                 if isnan(i):
                     continue
-                #if x['value_name'][index] in ['chance','damage','bonus']:
-                #    i = float(i)
-                #else:
-                #    i = int(i)
+                if x['value_name'][index] in ['crit','bonus']:
+                    i = float(i)
+                else:
+                    i = int(i)
                 d_vals[x['value_name'][index]].append(i)
 
             if x['skill_id'][index] in SKILL_SCRIPT_VALUES:

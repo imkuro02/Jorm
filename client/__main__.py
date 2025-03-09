@@ -3,6 +3,7 @@ import websockets
 import ssl
 import telnetlib3
 
+
 # Configuration
 MUD_SERVER = "127.0.0.1"  # Replace with your MUD server address
 MUD_PORT = 4001  # Standard Telnet port
@@ -10,10 +11,11 @@ WEBSOCKET_PORT = 8001  # Port for the WebSocket server
 SSL_CERT_FILE = "../server/server.crt"  # Path to your SSL certificate file
 SSL_KEY_FILE = "../server/server.key"  # Path to your SSL private key file
 
+
 async def handle_websocket(websocket):
     # Connect to the Telnet server
     reader, writer = await telnetlib3.open_connection(MUD_SERVER, MUD_PORT, encoding='utf8', force_binary=True)
-
+    
     # Handle communication
     async def read_from_telnet():
         try:
@@ -44,7 +46,7 @@ async def main():
 
     # Start the WebSocket server with SSL
     print(f"WebSocket server running on wss://0.0.0.0:{WEBSOCKET_PORT}")
-    async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT, ssl=ssl_context):
+    async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT):
         await asyncio.Future()  # Keep the server running indefinitely
 
 # Start the server

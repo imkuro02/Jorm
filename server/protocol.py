@@ -11,12 +11,14 @@ import textwrap
 
 IAC = b'\xff'       # Interpret as Command
 WILL = b'\xfb'      # Will Perform
+SE = b'\xf0'
+SB = b'\xfa'
 WONT = b'\xfc'      # Will Not Perform
 DO = b'\xfd'        # Please Do
 DONT = b'\xfe'      # Please Don’t
 ECHO = b'\x01'      # Echo
 LINEMODE = b'\x22'  # Line mode
-#GMCP = b'\x'
+GMCP = b'\xc9'
 
 class Protocol(protocol.Protocol):
     def __init__(self, factory):
@@ -43,6 +45,8 @@ class Protocol(protocol.Protocol):
         splash = splash.replace('#ONLINE#',f'{len(self.factory.protocols)}')
         splash = f'@bwhite{splash}@normal'
         self.sendLine(splash)
+        self.transport.write(IAC+WILL+GMCP)
+ 
 
     def change_state(self, state):
         match state:
@@ -302,10 +306,11 @@ class Protocol(protocol.Protocol):
 
     # override
     def connectionLost(self, reason):
+        print('DISCONNECTED')
         utils.logging.debug(self.id + f' Connection lost: {reason}')
         if self.actor != None:
-
             self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
+            #self.actor.ai = None
             self.actor.affect_manager.unload_all_affects(silent = True)
             self.actor.trade_manager.trade_stop()
             self.actor.party_manager.party_leave()
@@ -322,11 +327,18 @@ class Protocol(protocol.Protocol):
     # override
     def dataReceived(self, data):
         
-
         # interrupt
         if data == b'\xff\xf4\xff\xfd\x06':
             self.disconnect()
             return
+        
+        if IAC in data:
+            # IAC   SB GMCP 'MSDP {"COMMANDS" : ["LIST", "REPORT", "RESET", "SEND", "UNREPORT"]}' IAC SE
+            #self.transport.write(IAC + SB + GMCP + '{"COMMANDS" : ["LIST", "REPORT", "RESET", "SEND", "UNREPORT"]}'.encode('utf-8') + IAC + SE)
+            return
+        
+
+        
 
         # decode and process input data
         line = data.decode('utf-8', errors='ignore').strip()

@@ -134,7 +134,8 @@ class AI:
                 continue
 
             # dont try to use a skill on an ally if you cant use it on them
-            if ally != self and not s['target_others_is_valid']:
+            if ally != self.actor and s['target_others_is_valid'] == 0:
+                print(f'cannot {skill}')
                 continue
             
             ally_stats =    ally.stat_manager.stats
@@ -147,7 +148,7 @@ class AI:
             score_low_hp_enemy  = s['weight_low_hp_enemy']  * (((enemy_stats[StatType.HPMAX] - enemy_stats[StatType.HP])/enemy_stats[StatType.HPMAX])* 100)* s['script_values']['cooldown'][level]
             score_high_hp_enemy = s['weight_high_hp_enemy'] * ((enemy_stats[StatType.HP] / enemy_stats[StatType.HPMAX]) * 100)                          * s['script_values']['cooldown'][level]
 
-            print([score_low_hp_ally , score_high_hp_ally , score_low_hp_enemy , score_high_hp_enemy])
+            #print([score_low_hp_ally , score_high_hp_ally , score_low_hp_enemy , score_high_hp_enemy])
             score = score_low_hp_ally + score_high_hp_ally + score_low_hp_enemy + score_high_hp_enemy
             print(skill, score)
             if score > best_score:

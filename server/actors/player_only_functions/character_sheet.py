@@ -170,11 +170,11 @@ def command_skills(self, line):
             users_skill_level = 0
 
         t = utils.Table(2,1)
-        t.add_data('Practiced:')
-        if skill_learned:
-            t.add_data(self.skill_manager.skills[skill_id],'@green')
-        else:
-            t.add_data('No','@red')
+        #t.add_data(':')
+        #if skill_learned:
+        #    t.add_data(self.skill_manager.skills[skill_id],'@green')
+        #else:
+        #    t.add_data('No','@red')
 
         t.add_data('Target self:')
         if skill["target_self_is_valid"]:

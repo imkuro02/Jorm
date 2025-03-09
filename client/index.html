@@ -75,6 +75,7 @@
 
         // Handle messages from the server
         socket.onmessage = (event) => {
+            console.log(event.data);
             /**
              * If input is a password, change input type to password.  
              * This hides it using asterisks.

@@ -9,6 +9,7 @@ SkillScriptValuesToNames = {
     'levels':       'LEVEL',
     'damage':       'DAMAGE',
     # 'chance':       'CHANCE',
+    'crit':         'CRIT',
     'hp_cost':      'HP-COST',
     'mp_cost':      'MP-COST',
     'duration':     'DURATION',

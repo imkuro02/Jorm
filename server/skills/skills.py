@@ -16,6 +16,13 @@ class Skill:
         self.success = success
         self.silent_use = silent_use
 
+    def get_dmg_value(self, stat_type = None):
+        if 'crit' not in self.script_values or stat_type == None:
+            dmg = self.script_values['damage'][self.users_skill_level]
+        else:
+            dmg = self.script_values['damage'][self.users_skill_level] + int(self.user.stat_manager.stats[stat_type] * (random.randint(0,self.script_values['crit'][self.users_skill_level]*100)/100))
+        return dmg
+    
     def use_broadcast(self):
         perspectives = {
             'you on you':       self.use_perspectives['you on you fail'],
@@ -77,9 +84,10 @@ class SkillSwing(Skill):
 
         super().use()
         if self.success:
-            amp = int(self.user.stat_manager.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
-            base = self.script_values['damage'][self.users_skill_level]
-            dmg = base + amp
+            #amp = int(self.user.stat_manager.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
+            #base = self.script_values['damage'][self.users_skill_level]
+            #dmg = base + amp
+            dmg = self.get_dmg_value(my_dmg_scaling)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
@@ -92,9 +100,7 @@ class SkillCureLightWounds(Skill):
     def use(self):
         super().use()
         if self.success:
-            amp = int(self.user.stat_manager.stats[StatType.SOUL]*self.script_values['bonus'][self.users_skill_level])
-            base = self.script_values['damage'][self.users_skill_level]
-            dmg = base + amp
+            dmg = self.get_dmg_value(StatType.SOUL)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
@@ -116,14 +122,11 @@ class SkillBash(SkillSwing):
                 self.other.affect_manager.set_affect_object(stunned_affect)
 
 
-
 class SkillDamage(Skill):
      def use(self, my_dmg_scaling = StatType.GRIT, my_dmg_type = DamageType.PHYSICAL):
         super().use()
         if self.success:
-            amp = int(self.user.stat_manager.stats[my_dmg_scaling]*self.script_values['bonus'][self.users_skill_level])
-            base = self.script_values['damage'][self.users_skill_level]
-            dmg = base + amp
+            dmg = self.get_dmg_value(my_dmg_scaling)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
@@ -135,14 +138,12 @@ class SkillDamage(Skill):
 class SkillDoubleWhack(Skill):
     def use(self):
         for i in range(0,2):
-            amp = int(self.user.stat_manager.stats[StatType.FLOW]*self.script_values['bonus'][self.users_skill_level])
-            base = self.script_values['damage'][self.users_skill_level]
-            dmg = base + amp
+            dmg = self.get_dmg_value(StatType.FLOW)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = dmg,
-                damage_type = self.user.stat_manager.stats[StatType.FLOW]
+                damage_type = DamageType.PHYSICAL
                 )
             #damage = self.user.deal_damage(damage_obj)
             damage_obj.run()
