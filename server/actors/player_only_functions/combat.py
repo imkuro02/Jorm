@@ -9,7 +9,13 @@ def command_fight(self, line):
     #error_output = self.room.new_combat()
     #if isinstance(error_output, str):
     #    self.sendLine(error_output)
-    self.ai.tick()
+
+    if self.status == ActorStatusType.FIGHTING:
+        action = self.ai.get_best_skill()
+        if action != None:
+            use_skill(self, action[1], action[0])
+            self.finish_turn()
+        return
     
     if self.party_manager.party == None:
         self.room.join_combat(self)
@@ -36,9 +42,9 @@ def command_pass_turn(self, line):
     self.finish_turn()
 
 @check_no_empty_line
-#@check_your_turn
+@check_your_turn
 @check_alive
-@check_not_in_combat
+#@check_not_in_combat
 def command_use(self, line):
     _line = line
 
