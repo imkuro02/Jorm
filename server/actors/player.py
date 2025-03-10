@@ -37,7 +37,7 @@ class Player(Actor):
 
     def tick(self):
         super().tick()
-        self.ai.tick()
+        
         
 
     def check_if_admin(self):

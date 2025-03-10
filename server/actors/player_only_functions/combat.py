@@ -9,6 +9,8 @@ def command_fight(self, line):
     #error_output = self.room.new_combat()
     #if isinstance(error_output, str):
     #    self.sendLine(error_output)
+    self.ai.tick()
+    
     if self.party_manager.party == None:
         self.room.join_combat(self)
     else:

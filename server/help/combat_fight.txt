@@ -7,11 +7,11 @@ Nearby players will be dragged into the combat, so will every aggressive NPC.
 
 Initiative is rolled each round.
 
-On your turn, you will automatically use one of your skills to either:
-- Buff yourself or your allies
-- Damage enemies
+On your turn, you can use skills or consumable items on either yourself or 
+others, you can check which skills are off cooldown with "skills" 
 
-Some skills can be used before a fight.
+You can also type "fight" again to use one of your abilities on any valid 
+target. You may also tye "flee" to flee from combat.
 
 Type "help skills" for more information about skill levels.
 Type "help party" for more information about party and allies.
