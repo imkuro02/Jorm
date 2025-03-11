@@ -122,18 +122,18 @@ class EquipmentBonusManager:
             match en.bonus_type:
                 case 'skill_level':
                     if en.bonus_val >= 0:
-                        output += f'@green{SKILLS[en.bonus_key]["name"]}@back raised by @green+{en.bonus_val}@back.'
+                        output += f'@good{SKILLS[en.bonus_key]["name"]}@back raised by @good+{en.bonus_val}@back.'
                     else:
-                        output += f'@red{SKILLS[en.bonus_key]["name"]}@back lowered by @red{en.bonus_val}@back.'
+                        output += f'@bad{SKILLS[en.bonus_key]["name"]}@back lowered by @bad{en.bonus_val}@back.'
                     output += '\n'
                 case 'skill_values':
                     pass
                 case 'stat':
                     stat = StatType.name[en.bonus_key]
                     if en.bonus_val >= 0:
-                        output += f'@green{stat}@back raised by @green+{en.bonus_val}@back.'
+                        output += f'@good{stat}@back raised by @good+{en.bonus_val}@back.'
                     else:
-                        output += f'@red{stat}@back lowered by @red{en.bonus_val}@back.'
+                        output += f'@bad{stat}@back lowered by @bad{en.bonus_val}@back.'
                     output += '\n'
         return output+'@normal'
         if len(self.bonuses) >= 1:
@@ -145,9 +145,9 @@ class EquipmentBonusManager:
                     case 'skill_level':
                         t.add_data(SKILLS[en.bonus_key]['name'])
                         if en.bonus_val >= 0:
-                            t.add_data(f'+{en.bonus_val}','@green')
+                            t.add_data(f'+{en.bonus_val}','@good')
                         else:
-                            t.add_data(f'{en.bonus_val}','@red')
+                            t.add_data(f'{en.bonus_val}','@bad')
 
                     case 'skill_values':
                         pass
@@ -156,9 +156,9 @@ class EquipmentBonusManager:
                         pass
                         t.add_data(StatType.name[en.bonus_key])
                         if en.bonus_val >= 0:
-                            t.add_data(f'+{en.bonus_val}','@green')
+                            t.add_data(f'+{en.bonus_val}','@good')
                         else:
-                            t.add_data(f'{en.bonus_val}','@red')
+                            t.add_data(f'{en.bonus_val}','@bad')
                     
             return t.get_table()
         else:
@@ -212,11 +212,12 @@ class Equipment(Item):
         for stat in ordered_stats:
             if self.stat_manager.reqs[stat] == 0:
                 continue
+            col = '@good' if self.stat_manager.reqs[stat] <= identifier.stat_manager.stats[stat] else '@bad'
             t.add_data(StatType.name[stat])
-            t.add_data(self.stat_manager.reqs[stat])
+            t.add_data(self.stat_manager.reqs[stat], col = col)
         output += t.get_table()
-
-        output += '@tipTotal stats with bonuses:@normal\n'
+       
+        output += '\n@tipTotal stats with bonuses:@normal\n'
         t = Table(2,3)
         ordered_stats = [StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
         for stat in ordered_stats:
@@ -226,16 +227,18 @@ class Equipment(Item):
             t.add_data(self.stat_manager.stats[stat])
         output += t.get_table()
 
-        output += '@tipBonus:@normal\n'
+        output += '\n@tipSpecial bonus:@normal\n'
         for bonus in self.bonus_manager.bonuses.values():
+            col = '@good+' if bonus.bonus_val >= 1 else '@bad'
             match bonus.bonus_type:
                 case 'skill_level':
-                    output += f'Skill {SKILLS[bonus.bonus_key]["name"]} {bonus.bonus_val}\n'
+                    
+                    output += f'Affect {SKILLS[bonus.bonus_key]["name"]} by {col}{bonus.bonus_val}@back\n'
                 case 'stat':
-                    output += f'Stat {StatType.name[bonus.bonus_key]} {bonus.bonus_val}\n'
+                    output += f'Affect {StatType.name[bonus.bonus_key]} by {col}{bonus.bonus_val}@back\n'
 
         if self.equiped == False:
-            output += '@tipOn equip changes:@normal\n'
+            output += '\n@tipOn equip changes:@normal\n'
             eq = None
             if identifier.slots_manager.slots[self.slot] != None and identifier.slots_manager.slots[self.slot] != self.id:
                 eq = identifier.inventory_manager.items[identifier.slots_manager.slots[self.slot]]
@@ -253,11 +256,11 @@ class Equipment(Item):
                 elif new_stat < identifier.stat_manager.stats[stat]:
                     t.add_data(StatType.name[stat])
                     t.add_data(new_stat)
-                    t.add_data(difference, col='@red')
+                    t.add_data(difference, col='@bad')
                 elif new_stat > identifier.stat_manager.stats[stat]:
                     t.add_data(StatType.name[stat])
                     t.add_data(new_stat)
-                    t.add_data(f'+{difference}', col='@green')
+                    t.add_data(f'+{difference}', col='@good')
             output += t.get_table()
 
             def construct_bonus_id(bonus):
@@ -286,7 +289,7 @@ class Equipment(Item):
                     bonuses = construct_bonus_dict(bonuses, bonus, positive = False)
 
             for bonus in bonuses.values():
-                output += f"{bonus['bonus_key']} {bonus['bonus_val']}\n"
+                output += f"{'@goodLearn ' if bonus['bonus_val'] >= 1 else '@badForgor'}@normal {SKILLS[bonus['bonus_key']]['name']} \n"
 
             print(bonuses)
 
@@ -311,7 +314,7 @@ class Equipment(Item):
         t.add_data(StatType.name[StatType.LVL]+':')
         t.add_data(
             r[StatType.LVL], 
-            '@green' if identifier.stat_manager.stats[StatType.LVL] >= r[StatType.LVL] else '@red') 
+            '@good' if identifier.stat_manager.stats[StatType.LVL] >= r[StatType.LVL] else '@bad') 
 
         output += t.get_table()
         t = Table(columns = 3, spaces = 3)
@@ -347,15 +350,15 @@ class Equipment(Item):
                 t.add_data(StatType.name[stat])
 
                 if eq_stats[stat] < s:
-                    col = '@green'
+                    col = '@good'
                     t.add_data(f'{s} (+{s-eq_stats[stat]})', col)
                 elif eq_stats[stat] > s:
-                    col = '@red'
+                    col = '@bad'
                     t.add_data(f'{s} ({s-eq_stats[stat]})', col)
                 elif  eq_stats[stat] == s:
                     t.add_data(f'{s}', col)
 
-                t.add_data(r, '@normal' if identifier.stat_manager.stats[stat] >= r else '@red')
+                t.add_data(r, '@normal' if identifier.stat_manager.stats[stat] >= r else '@bad')
                 
                
             else:
@@ -363,7 +366,7 @@ class Equipment(Item):
                     continue
                 t.add_data(StatType.name[stat])
                 t.add_data(s, '@normal')
-                t.add_data(r, '@normal' if identifier.stat_manager.stats[stat] >= r else '@red')
+                t.add_data(r, '@normal' if identifier.stat_manager.stats[stat] >= r else '@bad')
 
        
 

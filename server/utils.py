@@ -26,6 +26,7 @@ colors = {
     '@yellow':  '\x1b[0;33m', 
     '@blue':    '\x1b[0;34m', 
     '@purple':  '\x1b[0;35m', 
+    #'@purple':  '\x1b[38;2;255;0;200m',
     '@cyan':    '\x1b[0;36m', 
     '@white':   '\x1b[0;37m', 
     '@bblack':  '\x1b[1;30m', 
@@ -39,10 +40,17 @@ colors = {
 
     '@bgred':   '\x1b[0;46m',
 
+
+    '@good':    '\x1b[0;32m',
+    '@bad':     '\x1b[0;35m',
+
     '@normal':  '\x1b[0m', 
     '@back':    '\x1b[0;00x',
     '@tip':     '\x1b[1;33m',
-    '@color':   '\x1b[0;00y'
+    
+    '@color':   '\x1b[0;00y',
+    #'@skill':   '\x1b[0;35m',
+    '@stat':    '\x1b[0;35m',
 }
 
 def match_word(word: str, l: list, get_score = False):
