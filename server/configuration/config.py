@@ -130,6 +130,7 @@ def load_lore():
     LORE['items'] = {}
     LORE['items_name_to_id'] = {}
     LORE['rooms'] = {}
+    LORE['skills'] = {}
 
     for i in WORLD['world']:
         LORE['rooms'][ WORLD['world'][i]['name'] ] = WORLD['world'][i]
@@ -140,6 +141,9 @@ def load_lore():
 
     for i in ENEMIES:
         LORE['enemies'][ENEMIES[i]['name']]  = ENEMIES[i]
+
+    for i in SKILLS:
+        LORE['skills'][SKILLS[i]['name']]  = SKILLS[i]
 
     return LORE 
 

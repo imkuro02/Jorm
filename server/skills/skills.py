@@ -137,6 +137,7 @@ class SkillDamage(Skill):
 
 class SkillDoubleWhack(Skill):
     def use(self):
+        
         for i in range(0,2):
             dmg = self.get_dmg_value(StatType.FLOW)
             damage_obj = Damage(
@@ -146,9 +147,11 @@ class SkillDoubleWhack(Skill):
                 damage_type = DamageType.PHYSICAL
                 )
             #damage = self.user.deal_damage(damage_obj)
-            damage_obj.run()
+            
             if self.success:
+                super().use()
                 damage_obj.run()
+
 
 class SkillDamageByGrit(SkillDamage):
     def use(self):

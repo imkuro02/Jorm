@@ -341,8 +341,9 @@ def command_lore(self, line):
     list_of_enemies = [enemy for enemy in LORE['enemies']]
     list_of_items = [item for item in LORE['items']]
     list_of_rooms = [room for room in LORE['rooms']]
+    list_of_skills = [skill for skill in LORE['skills']]
     
-    whole_list = list_of_enemies + list_of_items + list_of_rooms
+    whole_list = list_of_enemies + list_of_items + list_of_rooms + list_of_skills
 
     to_find = utils.match_word(line, whole_list)
     
@@ -400,6 +401,7 @@ def command_lore(self, line):
         if to_find in LORE['items']:
             item_id = LORE['items'][to_find]['premade_id']
             i = load_item(item_id)
+            i.new = False
             output += i.identify(self) + '\n'
             output += '@yellowLooted from@normal: '
             for e in LORE['enemies']:
@@ -411,6 +413,29 @@ def command_lore(self, line):
     
     if to_find in list_of_rooms:
         return
+
+    if to_find in list_of_skills:
+        self.command_skills(to_find)
+        output = '@tipItems with this skill@back:\n'
+        t = utils.Table(6,1)
+        t.add_data('Lvl')
+        t.add_data('Name')
+        t.add_data('Lvl')
+        t.add_data('Name')
+        t.add_data('Lvl')
+        t.add_data('Name')
+
+        sorted_items = {}
+        for i in LORE['items'].values():
+            if i['item_type'] != ItemType.EQUIPMENT:
+                continue
+            if i['base_skill'] == LORE['skills'][to_find]['skill_id']:
+                t.add_data(f"{i['requirements']['lvl']}.")
+                t.add_data(f"{i['name']}")
+
+        output += t.get_table()
+        self.sendLine(output)
+
     
     return
 
