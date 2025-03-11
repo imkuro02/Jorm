@@ -204,7 +204,97 @@ class Equipment(Item):
         self.stat_manager.stats[stat] = value
 
     def identify(self, identifier = None):
-        
+        output = super().identify()
+
+        output += '@tipRequirements to equip:@normal\n'
+        t = Table(2,3)
+        ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
+        for stat in ordered_stats:
+            if self.stat_manager.reqs[stat] == 0:
+                continue
+            t.add_data(StatType.name[stat])
+            t.add_data(self.stat_manager.reqs[stat])
+        output += t.get_table()
+
+        output += '@tipTotal stats with bonuses:@normal\n'
+        t = Table(2,3)
+        ordered_stats = [StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]
+        for stat in ordered_stats:
+            if self.stat_manager.stats[stat] == 0:
+                continue
+            t.add_data(StatType.name[stat])
+            t.add_data(self.stat_manager.stats[stat])
+        output += t.get_table()
+
+        output += '@tipBonus:@normal\n'
+        for bonus in self.bonus_manager.bonuses.values():
+            match bonus.bonus_type:
+                case 'skill_level':
+                    output += f'Skill {SKILLS[bonus.bonus_key]["name"]} {bonus.bonus_val}\n'
+                case 'stat':
+                    output += f'Stat {StatType.name[bonus.bonus_key]} {bonus.bonus_val}\n'
+
+        if self.equiped == False:
+            output += '@tipOn equip changes:@normal\n'
+            eq = None
+            if identifier.slots_manager.slots[self.slot] != None and identifier.slots_manager.slots[self.slot] != self.id:
+                eq = identifier.inventory_manager.items[identifier.slots_manager.slots[self.slot]]
+
+            t = Table(3,3)
+            for stat in ordered_stats:
+                difference = self.stat_manager.stats[stat]
+                if eq != None:
+                    difference = self.stat_manager.stats[stat] - eq.stat_manager.stats[stat]
+            
+
+                new_stat = identifier.stat_manager.stats[stat] + difference
+                if new_stat == identifier.stat_manager.stats[stat]:
+                    continue
+                elif new_stat < identifier.stat_manager.stats[stat]:
+                    t.add_data(StatType.name[stat])
+                    t.add_data(new_stat)
+                    t.add_data(difference, col='@red')
+                elif new_stat > identifier.stat_manager.stats[stat]:
+                    t.add_data(StatType.name[stat])
+                    t.add_data(new_stat)
+                    t.add_data(f'+{difference}', col='@green')
+            output += t.get_table()
+
+            def construct_bonus_id(bonus):
+                return f'{bonus.bonus_type}/{bonus.bonus_key}'
+            
+            def construct_bonus_dict(bonuses, bonus, positive):
+                if bonus.bonus_type != 'skill_level':
+                    return bonuses
+                
+                if construct_bonus_id(bonus) in bonuses:
+                    bonuses[construct_bonus_id(bonus)]['bonus_val'] += bonus.bonus_val
+                else:
+                    bonuses[construct_bonus_id(bonus)] = {
+                        'bonus_type': bonus.bonus_type,
+                        'bonus_key': bonus.bonus_key,
+                        'bonus_val': bonus.bonus_val * positive
+                    }
+                return bonuses
+            
+            bonuses = {}
+            for bonus in self.bonus_manager.bonuses.values():
+                bonuses = construct_bonus_dict(bonuses, bonus, positive = True)
+
+            if eq != None:
+               for bonus in eq.bonus_manager.bonuses.values():
+                    bonuses = construct_bonus_dict(bonuses, bonus, positive = False)
+
+            for bonus in bonuses.values():
+                output += f"{bonus['bonus_key']} {bonus['bonus_val']}\n"
+
+            print(bonuses)
+
+            
+
+          
+
+        return output
         output = super().identify()
         s = self.stat_manager.stats
         r = self.stat_manager.reqs
@@ -264,6 +354,8 @@ class Equipment(Item):
                     t.add_data(f'{s} ({s-eq_stats[stat]})', col)
                 elif  eq_stats[stat] == s:
                     t.add_data(f'{s}', col)
+
+                t.add_data(r, '@normal' if identifier.stat_manager.stats[stat] >= r else '@red')
                 
                
             else:
