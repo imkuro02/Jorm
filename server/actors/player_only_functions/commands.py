@@ -28,7 +28,7 @@ from actors.player_only_functions.character_sheet import (
 from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin,
     command_load_item, command_load_npcs, command_export, command_help, prompt, command_ranks,
-    command_send_prompt, command_reload_config, command_lore, command_quest
+    command_send_prompt, command_reload_config, command_lore, command_quest, command_bonus
 )
 
 shortcuts_to_commands = {
@@ -59,6 +59,7 @@ one_letter_commands = {
 commands = {
     # da rest
     'talk':     'command_talk',
+    'bonus':    'command_bonus',
     
     'quest':    'command_quest',
     'help':     'command_help',

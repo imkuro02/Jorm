@@ -92,3 +92,10 @@ SELECT actor_id, premade_id, item_id, item_keep, 1 from inventory_old;
 	);  
 
 =VLOOKUP(I2; use_perspectives.A:B; 2; 0) 
+
+
+
+
+----- bonus table
+drop table if exists equipment_bonus;
+# then let it get created by database.py __init__()

@@ -74,6 +74,38 @@ def command_gain_exp(self, exp):
     except ValueError:
         print('gain_exp needs a int')
         pass
+
+@check_is_admin
+def command_bonus(self, line):
+    if line == '':
+        self.sendLine('check help admin for syntax')
+        return
+
+    if len(line.split(',')) != 4:
+        self.sendLine('check help admin for syntax')
+        return
+    
+    item_name, bonus_type, bonus_key, bonus_val = line.split(',')
+    item = self.get_item(item_name)
+    
+    if item == None:
+        self.sendLine('Bonus what? (cant find item)')
+        return
+    
+    if item.item_type != ItemType.EQUIPMENT:
+        self.sendLine('Cant bonus a non equipable item')
+        return
+
+    if item.equiped:
+        self.sendLine('Cant bonus a currently equipped item')
+        return
+
+    from items.equipment import EquipmentBonus
+    boon = EquipmentBonus(bonus_type, bonus_key, int(bonus_val))
+    item.bonus_manager.add_bonus(boon)
+
+    
+
 '''
 @check_is_admin
 @check_no_empty_line

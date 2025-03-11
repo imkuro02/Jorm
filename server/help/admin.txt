@@ -15,4 +15,6 @@ admin: "admin [intiger value"]
 
 Load an item into your inventory
 load: "load [item config name]" 
+
+grant bonus to an item: bonus [item name], [bonus type], [bonus key], [bonus val]
 ................................................................................

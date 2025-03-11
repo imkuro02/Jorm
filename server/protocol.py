@@ -7,7 +7,7 @@ import uuid
 import copy
 import random
 from quest import OBJECTIVE_TYPES
-import textwrap
+from items.equipment import EquipmentBonus
 
 IAC = b'\xff'       # Interpret as Command
 WILL = b'\xfb'      # Will Perform
@@ -260,13 +260,27 @@ class Protocol(protocol.Protocol):
             self.actor.stat_manager.stats.update(actor['stats'])
             self.actor.skill_manager.skills = actor['skills']
 
+            bonuses = actor['equipment_bonuses']
+            
             for item in actor['inventory'].values():
                 new_item = load_item(item_premade_id = item['premade_id'], unique_id = item['item_id'])
                 new_item.keep =         item['item_keep']
                 new_item.id =           item['item_id']
                 new_item.stack =        item['item_stack']
 
+                '''
+                item_id TEXT NOT NULL,
+                bonus_type TEXT NOT NULL,
+                bonus_key TEXT NOT NULL,
+                bonus_val INT NOT NULL,
+                '''
 
+                if item['item_id'] in bonuses:
+                    for bonus in bonuses[item['item_id']]:
+                        boon = EquipmentBonus(bonus['bonus_type'],bonus['bonus_key'],bonus['bonus_val'])
+                        new_item.bonus_manager.add_bonus(boon)
+
+                
                 self.actor.inventory_manager.add_item(new_item)
             self.compare_slots_to_items()
 

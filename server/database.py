@@ -1,7 +1,7 @@
 import sqlite3
 import json
 import utils
-
+from configuration.config import ItemType
 class Database:
     def __init__(self):
         # Connect to the database
@@ -72,12 +72,13 @@ class Database:
         )''')
 
         self.cursor.execute(''' 
-        CREATE TABLE IF NOT EXISTS equipment_bonus (
+        CREATE TABLE IF NOT EXISTS equipment_bonuses (
             actor_id TEXT NOT NULL,
             item_id TEXT NOT NULL,
+            bonus_id TEXT NOT NULL,
             bonus_type TEXT NOT NULL,
             bonus_key TEXT NOT NULL,
-            bonus_val TEXT NOT NULL,
+            bonus_val INT NOT NULL,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
@@ -285,6 +286,34 @@ class Database:
                         :actor_id, :skill_id, :skill_lvl
                     )
                     ''', my_dict)
+
+
+
+        self.cursor.execute('''
+            DELETE FROM equipment_bonuses WHERE actor_id = ?
+        ''', (actor_id,))
+
+        my_dict = {}
+        my_dict['actor_id'] = actor_id
+        for item in actor.inventory_manager.items.values():
+            if item.item_type == ItemType.EQUIPMENT:
+                bonuses = item.bonus_manager.bonuses
+                for bonus_id in item.bonus_manager.bonuses:
+                    bonus = bonuses[bonus_id]
+                    my_dict['item_id'] = item.id
+                    my_dict['bonus_id'] = bonus_id
+                    my_dict['bonus_type'] = bonus.bonus_type
+                    my_dict['bonus_key'] = bonus.bonus_key
+                    my_dict['bonus_val'] = bonus.bonus_val
+                    self.cursor.execute('''
+                        INSERT INTO equipment_bonuses (
+                            actor_id, item_id, bonus_id, bonus_type, bonus_key, bonus_val
+                        ) VALUES (
+                            :actor_id, :item_id, :bonus_id, :bonus_type, :bonus_key, :bonus_val
+                        )
+                        ''', my_dict)
+
+
                 
         for eq_id in unequiped:
             actor.inventory_equip(actor.inventory_manager.items[eq_id], forced = True)
@@ -369,6 +398,13 @@ class Database:
         quests = self.cursor.fetchall()
         #print('quests',quests)
 
+        self.cursor.execute('''
+            SELECT * FROM equipment_bonuses WHERE actor_id = ?
+        ''', (actor_id,))
+        bonuses = self.cursor.fetchall()
+        print('bonuses', bonuses)
+
+
         my_dict = {}
         my_dict['actor_id'] = actor_id
         my_dict['actor_name'] = actor_name
@@ -414,6 +450,20 @@ class Database:
         my_dict['equipment'] = []
         for eq in equipment:
             my_dict['equipment'].append(eq[1])
+
+        my_dict['equipment_bonuses'] = {}
+        for bonus in bonuses:
+            boon_dict = {
+                'bonus_type': bonus[3],
+                'bonus_key': bonus[4],
+                'bonus_val': bonus[5]
+                }
+            if bonus[1] in my_dict['equipment_bonuses']:
+                my_dict['equipment_bonuses'][bonus[1]].append(boon_dict)
+            else:
+                my_dict['equipment_bonuses'][bonus[1]] = []
+                my_dict['equipment_bonuses'][bonus[1]].append(boon_dict)
+                
 
         my_dict['skills'] = {}
         for skill in skills:

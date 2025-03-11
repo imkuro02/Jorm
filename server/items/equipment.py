@@ -64,13 +64,31 @@ class EquipmentBonus:
         self.bonus_val =    bonus_val
         
 
+class BonusTypes:
+    SKILL_LEVEL = 'skill_level'
+    STAT  = 'stat'
+
+
 class EquipmentBonusManager:
     def __init__(self, item):
         self.item = item
         self.bonuses = {}
 
+    def check_if_bonus_valid(self, bonus):
+        if bonus.bonus_type != BonusTypes.SKILL_LEVEL or bonus.bonus_type != BonusTypes.STAT:
+            return False
+
+        if bonus.bonus_type == BonusTypes.SKILL_LEVEL:
+            if bonus.bonus_key not in SKILLS:
+                return False
+
+        if bonus.bonus_type == BonusTypes.STAT:
+            if bonus.bonus_key not in StatType.name:
+                return False
+
     def add_bonus(self, bonus): 
         bonus_id = f'{bonus.bonus_type}.{bonus.bonus_key}'
+        
         if bonus_id in self.bonuses:
             self.bonuses[bonus_id].bonus_val += bonus.bonus_val
         else:
@@ -206,10 +224,14 @@ class Equipment(Item):
 
                 if eq_stats[stat] < s:
                     col = '@green'
-                if eq_stats[stat] > s:
+                    t.add_data(f'{s} (+{s-eq_stats[stat]})', col)
+                elif eq_stats[stat] > s:
                     col = '@red'
+                    t.add_data(f'{s} ({s-eq_stats[stat]})', col)
+                elif  eq_stats[stat] == s:
+                    t.add_data(f'{s}', col)
                 
-                t.add_data(f'{s} ({s-eq_stats[stat]})', col)
+               
             else:
                 t.add_data(s, '@normal')
 
@@ -227,7 +249,10 @@ class Equipment(Item):
                     case 'skill_level':
                         t.add_data('')
                         t.add_data(SKILLS[en.bonus_key]['name'])
-                        t.add_data(f'+{en.bonus_val}','@green')
+                        if en.bonus_val >= 0:
+                            t.add_data(f'+{en.bonus_val}','@green')
+                        else:
+                            t.add_data(f'{en.bonus_val}','@red')
                         t.add_data('')
 
                     case 'skill_values':
@@ -237,7 +262,10 @@ class Equipment(Item):
                         pass
                         t.add_data('')
                         t.add_data(StatType.name[en.bonus_key])
-                        t.add_data(f'+{en.bonus_val}','@green')
+                        if en.bonus_val >= 0:
+                            t.add_data(f'+{en.bonus_val}','@green')
+                        else:
+                            t.add_data(f'{en.bonus_val}','@red')
                         t.add_data('')
 
         output = output + t.get_table() #+ self.bonus_manager.read_bonuses()
