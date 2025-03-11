@@ -127,10 +127,14 @@ class AI:
         best_score = -1000000
 
         for skill in self.actor.skill_manager.skills:
+            
             s = SKILLS[skill]
 
             # skip if on cooldown
             if skill in self.actor.cooldown_manager.cooldowns:
+                continue
+            # you do not know that skill cuz equipment might have lowered it
+            if self.actor.skill_manager.skills[skill] <= 0:
                 continue
 
             # dont try to use a skill on an ally if you cant use it on them

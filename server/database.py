@@ -299,7 +299,11 @@ class Database:
             if item.item_type == ItemType.EQUIPMENT:
                 bonuses = item.bonus_manager.bonuses
                 for bonus_id in item.bonus_manager.bonuses:
+
                     bonus = bonuses[bonus_id]
+                    if bonus.bonus_dont_save_in_db:
+                        continue
+
                     my_dict['item_id'] = item.id
                     my_dict['bonus_id'] = bonus_id
                     my_dict['bonus_type'] = bonus.bonus_type

@@ -56,9 +56,11 @@ class EquipmentStatManager:
 class EquipmentBonus:
     def __init__(   self, 
                     bonus_type = 'stat',
-                    bonus_key = 'hp_max',
-                    bonus_val = 100
+                    bonus_key = 'marmor',
+                    bonus_val = 69,
+                    bonus_dont_save_in_db = False
     ):
+        self.bonus_dont_save_in_db = bonus_dont_save_in_db
         self.bonus_type =   bonus_type
         self.bonus_key =    bonus_key
         self.bonus_val =    bonus_val
@@ -87,7 +89,7 @@ class EquipmentBonusManager:
                 return False
 
     def add_bonus(self, bonus): 
-        bonus_id = f'{bonus.bonus_type}.{bonus.bonus_key}'
+        bonus_id = len(self.bonuses)
         
         if bonus_id in self.bonuses:
             self.bonuses[bonus_id].bonus_val += bonus.bonus_val
@@ -110,32 +112,57 @@ class EquipmentBonusManager:
         print(f'cant add enchant for some reason {bonus.__dict__}')
 
     def remove_bonus(self, bonus):
+        
         return
 
     def read_bonuses(self):
-        t = Table(3,1)
-        t.add_data('Enchants')
-        t.add_data('')
-        t.add_data('')
-
-
+        output = '@cyan'
         for en in self.bonuses.values():
+            output += 'Enchanted with: '
             match en.bonus_type:
                 case 'skill_level':
-                    t.add_data('')
-                    t.add_data(SKILLS[en.bonus_key]['name'])
-                    t.add_data(f'+{en.bonus_val}','@green')
-
+                    if en.bonus_val >= 0:
+                        output += f'@green{SKILLS[en.bonus_key]["name"]}@back raised by @green+{en.bonus_val}@back.'
+                    else:
+                        output += f'@red{SKILLS[en.bonus_key]["name"]}@back lowered by @red{en.bonus_val}@back.'
+                    output += '\n'
                 case 'skill_values':
                     pass
-
                 case 'stat':
-                    pass
-                    t.add_data('')
-                    t.add_data(StatType.name[en.bonus_key])
-                    t.add_data(f'+{en.bonus_val}','@green')
+                    stat = StatType.name[en.bonus_key]
+                    if en.bonus_val >= 0:
+                        output += f'@green{stat}@back raised by @green+{en.bonus_val}@back.'
+                    else:
+                        output += f'@red{stat}@back lowered by @red{en.bonus_val}@back.'
+                    output += '\n'
+        return output+'@normal'
+        if len(self.bonuses) >= 1:
+            t = Table(columns = 2, spaces = 3)
+            t.add_data('@tipBoost@back')
+            t.add_data('@tipBonus@back')
+            for en in self.bonuses.values():
+                match en.bonus_type:
+                    case 'skill_level':
+                        t.add_data(SKILLS[en.bonus_key]['name'])
+                        if en.bonus_val >= 0:
+                            t.add_data(f'+{en.bonus_val}','@green')
+                        else:
+                            t.add_data(f'{en.bonus_val}','@red')
 
-        return t.get_table()
+                    case 'skill_values':
+                        pass
+
+                    case 'stat':
+                        pass
+                        t.add_data(StatType.name[en.bonus_key])
+                        if en.bonus_val >= 0:
+                            t.add_data(f'+{en.bonus_val}','@green')
+                        else:
+                            t.add_data(f'{en.bonus_val}','@red')
+                    
+            return t.get_table()
+        else:
+            return ''
 
 
             
@@ -197,11 +224,10 @@ class Equipment(Item):
             '@green' if identifier.stat_manager.stats[StatType.LVL] >= r[StatType.LVL] else '@red') 
 
         output += t.get_table()
-        t = Table(columns = 4, spaces = 3)
-        t.add_data('Bonuses ')
-        t.add_data('')
-        t.add_data('')
-        t.add_data('')
+        t = Table(columns = 3, spaces = 3)
+        t.add_data('@tipStats@back ')
+        t.add_data('@tipBonus@back')
+        t.add_data('@tipReq@back')
         #t.add_data('')
 
         #t.add_data('Stat')
@@ -210,17 +236,25 @@ class Equipment(Item):
         for stat in [StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]:
             s = self.stat_manager.stats[stat]
             r = self.stat_manager.reqs[stat]
+            
             #if r == 0 and s == 0:
             #    continue
-            t.add_data('')
-            t.add_data(StatType.name[stat])
+            
 
             if identifier.slots_manager.slots[self.slot] != None and identifier.slots_manager.slots[self.slot] != self.id:
+                
                 eq_id = identifier.slots_manager.slots[self.slot]
                 eq_item = identifier.inventory_manager.items[eq_id]
+
+
                 
                 eq_stats = eq_item.stat_manager.stats
                 col = "@normal"
+
+                if r == 0 and s == 0 and s-eq_stats[stat] == 0:
+                    continue
+
+                t.add_data(StatType.name[stat])
 
                 if eq_stats[stat] < s:
                     col = '@green'
@@ -233,42 +267,17 @@ class Equipment(Item):
                 
                
             else:
+                if r == 0 and s == 0:
+                    continue
+                t.add_data(StatType.name[stat])
                 t.add_data(s, '@normal')
-
-            t.add_data(r, '@normal' if identifier.stat_manager.stats[stat] >= r else '@red')
+                t.add_data(r, '@normal' if identifier.stat_manager.stats[stat] >= r else '@red')
 
        
 
-        if len(self.bonus_manager.bonuses) >= 1:
-            t.add_data('Enchants')
-            t.add_data('')
-            t.add_data('')
-            t.add_data('')
-            for en in self.bonus_manager.bonuses.values():
-                match en.bonus_type:
-                    case 'skill_level':
-                        t.add_data('')
-                        t.add_data(SKILLS[en.bonus_key]['name'])
-                        if en.bonus_val >= 0:
-                            t.add_data(f'+{en.bonus_val}','@green')
-                        else:
-                            t.add_data(f'{en.bonus_val}','@red')
-                        t.add_data('')
+        
 
-                    case 'skill_values':
-                        pass
-
-                    case 'stat':
-                        pass
-                        t.add_data('')
-                        t.add_data(StatType.name[en.bonus_key])
-                        if en.bonus_val >= 0:
-                            t.add_data(f'+{en.bonus_val}','@green')
-                        else:
-                            t.add_data(f'{en.bonus_val}','@red')
-                        t.add_data('')
-
-        output = output + t.get_table() #+ self.bonus_manager.read_bonuses()
+        output = output + t.get_table() + self.bonus_manager.read_bonuses()
         
         return output
 
