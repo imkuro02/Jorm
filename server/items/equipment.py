@@ -58,9 +58,9 @@ class EquipmentBonus:
                     bonus_type = 'stat',
                     bonus_key = 'marmor',
                     bonus_val = 69,
-                    bonus_dont_save_in_db = False
+                    bonus_premade_bonus = False
     ):
-        self.bonus_dont_save_in_db = bonus_dont_save_in_db
+        self.bonus_premade_bonus = bonus_premade_bonus
         self.bonus_type =   bonus_type
         self.bonus_key =    bonus_key
         self.bonus_val =    bonus_val
@@ -96,24 +96,30 @@ class EquipmentBonusManager:
         else:
             self.bonuses[bonus_id] = bonus
 
-
         match bonus.bonus_type:
             case 'skill_level':
-                self.item.skill_manager.learn(bonus.bonus_key, bonus.bonus_val)
-                return
+                if bonus.bonus_key in SKILLS:
+                    self.item.skill_manager.learn(bonus.bonus_key, bonus.bonus_val)
+                    return
             case 'skill_values':
                 pass
                 return
             case 'stat':
-                self.item.stat_manager.stats[bonus.bonus_key] += bonus.bonus_val
-                return
+                if bonus.bonus_key in [
+                    StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
+                    StatType.FLOW, StatType.MIND, StatType.SOUL, 
+                    StatType.ARMOR, StatType.MARMOR
+                    ]:
+                    self.item.stat_manager.stats[bonus.bonus_key] += bonus.bonus_val
+                    return
                 
-
+        del self.bonuses[bonus_id]
         print(f'cant add enchant for some reason {bonus.__dict__}')
 
     def remove_bonus(self, bonus):
         
         return
+
             
 
 class Equipment(Item):
@@ -220,12 +226,12 @@ class Equipment(Item):
                     return bonuses
                 
                 if construct_bonus_id(bonus) in bonuses:
-                    bonuses[construct_bonus_id(bonus)]['bonus_val'] += bonus.bonus_val
+                    bonuses[construct_bonus_id(bonus)]['bonus_val'] += bonus.bonus_val * (1 if positive else -1)
                 else:
                     bonuses[construct_bonus_id(bonus)] = {
                         'bonus_type': bonus.bonus_type,
                         'bonus_key': bonus.bonus_key,
-                        'bonus_val': bonus.bonus_val * positive
+                        'bonus_val': bonus.bonus_val * (1 if positive else -1)
                     }
                 return bonuses
             
@@ -240,11 +246,15 @@ class Equipment(Item):
             for bonus in bonuses.values():
                 #output += f"{'@goodLearn ' if bonus['bonus_val'] >= 1 else '@badForgor'}@normal {SKILLS[bonus['bonus_key']]['name']} \n"
                 if bonus['bonus_key'] in identifier.skill_manager.skills:
-                    if bonus['bonus_val'] > identifier.skill_manager.skills[bonus['bonus_key']]:
+                    val = bonus['bonus_val']
+                    curr = identifier.skill_manager.skills[bonus['bonus_key']] 
+                    new = curr + val
+                    print(new,curr,val)
+                    if new > curr:
                         output += f"@goodUpgrade@back {SKILLS[bonus['bonus_key']]['name']}\n"
-                    elif identifier.skill_manager.skills[bonus['bonus_key']] + bonus['bonus_val'] <= 0:
+                    elif new < curr and new >= 1:
                         output += f"@badDowngrade@back {SKILLS[bonus['bonus_key']]['name']}\n"
-                    elif bonus['bonus_val'] < identifier.skill_manager.skills[bonus['bonus_key']]:
+                    elif new <= 0:
                         output += f"@badForget@back {SKILLS[bonus['bonus_key']]['name']}\n"
                     else: 
                         continue

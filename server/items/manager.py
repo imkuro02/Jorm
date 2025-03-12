@@ -44,7 +44,7 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
                                     bonus_type = 'skill_level', 
                                     bonus_key = ITEMS[premade_id]['base_skill'], 
                                     bonus_val = 1,
-                                    bonus_dont_save_in_db = True
+                                    bonus_premade_bonus = True
                                 )
             new_item.bonus_manager.add_bonus(boon)
 

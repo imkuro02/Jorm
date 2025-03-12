@@ -301,7 +301,7 @@ class Database:
                 for bonus_id in item.bonus_manager.bonuses:
 
                     bonus = bonuses[bonus_id]
-                    if bonus.bonus_dont_save_in_db:
+                    if bonus.bonus_premade_bonus:
                         continue
 
                     my_dict['item_id'] = item.id
