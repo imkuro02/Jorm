@@ -114,57 +114,6 @@ class EquipmentBonusManager:
     def remove_bonus(self, bonus):
         
         return
-
-    def read_bonuses(self):
-        output = '@cyan'
-        for en in self.bonuses.values():
-            output += 'Enchanted with: '
-            match en.bonus_type:
-                case 'skill_level':
-                    if en.bonus_val >= 0:
-                        output += f'@good{SKILLS[en.bonus_key]["name"]}@back raised by @good+{en.bonus_val}@back.'
-                    else:
-                        output += f'@bad{SKILLS[en.bonus_key]["name"]}@back lowered by @bad{en.bonus_val}@back.'
-                    output += '\n'
-                case 'skill_values':
-                    pass
-                case 'stat':
-                    stat = StatType.name[en.bonus_key]
-                    if en.bonus_val >= 0:
-                        output += f'@good{stat}@back raised by @good+{en.bonus_val}@back.'
-                    else:
-                        output += f'@bad{stat}@back lowered by @bad{en.bonus_val}@back.'
-                    output += '\n'
-        return output+'@normal'
-        if len(self.bonuses) >= 1:
-            t = Table(columns = 2, spaces = 3)
-            t.add_data('@tipBoost@back')
-            t.add_data('@tipBonus@back')
-            for en in self.bonuses.values():
-                match en.bonus_type:
-                    case 'skill_level':
-                        t.add_data(SKILLS[en.bonus_key]['name'])
-                        if en.bonus_val >= 0:
-                            t.add_data(f'+{en.bonus_val}','@good')
-                        else:
-                            t.add_data(f'{en.bonus_val}','@bad')
-
-                    case 'skill_values':
-                        pass
-
-                    case 'stat':
-                        pass
-                        t.add_data(StatType.name[en.bonus_key])
-                        if en.bonus_val >= 0:
-                            t.add_data(f'+{en.bonus_val}','@good')
-                        else:
-                            t.add_data(f'{en.bonus_val}','@bad')
-                    
-            return t.get_table()
-        else:
-            return ''
-
-
             
 
 class Equipment(Item):

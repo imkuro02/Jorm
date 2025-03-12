@@ -100,8 +100,14 @@ def command_bonus(self, line):
         self.sendLine('Cant bonus a currently equipped item')
         return
 
+    try:
+        bonus_val = int(bonus_val)
+    except ValueError:
+        self.sendLine('Value is not an intiger')
+        return
+
     from items.equipment import EquipmentBonus
-    boon = EquipmentBonus(bonus_type, bonus_key, int(bonus_val))
+    boon = EquipmentBonus(bonus_type, bonus_key, bonus_val)
     item.bonus_manager.add_bonus(boon)
 
     
