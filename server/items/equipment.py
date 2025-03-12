@@ -289,7 +289,18 @@ class Equipment(Item):
                     bonuses = construct_bonus_dict(bonuses, bonus, positive = False)
 
             for bonus in bonuses.values():
-                output += f"{'@goodLearn ' if bonus['bonus_val'] >= 1 else '@badForgor'}@normal {SKILLS[bonus['bonus_key']]['name']} \n"
+                #output += f"{'@goodLearn ' if bonus['bonus_val'] >= 1 else '@badForgor'}@normal {SKILLS[bonus['bonus_key']]['name']} \n"
+                if bonus['bonus_key'] in identifier.skill_manager.skills:
+                    if bonus['bonus_val'] > identifier.skill_manager.skills[bonus['bonus_key']]:
+                        output += f"@goodUpgrade@back {SKILLS[bonus['bonus_key']]['name']}\n"
+                    elif identifier.skill_manager.skills[bonus['bonus_key']] + bonus['bonus_val'] <= 0:
+                        output += f"@badDowngrade@back {SKILLS[bonus['bonus_key']]['name']}\n"
+                    elif bonus['bonus_val'] < identifier.skill_manager.skills[bonus['bonus_key']]:
+                        output += f"@badForget@back {SKILLS[bonus['bonus_key']]['name']}\n"
+                    else: 
+                        continue
+                else:
+                    output += f"{'@goodLearn@back ' if bonus['bonus_val'] >= 1 else '@badForget@back'}@normal {SKILLS[bonus['bonus_key']]['name']} \n"
 
             print(bonuses)
 
