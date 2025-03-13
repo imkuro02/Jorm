@@ -1,6 +1,6 @@
 class AffectsManager:
-    def __init__(self, owner):
-        self.owner = owner
+    def __init__(self, actor):
+        self.actor = actor
         self.affects = {}
 
     def unload_all_affects(self, silent = False):

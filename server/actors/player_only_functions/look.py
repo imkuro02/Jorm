@@ -314,7 +314,7 @@ def command_look(self, line):
     def look_room(self, room_id):
         room = self.factory.world.rooms[room_id]
 
-        if room_id == self.room.uid:
+        if room_id == self.room.id:
             see = f'You are in @yellow{room.name}@normal\n'
         else:
             see = f'You look at @yellow{room.name}@normal\n'
@@ -322,11 +322,11 @@ def command_look(self, line):
         see = see + f'@cyan{room.description}@normal\n'
 
 
-        if len(room.entities) == 1:
+        if len(room.actors) == 1:
             see = see + 'You are alone.\n'
         else:
             see = see + 'there are others here:\n'
-            for i in room.entities.values():
+            for i in room.actors.values():
                 if i == self:
                     pass
                 else:
@@ -337,7 +337,7 @@ def command_look(self, line):
                         see = see + f' @yellow(FIGHTING)@normal'
                     see = see +'\n'
 
-        exits = self.protocol.factory.world.rooms[room.uid].exits
+        exits = self.protocol.factory.world.rooms[room.id].exits
         see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         see = see + '\n'
 
@@ -353,18 +353,18 @@ def command_look(self, line):
 
         self.sendLine(see)
 
-    def look_entity(entity):
-        sheet = entity.get_character_sheet()
+    def look_actor(actor):
+        sheet = actor.get_character_sheet()
         self.sendLine(f'You are looking at {sheet}')
         return 
 
     if line == '':
-        look_room(self, self.room.uid)
+        look_room(self, self.room.id)
         return
 
     if line != '':
-        entity = self.get_entity(line)
-        if entity == None:
+        actor = self.get_actor(line)
+        if actor == None:
             return
-        look_entity(entity)
+        look_actor(actor)
 

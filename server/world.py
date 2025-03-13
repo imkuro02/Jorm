@@ -34,7 +34,7 @@ class Spawner:
         self.respawn_all()
 
     def get_room_dict(self):
-        room_id = self.room.uid
+        room_id = self.room.id
         if room_id not in WORLD['world']:
             # remove the username affix on instanced rooms
             room_id = room_id.split('/')[0]
@@ -93,9 +93,9 @@ class Spawner:
 
 
 class Room:
-    def __init__(self, world, uid, name, description, exits, secret_exits, can_be_recall_site, instanced):
+    def __init__(self, world, _id, name, description, exits, secret_exits, can_be_recall_site, instanced):
         self.world = world
-        self.uid = uid
+        self.id = _id
         self.name = name
         self.description = description
         self.exits = exits
@@ -104,11 +104,11 @@ class Room:
         self.instanced = instanced
         self.inventory_manager = InventoryManager(self, limit = 20)
         self.combat = None
-        self.entities = {}
+        self.actors = {}
         self.spawner = Spawner(self)
 
     def is_an_instance(self):
-        if '/' in self.uid:
+        if '/' in self.id:
             return True
         return False
 
@@ -117,7 +117,7 @@ class Room:
         actors = {}
         if not self.is_an_instance():
             self.spawner.tick()
-        for a in self.entities.values():
+        for a in self.actors.values():
             actors[a.id] = a
 
         for e in actors.values():
@@ -133,7 +133,7 @@ class Room:
             participants = {}
             npcs_here = False
             players_here = False
-            for i in self.entities.values():
+            for i in self.actors.values():
                 #print(i)
                 if i == player_participant:
                     participants[i.id] = i
@@ -166,7 +166,7 @@ class Room:
         participants = {}
         npcs_here = False
         players_here = False
-        for i in self.entities.values():
+        for i in self.actors.values():
             #print(i)
             if type(i).__name__ == "Player":
                 participants[i.id] = i
@@ -178,51 +178,51 @@ class Room:
         if players_here and npcs_here:
             self.combat = Combat(self, participants)
         
-    def move_entity(self, entity, silent = False):
+    def move_actor(self, actor, silent = False):
         if not self.instanced:
-            self.remove_entity(entity)
-            if not silent and entity.room != self:
-                entity.simple_broadcast('',f'{entity.pretty_name()} has left.')
+            self.remove_actor(actor)
+            if not silent and actor.room != self:
+                actor.simple_broadcast('',f'{actor.pretty_name()} has left.')
 
-            entity.room = self
-            self.entities[entity.id] = entity
+            actor.room = self
+            self.actors[actor.id] = actor
 
             if not silent:
-                entity.simple_broadcast('',f'{entity.pretty_name()} has arrived.')
+                actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.')
         
         else:
-            if type(entity).__name__ != 'Player':
+            if type(actor).__name__ != 'Player':
                 return
-            instanced_room_id = self.uid+'/'+entity.name
+            instanced_room_id = self.id+'/'+actor.name
             self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.secret_exits, self.can_be_recall_site, instanced=False)
             instanced_room = self.world.rooms[instanced_room_id]
        
             #instanced_room.populate()
 
-            self.remove_entity(entity)
-            if not silent and entity.room != self:
-                entity.simple_broadcast('',f'{entity.pretty_name()} has left.')
+            self.remove_actor(actor)
+            if not silent and actor.room != self:
+                actor.simple_broadcast('',f'{actor.pretty_name()} has left.')
 
-            entity.room = instanced_room
-            instanced_room.entities[entity.id] = entity
+            actor.room = instanced_room
+            instanced_room.actors[actor.id] = actor
 
             if not silent:
-                entity.simple_broadcast('',f'{entity.pretty_name()} has arrived.')
+                actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.')
             
 
         
 
-    def remove_entity(self, entity):
-        if entity.room == None:
+    def remove_actor(self, actor):
+        if actor.room == None:
             return
-        if entity.id not in entity.room.entities:
+        if actor.id not in actor.room.actors:
             return
-        del entity.room.entities[entity.id]
+        del actor.room.actors[actor.id]
 
 
     #def move_enemy(self, enemy):
     #    enemy.room = self
-    #    self.entities[enemy.id] = enemy
+    #    self.actors[enemy.id] = enemy
  
         
 class World:
@@ -236,12 +236,12 @@ class World:
         for i in self.rooms:
             if self.rooms[i].instanced: 
                 continue
-            for x in self.rooms[i].entities:
-                if type(self.rooms[i].entities[x]).__name__ != 'Enemy':
+            for x in self.rooms[i].actors:
+                if type(self.rooms[i].actors[x]).__name__ != 'Enemy':
                     continue
-                if self.rooms[i].entities[x].status != ActorStatusType.NORMAL:
+                if self.rooms[i].actors[x].status != ActorStatusType.NORMAL:
                     continue 
-                all_mobs.append(self.rooms[i].entities[x])
+                all_mobs.append(self.rooms[i].actors[x])
         
         boss_mob = random.choice(all_mobs)
         boss_mob.name = '<!>' + boss_mob.name + '<!>'
@@ -261,12 +261,12 @@ class World:
             
 
             if r in self.rooms:
-                players = [entity for entity in self.rooms[r].entities.values() if type(entity).__name__ == "Player"]
+                players = [actor for actor in self.rooms[r].actors.values() if type(actor).__name__ == "Player"]
                 if len(players) >= 1:
                     continue
 
                 # prepare to reload
-                for e in self.rooms[r].entities.values():
+                for e in self.rooms[r].actors.values():
                     e.room = None
                 del self.rooms[r]
 

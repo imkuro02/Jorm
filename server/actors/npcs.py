@@ -158,7 +158,7 @@ class Npc(Actor):
         super().__init__(name,room,_id)
         self.dialog_tree = None
         if self.room != None:
-            self.room.move_entity(self, silent = True)
+            self.room.move_actor(self, silent = True)
 
     def talk_to(self, talker):
         if talker.current_dialog != None:

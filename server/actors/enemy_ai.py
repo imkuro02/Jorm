@@ -63,7 +63,7 @@ class AI:
         if new_room.instanced:
             return
         
-        new_room.move_entity(self.actor)
+        new_room.move_actor(self.actor)
 
         #print(self.actor.id,'i wandered!',self.actor.name)
 
@@ -85,7 +85,7 @@ class AI:
         if self.actor.room.combat.current_actor != self.actor:
             return False
 
-        if self.actor.room.combat.time_since_turn_finished <= 30*1:
+        if self.actor.room.combat.time_since_turn_finished <= 30*0.5:
             return False
         
         return True
@@ -95,9 +95,9 @@ class AI:
         if target == Targets.SELF:
             return self.actor
         
-        entities = self.actor.room.combat.participants.values()
-        enemies = [entity for entity in entities if entity.party_manager.get_party_id() != self.actor.party_manager.get_party_id() and entity.status == ActorStatusType.FIGHTING]
-        allies =  [entity for entity in entities if entity.party_manager.get_party_id() == self.actor.party_manager.get_party_id()  and entity.status == ActorStatusType.FIGHTING]
+        actors = self.actor.room.combat.participants.values()
+        enemies = [actor for actor in actors if actor.party_manager.get_party_id() != self.actor.party_manager.get_party_id() and actor.status == ActorStatusType.FIGHTING]
+        allies =  [actor for actor in actors if actor.party_manager.get_party_id() == self.actor.party_manager.get_party_id()  and actor.status == ActorStatusType.FIGHTING]
 
         match target:
 
@@ -139,7 +139,7 @@ class AI:
 
             # dont try to use a skill on an ally if you cant use it on them
             if ally != self.actor and s['target_others_is_valid'] == 0:
-                print(f'cannot {skill}')
+                #print(f'cannot {skill}')
                 continue
             
             ally_stats =    ally.stat_manager.stats
@@ -154,7 +154,7 @@ class AI:
 
             #print([score_low_hp_ally , score_high_hp_ally , score_low_hp_enemy , score_high_hp_enemy])
             score = score_low_hp_ally + score_high_hp_ally + score_low_hp_enemy + score_high_hp_enemy
-            print(skill, score)
+            #print(skill, score)
             if score > best_score:
                 best_score = score
                 best_skill = skill
@@ -210,7 +210,7 @@ class AIBasic(AI):
         for s in skills_to_pick_from.values():
             print(s)
         
-        #random_target = random.choice([entity for entity in self.actor.room.combat.participants.values() if type(entity).__name__ != type(self.actor).__name__])
+        #random_target = random.choice([actor for actor in self.actor.room.combat.participants.values() if type(actor).__name__ != type(self.actor).__name__])
         skill_to_use = self.actor.combat_loop[0]
 
         target = self.get_target(skill_to_use['target'])

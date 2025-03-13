@@ -75,10 +75,10 @@ class Database:
         CREATE TABLE IF NOT EXISTS equipment_bonuses (
             actor_id TEXT NOT NULL,
             item_id TEXT NOT NULL,
-            bonus_id TEXT NOT NULL,
-            bonus_type TEXT NOT NULL,
-            bonus_key TEXT NOT NULL,
-            bonus_val INT NOT NULL,
+            id TEXT NOT NULL,
+            type TEXT NOT NULL,
+            key TEXT NOT NULL,
+            val INT NOT NULL,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
@@ -297,23 +297,23 @@ class Database:
         my_dict['actor_id'] = actor_id
         for item in actor.inventory_manager.items.values():
             if item.item_type == ItemType.EQUIPMENT:
-                bonuses = item.bonus_manager.bonuses
-                for bonus_id in item.bonus_manager.bonuses:
+                bonuses = item.manager.bonuses
+                for id in item.manager.bonuses:
 
-                    bonus = bonuses[bonus_id]
-                    if bonus.bonus_premade_bonus:
+                    bonus = bonuses[id]
+                    if bonus.premade_bonus:
                         continue
 
                     my_dict['item_id'] = item.id
-                    my_dict['bonus_id'] = bonus_id
-                    my_dict['bonus_type'] = bonus.bonus_type
-                    my_dict['bonus_key'] = bonus.bonus_key
-                    my_dict['bonus_val'] = bonus.bonus_val
+                    my_dict['id'] = id
+                    my_dict['type'] = bonus.type
+                    my_dict['key'] = bonus.key
+                    my_dict['val'] = bonus.val
                     self.cursor.execute('''
                         INSERT INTO equipment_bonuses (
-                            actor_id, item_id, bonus_id, bonus_type, bonus_key, bonus_val
+                            actor_id, item_id, id, type, key, val
                         ) VALUES (
-                            :actor_id, :item_id, :bonus_id, :bonus_type, :bonus_key, :bonus_val
+                            :actor_id, :item_id, :id, :type, :key, :val
                         )
                         ''', my_dict)
 
@@ -406,7 +406,7 @@ class Database:
             SELECT * FROM equipment_bonuses WHERE actor_id = ?
         ''', (actor_id,))
         bonuses = self.cursor.fetchall()
-        print('bonuses', bonuses)
+        #print('bonuses', bonuses)
 
 
         my_dict = {}
@@ -458,9 +458,9 @@ class Database:
         my_dict['equipment_bonuses'] = {}
         for bonus in bonuses:
             boon_dict = {
-                'bonus_type': bonus[3],
-                'bonus_key': bonus[4],
-                'bonus_val': bonus[5]
+                'type': bonus[3],
+                'key': bonus[4],
+                'val': bonus[5]
                 }
             if bonus[1] in my_dict['equipment_bonuses']:
                 my_dict['equipment_bonuses'][bonus[1]].append(boon_dict)

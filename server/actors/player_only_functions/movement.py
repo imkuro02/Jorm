@@ -10,7 +10,7 @@ def command_flee(self, line):
         None,
         f'{self.pretty_name()} flees!'
     )
-    self.protocol.factory.world.rooms[self.recall_site].move_entity(self, silent = True)
+    self.protocol.factory.world.rooms[self.recall_site].move_actor(self, silent = True)
     self.status = ActorStatusType.NORMAL
     self.simple_broadcast(
         f'You have fled back to {self.room.name}',
@@ -24,7 +24,7 @@ def command_go(self, line):
 
     if self.room.is_an_instance():
         can_move = True
-        for e in self.room.entities.values():
+        for e in self.room.actors.values():
             if type(e).__name__ == 'Enemy':
                 can_move = False
                 break
@@ -57,7 +57,7 @@ def command_go(self, line):
 
     
 
-    world.rooms[new_room].move_entity(self)
+    world.rooms[new_room].move_actor(self)
     self.command_look('')
 
     if self.recall_site == 'tutorial#start' and self.room.can_be_recall_site:
@@ -66,14 +66,14 @@ def command_go(self, line):
     self.finish_turn(force_cooldown = True)
 
     if self.party_manager.party != None:
-        if self.party_manager.party.owner == self:
+        if self.party_manager.party.actor == self:
             for par in self.party_manager.party.participants.values():
                 if par == self:
                     continue
                 if par.room != old_room:
                     continue
                 #par.command_go(line)
-                self.room.move_entity(par, silent = True)
+                self.room.move_actor(par, silent = True)
                 par.sendLine('You follow.')
                 par.command_look('')
 

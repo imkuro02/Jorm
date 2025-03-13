@@ -10,7 +10,7 @@ class Item:
         self.description = 'Description here'
         self.stack = 1
         self.keep = False
-        self.owner = None # the inventory manager of this item
+        self.inventory_manager = None # the inventory manager of this item
         self.new = True # show if item is newly added to inv
     
     def pretty_name(self, rank_only = False):

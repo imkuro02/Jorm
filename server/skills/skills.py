@@ -44,7 +44,7 @@ class Skill:
             perspectives[perspective] = perspectives[perspective].replace('#USER#', self.user.pretty_name())
             perspectives[perspective] = perspectives[perspective].replace('#OTHER#', self.other.pretty_name())
 
-        for receiver in self.user.room.entities.values():
+        for receiver in self.user.room.actors.values():
             if type(receiver).__name__ != "Player":
                 continue
 

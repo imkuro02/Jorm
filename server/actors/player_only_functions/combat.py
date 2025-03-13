@@ -20,7 +20,7 @@ def command_fight(self, line):
     if self.party_manager.party == None:
         self.room.join_combat(self)
     else:
-        if self.party_manager.party.owner == self:
+        if self.party_manager.party.actor == self:
             self.room.join_combat(self)
         else:
             self.sendLine('You are not the party leader')
@@ -57,7 +57,7 @@ def command_use(self, line):
     list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values() if item.item_type == ItemType.CONSUMABLE]
     #list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
     whole_list = list_of_items + list_of_skill_names
-    list_of_entities = [entity.name for entity in self.room.entities.values()]
+    list_of_actors = [actor.name for actor in self.room.actors.values()]
 
     action = None
     target = None
@@ -72,7 +72,7 @@ def command_use(self, line):
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
         action = utils.match_word(action, list_of_items + list_of_skill_names)
-        #target = utils.match_word(target, list_of_items + list_of_entities)
+        #target = utils.match_word(target, list_of_items + list_of_actors)
 
 
     _action = None
@@ -87,7 +87,7 @@ def command_use(self, line):
         #if target in list_of_items:
         #    _target = self.get_item(target)
         
-        _target = self.get_entity(target)
+        _target = self.get_actor(target)
     else:
         _target = target
 
@@ -111,7 +111,7 @@ def command_use(self, line):
 
 '''
 def command_recall_set(self, line):
-    self.recall_site = self.room.uid
+    self.recall_site = self.room.id
     self.sendLine(self.recall_site)
 
 def command_recall_go(self, line):
@@ -120,7 +120,7 @@ def command_recall_go(self, line):
         self.sendLine('recall site broked')
         return
 
-    rooms[self.recall_site].move_entity(self)
+    rooms[self.recall_site].move_actor(self)
 '''
 
 @check_not_in_combat
@@ -136,7 +136,7 @@ def command_rest(self, line):
         if not self.room.can_be_recall_site:
             self.sendLine('@redThis is not a suitable rest spot.@normal')
             return
-        self.recall_site = self.room.uid
+        self.recall_site = self.room.id
         self.sendLine(f'@green{self.room.name} is now your rest spot.@normal')
         return
 
@@ -154,7 +154,7 @@ def command_rest(self, line):
             #tp home
             if self.recall_site not in self.protocol.factory.world.rooms:
                 self.recall_site = 'tutorial'
-            self.protocol.factory.world.rooms[self.recall_site].move_entity(self)
+            self.protocol.factory.world.rooms[self.recall_site].move_actor(self)
 
             self.simple_broadcast(
                 None,
@@ -164,7 +164,7 @@ def command_rest(self, line):
             self.stat_manager.stats[StatType.HP] = self.stat_manager.stats[StatType.HPMAX]
             self.stat_manager.stats[StatType.MP] = self.stat_manager.stats[StatType.MPMAX]
 
-            if self.room.uid == self.recall_site:
+            if self.room.id == self.recall_site:
                 self.simple_broadcast(
                     f'You rest',
                     f'{self.pretty_name()} rests'
@@ -178,7 +178,7 @@ def command_rest(self, line):
                 #tp home
                 if self.recall_site not in self.protocol.factory.world.rooms:
                     self.recall_site = 'tutorial'
-                self.protocol.factory.world.rooms[self.recall_site].move_entity(self)
+                self.protocol.factory.world.rooms[self.recall_site].move_actor(self)
 
                 self.simple_broadcast(
                     None,

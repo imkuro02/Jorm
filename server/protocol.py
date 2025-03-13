@@ -270,15 +270,15 @@ class Protocol(protocol.Protocol):
 
                 '''
                 item_id TEXT NOT NULL,
-                bonus_type TEXT NOT NULL,
-                bonus_key TEXT NOT NULL,
-                bonus_val INT NOT NULL,
+                type TEXT NOT NULL,
+                key TEXT NOT NULL,
+                val INT NOT NULL,
                 '''
 
                 if item['item_id'] in bonuses:
                     for bonus in bonuses[item['item_id']]:
-                        boon = EquipmentBonus(bonus['bonus_type'],bonus['bonus_key'],bonus['bonus_val'])
-                        new_item.bonus_manager.add_bonus(boon)
+                        boon = EquipmentBonus(bonus['type'],bonus['key'],bonus['val'])
+                        new_item.manager.add_bonus(boon)
 
                 
                 self.actor.inventory_manager.add_item(new_item)
@@ -308,7 +308,7 @@ class Protocol(protocol.Protocol):
                 self.save_actor()
                 self.actor.recall_site = 'tutorial#start'
 
-        self.actor.room.world.rooms[self.actor.recall_site].move_entity(self.actor)
+        self.actor.room.world.rooms[self.actor.recall_site].move_actor(self.actor)
         self.actor.command_look('')
         
     def save_actor(self):
@@ -332,9 +332,9 @@ class Protocol(protocol.Protocol):
             
 
             # teleport player to loading to remove them safely
-            self.factory.world.rooms['overworld#loading'].move_entity(self.actor)
+            self.factory.world.rooms['overworld#loading'].move_actor(self.actor)
             # remove player from combat
-            del self.actor.room.entities[self.actor.id]
+            del self.actor.room.actors[self.actor.id]
             
         self.factory.protocols.remove(self)
 

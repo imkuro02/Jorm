@@ -4,7 +4,7 @@ from combat.damage_event import Damage
 class Affect:
     def __init__(self, affect_manager, name, description, turns):
         self.affect_manager = affect_manager
-        self.owner = self.affect_manager.owner
+        self.actor = self.affect_manager.actor
         self.name = name
         self.description = description
         self.turns = turns
@@ -14,17 +14,17 @@ class Affect:
 
     # called when applied 
     def on_applied(self):
-        self.affect_manager.owner.simple_broadcast(
+        self.affect_manager.actor.simple_broadcast(
             f'You are {self.name}',
-            f'{self.affect_manager.owner.pretty_name()} is {self.name}',
+            f'{self.affect_manager.actor.pretty_name()} is {self.name}',
         )
 
     # called when effect is over
     def on_finished(self, silent = False):
         if not silent:
-            self.affect_manager.owner.simple_broadcast(
+            self.affect_manager.actor.simple_broadcast(
                 f'You are no longer {self.name}',
-                f'{self.affect_manager.owner.pretty_name()} is no longer {self.name}',
+                f'{self.affect_manager.actor.pretty_name()} is no longer {self.name}',
             )
         self.affect_manager.pop_affect(self)
 
@@ -52,10 +52,10 @@ class AffectStunned(Affect):
     # called at start of turn
     def set_turn(self):
         super().set_turn()
-        #self.owner.simple_broadcast(
+        #self.actor.simple_broadcast(
         #    f'You are too stunned to act!',
-        #    f'{self.owner.pretty_name()} is too stunned to act!')
-        self.owner.finish_turn()
+        #    f'{self.actor.pretty_name()} is too stunned to act!')
+        self.actor.finish_turn()
 
 class Leech(Affect):
     def __init__(self, affect_manager, name, description, turns, leech_power):
@@ -70,8 +70,8 @@ class Leech(Affect):
             return damage_obj
         
         leech_heal_damage_obj = Damage(
-            damage_source_actor = self.owner,
-            damage_taker_actor = self.owner,
+            damage_source_actor = self.actor,
+            damage_taker_actor = self.actor,
             damage_value = round(damage_obj.damage_value * self.leech_power),
             damage_type = DamageType.HEALING,
             combat_event = damage_obj.combat_event
@@ -92,7 +92,7 @@ class Thorns(Affect):
             return damage_obj
         
         thorns_damage = Damage(
-            damage_source_actor = self.owner,
+            damage_source_actor = self.actor,
             damage_taker_actor = damage_obj.damage_source_actor,
             damage_value = int(damage_obj.damage_value * self.damage_reflected_power),
             damage_type = DamageType.PURE,
@@ -167,16 +167,16 @@ class AffectEnrage(Affect):
     def __init__(self, affect_manager, name, description, turns, extra_hp):
         super().__init__(affect_manager, name, description, turns)
         self.extra_hp = extra_hp
-        self.bonus_hp = 0
+        self.hp = 0
 
     def on_applied(self):
         super().on_applied()
-        self.bonus_hp = int( self.owner.stat_manager.stats[StatType.HPMAX] * self.extra_hp )
-        self.owner.stat_manager.stats[StatType.HPMAX] += self.bonus_hp
-        self.owner.stat_manager.stats[StatType.HP] +=    self.bonus_hp
+        self.hp = int( self.actor.stat_manager.stats[StatType.HPMAX] * self.extra_hp )
+        self.actor.stat_manager.stats[StatType.HPMAX] += self.hp
+        self.actor.stat_manager.stats[StatType.HP] +=    self.hp
 
     def on_finished(self, silent=False):
-        self.owner.stat_manager.stats[StatType.HPMAX] -= self.bonus_hp
-        self.owner.stat_manager.stats[StatType.HP] -=    self.bonus_hp
-        self.owner.stat_manager.hp_mp_clamp_update()
+        self.actor.stat_manager.stats[StatType.HPMAX] -= self.hp
+        self.actor.stat_manager.stats[StatType.HP] -=    self.hp
+        self.actor.stat_manager.hp_mp_clamp_update()
         return super().on_finished(silent)

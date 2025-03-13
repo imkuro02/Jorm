@@ -12,11 +12,11 @@ party_commands = {
 }
 
 class Party:
-    def __init__(self, owner):
-        self.owner = owner
+    def __init__(self, actor):
+        self.actor = actor
         self.participants = {}
         self.invited = {}
-        self.add_participant(self.owner)
+        self.add_participant(self.actor)
 
     def add_participant(self, participant):
         for par in self.participants.values():
@@ -25,8 +25,8 @@ class Party:
         self.participants[participant.id] = participant
         participant.party_manager.party = self
 
-        if self.owner != participant:
-            participant.sendLine(f'You join {self.owner.pretty_name()}\'s party')
+        if self.actor != participant:
+            participant.sendLine(f'You join {self.actor.pretty_name()}\'s party')
             
 
     def remove_participant(self, participant):
@@ -37,10 +37,10 @@ class Party:
         for par in self.participants.values():
             par.sendLine(f'{participant.pretty_name()} leaves the party')
 
-        if participant == self.owner:
+        if participant == self.actor:
             to_remove = []
             for i in self.participants.values():
-                if i == self.owner: 
+                if i == self.actor: 
                     continue
                 to_remove.append(i)
             for i in to_remove:
@@ -57,7 +57,7 @@ class PartyManager:
 
     def get_party_id(self):
         if self.party != None:
-            return self.party.owner.id
+            return self.party.actor.id
         return self.actor.id
         
     def clear_invites(self):
@@ -75,10 +75,10 @@ class PartyManager:
         if self.party == None:
             self.actor.sendLine('You are not in a party')
             return
-        if self.party.owner != self.actor:
+        if self.party.actor != self.actor:
             self.actor.sendLine('You are not the leader')
             return
-        invited = self.actor.get_entity(line)
+        invited = self.actor.get_actor(line)
         
         if invited == None:
             self.actor.sendLine('Invite who?')
@@ -104,15 +104,15 @@ class PartyManager:
 
     def party_join(self, line):
         if self.party != None:
-            self.owner.sendLine('You are already in a party')
+            self.actor.sendLine('You are already in a party')
             return
         
-        inviter = self.actor.get_entity(line)
+        inviter = self.actor.get_actor(line)
         if inviter == None:
             return
 
         for i in self.invitations:
-            if i.owner == inviter:
+            if i.actor == inviter:
                 i.add_participant(self.actor)
                 self.clear_invites()
 
@@ -120,7 +120,7 @@ class PartyManager:
         if self.party == None:
             self.actor.sendLine('You are not in a party')
             return
-        if self.party.owner != self.actor:
+        if self.party.actor != self.actor:
             self.actor.sendLine('You are not the leader')
             return
         best_match, best_score = utils.match_word(line, [par.name for par in self.party.participants.values()], get_score = True)

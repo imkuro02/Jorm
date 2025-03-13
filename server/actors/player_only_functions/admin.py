@@ -85,7 +85,7 @@ def command_bonus(self, line):
         self.sendLine('check help admin for syntax')
         return
     
-    item_name, bonus_type, bonus_key, bonus_val = line.split(',')
+    item_name, type, key, val = line.split(',')
     item = self.get_item(item_name)
     
     if item == None:
@@ -101,14 +101,14 @@ def command_bonus(self, line):
         return
 
     try:
-        bonus_val = int(bonus_val)
+        val = int(val)
     except ValueError:
         self.sendLine('Value is not an intiger')
         return
 
     from items.equipment import EquipmentBonus
-    boon = EquipmentBonus(bonus_type, bonus_key, bonus_val)
-    item.bonus_manager.add_bonus(boon)
+    boon = EquipmentBonus(type, key, val)
+    item.manager.add_bonus(boon)
 
     
 
@@ -214,9 +214,9 @@ def command_load_npcs(self, line):
     create_enemy(self.room, line)
 
 def command_export(self, line):
-    list_of_entities = [entity.name for entity in self.room.entities.values()]
+    list_of_actors = [actor.name for actor in self.room.actors.values()]
     list_of_inventory = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
-    whole_list = list_of_entities + list_of_inventory
+    whole_list = list_of_actors + list_of_inventory
 
     best_match = utils.match_word(line, whole_list)
 
@@ -237,11 +237,11 @@ def command_export(self, line):
         self.sendLine(yaml_text, color = False)
         '''
 
-    # export entity
-    if best_match in list_of_entities:
-        entity = self.get_entity(best_match)
-        entity_dict = str(entity.__dict__)
-        self.sendLine(entity_dict)
+    # export actor
+    if best_match in list_of_actors:
+        actor = self.get_actor(best_match)
+        actor_dict = str(actor.__dict__)
+        self.sendLine(actor_dict)
 
 
 @check_is_admin
@@ -259,7 +259,7 @@ def command_teleport(self, line):
             user = proto.actor
             break
     if user != None:
-        user.room.move_entity(self)
+        user.room.move_actor(self)
         self.sendLine(f'You teleport to {user.pretty_name()}')
     else:
         self.sendLine(f'Cant find "{line}"')
@@ -488,7 +488,7 @@ def command_lore(self, line):
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
         action = utils.match_word(action, list_of_items + list_of_skill_names)
-        #target = utils.match_word(target, list_of_items + list_of_entities)
+        #target = utils.match_word(target, list_of_items + list_of_actors)
 
 
     _action = None

@@ -1,7 +1,7 @@
 def command_talk(self, line):
-    entity = self.get_entity(line)
-    if entity == None:
+    actor = self.get_actor(line)
+    if actor == None:
         self.sendLine('Talk to who?')
         return
-    entity.talk_to(self)
+    actor.talk_to(self)
     

@@ -11,8 +11,8 @@ from party import PartyManager
 from quest import QuestManager
 
 class ActorStatManager:
-    def __init__(self, owner):
-        self.owner = owner
+    def __init__(self, actor):
+        self.actor = actor
         self.stats = {
             StatType.HPMAX: 30,
             StatType.HP:    30,
@@ -51,16 +51,16 @@ class ActorStatManager:
             self.stats[StatType.HP] = 0
             self.status = ActorStatusType.DEAD
 
-            self.owner.simple_broadcast(
+            self.actor.simple_broadcast(
                 f'@redYou died@normal "help rest"',
-                f'{self.owner.pretty_name()} has died'
+                f'{self.actor.pretty_name()} has died'
                 )
 
-            self.owner.die()
+            self.actor.die()
 
 class SkillManager:
-    def __init__(self, owner):
-        self.owner = owner
+    def __init__(self, actor):
+        self.actor = actor
         self.skills = {
             'swing': 1
         }
@@ -92,8 +92,8 @@ class SkillManager:
 
 
 class CooldownManager:
-    def __init__ (self, owner):
-        self.owner = owner
+    def __init__ (self, actor):
+        self.actor = actor
         self.cooldowns = {}
 
     def add_cooldown(self, cooldown, turns):
@@ -123,8 +123,8 @@ class CooldownManager:
             self.remove_cooldown(i)
 
 class SlotsManager:
-    def __init__(self, owner):
-        self.owner = owner
+    def __init__(self, actor):
+        self.actor = actor
         self.slots = {
             EquipmentSlotType.HEAD:      None,
             EquipmentSlotType.BODY:      None,
@@ -232,7 +232,7 @@ class Actor:
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
         if self.status != ActorStatusType.FIGHTING:
-            #self.cooldown_manager.unload_all_cooldowns()
+            self.cooldown_manager.unload_all_cooldowns()
 
             if self.status != ActorStatusType.DEAD and self.factory.ticks_passed % 30 == 0:
                 damage_obj = Damage(
@@ -290,7 +290,7 @@ class Actor:
         #self.room.inventory_manager.add_item(item)
 
         if type(self).__name__ != "Player":
-            del self.room.entities[self.id]
+            del self.room.actors[self.id]
             self.room = None
 
     def simple_broadcast(self, line_self, line_others, worldwide = False):
@@ -303,7 +303,7 @@ class Actor:
             players = [proto.actor for proto in self.factory.protocols if proto.actor != None]
 
         else:
-            players = [entity for entity in self.room.entities.values() if type(entity).__name__ == "Player"]
+            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == "Player"]
             
         for player in players:
             if player == self:

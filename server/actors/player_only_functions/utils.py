@@ -1,8 +1,8 @@
 import utils
 from configuration.config import ItemType
 
-def get_entity(self, line):
-    return utils.get_match(line, self.room.entities)
+def get_actor(self, line):
+    return utils.get_match(line, self.room.actors)
 
     # Return if you cant find a target
     if not isinstance(target, Actor):

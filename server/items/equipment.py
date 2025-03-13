@@ -4,8 +4,8 @@ from items.misc import Item
 from utils import Table
 
 class EquipSkillManager:
-    def __init__(self, owner):
-        self.owner = owner
+    def __init__(self, item):
+        self.item = item
         self.skills = {}
 
     # code copy pasted from actor skill manager
@@ -17,7 +17,7 @@ class EquipSkillManager:
     
     def unlearn(self, skill_id, amount = 1):
         if skill_id not in self.skills:
-            print(f'{self.owner.name} cant unlearn {skill_id} because it is not learned')
+            print(f'{self.item.name} cant unlearn {skill_id} because it is not learned')
             return
         
         if amount == self.skills[skill_id]:
@@ -27,8 +27,8 @@ class EquipSkillManager:
         self.skills[skill_id] -= amount
 
 class EquipmentStatManager:
-    def __init__(self, owner):
-        self.owner = owner
+    def __init__(self, item):
+        self.item = item
         
         self.stats = {
             StatType.HPMAX: 0,
@@ -55,15 +55,15 @@ class EquipmentStatManager:
         
 class EquipmentBonus:
     def __init__(   self, 
-                    bonus_type = 'stat',
-                    bonus_key = 'marmor',
-                    bonus_val = 69,
-                    bonus_premade_bonus = False
+                    type = 'stat',
+                    key = 'marmor',
+                    val = 69,
+                    premade_bonus = False
     ):
-        self.bonus_premade_bonus = bonus_premade_bonus
-        self.bonus_type =   bonus_type
-        self.bonus_key =    bonus_key
-        self.bonus_val =    bonus_val
+        self.premade_bonus = premade_bonus
+        self.type =   type
+        self.key =    key
+        self.val =    val
         
 
 class BonusTypes:
@@ -76,44 +76,44 @@ class EquipmentBonusManager:
         self.item = item
         self.bonuses = {}
 
-    def check_if_bonus_valid(self, bonus):
-        if bonus.bonus_type != BonusTypes.SKILL_LEVEL or bonus.bonus_type != BonusTypes.STAT:
+    def check_if_valid(self, bonus):
+        if bonus.type != BonusTypes.SKILL_LEVEL or bonus.type != BonusTypes.STAT:
             return False
 
-        if bonus.bonus_type == BonusTypes.SKILL_LEVEL:
-            if bonus.bonus_key not in SKILLS:
+        if bonus.type == BonusTypes.SKILL_LEVEL:
+            if bonus.key not in SKILLS:
                 return False
 
-        if bonus.bonus_type == BonusTypes.STAT:
-            if bonus.bonus_key not in StatType.name:
+        if bonus.type == BonusTypes.STAT:
+            if bonus.key not in StatType.name:
                 return False
 
     def add_bonus(self, bonus): 
-        bonus_id = len(self.bonuses)
+        id = len(self.bonuses)
         
-        if bonus_id in self.bonuses:
-            self.bonuses[bonus_id].bonus_val += bonus.bonus_val
+        if id in self.bonuses:
+            self.bonuses[id].val += bonus.val
         else:
-            self.bonuses[bonus_id] = bonus
+            self.bonuses[id] = bonus
 
-        match bonus.bonus_type:
+        match bonus.type:
             case 'skill_level':
-                if bonus.bonus_key in SKILLS:
-                    self.item.skill_manager.learn(bonus.bonus_key, bonus.bonus_val)
+                if bonus.key in SKILLS:
+                    self.item.skill_manager.learn(bonus.key, bonus.val)
                     return
             case 'skill_values':
                 pass
                 return
             case 'stat':
-                if bonus.bonus_key in [
+                if bonus.key in [
                     StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
                     StatType.FLOW, StatType.MIND, StatType.SOUL, 
                     StatType.ARMOR, StatType.MARMOR
                     ]:
-                    self.item.stat_manager.stats[bonus.bonus_key] += bonus.bonus_val
+                    self.item.stat_manager.stats[bonus.key] += bonus.val
                     return
                 
-        del self.bonuses[bonus_id]
+        del self.bonuses[id]
         print(f'cant add enchant for some reason {bonus.__dict__}')
 
     def remove_bonus(self, bonus):
@@ -133,16 +133,16 @@ class Equipment(Item):
         self.rank = 0 
         
         self.stat_manager = EquipmentStatManager(self)
-        self.bonus_manager = EquipmentBonusManager(self)
+        self.manager = EquipmentBonusManager(self)
         self.skill_manager = EquipSkillManager(self)
 
         '''       
-        boon = EquipmentBonus(bonus_type = 'skill_level', bonus_key = 'swing', bonus_val = 1)
-        self.bonus_manager.add_bonus(boon)
-        boon = EquipmentBonus(bonus_type = 'stat', bonus_key = 'grit', bonus_val = 1)
-        self.bonus_manager.add_bonus(boon)
-        boon = EquipmentBonus(bonus_type = 'stat', bonus_key = 'armor', bonus_val = 1)
-        self.bonus_manager.add_bonus(boon)
+        boon = EquipmentBonus(type = 'skill_level', key = 'swing', val = 1)
+        self.manager.add_bonus(boon)
+        boon = EquipmentBonus(type = 'stat', key = 'grit', val = 1)
+        self.manager.add_bonus(boon)
+        boon = EquipmentBonus(type = 'stat', key = 'armor', val = 1)
+        self.manager.add_bonus(boon)
         '''
 
     def to_dict(self):
@@ -183,14 +183,14 @@ class Equipment(Item):
         output += t.get_table()
 
         output += '\n@tipSpecial bonus:@normal\n'
-        for bonus in self.bonus_manager.bonuses.values():
-            col = '@good+' if bonus.bonus_val >= 1 else '@bad'
-            match bonus.bonus_type:
+        for bonus in self.manager.bonuses.values():
+            col = '@good+' if bonus.val >= 1 else '@bad'
+            match bonus.type:
                 case 'skill_level':
                     
-                    output += f'Affect {SKILLS[bonus.bonus_key]["name"]} by {col}{bonus.bonus_val}@back\n'
+                    output += f'Affect {SKILLS[bonus.key]["name"]} by {col}{bonus.val}@back\n'
                 case 'stat':
-                    output += f'Affect {StatType.name[bonus.bonus_key]} by {col}{bonus.bonus_val}@back\n'
+                    output += f'Affect {StatType.name[bonus.key]} by {col}{bonus.val}@back\n'
 
         if self.equiped == False:
             output += '\n@tipOn equip changes:@normal\n'
@@ -218,48 +218,48 @@ class Equipment(Item):
                     t.add_data(f'+{difference}', col='@good')
             output += t.get_table()
 
-            def construct_bonus_id(bonus):
-                return f'{bonus.bonus_type}/{bonus.bonus_key}'
+            def construct_id(bonus):
+                return f'{bonus.type}/{bonus.key}'
             
-            def construct_bonus_dict(bonuses, bonus, positive):
-                if bonus.bonus_type != 'skill_level':
+            def construct_dict(bonuses, bonus, positive):
+                if bonus.type != 'skill_level':
                     return bonuses
                 
-                if construct_bonus_id(bonus) in bonuses:
-                    bonuses[construct_bonus_id(bonus)]['bonus_val'] += bonus.bonus_val * (1 if positive else -1)
+                if construct_id(bonus) in bonuses:
+                    bonuses[construct_id(bonus)]['val'] += bonus.val * (1 if positive else -1)
                 else:
-                    bonuses[construct_bonus_id(bonus)] = {
-                        'bonus_type': bonus.bonus_type,
-                        'bonus_key': bonus.bonus_key,
-                        'bonus_val': bonus.bonus_val * (1 if positive else -1)
+                    bonuses[construct_id(bonus)] = {
+                        'type': bonus.type,
+                        'key': bonus.key,
+                        'val': bonus.val * (1 if positive else -1)
                     }
                 return bonuses
             
             bonuses = {}
-            for bonus in self.bonus_manager.bonuses.values():
-                bonuses = construct_bonus_dict(bonuses, bonus, positive = True)
+            for bonus in self.manager.bonuses.values():
+                bonuses = construct_dict(bonuses, bonus, positive = True)
 
             if eq != None:
-               for bonus in eq.bonus_manager.bonuses.values():
-                    bonuses = construct_bonus_dict(bonuses, bonus, positive = False)
+               for bonus in eq.manager.bonuses.values():
+                    bonuses = construct_dict(bonuses, bonus, positive = False)
 
             for bonus in bonuses.values():
-                #output += f"{'@goodLearn ' if bonus['bonus_val'] >= 1 else '@badForgor'}@normal {SKILLS[bonus['bonus_key']]['name']} \n"
-                if bonus['bonus_key'] in identifier.skill_manager.skills:
-                    val = bonus['bonus_val']
-                    curr = identifier.skill_manager.skills[bonus['bonus_key']] 
+                #output += f"{'@goodLearn ' if bonus['val'] >= 1 else '@badForgor'}@normal {SKILLS[bonus['key']]['name']} \n"
+                if bonus['key'] in identifier.skill_manager.skills:
+                    val = bonus['val']
+                    curr = identifier.skill_manager.skills[bonus['key']] 
                     new = curr + val
                     print(new,curr,val)
                     if new > curr:
-                        output += f"@goodUpgrade@back {SKILLS[bonus['bonus_key']]['name']}\n"
+                        output += f"@goodUpgrade@back {SKILLS[bonus['key']]['name']}\n"
                     elif new < curr and new >= 1:
-                        output += f"@badDowngrade@back {SKILLS[bonus['bonus_key']]['name']}\n"
+                        output += f"@badDowngrade@back {SKILLS[bonus['key']]['name']}\n"
                     elif new <= 0:
-                        output += f"@badForget@back {SKILLS[bonus['bonus_key']]['name']}\n"
+                        output += f"@badForget@back {SKILLS[bonus['key']]['name']}\n"
                     else: 
                         continue
                 else:
-                    output += f"{'@goodLearn@back ' if bonus['bonus_val'] >= 1 else '@badForget@back'}@normal {SKILLS[bonus['bonus_key']]['name']} \n"
+                    output += f"{'@goodLearn@back ' if bonus['val'] >= 1 else '@badForget@back'}@normal {SKILLS[bonus['key']]['name']} \n"
 
             print(bonuses)
 
@@ -342,7 +342,7 @@ class Equipment(Item):
 
         
 
-        output = output + t.get_table() + self.bonus_manager.read_bonuses()
+        output = output + t.get_table() + self.manager.read_bonuses()
         
         return output
 

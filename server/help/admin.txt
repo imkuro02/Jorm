@@ -4,7 +4,7 @@ Title: Admin commands
 Teleport to a player
 teleport: "teleport [player name]" teleports you to that player 
 
-Display all information about an entity
+Display all information about an actor
 export: "export [item name]" or "export [character name]"
 
 Kick a player

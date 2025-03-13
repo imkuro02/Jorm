@@ -4,9 +4,10 @@ from items.misc import Item
 from skills.manager import use_skill_from_consumable, get_skills
 
 class ConsumableSkillManager:
-    def __init__(self, owner):
-        self.owner = owner
+    def __init__(self, item):
+        self.item = item
         self.skills = []
+        
 class Consumable(Item):
     def __init__(self):
         super().__init__()

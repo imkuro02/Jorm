@@ -4,7 +4,7 @@ from items.manager import load_item
 
 
 #               proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.enemy_id, 1)
-#                entity.quest_manager.propose_objective_count_addition(proposal)
+#                owner.quest_manager.propose_objective_count_addition(proposal)
 class InventoryManager:
     def __init__(self, owner, limit = 20):
         self.owner = owner

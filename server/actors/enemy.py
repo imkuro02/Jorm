@@ -60,7 +60,7 @@ class Enemy(Actor):
         self.combat_loop = copy.deepcopy(combat_loop)
 
         self.ai = enemy_ai.AIBasic(self)
-        self.room.move_entity(self)
+        self.room.move_actor(self)
 
     def sendLine(self, line):
         print(f'sendLine called in a enemy function? line: {line}')
@@ -69,7 +69,7 @@ class Enemy(Actor):
         super().tick()
         self.ai.tick()
 
-    def drop_loot(self,entity):
+    def drop_loot(self,actor):
         all_items = ITEMS
         
         for item in self.loot: 
@@ -85,10 +85,10 @@ class Enemy(Actor):
             #        new_item.stat_manager.stats[stat] = new_item.stat_manager.stats[stat] + 1
 
             
-            if entity.inventory_manager.add_item(new_item):   
-                entity.sendLine(f'You loot {new_item.name}')
+            if actor.inventory_manager.add_item(new_item):   
+                actor.sendLine(f'You loot {new_item.name}')
             else:
-                entity.sendLine(f'Your inventory is full and you missed out on {new_item.name}')
+                actor.sendLine(f'Your inventory is full and you missed out on {new_item.name}')
 
     def die(self):
         
@@ -102,12 +102,12 @@ class Enemy(Actor):
             super().die()
             return
         
-        for entity in self.room.combat.participants.values():
-            if type(entity).__name__ == "Player":
-                entity.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
-                self.drop_loot(entity)
+        for actor in self.room.combat.participants.values():
+            if type(actor).__name__ == "Player":
+                actor.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
+                self.drop_loot(actor)
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.enemy_id, 1)
-                entity.quest_manager.propose_objective_count_addition(proposal)
+                actor.quest_manager.propose_objective_count_addition(proposal)
                 
         super().die()
 
