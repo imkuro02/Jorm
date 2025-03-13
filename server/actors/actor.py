@@ -274,11 +274,13 @@ class Actor:
             print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
             return
         
+        self.status = ActorStatusType.DEAD
+        
         if self.room.combat != None:
             if self.room.combat.current_actor == self:
                 self.room.combat.next_turn()
 
-        self.status = ActorStatusType.DEAD
+        
 
         # create a temporary corpse item 
         # this items name and description is NOT stored in db
