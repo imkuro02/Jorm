@@ -249,7 +249,7 @@ class Equipment(Item):
                     val = bonus['val']
                     curr = identifier.skill_manager.skills[bonus['key']] 
                     new = curr + val
-                    print(new,curr,val)
+                    #print(new,curr,val)
                     if new > curr:
                         output += f"@goodUpgrade@back {SKILLS[bonus['key']]['name']}\n"
                     elif new < curr and new >= 1:
@@ -261,7 +261,7 @@ class Equipment(Item):
                 else:
                     output += f"{'@goodLearn@back ' if bonus['val'] >= 1 else '@badForget@back'}@normal {SKILLS[bonus['key']]['name']} \n"
 
-            print(bonuses)
+            #print(bonuses)
 
             
 
