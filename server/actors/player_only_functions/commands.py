@@ -35,7 +35,9 @@ shortcuts_to_commands = {
     'n':    'go north',
     'e':    'go east',
     's':    'go south',
-    'w':    'go west'
+    'w':    'go west',
+    'u':    'go up',
+    'd':    'go down'
 
 }
 # one letter command mapper

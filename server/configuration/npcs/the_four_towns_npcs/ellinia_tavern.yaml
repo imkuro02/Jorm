@@ -1,0 +1,45 @@
+ellinia_tavern:
+  name: Christine
+  description: |
+    Christine the tavernkeep is a fucking bitch, a fucking skank. fuck that hag
+  tree:
+    start:
+      dialog: |
+        says "Hello traveler"
+      options:
+        - say: I want to become a mage
+          goto: quest_start_apprentice_emblem
+          quest_check:
+            - id: apprentice_emblem_mage
+              state: not_started
+
+        - say: Hello!
+          goto: hello
+         
+    end:
+      dialog: |
+        says "Farewell"
+
+    hello:
+      dialog: |
+        says "Hello!"
+      options:
+        - say: Hello!
+          goto: hello
+
+    quest_start_apprentice_emblem:
+      dialog: |
+        says "Well, you should go ahead and speak to Grendel then. He is not only the towns elder, but also a powerful mage"
+      options:
+        - say: Thanks
+          goto: end
+        - say: Where is he?
+          goto: quest_start_apprentice_emblem2
+
+    quest_start_apprentice_emblem2:
+      dialog: |
+        says "He lives at the top of the largest tree in town, there is even a shortcut hollowed out in the tree's trunk for easy travel from here to the top."
+
+        
+
+        
