@@ -176,7 +176,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'description':  str_with_newlines(x['description'][index]),
                 'item_type':    'equipment',
                 'slot':         x['slot'][index],
-                'base_skill':   x['base_skill'][index],
+                'bonuses':   x['bonuses'][index],
                 'stats': {
                     'grit':     int(x['grit'][index]),
                     'hp_max':   int(x['hp_max'][index]),

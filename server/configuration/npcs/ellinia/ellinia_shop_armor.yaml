@@ -1,7 +1,7 @@
 ellinia_shop_armor:
-  name: Len
+  name: Template npc
   description: |
-    Len is seen in the back of the store mixing seemingly random ingredients in a cauldron.
+    template
   tree:
     start:
       dialog: |

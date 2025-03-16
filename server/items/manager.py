@@ -39,14 +39,19 @@ def load_item(item_premade_id, unique_id = None): # unique_id is used for equipm
             unique_id = new_item.id
 
         # 0 is the placeholder for no skill
-        if ITEMS[premade_id]['base_skill'] != 0:
-            boon = EquipmentBonus(  
-                                    type = 'skill_level', 
-                                    key = ITEMS[premade_id]['base_skill'], 
-                                    val = 1,
-                                    premade_bonus = True
-                                )
-            new_item.manager.add_bonus(boon)
+        if ITEMS[premade_id]['bonuses'] != 0:
+            for b in ITEMS[premade_id]['bonuses'].split(','):
+                _type = b.split(':')[0]
+                _key = b.split(':')[1].split('=')[0]
+                _val = int(b.split('=')[1])
+                #print(b)
+                boon = EquipmentBonus(  
+                                        type = _type, 
+                                        key = _key, 
+                                        val = _val,
+                                        premade_bonus = True
+                                    )
+                new_item.manager.add_bonus(boon)
 
 
             

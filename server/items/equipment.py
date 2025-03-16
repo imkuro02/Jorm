@@ -160,7 +160,7 @@ class Equipment(Item):
 
     def identify(self, identifier = None):
         output = super().identify()
-
+        output += f'@tipEquipment slot:@normal {EquipmentSlotType.name[self.slot]}\n'
         output += '@tipRequirements to equip:@normal\n'
         t = Table(2,3)
         ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]

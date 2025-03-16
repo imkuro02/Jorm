@@ -72,7 +72,7 @@ class Dialog:
 
     def print_dialog(self):
         output = f'{self.npc.pretty_name()} '+self.dialog_tree[self.current_line]['dialog']+'@normal'
-        print('>',output)
+        #print('>',output)
         
         # if there is only one option, that option is end
         # so dont print anything dialogue should end
