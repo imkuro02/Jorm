@@ -96,9 +96,10 @@ class Player(Actor):
         self.last_line_sent = line
 
         command = line.split()[0]
-        line = " ".join(line.split()[1::]).strip()
+        full_line =  line
+        line = " ".join(line.split()[1::]).strip() 
 
-        if command in shortcuts_to_commands:
+        if full_line in shortcuts_to_commands:
             self.handle(shortcuts_to_commands[command])
             return
 
