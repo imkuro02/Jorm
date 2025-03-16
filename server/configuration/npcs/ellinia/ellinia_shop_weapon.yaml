@@ -1,0 +1,25 @@
+ellinia_shop_weapon:
+  name: Len
+  description: |
+    Len is seen in the back of the store mixing seemingly random ingredients in a cauldron.
+  tree:
+    start:
+      dialog: |
+        says "Hello"
+      options:
+        - say: Hello!
+          goto: hello
+         
+    end:
+      dialog: |
+        says "Farewell"
+
+    hello:
+      dialog: |
+        says "Hello!"
+      options:
+        - say: Hello!
+          goto: hello
+
+
+

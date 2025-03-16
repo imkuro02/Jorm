@@ -1,0 +1,28 @@
+ellinia_shop_potion:
+  name: Len the fairy
+  description: |
+    Len is seen in the back of the store mixing seemingly random ingredients in a cauldron.
+  tree:
+    start:
+      dialog: |
+        says "Hello"
+      options:
+        - say: Hello!
+          goto: hello
+        - say: What do you have for sale?
+          goto: list
+    list:
+      dialog: |
+        says "Currently? nothing! im out of ingredients"
+    end:
+      dialog: |
+        says "Farewell"
+    hello:
+      dialog: |
+        says "Hello!"
+      options:
+        - say: Hello!
+          goto: hello
+
+
+

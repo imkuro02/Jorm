@@ -26,7 +26,7 @@ class Dialog:
             # the players wont be able to access it because of end_dialog() anyway
             if self.current_line == 'end':
                 return options
-            options.append({'index':0, 'say': 'bye', 'goto': 'end'})
+            options.append({'index':0, 'say': 'Bye', 'goto': 'end'})
             return options
 
         i = 1
@@ -67,25 +67,27 @@ class Dialog:
 
             i += 1
 
-        options.append({'index':0, 'say': 'bye', 'goto': 'end'})
+        options.append({'index':0, 'say': 'Bye', 'goto': 'end'})
         return options
 
     def print_dialog(self):
         output = f'{self.npc.pretty_name()} '+self.dialog_tree[self.current_line]['dialog']+'@normal'
+        print('>',output)
         
         # if there is only one option, that option is end
         # so dont print anything dialogue should end
-        if len(self.get_valid_options()) >= 2:
-            for i in self.get_valid_options():
-                output += f'{i["index"]}: {i["say"]}\n'
+
+        #if len(self.get_valid_options()) >= 2:
+        for i in self.get_valid_options():
+            output += f'{i["index"]}: {i["say"]}\n'
 
 
         self.player.sendLine(f'{output}')
 
         # if this is the end, or there is only one option
         # end dialogue
-        if len(self.get_valid_options()) <= 1:
-            self.end_dialog()
+        #if len(self.get_valid_options()) <= 1:
+        #    self.end_dialog()
         if self.current_line == 'end':
             self.end_dialog()
 
