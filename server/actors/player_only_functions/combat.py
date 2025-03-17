@@ -11,10 +11,7 @@ def command_fight(self, line):
     #    self.sendLine(error_output)
 
     if self.status == ActorStatusType.FIGHTING:
-        action = self.ai.get_best_skill()
-        if action != None:
-            use_skill(self, action[1], action[0])
-            self.finish_turn()
+        self.ai.tick()
         return
     
     if self.party_manager.party == None:

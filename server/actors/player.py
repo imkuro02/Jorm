@@ -8,7 +8,8 @@ import actors.player_only_functions.commands
 from configuration.config import StatType
 import time
 
-from actors.enemy_ai import AIBasic
+#from actors.enemy_ai import AIBasic
+from actors.ai import PlayerAI
 
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
@@ -33,7 +34,7 @@ class Player(Actor):
         self.date_of_last_login = utils.get_unix_timestamp()
         self.time_in_game = 0
 
-        self.ai = AIBasic(self)
+        self.ai = PlayerAI(self)
 
     def tick(self):
         super().tick()

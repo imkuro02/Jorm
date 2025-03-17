@@ -2,9 +2,10 @@ from twisted.internet import reactor, protocol, ssl, task
 from protocol import Protocol
 from world import World
 from database import Database
-from utils import logging 
+from utils import logging, Table
 import configuration.config as config
 config.load()
+import time
 
 
 class ServerFactory(protocol.Factory):
@@ -13,17 +14,21 @@ class ServerFactory(protocol.Factory):
         
         self.db = Database()
         self.ticks_passed = 0
+        self.runtime = time.time()
+        self.start = time.time()
         self.tickrate: int = 30
         self.world = World(self)
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)
 
         logging.info('Server started')
+        
 
         # where the actors will be stored for rank command
         self.ranks = {}
         
     def tick(self):
+        
         self.ticks_passed += 1
         self.world.tick()
         #for room in self.world.rooms.values():
@@ -33,6 +38,10 @@ class ServerFactory(protocol.Factory):
                 if i.actor != None:
                     self.db.write_actor(i.actor)
             self.ranks = self.db.find_all_accounts()
+
+        self.runtime = time.time() - self.start
+        #if self.runtime > self.ticks_passed/30:
+        #print(self.ticks_passed, self.runtime, self.ticks_passed/30 , '\r')
 
     def buildProtocol(self, addr):
         return Protocol(self)

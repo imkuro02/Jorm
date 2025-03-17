@@ -1,18 +1,11 @@
 from actors.actor import Actor
-
-import actors.enemy_ai as enemy_ai
-
 import random
-
 import copy
-
 from configuration.config import StatType, ItemType, ENEMIES, ITEMS
-
 from items.manager import load_item
-
 from configuration.config import ITEMS
-
 from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
+from actors.ai import EnemyAI
 
 def create_enemy(room, enemy_id, spawn_for_lore = False):
     if enemy_id not in ENEMIES:
@@ -59,7 +52,7 @@ class Enemy(Actor):
         self.skill_manager.skills = copy.deepcopy(skills)
         self.combat_loop = copy.deepcopy(combat_loop)
 
-        self.ai = enemy_ai.AIBasic(self)
+        self.ai = EnemyAI(self)
         self.room.move_actor(self)
 
     def sendLine(self, line):
