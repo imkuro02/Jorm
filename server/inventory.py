@@ -80,8 +80,3 @@ class InventoryManager:
     def all_items_set_new(self, new = False):
         for i in self.items.values():
             i.new = new
-
-
-
-
-    

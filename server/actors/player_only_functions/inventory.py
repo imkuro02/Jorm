@@ -14,6 +14,22 @@ def command_trade(self, line):
 @check_not_in_combat
 @check_alive
 def command_get(self, line):
+    if line.lower() == 'all':
+        items_to_get = []
+        for item in self.room.inventory_manager.items.values():
+            items_to_get.append(item)
+
+        for item in items_to_get:
+            if self.inventory_manager.add_item(item):
+                self.room.inventory_manager.remove_item(item)
+                self.simple_broadcast(
+                    f'You get {item.name}',
+                    f'{self.pretty_name()} gets {item.name}'
+                    )
+            else:
+                self.sendLine('Your Inventory is full')
+        return
+
     item = self.get_item(line, search_mode = 'room')
     if item == None:
         self.sendLine('Get what?')
@@ -32,10 +48,34 @@ def command_get(self, line):
 @check_not_in_combat
 @check_alive
 def command_drop(self, line):
+    if line.lower() == 'all':
+        items_to_drop = []
+        for item in self.inventory_manager.items.values(): 
+            if item.keep:
+                #self.sendLine('Can\'t drop kept items')
+                continue
+            if item.item_type == ItemType.EQUIPMENT:
+                if item.equiped:
+                    #self.sendLine('Can\'t drop equiped items')
+                    continue
+            items_to_drop.append(item)
+
+        for item in items_to_drop:
+            self.room.inventory_manager.add_item(item)
+            self.inventory_manager.remove_item(item)
+
+            self.simple_broadcast(
+                f'You drop {item.name}',
+                f'{self.pretty_name()} drops {item.name}'
+                )
+        
+        return
+
     item = self.get_item(line)
     if item == None:
         self.sendLine('Drop what?')
         return
+
     if item.keep:
         self.sendLine('Can\'t drop kept items')
         return
@@ -43,6 +83,7 @@ def command_drop(self, line):
         if item.equiped:
             self.sendLine('Can\'t drop equiped items')
             return
+
     self.room.inventory_manager.add_item(item)
     self.inventory_manager.remove_item(item)
     self.simple_broadcast(
