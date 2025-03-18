@@ -27,7 +27,7 @@ def read_from_ods_file():
     SHEET['enemy_skills'] =        read_ods(file_path, 'enemy_skills')
     SHEET['loot'] =                read_ods(file_path, 'loot')
     SHEET['enemies'] =             read_ods(file_path, 'enemies')
-    SHEET['enemy_combat_loop'] =   read_ods(file_path, 'enemy_combat_loop')
+    #SHEET['enemy_combat_loop'] =   read_ods(file_path, 'enemy_combat_loop')
     end = time.time()
     print(end - start,'LOADING OF CONFIG.ODS')
 
@@ -126,10 +126,10 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
                 'can_be_practiced':         bool(x['can_be_practiced'][index]),
                 'level_req':                x['level_req'][index],
                 'use_perspectives':         USE_PERSPECTIVES[x['use_perspectives'][index]],
-                'weight_low_hp_ally':       x['weight_low_hp_ally'][index],
-                'weight_high_hp_ally':      x['weight_high_hp_ally'][index],
-                'weight_low_hp_enemy':      x['weight_low_hp_enemy'][index],
-                'weight_high_hp_enemy':     x['weight_high_hp_enemy'][index],
+                #'weight_low_hp_ally':       x['weight_low_hp_ally'][index],
+                #'weight_high_hp_ally':      x['weight_high_hp_ally'][index],
+                #'weight_low_hp_enemy':      x['weight_low_hp_enemy'][index],
+                #'weight_high_hp_enemy':     x['weight_high_hp_enemy'][index],
                 'is_offensive':             x['is_offensive'][index]
             }
 
@@ -285,6 +285,7 @@ def configure_ENEMIES(SHEET):
     end = time.time()
     print(end - start,'ENEMY_SKILLS')
 
+    '''
     start = time.time()
     # ADD ENEMY COMBAT LOOP
     TEMP_ENEMY_COMBAT_LOOP = {}
@@ -318,7 +319,7 @@ def configure_ENEMIES(SHEET):
 
     end = time.time()
     print(end - start,'ENEMY_COMBAT_LOOP')
-
+    '''
     return ENEMIES
 
 def load():
