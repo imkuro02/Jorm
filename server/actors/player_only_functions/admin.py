@@ -58,10 +58,7 @@ def command_ranks(self, line):
     self.sendLine(output)
 
 
-def prompt(self):
-    output = f'[@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal '
-    output += f'@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal]'
-    return utils.add_color(output)
+
 
 def command_send_prompt(self, line):
     self.sendLine(self.prompt())

@@ -17,7 +17,7 @@ class Combat:
             else: 
                 p.stat_manager.stats[StatType.THREAT] = 0  
 
-        self.initiative()
+        #self.initiative()
         
     def add_participant(self, participant):
         participant.status = ActorStatusType.FIGHTING
@@ -154,6 +154,7 @@ class Combat:
             if i.status != ActorStatusType.DEAD:
                 self.order.append(i)
         
+        """
         for i in self.order:
             if type(i).__name__ == "Player":
                 combat_stats = f'\n@yellowCombat overview (Round {self.round})@normal:'
@@ -162,7 +163,7 @@ class Combat:
                     combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stat_manager.stats[StatType.HP]}@normal/@red{participant.stat_manager.stats[StatType.HPMAX]}@normal]'''
                 i.sendLine(combat_stats)
                 #i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
-        
+        """
         self.round += 1
         for i in self.order:
             i.status = ActorStatusType.FIGHTING

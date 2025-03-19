@@ -22,6 +22,8 @@ def command_fight(self, line):
         else:
             self.sendLine('You are not the party leader')
 
+    
+
 @check_alive
 def command_pass_turn(self, line):
     if self.room.combat == None:

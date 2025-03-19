@@ -156,6 +156,7 @@ class Room:
 
             if players_here and npcs_here:
                 self.combat = Combat(self, participants)
+                self.combat.initiative()
         else:
             self.combat.add_participant(player_participant)
 

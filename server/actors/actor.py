@@ -166,6 +166,22 @@ class Actor:
 
         self.recently_send_message_count = 0
    
+    def prompt(self):
+        hp =    self.stat_manager.stats[StatType.HP]
+        mhp =   self.stat_manager.stats[StatType.HPMAX]
+        mp =    self.stat_manager.stats[StatType.MP]
+        mmp =   self.stat_manager.stats[StatType.MPMAX]
+        if hp <= 0:
+            output = f'[@red{hp}@normal/@red{mhp}@normal] (@red0@normal%)@normal '
+        else:
+            output = f'[@red{hp}@normal/@red{mhp}@normal] (@red{int((hp/mhp)*100)}@normal%)@normal '
+
+        if mp <= 0:
+            output += f'[@cyan{mp}@normal/@cyan{mmp}@normal] (@cyan0@normal%)@normal '
+        else:   
+            output += f'[@cyan{mp}@normal/@cyan{mmp}@normal] (@cyan{int((mp/mmp)*100)}@normal%)@normal'
+        return output
+
     def talk_to(self, talker):
         if self.dialog_tree == None:
             talker.sendLine('There is nothing to talk about.')
@@ -293,7 +309,9 @@ class Actor:
 
         if type(self).__name__ != "Player":
             del self.room.actors[self.id]
+            del self.room.combat.participants[self.id]
             self.room = None
+        
 
     def simple_broadcast(self, line_self, line_others, worldwide = False):
         
@@ -344,7 +362,44 @@ class Actor:
     def set_turn(self):
         
         if type(self).__name__ == "Player":
-            output = f'@yellowYour turn.@normal {self.prompt()} @normal'
+            output = f'@yellowYour turn.@normal'
+            self.sendLine(output)
+            t = utils.Table(10,0)
+            par = self
+            hp =    par.stat_manager.stats[StatType.HP]
+            mhp =   par.stat_manager.stats[StatType.HPMAX]
+            mp =    par.stat_manager.stats[StatType.MP]
+            mmp =   par.stat_manager.stats[StatType.MPMAX]
+            t.add_data(f'[')
+            t.add_data(f'@red{hp}')
+            t.add_data(f'/')
+            t.add_data(f'@red{mhp}')
+            t.add_data(f'|')
+            t.add_data(f'@cyan{mp}')
+            t.add_data(f'/')
+            t.add_data(f'@cyan{mmp}')
+            t.add_data(f']')
+            t.add_data(f'   {par.pretty_name()}')
+
+            for par in self.room.combat.participants.values():
+                if par == self: 
+                    continue
+                hp =    par.stat_manager.stats[StatType.HP]
+                mhp =   par.stat_manager.stats[StatType.HPMAX]
+                mp =    par.stat_manager.stats[StatType.MP]
+                mmp =   par.stat_manager.stats[StatType.MPMAX]
+                t.add_data(f'[')
+                t.add_data(f'@red{hp}')
+                t.add_data(f'/')
+                t.add_data(f'@red{mhp}')
+                t.add_data(f'|')
+                t.add_data(f'@cyan{mp}')
+                t.add_data(f'/')
+                t.add_data(f'@cyan{mmp}')
+                t.add_data(f']')
+                t.add_data(f'   {par.pretty_name()}')
+            
+            output = t.get_table()
             self.sendLine(output)
 
         self.affect_manager.set_turn()
