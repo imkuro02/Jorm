@@ -309,7 +309,9 @@ class Actor:
 
         if type(self).__name__ != "Player":
             del self.room.actors[self.id]
-            del self.room.combat.participants[self.id]
+            if self.room.combat != None:
+                if self.id in self.room.combat.participants:
+                    del self.room.combat.participants[self.id]
             self.room = None
         
 
