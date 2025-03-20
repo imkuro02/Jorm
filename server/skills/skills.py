@@ -2,11 +2,13 @@ from configuration.config import DamageType, StatType, ActorStatusType
 #import affects.manager as aff_manager
 import affects.affects as affects
 from combat.damage_event import Damage
-
+from combat.damage_message import ActionReaction
 import random
+from configuration.config import SKILLS
 
 class Skill:
     def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False):
+        self.name = SKILLS[skill_id]['name']
         self.skill_id = skill_id
         self.script_values = script_values
         self.user = user
@@ -15,6 +17,7 @@ class Skill:
         self.use_perspectives = use_perspectives
         self.success = success
         self.silent_use = silent_use
+        self.action = ActionReaction(self.user, self)
 
     def get_dmg_value(self, stat_type = None):
         if 'crit' not in self.script_values or stat_type == None:
@@ -23,6 +26,46 @@ class Skill:
             dmg = self.script_values['damage'][self.users_skill_level] + int(self.user.stat_manager.stats[stat_type] * (random.randint(0,int(self.script_values['crit'][self.users_skill_level]*100))/100))
         return dmg
     
+    def print(self):
+        perspectives = {
+            'you on you':       self.use_perspectives['you on you fail'],
+            'you on other':     self.use_perspectives['you on other fail'],
+            'user on user':     self.use_perspectives['user on user fail'],
+            'user on you':      self.use_perspectives['user on you fail'],
+            'user on other':    self.use_perspectives['user on other fail']
+        }
+        if self.success:
+            perspectives = {
+                'you on you':       self.use_perspectives['you on you'],
+                'you on other':     self.use_perspectives['you on other'],
+                'user on user':     self.use_perspectives['user on user'],
+                'user on you':      self.use_perspectives['user on you'],
+                'user on other':    self.use_perspectives['user on other']
+            }
+
+        for perspective in perspectives:
+            perspectives[perspective] = perspectives[perspective].replace('#USER#', self.user.pretty_name())
+            perspectives[perspective] = perspectives[perspective].replace('#OTHER#', self.other.pretty_name())
+
+        for receiver in self.user.room.actors.values():
+
+
+            if receiver == self.user and receiver == self.other:
+                return(perspectives['you on you'])
+                
+            if receiver == self.user and receiver != self.other:
+                return(perspectives['you on other'])
+                
+            if receiver != self.user and receiver != self.other and self.user == self.other:
+                return(perspectives['user on user'])
+                
+            if receiver != self.user and receiver == self.other:
+                return(perspectives['user on you'])
+                
+            if receiver != self.user and receiver != self.other:
+                return(perspectives['user on other'])
+                
+                
     def use_broadcast(self):
         perspectives = {
             'you on you':       self.use_perspectives['you on you fail'],
@@ -70,7 +113,9 @@ class Skill:
 
         if self.silent_use:
             return
-        self.use_broadcast()
+        #self.use_broadcast()
+        
+        
 
 
 class SkillSwing(Skill):
@@ -89,6 +134,7 @@ class SkillSwing(Skill):
             #dmg = base + amp
             dmg = self.get_dmg_value(my_dmg_scaling)
             damage_obj = Damage(
+                action = self.action,
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = dmg,
@@ -102,6 +148,7 @@ class SkillCureLightWounds(Skill):
         if self.success:
             dmg = self.get_dmg_value(StatType.SOUL)
             damage_obj = Damage(
+                action = self.action,
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = dmg,
@@ -114,6 +161,7 @@ class SkillBash(SkillSwing):
         damage_dealt = super().use()
         if self.success:
             stunned_affect = affects.AffectStunned(
+                self.action,
                 self.other.affect_manager,
                 'Stunned', 'Unable to act during combat turns',
                 turns = 1
@@ -128,6 +176,7 @@ class SkillDamage(Skill):
         if self.success:
             dmg = self.get_dmg_value(my_dmg_scaling)
             damage_obj = Damage(
+                action = self.action,
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = dmg,
@@ -141,6 +190,7 @@ class SkillDoubleWhack(Skill):
         for i in range(0,2):
             dmg = self.get_dmg_value(StatType.FLOW)
             damage_obj = Damage(
+                action = self.action,
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = dmg,
@@ -173,6 +223,7 @@ class SkillBecomeEthereal(Skill):
             turns = int(self.script_values['duration'][self.users_skill_level])
             dmg_amp = self.script_values['bonus'][self.users_skill_level]
             ethereal_affect = affects.AffectEthereal(
+                self.action,
                 self.other.affect_manager, 
                 'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
                 turns, dmg_amp)
@@ -185,6 +236,7 @@ class SkillMageArmor(Skill):
             turns = int(self.script_values['duration'][self.users_skill_level])
             reduction = self.script_values['bonus'][self.users_skill_level]
             ethereal_affect = affects.AffectMageArmor(
+                self.action,
                 affect_manager = self.other.affect_manager, 
                 name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
                 turns = turns, reduction = reduction)
@@ -197,6 +249,7 @@ class SkillEnrage(Skill):
             turns =         int(self.script_values['duration'][self.users_skill_level])
             extra_hp =      self.script_values['bonus'][self.users_skill_level]
             enrage_affect = affects.AffectEnrage(
+                self.action,
                 affect_manager = self.other.affect_manager, 
                 name = 'Enraged', description = f'Temporary {int(extra_hp*100)}% Health', 
                 turns = turns, extra_hp = extra_hp)
@@ -209,6 +262,7 @@ class SkillLeech(Skill):
             leech_power = self.script_values['bonus'][self.users_skill_level]
             #affect_manager, name, description, turns
             leech_affect = affects.Leech(
+                self.action,
                 affect_manager = self.other.affect_manager,
                 name = 'Leeching',
                 description = f'Convert {int(leech_power*100)}% of physical damage dealt to healing.',
@@ -224,6 +278,7 @@ class SkillThorns(Skill):
         if self.success:
             damage_reflected_power = self.script_values['bonus'][self.users_skill_level]
             thorns_affect = affects.Thorns(
+                self.action,
                 affect_manager = self.other.affect_manager,
                 name = 'Thorny',
                 description = f'Reflect {int(damage_reflected_power*100)}% of physical damage back. ',
@@ -239,6 +294,7 @@ class SkillRegenHP30(Skill):
         if self.success:
             #self.other.take_damage(self.user, int(self.user.stat_manager.stats[StatType.HPMAX]*.3), DamageType.HEALING)
             damage_obj = Damage(
+                action = self.action,
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stat_manager.stats[StatType.HPMAX]*.3),
@@ -252,6 +308,7 @@ class SkillRegenMP30(Skill):
         if self.success:
             #self.other.take_damage(self.user, int(self.user.stat_manager.stats[StatType.HPMAX]*.3), DamageType.HEALING)
             damage_obj = Damage(
+                action = self.action,
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stat_manager.stats[StatType.MPMAX]*.3),

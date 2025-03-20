@@ -117,6 +117,7 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
                 )
         
         skill_obj.use()
+        skill_obj.action.print()
         del skill_obj
         
 
@@ -165,6 +166,8 @@ def use_skill(user, target, skill_id, no_checks = False):
             )
 
         skill_obj.use()
+        skill_obj.action.print()
+        print('reaction printed')
         del skill_obj
         return True
     return False

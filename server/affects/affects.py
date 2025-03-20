@@ -1,8 +1,9 @@
 from configuration.config import DamageType, StatType
 from combat.damage_event import Damage
-
+from combat.damage_message import ReactionDamage
 class Affect:
-    def __init__(self, affect_manager, name, description, turns):
+    def __init__(self, action, affect_manager, name, description, turns):
+        self.action = action
         self.affect_manager = affect_manager
         self.actor = self.affect_manager.actor
         self.name = name
@@ -39,12 +40,15 @@ class Affect:
 
     # called whenever hp updates in any way
     def take_damage(self, damage_obj):
+        self.action = damage_obj.action
         return damage_obj
     
     def deal_damage(self, damage_obj):
+        self.action = damage_obj.action
         return damage_obj
     
     def dealt_damage(self, damage_obj):
+        self.action = damage_obj.action
         return damage_obj
 
 
@@ -58,8 +62,8 @@ class AffectStunned(Affect):
         self.actor.finish_turn()
 
 class Leech(Affect):
-    def __init__(self, affect_manager, name, description, turns, leech_power):
-        super().__init__(affect_manager, name, description, turns)
+    def __init__(self, action, affect_manager, name, description, turns, leech_power):
+        super().__init__(action, affect_manager, name, description, turns)
         self.leech_power = leech_power
 
     def dealt_damage(self, damage_obj):
@@ -69,7 +73,15 @@ class Leech(Affect):
         if damage_obj.damage_value == 0:
             return damage_obj
         
+        reaction = ReactionDamage(
+            self,
+            damage_obj.damage_source_actor,
+            round(damage_obj.damage_value * self.leech_power),
+            DamageType.HEALING
+        )
+        
         leech_heal_damage_obj = Damage(
+            action = self.action,
             damage_source_actor = self.actor,
             damage_taker_actor = self.actor,
             damage_value = round(damage_obj.damage_value * self.leech_power),
@@ -80,18 +92,30 @@ class Leech(Affect):
         return damage_obj
     
 class Thorns(Affect):
-    def __init__(self, affect_manager, name, description, turns, damage_reflected_power):
-        super().__init__(affect_manager, name, description, turns)
+    def __init__(self, action, affect_manager, name, description, turns, damage_reflected_power):
+        super().__init__(action, affect_manager, name, description, turns)
         self.damage_reflected_power = damage_reflected_power # how much in % to reflect
 
     def take_damage(self, damage_obj):
+        super().take_damage(damage_obj)
         if damage_obj.damage_type != DamageType.PHYSICAL:
             return damage_obj
 
         if damage_obj.damage_value <= 0:
             return damage_obj
         
+        reaction = ReactionDamage(
+            self,
+            damage_obj.damage_source_actor,
+            int(damage_obj.damage_value * self.damage_reflected_power),
+            DamageType.PURE
+        )
+
+        self.action.add_reaction(reaction)
+        print('reaction added')
+
         thorns_damage = Damage(
+            action = self.action,
             damage_source_actor = self.actor,
             damage_taker_actor = damage_obj.damage_source_actor,
             damage_value = int(damage_obj.damage_value * self.damage_reflected_power),
@@ -102,8 +126,8 @@ class Thorns(Affect):
         return damage_obj
 
 class AffectEthereal(Affect):
-    def __init__(self, affect_manager, name, description, turns, dmg_amp):
-        super().__init__(affect_manager, name, description, turns)
+    def __init__(self, action, affect_manager, name, description, turns, dmg_amp):
+        super().__init__(action, affect_manager, name, description, turns)
         self.dmg_amp = dmg_amp
     
     def take_damage(self, damage_obj: Damage):
@@ -129,8 +153,8 @@ class AffectEthereal(Affect):
         return damage_obj
 
 class AffectMageArmor(Affect):
-    def __init__(self, affect_manager, name, description, turns, reduction):
-        super().__init__(affect_manager, name, description, turns)
+    def __init__(self, action, affect_manager, name, description, turns, reduction):
+        super().__init__(action, affect_manager, name, description, turns)
         self.reduction = reduction
     
     def take_damage(self, damage_obj: 'Damage'):
@@ -164,8 +188,8 @@ class AffectMageArmor(Affect):
         return damage_obj
     
 class AffectEnrage(Affect):
-    def __init__(self, affect_manager, name, description, turns, extra_hp):
-        super().__init__(affect_manager, name, description, turns)
+    def __init__(self, action, affect_manager, name, description, turns, extra_hp):
+        super().__init__(action, affect_manager, name, description, turns)
         self.extra_hp = extra_hp
         self.hp = 0
 
