@@ -72,6 +72,7 @@ class Leech(Affect):
         leech_heal_damage_obj = Damage(
             damage_source_actor = self.actor,
             damage_taker_actor = self.actor,
+            damage_source_action = self,
             damage_value = round(damage_obj.damage_value * self.leech_power),
             damage_type = DamageType.HEALING,
             combat_event = damage_obj.combat_event
@@ -94,6 +95,7 @@ class Thorns(Affect):
         thorns_damage = Damage(
             damage_source_actor = self.actor,
             damage_taker_actor = damage_obj.damage_source_actor,
+            damage_source_action = self,
             damage_value = int(damage_obj.damage_value * self.damage_reflected_power),
             damage_type = DamageType.PURE,
             combat_event = damage_obj.combat_event

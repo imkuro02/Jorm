@@ -5,11 +5,13 @@ from combat.combat_event import CombatEvent
 class Damage:
     def __init__(self, 
                  damage_taker_actor,
+                 damage_source_action,
                  damage_source_actor, 
                  damage_value, damage_type, 
                  damage_to_stat = StatType.HP,
                  silent = False,
                  combat_event = None):
+        self.damage_source_action = damage_source_action
         self.damage_taker_actor = damage_taker_actor
         self.damage_source_actor = damage_source_actor
         self.damage_value = damage_value
@@ -50,7 +52,7 @@ class Damage:
                         indent(f'{self.damage_taker_actor.pretty_name()} heals {self.damage_value} {StatType.name[self.damage_to_stat]}', IndentType.MINOR)
                         )
 
-                self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
+                #self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
                 return self.damage_value
 
         
@@ -79,5 +81,5 @@ class Damage:
                     )
 
 
-        self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
+        #self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
         return self

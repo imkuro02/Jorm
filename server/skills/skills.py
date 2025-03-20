@@ -2,12 +2,13 @@ from configuration.config import DamageType, StatType, ActorStatusType
 #import affects.manager as aff_manager
 import affects.affects as affects
 from combat.damage_event import Damage
-
+from configuration.config import SKILLS
 import random
 
 class Skill:
     def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False):
         self.skill_id = skill_id
+        self.name = SKILLS[skill_id]['name']
         self.script_values = script_values
         self.user = user
         self.other = other
@@ -91,6 +92,7 @@ class SkillSwing(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
+                damage_source_action = self,
                 damage_value = dmg,
                 damage_type = DamageType.PHYSICAL
                 )
@@ -104,6 +106,7 @@ class SkillCureLightWounds(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
+                damage_source_action = self,
                 damage_value = dmg,
                 damage_type = DamageType.HEALING
                 )
@@ -130,6 +133,7 @@ class SkillDamage(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
+                damage_source_action = self,
                 damage_value = dmg,
                 damage_type = my_dmg_type
                 )
@@ -143,6 +147,7 @@ class SkillDoubleWhack(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
+                damage_source_action = self,
                 damage_value = dmg,
                 damage_type = DamageType.PHYSICAL
                 )
@@ -240,6 +245,7 @@ class SkillRegenHP30(Skill):
             #self.other.take_damage(self.user, int(self.user.stat_manager.stats[StatType.HPMAX]*.3), DamageType.HEALING)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
+                damage_source_action = self,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stat_manager.stats[StatType.HPMAX]*.3),
                 damage_type = DamageType.HEALING
@@ -253,6 +259,7 @@ class SkillRegenMP30(Skill):
             #self.other.take_damage(self.user, int(self.user.stat_manager.stats[StatType.HPMAX]*.3), DamageType.HEALING)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
+                damage_source_action = self,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stat_manager.stats[StatType.MPMAX]*.3),
                 damage_type = DamageType.HEALING,

@@ -254,6 +254,7 @@ class Actor:
                 damage_obj = Damage(
                     damage_taker_actor = self,
                     damage_source_actor = self,
+                    damage_source_action = self,
                     damage_value = 1,
                     damage_type = DamageType.HEALING,
                     silent = True
@@ -262,6 +263,7 @@ class Actor:
                 damage_obj = Damage(
                     damage_taker_actor = self,
                     damage_source_actor = self,
+                    damage_source_action = self,
                     damage_value = 1,
                     damage_type = DamageType.HEALING,
                     damage_to_stat = StatType.MP,
