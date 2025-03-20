@@ -385,7 +385,7 @@ class Actor:
             t.add_data(f'/')
             t.add_data(f'@cyan{mmp}')
             t.add_data(f']')
-            t.add_data(f'   {par.pretty_name()}')
+            t.add_data(f' {par.pretty_name()}')
 
             for par in self.room.combat.participants.values():
                 if par == self: 
@@ -403,7 +403,7 @@ class Actor:
                 t.add_data(f'/')
                 t.add_data(f'@cyan{mmp}')
                 t.add_data(f']')
-                t.add_data(f'   {par.pretty_name()}')
+                t.add_data(f' {par.pretty_name()}')
             
             output = t.get_table()
             output = output[:-1] if output.endswith("\n") else output
