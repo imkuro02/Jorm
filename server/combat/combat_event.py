@@ -23,9 +23,15 @@ class CombatEvent:
             #pop.damage_source_actor.simple_broadcast(pop,pop)
 
         #pop.damage_source_actor.simple_broadcast(output,output)
-
-        pop.damage_source_actor.stat_manager.hp_mp_clamp_update()
-        pop.damage_taker_actor.stat_manager.hp_mp_clamp_update()
+        actors = []
+        for actor in pop.damage_source_actor.room.actors.values():
+            actors.append(actor)
+        for actor in actors:
+            if actor.status == ActorStatusType.DEAD:
+                continue
+            actor.stat_manager.hp_mp_clamp_update()
+        #pop.damage_source_actor.stat_manager.hp_mp_clamp_update()
+        #pop.damage_taker_actor.stat_manager.hp_mp_clamp_update()
 
     def run(self):
         if len(self.queue) == 0:
