@@ -56,7 +56,7 @@ class AI:
             if use_skill(self.actor, target, skill_to_use):
                 self.actor.finish_turn()
                 return True
-
+            skills.remove(skill_to_use)
         self.actor.simple_broadcast('You do nothing.',f'{self.actor.pretty_name()} does nothing.')
         self.actor.finish_turn()
         return False

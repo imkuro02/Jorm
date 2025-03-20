@@ -1,5 +1,6 @@
 
-from configuration.config import StatType, DamageType
+from configuration.config import StatType, DamageType, IndentType
+from utils import indent
 from combat.combat_event import CombatEvent
 class Damage:
     def __init__(self, 
@@ -45,8 +46,8 @@ class Damage:
                 self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] += self.damage_value
                 if not self.silent:
                     self.damage_taker_actor.simple_broadcast(
-                        f'You heal {self.damage_value} {StatType.name[self.damage_to_stat]}',
-                        f'{self.damage_taker_actor.pretty_name()} heals {self.damage_value} {StatType.name[self.damage_to_stat]}'
+                        indent(f'You heal {self.damage_value} {StatType.name[self.damage_to_stat]}', IndentType.MINOR),
+                        indent(f'{self.damage_taker_actor.pretty_name()} heals {self.damage_value} {StatType.name[self.damage_to_stat]}', IndentType.MINOR)
                         )
 
                 self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
@@ -56,8 +57,8 @@ class Damage:
         if self.damage_value <= 0:
             if not self.silent:
                 self.damage_taker_actor.simple_broadcast(
-                f'You block',
-                f'{self.damage_taker_actor.pretty_name()} blocks'
+                indent(f'You block', IndentType.MINOR),
+                indent(f'{self.damage_taker_actor.pretty_name()} blocks', IndentType.MINOR)
                 )
             return self
 
@@ -66,15 +67,15 @@ class Damage:
         if self.damage_to_stat == StatType.HP:
             if not self.silent:
                 self.damage_taker_actor.simple_broadcast(
-                    f'You take {self.damage_value} damage',
-                    f'{self.damage_taker_actor.pretty_name()} takes {self.damage_value} damage'
+                    indent(f'You take {self.damage_value} damage', IndentType.MINOR),
+                    indent(f'{self.damage_taker_actor.pretty_name()} takes {self.damage_value} damage', IndentType.MINOR)
                     )
             
         if self.damage_to_stat == StatType.MP:
             if not self.silent:
                 self.damage_taker_actor.simple_broadcast(
-                    f'You lose {self.damage_value} Magicka',
-                    f'{self.damage_taker_actor.pretty_name()} loses {self.damage_value} Magicka'
+                    indent(f'You lose {self.damage_value} Magicka', IndentType.MINOR),
+                    indent(f'{self.damage_taker_actor.pretty_name()} loses {self.damage_value} Magicka', IndentType.MINOR)
                     )
 
 

@@ -17,6 +17,11 @@ SkillScriptValuesToNames = {
     'bonus':        'BONUS'
 }
 
+class IndentType:
+    NONE = 'none'
+    MINOR = 'minor'
+    MAJOR = 'major'
+    
 class ItemType:
     MISC = 'misc'
     EQUIPMENT = 'equipment'

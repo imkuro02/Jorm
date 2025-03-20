@@ -3,6 +3,7 @@ import logging
 import datetime
 import time
 import re
+from configuration.config import IndentType
 
 logging.basicConfig(
     filename=   'logs.log',     # Log file name
@@ -326,6 +327,19 @@ def add_line_breaks(input_string, max_width=80):
         else:
             output += l+'\n'
     return output
+
+def indent(line, indent: IndentType):
+    _indent = 0
+    match indent:
+        case IndentType.NONE:
+            pass
+        case IndentType.MINOR:
+            _indent = 3
+        case IndentType.MAJOR:
+            _indent = 6
+    return (' '*_indent) + line
+        
+
 
 if __name__ == '__main__':
     
