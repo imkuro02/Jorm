@@ -131,6 +131,15 @@ class Combat:
     def next_turn(self):
         team1_died = True
         team2_died = True
+        
+        actors = []
+        for actor in self.participants.values():
+            actors.append(actor)
+        for actor in actors:
+            if actor.status == ActorStatusType.DEAD:
+                continue
+            actor.stat_manager.hp_mp_clamp_update()
+
         for i in self.participants.values():
             if i.status != ActorStatusType.DEAD and type(i).__name__ == "Player":
                 team1_died = False
@@ -145,6 +154,9 @@ class Combat:
             self.initiative()
             return
         
+
+        
+
         self.current_actor = self.order[0]
         self.order.pop(0)
         self.current_actor.set_turn()

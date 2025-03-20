@@ -270,6 +270,8 @@ class Actor:
                     silent = True
                     )
                 damage_obj.run()   
+                
+        self.stat_manager.hp_mp_clamp_update()
 
     '''
     def deal_damage(self, damage_obj: Damage):
@@ -404,6 +406,7 @@ class Actor:
                 t.add_data(f'   {par.pretty_name()}')
             
             output = t.get_table()
+            output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)
 
         self.affect_manager.set_turn()
