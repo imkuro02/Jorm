@@ -9,9 +9,10 @@ from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, 
 
 def command_help(self, line):
     files = os.listdir('help')
+    file_text = [f.replace('.txt', '') for f in files]
     if line == '':
         output = f'@redNo command found, here are all commands you can use help on@normal\n'
-        for i in files:
+        for i in file_text:
             output += f'{i}\n'
         self.sendLine(output)
         return
