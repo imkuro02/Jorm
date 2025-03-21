@@ -12,7 +12,7 @@ class TestAdminCommands(unittest.TestCase):
 
         # Test with empty line
         command_help(mock_self, '')
-        mock_self.sendLine.assert_called_once_with('@redNo aaacommand found, here are all commands you can use help on@normal\ncommand1\ncommand2\n')
+        mock_self.sendLine.assert_called_once_with('@redNo command found, here are all commands you can use help on@normal\ncommand1\ncommand2\n')
 
         # Test with specific command
         mock_self.sendLine.reset_mock()
