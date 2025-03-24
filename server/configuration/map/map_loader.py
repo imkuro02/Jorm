@@ -48,6 +48,7 @@ def load_map():
                             room['description'] = i['_description']
                             room['exits'] = {}
                             room['secret_exits'] = {}
+                            room['blocked_exits'] = []
                             room['can_be_recall_site'] = False
                             room['instanced'] = False
 
@@ -117,13 +118,21 @@ def load_map():
 
         if conn['from']['direction'] != '':
             if 'secret:' not in conn['from']['direction']:
-                rooms[conn['from']['room_id']]['exits'][conn['from']['direction']] = conn['to']['room_id']
-            else:
+                if 'blocked:' in conn['from']['direction']:
+                    rooms[conn['from']['room_id']]['exits'][conn['from']['direction'].replace('blocked:','')] = conn['to']['room_id']
+                    rooms[conn['from']['room_id']]['blocked_exits'].append(conn['from']['direction'].replace('blocked:',''))
+                else:
+                    rooms[conn['from']['room_id']]['exits'][conn['from']['direction']] = conn['to']['room_id']
+            else:   
                 rooms[conn['from']['room_id']]['secret_exits'][conn['from']['direction'].replace('secret:','')] = conn['to']['room_id']
 
         if conn['to']['direction'] != '':
             if 'secret:' not in conn['to']['direction']:
-                rooms[conn['to']['room_id']]['exits'][conn['to']['direction']] = conn['from']['room_id']
+                if 'blocked:' in conn['to']['direction']:
+                    rooms[conn['to']['room_id']]['exits'][conn['to']['direction'].replace('blocked:','')] = conn['from']['room_id']
+                    rooms[conn['to']['room_id']]['blocked_exits'].append(conn['to']['direction'].replace('blocked:',''))
+                else:
+                    rooms[conn['to']['room_id']]['exits'][conn['to']['direction']] = conn['from']['room_id']
             else:
                 rooms[conn['to']['room_id']]['secret_exits'][conn['to']['direction'].replace('secret:','')] = conn['from']['room_id']
 

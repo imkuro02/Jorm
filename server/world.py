@@ -88,17 +88,18 @@ class Spawner:
 
 
     def tick(self):
-        if self.room.world.factory.ticks_passed % 120 == 0:
+        if self.room.world.factory.ticks_passed % (30*120) == 0:
             self.respawn_all()
 
 
 class Room:
-    def __init__(self, world, _id, name, description, exits, secret_exits, can_be_recall_site, instanced):
+    def __init__(self, world, _id, name, description, exits, blocked_exits, secret_exits, can_be_recall_site, instanced):
         self.world = world
         self.id = _id
         self.name = name
         self.description = description
         self.exits = exits
+        self.blocked_exits = blocked_exits
         self.secret_exits = secret_exits
         self.can_be_recall_site = can_be_recall_site
         self.instanced = instanced
@@ -110,6 +111,12 @@ class Room:
     def is_an_instance(self):
         if '/' in self.id:
             return True
+        return False
+
+    def is_enemy_present(self):
+        for i in self.actors.values():
+            if type(i).__name__ == 'Enemy':
+                return i
         return False
 
 
@@ -195,7 +202,7 @@ class Room:
             if type(actor).__name__ != 'Player':
                 return
             instanced_room_id = self.id+'/'+actor.name
-            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.secret_exits, self.can_be_recall_site, instanced=False)
+            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.blocked_exits, self.secret_exits, self.can_be_recall_site, instanced=False)
             instanced_room = self.world.rooms[instanced_room_id]
        
             #instanced_room.populate()
@@ -272,7 +279,7 @@ class World:
                 del self.rooms[r]
 
             #if room['instanced'] == True:
-            self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site'], room['instanced']) 
+            self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['blocked_exits'], room['secret_exits'], room['can_be_recall_site'], room['instanced']) 
             #else:
             #    self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
             #self.rooms[r].populate()

@@ -45,6 +45,13 @@ def command_go(self, line):
             direction = _exit
             break
 
+
+    if direction in self.room.blocked_exits:
+        e = self.room.is_enemy_present() # this returns the enemy or False if none
+        if e != False: 
+            self.sendLine(f'{e.pretty_name()} is blocking the path.')
+            return
+
     if direction == None:
         self.simple_broadcast(
             f'You walk into a wall',

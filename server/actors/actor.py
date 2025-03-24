@@ -271,7 +271,7 @@ class Actor:
                     )
                 damage_obj.run()   
                 
-        self.stat_manager.hp_mp_clamp_update()
+                self.stat_manager.hp_mp_clamp_update()
 
     '''
     def deal_damage(self, damage_obj: Damage):

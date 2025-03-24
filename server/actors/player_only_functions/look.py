@@ -338,7 +338,15 @@ def command_look(self, line):
                     see = see +'\n'
 
         exits = self.protocol.factory.world.rooms[room.id].exits
-        see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
+        blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
+        see = see + f'You can go: '
+        for exit_name in exits:
+            if exit_name not in blocked_exits:
+                see = see + f'@yellow{exit_name}@normal, '
+            else:
+                see = see + f'@red{exit_name}@normal, '
+
+        #see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         see = see + '\n'
 
         if not room.inventory_manager.is_empty():
