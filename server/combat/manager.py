@@ -69,8 +69,14 @@ class Combat:
                 team2_died = False
             i.tick()
         '''
+        participants = []
         for i in self.participants.values():
-            i.tick()
+            participants.append(i)
+        for i in participants:
+            if i in self.participants.values():
+                i.tick()
+            else:
+                print(f'{i} is not here')
 
         #if team1_died or team2_died:
         #    self.combat_over()

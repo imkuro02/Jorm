@@ -211,6 +211,13 @@ def command_load_npcs(self, line):
     from actors.enemy import create_enemy
     create_enemy(self.room, line)
 
+def command_kill(self, line):
+    actor = self.get_actor(line)
+    if actor == None:
+        self.sendLine('Kill who?')
+        return
+    actor.die()
+
 def command_export(self, line):
     list_of_actors = [actor.name for actor in self.room.actors.values()]
     list_of_inventory = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
