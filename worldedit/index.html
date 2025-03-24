@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:white;">
+<head>
+<title>MUD Mapper</title>
+
+ 
+<script type="text/javascript">
+/*
+ * MUD Mapper
+ * Designed for mapping MUDs / Dungeons
+ *
+ * Written for HTML5 Canvas
+ * Based on Virtual Graph Paper by Garrett Bartley
+ * http://www.garrettbartley.com/graphpaper.html
+ *
+ */
+
+// Declare global variables
+var global;
+var actions;
+var canvas;
+var ctx;
+var shape;
+var astar;
+
+// Use Debugger.log(string) to print out log messages to console
+var Debugger = function () { };
+Debugger.log = function (message) {
+   try {
+      console.log(message);
+   } catch (exception) {
+      return;
+   }
+}
+
+// Called when everything is ready
+function BodyLoad() {
+	canvas = document.getElementById('canvas');
+
+	// Set up the canvas context (ctx)
+	ctx = canvas.getContext('2d');
+	
+	// Set some canvas properties
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	canvas.mousedown = false;
+	
+	document.getElementById('width').value = canvas.width;
+	document.getElementById('height').value = canvas.height;
+	
+	// Global variables object and associated functions
+	global = {
+		version: 5,
+		objects: [], 	
+		spacing: 16,
+		color: 'Black', 
+		title: '',
+		selected: -1,	// currently selected object (-1 = none)
+		drawGraphPaper: true,
+		hidePrivate: false,
+
+		// Only convert the settings we want save to JSON
+		toJSON: function () {
+        	return {
+        		version: this.version,
+				width: canvas.width,
+				height: canvas.height,
+            	spacing: this.spacing,
+            	title: this.title,
+            	objects: this.objects
+        	}
+    	},
+
+		// Add a new object (square/line)
+		addObject: function(x1,y1,x2,y2,type) {
+			this.selected = this.objects.length;
+			this.objects[this.selected] = {
+				x1: x1,
+				y1: y1,
+				x2: x2,
+				y2: y2,
+				type: type,
+				color: 'Black',
+				label: '',
+				sub: '',
+				subpos: 'middle',
+				desc1: '',
+				desc2: '',
+				desc3: '',
+				desc4: '',
+				directions: '',
+				reverse: '',
+				private: false,
+			}
+
+			if (type == 'line') {
+				this.checkLine(this.objects[this.selected]);
+			}
+
+			// Update the color and label values
+			document.getElementById('color').value = 'Black';
+			document.getElementById('label').value = '';
+			document.getElementById('private').checked = false;
+			document.getElementById('desc1').value = '';
+			document.getElementById('desc2').value = '';
+			document.getElementById('desc3').value = '';
+			document.getElementById('desc4').value = '';
+			document.getElementById('directions').value = '';
+			document.getElementById('subscript').value = '';
+			document.getElementById('subscriptposition').value = 'middle';
+
+			this.color = color;
+
+			actions.update();
+		},
+
+		// Remove the last added object
+		undoObject: function() {
+			this.objects.splice(this.objects.length-1,1);
+			this.selected = -1;
+		},
+
+		// Delete the selected object
+		deleteSelected: function() {
+			if (this.selected >= 0) {
+				this.objects.splice(this.selected,1);
+				this.selected = -1;
+			}
+		},
+
+		// Delete all objects
+		resetObjects: function() {
+			this.objects = [];
+			this.selected = -1;
+		},
+
+		// Find the square object (if any) at the provided point (x,y)
+		findSquareObject: function(x,y) {
+			found = -1;
+
+			for(var i=0;i<this.objects.length;i++) {
+				if(this.objects[i].type=='square') {
+					if (this.objects[i].x1 == x && this.objects[i].y1 == y) {
+						found = i;
+						break;
+					}
+				}
+			}
+
+			return found;
+		},
+
+		// Find the line object (if any) at the provided point (x,y).
+		// This is done by calculating the distance from the point to the line.
+		findLineObject: function(x,y) {
+			found = -1;
+
+			for(var i=0;i<this.objects.length;i++) {
+				if(this.objects[i].type=='line') {
+
+					// The distance calculation assumes an infinite line so
+					// we need to make sure the point is actually near our
+					// line
+					x1=0;x2=0;y1=0;y2=0;
+
+					if (this.objects[i].x1 <= this.objects[i].x2) {
+						x1 = this.objects[i].x1;
+						x2 = this.objects[i].x2;
+					} else {
+						x1 = this.objects[i].x2;
+						x2 = this.objects[i].x1;						
+					}
+
+					if (this.objects[i].y1 <= this.objects[i].y2) {
+						y1 = this.objects[i].y1;
+						y2 = this.objects[i].y2;
+					} else {
+						y1 = this.objects[i].y2;
+						y2 = this.objects[i].y1;						
+					}
+
+					if (x >= x1 && x <= x2 && y >= y1 && y <= y2) {
+						dist = this.distanceToLine(this.objects[i].x1,
+							this.objects[i].y1,this.objects[i].x2,
+							this.objects[i].y2,x,y);
+						if (dist < (global.spacing / 2)) {
+							found = i;
+							break;
+						}
+					}
+				}
+			}
+
+			return found;			
+		},
+
+		// Distance from line (x1,y1,x2,y2) to a point (px,py)
+		// Code based on:
+		// http://developer.classpath.org/doc/java/awt/geom/Line2D-source.html
+		distanceToLine: function(x1,y1,x2,y2,px,py) {
+			pd2 = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+
+      		x = 0.0;
+      		y = 0.0;
+
+      		if (pd2 == 0) {
+          		// Points are coincident.
+          		x = x1;
+          		y = y2;
+        	} else {
+          		u = ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / pd2;
+          		x = x1 + (u * (x2 - x1));
+          		y = y1 + (u * (y2 - y1));
+        	}
+  
+ 			distSquared = (x - px) * (x - px) + (y - py) * (y - py);
+
+ 			return Math.sqrt(distSquared);
+    	},
+
+ 		// Select the specified object.
+		selectObject: function(o) {
+			this.selected = o;
+
+			this.color = this.objects[o].color;
+			document.getElementById('color').value = this.objects[o].color;
+			document.getElementById('label').value = this.objects[o].label;
+			document.getElementById('private').checked = this.objects[o].private;
+			document.getElementById('desc1').value = this.objects[o].desc1;
+			document.getElementById('desc2').value = this.objects[o].desc2;
+			document.getElementById('desc3').value = this.objects[o].desc3;
+			document.getElementById('desc4').value = this.objects[o].desc4;
+			document.getElementById('directions').value = this.objects[o].directions;
+			document.getElementById('subscript').value = this.objects[o].sub;
+			document.getElementById('subscriptposition').value = this.objects[o].subpos;
+
+			actions.update();
+		},
+
+   		// User updated the color on the main toolbar.
+		updateColor: function(color) {
+			this.color = color;
+
+			if (this.selected >= 0) {
+				this.objects[this.selected].color = color;
+				actions.update();
+			}
+		},
+
+		// User updated the label on the main toolbar.
+		updateLabel: function(label) {
+			if (this.selected >= 0) {
+				this.objects[this.selected].label = label.trim();
+				actions.update();
+			}
+		},
+
+		updatePrivate: function(private) {
+			if (this.selected >= 0) {
+				this.objects[this.selected].private = private;
+				actions.update();
+			}
+		},
+
+		// User updated descriptions on the room toolbar.
+		updateDesc1: function(desc) {
+			if (this.selected >= 0) {
+				this.objects[this.selected].desc1 = desc.trim();
+			}
+		},
+
+		updateDesc2: function(desc) {
+			if (this.selected >= 0) {
+				this.objects[this.selected].desc2 = desc.trim();
+			}
+		},
+
+		updateDesc3: function(desc) {
+			if (this.selected >= 0) {
+				this.objects[this.selected].desc3 = desc.trim();
+			}
+		},
+
+		updateDesc4: function(desc) {
+			if (this.selected >= 0) {
+				this.objects[this.selected].desc4 = desc.trim();
+			}
+		},
+
+		// User updated the subscript on the room toolbar. 
+		updateSubscript: function(subscript) {
+			if (this.selected >= 0) {
+				this.objects[this.selected].sub = subscript.trim();
+				actions.update();
+			}
+		},
+
+		updateSubscriptPosition: function(position) {
+			if (this.selected >= 0) {
+				this.objects[this.selected].subpos = position;
+				actions.update();
+			}
+		},
+
+		// User updated the title on the map toolbar
+		updateTitle: function(title) {
+			this.title = title.trim();
+			actions.update();
+		},
+
+		// User updated the canvas width on the map toolbar
+		updateWidth: function(width) {
+			canvas.width = width;
+			actions.update();
+		},
+		
+		// User updated the canvas height on the map toolbar
+		updateHeight: function(height) {
+			canvas.height = height;
+			actions.update();
+		},
+
+		updateHidePrivate: function(hidePrivate) {
+			global.hidePrivate = hidePrivate;
+			actions.update();
+		},
+
+		// Lines should always be saved left to right (priority 1)
+		// and top to bottom (priority 2)
+		checkLine: function(line) {
+			var x1 = line.x1;
+			var x2 = line.x2;
+			var y1 = line.y1;
+			var y2 = line.y2;
+
+			if (x1 > x2 || (x1 == x2 && y1 > y2))
+			{
+				line.x1 = x2;
+				line.y1 = y2;
+				line.x2 = x1;
+				line.y2 = y1;
+			}
+		},
+
+		validObject: function(obj) {
+			if (global.hidePrivate && obj.private) {
+				return false;
+			}
+
+			return true;
+		},
+	}
+
+	// UI actions
+	actions = {
+		// Redraw the whole page
+		update: function() {
+			canvas.redraw();
+			this.restore();
+		},
+
+		// Redraw all the objects.
+		restore: function() {
+			var room = document.getElementById('room');
+			room.style.display = 'none';
+
+			// Draw lines first
+			for(var i=0;i<global.objects.length;i++) {
+				if(global.objects[i].type=='line' &&
+					global.validObject(global.objects[i])) {
+					if (i == global.selected) {
+						// Highlight the selected line
+						shape.highlight(global.objects[i]);
+					}
+
+					shape.draw(global.objects[i]);
+				}
+			}
+
+			// Then draw squares
+			for(var i=0;i<global.objects.length;i++) {
+				if(global.objects[i].type=='square' &&
+					global.validObject(global.objects[i])) {
+					if (i == global.selected) {
+						// Highlight the selected square
+						shape.highlight(global.objects[i]);
+
+						room.style.display = 'block';
+					}
+
+					shape.draw(global.objects[i]);
+				}
+			}
+		},
+
+		// Remove the last drawn object
+		undo: function() {
+			global.undoObject();
+			this.update();
+		},
+
+		// Removed the selected object
+		delete: function() {
+			global.deleteSelected();
+			this.update();
+		},
+
+		// Clear all the objects
+		clear: function() {
+			global.resetObjects();
+			this.update();
+		},
+
+		sortObjects: function() {
+ 			var sorted = global.objects.slice(0);
+
+ 			sorted.sort(function(a,b) {
+  				if (a.y1 < b.y1) return -1;
+  				if (a.y1 > b.y1) return 1;
+  				if (a.x1 < b.x1) return -1;
+  				if (a.x1 > b.x1) return 1;
+  				return 0;
+			});
+
+			return sorted;
+		},
+
+ 		autoUpdate: function() {
+			astar.init();
+
+ 			var sorted = this.sortObjects();
+ 			var subscript = 1;
+
+ 			for(var i=0;i<sorted.length;i++) {
+				if(sorted[i].type=='square' ) {
+					if (global.validObject(sorted[i]) && sorted[i].desc1 != '') {
+						sorted[i].sub = subscript;
+						subscript++;
+
+						var path = astar.search(sorted[i],false);
+						sorted[i].directions = path.join(";");
+
+						path = astar.search(sorted[i],true);
+						sorted[i].reverse = path.join(";");
+					} else {
+						sorted[i].sub = '';
+					}
+				}
+			}
+
+			this.update();
+		},
+
+		shift: function(xoff,yoff) {
+ 			for(var i=0;i<global.objects.length;i++) {
+ 				global.objects[i].x1 = global.objects[i].x1 + xoff*global.spacing;
+				global.objects[i].x2 = global.objects[i].x2 + xoff*global.spacing;
+				global.objects[i].y1 = global.objects[i].y1 + yoff*global.spacing;
+				global.objects[i].y2 = global.objects[i].y2 + yoff*global.spacing;
+			}
+
+			this.update();
+		},
+
+		// Automatically save text file to disk
+		saveFile: function(filename,text) {
+			var textFileAsBlob = new Blob([text], {type:'text/plain'});
+
+			var downloadLink = document.createElement("a");
+			downloadLink.download = filename;
+
+			downloadLink.innerHTML = "Download File";
+			if (window.webkitURL != null)
+			{
+				// Chrome allows the link to be clicked
+				// without actually adding it to the DOM.
+				downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+			}
+			else
+			{
+				// Firefox requires the link to be added to the DOM
+				// before it can be clicked.
+				downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+				downloadLink.onclick = destroyClickedElement;
+				downloadLink.style.display = "none";
+				document.body.appendChild(downloadLink);
+			}
+
+			downloadLink.click();
+		},
+
+		// Save the map data to disk (in JSON format)
+		save: function() {
+			var filename = 'mapper.json';
+			if (global.title != undefined && global.title != '') {
+				filename = global.title + '.json';
+			}
+
+			var text = JSON.stringify(global,null,"\t");
+
+			this.saveFile(filename, text);
+		},
+
+		// Load the map from disk
+		load: function(files) {
+    		var file = files[0];
+
+      		var fileReader = new FileReader();
+			fileReader.onload = function(fileLoadedEvent) 
+			{
+				var textFromFileLoaded = fileLoadedEvent.target.result;
+				var data = JSON.parse(textFromFileLoaded);
+
+				global.objects = data.objects;
+				global.spacing = data.spacing;
+
+				global.title = data.title;
+				document.getElementById('title').value = global.title;
+
+				if (data.version >= 2) {
+					canvas.width = data.width;
+					canvas.height = data.height;
+					document.getElementById('width').value = canvas.width;
+					document.getElementById('height').value = canvas.height;
+				}
+				
+				for(var i=0;i<global.objects.length;i++) {
+					if (data.version < 3) {
+						global.objects[i].desc1 = '';
+						global.objects[i].desc2 = '';
+						global.objects[i].desc3 = '';
+						global.objects[i].desc4 = '';
+					}
+
+					if (data.version < 4) {
+						global.objects[i].directions = '';
+						global.objects[i].reverse = '';
+
+						if (global.objects[i].type == 'line') {
+							// Lines should always be drawn left to right
+							global.checkLine(global.objects[i]);
+						}
+					}
+
+					if (data.version < 5) {
+						global.objects[i].private = false;
+					}
+				}
+
+				actions.update();
+			};
+
+			fileReader.readAsText(file);
+ 		},
+
+		// Export to PNG
+		png: function() {
+			// Remove the highlighted object first
+			global.selected = -1;
+			global.drawGraphPaper = false;
+			this.update();
+
+			window.open(canvas.toDataURL('image/png'), 'Save as PNG');
+
+			global.drawGraphPaper = true;
+			this.update();
+		},
+
+		// Export to HTML
+		html: function() {
+			var pngfilename = 'mapper.png';
+			var htmlfilename = 'mapper.html';
+
+			if (global.title != undefined && global.title != '') {
+				pngfilename = global.title + '.png';
+				htmlfilename = global.title + '.html';
+			}
+
+			var html = '';
+
+			html += '<!DOCTYPE html>\n';
+			html += '<html>\n';
+			html += '<head>\n';
+			html += '	<style>\n';
+			html += '		* {\n';
+			html += '			padding: 10;\n';
+			html += '			margin: 10;\n';
+			html += '		}\n';
+			html += '		.fit {\n';
+			html += '			max-width: 100%;\n';
+			html += '		}\n';
+			html += '		.center {\n';
+			html += '			display: block;\n';
+			html += '			margin: auto;\n';
+			html += '		}\n';
+			html += '	</style>\n';
+			html += '	<title>' + global.title + '</title>\n';
+			html += '</head>\n';
+			html += '\n';
+			html += '<body>\n';
+			html += '	<a href="' + pngfilename + '">'
+			html += '<img id="map" class="center fit" src="' + pngfilename + '"></a>\n';
+			html += '\n';
+			html += '	<table border="1" align="center">\n';
+			html += '		<tr>\n';
+			html += '			<th>No</th>\n';
+			html += '			<th>Area</th>\n';
+			html += '			<th>Enter / Exit</th>\n';
+			html += '			<th>Monster class</th>\n';
+
+			if (!global.hidePrivate) {
+				html += '			<th>Rooms</th>\n';
+			}
+
+//			html += '			<th>Directions</th>\n';
+			html += '		</tr>\n';
+
+			var sorted = this.sortObjects();
+ 			for(var i=0;i<sorted.length;i++) {
+				if(sorted[i].type=='square' && sorted[i].sub!='') {
+					html += '		<tr>\n';
+					html += '			<td>' + sorted[i].sub +   '</td>\n';
+					html += '			<td>' + sorted[i].desc1 + '</td>\n';
+					html += '			<td>' + sorted[i].desc2 + '</td>\n';
+					html += '			<td>' + sorted[i].desc3 + '</td>\n';
+
+					if (!global.hidePrivate) {
+						html += '			<td>' + sorted[i].desc4 + '</td>\n';
+					}
+
+//					html += '			<td>' + sorted[i].directions + '</td>\n';
+					html += '		</tr>\n';
+				}
+			}
+
+			html += '	</table>\n';
+			html += '</body>\n';
+			html += '</html>\n';
+			
+			this.saveFile(htmlfilename, html);
+		},
+
+		// Export speedwalks as tintin++ scripts
+		tintin: function() {
+			var scriptfile = 'mapper.tin';
+
+			if (global.title != undefined && global.title != '') {
+				scriptfile = global.title + '.tin';
+			}
+
+			var script = '';
+			
+			script += '#var realms[' + global.title + '][areas]\n';
+			script += '{\n'
+
+			var sorted = this.sortObjects();
+ 			for(var i=0;i<sorted.length;i++) {
+				if(sorted[i].type=='square' && sorted[i].sub!='' && 
+					sorted[i].directions!='') {
+					var str = sorted[i].desc1.split('\'').join('');
+					str = str.split('[').join('');
+					str = str.split(']').join('');
+					script += '    {' + str.toLowerCase() + '}'
+					script += ' {' + sorted[i].directions + '}\n';
+				}
+			}
+
+			script += '}\n';
+			
+			script += '#var realms[' + global.title + '][areasreverse]\n';
+			script += '{\n'
+
+			var sorted = this.sortObjects();
+ 			for(var i=0;i<sorted.length;i++) {
+				if(sorted[i].type=='square' && sorted[i].sub!='' &&
+					sorted[i].directions!='') {
+					var str = sorted[i].desc1.split('\'').join('');
+					str = str.split('[').join('');
+					str = str.split(']').join('');
+					script += '    {' + str.toLowerCase() + '}'
+					script += ' {' + sorted[i].reverse + '}\n';
+				}
+			}
+
+			script += '}\n';
+			
+			this.saveFile(scriptfile, script);
+		},
+	}
+
+	// Shape drawing functions
+	shape = {
+		x: 0, y: 0,
+
+		// Called on mouse down event
+		init: function(x,y) {
+			this.x = this.squareCoord(x);
+			this.y = this.squareCoord(y);
+		},
+
+		// Called on mouse up event
+		done: function(x,y) {
+			x2 = this.squareCoord(x);
+			y2 = this.squareCoord(y);
+
+			if (x2 == this.x && y2 == this.y) {
+				// Mouse didn't move.  Either draw a square or select an
+				// object.
+				o = global.findSquareObject(x2,y2);
+				if (o < 0) {
+					o = global.findLineObject(this.lineCoord(x),
+							this.lineCoord(y));
+				}
+
+				if (o < 0) {
+					global.addObject(this.x,this.y,0,0,'square');
+				} else {
+					global.selectObject(o);
+				}
+			} else {
+				// Mouse moved.  Draw line.
+				global.addObject(this.lineCoord(this.x),this.lineCoord(this.y),
+					this.lineCoord(x2),this.lineCoord(y2),'line');
+			}
+		},
+
+		// Draw the specified shape
+		draw: function(obj) {
+			ctx.fillStyle = obj.color;
+			ctx.strokeStyle = obj.color;
+
+			if (obj.type == 'square') {
+				ctx.fillRect(obj.x1,obj.y1,global.spacing,global.spacing);
+
+				if (obj.label != undefined) {
+					ctx.fillStyle = 'white'
+					ctx.textAlign = 'center';
+					ctx.textBaseline = 'middle';
+					ctx.font="bold 14px Arial";
+					ctx.fillText(obj.label,obj.x1+global.spacing/2,
+						obj.y1+global.spacing/2,global.spacing);
+				}
+
+				if (obj.sub != undefined) {
+					ctx.fillStyle = 'black'
+					ctx.textAlign = 'left';
+					ctx.textBaseline = obj.subpos;
+					ctx.font="9px Helvetica";
+					ctx.fillText(obj.sub,obj.x1+global.spacing,obj.y1);
+				}
+			} else if (obj.type == 'line') {
+      			ctx.lineWidth = 2;
+				ctx.beginPath();
+				ctx.moveTo(obj.x1,obj.y1);
+				ctx.lineTo(obj.x2,obj.y2);
+				ctx.closePath();
+				ctx.stroke();
+
+				if (obj.label != undefined) {
+					x = obj.x1+((obj.x2-obj.x1)/2);
+					y = obj.y1+((obj.y2-obj.y1)/2);
+
+					if (obj.y1 == obj.y2) {
+						// Horizontal line
+						y = y - 1;
+						ctx.textAlign = 'center';
+						ctx.textBaseline = 'bottom';
+					} else if (obj.x1 == obj.x2) {
+						// Vertical line
+						x = x + 2;
+						ctx.textAlign = 'left';
+						ctx.textBaseline = 'middle';						
+					} else {
+						// Diagonal line
+						x = x + 6;
+						ctx.textAlign = 'left';
+						ctx.textBaseline = 'middle';						
+					}
+
+					ctx.fillStyle = 'black'
+					ctx.font="bold 14px Arial";
+					ctx.fillText(obj.label,x,y);
+				}
+			}
+		},
+
+		// Draw a guide line
+		guide: function(x,y) {
+			actions.update();
+
+			object = {
+				x1: this.lineCoord(this.x),
+				y1: this.lineCoord(this.y),
+				x2: this.lineCoord(x),
+				y2: this.lineCoord(y),
+				type: 'line',
+				color: 'Black',
+				label: '',
+				sub: '',
+				subpos: 'middle'
+			};
+
+			this.draw(object);
+		},
+
+		// Highlight
+		highlight: function(obj) {
+      		ctx.lineWidth = 4;
+      		ctx.strokeStyle = 'yellow';
+
+      		ctx.beginPath();
+
+      		if (obj.type == 'square') {
+      			ctx.rect(obj.x1,obj.y1,global.spacing,global.spacing);
+ 			} else if (obj.type == 'line') {
+				ctx.moveTo(obj.x1,obj.y1);
+				ctx.lineTo(obj.x2,obj.y2);
+				ctx.closePath();
+      		}
+
+      		ctx.stroke();
+		},
+
+		// Top left corner of square on our graph paper
+		squareCoord: function(c) {
+			var coord = c - (c % global.spacing);
+			return coord;
+		},
+
+		// Center of square on our graph paper
+		lineCoord: function(c) {
+			var coord = this.squareCoord(c) + (global.spacing / 2);
+			return coord;
+		}
+	}
+
+	// javascript-astar
+	// http://github.com/bgrins/javascript-astar
+	// Freely distributable under the MIT License.
+	// Implements the astar search algorithm in javascript using a binary heap.
+	astar = {
+ 		nodes: {},
+
+    	init: function() {
+    		this.nodes = {};
+
+ 			for(var i=0;i<global.objects.length;i++) {
+				if(global.objects[i].type=='square') {
+					var key = (global.objects[i].x1+global.spacing/2) + '_' + (global.objects[i].y1+global.spacing/2);
+					this.nodes[key] = {
+						obj: global.objects[i],
+						neighbors: [],
+						directions: [],
+                		f: 0,
+                		g: 0,
+                		h: 0,
+                		cost: global.spacing*4,
+                		visited: false,
+                		closed: false,
+                		parent: null,
+                		dir: '',
+                	};
+				}
+			}
+
+ 			// Find Neighbors
+ 			for(var i=0;i<global.objects.length;i++) {
+				if(global.objects[i].type=='line') {
+					var x1 = global.objects[i].x1;
+					var x2 = global.objects[i].x2;
+					var y1 = global.objects[i].y1;
+					var y2 = global.objects[i].y2;
+
+					var xoff = 0;
+					var dir1 = 's';
+					var dir2 = 'n';
+					
+					if (x1 != x2) {
+						xoff = global.spacing;
+
+						if (y1 < y2) {
+							dir1 = 'se';
+							dir2 = 'nw';
+						} else if (y1 == y2) {
+							dir1 = 'e';
+							dir2 = 'w';
+						} else if (y1 > y2) {
+							dir1 = 'ne';
+							dir2 = 'sw';
+						}
+					}
+
+					if (global.objects[i].color != 'Black') {
+						dir1 = '';
+						dir2 = '';
+
+						if (global.objects[i].label != '') {
+							var dirs = global.objects[i].label.split('/');
+							if (dirs.length == 1) {
+								dir1 = dirs[0].trim();
+							} else if (dirs.length == 2) {
+								dir1 = dirs[0].trim();
+								dir2 = dirs[1].trim();
+							}
+						} else if (global.objects[i].color == 'Green') {
+							if (y1 < y2) {
+								dir1 = 'd';
+								dir2 = 'u';
+							} else {
+								dir1 = 'u';
+								dir2 = 'd';
+							}
+						}
+					}
+
+					var yoff = 0;
+					if (y1 < y2) {
+						yoff = global.spacing;
+					} else if (y1 > y2) {
+						yoff = -global.spacing;
+					}
+
+					var sq1 = this.nodes[x1 + '_' + y1];
+					while (x1 != x2 || y1 != y2) {
+						x1 = x1 + xoff;
+						y1 = y1 + yoff;
+
+						var sq2 = this.nodes[x1 + '_' + y1];
+						if (sq2 != undefined)
+						{
+							// Found a line segment
+							this.addNeighbor(sq1, sq2, dir1, dir2);
+							sq1 = sq2;
+						}
+					}
+				}
+			}
+   		},
+
+ 		addNeighbor: function(sq1, sq2, dir1, dir2) {
+			if (sq1 != undefined && sq2 != undefined) {
+				// connecting two rooms
+
+				if (dir1 == '' && dir2 == '') {
+					// See if the room descriptions have enter/exit
+					// commands
+					if (sq1.obj.desc2 != '') {
+						var dirs = sq1.obj.desc2.split('/');
+						if (dirs.length == 1) {
+							dir2 = dirs[0].trim();
+						} else if (dirs.length == 2) {
+							dir1 = dirs[1].trim();
+							dir2 = dirs[0].trim();
+						}
+					} else if (sq2.obj,desc2 != '') {
+						var dirs = sq2.obj.desc2.split('/');
+						if (dirs.length == 1) {
+							dir1 = dirs[0].trim();
+						} else if (dirs.length == 2) {
+							dir1 = dirs[0].trim();
+							dir2 = dirs[1].trim();
+						}	
+					}
+				}
+
+				sq1.neighbors[sq1.neighbors.length] = sq2;
+				sq1.directions[sq1.directions.length] = dir1;
+
+				sq2.neighbors[sq2.neighbors.length] = sq1;
+				sq2.directions[sq2.directions.length] = dir2;
+			}
+
+/*
+			for (var key in nodes) {
+				var node = nodes[key];
+				var exits = '';
+
+				for (var i=0;i<node.directions.length;i++) {
+					if (exits != '') {
+						exits = exits + ', ';
+					}
+
+					exits = exits + node.directions[i];
+				}
+
+				node.obj.exits = exits;
+			}
+*/
+		},
+
+		reset: function() {
+			var start = null;
+
+			for (var key in this.nodes) {
+				var node = this.nodes[key];
+				node.f = 0;
+				node.g = 0;
+				node.h = 0;
+				node.visited = false;
+				node.closed = false;
+				node.parent = null;
+				node.dir = '';
+
+                if (start == null && node.obj.label == '*') {
+                	start = node;
+                }
+			}
+
+			return start;
+		},
+
+   		heap: function() {
+        	return new BinaryHeap(function(node) { 
+            	return node.f; 
+        	});
+    	},
+
+    	search: function(node, reverse) {
+ 			var key = (node.x1+global.spacing/2) + '_' + (node.y1+global.spacing/2);
+
+ 			var end = this.nodes[key];
+
+			if (end.neighbors.length == 0) {
+				// Node isn't connected to anything
+        		return [];
+			}
+
+    		var start = this.reset();
+
+    		if (reverse == true) {
+    			end = start;
+    			start = this.nodes[key];
+    		}
+
+        	var heuristic = astar.manhattan;
+
+       		var openHeap = this.heap();
+        	openHeap.push(start);
+
+        	while(openHeap.size() > 0) {
+
+            	// Grab the lowest f(x) to process next.  Heap keeps this sorted for us.
+            	var currentNode = openHeap.pop();
+
+            	// End case -- result has been found, return the traced path.
+            	if(currentNode === end) {
+                	var curr = currentNode;
+                	var ret = [];
+                	while(curr.parent) {
+                		ret.push(curr.dir);
+                    	curr = curr.parent;
+                	}
+                	return ret.reverse();
+            	}
+
+            	// Normal case -- move currentNode from open to closed, process each of its neighbors.
+            	currentNode.closed = true;
+
+            	for(var i=0, il = currentNode.neighbors.length; i < il; i++) {
+                	var neighbor = currentNode.neighbors[i];
+
+                	if(neighbor.closed || currentNode.directions[i] == '') {
+                    	// Not a valid node to process, skip to next neighbor.
+                    	continue;
+                	}
+
+                	// The g score is the shortest distance from start to current node.
+                	// We need to check if the path we have arrived at this neighbor is the shortest one we have seen yet.
+                	var gScore = currentNode.g + neighbor.cost;
+                	var beenVisited = neighbor.visited;
+
+                	if(!beenVisited || gScore < neighbor.g) {
+
+                    	// Found an optimal (so far) path to this node.  Take score for node to see how good it is.
+                    	neighbor.visited = true;
+                    	neighbor.parent = currentNode;
+                    	neighbor.dir = currentNode.directions[i];
+                    	neighbor.h = neighbor.h || heuristic(neighbor.obj, end.obj);
+                    	neighbor.g = gScore;
+                    	neighbor.f = neighbor.g + neighbor.h;
+
+                    	if (!beenVisited) {
+                        	// Pushing to heap will put it in proper place based on the 'f' value.
+                        	openHeap.push(neighbor);
+                    	}
+                    	else {
+                        	// Already seen the node, but since it has been rescored we need to reorder it in the heap
+                        	openHeap.rescoreElement(neighbor);
+                    	}
+                	}
+            	}
+        	}
+
+        	// No result was found - empty array signifies failure to find path.
+        	return [];
+    	},
+
+    	manhattan: function(pos0, pos1) {
+        	// See list of heuristics: http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
+
+        	var d1 = Math.abs (pos1.x1 - pos0.x1);
+        	var d2 = Math.abs (pos1.y1 - pos0.y1);
+        	return d1 + d2;
+    	},
+    }
+
+	function BinaryHeap(scoreFunction){
+    	this.content = [];
+    	this.scoreFunction = scoreFunction;
+	}
+
+	BinaryHeap.prototype = {
+    	push: function(element) {
+        	// Add the new element to the end of the array.
+        	this.content.push(element);
+
+        	// Allow it to sink down.
+        	this.sinkDown(this.content.length - 1);
+    	},
+    	pop: function() {
+        	// Store the first element so we can return it later.
+        	var result = this.content[0];
+        	// Get the element at the end of the array.
+        	var end = this.content.pop();
+        	// If there are any elements left, put the end element at the
+        	// start, and let it bubble up.
+        	if (this.content.length > 0) {
+            	 this.content[0] = end;
+             	this.bubbleUp(0);
+        	}
+        	return result;
+    	},
+    	remove: function(node) {
+        	var i = this.content.indexOf(node);
+    
+        	// When it is found, the process seen in 'pop' is repeated
+        	// to fill up the hole.
+        	var end = this.content.pop();
+
+        	if (i !== this.content.length - 1) {
+            	this.content[i] = end;
+            
+            	if (this.scoreFunction(end) < this.scoreFunction(node)) {
+                	this.sinkDown(i);
+            	}
+            	else {
+                	this.bubbleUp(i);
+            	}
+        	}
+    	},
+    	size: function() {
+        	return this.content.length;
+    	},
+    	rescoreElement: function(node) {
+        	this.sinkDown(this.content.indexOf(node));
+    	},
+    	sinkDown: function(n) {
+        	// Fetch the element that has to be sunk.
+        	var element = this.content[n];
+
+        	// When at 0, an element can not sink any further.
+        	while (n > 0) {
+
+            	// Compute the parent element's index, and fetch it.
+            	var parentN = ((n + 1) >> 1) - 1,
+                	parent = this.content[parentN];
+            	// Swap the elements if the parent is greater.
+            	if (this.scoreFunction(element) < this.scoreFunction(parent)) {
+                	this.content[parentN] = element;
+                	this.content[n] = parent;
+                	// Update 'n' to continue at the new position.
+                	n = parentN;
+            	}
+
+            	// Found a parent that is less, no need to sink any further.
+            	else {
+                	break;
+            	}
+        	}
+    	},
+    	bubbleUp: function(n) {
+        	// Look up the target element and its score.
+        	var length = this.content.length,
+            	element = this.content[n],
+            	elemScore = this.scoreFunction(element);
+        
+        	while(true) {
+            	// Compute the indices of the child elements.
+            	var child2N = (n + 1) << 1, child1N = child2N - 1;
+            	// This is used to store the new position of the element,
+            	// if any.
+            	var swap = null;
+            	// If the first child exists (is inside the array)...
+            	if (child1N < length) {
+            	// Look it up and compute its score.
+            	var child1 = this.content[child1N],
+                	child1Score = this.scoreFunction(child1);
+
+            	// If the score is less than our element's, we need to swap.
+            	if (child1Score < elemScore)
+                	swap = child1N;
+            	}
+
+            	// Do the same checks for the other child.
+            	if (child2N < length) {
+                	var child2 = this.content[child2N],
+                    	child2Score = this.scoreFunction(child2);
+                	if (child2Score < (swap === null ? elemScore : child1Score)) {
+                    	swap = child2N;
+                	}
+            	}
+
+            	// If the element needs to be moved, swap it, and continue.
+            	if (swap !== null) {
+                	this.content[n] = this.content[swap];
+                	this.content[swap] = element;
+                	n = swap;
+            	}
+
+            	// Otherwise, we are done.
+            	else {
+                	break;
+            	}
+        	}
+    	}
+	}
+
+	// Clear out everything
+	canvas.clear = function() {
+		ctx.clearRect(0,0,this.width,this.height);
+	}
+
+	// Redraw everything
+	canvas.redraw = function() {		
+		this.clear();
+		
+		if (global.drawGraphPaper) {
+			// Prepare to draw the grid
+			ctx.beginPath();
+			ctx.strokeStyle = 'lightblue';
+			ctx.lineWidth = 1;
+
+			// Vertical rule
+			for(var y=global.spacing;y<this.height;y=y+global.spacing) {
+				ctx.moveTo(0,y);
+				ctx.lineTo(this.width,y);
+			}
+
+			// Horizontal rule
+			for(var x=global.spacing;x<this.width;x=x+global.spacing) {
+				ctx.moveTo(x,0);
+				ctx.lineTo(x,this.height);
+			}
+
+			// Draw the grid
+			ctx.closePath();
+			ctx.stroke();
+		}
+	}
+
+
+	canvas.getMousePos = function(evt) {
+        var rect = this.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+    }
+	  
+	canvas.onmousemove = function(e) {
+		if(!e) var e = window.event;
+		var pos = this.getMousePos(e);
+		
+		// If we're drawing a line, show the guide line
+		if(this.mousedown)
+			shape.guide(pos.x,pos.y);
+	}
+
+
+	canvas.onmousedown = function(e) {
+		if(!e) var e = window.event;
+		
+		this.mousedown = true;
+		
+		var pos = this.getMousePos(e);
+
+		shape.init(pos.x,pos.y);
+	}
+
+
+	canvas.onmouseup = function(e) {
+		if(!e) var e = window.event;
+
+		this.mousedown = false;
+		
+		var pos = this.getMousePos(e);
+
+		shape.done(pos.x,pos.y);
+	}
+		
+	// Now that all functions and objects are set, draw the grid
+	canvas.redraw();
+}
+</script>
+
+<style type="text/css">
+body {
+	margin: 0;
+}
+
+#canvas { z-index: 1; }
+
+#room {
+	z-index: 2;
+	position: fixed;
+	bottom: 355px;
+	right: 10px;
+	border: 1px solid #000;
+	background-color: #fff;
+	font-family: sans-serif;
+	font-size: 90%;
+	padding: 10px;
+	display: none;
+}
+
+#room p {
+	margin: 0;
+	clear: both;
+	line-height: 2em;
+}
+
+#room p label {
+	font-weight: bold;
+	width: 7em;
+	float: left;
+	display: inline-block;
+}
+
+#room p textarea {
+	float: left;
+	border: 1px solid #000;
+	color: black;
+	display: inline-block;
+}
+
+#room p select {
+	float: left;
+	border: 1px solid #000;
+	color: black;
+	display: inline-block;
+}
+
+#shape {
+	z-index: 3;
+	position: fixed;
+	bottom: 210px;
+	right: 10px;
+	border: 1px solid #000;
+	background-color: #fff;
+	font-family: sans-serif;
+	font-size: 90%;
+	padding: 10px;
+}
+
+#shape p {
+	margin: 0;
+	clear: both;
+	line-height: 2em;
+}
+
+#shape p label {
+	font-weight: bold;
+	width: 7em;
+	float: left;
+	display: inline-block;
+}
+
+#shape p select {
+	float: left;
+	border: 1px solid #000;
+	color: black;
+	display: inline-block;
+}
+
+#shape p textarea {
+	float: left;
+	border: 1px solid #000;
+	color: black;
+	display: inline-block;
+}
+
+#map {
+	z-index: 4;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	border: 1px solid #000;
+	background-color: #fff;
+	font-family: sans-serif;
+	font-size: 90%;
+	padding: 10px;
+}
+
+#map p {
+	margin: 0;
+	clear: both;
+	line-height: 2em;
+}
+
+#map p label {
+	font-weight: bold;
+	width: 7em;
+	float: left;
+	display: inline-block;
+}
+
+#map p textarea {
+	float: left;
+	border: 1px solid #000;
+	color: black;
+	display: inline-block;
+}
+
+</style>
+</head>
+
+<body onload="BodyLoad()">
+
+<canvas id="canvas"></canvas>
+
+<div id="room">
+	<p>
+		<label>Desc1</label>
+		<textarea id="desc1" onchange="global.updateDesc1(this.value)" rows=1
+			cols=22>
+		</textarea>
+	</p>
+
+	<p>
+		<label>Desc2</label>
+		<textarea id="desc2" onchange="global.updateDesc2(this.value)" rows=1
+			cols=22>
+		</textarea>
+	</p>
+
+	<p>
+		<label>Desc3</label>
+		<textarea id="desc3" onchange="global.updateDesc3(this.value)" rows=1
+			cols=22>
+		</textarea>
+	</p>
+
+	<p>
+		<label>Desc4</label>
+		<textarea id="desc4" onchange="global.updateDesc4(this.value)" rows=1
+			cols=22>
+		</textarea>
+	</p>
+
+	<p>
+		<label>Subscript</label>
+		<textarea id="subscript" onchange="global.updateSubscript(this.value)" rows=1
+			cols=12>
+		</textarea>
+		<select id="subscriptposition" onchange="global.updateSubscriptPosition(this.value)">
+			<option selected>middle</option>
+			<option>top</option>
+			<option>bottom</option>
+		</select>
+	</p>
+
+	<p>
+		<label>Directions</label>
+		<textarea id="directions" rows=1 cols=22 readonly="readonly">
+		</textarea>
+	</p>
+
+</div>
+
+<div id="shape">
+	<p>
+		<button onclick="actions.undo()">Undo</button>
+		<button onclick="actions.delete()">Delete</button>
+		<button onclick="actions.clear()">Clear</button>
+		<button onclick="actions.autoUpdate()">Auto</button>
+	</p>
+
+	<p>
+		<label>Color</label>
+		<select id="color" onchange="global.updateColor(this.value)">
+			<option selected>Black</option>
+			<option>Red</option>
+			<option>Orange</option>
+			<option>Green</option>
+			<option>Blue</option>
+			<option>Purple</option>
+		</select>
+	</p>
+
+	<p>
+		<label>Label</label>
+		<textarea id="label" onchange="global.updateLabel(this.value)" rows=1
+			cols=12>
+		</textarea>
+	</p>
+
+	<p>
+		<label>Private</label>
+		<input id="private" type="checkbox" onchange="global.updatePrivate(this.checked)" />
+	</p>
+</div>
+
+<div id="map">
+	<p>
+		<label>Title</label>
+		<textarea id="title" onchange="global.updateTitle(this.value)" rows=1
+			cols=22>
+		</textarea>
+	</p>
+
+	<p>
+		<label>Canvas</label>
+		<textarea id="width" onchange="global.updateWidth(this.value)" rows=1
+			cols=9>
+		</textarea>
+		<textarea id="height" onchange="global.updateHeight(this.value)" rows=1
+			cols=9>
+		</textarea>
+	</p>
+	
+	<p>
+		<label>Shift</label>
+		<button onclick="actions.shift(-1, 0)">Left</button>
+		<button onclick="actions.shift(1, 0)">Right</button>
+		<button onclick="actions.shift(0, -1)">Up</button>
+		<button onclick="actions.shift(0, 1)">Down</button>
+	</p>
+
+	<p>
+		<label>Hide Private</label>
+		<input id="hideprivate" type="checkbox" onchange="global.updateHidePrivate(this.checked)" />
+	</p>
+
+	<p>
+		<label>File</label>
+		<button onclick="actions.save()">Save</button>
+		<input type="file" id="load" name="files" style="width: 82px;" onchange="actions.load(this.files)"/>
+	</p>
+
+	<p>
+		<label>Export</label>
+		<button onclick="actions.png()">PNG</button>
+		<button onclick="actions.html()">HTML</button>
+		<button onclick="actions.tintin()">Tintin</button>
+	</p>
+</div>
+
+</body>
+</html>

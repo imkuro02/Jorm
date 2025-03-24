@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Field with JavaScript</title>
+</head>
+<body>
+    
+    <canvas id="myCanvas" width="1000" height="1000" style="background-color:gray; border:1px solid black;">
+  
+    </canvas>
+    <div id="container">
+        <button id="btn_move">Move</button>
+        <button id="btn_new">New</button>
+        <button id="btn_delete">Del</button>
+        <button id="btn_edit">Edit</button>
+        <button id="btn_connect">Connect</button>
+    </div> <!-- A container to hold the text field -->
+  <script>
+    // Create a text input field
+    
+    var textField = document.createElement("input");
+    textField.type = "text";  // Specify that it's a text field
+    textField.id = "myTextField"; // Assign an ID to the text field
+
+    // Optional: Add placeholder text
+    textField.placeholder = "Enter some text here...";
+
+    // Append the text field to the container div
+    document.getElementById("container").appendChild(textField);
+
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    nodes = {};
+    selected_node = null;
+    gridSize = 16
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i in nodes) {
+            
+            if (nodes[i] == selected_node){
+                ctx.fillStyle = "red";
+            }else{
+                ctx.fillStyle = "blue";
+            }
+             // Set color
+            ctx.fillRect(nodes[i].x + offsetX, nodes[i].y + offsetY, gridSize, gridSize); // (x, y, width, height)  
+
+        };
+    }
+
+    function add_node(x, y) {
+    // Snap x and y to the nearest multiple of 16
+    let snappedX = Math.round(x / gridSize) * gridSize;
+    let snappedY = Math.round(y / gridSize) * gridSize;
+
+    // Generate a unique id for the new node
+    let id = String(Object.keys(nodes).length);
+    
+    // Add the node to the 'nodes' object with snapped coordinates
+    nodes[id] = {'id': id, 'x': snappedX, 'y': snappedY, 'custom': {}};
+}
+
+    function check_node_clicked(x,y) {
+        for (let i in nodes) {
+            if (nodes[i].x <= x && nodes[i].x + 16 >= x && nodes[i].y <= y && nodes[i].y + 16 >= y){
+                return nodes[i]
+            }
+        };
+        return null;
+    }
+
+    document.addEventListener("click", function(event) {
+        var rect = canvas.getBoundingClientRect();
+        let x = event.clientX;
+        let y = event.clientY;
+        x =  x - rect.left - offsetX;
+        y =  y - rect.top - offsetY;
+        
+        
+        if (event.button === 0) {
+            selected_node = check_node_clicked(x,y);
+            if (selected_node == null) {
+                add_node(x-(gridSize/2),y-(gridSize/2));
+                draw();
+            }
+        }
+        
+        
+        
+        //add_node(event.clientX, event.clientY)
+        //ctx.lineTo(event.clientX, event.clientY);
+        //ctx.stroke();
+    }   );
+
+    var isDragging = false;
+    var dragStartX, dragStartY;
+    var offsetX = 0, offsetY = 0;
+
+    // Right-click mouse down event to start dragging
+    canvas.addEventListener('mousedown', function(event) {
+        if (event.button === 2) {  // Right mouse button
+            isDragging = true;
+        }
+            dragStartX = event.clientX;
+            dragStartY = event.clientY;
+            event.preventDefault(); // Prevent right-click menu from showing
+            var rect = canvas.getBoundingClientRect();
+            let x = event.clientX;
+            let y = event.clientY;
+            x =  x - rect.left - offsetX;
+            y =  y - rect.top - offsetY;
+            
+        
+    });
+
+    // Mouse move event to drag the canvas
+    canvas.addEventListener('mousemove', function(event) {
+        if (isDragging) {
+            var deltaX = event.clientX - dragStartX;
+            var deltaY = event.clientY - dragStartY;
+            offsetX += deltaX;
+            offsetY += deltaY;
+            dragStartX = event.clientX;
+            dragStartY = event.clientY;
+            draw();
+        }
+    });
+
+      // Mouse up event to stop dragging
+    canvas.addEventListener('mouseup', function(event) {
+        if (event.button === 2) {  // Right mouse button
+            isDragging = false;
+        }
+    });
+
+    // Right-click menu prevention for the canvas
+    canvas.addEventListener('contextmenu', function(event) {
+        event.preventDefault(); // Prevent the context menu from appearing
+    });
+
+  </script>
+</body>
+</html>
+
+
