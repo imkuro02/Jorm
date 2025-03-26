@@ -61,17 +61,17 @@ def command_look(self, line):
         grid[START_LOC] = room_id
 
         for _exit in start_room.exits:
-            if _exit not in offsets:
+            if _exit.direction not in offsets:
                 continue
             x = 0
             y = 0
-            x += offsets[_exit][1] + VIEW_RANGE
-            y += offsets[_exit][0] + VIEW_RANGE
+            x += offsets[_exit.direction][1] + VIEW_RANGE
+            y += offsets[_exit.direction][0] + VIEW_RANGE
             _loc = f'{x},{y}'
             if _loc not in grid:
-                grid[_loc] = start_room.exits[_exit]
-            x += -offsets_path[_exit][1]
-            y += -offsets_path[_exit][0]
+                grid[_loc] = _exit.to_room_id
+            x += -offsets_path[_exit.direction][1]
+            y += -offsets_path[_exit.direction][0]
             _loc = f'{x},{y}'
             if _loc not in grid:
                 grid[_loc] = 'PATH'
@@ -88,17 +88,17 @@ def command_look(self, line):
                 _x = int(room_loc.split(',')[0])
                 _y = int(room_loc.split(',')[1])
                 for _exit in room.exits:
-                    if _exit not in offsets:
+                    if _exit.direction not in offsets:
                         continue
                     x = _x
                     y = _y
-                    x += offsets[_exit][1] 
-                    y += offsets[_exit][0] 
+                    x += offsets[_exit.direction][1] 
+                    y += offsets[_exit.direction][0] 
                     _loc = f'{x},{y}'
 
-                    grid[_loc] = room.exits[_exit]
-                    x += -offsets_path[_exit][1]
-                    y += -offsets_path[_exit][0]
+                    grid[_loc] = _exit.to_room_id
+                    x += -offsets_path[_exit.direction][1]
+                    y += -offsets_path[_exit.direction][0]
                     _loc = f'{x},{y}'
                     if _loc not in grid:
                         grid[_loc] = 'PATH'
@@ -180,7 +180,7 @@ def command_look(self, line):
                 
 
         output = t.get_table()
-        #output = str(offsets)
+        #output = str(grid)
 
             
             
@@ -319,7 +319,7 @@ def command_look(self, line):
             see = f'You are in @yellow{room.name}@normal\n'
         else:
             see = f'You look at @yellow{room.name}@normal\n'
-        #see += draw_local_area(self, room_id)
+        see += draw_local_area(self, room_id)
         see = see + f'@cyan{room.description}@normal\n'
 
 
