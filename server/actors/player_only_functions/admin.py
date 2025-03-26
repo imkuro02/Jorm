@@ -531,7 +531,9 @@ def command_edit_room(self, line):
                 output = world.edit_desc_room(room = self.room, desc = ' '.join(line[1:]))
             case 'exit':
                 output = world.edit_room_new_exit(room = self.room, direction = line[1], other_room_id = line[2])
+            case 'rest':
+                output = world.edit_rest_room(room = self.room)
     except Exception as e:
-        output = e
+        output = str(e)
 
     self.sendLine(output)

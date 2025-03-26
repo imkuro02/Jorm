@@ -286,10 +286,12 @@ class World:
         return 'Deleted'
 
     def edit_del_exit(self, room, direction):
+        to_del = []
         for _exit in room.exits:
-            to_del = []
             if _exit.direction == direction:
                 to_del.append(_exit)
+        if to_del == []:
+            return 'No exit deleted'
         for d in to_del:
             room.exits.remove(d)
         return 'Deleted'
@@ -307,6 +309,12 @@ class World:
     def edit_desc_room(self, room, desc):
         room.description = desc
         return 'Desc set'
+
+    def edit_rest_room(self, room):
+        room.can_be_recall_site = not room.can_be_recall_site
+        return f'can be recall site set to {room.can_be_recall_site}'
+
+    
                 
 
     def reload(self):
