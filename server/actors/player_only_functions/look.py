@@ -152,13 +152,13 @@ def command_look(self, line):
                     pass
                 elif room.can_be_recall_site and loc == START_LOC:
                     cell += Art.RECALL_SITE_AND_PLAYER
-                elif len([ x for x in room.exits.keys() if x not in offsets.keys() ]) != 0 and loc == START_LOC: #set(offsets.keys()) - set(grid[loc].exits.keys()):
+                elif len([ x for x in room.exits if x not in offsets ]) != 0 and loc == START_LOC: #set(offsets.keys()) - set(grid[loc].exits.keys()):
                     cell += Art.SPECIAL_EXIT_AND_PLAYER
                 elif loc == START_LOC:
                     cell += Art.PLAYER_HERE
                 elif room.can_be_recall_site:
                     cell += Art.RECALL_SITE
-                elif len([ x for x in room.exits.keys() if x not in offsets.keys() ]) != 0:
+                elif len([ x for x in room.exits if x not in offsets ]) != 0:
                     cell += Art.SPECIAL_EXIT
                 else:
                     cell += Art.GROUND
@@ -180,6 +180,7 @@ def command_look(self, line):
                 
 
         output = t.get_table()
+        #output = str(offsets)
 
             
             
@@ -318,7 +319,7 @@ def command_look(self, line):
             see = f'You are in @yellow{room.name}@normal\n'
         else:
             see = f'You look at @yellow{room.name}@normal\n'
-        see += draw_local_area(self, room_id)
+        #see += draw_local_area(self, room_id)
         see = see + f'@cyan{room.description}@normal\n'
 
 
@@ -338,13 +339,17 @@ def command_look(self, line):
                     see = see +'\n'
 
         exits = self.protocol.factory.world.rooms[room.id].exits
-        blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
+        #blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
         see = see + f'You can go: '
-        for exit_name in exits:
-            if exit_name not in blocked_exits:
-                see = see + f'@yellow{exit_name}@normal, '
-            else:
-                see = see + f'@red{exit_name}@normal, '
+        for _exit in exits:
+            #if exit_name not in blocked_exits:
+            if _exit.secret:
+                continue
+            #if _exit.blocked and self.room.is_enemy_present():
+            #    continue
+            see = see + f'@yellow{_exit.pretty_direction()}@normal, '
+            #else:
+            #    see = see + f'@red{exit_name}@normal, '
 
         #see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         see = see + '\n'

@@ -91,16 +91,60 @@ class Spawner:
         if self.room.world.factory.ticks_passed % (30*120) == 0:
             self.respawn_all()
 
+class Exit:
+    def __init__(self, room, direction, to_room_id, blocked = False, secret = False):
+        self.room = room
+        self.direction = direction
+        self.to_room_id = to_room_id
+        self.blocked = blocked
+        self.secret = secret
+
+    #def get_room_name(self):
+    #    if self.to_room_id not in WORLD['world']:
+    #        return '-no name-'
+
+    def get_room_obj(self):
+        if self.to_room_id not in self.room.world.rooms:
+            return None
+        return self.room.world.rooms[self.to_room_id]
+
+    def pretty_direction(self):
+        if self.blocked:
+            return f'[{self.direction}]'
+        return self.direction
+
 
 class Room:
-    def __init__(self, world, _id, name, description, exits, blocked_exits, secret_exits, can_be_recall_site, instanced):
+    def __init__(self, world, _id, name, description, exits, can_be_recall_site, instanced):
         self.world = world
         self.id = _id
         self.name = name
         self.description = description
-        self.exits = exits
-        self.blocked_exits = blocked_exits
-        self.secret_exits = secret_exits
+
+        self.exits = []
+        for _exit in exits:
+            if type(_exit).__name__ == 'Exit':
+                self.exits.append(_exit)
+                continue
+
+            _exit_dict = {'direction': _exit, 'to_room_id': exits[_exit] ,'blocked': False, 'secret': False}
+            if 'secret:' in _exit: 
+                _exit_dict['secret'] = True
+                _exit_dict['direction'] = _exit_dict['direction'].replace('secret:','')
+            if 'blocked:' in _exit: 
+                _exit_dict['blocked'] = True
+                _exit_dict['direction'] = _exit_dict['direction'].replace('blocked:','')
+
+            self.exits.append(
+                                Exit(
+                                    room = self,
+                                    direction = _exit_dict['direction'],
+                                    to_room_id = _exit_dict['to_room_id'],
+                                    blocked = _exit_dict['blocked'],
+                                    secret = _exit_dict['secret']
+                                )
+                            )
+        
         self.can_be_recall_site = can_be_recall_site
         self.instanced = instanced
         self.inventory_manager = InventoryManager(self, limit = 20)
@@ -202,7 +246,7 @@ class Room:
             if type(actor).__name__ != 'Player':
                 return
             instanced_room_id = self.id+'/'+actor.name
-            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.blocked_exits, self.secret_exits, self.can_be_recall_site, instanced=False)
+            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.can_be_recall_site, instanced=False)
             instanced_room = self.world.rooms[instanced_room_id]
        
             #instanced_room.populate()
@@ -279,7 +323,8 @@ class World:
                 del self.rooms[r]
 
             #if room['instanced'] == True:
-            self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['blocked_exits'], room['secret_exits'], room['can_be_recall_site'], room['instanced']) 
+            #print(room['exits'])
+            self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['can_be_recall_site'], room['instanced']) 
             #else:
             #    self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
             #self.rooms[r].populate()

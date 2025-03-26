@@ -113,9 +113,13 @@ def load_map():
                             connectors[uuid.uuid4()] = conn
                             
     for conn in connectors.values():
-        #if 'tutorial' in conn['from']['room_id'] or 'tutorial'  in conn['from']['room_id']:
-            #print(conn)
+        if conn['from']['direction'] != '':
+            rooms[conn['from']['room_id']]['exits'][conn['from']['direction']] = conn['to']['room_id']
 
+        if conn['to']['direction'] != '':
+            rooms[conn['to']['room_id']]['exits'][conn['to']['direction']] = conn['from']['room_id']
+        
+        '''
         if conn['from']['direction'] != '':
             if 'secret:' not in conn['from']['direction']:
                 if 'blocked:' in conn['from']['direction']:
@@ -135,6 +139,7 @@ def load_map():
                     rooms[conn['to']['room_id']]['exits'][conn['to']['direction']] = conn['from']['room_id']
             else:
                 rooms[conn['to']['room_id']]['secret_exits'][conn['to']['direction'].replace('secret:','')] = conn['from']['room_id']
+        '''
 
     #for r in rooms.values():
     #    if 'tutorial' not in r['id']:

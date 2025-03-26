@@ -39,6 +39,13 @@ def command_go(self, line):
     world = self.protocol.factory.world
     direction = None
 
+    exits = self.room.exits
+    for _exit in exits:
+        if ' '+line.lower() in ' '+_exit.direction.lower(): 
+            room_obj = _exit.get_room_obj()
+            if room_obj != None:
+                direction = _exit
+    '''
     exits = {**self.room.exits, **self.room.secret_exits}
     for _exit in exits:
         if ' '+line.lower() in ' '+_exit.lower():
@@ -52,15 +59,23 @@ def command_go(self, line):
             self.sendLine(f'{e.pretty_name()} is blocking the path.')
             return
 
+    '''
     if direction == None:
         self.simple_broadcast(
             f'You walk into a wall',
             f'{self.pretty_name()} walks into a wall'
             ) 
         return
+        
+    if direction.blocked and self.room.is_enemy_present():
+        self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path.')
+        return
+
+    
+    
 
     old_room = self.room
-    new_room = exits[direction]
+    new_room = direction.get_room_obj().id
 
     
 
