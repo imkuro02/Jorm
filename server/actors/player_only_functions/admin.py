@@ -504,3 +504,34 @@ def command_lore(self, line):
     if action in list_of_skill_names:
         _action = name_to_id[action]
     
+@check_is_admin
+def command_edit_room(self, line):
+    output = 'no changes'
+    try:
+        line = line.split()
+        #self.sendLine(str(line))
+        world = self.factory.world
+        
+
+    
+        match line[0]:
+            case 'view':
+                output = self.room.id
+            case 'room':
+                output = world.edit_new_room(room = self.room, direction = line[1])
+            case 'uroom':
+                output = world.edit_del_room(room_id = line[1])
+            case 'uexit':
+                output = world.edit_del_exit(room = self.room, direction = line[1])
+            case 'goto':
+                output = world.edit_goto_room(user = self, room_id = line[1])
+            case 'name':
+                output = world.edit_name_room(room = self.room, name = ' '.join(line[1:]))
+            case 'desc':
+                output = world.edit_desc_room(room = self.room, desc = ' '.join(line[1:]))
+            case 'exit':
+                output = world.edit_room_new_exit(room = self.room, direction = line[1], other_room_id = line[2])
+    except Exception as e:
+        output = e
+
+    self.sendLine(output)

@@ -312,13 +312,14 @@ def command_look(self, line):
 
 
     def look_room(self, room_id):
+        
         room = self.factory.world.rooms[room_id]
 
         if room_id == self.room.id:
             see = f'You are in @yellow{room.name}@normal\n'
         else:
             see = f'You look at @yellow{room.name}@normal\n'
-        see += draw_local_area(self, room_id)
+        #see += draw_local_area(self, room_id)
         see = see + f'@cyan{room.description}@normal\n'
 
 
@@ -337,6 +338,7 @@ def command_look(self, line):
                         see = see + f' @yellow(FIGHTING)@normal'
                     see = see +'\n'
 
+        '''
         exits = self.protocol.factory.world.rooms[room.id].exits
         blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
         see = see + f'You can go: '
@@ -345,6 +347,10 @@ def command_look(self, line):
                 see = see + f'@yellow{exit_name}@normal, '
             else:
                 see = see + f'@red{exit_name}@normal, '
+        '''
+        exits = self.protocol.factory.world.rooms[room.id].exits
+        for _exit in exits:
+            see = see + f'{_exit.direction}: {_exit.room_obj.name}\n'
 
         #see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         see = see + '\n'

@@ -17,6 +17,10 @@ SkillScriptValuesToNames = {
     'bonus':        'BONUS'
 }
 
+class ConstantRooms:
+    LOADING = 0
+    TUTORIAL = 1
+
 class IndentType:
     NONE = 'none'
     MINOR = 'minor'

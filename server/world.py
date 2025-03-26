@@ -91,22 +91,27 @@ class Spawner:
         if self.room.world.factory.ticks_passed % (30*120) == 0:
             self.respawn_all()
 
+class Exit:
+    def __init__(self, direction = 'north', room_obj = None):
+        self.direction = direction
+        self.room_obj = room_obj
+        self.is_secret = False
+        self.is_blocked = False
 
 class Room:
-    def __init__(self, world, _id, name, description, exits, blocked_exits, secret_exits, can_be_recall_site, instanced):
-        self.world = world
-        self.id = _id
-        self.name = name
-        self.description = description
-        self.exits = exits
-        self.blocked_exits = blocked_exits
-        self.secret_exits = secret_exits
-        self.can_be_recall_site = can_be_recall_site
-        self.instanced = instanced
+    def __init__(self, world, _id):
+        self.world =            world
+        self.id =               _id
+        self.name =             'No Room Name'
+        self.description =      'No Room Desc'
+
+        self.exits = []
+        self.can_be_recall_site = False
+
         self.inventory_manager = InventoryManager(self, limit = 20)
         self.combat = None
         self.actors = {}
-        self.spawner = Spawner(self)
+        #self.spawner = Spawner(self)
 
     def is_an_instance(self):
         if '/' in self.id:
@@ -123,7 +128,8 @@ class Room:
     def tick(self):
         actors = {}
         if not self.is_an_instance():
-            self.spawner.tick()
+            pass
+            #self.spawner.tick()
         for a in self.actors.values():
             actors[a.id] = a
 
@@ -187,7 +193,7 @@ class Room:
             self.combat = Combat(self, participants)
         
     def move_actor(self, actor, silent = False):
-        if not self.instanced:
+        if not self.is_an_instance():
             self.remove_actor(actor)
             if not silent and actor.room != self:
                 actor.simple_broadcast('',f'{actor.pretty_name()} has left.')
@@ -216,9 +222,6 @@ class Room:
 
             if not silent:
                 actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.')
-            
-
-        
 
     def remove_actor(self, actor):
         if actor.room == None:
@@ -227,38 +230,84 @@ class Room:
             return
         del actor.room.actors[actor.id]
 
-
-    #def move_enemy(self, enemy):
-    #    enemy.room = self
-    #    self.actors[enemy.id] = enemy
  
         
 class World:
     def __init__(self, factory):
         self.factory = factory
         self.rooms = {}
-        self.reload()
+        self.rooms = {
+            '0': Room(self, '0'),
+            '1': Room(self, '1')
+        }
+        ex = Exit(direction = 'north', room_obj = self.rooms['1'])
+        self.rooms['0'].exits.append(ex)
+        #self.reload()
 
-    def spawn_boss(self):
-        all_mobs = []
-        for i in self.rooms:
-            if self.rooms[i].instanced: 
-                continue
-            for x in self.rooms[i].actors:
-                if type(self.rooms[i].actors[x]).__name__ != 'Enemy':
-                    continue
-                if self.rooms[i].actors[x].status != ActorStatusType.NORMAL:
-                    continue 
-                all_mobs.append(self.rooms[i].actors[x])
-        
-        boss_mob = random.choice(all_mobs)
-        boss_mob.name = '<!>' + boss_mob.name + '<!>'
-        boss_mob.simple_broadcast('',
-        f'{boss_mob.pretty_name()} is terrorizing {boss_mob.room.name}', worldwide = True)
-        for s in boss_mob.stat_manager.stats:
-            boss_mob.stat_manager.stats[s] = boss_mob.stat_manager.stats[s] * 2
-        boss_mob.stat_manager.stats[StatType.EXP] = boss_mob.stat_manager.stats[StatType.EXP] * 5
+    
+    def edit_new_room(self, room, direction):
+        room_id = str(len(self.rooms))
+        self.rooms[room_id] = Room(self, room_id)
+        _exit = Exit(direction, self.rooms[room_id])
+        room.exits.append(_exit)
+        return f'new exit {_exit.direction} -> {room_id}'
+    
+    def edit_room_new_exit(self, room, direction, other_room_id):
+        if other_room_id not in self.rooms:
+            return 'No room with that ID'
 
+        _exit = Exit(direction, self.rooms[other_room_id])
+        room.exits.append(_exit)
+
+        return f'new exit {_exit.direction} -> {other_room_id}'
+
+    def edit_del_room(self, room_id):
+        if room_id not in self.rooms:
+            return 'No room with that ID'
+
+        if room_id == '0':
+            return 'Cannot delete room 0'
+
+        to_move = []
+        for actor in self.rooms[room_id].actors.values():
+            to_move.append(actor)
+        for actor in to_move:
+            self.rooms['0'].move_actor(actor)
+
+        for room in self.rooms.values():
+            to_del = []
+            for _exit in room.exits:
+                if _exit.room_obj == self.rooms[room_id]:
+                    to_del.append(_exit)
+            for d in to_del:
+                room.exits.remove(d)
+
+        del self.rooms[room_id]
+        return 'Deleted'
+
+    def edit_del_exit(self, room, direction):
+        for _exit in room.exits:
+            to_del = []
+            if _exit.direction == direction:
+                to_del.append(_exit)
+        for d in to_del:
+            room.exits.remove(d)
+        return 'Deleted'
+
+    def edit_goto_room(self, user, room_id):
+        if room_id not in self.rooms:
+            return 'No room with that ID'
+        self.rooms[room_id].move_actor(user)
+        return f'You are in {room_id}'
+
+    def edit_name_room(self, room, name):
+        room.name = name
+        return 'Name set'
+
+    def edit_desc_room(self, room, desc):
+        room.description = desc
+        return 'Desc set'
+                
 
     def reload(self):
         print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
@@ -278,25 +327,11 @@ class World:
                     e.room = None
                 del self.rooms[r]
 
-            #if room['instanced'] == True:
             self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['blocked_exits'], room['secret_exits'], room['can_be_recall_site'], room['instanced']) 
-            #else:
-            #    self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
-            #self.rooms[r].populate()
-            
-
-
 
     def save_world(self):
         pass
 
     def tick(self):
-        #if self.factory.ticks_passed % (30*(60*1)) == 0 or self.factory.ticks_passed == 3:
-        #    self.reload()
-            #self.spawn_boss()
-            
-        #if self.factory.ticks_passed % (30*(60*10)) == 0 or self.factory.ticks_passed == 1:
-        #    for i in self.rooms.values():
-        #        i.respawn_enemies()
         for i in self.rooms.values():
             i.tick()
