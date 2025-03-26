@@ -152,13 +152,13 @@ def command_look(self, line):
                     pass
                 elif room.can_be_recall_site and loc == START_LOC:
                     cell += Art.RECALL_SITE_AND_PLAYER
-                elif len([ x for x in room.exits if x not in offsets ]) != 0 and loc == START_LOC: #set(offsets.keys()) - set(grid[loc].exits.keys()):
+                elif len([ x for x in room.exits if x.direction not in offsets ]) != 0 and loc == START_LOC: #set(offsets.keys()) - set(grid[loc].exits.keys()):
                     cell += Art.SPECIAL_EXIT_AND_PLAYER
                 elif loc == START_LOC:
                     cell += Art.PLAYER_HERE
                 elif room.can_be_recall_site:
                     cell += Art.RECALL_SITE
-                elif len([ x for x in room.exits if x not in offsets ]) != 0:
+                elif len([ x for x in room.exits if x.direction not in offsets ]) != 0:
                     cell += Art.SPECIAL_EXIT
                 else:
                     cell += Art.GROUND
