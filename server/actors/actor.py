@@ -9,6 +9,7 @@ from inventory import InventoryManager
 import utils
 from party import PartyManager
 from quest import QuestManager
+from actors.ai import EnemyAI
 
 class ActorStatManager:
     def __init__(self, actor):
@@ -165,6 +166,7 @@ class Actor:
         self.cooldown_manager = CooldownManager(self)
 
         self.recently_send_message_count = 0
+        self.ai = EnemyAI(self)
    
     def prompt(self):
         hp =    self.stat_manager.stats[StatType.HP]

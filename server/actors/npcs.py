@@ -2,12 +2,12 @@ from actors.actor import Actor
 from configuration.config import NPCS, StatType
 from items.manager import load_item
 from quest import QUEST_STATE_TYPES, ObjectiveCountProposal
+from actors.ai import EnemyAI
 def create_npc(room, npc_id):
-    
     npc = Npc(npc_id, room)
-
     _npc = NPCS[npc_id]
     npc.name = _npc['name']
+    npc.enemy_id = npc_id
     npc.description = _npc['description']
     npc.dialog_tree = _npc['tree']
     return npc
@@ -169,11 +169,13 @@ class Dialog:
 
         
 class Npc(Actor):
-    def __init__(self, name = None, room = None, _id = None):
+    def __init__(self, name = None, room = None, _id = None, enemy_id = None):
         super().__init__(name,room,_id)
+        self.enemy_id = enemy_id
         self.dialog_tree = None
         if self.room != None:
             self.room.move_actor(self, silent = True)
+        self.ai = EnemyAI(self)
 
     def talk_to(self, talker):
         if talker.current_dialog != None:
@@ -194,5 +196,8 @@ class Npc(Actor):
 
         return output
     
+    def tick(self):
+        super().tick()
+        self.ai.tick()
 
 

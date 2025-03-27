@@ -22,7 +22,7 @@ def create_enemy(room, enemy_id, spawn_for_lore = False):
         name = enemy['name']
     stats = enemy['stats']
     skills = enemy['skills']
-    combat_loop = enemy['combat_loop']
+    #combat_loop = enemy['combat_loop']
     _loot = enemy['loot']
     loot = _loot
     #print(enemy['name'],LOOT[_loot],'XD')
@@ -33,13 +33,13 @@ def create_enemy(room, enemy_id, spawn_for_lore = False):
         #print(loot)
         if item not in ITEMS:
             print(item, 'does not exist in loot table for ', enemy_id)
-    e = Enemy(enemy_id, name, room, stats, loot, skills, combat_loop)
+    e = Enemy(enemy_id, name, room, stats, loot, skills)
     e.description = enemy['description']
 
     return e
 
 class Enemy(Actor):
-    def __init__(self, enemy_id, name, room, stats, loot, skills, combat_loop):
+    def __init__(self, enemy_id, name, room, stats, loot, skills):
         super().__init__(name, room)
         self.enemy_id = enemy_id
         self.stat_manager.stats = {**self.stat_manager.stats, **stats}
@@ -50,7 +50,6 @@ class Enemy(Actor):
 
         self.loot = copy.deepcopy(loot)
         self.skill_manager.skills = copy.deepcopy(skills)
-        self.combat_loop = copy.deepcopy(combat_loop)
 
         self.ai = EnemyAI(self)
         self.room.move_actor(self)

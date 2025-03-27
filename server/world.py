@@ -205,6 +205,10 @@ class Room:
                     participants[i.id] = i
                     npcs_here = True
 
+                if type(i).__name__ == "Npc":
+                    participants[i.id] = i
+                    npcs_here = True
+
             if players_here and npcs_here:
                 self.combat = Combat(self, participants)
                 self.combat.initiative()
@@ -224,6 +228,9 @@ class Room:
                 participants[i.id] = i
                 players_here = True
             if type(i).__name__ == "Enemy":
+                participants[i.id] = i
+                npcs_here = True
+            if type(i).__name__ == "Npc":
                 participants[i.id] = i
                 npcs_here = True
 

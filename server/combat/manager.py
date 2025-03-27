@@ -135,9 +135,7 @@ class Combat:
         print('combat over')
 
     def next_turn(self):
-        team1_died = True
-        team2_died = True
-        
+
         actors = []
         for actor in self.participants.values():
             actors.append(actor)
@@ -146,12 +144,12 @@ class Combat:
                 continue
             actor.stat_manager.hp_mp_clamp_update()
 
+        participating_parties = []
         for i in self.participants.values():
-            if i.status != ActorStatusType.DEAD and type(i).__name__ == "Player":
-                team1_died = False
-            if i.status != ActorStatusType.DEAD and type(i).__name__ == "Enemy":
-                team2_died = False
-        if team1_died or team2_died:
+            if i.status != ActorStatusType.DEAD and i.party_manager.get_party_id() not in participating_parties:
+                participating_parties.append(i.party_manager.get_party_id())
+
+        if len(participating_parties) <= 1:
             self.combat_over()
             return
 
