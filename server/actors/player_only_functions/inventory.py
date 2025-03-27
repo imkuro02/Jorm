@@ -1,4 +1,4 @@
-from actors.player_only_functions.checks import check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
+from actors.player_only_functions.checks import check_no_combat_in_room, check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
 from configuration.config import ItemType, StatType
 import utils
 
@@ -11,7 +11,7 @@ def command_trade(self, line):
 
 @check_not_trading
 @check_no_empty_line
-@check_not_in_combat
+@check_no_combat_in_room
 @check_alive
 def command_get(self, line):
     if line.lower() == 'all':

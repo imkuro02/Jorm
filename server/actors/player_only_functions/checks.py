@@ -60,3 +60,11 @@ def check_not_in_combat(func):
             return
         return func(self, line)
     return wrapper
+
+def check_no_combat_in_room(func):
+    def wrapper(self, line):
+        if self.room.combat != None:
+            self.sendLine('You can\'t do that while there is a fight going on!')
+            return
+        return func(self, line)
+    return wrapper

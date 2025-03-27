@@ -101,8 +101,8 @@ def command_look(self, line):
                     if _exit.secret:
                         continue
                     # do not duplicate if room leads to one that already is placed
-                    if _exit.to_room_id in grid.values():
-                        continue
+                    #if _exit.to_room_id in grid.values():
+                    #    continue
                     x = _x
                     y = _y
                     x += offsets[_exit.direction][1] 
@@ -256,18 +256,41 @@ def command_look(self, line):
 
         self.sendLine(see)
 
+
+
     def look_actor(actor):
         sheet = actor.get_character_sheet()
         self.sendLine(f'You are looking at {sheet}')
         return 
 
+    def look_item(identifier, item):
+        output = item.identify(identifier = identifier)
+        identifier.sendLine('You look at: ' + output)
+        return
+
+    
+    list_of_actors =        [actor.name for actor in self.room.actors.values()]
+    list_of_directions =    [] #[_exit.direction for _exit in self.room.exits.values()]
+    list_of_items =         [item.name for item in self.room.inventory_manager.items.values()]
+    whole_list = list_of_items + list_of_directions + list_of_actors
+
+    look_at = utils.match_word(line, whole_list)
+    self.sendLine(look_at)
+
     if line == '':
         look_room(self, self.room.id)
         return
 
-    if line != '':
+    
+    if look_at in list_of_actors:
         actor = self.get_actor(line)
         if actor == None:
             return
         look_actor(actor)
+
+    if look_at in list_of_items:
+        item = self.get_item(line, search_mode = 'room')
+        if item == None:
+            return
+        look_item(self, item)
 

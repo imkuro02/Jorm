@@ -62,6 +62,18 @@ class Enemy(Actor):
         super().tick()
         self.ai.tick()
 
+    def drop_loot_on_ground(self):
+        for item in self.loot: 
+            roll = random.random()
+            if roll >= self.loot[item]:
+                continue
+
+            new_item = load_item(item)
+            self.simple_broadcast('',f'{new_item.name} hits the ground with a thud.')
+            self.room.inventory_manager.add_item(new_item)
+
+
+
     def drop_loot(self,actor):
         all_items = ITEMS
         
@@ -77,7 +89,7 @@ class Enemy(Actor):
             #        stat = random.choice([s for s in new_item.stat_manager.stats.keys()])
             #        new_item.stat_manager.stats[stat] = new_item.stat_manager.stats[stat] + 1
 
-            
+            # OLD LOOT THING
             if actor.inventory_manager.add_item(new_item):   
                 actor.sendLine(f'You loot {new_item.name}')
             else:
@@ -98,7 +110,8 @@ class Enemy(Actor):
         for actor in self.room.combat.participants.values():
             if type(actor).__name__ == "Player":
                 actor.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
-                self.drop_loot(actor)
+                #self.drop_loot(actor)
+                self.drop_loot_on_ground()
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.enemy_id, 1)
                 actor.quest_manager.propose_objective_count_addition(proposal)
                 
