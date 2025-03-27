@@ -58,7 +58,6 @@ tutorial_1:
         type "level soul" to level up soul.
 
         simple right?"
-
       options: 
         - say: What else?
           goto: help_me
@@ -107,24 +106,20 @@ tutorial_1:
       dialog: |
         says "just go to the south-east corner. 
         Then type "go crossroad" to leave"
-
     quest_turn_in_failed:
       dialog: |
         looks you up and down then says "well where is it?"
         The corpse is not in your inventory 
         "You probably didn't pick it up"
-
     quest_turn_in_success:
       dialog: |
         says "Ah! perfect, this will make a fine snack"
         They smile "but before you go, You should level up first"
-
       options: 
         - say: Level up?
           goto: help_level
         - say: I just want to leave
           goto: quest_already_turned_in
-
     tutorial_1_in_progress_help:
       dialog: |
         says "As I already told you, go to the Northern wall, and go into the hole.
@@ -134,7 +129,6 @@ tutorial_1:
           goto: how_to_fight
         - say: Why?
           goto: why_fight
-
     start_tutorial_1:
       dialog: |
         says "Simple, go to the Northern wall, crawl into the hole.
@@ -144,9 +138,6 @@ tutorial_1:
           goto: how_to_fight
         - say: Why?
           goto: why_fight
-
-
-
     how_to_fight:
       dialog: |
         says "fighting is very simple.
@@ -156,18 +147,15 @@ tutorial_1:
         to actually fight them, you need to use your skills during your turn.
         type @tip"skills"@back to view all your skills.
         and when in combat type @tip"use [skill] on [enemy]"@back to use your skills on them."
-
     why_fight:
       dialog: |
         says "Just do it" 
       options:
         - say: How do I kill it?
           goto: how_to_fight
-
     where_am_i:
       dialog: |
         says "A sanctuary of sorts"
-
       options:
         - say: How do I get out?
           goto: start_tutorial_1
@@ -176,7 +164,6 @@ tutorial_1:
               state: not_started
           quest_start:
             id: tutorial_1
-
     end:
       dialog: |
         turns away from you.

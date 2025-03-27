@@ -1,7 +1,7 @@
 from actors.actor import Actor
 from configuration.config import NPCS, StatType
 from items.manager import load_item
-from quest import QUEST_STATE_TYPES
+from quest import QUEST_STATE_TYPES, ObjectiveCountProposal
 def create_npc(room, npc_id):
     
     npc = Npc(npc_id, room)
@@ -62,6 +62,14 @@ class Dialog:
             if 'quest_start' in option:
                 quest_id =              option['quest_start']['id']
                 dic['quest_start'] =    {'id':quest_id}
+
+            if 'quest_objective' in option:
+                #self.type =             _type               # what kind of objective this is
+                #self.requirement_id =   _requirement_id     # the id of whatever is required
+                #self.to_add =           _to_add             # how much to add 
+                requirement_id =              option['quest_objective']['requirement_id']
+                objective_count_proposal = ObjectiveCountProposal('conversation', requirement_id, 1)
+                dic['quest_objective_count_proposal'] = objective_count_proposal
         
             options.append(dic)
 
@@ -114,6 +122,11 @@ class Dialog:
 
         self.player.sendLine('You say "'+answer['say']+'"')
         self.current_line = answer['goto']
+
+        if 'quest_objective_count_proposal' in answer:
+            self.print_dialog()
+            self.player.quest_manager.propose_objective_count_addition(answer['quest_objective_count_proposal'])
+            return
 
         if 'quest_start' in answer:
             self.print_dialog()

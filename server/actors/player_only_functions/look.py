@@ -63,11 +63,19 @@ def command_look(self, line):
         for _exit in start_room.exits:
             if _exit.direction not in offsets:
                 continue
+            if _exit.secret:
+                continue
+            # do not duplicate if room leads to one that already is placed
+            if _exit.to_room_id in grid.values():
+                continue
             x = 0
             y = 0
             x += offsets[_exit.direction][1] + VIEW_RANGE
             y += offsets[_exit.direction][0] + VIEW_RANGE
             _loc = f'{x},{y}'
+
+            
+                    
             if _loc not in grid:
                 grid[_loc] = _exit.to_room_id
             x += -offsets_path[_exit.direction][1]
@@ -89,6 +97,11 @@ def command_look(self, line):
                 _y = int(room_loc.split(',')[1])
                 for _exit in room.exits:
                     if _exit.direction not in offsets:
+                        continue
+                    if _exit.secret:
+                        continue
+                    # do not duplicate if room leads to one that already is placed
+                    if _exit.to_room_id in grid.values():
                         continue
                     x = _x
                     y = _y
@@ -142,7 +155,7 @@ def command_look(self, line):
                 room = self.protocol.factory.world.rooms[grid[loc]]
                 #print(room)
                 # left
-                if 'up' in room.exits:
+                if 'up' in [ x.direction for x in room.exits ]:
                     cell += Art.STAIRS_UP
                 else:
                     cell += Art.EMPTY
@@ -164,7 +177,7 @@ def command_look(self, line):
                     cell += Art.GROUND
 
                 # right
-                if 'down' in room.exits:
+                if 'down' in [ x.direction for x in room.exits ]:
                     cell += Art.STAIRS_DOWN
                 else:
                     cell += Art.EMPTY
@@ -185,129 +198,6 @@ def command_look(self, line):
             
             
 
-        '''
-        x = 0
-        y = 0
-        start_room = self.protocol.factory.world.rooms[room_id]
-        loc = f'{x},{y}'
-        grid = {}
-        path = {}
-        grid[loc] = start_room
-        cur_room = start_room
-        mapped_rooms = []
-
-
-        for direction in cur_room.exits:
-            if direction in offsets:
-                _x = x
-                _y = y
-                _x += offsets[direction][0]
-                _y += offsets[direction][1]
-                loc = f'{_x},{_y}'
-                grid[loc] = self.protocol.factory.world.rooms[cur_room.exits[direction]]
-                print(loc)
-
-        _grid = {}
-        _path = {}
-        for loc in grid:
-            for direction in grid[loc].exits:
-                if direction not in offsets:
-                    continue
-
-                _x = x
-                _y = y
-                _x = int(loc.split(',')[0])
-                _y = int(loc.split(',')[1])
-
-                _x += offsets[direction][0]
-                _y += offsets[direction][1]
-                _loc = f'{_x},{_y}'
-                if _loc not in grid:
-                    _grid[_loc] = self.protocol.factory.world.rooms[grid[loc].exits[direction]]
-                    _x += offsets_path[direction][0]
-                    _y += offsets_path[direction][1]
-                    _loc = f'{_x},{_y}'
-                    _path[_loc] = True
-                   
-        print(_path)
-        for _loc in _grid:
-            if _loc not in grid:
-                grid[_loc] = _grid[_loc]
-
-        for _loc in _path:
-            if _loc not in path:
-                path[_loc] = _path[_loc]
-            #_grid_ = grid | _grid
-            #grid = _grid_
-
-
-            
-        
-        _grid = grid
-        grid = {}
-        for _loc in _grid:
-            _x = int(_loc.split(',')[0])
-            _y = int(_loc.split(',')[1])
-            loc = f'{_x+VIEW_RANGE},{_y+VIEW_RANGE}'
-            grid[loc] = _grid[_loc]       
-
-        _path = path
-        path = {}
-        for _loc in _path:
-            _x += int(_loc.split(',')[0])
-            _y += int(_loc.split(',')[1])
-            loc = f'{_x+VIEW_RANGE},{_y+VIEW_RANGE}'
-            path[loc] = _path[_loc] 
-
-
-        t = utils.Table((VIEW_RANGE*2)+1,0)
-
-        for _y in range(0,(VIEW_RANGE*2)+1):
-            for _x in range(0,(VIEW_RANGE*2)+1):
-                loc = f'{_x},{_y}'
-                
-                cell = ''
-                
-                if loc not in grid and loc not in path:
-                    t.add_data('   ')
-                    continue
-
-                if loc in path:
-                    t.add_data('---')
-                    continue
-                    
-                # left
-                if 'up' in grid[loc].exits:
-                    cell += Art.STAIRS_UP
-                else:
-                    cell += Art.GROUND
-                    
-
-                # mid
-                if 100 == 10:
-                    pass
-                #elif len([ x for x in grid[loc].exits.keys() if x not in offsets.keys() ]) != 0 and loc == f'{VIEW_RANGE},{VIEW_RANGE}': #set(offsets.keys()) - set(grid[loc].exits.keys()):
-                #    cell += Art.SPECIAL_EXIT_AND_PLAYER
-                elif loc == f'{VIEW_RANGE},{VIEW_RANGE}':
-                    cell += Art.PLAYER_HERE
-                elif grid[loc].can_be_recall_site:
-                    cell += Art.RECALL_SITE
-                elif len([ x for x in grid[loc].exits.keys() if x not in offsets.keys() ]) != 0:
-                    cell += Art.SPECIAL_EXIT
-                else:
-                    cell += Art.GROUND
-
-                # right
-                if 'down' in grid[loc].exits:
-                    cell += Art.STAIRS_DOWN
-                else:
-                    cell += Art.GROUND
-                
-                #self.sendLine(f'{loc}, {grid[loc].exits.keys()}')
-                t.add_data(cell)
-               
-        output = t.get_table()
-        '''
         return output
         #self.sendLine(output)
 

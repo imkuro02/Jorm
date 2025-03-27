@@ -68,8 +68,20 @@ rat_hunter:
       dialog: |
         says "Im Edward! a rat hunter... AAARGH!!!"
       options:
-        - say: cool
+        - say: Cool
           goto: start
+        - say: Christine is worreid about you
+          goto: confirm_rat_hunter_is_safe
+          quest_check:
+            - id: ellinia_tavern_speak_to_rat_hunter
+              state: in_progress
+          quest_objective: 
+            requirement_id: ellinia_tavern_speak_to_rat_hunter/rat_hunter
+
+    confirm_rat_hunter_is_safe:
+      dialog: >
+        says "I see! tell her to worry not, for I am just hunting rats!"
+      #
 
     # rat hunter quest
     rat_hunter_start:

@@ -1,6 +1,6 @@
 
 
-from configuration.config import QUESTS, ENEMIES, ITEMS
+from configuration.config import QUESTS, ENEMIES, ITEMS, NPCS
 import utils
 from items.manager import load_item
 
@@ -177,7 +177,9 @@ class Quest:
                     case OBJECTIVE_TYPES.COLLECT_X:
                         enemy_name = ITEMS[objective.requirement_id]['name']
                         output += f'Collect @white{enemy_name}@normal: {objective.count}/{objective.goal}' + '\n'
-
+                    case OBJECTIVE_TYPES.CONVERSATION:
+                        #npc = NPCS[objective.requirement_id]['name']
+                        output += f'{objective.name}' + '\n'
         output += self.get_state(as_string = True) + '\n'
         return output
 
@@ -275,6 +277,7 @@ class Objective:
         return False
 
     def propose_objective_count_addition(self, objective_count_proposal: 'ObjectiveCountProposal'):
+        #print(self.__dict__, objective_count_proposal.__dict__)
         if objective_count_proposal.requirement_id != self.requirement_id:
             return False
         if objective_count_proposal.type != self.type:
