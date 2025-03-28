@@ -77,9 +77,12 @@ class Player(Actor):
     def handle(self, line):
         # empty lines are handled as resend last line
 
+        # try to send answer to dialog
+        # if you input something that is not a dialog answer
+        # stop dialog and continue with command handling
         if self.current_dialog != None:
-            self.current_dialog.answer(line)
-            return
+            if self.current_dialog.answer(line):
+                return
             
         
         if not line: 

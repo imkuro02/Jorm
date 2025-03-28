@@ -1,17 +1,15 @@
 kill_kerning_trainer:
-  name: Kill some rats
+  name: Fight Edge Lord
   description: 
     in_progress: |
-      Rat hunter Edward has asked me to kill some rats for them
-      I wonder if I get to become a rat hunter when im finished!
+      Edge Lord was all up in my face for no reasaon.
+      Time to teach him a lesson!
     completed: |
-      That was a workout! But now I've killed enough rats to 
-      prove that im worthy of the rat hunter title!
+      I beat Edge Lords ass, next time I see him I bet he will be more humble!
     turned_in: |
-      I told Edward about my rat genocide.
-      They were very happy!
+      Edge Lord has been humbled greatly, but his demeanour has not changed at all!
   objectives:
-    kill the rats:
+    Beat up Edge Lord:
       type: kill_x
       objective: kerning_trainer
-      completed_at: 15
+      completed_at: 1

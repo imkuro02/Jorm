@@ -275,12 +275,11 @@ def command_look(self, line):
     whole_list = list_of_items + list_of_directions + list_of_actors
 
     look_at = utils.match_word(line, whole_list)
-    self.sendLine(look_at)
+    #self.sendLine(look_at)
 
     if line == '':
         look_room(self, self.room.id)
         return
-
     
     if look_at in list_of_actors:
         actor = self.get_actor(line)

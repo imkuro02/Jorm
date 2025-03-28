@@ -105,9 +105,13 @@ class Dialog:
                 answer = option
                 break
                 
+        # return False if the answer is invalid
+        # or True if answer is valid and dialog continues
         if answer == None:
-            last_index = len(options)-1
-            answer = options[last_index]
+            #last_index = len(options)-1
+            #answer = options[last_index]
+            self.end_dialog()
+            return False
 
 
         self.player.sendLine('You say "'+answer['say']+'"')
@@ -116,19 +120,19 @@ class Dialog:
         if 'quest_objective_count_proposal' in answer:
             self.print_dialog()
             self.player.quest_manager.propose_objective_count_addition(answer['quest_objective_count_proposal'])
-            return
+            return True
 
         if 'quest_start' in answer:
             self.print_dialog()
             self.player.quest_manager.start_quest(answer['quest_start']['id'])
-            return
+            return True
 
         if 'quest_turn_in' in answer:
             if 'reward' in answer:
                 if len(answer['reward']) > self.player.inventory_manager.item_free_space():
                     self.player.sendLine('You need more space in your inventory')
                     self.end_dialog()
-                    return
+                    return True
 
             self.print_dialog()
             self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
@@ -147,11 +151,13 @@ class Dialog:
                 self.player.sendLine(f'You got: {answer["reward_exp"]} Experience')
 
             
-            return
+            return True
             
 
         self.print_dialog()
+        return True
 
     def end_dialog(self):
         self.player.current_dialog = None
+        return
         #self.player = None

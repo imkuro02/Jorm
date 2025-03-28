@@ -8,15 +8,6 @@ kerning_trainer:
       dialog: |
         says "Hello there..." then enters a fighting stance.
       options:
-         # qkill_kerning_trainer
-        - say: Fight me bitch
-          goto: fight
-          quest_check:
-            - id: kill_kerning_trainer
-              state: not_started
-          quest_start:
-            id: kill_kerning_trainer
-
         # quest for rogue emblem
         - say: I want to become a rogue
           goto: quest_start_apprentice_emblem
@@ -42,12 +33,45 @@ kerning_trainer:
             reward: 
              - flow relic 1
             reward_exp: 20
+
+          # qkill_kerning_trainer
+        - say: You looking for a fight?
+          goto: kill_kerning_trainer_start
+          quest_check:
+            - id: kill_kerning_trainer
+              state: not_started
+
+          # qkill_kerning_trainer
+        - say: Hey tough guy.
+          goto: kill_kerning_trainer_turn_in
+          quest_check:
+            - id: kill_kerning_trainer
+              state: completed
+          quest_turn_in:
+            id: kill_kerning_trainer
+            reward_exp: 20
     end:
       dialog: |
-        says "farewell"
-    fight:
+        says "Farewell!"
+    end2:
       dialog: |
-        says "I'd like to see you try!"
+        says "Thats what I thought!"
+    kill_kerning_trainer_start:
+      dialog: |
+        says "Ha! What is the point of fighting with you if I will win?"
+      options:
+        - say: Bring it on!
+          goto: kill_kerning_trainer_start2
+          quest_start:
+            id: kill_kerning_trainer
+        - say: S-sorry...
+          goto: end2
+    kill_kerning_trainer_start2:
+      dialog: |
+        flais their arms around like a moron.
+    kill_kerning_trainer_turn_in:
+      dialog: |
+        grimaces then says "Beginners luck..."
     # quest for rogue emblem
     quest_turn_in_apprentice_emblem:
       dialog: |
