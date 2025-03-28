@@ -3,7 +3,7 @@ from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
 from items.manager import load_item
 
 
-#               proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.enemy_id, 1)
+#               proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
 #                owner.quest_manager.propose_objective_count_addition(proposal)
 class InventoryManager:
     def __init__(self, owner, limit = 20):

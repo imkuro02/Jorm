@@ -208,8 +208,7 @@ def command_load_npcs(self, line):
     if line not in data:
         self.sendLine(f'{line} is not a premade npc')
         return
-    from actors.enemy import create_enemy
-    create_enemy(self.room, line)
+    create_npc(self.room, line)
 
 def command_kill(self, line):
     actor = self.get_actor(line)
@@ -377,6 +376,7 @@ def command_quest(self, line = 'list'):
 
 
 from actors.enemy import create_enemy
+from actors.npcs import create_npc
 @check_no_empty_line
 def command_lore(self, line):
     
@@ -393,8 +393,8 @@ def command_lore(self, line):
     #self.sendLine(to_find)
     
     if to_find in list_of_enemies:
-        e_id = LORE['enemies'][to_find]['enemy_id']
-        e = create_enemy(self.room.world.rooms['overworld#loading'], e_id, spawn_for_lore = True)
+        e_id = LORE['enemies'][to_find]['npc_id']
+        e = create_npc(self.room.world.rooms['overworld#loading'], e_id, spawn_for_lore = True)
         
         
         all_rooms_e_spawns_in = []

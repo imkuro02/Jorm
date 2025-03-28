@@ -1,0 +1,17 @@
+kill_kerning_trainer:
+  name: Kill some rats
+  description: 
+    in_progress: |
+      Rat hunter Edward has asked me to kill some rats for them
+      I wonder if I get to become a rat hunter when im finished!
+    completed: |
+      That was a workout! But now I've killed enough rats to 
+      prove that im worthy of the rat hunter title!
+    turned_in: |
+      I told Edward about my rat genocide.
+      They were very happy!
+  objectives:
+    kill the rats:
+      type: kill_x
+      objective: kerning_trainer
+      completed_at: 15

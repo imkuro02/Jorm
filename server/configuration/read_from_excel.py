@@ -210,8 +210,8 @@ def configure_ENEMIES(SHEET):
     for row in SHEET['enemies']:
         x = SHEET['enemies']
         for index in range(0, len(x[row])):
-            ENEMIES[x['enemy_id'][index]] = {
-                'enemy_id':     x['enemy_id'][index],
+            ENEMIES[x['npc_id'][index]] = {
+                'npc_id':     x['npc_id'][index],
                 'name':         x['name'][index],
                 'description':  x['description'][index],
                 'stats': {
@@ -244,12 +244,12 @@ def configure_ENEMIES(SHEET):
                 x['item_id'][index]: float(x['drop_rate'][index])
             }
 
-            if x['enemy_id'][index] in LOOT:
+            if x['npc_id'][index] in LOOT:
                 # concate the previous dict with new a new value
-                LOOT[x['enemy_id'][index]] = LOOT[x['enemy_id'][index]] | d_vals
+                LOOT[x['npc_id'][index]] = LOOT[x['npc_id'][index]] | d_vals
             else:
                 # create a fresh dict
-                LOOT[x['enemy_id'][index]] = {
+                LOOT[x['npc_id'][index]] = {
                     x['item_id'][index]: d_vals
                 }
 
@@ -270,17 +270,17 @@ def configure_ENEMIES(SHEET):
                 x['skill_id'][index]: int(x['practice'][index])
             }
 
-            if x['enemy_id'][index] in ENEMY_SKILLS:
+            if x['npc_id'][index] in ENEMY_SKILLS:
                 # concate the previous dict with new a new value
-                ENEMY_SKILLS[x['enemy_id'][index]] = ENEMY_SKILLS[x['enemy_id'][index]] | d_vals
+                ENEMY_SKILLS[x['npc_id'][index]] = ENEMY_SKILLS[x['npc_id'][index]] | d_vals
             else:
                 # create a fresh dict
-                ENEMY_SKILLS[x['enemy_id'][index]] = {
+                ENEMY_SKILLS[x['npc_id'][index]] = {
                     x['skill_id'][index]: d_vals
                 }
 
-    for enemy_id in ENEMY_SKILLS:
-        ENEMIES[enemy_id]['skills'] = ENEMY_SKILLS[enemy_id]
+    for npc_id in ENEMY_SKILLS:
+        ENEMIES[npc_id]['skills'] = ENEMY_SKILLS[npc_id]
     
     end = time.time()
     print(end - start,'ENEMY_SKILLS')
@@ -299,12 +299,12 @@ def configure_ENEMIES(SHEET):
                 }
             }
 
-            if x['enemy_id'][index] in TEMP_ENEMY_COMBAT_LOOP:
+            if x['npc_id'][index] in TEMP_ENEMY_COMBAT_LOOP:
                 # concate the previous dict with new a new value
-                TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] = TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] | d_vals
+                TEMP_ENEMY_COMBAT_LOOP[x['npc_id'][index]] = TEMP_ENEMY_COMBAT_LOOP[x['npc_id'][index]] | d_vals
             else:
                 # create a fresh dict
-                TEMP_ENEMY_COMBAT_LOOP[x['enemy_id'][index]] = {
+                TEMP_ENEMY_COMBAT_LOOP[x['npc_id'][index]] = {
                     x['order'][index]: d_vals
                 }
 
@@ -314,8 +314,8 @@ def configure_ENEMIES(SHEET):
         for i in dict(sorted(TEMP_ENEMY_COMBAT_LOOP[loop].items())):
             ENEMY_COMBAT_LOOP[loop].append(TEMP_ENEMY_COMBAT_LOOP[loop][i])
 
-    for enemy_id in ENEMY_COMBAT_LOOP:
-        ENEMIES[enemy_id]['combat_loop'] = ENEMY_COMBAT_LOOP[enemy_id]
+    for npc_id in ENEMY_COMBAT_LOOP:
+        ENEMIES[npc_id]['combat_loop'] = ENEMY_COMBAT_LOOP[npc_id]
 
     end = time.time()
     print(end - start,'ENEMY_COMBAT_LOOP')

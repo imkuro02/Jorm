@@ -1,18 +1,18 @@
 from actors.actor import Actor
 import random
 import copy
-from configuration.config import StatType, ItemType, ENEMIES, ITEMS
+from configuration.config import StatType, ItemType, ENEMIES, NPCS, ITEMS
 from items.manager import load_item
 from configuration.config import ITEMS
 from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
 from actors.ai import EnemyAI
 
-def create_enemy(room, enemy_id, spawn_for_lore = False):
-    if enemy_id not in ENEMIES:
-        print(f'error creating enemy: {enemy_id}')
+def create_enemy(room, npc_id, spawn_for_lore = False):
+    if npc_id not in ENEMIES:
+        print(f'error creating enemy: {npc_id}')
         return
 
-    enemy = ENEMIES[enemy_id]
+    enemy = ENEMIES[npc_id]
     name = ''
     if not spawn_for_lore:
         names = 'Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
@@ -25,6 +25,7 @@ def create_enemy(room, enemy_id, spawn_for_lore = False):
     #combat_loop = enemy['combat_loop']
     _loot = enemy['loot']
     loot = _loot
+    description = enemy['description']
     #print(enemy['name'],LOOT[_loot],'XD')
 
         
@@ -32,27 +33,51 @@ def create_enemy(room, enemy_id, spawn_for_lore = False):
     for item in loot.keys():
         #print(loot)
         if item not in ITEMS:
-            print(item, 'does not exist in loot table for ', enemy_id)
-    e = Enemy(enemy_id, name, room, stats, loot, skills)
-    e.description = enemy['description']
+            print(item, 'does not exist in loot table for ', npc_id)
+    e = Enemy(npc_id, name, description, room, stats, loot, skills)
 
     return e
 
-class Enemy(Actor):
-    def __init__(self, enemy_id, name, room, stats, loot, skills):
-        super().__init__(name, room)
-        self.enemy_id = enemy_id
-        self.stat_manager.stats = {**self.stat_manager.stats, **stats}
-        
-        #self.stat_manager.stats = 
-        self.stat_manager.stats[StatType.HPMAX] = self.stat_manager.stats[StatType.HP]
-        self.stat_manager.stats[StatType.MPMAX] = self.stat_manager.stats[StatType.MP]
 
-        self.loot = copy.deepcopy(loot)
-        self.skill_manager.skills = copy.deepcopy(skills)
+class Enemy(Actor):
+    def __init__(
+        self, 
+        npc_id = None, 
+        name = None,
+        description = None, 
+        room = None, 
+        stats = None, 
+        loot = None, 
+        skills = None,
+        dialog_tree = None
+    ):
+        super().__init__(
+            name = name, 
+            description = description, 
+            room = room,
+            dialog_tree = dialog_tree
+        )
+
+        self.npc_id = npc_id
+        
+
+        
+
+        if stats != None:
+            self.stat_manager.stats = {**self.stat_manager.stats, **stats}
+            self.stat_manager.stats[StatType.HPMAX] = self.stat_manager.stats[StatType.HP]
+            self.stat_manager.stats[StatType.MPMAX] = self.stat_manager.stats[StatType.MP]
+
+        if loot != None:
+            self.loot = copy.deepcopy(loot)
+        else:
+            self.loot = {}
+
+        if skills != None:
+            self.skill_manager.skills = copy.deepcopy(skills)
 
         self.ai = EnemyAI(self)
-        self.room.move_actor(self)
+
 
     def sendLine(self, line):
         print(f'sendLine called in a enemy function? line: {line}')
@@ -70,8 +95,6 @@ class Enemy(Actor):
             new_item = load_item(item)
             self.simple_broadcast('',f'{new_item.name} hits the ground with a thud.')
             self.room.inventory_manager.add_item(new_item)
-
-
 
     def drop_loot(self,actor):
         all_items = ITEMS
@@ -111,7 +134,7 @@ class Enemy(Actor):
                 actor.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
                 #self.drop_loot(actor)
                 self.drop_loot_on_ground()
-                proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.enemy_id, 1)
+                proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
                 actor.quest_manager.propose_objective_count_addition(proposal)
                 
         super().die()
@@ -119,3 +142,5 @@ class Enemy(Actor):
 
     def set_turn(self):
         super().set_turn()
+
+    

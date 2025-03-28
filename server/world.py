@@ -66,7 +66,7 @@ class Spawner:
                 if self.spawn_points_enemies[i] != None:
                     continue
                 _selected = random.choice(_list)
-                enemy = create_enemy(self.room, _selected)
+                enemy = create_npc(self.room, _selected)
                 self.spawn_points_enemies[i] = enemy
                 
         if 'items' in self.room_dict:

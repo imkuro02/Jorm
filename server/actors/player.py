@@ -14,20 +14,18 @@ from actors.ai import PlayerAI
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
         self.protocol = protocol
-        
-        super().__init__(name, room, _id)
+        self.admin = 0
+
+        super().__init__(name = name, room = room, _id = _id)
 
         self.last_line_sent = None
         self.last_command_used = None
 
-        self.admin = 0
         self.check_if_admin()
 
-        self.recall_site = 'tutorial'
+        self.recall_site = 'tutorial#tutorial'
         self.trade_manager = TradeManager(self)
-
-        if self.room != None:
-            self.room.move_actor(self, silent = True)
+        
 
         # meta data
         self.date_of_creation = utils.get_unix_timestamp()
@@ -35,12 +33,7 @@ class Player(Actor):
         self.time_in_game = 0
 
         self.ai = PlayerAI(self)
-
-    def tick(self):
-        super().tick()
         
-        
-
     def check_if_admin(self):
         if self.protocol == None:
             return
@@ -55,9 +48,9 @@ class Player(Actor):
     def set_admin(self, admin_level):
         self.admin = admin_level
 
-    def get_character_sheet(self):
-        output = super().get_character_sheet()
-        return output
+    #def get_character_sheet(self):
+    #    output = super().get_character_sheet()
+    #    return output
 
     def combat_over_prompt(self):
         self.sendLine('@yellowCombat over!@normal')

@@ -1,13 +1,22 @@
 kerning_trainer:
   name: Edge Lord
-  description: |
-    A shadow figure looks you up and down, they seem strangely familiar.
+  description: >
+    A shadow figure looks you up and down.
+    They seem strangely familiar.
   tree:
     start:
       dialog: |
         says "Hello there..." then enters a fighting stance.
       options:
-        
+         # qkill_kerning_trainer
+        - say: Im gonna fucking kil you
+          goto: end
+          quest_check:
+            - id: kill_kerning_trainer
+              state: not_started
+          quest_start:
+            id: kill_kerning_trainer
+
         # quest for rogue emblem
         - say: I want to become a rogue
           goto: quest_start_apprentice_emblem

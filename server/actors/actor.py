@@ -10,6 +10,7 @@ import utils
 from party import PartyManager
 from quest import QuestManager
 from actors.ai import EnemyAI
+from dialog import Dialog
 
 class ActorStatManager:
     def __init__(self, actor):
@@ -134,39 +135,53 @@ class SlotsManager:
             EquipmentSlotType.RELIC:     None
         }
 
+
 class Actor:
-    def __init__(self, name = None, room = None, _id = None):
+    def __init__(
+        self, 
+        _id = None,
+        name = None,
+        description = None, 
+        room = None, 
+        dialog_tree = None
+    ):
+
         self.name = name
-        self.description = ''
+        self.description = description
+
         if _id == None:
             self.id = str(uuid.uuid4())
         else: 
             self.id = _id
 
-        # npcs have dialog trees that they create a copy of
-        # and give to players on talk command
-        self.dialog_tree = None
-        # playrs rcive the dialog tree here
+        self.dialog_tree = dialog_tree
         self.current_dialog = None
+        
 
         #self.protocol = protocol
         self.room = room
         if self.room != None:
             self.factory = self.room.world.factory
 
-        self.affect_manager =       AffectsManager(self)
+        
+
         self.inventory_manager =    InventoryManager(self)
         self.slots_manager =        SlotsManager(self)
+
         self.party_manager =        PartyManager(self)
         self.quest_manager =        QuestManager(self)
+
         self.stat_manager =         ActorStatManager(self)
         self.status =               ActorStatusType.NORMAL
+        self.affect_manager =       AffectsManager(self)
         self.skill_manager =        SkillManager(self)
-
-        self.cooldown_manager = CooldownManager(self)
+        self.cooldown_manager =     CooldownManager(self)
 
         self.recently_send_message_count = 0
         self.ai = EnemyAI(self)
+
+        if self.room != None:
+            self.room.move_actor(self, silent = True)
    
     def prompt(self):
         hp =    self.stat_manager.stats[StatType.HP]
@@ -185,9 +200,15 @@ class Actor:
         return output
 
     def talk_to(self, talker):
+        if talker.current_dialog != None:
+            talker.sendLine('You are already conversing.')
+            return
         if self.dialog_tree == None:
             talker.sendLine('There is nothing to talk about.')
             return
+            
+        talker.current_dialog = Dialog(talker, self, self.dialog_tree)
+        talker.current_dialog.print_dialog()
         
     def pretty_name(self):
         output = ''
