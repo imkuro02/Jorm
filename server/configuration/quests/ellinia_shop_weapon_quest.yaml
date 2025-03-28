@@ -9,7 +9,7 @@ ellinia_shop_weapon_quest_1:
     turned_in: |
       I've handed in the branches, and I got a pretty wand for my troubles!
   objectives:
-    kill the rats:
+    Collect tree branches:
       type: collect_x
       objective: tree_branch
       completed_at: 3
@@ -25,7 +25,7 @@ ellinia_shop_weapon_quest_2:
     turned_in: |
       I've handed in the branches, and I got a pretty wand for my troubles!
   objectives:
-    kill the rats:
+    Collect tree branches:
       type: collect_x
       objective: tree_branch
       completed_at: 12
@@ -41,7 +41,7 @@ ellinia_shop_weapon_quest_3:
     turned_in: |
       I've handed in the roots, and I got a pretty wand for my troubles!
   objectives:
-    kill the rats:
+    Collect tree roots:
       type: collect_x
       objective: tree_root
       completed_at: 3

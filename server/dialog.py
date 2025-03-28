@@ -15,7 +15,7 @@ class Dialog:
             # the players wont be able to access it because of end_dialog() anyway
             if self.current_line == 'end':
                 return options
-            options.append({'index':0, 'say': 'Bye', 'goto': 'end'})
+            #options.append({'index':0, 'say': 'Bye', 'goto': 'end'})
             return options
 
         i = 1
@@ -64,7 +64,8 @@ class Dialog:
 
             i += 1
 
-        options.append({'index':0, 'say': 'Bye', 'goto': 'end'})
+        #if len(options) >= 1:
+        #    options.append({'index':0, 'say': 'Bye', 'goto': 'end'})
         return options
 
     def print_dialog(self):
@@ -83,8 +84,8 @@ class Dialog:
 
         # if this is the end, or there is only one option
         # end dialogue
-        #if len(self.get_valid_options()) <= 1:
-        #    self.end_dialog()
+        if len(self.get_valid_options()) <= 0:
+            self.end_dialog()
         if self.current_line == 'end':
             self.end_dialog()
 

@@ -150,7 +150,7 @@ class QuestManager:
 class Quest:
     def __init__(self, _id, _name, _description = ''):
         self.id = _id
-        self.manager = None
+        self.quest_manager = None
         self.name = _name
         self.description = _description
         self.objectives = {}
@@ -230,14 +230,19 @@ class Quest:
     def propose_objective_count_addition(self, objective_count_proposal: 'ObjectiveCountProposal'):
         proposal_accepted = False
         for objective in self.objectives.values():
+            completed = objective.is_completed()
             proposal_accepted = objective.propose_objective_count_addition(objective_count_proposal)
+            if completed == False and objective.is_completed() and objective.type != OBJECTIVE_TYPES.TURNED_IN:
+                # this is buggy cuz it displays quest completed BEFORE stuff actually happnes
+                # like before loot is displayed as picked up for example
+                self.quest_manager.actor.sendLine(f'@green{QUESTS[objective.quest_id]["name"]}: {objective.name} completed@normal')
             if proposal_accepted:
                 continue
 
         return proposal_accepted
 
     def add_objective(self, objective: 'Objective'):
-        objective.manager =                 self.manager
+        objective.manager =                 self.quest_manager
         self.objectives[objective.name] =   objective
 
 # this is the object killing, or ooting items, will create, and send to players quest managers

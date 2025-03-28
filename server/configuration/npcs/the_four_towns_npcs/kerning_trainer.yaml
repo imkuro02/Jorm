@@ -9,8 +9,8 @@ kerning_trainer:
         says "Hello there..." then enters a fighting stance.
       options:
          # qkill_kerning_trainer
-        - say: Im gonna fucking kil you
-          goto: end
+        - say: Fight me bitch
+          goto: fight
           quest_check:
             - id: kill_kerning_trainer
               state: not_started
@@ -45,7 +45,9 @@ kerning_trainer:
     end:
       dialog: |
         says "farewell"
-        
+    fight:
+      dialog: |
+        says "I'd like to see you try!"
     # quest for rogue emblem
     quest_turn_in_apprentice_emblem:
       dialog: |
