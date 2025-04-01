@@ -190,16 +190,16 @@
       }
     });
 
-    for (let x = 0; x < 10; x++) {  // Loops from 0 to 4
-        for (let y = 0; y < 10; y++) {  
+    for (let x = 0; x < 64; x++) {  // Loops from 0 to 4
+        for (let y = 0; y < 64; y++) {  
             new_node(data = null, position = {'x':x*100,'y':y*100})
         }
     }
     cy.minZoom(0.1);  // Prevent extreme zooming
     cy.maxZoom(5);
     //cy.zoomingEnabled(false);
-    //cy.panningEnabled(false);
-    cy.boxSelectionEnabled(false);
+    cy.panningEnabled(True);
+    cy.boxSelectionEnabled(True);
     
     //cy.renderer().options({ textureOnViewport: true });
   </script>
