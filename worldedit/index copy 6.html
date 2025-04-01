@@ -65,7 +65,7 @@
           selector: 'node',
           style: {
             'background-color': '#66CCFF',
-            'label': '',
+            'label': 'data(name)',
             'width': '40px',
             'height': '40px'
           }
@@ -74,7 +74,6 @@
           selector: 'node:selected',
           style: {
             'background-color': '#FF6347',
-			'label': 'data(name)',
             'border-width': 4,
             'border-color': '#FF4500',
           }
@@ -86,23 +85,20 @@
             'line-color': '#ccc',
             'target-arrow-color': '#ccc',
             'target-arrow-shape': 'triangle',
-            'label': '',
+            'label': 'data(direction)',
             'font-size': '12px',
             'curve-style': 'bezier',
-            'control-point-step-size': 0,
-            'control-point-distance': 0
+            'control-point-step-size': 30,
+            'control-point-distance': 20
           }
         },
         {
           selector: 'edge:selected',
           style: {
             'line-color': '#FF6347',
-			'label': 'data(direction)',
             'width': 4,
             'target-arrow-color': '#FF6347',
-            'target-arrow-shape': 'triangle-tee',
-			'control-point-step-size': 30,
-            'control-point-distance': 50
+            'target-arrow-shape': 'triangle-tee'
           }
         }
       ],

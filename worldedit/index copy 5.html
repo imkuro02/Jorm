@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Cytoscape Example</title>
+  <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
+  <style>
+    #cy {
+      height: 800px;
+      width: auto;
+      border: solid 1px #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="cy"></div>
+
+  <script>
+
+	function new_node() {
+		node_template = { 
+			group: 'nodes',
+			position: {
+				x:0, 
+				y:0
+			},
+			data: {
+				id: 'unique id ',
+				name: 'node name',
+				desc: 'node desc'
+			}
+		}
+		node_template.data.id = generateUUID4()
+		cy.add(node_template);
+	}
+
+	
+
+	edge_template = {
+		group: 'edges',
+		data: {
+			id: 0,
+			source: 'node_id1',
+			target: 'node_id2',
+			direction: 'direction'
+		}
+	}
+    var cy = cytoscape({
+      container: document.getElementById('cy'),
+
+      elements: [],
+	  /* [
+        // Nodes
+        { group:'nodes', data: { id: 'A'}, position: { x: 100, y: 666 }, game_data: {name: 'name'}}, // Node A at (100, 100)
+        { group:'nodes', data: { id: 'B', name: 'poo'}, position: { x: 300, y: 300 }, game_data: {name: 'name'}}, // Node B at (300, 300)
+
+        // Edge with from and to labels
+        { group:'edges', data: { id: 'AB', source: 'A', target: 'B'}, game_data: {direction: 'direction'} },
+		{ group:'edges', data: { id: 'BA', source: 'B', target: 'A'}, game_data: {direction: 'direction'} }
+		
+      ],*/
+
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'background-color': '#66CCFF',
+            'label': 'data(name)',
+            'width': '40px',
+            'height': '40px'
+          }
+        },
+		{
+			selector: 'node:selected',
+			style: {
+				'background-color': '#FF6347', // Change the color when selected
+				'border-width': 4, // Add border when selected
+				'border-color': '#FF4500', // Change border color
+			}
+		},
+        {
+          selector: 'edge',
+          style: {
+            'width': 2,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle',
+            'label': 'data(direction)',  // Displaying edge labels
+			// Move the label closer to the source node by using negative margins
+            //'text-rotation': 'autorotate',
+            'font-size': '12px',
+			'curve-style': 'bezier', // Enables curved edge
+            'control-point-step-size': 30, // Adds curvature (controls the size of the curve)
+            'control-point-distance': 20 // Adjusts how far the control point is to affect the curvature
+          }
+        },
+		{
+          selector: 'edge:selected',
+          style: {
+            'line-color': '#FF6347',  // Highlight the edge when selected
+            'width': 4,               // Make the edge thicker
+            'target-arrow-color': '#FF6347', // Change arrow color
+            'target-arrow-shape': 'triangle-tee' // Change the arrow shape
+          }
+        }
+      ],
+
+
+      layout: {
+        name: 'preset',
+      }
+    });
+
+	/*
+	cy.add({
+		group: 'nodes', // Specify this is a node
+		data: { id: 'C' }, // The node ID (you can change it)
+		position: { x: 150, y: 150 } // Optional: Place node at (150, 150)
+	});
+
+	cy.add({
+		group: 'nodes', // Specify this is a node
+		data: { id: 'D' }, // The node ID (you can change it)
+		position: { x: 0, y: 150 } // Optional: Place node at (150, 150)
+	});
+
+	cy.add({group: 'edges', data: {source:'C', target:'D', direction:'west'}});
+	cy.add({group: 'edges', data: {source:'D', target:'C', direction:'east'}});
+
+	console.log(cy.edges());
+	*/
+
+	// Generate and print a UUID4
+	function generateUUID4() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+	}
+
+	// Print the generated UUID4
+	const uuid = generateUUID4();
+	console.log("Generated UUID4: " + uuid);
+
+  </script>
+</body>
+</html>
