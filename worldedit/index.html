@@ -195,6 +195,16 @@
             new_node(data = null, position = {'x':x*100,'y':y*100})
         }
     }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && event.key === 'x') { // Check if Ctrl + X is pressed
+          let selectedNodes = cy.$(':selected'); // Get all selected elements
+          if (selectedNodes.length > 0) {
+              selectedNodes.remove(); // Remove selected elements
+              console.log(selectedNodes.length + ' nodes/edges deleted');
+          }
+      }
+    });
     cy.minZoom(0.1);  // Prevent extreme zooming
     cy.maxZoom(5);
     //cy.zoomingEnabled(false);
