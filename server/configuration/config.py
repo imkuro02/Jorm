@@ -195,6 +195,7 @@ def load():
     SPLASH_SCREENS['screens'] = splash_screens
 
     WORLD['world'] = configuration.map.map_loader.load_map()
+    #print(len(WORLD['world']))
 
     LORE = load_lore()
 

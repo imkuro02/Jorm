@@ -7,8 +7,8 @@
   <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
   <style>
     #cy {
-      height: 800px;
-      width: auto;
+      height: calc(100vh - 150px);
+      width: 99%;
       border: solid 1px #ccc;
     }
   </style>
@@ -20,31 +20,29 @@
     var selectedNode = null; // Track the currently selected node
 
     function new_node(data = null, position = null) {
-	
-	
-		var node_template = { 
-			group: 'nodes',
-				position: {
-					x: 0, 
-					y: 0
-				},
-				data: {
-					id: generateUUID4(),
-					name: 'node name',
-					desc: 'node desc'
-			}
-		};
+      var node_template = { 
+        group: 'nodes',
+          position: {
+            x: 0, 
+            y: 0
+          },
+          data: {
+            id: generateUUID4(),
+            name: 'node name',
+            desc: 'node desc'
+        }
+      };
 
-		if(data!==null){
-			node_template.data = data
-		}
+      if(data!==null){
+        node_template.data = data
+      }
 
-		if(position!==null){
-			console.log(position);	
-			node_template.position = position
-		}
+      if(position!==null){
+        console.log(position);	
+        node_template.position = position
+      }
 
-		cy.add(node_template);
+      cy.add(node_template);
 	}
 
     var edge_template = {
@@ -58,23 +56,30 @@
     }
 
     var cy = cytoscape({
+      options: {
+        //textureOnViewport: true
+      },
       container: document.getElementById('cy'),
       elements: [],
+      headless: false,
+      textureOnViewport: true,
       style: [
         {
           selector: 'node',
           style: {
+            'shape': 'ellipse',  // Sets node shape
             'background-color': '#66CCFF',
             'label': '',
-            'width': '40px',
-            'height': '40px'
+            'border-width': 0,  // No borders = fewer draw calls
+            'width': '50px',
+            'height': '50px'
           }
         },
         {
           selector: 'node:selected',
           style: {
             'background-color': '#FF6347',
-			'label': 'data(name)',
+			      'label': 'data(name)',
             'border-width': 4,
             'border-color': '#FF4500',
           }
@@ -107,7 +112,7 @@
         }
       ],
       layout: {
-        name: 'preset',
+        name: 'grid',
       }
     });
 
@@ -184,6 +189,19 @@
         }
       }
     });
+
+    for (let x = 0; x < 10; x++) {  // Loops from 0 to 4
+        for (let y = 0; y < 10; y++) {  
+            new_node(data = null, position = {'x':x*100,'y':y*100})
+        }
+    }
+    cy.minZoom(0.1);  // Prevent extreme zooming
+    cy.maxZoom(5);
+    //cy.zoomingEnabled(false);
+    //cy.panningEnabled(false);
+    cy.boxSelectionEnabled(false);
+    
+    //cy.renderer().options({ textureOnViewport: true });
   </script>
 </body>
 </html>
