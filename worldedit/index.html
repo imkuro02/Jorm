@@ -126,7 +126,16 @@
           selector: 'node',
           style: {
             'shape': 'square',
-            'background-color': 'cyan',
+            'background-color': function(ele) {
+              if (ele.data('json') && ele.data('json').id) {
+                if (ele.data('json').id[0] == '!'){
+                  return 'darkgray';
+                }
+                return 'green'; // If 'secret' exists in JSON, make it red
+              } else {
+                return 'cyan'; // Default color
+              }
+            },
             'label': 'data(name)',
             'border-width': 0,
             'width': '32px',
@@ -147,6 +156,8 @@
           style: {
             'width': 4,
             'line-color': '#ccc',
+            //'source-arrow-shape': 'circle',
+            //'source-arrow-color': 'red',
             'target-arrow-color': '#ccc',
             'target-arrow-shape': 'triangle',
             'target-arrow-color': 'red',
