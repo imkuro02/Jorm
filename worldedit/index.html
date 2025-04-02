@@ -149,11 +149,13 @@
             'line-color': '#ccc',
             'target-arrow-color': '#ccc',
             'target-arrow-shape': 'triangle',
+            'target-arrow-color': 'red',
             'label': 'data(name)',
             'text-rotation': 'autorotate',
             'font-size': '12px',
             'curve-style': 'bezier',
             'control-point-step-size': 30,
+            
             'control-point-distance': 10
           }
         },
@@ -164,7 +166,7 @@
             'label': 'data(name)',
             'text-rotation': 'autorotate',
             'width': 4,
-            'target-arrow-color': '#FF6347',
+            'target-arrow-color': 'red',
             'target-arrow-shape': 'triangle-tee',
             'control-point-step-size': 30,
             'control-point-distance': 10
@@ -294,11 +296,11 @@ document.getElementById('json-editor').addEventListener('input', function() {
     });
 
     // Create a bunch of nodes for testing
-    //for (let x = 0; x < 64; x++) {
-    //  for (let y = 0; y < 64; y++) {
-    //    new_node(data = null, position = {'x': x * 100, 'y': y * 100});
-    //  }
-    //}
+    for (let x = 0; x < 64; x++) {
+      for (let y = 0; y < 64; y++) {
+       new_node(data = null, position = {'x': x * 100, 'y': y * 100});
+     }
+    }
 
 	function download_json(jsonObject) {
 		const blob = new Blob([jsonObject], { type: 'application/json' });

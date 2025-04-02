@@ -395,11 +395,13 @@ def command_lore(self, line):
     if to_find in list_of_enemies:
         e_id = LORE['enemies'][to_find]['npc_id']
         e = create_npc(self.room.world.rooms['loading'], e_id, spawn_for_lore = True)
+        if e == None:
+            return
         
         
         all_rooms_e_spawns_in = []
         for room in LORE['rooms'].values():
-            for spawn_points in room['enemies']:
+            for spawn_points in room['npcs']:
                 if e_id in spawn_points:
                     if room['name'] in all_rooms_e_spawns_in:
                         continue

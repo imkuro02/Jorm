@@ -28,20 +28,28 @@ def load_map():
         room_items = []
 
         if 'id' in json_data:
-            # override connection id's of edges
+            new_id = json_data['id']
+
+            skip_loading = False
+            if '!' == new_id[0]:
+                new_id = new_id.replace('!','')
+                skip_loading = True
+
+            room_id = new_id
             for edge in all_data['edges'].values():
                 edge_data = edge['data']
-                if edge_data['source'] == room_id:
-                    #print(all_data['edges'][edge_data['id']]['data']['source'], 'set to')
-                    all_data['edges'][edge_data['id']]['data']['source'] = json_data['id']
-                    ##print(all_data['edges'][edge_data['id']]['source'])
-                if edge_data['target'] == room_id:
-                    all_data['edges'][edge_data['id']]['data']['target'] = json_data['id']
-            # override room id
-            room_id = json_data['id']
+                if edge_data['source'] == data['id']:
+                    all_data['edges'][edge_data['id']]['data']['source'] = new_id
+                if edge_data['target'] == data['id']:
+                    all_data['edges'][edge_data['id']]['data']['target'] = new_id
 
-        if 'desc' in json_data:
-            room_desc = json_data['desc']
+                print(all_data['edges'][edge_data['id']])
+
+            if skip_loading:
+                continue
+
+        if 'description' in json_data:
+            room_desc = json_data['description']
 
         if 'npcs' in json_data:
             room_npcs= json_data['npcs']
@@ -64,7 +72,7 @@ def load_map():
     for edge in all_data['edges'].values():
         edge_data = edge['data']
         if edge_data['source'] in nodes:
-            print(edge_data['source'] , 'yep!')
+            
             new_exit = {
                 'from': edge_data['source'], 
                 'to_room_id': edge_data['target'], 
@@ -74,7 +82,6 @@ def load_map():
             }
 
             if 'secret' in edge_data['json']:
-                print('secret')
                 new_exit['secret'] = edge_data['json']['secret']
             if 'blocked' in edge_data['json']:
                 new_exit['blocked'] = edge_data['json']['secret']
