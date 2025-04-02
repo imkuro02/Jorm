@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Cytoscape Example</title>
+  <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
+  <style>
+    #cy {
+      height: calc(100vh - 150px);
+      width: 99%;
+      border: solid 1px #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="cy"></div>
+
+  <script>
+    var selectedNode = null; // Track the currently selected node
+
+    function new_node(data = null, position = null) {
+      var node_template = { 
+        group: 'nodes',
+          position: {
+            x: 0, 
+            y: 0
+          },
+          data: {
+            id: generateUUID4(),
+            name: 'node name',
+			json: {}
+        }
+      };
+
+      if(data!==null){
+        node_template.data = data
+      }
+
+      if(position!==null){
+        console.log(position);	
+        node_template.position = position
+      }
+
+      cy.add(node_template);
+	}
+
+	function new_edge(source = null, target = null, name = null){
+		var edge_template = {
+			group: 'edges',
+			data: {
+				source: 	source,
+				target: 	target,
+				name:		name,
+				json: {}
+			}
+		}
+
+		cy.add(edge_template)
+	}
+
+
+    var cy = cytoscape({
+      options: {
+        //textureOnViewport: true
+      },
+      container: document.getElementById('cy'),
+      elements: [],
+      headless: false,
+      textureOnViewport: true,
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'shape': 'square',  // Sets node shape
+            'background-color':  'cyan',
+            'label': 'data(name)',
+            'border-width': 0,  // No borders = fewer draw calls
+            'width': '32px',
+            'height': '32px'
+          }
+        },
+        {
+          selector: 'node:selected',
+          style: {
+            'background-color': '#FF6347',
+			'label': 'data(name)',
+            'border-width': 4,
+            'border-color': '#FF4500',
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 4,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle',
+			'label': 'data(name)',
+            'text-rotation': 'autorotate',
+            'font-size': '12px',
+            'curve-style': 'bezier',
+            'control-point-step-size': 30,
+            'control-point-distance': 10
+          }
+        },
+        {
+          selector: 'edge:selected',
+          style: {
+            'line-color': '#FF6347',
+			'label': 'data(name)',
+			'text-rotation': 'autorotate',
+            'width': 4,
+            'target-arrow-color': '#FF6347',
+            'target-arrow-shape': 'triangle-tee',
+			'control-point-step-size': 30,
+            'control-point-distance': 10
+          }
+        }
+      ],
+      layout: {
+        name: 'grid',
+      }
+    });
+
+    function generateUUID4() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+	// Right-click to create new node
+    cy.on('cxttap', function(event) {
+      	if (!event.target || event.target === cy) {
+			// Tap happened on empty space (or the Cytoscape container itself)
+			//console.log(event)
+			selectedNode = null; // Deselect the node
+			console.log('Node created');
+			new_node(data = null, position = event.position)
+		}else{
+			var node = event.target;
+			node.remove();
+			console.log('Node deleted: ' + node.id());
+		}
+      
+    });
+
+    cy.on('cxttap', 'edge', function(event) {
+      var edge = event.target;
+      edge.remove();
+      console.log('Edge deleted: ' + edge.id());
+    });
+
+    // Select a node for edge creation
+    cy.on('tap', 'node', function(event) {
+      var node = event.target;
+
+	// If the Ctrl key is pressed, don't create an edge
+	if (event.originalEvent.ctrlKey) {
+		return; // Prevent edge creation
+	}
+
+	if (!selectedNode) {
+        // First node is selected
+        selectedNode = node;
+        console.log('Node selected: ' + node.id());
+	} else {
+		new_edge(source = selectedNode.id(), target = node.id(), name = 'DIR');
+	  
+        // Second node clicked, create an edge
+        //var newEdge = {
+        //  group: 'edges',
+        //  data: {
+        //    id: generateUUID4(),
+        //    source: selectedNode.id(),
+        //    target: node.id(),
+        //    direction: 'bidirectional'
+        //  }
+	
+
+        //cy.add(newEdge);
+        console.log('Edge created between ' + selectedNode.id() + ' and ' + node.id());
+		
+        
+        selectedNode = node; // Reset selection
+
+      }
+    });
+
+    // Deselect the node when clicking on empty space
+    cy.on('tap', function(event) {
+      if (!event.target || event.target === cy) {
+        // Tap happened on empty space (or the Cytoscape container itself)
+        if (selectedNode) {
+          selectedNode = null; // Deselect the node
+          console.log('Node deselected');
+        }
+      }
+    });
+
+    
+
+    document.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && event.key === 'x') { // Check if Ctrl + X is pressed
+          let selectedNodes = cy.$(':selected'); // Get all selected elements
+          if (selectedNodes.length > 0) {
+              selectedNodes.remove(); // Remove selected elements
+			  selectedNode = null;
+              console.log(selectedNodes.length + ' nodes/edges deleted');
+          }
+      }
+    });
+    cy.minZoom(0.1);  // Prevent extreme zooming
+    cy.maxZoom(5);
+    //cy.zoomingEnabled(false);
+    //cy.panningEnabled(True);
+    cy.boxSelectionEnabled(True);
+    
+    //cy.renderer().options({ textureOnViewport: true });
+
+	//for (let x = 0; x < 64; x++) {  // Loops from 0 to 4
+    //    for (let y = 0; y < 64; y++) {  
+    //        new_node(data = null, position = {'x':x*100,'y':y*100})
+    //    }
+    //}
+  </script>
+</body>
+</html>

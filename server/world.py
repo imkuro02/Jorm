@@ -15,16 +15,10 @@ class Spawner:
     def __init__(self, room):
         self.room = room
         self.room_dict = self.get_room_dict()
-        
 
-        self.spawn_points_enemies = {}
         self.spawn_points_items = {}
         self.spawn_points_npcs = {}
 
-        
-
-        for i in range(0,len(self.room_dict['enemies'])):
-            self.spawn_points_enemies[i] = None
         for i in range(0,len(self.room_dict['items'])):
             self.spawn_points_items[i] = None
         for i in range(0,len(self.room_dict['npcs'])):
@@ -43,12 +37,6 @@ class Spawner:
         return room
     
     def respawn_all(self, forced = True):
-        for i in self.spawn_points_enemies:
-            if self.spawn_points_enemies[i] == None:
-                continue
-            if self.spawn_points_enemies[i].room == None:
-                self.spawn_points_enemies[i] = None
-
         for i in self.spawn_points_items:
             if self.spawn_points_items[i] == None:
                 continue
@@ -60,15 +48,7 @@ class Spawner:
                 continue
             if self.spawn_points_npcs[i].room == None:
                 self.spawn_points_npcs[i] = None      
-
-        if 'enemies' in self.room_dict:
-            for i, _list in enumerate(self.room_dict['enemies']):
-                if self.spawn_points_enemies[i] != None:
-                    continue
-                _selected = random.choice(_list)
-                enemy = create_npc(self.room, _selected)
-                self.spawn_points_enemies[i] = enemy
-                
+ 
         if 'items' in self.room_dict:
             for i, _list in enumerate(self.room_dict['items']):
                 if self.spawn_points_items[i] != None:
@@ -123,17 +103,16 @@ class Room:
 
         self.exits = []
         for _exit in exits:
+            print(_exit)
             if type(_exit).__name__ == 'Exit':
                 self.exits.append(_exit)
                 continue
 
-            _exit_dict = {'direction': _exit, 'to_room_id': exits[_exit] ,'blocked': False, 'secret': False}
-            if 'secret:' in _exit: 
-                _exit_dict['secret'] = True
-                _exit_dict['direction'] = _exit_dict['direction'].replace('secret:','')
-            if 'blocked:' in _exit: 
-                _exit_dict['blocked'] = True
-                _exit_dict['direction'] = _exit_dict['direction'].replace('blocked:','')
+            _exit_dict = {
+                'direction': _exit['direction'], 
+                'to_room_id': _exit['to_room_id'],
+                'blocked': _exit['blocked'], 
+                'secret': _exit['secret']}
 
             self.exits.append(
                                 Exit(

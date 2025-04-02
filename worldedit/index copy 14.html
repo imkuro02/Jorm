@@ -72,9 +72,9 @@
 
   <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
   <script>
-    var selectedNode = null; // Track the currently selected node or edge
+	// track current selected node or edge
+    var selectedNode = null; 
     var selectedEdge = null;
-	var copiedData = null;
 
     function new_node(data = null, position = null) {
       var node_template = { 
@@ -83,8 +83,7 @@
         data: { 
 			id: generateUUID4(), 
 			name: 'node name', 
-			json: {} 
-		}
+			json: '{}' }
       };
 
       if (data !== null) {
@@ -107,7 +106,7 @@
           source: null,
           target: null,
           name: 'no name',
-          json: {}
+          json: '{}'
         }
       };
 
@@ -118,6 +117,7 @@
       cy.add(edge_template);
     }
 
+	// what a mess
     var cy = cytoscape({
       container: document.getElementById('cy'),
       elements: [],
@@ -174,6 +174,7 @@
       layout: { name: 'grid' }
     });
 
+	// generate uuid for saving and edges
     function generateUUID4() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -181,55 +182,55 @@
       });
     }
 
-    // Right-click to create new node or delete a node
+    // right click to create a new node, delete a node / edge
     cy.on('cxttap', function(event) {
       if (!event.target || event.target === cy) {
-        // Right-click on empty space or the Cytoscape container itself
         selectedNode = null;
         selectedEdge = null;
-        document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
+        document.getElementById('editor').classList.remove('no-pointer-events'); 
         new_node(data = null, position = event.position);
-        document.getElementById('json-editor').value = ''; // Clear editor on empty space click
+        document.getElementById('json-editor').value = ''; 
       } else {
         if (event.target.isNode()) {
           var node = event.target;
           node.remove();
           selectedNode = null;
           selectedEdge = null;
-          document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
-          document.getElementById('json-editor').value = ''; // Clear editor on node removal
+          document.getElementById('editor').classList.remove('no-pointer-events'); 
+          document.getElementById('json-editor').value = ''; 
         } else if (event.target.isEdge()) {
           var edge = event.target;
           edge.remove();
           selectedNode = null;
           selectedEdge = null;
-          document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
-          document.getElementById('json-editor').value = ''; // Clear editor on edge removal
+          document.getElementById('editor').classList.remove('no-pointer-events'); 
+          document.getElementById('json-editor').value = ''; 
         }
       }
     });
 
-    // Select a node for edge creation
+    // select node for edge creation
     cy.on('tap', 'node', function(event) {
       var node = event.target;
 
-      // If the Ctrl key is pressed, don't create an edge
+      // if the ctrl key is pressed, dont create an edge
       if (event.originalEvent.ctrlKey) {
-        return; // Prevent edge creation
+        return; 
       }
 
       if (!selectedNode) {
-        // First node is selected
+        // first node selected
         selectedNode = node;
         selectedEdge = null; // Clear edge selection
         console.log('Node selected: ' + node.id());
-        document.getElementById('json-editor').value = JSON.stringify(node.data(), null, 2); // Display node data
+		// editor set node data
+        document.getElementById('json-editor').value = JSON.stringify(node.data(), null, 2); 
       } else {
 		let data = {
 			'source': selectedNode.id(), 
 			'target': node.id(), 
 			'name': 'DIR', 
-			'json': {}
+			'json': '{}'
 		}
         new_edge(data);
         selectedNode = node; // Reset selection
@@ -240,49 +241,43 @@
     cy.on('tap', 'edge', function(event) {
       var edge = event.target;
       selectedEdge = edge;
-      selectedNode = null; // Clear node selection
+      selectedNode = null; // clear nodes
       console.log('Edge selected: ' + edge.id());
-      document.getElementById('json-editor').value = JSON.stringify(edge.data(), null, 2); // Display edge data
+	  // editor set edge data
+      document.getElementById('json-editor').value = JSON.stringify(edge.data(), null, 2); 
     });
 
-    // Deselect node or edge on tapping elsewhere
+    // deselct all when you tap on nothing
     cy.on('tap', function(event) {
       if (!event.target || event.target === cy) {
-        // Tap happened on empty space (or the Cytoscape container itself)
+        // tapped on empty space
         if (selectedNode || selectedEdge) {
           selectedNode = null;
           selectedEdge = null;
-          document.getElementById('json-editor').value = ''; // Clear editor
+          document.getElementById('json-editor').value = ''; // clear the editor
           console.log('Deselected');
         }
       }
     });
 
-    // Save the edited JSON back to the node or edge
-document.getElementById('json-editor').addEventListener('input', function() {
-  const editor = this;  // Reference to the editor element
-  
-  if (selectedNode) {
-    try {
-      selectedNode.data(JSON.parse(editor.value)); // Update the node's JSON data
-      editor.style.backgroundColor = 'white';  // Set background to white if JSON is valid
-    } catch (e) {
-      console.error('Invalid JSON');
-      editor.style.backgroundColor = 'lightgray';  // Set background to light gray if JSON is invalid
-    }
-  } else if (selectedEdge) {
-    try {
-      selectedEdge.data(JSON.parse(editor.value)); // Update the edge's JSON data
-      editor.style.backgroundColor = 'white';  // Set background to white if JSON is valid
-    } catch (e) {
-      console.error('Invalid JSON');
-      editor.style.backgroundColor = 'lightgray';  // Set background to light gray if JSON is invalid
-    }
-  }
-});
+    // on editor edits save data to the object
+    document.getElementById('json-editor').addEventListener('input', function() {
+      if (selectedNode) {
+        try {
+          selectedNode.data(JSON.parse(this.value)); // update node json data
+        } catch (e) {
+          console.error('Invalid JSON');
+        }
+      } else if (selectedEdge) {
+        try {
+          selectedEdge.data(JSON.parse(this.value)); // update edge json data
+        } catch (e) {
+          console.error('Invalid JSON');
+        }
+      }
+    });
 
-
-    // Allow Tab key to insert spaces in the textarea
+    // allows you to tab in the editor
     document.getElementById('json-editor').addEventListener('keydown', function(event) {
       if (event.key === 'Tab') {
         event.preventDefault();
@@ -293,13 +288,14 @@ document.getElementById('json-editor').addEventListener('input', function() {
       }
     });
 
-    // Create a bunch of nodes for testing
+    // create a bunch of nodes for testing
     //for (let x = 0; x < 64; x++) {
     //  for (let y = 0; y < 64; y++) {
     //    new_node(data = null, position = {'x': x * 100, 'y': y * 100});
     //  }
     //}
 
+	// save json as a file
 	function download_json(jsonObject) {
 		const blob = new Blob([jsonObject], { type: 'application/json' });
 		const link = document.createElement('a');
@@ -312,6 +308,7 @@ document.getElementById('json-editor').addEventListener('input', function() {
 		URL.revokeObjectURL(url);
 	}
 
+	// loop thru each node and edge, turn it into a json and save it for the user
 	function export_json(){
 		let j = {'nodes':{}, 'edges':{}};
 		cy.nodes().forEach(n => {
@@ -327,31 +324,31 @@ document.getElementById('json-editor').addEventListener('input', function() {
 		
 	}
 
+	// no clue what this does
 	function handleFileUpload() {
 		
 		const fileInput = document.getElementById('fileInput');
 		console.log(fileInput.files[0])
-		// Ensure a file is selected
+		// check if a file is selected
 		if (fileInput.files.length === 0) {
 			alert('Please select a file to upload.');
 			return;
 		}
 
-		const file = fileInput.files[0];  // Get the selected file
+		const file = fileInput.files[0];  // get selected file
 
-		// Check if the file is a JSON file
+		// double check its a json but like who cares tbh
 		if (file.type !== 'application/json') {
 			alert('Please upload a JSON file.');
 			return;
 		}
 
-		// Create a FileReader to read the content of the file
+		// create a file reader, wont work without this idk why
 		const reader = new FileReader();
 		
-		// Set up the onload function to handle when the file is read
+		// when file is loaded, import it as a json
 		reader.onload = function(event) {
 			try {
-				// Parse the JSON content
 				import_json(event.target.result);
 				alert('loaded ');
 			} catch (error) {
@@ -367,33 +364,25 @@ document.getElementById('json-editor').addEventListener('input', function() {
 		cy.nodes().remove();
 		cy.edges().remove();
 		for (let key in json.nodes) {
-			//console.log(json.nodes[key]);
 			new_node(json.nodes[key].data, json.nodes[key].position);
 		};
 
 		for (let key in json.edges) {
 			new_edge(data = json.edges[key].data);
-			// Code to be executed for each element
 		};
 	}
 
-	// Handle Ctrl + something keys
+	// Delete selected nodes when ctrl-x
     document.addEventListener('keydown', function(event) {
-      if (event.ctrlKey && event.key === 'x') { // Check if Ctrl + X is pressed
-        let selectedNodes = cy.$(':selected'); // Get all selected nodes
+      if (event.ctrlKey && event.key === 'x') { 
+        let selectedNodes = cy.$(':selected'); // get all selected nodes
 
         if (selectedNodes.length > 0) {
-          selectedNodes.remove(); // Remove selected nodes
+          selectedNodes.remove(); // DELETE
           console.log(selectedNodes.length + ' nodes deleted');
         }
       }
-	  
     });
-
-
-
-
-
   </script>
 
 </body>

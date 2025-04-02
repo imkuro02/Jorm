@@ -1,6 +1,7 @@
 import yaml
 from enum import Enum, auto
-import configuration.map.map_loader
+#import configuration.map.map_loader
+import configuration.map_new.map_loader
 import csv
 import os
 import configuration.read_from_excel as rfe
@@ -194,7 +195,7 @@ def load():
     from configuration.splashscreens.splash import splash_screens
     SPLASH_SCREENS['screens'] = splash_screens
 
-    WORLD['world'] = configuration.map.map_loader.load_map()
+    WORLD['world'] = configuration.map_new.map_loader.load_map()
     #print(len(WORLD['world']))
 
     LORE = load_lore()

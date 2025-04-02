@@ -63,9 +63,6 @@
 
     <!-- Editor Section -->
     <div id="editor">
-		<input type="file" id="fileInput" />
-		<button onclick="handleFileUpload()">Load</button>
-		<button onclick="export_json()">Save</button>
       <textarea id="json-editor" placeholder="Select a node or edge to edit its JSON data..."></textarea>
     </div>
   </div>
@@ -74,17 +71,12 @@
   <script>
     var selectedNode = null; // Track the currently selected node or edge
     var selectedEdge = null;
-	var copiedData = null;
 
     function new_node(data = null, position = null) {
       var node_template = { 
         group: 'nodes',
         position: { x: 0, y: 0 },
-        data: { 
-			id: generateUUID4(), 
-			name: 'node name', 
-			json: {} 
-		}
+        data: { id: generateUUID4(), name: 'node name', json: '{}' }
       };
 
       if (data !== null) {
@@ -98,22 +90,16 @@
       cy.add(node_template);
     }
 
-    function new_edge(data = null) {
-		console.log(data);
+    function new_edge(source, target, name) {
       var edge_template = {
         group: 'edges',
         data: {
-		  id: generateUUID4(),
-          source: null,
-          target: null,
-          name: 'no name',
-          json: {}
+          source: source,
+          target: target,
+          name: name,
+          json: '{}'
         }
       };
-
-	  if (data !== null) {
-        edge_template.data = data;
-      }
 
       cy.add(edge_template);
     }
@@ -225,13 +211,7 @@
         console.log('Node selected: ' + node.id());
         document.getElementById('json-editor').value = JSON.stringify(node.data(), null, 2); // Display node data
       } else {
-		let data = {
-			'source': selectedNode.id(), 
-			'target': node.id(), 
-			'name': 'DIR', 
-			'json': {}
-		}
-        new_edge(data);
+        new_edge(source = selectedNode.id(), target = node.id(), name = 'DIR');
         selectedNode = node; // Reset selection
       }
     });
@@ -258,38 +238,34 @@
       }
     });
 
-    // Save the edited JSON back to the node or edge
-document.getElementById('json-editor').addEventListener('input', function() {
-  const editor = this;  // Reference to the editor element
-  
-  if (selectedNode) {
-    try {
-      selectedNode.data(JSON.parse(editor.value)); // Update the node's JSON data
-      editor.style.backgroundColor = 'white';  // Set background to white if JSON is valid
-    } catch (e) {
-      console.error('Invalid JSON');
-      editor.style.backgroundColor = 'lightgray';  // Set background to light gray if JSON is invalid
-    }
-  } else if (selectedEdge) {
-    try {
-      selectedEdge.data(JSON.parse(editor.value)); // Update the edge's JSON data
-      editor.style.backgroundColor = 'white';  // Set background to white if JSON is valid
-    } catch (e) {
-      console.error('Invalid JSON');
-      editor.style.backgroundColor = 'lightgray';  // Set background to light gray if JSON is invalid
-    }
-  }
-});
+    // Save the edited JSON back to the node or edge (only name and json)
+    document.getElementById('json-editor').addEventListener('input', function() {
+      try {
+        var newData = JSON.parse(this.value); // Try to parse the input as JSON
+        if (selectedNode) {
+          selectedNode.data({
+            name: newData.name || selectedNode.data('name'), // Keep existing values for any non-updated properties
+            json: newData.json || selectedNode.data('json')
+          });
+        } else if (selectedEdge) {
+          selectedEdge.data({
+            name: newData.name || selectedEdge.data('name'),
+            json: newData.json || selectedEdge.data('json')
+          });
+        }
+      } catch (e) {
+        console.error('Invalid JSON');
+      }
+    });
 
-
-    // Allow Tab key to insert spaces in the textarea
+    // Allow Tab key to insert 4 spaces in the textarea
     document.getElementById('json-editor').addEventListener('keydown', function(event) {
       if (event.key === 'Tab') {
         event.preventDefault();
         var cursorPos = this.selectionStart;
         var text = this.value;
-        this.value = text.substring(0, cursorPos) + '    ' + text.substring(cursorPos);
-        this.selectionStart = this.selectionEnd = cursorPos + 1; // Move cursor after the tab
+        this.value = text.substring(0, cursorPos) + '    ' + text.substring(cursorPos); // 4 spaces
+        this.selectionStart = this.selectionEnd = cursorPos + 4; // Move cursor after the inserted spaces
       }
     });
 
@@ -299,101 +275,6 @@ document.getElementById('json-editor').addEventListener('input', function() {
     //    new_node(data = null, position = {'x': x * 100, 'y': y * 100});
     //  }
     //}
-
-	function download_json(jsonObject) {
-		const blob = new Blob([jsonObject], { type: 'application/json' });
-		const link = document.createElement('a');
-		const url = URL.createObjectURL(blob);
-		link.download = 'edging_my_nodes.json';
-		link.href = url;
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-		URL.revokeObjectURL(url);
-	}
-
-	function export_json(){
-		let j = {'nodes':{}, 'edges':{}};
-		cy.nodes().forEach(n => {
-			let id = n.data().id;
-			j.nodes[id] = {'position': n.position(), 'data': n.data()};
-		});
-		cy.edges().forEach(e => {
-			let id = e.data().id;
-			j.edges[id] = {'data': e.data()};
-		});
-		jsonObject = JSON.stringify(j);
-		download_json(jsonObject);
-		
-	}
-
-	function handleFileUpload() {
-		
-		const fileInput = document.getElementById('fileInput');
-		console.log(fileInput.files[0])
-		// Ensure a file is selected
-		if (fileInput.files.length === 0) {
-			alert('Please select a file to upload.');
-			return;
-		}
-
-		const file = fileInput.files[0];  // Get the selected file
-
-		// Check if the file is a JSON file
-		if (file.type !== 'application/json') {
-			alert('Please upload a JSON file.');
-			return;
-		}
-
-		// Create a FileReader to read the content of the file
-		const reader = new FileReader();
-		
-		// Set up the onload function to handle when the file is read
-		reader.onload = function(event) {
-			try {
-				// Parse the JSON content
-				import_json(event.target.result);
-				alert('loaded ');
-			} catch (error) {
-				alert('Error parsing JSON: ' + error.message);
-			}
-    	};
-
-		reader.readAsText(file);
-	}
-
-	function import_json(input = '{}'){
-		let json = JSON.parse(input);
-		cy.nodes().remove();
-		cy.edges().remove();
-		for (let key in json.nodes) {
-			//console.log(json.nodes[key]);
-			new_node(json.nodes[key].data, json.nodes[key].position);
-		};
-
-		for (let key in json.edges) {
-			new_edge(data = json.edges[key].data);
-			// Code to be executed for each element
-		};
-	}
-
-	// Handle Ctrl + something keys
-    document.addEventListener('keydown', function(event) {
-      if (event.ctrlKey && event.key === 'x') { // Check if Ctrl + X is pressed
-        let selectedNodes = cy.$(':selected'); // Get all selected nodes
-
-        if (selectedNodes.length > 0) {
-          selectedNodes.remove(); // Remove selected nodes
-          console.log(selectedNodes.length + ' nodes deleted');
-        }
-      }
-	  
-    });
-
-
-
-
-
   </script>
 
 </body>

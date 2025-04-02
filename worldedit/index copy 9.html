@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Side by Side Example</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Flex container for side-by-side layout */
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Style for #cy (Cytoscape container) */
+    #cy {
+      flex: 1;  /* This will make #cy take up the remaining space */
+      background-color: #f0f0f0;
+      border-right: solid 1px #ccc; /* Optional: Adds a border between the divs */
+    }
+
+    /* Style for #editor */
+    #editor {
+      width: 300px; /* Set a fixed width for the editor */
+      background-color: #e0e0e0;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 10; /* Keep the editor above Cytoscape */
+    }
+
+    /* Prevent #editor from blocking right-click events */
+    #editor.no-pointer-events {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Container for side-by-side layout -->
+  <div class="container">
+    <!-- Cytoscape Container -->
+    <div id="cy"></div>
+
+    <!-- Editor Section -->
+    <div id="editor">
+      <p>test</p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/cytoscape@3.22.0/dist/cytoscape.min.js"></script>
+  <script>
+    var selectedNode = null; // Track the currently selected node
+
+    function new_node(data = null, position = null) {
+      var node_template = { 
+        group: 'nodes',
+        position: { x: 0, y: 0 },
+        data: { id: generateUUID4(), name: 'node name', json: '{}' }
+      };
+
+      if (data !== null) {
+        node_template.data = data;
+      }
+
+      if (position !== null) {
+        node_template.position = position;
+      }
+
+      cy.add(node_template);
+    }
+
+    var cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: [],
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'shape': 'square',
+            'background-color': 'cyan',
+            'label': 'data(name)',
+            'border-width': 0,
+            'width': '32px',
+            'height': '32px'
+          }
+        },
+        {
+          selector: 'node:selected',
+          style: {
+            'background-color': '#FF6347',
+            'label': 'data(name)',
+            'border-width': 4,
+            'border-color': '#FF4500',
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 4,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle',
+            'label': 'data(name)',
+            'text-rotation': 'autorotate',
+            'font-size': '12px',
+            'curve-style': 'bezier',
+            'control-point-step-size': 30,
+            'control-point-distance': 10
+          }
+        },
+        {
+          selector: 'edge:selected',
+          style: {
+            'line-color': '#FF6347',
+            'label': 'data(name)',
+            'text-rotation': 'autorotate',
+            'width': 4,
+            'target-arrow-color': '#FF6347',
+            'target-arrow-shape': 'triangle-tee',
+            'control-point-step-size': 30,
+            'control-point-distance': 10
+          }
+        }
+      ],
+      layout: { name: 'grid' }
+    });
+
+    function generateUUID4() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    // Right-click to create new node or delete a node
+    cy.on('cxttap', function(event) {
+      if (!event.target || event.target === cy) {
+        // Right-click on empty space or the Cytoscape container itself
+        selectedNode = null;
+        document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
+        new_node(data = null, position = event.position);
+      } else {
+        var node = event.target;
+        node.remove();
+        selectedNode = null;
+        document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
+      }
+    });
+
+    // Right-click to delete edge
+    cy.on('cxttap', 'edge', function(event) {
+      var edge = event.target;
+      edge.remove();
+      selectedNode = null;
+      document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
+    });
+
+    // Select a node for edge creation
+    cy.on('tap', 'node', function(event) {
+      var node = event.target;
+
+      // If the Ctrl key is pressed, don't create an edge
+      if (event.originalEvent.ctrlKey) {
+        return; // Prevent edge creation
+      }
+
+      if (!selectedNode) {
+        // First node is selected
+        selectedNode = node;
+        console.log('Node selected: ' + node.id());
+      } else {
+        new_edge(source = selectedNode.id(), target = node.id(), name = 'DIR');
+        selectedNode = node; // Reset selection
+      }
+    });
+
+    function new_edge(source, target, name) {
+      var edge_template = {
+        group: 'edges',
+        data: {
+          source: source,
+          target: target,
+          name: name
+        }
+      };
+
+      cy.add(edge_template);
+    }
+
+    // Tap anywhere outside to deselect the node
+    cy.on('tap', function(event) {
+      if (!event.target || event.target === cy) {
+        // Tap happened on empty space (or the Cytoscape container itself)
+        if (selectedNode) {
+          selectedNode = null; // Deselect the node
+          console.log('Node deselected');
+        }
+      }
+    });
+
+    // Prevent interaction with editor when interacting with Cytoscape
+    cy.on('tap', function(event) {
+      if (event.target !== cy) {
+        document.getElementById('editor').classList.add('no-pointer-events'); // Disable pointer events on the editor
+      }
+    });
+
+    // Handle Ctrl + X to delete all selected nodes
+    document.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && event.key === 'x') { // Check if Ctrl + X is pressed
+        let selectedNodes = cy.$(':selected'); // Get all selected nodes
+
+        if (selectedNodes.length > 0) {
+          selectedNodes.remove(); // Remove selected nodes
+          console.log(selectedNodes.length + ' nodes deleted');
+        }
+      }
+    });
+
+    // Create a bunch of nodes for testing
+    for (let x = 0; x < 64; x++) {
+      for (let y = 0; y < 64; y++) {
+        new_node(data = null, position = {'x': x * 100, 'y': y * 100});
+      }
+    }
+  </script>
+
+</body>
+</html>
