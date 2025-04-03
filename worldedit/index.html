@@ -82,7 +82,6 @@
         position: { x: 0, y: 0 },
         data: { 
 			id: generateUUID4(), 
-			name: 'node name', 
 			json: {} 
 		}
       };
@@ -99,6 +98,7 @@
     }
 
     function new_edge(data = null) {
+    
 		console.log(data);
       var edge_template = {
         group: 'edges',
@@ -106,13 +106,16 @@
 		  id: generateUUID4(),
           source: null,
           target: null,
-          name: 'no name',
           json: {}
         }
       };
 
 	  if (data !== null) {
         edge_template.data = data;
+      }
+
+      if(data['source'] === data['target']){
+        return;
       }
 
       cy.add(edge_template);
@@ -127,16 +130,19 @@
           style: {
             'shape': 'square',
             'background-color': function(ele) {
-              if (ele.data('json') && ele.data('json').id) {
-                if (ele.data('json').id[0] == '!'){
-                  return 'darkgray';
-                }
-                return 'green'; // If 'secret' exists in JSON, make it red
+              if (ele.data('json') && ele.data('json').color) {
+                return ele.data('json').color;
               } else {
-                return 'cyan'; // Default color
+                return 'darkgray';
               }
             },
-            'label': 'data(name)',
+            'label': function(ele) {
+              if (ele.data('json') && ele.data('json').label) { 
+                return ele.data('json').label;
+              } else {
+                return '';
+              }
+            },
             'border-width': 0,
             'width': '32px',
             'height': '32px'
@@ -146,7 +152,13 @@
           selector: 'node:selected',
           style: {
             'background-color': '#FF6347',
-            'label': 'data(name)',
+            'label': function(ele) {
+              if (ele.data('json') && ele.data('json').label) { 
+                return ele.data('json').label;
+              } else {
+                return '';
+              }
+            },
             'border-width': 4,
             'border-color': '#FF4500',
           }
@@ -161,12 +173,17 @@
             'target-arrow-color': '#ccc',
             'target-arrow-shape': 'triangle',
             'target-arrow-color': 'red',
-            'label': 'data(name)',
+            'label': function(ele) {
+              if (ele.data('json') && ele.data('json').label) { 
+                return ele.data('json').label;
+              } else {
+                return '';
+              }
+            },
             'text-rotation': 'autorotate',
             'font-size': '12px',
             'curve-style': 'bezier',
-            'control-point-step-size': 30,
-            
+            'control-point-step-size': 10,
             'control-point-distance': 10
           }
         },
@@ -174,13 +191,19 @@
           selector: 'edge:selected',
           style: {
             'line-color': '#FF6347',
-            'label': 'data(name)',
+            'label': function(ele) {
+              if (ele.data('json') && ele.data('json').label) { 
+                return ele.data('json').label;
+              } else {
+                return '';
+              }
+            },
             'text-rotation': 'autorotate',
             'width': 4,
             'target-arrow-color': 'red',
             'target-arrow-shape': 'triangle-tee',
             'control-point-step-size': 30,
-            'control-point-distance': 10
+            'control-point-distance': 30
           }
         }
       ],
@@ -236,14 +259,15 @@
         selectedNode = node;
         selectedEdge = null; // Clear edge selection
         console.log('Node selected: ' + node.id());
-        document.getElementById('json-editor').value = JSON.stringify(node.data(), null, 2); // Display node data
+        document.getElementById('json-editor').value = JSON.stringify(node.data().json, null, 2); // Display node data
       } else {
 		let data = {
+			'id': generateUUID4(),
 			'source': selectedNode.id(), 
 			'target': node.id(), 
-			'name': 'DIR', 
 			'json': {}
 		}
+        
         new_edge(data);
         selectedNode = node; // Reset selection
       }
@@ -255,7 +279,7 @@
       selectedEdge = edge;
       selectedNode = null; // Clear node selection
       console.log('Edge selected: ' + edge.id());
-      document.getElementById('json-editor').value = JSON.stringify(edge.data(), null, 2); // Display edge data
+      document.getElementById('json-editor').value = JSON.stringify(edge.data().json, null, 2); // Display edge data
     });
 
     // Deselect node or edge on tapping elsewhere
@@ -277,7 +301,7 @@ document.getElementById('json-editor').addEventListener('input', function() {
   
   if (selectedNode) {
     try {
-      selectedNode.data(JSON.parse(editor.value)); // Update the node's JSON data
+      selectedNode.data().json=(JSON.parse(editor.value)); // Update the node's JSON data
       editor.style.backgroundColor = 'white';  // Set background to white if JSON is valid
     } catch (e) {
       console.error('Invalid JSON');
@@ -285,7 +309,7 @@ document.getElementById('json-editor').addEventListener('input', function() {
     }
   } else if (selectedEdge) {
     try {
-      selectedEdge.data(JSON.parse(editor.value)); // Update the edge's JSON data
+      selectedEdge.data().json=(JSON.parse(editor.value)); // Update the edge's JSON data
       editor.style.backgroundColor = 'white';  // Set background to white if JSON is valid
     } catch (e) {
       console.error('Invalid JSON');
@@ -307,11 +331,11 @@ document.getElementById('json-editor').addEventListener('input', function() {
     });
 
     // Create a bunch of nodes for testing
-    for (let x = 0; x < 64; x++) {
-      for (let y = 0; y < 64; y++) {
-       new_node(data = null, position = {'x': x * 100, 'y': y * 100});
-     }
-    }
+    //for (let x = 0; x < 64; x++) {
+    //  for (let y = 0; y < 64; y++) {
+    //   new_node(data = null, position = {'x': x * 100, 'y': y * 100});
+    // }
+    //}
 
 	function download_json(jsonObject) {
 		const blob = new Blob([jsonObject], { type: 'application/json' });
