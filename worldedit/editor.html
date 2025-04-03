@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config Editor</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .group { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+        .enemy-input { display: block; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h2>Config Editor</h2>
+    <label>
+        Name: <input type="text" id="name" />
+    </label>
+    <h3>NPC Groups</h3>
+    <div id="npc-groups"></div>
+    <button onclick="addGroup()">Add NPC Group</button>
+    <br><br>
+    <button onclick="saveConfig()">Save Config</button>
+    <pre id="output"></pre>
+
+    <script>
+        let config = { name: "", npcs: [] };
+
+        function addGroup() {
+            const groupIndex = config.npcs.length;
+            config.npcs.push([]);
+            render();
+        }
+
+        function addEnemy(groupIndex) {
+            config.npcs[groupIndex].push("");
+            render();
+        }
+
+        function updateName(value) {
+            config.name = value;
+        }
+
+        function updateEnemy(groupIndex, enemyIndex, value) {
+            config.npcs[groupIndex][enemyIndex] = value;
+        }
+
+        function removeEnemy(groupIndex, enemyIndex) {
+            config.npcs[groupIndex].splice(enemyIndex, 1);
+            render();
+        }
+
+        function removeGroup(groupIndex) {
+            config.npcs.splice(groupIndex, 1);
+            render();
+        }
+
+        function render() {
+            document.getElementById("name").value = config.name;
+            document.getElementById("npc-groups").innerHTML = "";
+            config.npcs.forEach((group, groupIndex) => {
+                const groupDiv = document.createElement("div");
+                groupDiv.className = "group";
+                groupDiv.innerHTML = `<strong>Group ${groupIndex + 1}</strong>`;
+                group.forEach((enemy, enemyIndex) => {
+                    groupDiv.innerHTML += `<input type='text' class='enemy-input' value='${enemy}' 
+                        oninput='updateEnemy(${groupIndex}, ${enemyIndex}, this.value)'>
+                        <button onclick='removeEnemy(${groupIndex}, ${enemyIndex})'>Remove</button>`;
+                });
+                groupDiv.innerHTML += `<br><button onclick='addEnemy(${groupIndex})'>Add Enemy</button>
+                                       <button onclick='removeGroup(${groupIndex})'>Remove Group</button>`;
+                document.getElementById("npc-groups").appendChild(groupDiv);
+            });
+        }
+
+        function saveConfig() {
+            document.getElementById("output").textContent = JSON.stringify(config, null, 4);
+        }
+
+        document.getElementById("name").addEventListener("input", (e) => updateName(e.target.value));
+    </script>
+</body>
+</html>

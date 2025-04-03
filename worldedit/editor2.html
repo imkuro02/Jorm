@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config Editor</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .group { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+        .npc-entry { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h2>Config Editor</h2>
+    <label>
+        Name: <input type="text" id="name" />
+    </label>
+    <h3>NPC Groups</h3>
+    <div id="npc-groups"></div>
+    <button onclick="addGroup()">Add NPC Group</button>
+    <br><br>
+    <button onclick="saveConfig()">Save Config</button>
+    <pre id="output"></pre>
+
+    <script>
+        let config = { name: "", npcs: [] };
+
+        function addGroup() {
+            config.npcs.push([]);
+            render();
+        }
+
+        function addNPC(groupIndex) {
+            config.npcs[groupIndex].push({ name: "", spawnRate: 1.0 });
+            render();
+        }
+
+        function updateName(value) {
+            config.name = value;
+        }
+
+        function updateNPC(groupIndex, npcIndex, key, value) {
+            if (key === 'spawnRate') {
+                value = parseFloat(value) || 0;
+            }
+            config.npcs[groupIndex][npcIndex][key] = value;
+        }
+
+        function removeNPC(groupIndex, npcIndex) {
+            config.npcs[groupIndex].splice(npcIndex, 1);
+            render();
+        }
+
+        function removeGroup(groupIndex) {
+            config.npcs.splice(groupIndex, 1);
+            render();
+        }
+
+        function render() {
+            document.getElementById("name").value = config.name;
+            document.getElementById("npc-groups").innerHTML = "";
+            config.npcs.forEach((group, groupIndex) => {
+                const groupDiv = document.createElement("div");
+                groupDiv.className = "group";
+                groupDiv.innerHTML = `<strong>Group ${groupIndex + 1}</strong>`;
+                group.forEach((npc, npcIndex) => {
+                    groupDiv.innerHTML += `
+                        <div class='npc-entry'>
+                            <input type='text' value='${npc.name}' placeholder='NPC Name' 
+                                oninput='updateNPC(${groupIndex}, ${npcIndex}, "name", this.value)'>
+                            <input type='number' step='0.1' min='0' value='${npc.spawnRate}' placeholder='Spawn Rate' 
+                                oninput='updateNPC(${groupIndex}, ${npcIndex}, "spawnRate", this.value)'>
+                            <button onclick='removeNPC(${groupIndex}, ${npcIndex})'>Remove</button>
+                        </div>`;
+                });
+                groupDiv.innerHTML += `<br><button onclick='addNPC(${groupIndex})'>Add NPC</button>
+                                       <button onclick='removeGroup(${groupIndex})'>Remove Group</button>`;
+                document.getElementById("npc-groups").appendChild(groupDiv);
+            });
+        }
+
+        function saveConfig() {
+            document.getElementById("output").textContent = JSON.stringify(config, null, 1);
+        }
+
+        document.getElementById("name").addEventListener("input", (e) => updateName(e.target.value));
+    </script>
+</body>
+</html>

@@ -226,7 +226,7 @@
         document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
         new_node(data = null, position = event.position);
         document.getElementById('json-editor').value = ''; // Clear editor on empty space click
-      } else {
+      } /* else {
         if (event.target.isNode()) {
           var node = event.target;
           node.remove();
@@ -242,7 +242,7 @@
           document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
           document.getElementById('json-editor').value = ''; // Clear editor on edge removal
         }
-      }
+      } */
     });
 
     // Select a node for edge creation
