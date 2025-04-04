@@ -32,6 +32,13 @@ var selectedNode = null; // Track the currently selected node or edge
 var selectedEdge = null;
 var copiedData = null;
 
+function NODEsetSelectedNode(node){
+    if (selectedNode == node){
+        GUIsetSelectedNode(node);
+    }
+    selectedNode = node;
+}
+
 function new_node(data = null, position = null) {
     var node_template = { 
     group: 'nodes',
@@ -189,7 +196,8 @@ function generateUUID4() {
 cy.on('cxttap', function(event) {
     if (!event.target || event.target === cy) {
     // Right-click on empty space or the Cytoscape container itself
-    selectedNode = null;
+    //selectedNode = null;
+    NODEsetSelectedNode(null);
     selectedEdge = null;
     document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
     new_node(data = null, position = event.position);
@@ -217,7 +225,10 @@ cy.on('cxttap', function(event) {
 cy.on('tap', 'node', function(event) {
     var node = event.target;
     if (!event.originalEvent.shiftKey) {
-        selectedNode = null;
+        if (node == selectedNode){
+            NODEsetSelectedNode(node);
+        }
+        NODEsetSelectedNode(null);
         selectedEdge = null;
     }
     
@@ -231,7 +242,7 @@ cy.on('tap', 'node', function(event) {
     
     if (!selectedNode) {
     // First node is selected
-    selectedNode = node;
+    NODEsetSelectedNode(node);
     selectedEdge = null; // Clear edge selection
     console.log('Node selected: ' + node.id());
     document.getElementById('json-editor').value = JSON.stringify(node.data().json, null, 2); // Display node data
@@ -256,7 +267,7 @@ cy.on('tap', 'node', function(event) {
 cy.on('tap', 'edge', function(event) {
     var edge = event.target;
     selectedEdge = edge;
-    selectedNode = null; // Clear node selection
+    NODEsetSelectedNode(null); // Clear node selection
     console.log('Edge selected: ' + edge.id());
     document.getElementById('json-editor').value = JSON.stringify(edge.data().json, null, 2); // Display edge data
     document.getElementById('json-editor').focus();
@@ -268,7 +279,7 @@ cy.on('tap', function(event) {
     if (!event.target || event.target === cy) {
     // Tap happened on empty space (or the Cytoscape container itself)
     if (selectedNode || selectedEdge) {
-        selectedNode = null;
+        NODEsetSelectedNode(null);
         selectedEdge = null;
         document.getElementById('json-editor').value = ''; // Clear editor
         console.log('Deselected');
@@ -408,4 +419,5 @@ document.addEventListener('keydown', function(event) {
     
 });
 
-
+window.selectedNode = selectedNode;
+window.NODEsetSelectedNode = NODEsetSelectedNode;

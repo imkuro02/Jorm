@@ -1,3 +1,4 @@
+
 function label(text){
     const label = document.createElement("label");
     label.textContent = text;
@@ -75,6 +76,62 @@ group.appendChild(br());
 
 formContainer.appendChild(group);
 
+function GUIsetSelectedNode(node){
+    if(node !== null){
+        data = node.data().json;
+
+        if (typeof data['id'] !== "undefined"){
+            id_input.value = data['id'];
+        } else {
+            id_input.value = '';
+        }
+
+        if (typeof data['label'] !== "undefined"){
+            label_input.value = data['label'];
+        } else {
+            label_input.value = '';
+        }
+
+        if (typeof data['color'] !== "undefined"){
+            color_input.value = data['color'];
+        } else {
+            color_input.value = '';
+        }
+
+        if (typeof data['name'] !== "undefined"){
+            name_input.value = data['name'];
+        } else {
+            name_input.value = '';
+        }
+
+        if (typeof data['desc'] !== "undefined"){
+            desc_input.value = data['desc'];
+        } else {
+            desc_input.value = '';
+        }
+
+        if (typeof data['can_be_recall_site'] !== "undefined"){
+            can_be_recall_site_input.value = data['can_be_recall_site'];
+        } else {
+            can_be_recall_site_input.value = '';
+        }
+
+        if (typeof data['instanced'] !== "undefined"){
+            instanced_input.value = data['instanced'];
+        } else {
+            instanced_input.value = '';
+        }
+
+        if (typeof data['spawn'] !== "undefined"){
+            spawm_group_input.value = data['spawn'];
+        } else {
+            spawm_group_input.value = '';
+        }
+    }
+}
+
+
+  
 function export_json() {
     const data = {
         'id': id_input.value,
@@ -89,7 +146,7 @@ function export_json() {
 
     for (const key in data) {
         if (data.hasOwnProperty(key)) {
-            if (data[key] === false || data[key] === '') {
+            if (data[key] === false || data[key] === '' || (typeof data[key] === "undefined")) {
                 delete data[key];
             }
         }
@@ -100,9 +157,16 @@ function export_json() {
     
     navigator.clipboard.writeText(textToCopy)
         .then(() => {
-            alert("Text copied to clipboard!");
+            //alert("Text copied to clipboard!");
         })
         .catch(err => {
             console.error("Failed to copy text: ", err);
         });
+
+    
+    if (window.selectedNode!=null){
+        window.selectedNode.data().json = data
+    } 
 }
+
+window.GUIsetSelectedNode = GUIsetSelectedNode;
