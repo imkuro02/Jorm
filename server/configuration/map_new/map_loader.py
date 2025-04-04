@@ -26,8 +26,7 @@ def load_map():
         room_desc = 'NO DESC'
         room_safe = False
         room_instanced = False
-        room_npcs = []
-        room_items = []
+        room_spawner = []
 
         if 'id' in json_data:
             new_id = json_data['id']
@@ -59,18 +58,20 @@ def load_map():
             if type(json_data['description']) == list:
                 room_desc = '\n'.join(json_data['description'])
 
-        if 'npcs' in json_data:
-            room_npcs= json_data['npcs']
-
-        if 'items' in json_data:
-            room_items = json_data['items']
-
         if 'instanced' in json_data:
             room_instanced = json_data['instanced']
 
         if 'can_be_recall_site' in json_data:
             room_safe = json_data['can_be_recall_site']
 
+        if 'spawner' in json_data:
+            for i in [json_data['spawner'].split('\n')]:
+                print(i)
+                for x in i:
+                    print('x:',x.split(', '))
+                    room_spawner.append(x.split(', '))
+
+        print(room_spawner)
         nodes[room_id] = {
             'id': room_id,
             'name': room_name,
@@ -78,8 +79,8 @@ def load_map():
             'exits': [],
             'can_be_recall_site': room_safe,
             'instanced': room_instanced,
-            'npcs': room_npcs,
-            'items': room_items
+            'spawner': room_spawner,
+            #'items': room_items
         }
 
 

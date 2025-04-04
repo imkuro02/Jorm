@@ -2,6 +2,7 @@ from actors.enemy import create_enemy
 from actors.npcs import create_npc
 from actors.player import Player
 from items.manager import load_item
+from configuration.config import ITEMS, ENEMIES
 import time
 #from items import Item
 import uuid
@@ -16,13 +17,17 @@ class Spawner:
         self.room = room
         self.room_dict = self.get_room_dict()
 
-        self.spawn_points_items = {}
-        self.spawn_points_npcs = {}
+        #self.spawn_points_items = {}
+        #self.spawn_points_npcs = {}
 
-        for i in range(0,len(self.room_dict['items'])):
-            self.spawn_points_items[i] = None
-        for i in range(0,len(self.room_dict['npcs'])):
-            self.spawn_points_npcs[i] = None
+        #for i in range(0,len(self.room_dict['items'])):
+        #    self.spawn_points_items[i] = None
+        #for i in range(0,len(self.room_dict['npcs'])):
+        #    self.spawn_points_npcs[i] = None
+
+        self.spawn_points = {}
+        for i in range(0,len(self.room_dict['spawner'])):
+            self.spawn_points[i] = None
 
         #print(self.spawn_points_items)
         self.respawn_all()
@@ -37,6 +42,7 @@ class Spawner:
         return room
     
     def respawn_all(self, forced = True):
+        '''
         for i in self.spawn_points_items:
             if self.spawn_points_items[i] == None:
                 continue
@@ -47,8 +53,34 @@ class Spawner:
             if self.spawn_points_npcs[i] == None:
                 continue
             if self.spawn_points_npcs[i].room == None:
-                self.spawn_points_npcs[i] = None      
+                self.spawn_points_npcs[i] = None    
+        '''
+        
+        for i in self.spawn_points:
+            if self.spawn_points[i] in self.room.actors.values() or self.spawn_points[i] in self.room.inventory_manager.items.values():
+                continue
+            else:
+                self.spawn_points[i] = None
+
  
+        if 'spawner' in self.room_dict:
+            for i, _list in enumerate(self.room_dict['spawner']):
+                print(self.spawn_points[i])
+                if self.spawn_points[i] != None:
+                    continue
+                    
+                _selected = random.choice(_list)
+                #print(ENEMIES)
+                #print(NPCS[_selected])
+                if _selected in ITEMS:
+                    item = load_item(_selected)
+                    self.room.inventory_manager.add_item(item)
+                    self.spawn_points[i] = item
+                if _selected in ENEMIES:
+                    #_selected = random.choice(_list)
+                    npc = create_npc(self.room,_selected)
+                    self.spawn_points[i] = npc
+        '''
         if 'items' in self.room_dict:
             for i, _list in enumerate(self.room_dict['items']):
                 if self.spawn_points_items[i] != None:
@@ -65,10 +97,10 @@ class Spawner:
                 _selected = random.choice(_list)
                 npc = create_npc(self.room,_selected)
                 self.spawn_points_npcs[i] = npc
-
+        '''
 
     def tick(self):
-        if self.room.world.factory.ticks_passed % (30*120) == 0:
+        if self.room.world.factory.ticks_passed % (30*2) == 0:
             self.respawn_all()
 
 class Exit:

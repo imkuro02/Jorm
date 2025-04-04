@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+  }
+
+  /* Flex container for side-by-side layout */
+  .container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Style for #cy (Cytoscape container) */
+  #cy {
+    flex: 1;  /* This will make #cy take up the remaining space */
+    background-color: #f0f0f0;
+    border-right: solid 1px #ccc; /* Optional: Adds a border between the divs */
+  }
+
+  /* Style for #editor */
+  #editor {
+    width: 500px; /* Set a fixed width for the editor */
+    background-color: #e0e0e0;
+    padding: 2px;
+    box-sizing: border-box;
+    z-index: 10; /* Keep the editor above Cytoscape */
+  }
+
+  /* Prevent #editor from blocking right-click events */
+  #editor.no-pointer-events {
+    pointer-events: none;
+  }
+
+  /* Style for the text input */
+  textarea {
+    width: 100%;
+    height: 100%;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    background-color: #fff;
+    /* resize: none; */
+  }
