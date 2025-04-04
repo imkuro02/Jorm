@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Template GUI Editor</title>
+  <style>
+    .input-group {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>JSON Template GUI Editor</h1>
+  <textarea id="json-input" placeholder="Enter your JSON template here..." rows="10" cols="50"></textarea><br><br>
+  <button onclick="generateForm()">Generate Form</button>
+  <div id="form-container"></div>
+
+  <script>
+    function generateForm() {
+      const jsonInput = document.getElementById("json-input").value;
+      let jsonData;
+      
+      try {
+        jsonData = JSON.parse(jsonInput);
+      } catch (e) {
+        alert("Invalid JSON");
+        return;
+      }
+
+      const formContainer = document.getElementById("form-container");
+      formContainer.innerHTML = '';  // Clear any previous form
+
+      for (let key in jsonData) {
+        const value = jsonData[key];
+        if (Array.isArray(value)) {
+          // Handle array input (e.g., npcs)
+          const group = document.createElement("div");
+          group.classList.add("input-group");
+          group.innerHTML = `<strong>${key} (Array)</strong><br>`;
+          value.forEach(subArray => {
+            subArray.forEach(subValue => {
+              const label = document.createElement("label");
+              label.textContent = `${key}: `;
+              group.appendChild(label);
+
+              subValue.forEach(val => {
+                const input = document.createElement("input");
+                input.type = (val === "str") ? "text" : "number";
+                input.placeholder = val;
+                group.appendChild(input);
+              });
+            });
+          });
+          formContainer.appendChild(group);
+        } else {
+          // Handle single value input
+          const group = document.createElement("div");
+          group.classList.add("input-group");
+
+          const label = document.createElement("label");
+          label.textContent = `${key}: `;
+          group.appendChild(label);
+
+          const input = document.createElement("input");
+          input.type = (value === "str") ? "text" : "number";
+          group.appendChild(input);
+
+          formContainer.appendChild(group);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

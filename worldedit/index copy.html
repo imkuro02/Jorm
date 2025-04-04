@@ -130,13 +130,10 @@
           style: {
             'shape': 'square',
             'background-color': function(ele) {
-              let _empty = Object.keys(ele.data('json')).length === 0 && ele.data('json').constructor === Object;
               if (ele.data('json') && ele.data('json').color) {
                 return ele.data('json').color;
-              } else if (ele.data('json') && _empty){
-                return 'black';
               } else {
-                return 'gray';
+                return 'darkgray';
               }
             },
             'label': function(ele) {
@@ -170,16 +167,7 @@
           selector: 'edge',
           style: {
             'width': 4,
-            'line-color': function(ele) {
-                let _empty = Object.keys(ele.data('json')).length === 0 && ele.data('json').constructor === Object;
-                if (ele.data('json') && ele.data('json').color) {
-                  return ele.data('json').color;
-                } else if (ele.data('json') && _empty){
-                  return 'black';
-                } else {
-                  return '#ccc';
-                }
-              },
+            'line-color': '#ccc',
             //'source-arrow-shape': 'circle',
             //'source-arrow-color': 'red',
             'target-arrow-color': '#ccc',
@@ -260,11 +248,8 @@
     // Select a node for edge creation
     cy.on('tap', 'node', function(event) {
       var node = event.target;
-      if (!event.originalEvent.shiftKey) {
-          selectedNode = null;
-          selectedEdge = null;
-        }
-      
+      selectedNode = null;
+      selectedEdge = null;
       
 
       // If the Ctrl key is pressed, don't create an edge
@@ -281,7 +266,11 @@
         document.getElementById('json-editor').value = JSON.stringify(node.data().json, null, 2); // Display node data
         document.getElementById('json-editor').focus();
       } else {
-        console.log('edge');
+
+        if (!event.originalEvent.shiftKey) {
+          selectedNode.unselect();
+          return;
+        }
 
         let data = {
           'id': generateUUID4(),
