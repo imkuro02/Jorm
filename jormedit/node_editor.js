@@ -34,9 +34,16 @@ var copiedData = null;
 
 function NODEsetSelectedNode(node){
     if (selectedNode == node){
-        GUIsetSelectedNode(node);
+        guiNodeSetSelectedNode(node);
     }
     selectedNode = node;
+}
+
+function NODEsetSelectedEdge(edge){
+    if (selectedEdge == edge){
+        guiEdgeSetSelectedEdge(edge);
+    }
+    selectedEdge = edge;
 }
 
 function new_node(data = null, position = null) {
@@ -54,7 +61,9 @@ function new_node(data = null, position = null) {
     }
 
     if (position !== null) {
-    node_template.position = position;
+        //position.x = Math.round(position.x / 16) * 16;
+        //position.y = Math.round(position.y / 16) * 16;
+        node_template.position = position;
     }
 
     cy.add(node_template);
@@ -177,8 +186,8 @@ var cy = cytoscape({
         'width': 4,
         'target-arrow-color': 'red',
         'target-arrow-shape': 'triangle-tee',
-        'control-point-step-size': 30,
-        'control-point-distance': 30
+        'control-point-step-size': 10,
+        'control-point-distance': 10
         }
     }
     ],
@@ -198,8 +207,9 @@ cy.on('cxttap', function(event) {
     // Right-click on empty space or the Cytoscape container itself
     //selectedNode = null;
     NODEsetSelectedNode(null);
-    selectedEdge = null;
+    NODEsetSelectedEdge(null);
     document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
+
     new_node(data = null, position = event.position);
     document.getElementById('json-editor').value = ''; // Clear editor on empty space click
     } /* else {
@@ -207,14 +217,14 @@ cy.on('cxttap', function(event) {
         var node = event.target;
         node.remove();
         selectedNode = null;
-        selectedEdge = null;
+        NODEsetSelectedEdge(null);
         document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
         document.getElementById('json-editor').value = ''; // Clear editor on node removal
     } else if (event.target.isEdge()) {
         var edge = event.target;
         edge.remove();
         selectedNode = null;
-        selectedEdge = null;
+        NODEsetSelectedEdge(null);
         document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
         document.getElementById('json-editor').value = ''; // Clear editor on edge removal
     }
@@ -229,7 +239,7 @@ cy.on('tap', 'node', function(event) {
             NODEsetSelectedNode(node);
         }
         NODEsetSelectedNode(null);
-        selectedEdge = null;
+        NODEsetSelectedEdge(null);
     }
     
     
@@ -243,7 +253,7 @@ cy.on('tap', 'node', function(event) {
     if (!selectedNode) {
     // First node is selected
     NODEsetSelectedNode(node);
-    selectedEdge = null; // Clear edge selection
+    NODEsetSelectedEdge(null); // Clear edge selection
     console.log('Node selected: ' + node.id());
     document.getElementById('json-editor').value = JSON.stringify(node.data().json, null, 2); // Display node data
     document.getElementById('json-editor').focus();
@@ -266,7 +276,7 @@ cy.on('tap', 'node', function(event) {
 // Select an edge
 cy.on('tap', 'edge', function(event) {
     var edge = event.target;
-    selectedEdge = edge;
+    NODEsetSelectedEdge(edge);
     NODEsetSelectedNode(null); // Clear node selection
     console.log('Edge selected: ' + edge.id());
     document.getElementById('json-editor').value = JSON.stringify(edge.data().json, null, 2); // Display edge data
@@ -280,7 +290,7 @@ cy.on('tap', function(event) {
     // Tap happened on empty space (or the Cytoscape container itself)
     if (selectedNode || selectedEdge) {
         NODEsetSelectedNode(null);
-        selectedEdge = null;
+        NODEsetSelectedEdge(null);
         document.getElementById('json-editor').value = ''; // Clear editor
         console.log('Deselected');
     }
@@ -404,6 +414,7 @@ function import_json(input = '{}'){
         new_edge(data = json.edges[key].data);
         // Code to be executed for each element
     };
+    cy.fit();
 }
 
 // Handle Ctrl + something keys

@@ -10,20 +10,18 @@ def load_map():
         for filename in files:
             if filename.endswith('.json'):
                 file_path = os.path.join(root, filename)
-                print(file_path)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
                     all_data['nodes'].update(data['nodes'])
                     all_data['edges'].update(data['edges'])
 
     for node in all_data['nodes'].values():
-        print(node)
         data =      node['data']
         json_data = node['data']['json']
 
         room_id = data['id']
-        room_name = 'NO NAME'
-        room_desc = 'NO DESC'
+        room_name = 'somewhere'
+        room_desc = 'There is nothing noteworthy here'
         room_safe = False
         room_instanced = False
         room_spawner = []
@@ -43,8 +41,6 @@ def load_map():
                     all_data['edges'][edge_data['id']]['data']['source'] = new_id
                 if edge_data['target'] == data['id']:
                     all_data['edges'][edge_data['id']]['data']['target'] = new_id
-
-                print(all_data['edges'][edge_data['id']])
 
             if skip_loading:
                 continue
@@ -66,12 +62,10 @@ def load_map():
 
         if 'spawner' in json_data:
             for i in [json_data['spawner'].split('\n')]:
-                print(i)
                 for x in i:
-                    print('x:',x.split(', '))
                     room_spawner.append(x.split(', '))
 
-        print(room_spawner)
+        #print(room_spawner)
         nodes[room_id] = {
             'id': room_id,
             'name': room_name,

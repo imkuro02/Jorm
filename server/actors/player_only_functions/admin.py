@@ -201,13 +201,11 @@ def command_load_item(self, line):
 @check_is_admin
 @check_no_empty_line
 def command_load_npcs(self, line):
-    data = config.ENEMIES
+
     if line == 'boss':
         self.room.world.spawn_boss()
         return
-    if line not in data:
-        self.sendLine(f'{line} is not a premade npc')
-        return
+    
     create_npc(self.room, line)
 
 def command_kill(self, line):

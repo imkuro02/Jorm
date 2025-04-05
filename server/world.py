@@ -2,7 +2,7 @@ from actors.enemy import create_enemy
 from actors.npcs import create_npc
 from actors.player import Player
 from items.manager import load_item
-from configuration.config import ITEMS, ENEMIES
+from configuration.config import ITEMS, ENEMIES, NPCS
 import time
 #from items import Item
 import uuid
@@ -65,7 +65,7 @@ class Spawner:
  
         if 'spawner' in self.room_dict:
             for i, _list in enumerate(self.room_dict['spawner']):
-                print(self.spawn_points[i])
+                #print(self.spawn_points[i])
                 if self.spawn_points[i] != None:
                     continue
                     
@@ -80,6 +80,11 @@ class Spawner:
                     #_selected = random.choice(_list)
                     npc = create_npc(self.room,_selected)
                     self.spawn_points[i] = npc
+                if _selected in NPCS:
+                    #_selected = random.choice(_list)
+                    npc = create_npc(self.room,_selected)
+                    self.spawn_points[i] = npc
+                
         '''
         if 'items' in self.room_dict:
             for i, _list in enumerate(self.room_dict['items']):
@@ -135,7 +140,7 @@ class Room:
 
         self.exits = []
         for _exit in exits:
-            print(_exit)
+            #print(_exit)
             if type(_exit).__name__ == 'Exit':
                 self.exits.append(_exit)
                 continue
