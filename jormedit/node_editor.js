@@ -141,7 +141,7 @@ var cy = cytoscape({
     {
         selector: 'edge',
         style: {
-        'width': 4,
+        'width': 1,
         'line-color': function(ele) {
             let _empty = Object.keys(ele.data('json')).length === 0 && ele.data('json').constructor === Object;
             if (ele.data('json') && ele.data('json').color) {
