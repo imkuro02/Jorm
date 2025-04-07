@@ -119,8 +119,10 @@ var cy = cytoscape({
             }
         },
         'border-width': 0,
-        'width': '32px',
-        'height': '32px'
+        'width': '64px',
+        'height': '64px',
+        'text-halign': 'center',        // Horizontal alignment of the text
+        'text-valign': 'center'        // Vertical alignment of the text
         }
     },
     {
@@ -141,7 +143,7 @@ var cy = cytoscape({
     {
         selector: 'edge',
         style: {
-        'width': 1,
+        'width': 4,
         'line-color': function(ele) {
             let _empty = Object.keys(ele.data('json')).length === 0 && ele.data('json').constructor === Object;
             if (ele.data('json') && ele.data('json').color) {

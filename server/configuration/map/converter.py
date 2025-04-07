@@ -27,7 +27,7 @@ def load_map():
                     elems = data ['elements']
                     for i in elems:
                         objects[i['id']] = i
-                        print(i)
+                        #print(i)
 
                     for i in objects.values():
                         if i['_type'] == 'Room':
@@ -46,6 +46,8 @@ def load_map():
 
                             room['id'] = ROOM_ID
                             room['name'] = i['_name']
+                            room['_x'] = i['_x']
+                            room['_y'] = i['_y']
                             room['description'] = i['_description']
                             room['exits'] = {}
                             room['secret_exits'] = {}
@@ -146,10 +148,17 @@ def load_map():
     #    if 'tutorial' not in r['id']:
     #        continue 
         #print(r)
+    _rooms = {}
+    i = 0
+    for r in rooms:
+        i += 1
+        _rooms[str(i)] = {"position":{'x':rooms[r]['_x'],'y':rooms[r]['_y'], "data":{}}}
+        print(_rooms)
             
                     
-    return(rooms)
+    return({'nodes':_rooms, "edges":{}})
 
 if __name__ == '__main__':
     w = load_map()
     #print(w)
+    print(w)

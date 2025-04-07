@@ -161,10 +161,13 @@ function save_json() {
     //        console.error("Failed to copy text: ", err);
     //    });
 
-    
-    if (window.selectedNode!=null){
-        window.selectedNode.data().json = data
-    } 
+    cy.nodes(':selected').forEach(function(node) {
+        // Your code to operate on each selected node
+        node.data().json = data
+    });
+    //if (window.selectedNode!=null){
+    //    window.selectedNode.data().json = data
+    //} 
 }
 
 window.guiNodeSetSelectedNode = guiNodeSetSelectedNode;

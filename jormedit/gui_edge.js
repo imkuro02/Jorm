@@ -115,10 +115,13 @@ function edge_save_json() {
     }
 
     console.log(data);
-    
-    if (window.selectedEdge!=null){
-        window.selectedEdge.data().json = data
-    } 
+    cy.edges(':selected').forEach(function(edge) {
+        // Your code to operate on each selected node
+        edge.data().json = data
+    });
+    //if (window.selectedEdge!=null){
+    //    window.selectedEdge.data().json = data
+    //} 
 }
 
 window.guiEdgeSetSelectedEdge = guiEdgeSetSelectedEdge;
