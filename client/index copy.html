@@ -7,17 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jorm</title>
     <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.1/ansi_up.min.js"></script>
-    <link href="https://fonts.cdnfonts.com/css/comic-mono" rel="stylesheet">
     
     
     <style>
-        @font-face {
-            font-family: 'Comic Mono';
-            src: url('ComicMono.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
         iframe {
             width: 200px;
             height: 250px;
@@ -33,71 +25,38 @@
             background-color: transparent;
             text-decoration: none;
         }
-        input[type="text"] {
-            outline: none;           /* removes the blue glow */
-            border: 1px solid #ccc;  /* optional: customize border */
-            padding: 0.5rem;
-            font-family: 'Comic Mono', monospace;
-            border-radius: 4px;
-        }
         body {
-            font-family: 'Comic Mono', monospace;
+            font-family: monospace;
             color: #fbf1c7;
-            background-color: #f4eddb;
+            background-color: #32302f;
             margin: 0;
             padding: 20px;
         }
-        #chatbox {
-            
-            display: flex;
-            flex-direction: column; /* stack items vertically */
-            align-items: center;    /* center items horizontally */
-            
-            
-            font-family: 'Comic Mono', monospace;
-
-        }
-        #inputoutput {
-            background-color: #837872;
-            width: 1100px;
-            margin:20px;
-            padding:10px;
-            border: 4px solid #53443d;
-        }
         #output {
-            font-family: 'Comic Mono', monospace;
-            height:  calc(100vh - 170px); 
-            font-size: 24px;
-            
+            font-family: monospace;
+            height:  calc(100vh - 115px); 
             overflow-y: auto;
-            
+            background-color: #080808;
             color: #fff;
- 
-            width: 100%;
-            
-
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
             white-space: pre-wrap;
-            text-shadow:
-                2px 2px 2px rgba(0,0,0,1); /* faded long shadow */
         }
         #input {
             width: 100%;
-            font-size: 24px;
-            height: 48px;
+            padding: 10px;
             box-sizing: border-box;
         }
     </style>
 </head>
 <body>
-    <div id = "chatbox">
-        <div id = "inputoutput">
-            <div id="output"></div>
-            <input type="text" id="input" placeholder="Input">
-        </div>
-    </div>
     <div id="iframeContainer">
         <iframe src="jorm_audio.html"></iframe>
     </div>
+    
+    <div id="output"></div>
+    <input type="text" id="input" placeholder="Input">
     <script>
         const output = document.getElementById('output');
         const input = document.getElementById('input');
