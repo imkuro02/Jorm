@@ -112,8 +112,8 @@ var cy = cytoscape({
             }
         },
         'label': function(ele) {
-            if (ele.data('json') && ele.data('json').label) { 
-            return ele.data('json').label;
+            if (ele.data('json') && ele.data('json').id) { 
+            return ele.data('json').id;
             } else {
             return '';
             }
@@ -129,13 +129,6 @@ var cy = cytoscape({
         selector: 'node:selected',
         style: {
         'background-color': '#FF6347',
-        'label': function(ele) {
-            if (ele.data('json') && ele.data('json').label) { 
-            return ele.data('json').label;
-            } else {
-            return '';
-            }
-        },
         'border-width': 4,
         'border-color': '#FF4500',
         }
@@ -160,13 +153,13 @@ var cy = cytoscape({
         'target-arrow-shape': 'triangle',
         'target-arrow-color': 'red',
         'label': function(ele) {
-            if (ele.data('json') && ele.data('json').label) { 
-            return ele.data('json').label;
+            if (ele.data('json') && ele.data('json').direction) { 
+            return ele.data('json').direction;
             } else {
             return '';
             }
         },
-        'text-rotation': 'autorotate',
+        
         'font-size': '12px',
         'curve-style': 'bezier',
         'control-point-step-size': 10,
@@ -177,14 +170,7 @@ var cy = cytoscape({
         selector: 'edge:selected',
         style: {
         'line-color': '#FF6347',
-        'label': function(ele) {
-            if (ele.data('json') && ele.data('json').label) { 
-            return ele.data('json').label;
-            } else {
-            return '';
-            }
-        },
-        'text-rotation': 'autorotate',
+        
         'width': 4,
         'target-arrow-color': 'red',
         'target-arrow-shape': 'triangle-tee',
@@ -195,7 +181,11 @@ var cy = cytoscape({
     ],
     layout: { name: 'grid' }
 });
-
+cy.gridGuide({
+    snapToGridDuringDrag: true,
+    gridSpacing: 32,
+    snapToAlignmentLocationOnRelease: true
+  });
 function generateUUID4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -421,7 +411,7 @@ function import_json(input = '{}'){
 
 // Handle Ctrl + something keys
 document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && event.key === 'x') { // Check if Ctrl + X is pressed
+    if (event.key === "Delete") { // Check if Ctrl + X is pressed
     let selectedNodes = cy.$(':selected'); // Get all selected nodes
 
     if (selectedNodes.length > 0) {
