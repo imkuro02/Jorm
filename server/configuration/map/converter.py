@@ -5,8 +5,8 @@ import random
 import uuid
 def load_map():
     # Path to the JSON file
-    #file_path = "configuration/map/map.json"
-    #data = ''
+    file_path = "configuration/map/map.json"
+    data = ''
     # Open and read the JSON file
     #with open(file_path, "r") as file:
     #    data = json.load(file)
@@ -18,7 +18,6 @@ def load_map():
         for filename in files:
             if filename.endswith('.json'):
                 file_path = os.path.join(root, filename)
-                print(file_path)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
                     file_path = file_path.replace('configuration/map/','').replace('.json','')
@@ -27,12 +26,11 @@ def load_map():
                     elems = data ['elements']
                     for i in elems:
                         objects[i['id']] = i
-                        #print(i)
 
                     for i in objects.values():
                         if i['_type'] == 'Room':
-                            if '#' in i['_subtitle']:
-                                continue
+                            #if '#' in i['_subtitle']:
+                            #    continue
 
                             ROOM_ID = file_path+'#'+i['_subtitle']
                             #print(i['_subtitle'] == 'loading',i['_subtitle'] )
@@ -45,9 +43,8 @@ def load_map():
                             room = rooms[ROOM_ID]
 
                             room['id'] = ROOM_ID
+                            room['pos'] = {'x':i['_x']*2,'y':i['_y']*2}
                             room['name'] = i['_name']
-                            room['_x'] = i['_x']
-                            room['_y'] = i['_y']
                             room['description'] = i['_description']
                             room['exits'] = {}
                             room['secret_exits'] = {}
@@ -148,17 +145,88 @@ def load_map():
     #    if 'tutorial' not in r['id']:
     #        continue 
         #print(r)
+
+    from uuid import uuid4   
     _rooms = {}
-    i = 0
-    for r in rooms:
-        i += 1
-        _rooms[str(i)] = {"position":{'x':rooms[r]['_x'],'y':rooms[r]['_y'], "data":{}}}
-        print(_rooms)
+    my_dict = {'nodes':{},'edges':{}}
+
+    for r in rooms.values():
+        #{"nodes":{"6e904f3a-11d3-4871-889e-bb314cb2a813":{"
+        #position":{"x":240,"y":304},"data":{"id":"6e904f3a-11d3-4871-889e-bb314cb2a813","json":{}}}}
+        #,"edges":{}}
+        PEEID = r['id']#str(uuid4())
+        #print(PEEID)
+        col = 'red'
+
+        if 'ellinia#' in PEEID:
+            col = 'green'
+        if 'overworld#' in PEEID:
+            col = 'gray'
+        if 'tutorial#' in PEEID:
+            col = 'yellow'
+
+        #print(r)
+
+        
+
+        # _spawner = '\n'.join([', '.join([r['items']]])+', '.join([r['npcs']]))+'\n'.join(', '.join([r['enemies']]))
+        #print(r['items'])
+
+        _i = r['items']  
+        _e = r['enemies']    
+        _n = r['npcs'] 
+
+        combinator = ''
+        for x in _i+_e+_n:
+            for y in x:
+                combinator += f'{y}, '
+            combinator += '\n'
+
+        combinator = combinator[::-1].replace(', \n'[::-1], '', 1)[::-1]
+
+        
+
+        _spawner = combinator
+        my_dict['nodes'] = {**my_dict['nodes'], **{PEEID:{'position':r['pos'],"data":{"id":PEEID,"json":{
+            'name':r['name'],
+            'description':r['description'],
+            'color': col,
+            'spawner': str(_spawner)
             
+        }}}}}
+
+        for ex in r['exits']:
+            PEEID = str(uuid4())
+            direction = ex
+            secret = False
+            blocked = False
+            if 'secret:' in direction:
+                direction = direction.replace('secret:','')
+                secret = True
+            if 'blocked:' in direction:
+                direction = direction.replace('blocked:','')
+                blocked = True
+            target = r['exits'][ex]
+            source = r['id']
+            edge = {PEEID:{"data":{'id':PEEID, 'target':target, 'source':source, 'json':{ 
+                'direction':direction,
+                'secret': secret,
+                'blocked': blocked
+            }}}}
+            
+            my_dict['edges'] = {**my_dict['edges'], **edge}
+
+
+        
+
+    for i in my_dict['nodes'].values():
+        print(i['data']['json']['spawner'])
+
+    with open('data.json', 'w') as json_file:
+        json.dump(my_dict, json_file, indent=4)
                     
-    return({'nodes':_rooms, "edges":{}})
+    #return(my_dict)
 
 if __name__ == '__main__':
     w = load_map()
-    #print(w)
     print(w)

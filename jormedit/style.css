@@ -21,7 +21,7 @@ body {
 
   /* Style for #editor */
   #editor {
-    width: 500px; /* Set a fixed width for the editor */
+    width: 100px; /* Set a fixed width for the editor */
     background-color: #e0e0e0;
     padding: 2px;
     box-sizing: border-box;
