@@ -1,0 +1,19 @@
+title: Node
+position: -256,33
+---
+-> test
+<<jump Node1>>
+===
+title: Node1
+position: 37,167
+---
+Player: I'd like to buy a pie!
+
+<<if $gold_amount < 10>>
+    Baker: Well, you can't afford one!
+<<elseif $gold_amount < 15>>
+    Baker: You can almost afford one!
+<<else>>
+    Baker: Here you go!
+<<endif>>
+===
