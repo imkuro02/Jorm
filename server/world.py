@@ -76,14 +76,17 @@ class Spawner:
                     item = load_item(_selected)
                     self.room.inventory_manager.add_item(item)
                     self.spawn_points[i] = item
+                    continue
                 if _selected in ENEMIES:
                     #_selected = random.choice(_list)
                     npc = create_npc(self.room,_selected)
                     self.spawn_points[i] = npc
+                    continue
                 if _selected in NPCS:
                     #_selected = random.choice(_list)
                     npc = create_npc(self.room,_selected)
                     self.spawn_points[i] = npc
+                    continue
                 
         '''
         if 'items' in self.room_dict:
