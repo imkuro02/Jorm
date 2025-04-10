@@ -150,9 +150,10 @@ class Protocol(protocol.Protocol):
 
         for online_account in self.factory.protocols:
             if self.id == online_account.id and self != online_account:
-                self.sendLine('@redYou are already logged in on another device@normal')
-                self.change_state(self.LOGIN_OR_REGISTER)
-                return
+                #self.sendLine('@redYou are already logged in on another device@normal')
+                online_account.disconnect()
+                #self.change_state(self.LOGIN_OR_REGISTER)
+                #return
             #print(online_account.id)
         self.change_state(self.PLAY_OR_SETTINGS)
         #self.sendLine(str(self.account))
