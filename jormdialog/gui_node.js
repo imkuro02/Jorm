@@ -46,16 +46,16 @@ nodeGroup.appendChild(br());
 
 
 
-nodeGroup.appendChild(label('Script'));
+nodeGroup.appendChild(label('Display'));
 nodeGroup.appendChild(br());
-const nodeScriptInput = document.createElement("textarea");
-nodeGroup.appendChild(nodeScriptInput);
+const nodeDialogInput = document.createElement("textarea");
+nodeGroup.appendChild(nodeDialogInput);
 nodeGroup.appendChild(br());
 
-nodeGroup.appendChild(label('Show If'));
+nodeGroup.appendChild(label('Requirements'));
 nodeGroup.appendChild(br());
-const nodeShowIfInput = document.createElement("textarea");
-nodeGroup.appendChild(nodeShowIfInput);
+const nodeRequirementsInput = document.createElement("textarea");
+nodeGroup.appendChild(nodeRequirementsInput);
 nodeGroup.appendChild(br());
 
 nodeGroup.appendChild(label('Execute'));
@@ -82,16 +82,16 @@ function guiNodeSetSelectedNode(node){
             nodeLabelInput.value = '';
         }
 
-        if (typeof data['show_if'] !== "undefined"){
-            nodeShowIfInput.value = data['show_if'];
+        if (typeof data['requirements'] !== "undefined"){
+            nodeRequirementsInput.value = data['requirements'];
         } else {
-            nodeShowIfInput.value = '';
+            nodeRequirementsInput.value = '';
         }
 
-        if (typeof data['script'] !== "undefined"){
-            nodeScriptInput.value = data['script'];
+        if (typeof data['dialog'] !== "undefined"){
+            nodeDialogInput.value = data['dialog'];
         } else {
-            nodeScriptInput.value = '';
+            nodeDialogInput.value = '';
         }
 
         if (typeof data['execute'] !== "undefined"){
@@ -109,8 +109,8 @@ function save_json() {
         'label': nodeLabelInput.value,
         'color': nodeColorInput.value,
         'execute': nodeExecuteInput.value,
-        'script':  nodeScriptInput.value,
-        'show_if':  nodeShowIfInput.value
+        'dialog':  nodeDialogInput.value,
+        'requirements':  nodeRequirementsInput.value
     };
 
     for (const key in data) {

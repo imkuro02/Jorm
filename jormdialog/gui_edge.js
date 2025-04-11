@@ -38,23 +38,18 @@ const edgeLabelInput = document.createElement("input");
 edgeGroup.appendChild(edgeLabelInput);
 edgeGroup.appendChild(br());
 
-edgeGroup.appendChild(label('direction'));
+edgeGroup.appendChild(label('Index'));
 edgeGroup.appendChild(br());
-const edgeDirectionInput = document.createElement("input");
-edgeGroup.appendChild(edgeDirectionInput);
-edgeGroup.appendChild(br());
-
-const edgeBlockedInput = document.createElement("input");
-edgeBlockedInput.type = 'checkbox';
-edgeGroup.appendChild(edgeBlockedInput);
-edgeGroup.appendChild(label('blocked'));
+const edgeIndexInput = document.createElement("input");
+edgeGroup.appendChild(edgeIndexInput);
 edgeGroup.appendChild(br());
 
-const edgeSecretInput = document.createElement("input");
-edgeSecretInput.type = 'checkbox';
-edgeGroup.appendChild(edgeSecretInput);
-edgeGroup.appendChild(label('secret'));
+edgeGroup.appendChild(label('reply'));
 edgeGroup.appendChild(br());
+const edgeReplyInput = document.createElement("input");
+edgeGroup.appendChild(edgeReplyInput);
+edgeGroup.appendChild(br());
+
 
 
 edgeFormContainer.appendChild(edgeGroup);
@@ -75,22 +70,10 @@ function guiEdgeSetSelectedEdge(edge){
             edgeLabelInput.value = '';
         }
 
-        if (typeof data['direction'] !== "undefined"){
-            edgeDirectionInput.value = data['direction'];
+        if (typeof data['reply'] !== "undefined"){
+            edgeReplyInput.value = data['reply'];
         } else {
-            edgeDirectionInput.value = '';
-        }
-
-        if (typeof data['blocked'] !== "undefined"){
-            edgeBlockedInput.checked = data['blocked'];
-        } else {
-            edgeBlockedInput.checked = false;
-        }
-
-        if (typeof data['secret'] !== "undefined"){
-            edgeSecretInput.checked = data['secret'];
-        } else {
-            edgeSecretInput.checked = false;
+            edgeReplyInput.value = '';
         }
     }
 }
@@ -99,9 +82,8 @@ function edge_save_json() {
     const data = {
         'id': edgeIdInput.value,
         'label': edgeLabelInput.value,
-        'direction': edgeDirectionInput.value,
-        'secret': edgeSecretInput.checked,
-        'blocked': edgeBlockedInput.checked
+        'index': edgeIndexInput.value,
+        'reply': edgeReplyInput.value,
     };
 
     
