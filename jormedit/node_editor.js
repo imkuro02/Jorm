@@ -112,8 +112,8 @@ var cy = cytoscape({
             }
         },
         'label': function(ele) {
-            if (ele.data('json') && ele.data('json').id) { 
-            return ele.data('json').id;
+            if (ele.data('json') && ele.data('json').label) { 
+            return ele.data('json').label;
             } else {
             return '';
             }
