@@ -331,15 +331,15 @@ def add_line_breaks(input_string, max_width=80):
     return output
 
 def indent(line, indent: IndentType):
-    _indent = 0
+    _indent = ''
     match indent:
         case IndentType.NONE:
             pass
         case IndentType.MINOR:
-            _indent = 3
+            _indent = '> '
         case IndentType.MAJOR:
-            _indent = 6
-    return (' '*_indent) + line
+            _indent = '>> '
+    return (_indent) + line
         
 
 

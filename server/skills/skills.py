@@ -267,3 +267,25 @@ class SkillRegenMP30(Skill):
                 )
             damage_obj.run()               
 
+class SkillRefreshingDrink(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            power = self.script_values['crit'][self.users_skill_level]
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stat_manager.stats[StatType.HPMAX]*power),
+                damage_type = DamageType.HEALING
+                )
+            damage_obj.run()        
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stat_manager.stats[StatType.MPMAX]*power),
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MP
+                )
+            damage_obj.run()          

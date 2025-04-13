@@ -1,0 +1,9 @@
+bartender:
+  name: Bartender
+  description: |
+    The tired bartender nods at you.
+  tree:
+    start:
+      dialog: |
+        says "Take a seat, or don't... I don't car..."
+      

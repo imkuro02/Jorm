@@ -195,8 +195,8 @@ def command_skills(self, line):
             t.add_data('No','@red')
 
         output += t.get_table()
-        if skill['can_be_practiced'] == False:
-            output += f'@redThis skill cannot be practied!@normal\n'
+        #if skill['can_be_practiced'] == False:
+        #    output += f'@redThis skill cannot be practied!@normal\n'
 
         if 'script_values' in skill:
             t = utils.Table(len(skill['script_values']['levels']) + 1 ,4)
