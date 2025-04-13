@@ -13,7 +13,7 @@ class Combat:
         # reset threat
         for p in self.participants.values():
             if type(p).__name__ == 'Player':
-                p.stat_manager.stats[StatType.THREAT] = 20 
+                p.stat_manager.stats[StatType.THREAT] = 200 
             else: 
                 p.stat_manager.stats[StatType.THREAT] = 0  
 

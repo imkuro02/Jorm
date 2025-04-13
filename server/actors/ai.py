@@ -3,6 +3,7 @@ from skills.manager import use_skill, get_user_skill_level_as_index
 from configuration.config import ActorStatusType
 from configuration.config import StatType, SKILLS
 
+
 class AI:
     def __init__(self, actor):
         self.actor = actor
@@ -51,7 +52,11 @@ class AI:
             if targets == []:
                 continue
 
+            #target = random.choice(targets)
             target = random.choice(targets)
+            for t in targets:
+                if t.stat_manager.stats[StatType.THREAT] > target.stat_manager.stats[StatType.THREAT]:
+                    target = t
             
             if use_skill(self.actor, target, skill_to_use):
                 self.actor.finish_turn()
@@ -104,3 +109,54 @@ class EnemyAI(AI):
         
         self.use_best_skill()
         
+class SlimeAI(AI):
+    def tick(self):
+        if not super().tick():
+            return
+        
+        stats = self.actor.stat_manager.stats
+        if stats[StatType.HP] < stats[StatType.HPMAX]*.75 and stats[StatType.HPMAX] > 10 :
+            stats[StatType.HP] = int(stats[StatType.HP]*.5)
+            stats[StatType.HPMAX] = stats[StatType.HP]
+
+            # create npc is assigned in actors.npcs script
+            clone = create_npc(self.actor.room, self.actor.npc_id)
+            clone.stat_manager.stats[StatType.HPMAX] = stats[StatType.HP]
+            clone.stat_manager.stats[StatType.HP] = stats[StatType.HP]
+            clone.simple_broadcast('',f'{self.actor.pretty_name()} splits!')
+            clone.room.join_combat(clone)
+            self.actor.finish_turn()
+        else:
+            self.use_best_skill()
+
+class CowardAI(AI):
+    def tick(self):
+        if not super().tick():
+            return
+    
+        if len(self.actor.room.exits) >= 1:
+            stats = self.actor.stat_manager.stats
+            roll = (100 - (stats[StatType.HP] / stats[StatType.HPMAX] * 100)) / 5 
+            print(roll)
+            if roll > random.randint(1,100):
+                random_dir = random.choice(self.actor.room.exits)
+                self.actor.simple_broadcast('',f'{self.actor.pretty_name()} flees {random_dir.direction}!')
+                new_room = random_dir.get_room_obj().id
+
+                
+                world = self.actor.room.world
+                world.rooms[new_room].move_actor(self.actor, silent = True)
+                self.actor.finish_turn()
+                return
+            self.use_best_skill()
+    
+def get_ai(ai_name):
+    match ai_name:
+        case 'Slime':
+            return SlimeAI
+        case 'Enemy':
+            return EnemyAI
+        case 'Coward':
+            return CowardAI
+        case _:
+            return EnemyAI

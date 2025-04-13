@@ -24,10 +24,10 @@ def command_go(self, line):
 
     if self.room.is_an_instance():
         can_move = True
-        for e in self.room.actors.values():
-            if type(e).__name__ == 'Enemy':
-                can_move = False
-                break
+
+        if self.room.is_enemy_present():
+            can_move = False
+  
 
         if not can_move:
             self.sendLine('Its not safe to go further.')

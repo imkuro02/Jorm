@@ -211,7 +211,8 @@ def configure_ENEMIES(SHEET):
         x = SHEET['enemies']
         for index in range(0, len(x[row])):
             ENEMIES[x['npc_id'][index]] = {
-                'npc_id':     x['npc_id'][index],
+                'npc_id':       x['npc_id'][index],
+                'ai':           x['ai'][index],
                 'name':         x['name'][index],
                 'description':  x['description'][index],
                 'stats': {

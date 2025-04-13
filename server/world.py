@@ -1,4 +1,4 @@
-from actors.enemy import create_enemy
+#from actors.enemy import create_enemy
 from actors.npcs import create_npc
 from actors.player import Player
 from items.manager import load_item
@@ -108,7 +108,7 @@ class Spawner:
         '''
 
     def tick(self):
-        if self.room.world.factory.ticks_passed % (30*2) == 0:
+        if self.room.world.factory.ticks_passed % (30*120) == 0:
             self.respawn_all()
 
 class Exit:

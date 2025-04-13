@@ -201,6 +201,12 @@ def command_load_item(self, line):
 @check_is_admin
 @check_no_empty_line
 def command_load_npcs(self, line):
+    if ':' in line:
+        npc_id, unique_name = line.split(':')
+        n = create_npc(self.room, npc_id)
+        n.name = unique_name
+
+        return
 
     if line == 'boss':
         self.room.world.spawn_boss()
@@ -373,7 +379,7 @@ def command_quest(self, line = 'list'):
 
 
 
-from actors.enemy import create_enemy
+#from actors.enemy import create_enemy
 from actors.npcs import create_npc
 @check_no_empty_line
 def command_lore(self, line):

@@ -7,6 +7,7 @@ from configuration.config import ITEMS
 from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
 from actors.ai import EnemyAI
 
+'''
 def create_enemy(room, npc_id, spawn_for_lore = False):
     if npc_id not in ENEMIES:
         print(f'error creating enemy: {npc_id}')
@@ -37,12 +38,13 @@ def create_enemy(room, npc_id, spawn_for_lore = False):
     e = Enemy(npc_id, name, description, room, stats, loot, skills)
 
     return e
-
+'''
 
 class Enemy(Actor):
     def __init__(
         self, 
         npc_id = None, 
+        ai = None,
         name = None,
         description = None, 
         room = None, 
@@ -53,6 +55,7 @@ class Enemy(Actor):
     ):
         super().__init__(
             name = name, 
+            ai = ai,
             description = description, 
             room = room,
             dialog_tree = dialog_tree
@@ -76,7 +79,7 @@ class Enemy(Actor):
         if skills != None:
             self.skill_manager.skills = copy.deepcopy(skills)
 
-        self.ai = EnemyAI(self)
+        #self.ai = EnemyAI(self)
 
 
     def sendLine(self, line):

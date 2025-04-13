@@ -9,7 +9,7 @@ from inventory import InventoryManager
 import utils
 from party import PartyManager
 from quest import QuestManager
-from actors.ai import EnemyAI
+import actors.ai
 from dialog import Dialog
 
 class ActorStatManager:
@@ -140,31 +140,26 @@ class Actor:
     def __init__(
         self, 
         _id = None,
+        ai = None,
         name = None,
         description = None, 
         room = None, 
-        dialog_tree = None
+        
     ):
-
-        self.name = name
-        self.description = description
 
         if _id == None:
             self.id = str(uuid.uuid4())
         else: 
             self.id = _id
-
-        self.dialog_tree = dialog_tree
-        self.current_dialog = None
-        
-
-        #self.protocol = protocol
+        self.ai = actors.ai.get_ai(ai)(self)
+        self.name = name
+        self.description = description
         self.room = room
         if self.room != None:
             self.factory = self.room.world.factory
 
         
-
+        
         self.inventory_manager =    InventoryManager(self)
         self.slots_manager =        SlotsManager(self)
 
@@ -177,8 +172,9 @@ class Actor:
         self.skill_manager =        SkillManager(self)
         self.cooldown_manager =     CooldownManager(self)
 
-        self.recently_send_message_count = 0
-        self.ai = EnemyAI(self)
+        
+        self.dialog_tree = None
+        
 
         if self.room != None:
             self.room.move_actor(self, silent = True)
@@ -213,9 +209,10 @@ class Actor:
     def pretty_name(self):
         output = ''
         
+        
         match type(self).__name__:
             case "Enemy":
-                output = output + f'@red{self.name}@normal'
+                output = output + f'@purple{self.name}@normal'
             case "Player":
                 if self.admin:
                     output = output + f'@byellow{self.name}@normal'
@@ -223,7 +220,7 @@ class Actor:
                     output = output + f'@cyan{self.name}@normal'
             case "Npc":
                 output = output + f'@yellow{self.name}@normal'
-
+        
         if self.status == ActorStatusType.FIGHTING:
             output = f'{output}'
 
@@ -268,8 +265,7 @@ class Actor:
 
     def tick(self):
         
-        if self.recently_send_message_count > 0:
-            self.recently_send_message_count -= 1
+        
         if self.status != ActorStatusType.FIGHTING:
             self.cooldown_manager.unload_all_cooldowns()
 

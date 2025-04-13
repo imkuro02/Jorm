@@ -15,6 +15,7 @@ class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
         self.protocol = protocol
         self.admin = 0
+        
 
         super().__init__(name = name, room = room, _id = _id)
 
@@ -25,12 +26,13 @@ class Player(Actor):
 
         self.recall_site = 'tutorial#tutorial'
         self.trade_manager = TradeManager(self)
-        
+        self.current_dialog = None
 
         # meta data
         self.date_of_creation = utils.get_unix_timestamp()
         self.date_of_last_login = utils.get_unix_timestamp()
         self.time_in_game = 0
+        self.recently_send_message_count = 0
 
         self.ai = PlayerAI(self)
         
@@ -51,6 +53,11 @@ class Player(Actor):
     #def get_character_sheet(self):
     #    output = super().get_character_sheet()
     #    return output
+
+    def tick(self):
+        super().tick()
+        if self.recently_send_message_count > 0:
+            self.recently_send_message_count -= 1
 
     def combat_over_prompt(self):
         self.sendLine('@yellowCombat over!@normal')
