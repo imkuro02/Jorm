@@ -1,7 +1,8 @@
-from actors.player_only_functions.checks import check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
+from actors.player_only_functions.checks import check_not_in_party, check_not_in_party_or_is_party_leader, check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
 from configuration.config import ActorStatusType
 
 @check_your_turn
+@check_not_in_party
 def command_flee(self, line):
     if self.room.combat == None:
         self.sendLine('You are not in combat, you don\'t need to flee')
@@ -20,6 +21,7 @@ def command_flee(self, line):
 @check_no_empty_line
 @check_not_in_combat
 @check_alive
+@check_not_in_party_or_is_party_leader
 def command_go(self, line):
 
     if self.room.is_an_instance():
@@ -80,7 +82,7 @@ def command_go(self, line):
     
 
     world.rooms[new_room].move_actor(self)
-    self.command_look('')
+    
 
     if self.recall_site == 'tutorial' and self.room.can_be_recall_site:
         self.command_rest('set')
@@ -97,7 +99,10 @@ def command_go(self, line):
                 #par.command_go(line)
                 self.room.move_actor(par, silent = True)
                 par.sendLine('You follow.')
-                par.command_look('')
+        for par in self.party_manager.party.participants.values():
+            par.command_look('')
+    else:
+        self.command_look('')
 
 
 

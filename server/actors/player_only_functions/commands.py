@@ -6,7 +6,7 @@ from actors.player_only_functions.talk import command_talk
 
 from actors.player_only_functions.combat import (
     command_fight, command_pass_turn, 
-    command_use, command_rest, command_party
+    command_use, command_rest, rest_set, rest_now, rest_now_request, command_party
 )
 
 from actors.player_only_functions.look import command_look

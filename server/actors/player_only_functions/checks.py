@@ -68,3 +68,20 @@ def check_no_combat_in_room(func):
             return
         return func(self, line)
     return wrapper
+
+def check_not_in_party_or_is_party_leader(func):
+    def wrapper(self, line):
+        if self.party_manager.party != None:
+            if self.party_manager.party.actor != self:
+                self.sendLine('Only party leader can do this')
+                return
+        return func(self, line)
+    return wrapper
+
+def check_not_in_party(func):
+    def wrapper(self, line):
+        if self.party_manager.party != None:
+            self.sendLine('You can\'t do this while in a party')
+            return
+        return func(self, line)
+    return wrapper

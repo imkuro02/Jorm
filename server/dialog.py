@@ -1,6 +1,7 @@
 from quest import QUEST_STATE_TYPES, ObjectiveCountProposal
 from items.manager import load_item
 from configuration.config import StatType
+import random
 class Dialog:
     def __init__(self, _player, _npc, _dialog_tree):
         self.player = _player
@@ -69,7 +70,13 @@ class Dialog:
         return options
 
     def print_dialog(self):
-        output = f'{self.npc.pretty_name()} '+self.dialog_tree[self.current_line]['dialog']+'@normal'
+        dialog_line = self.dialog_tree[self.current_line]['dialog']
+        if type(dialog_line) == list:
+            output = f'{self.npc.pretty_name()} '+random.choice(dialog_line)+'@normal'
+        else:
+            output = f'{self.npc.pretty_name()} '+dialog_line+'@normal'
+
+
         #print('>',output)
         
         # if there is only one option, that option is end

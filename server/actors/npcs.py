@@ -10,7 +10,7 @@ from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
 
 def create_npc(room, npc_id, spawn_for_lore = False):
     room =          room
-    name =          'actors.npcs.create_npc could not assign name'
+    name =          'None'
     desc =          None
     stats =         None
     loot =          None
@@ -29,8 +29,8 @@ def create_npc(room, npc_id, spawn_for_lore = False):
         ai =        ENEMIES[npc_id]['ai']
     
     if npc_id in NPCS:
-        name =      NPCS[npc_id]['name']
-        desc =      NPCS[npc_id]['description']
+        #name =      NPCS[npc_id]['name']
+        #desc =      NPCS[npc_id]['description']
         tree =      NPCS[npc_id]['tree']
 
 

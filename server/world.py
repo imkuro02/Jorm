@@ -185,8 +185,9 @@ class Room:
 
     def tick(self):
         actors = {}
-        if not self.is_an_instance():
-            self.spawner.tick()
+        #if not self.is_an_instance():
+        self.spawner.tick()
+        
         for a in self.actors.values():
             actors[a.id] = a
 
@@ -272,20 +273,23 @@ class Room:
             if type(actor).__name__ != 'Player':
                 return
             instanced_room_id = self.id+'/'+actor.name
-            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.can_be_recall_site, instanced=False)
-            instanced_room = self.world.rooms[instanced_room_id]
-       
-            #instanced_room.populate()
+            if instanced_room_id not in self.world.rooms:
+                self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.can_be_recall_site, instanced=False)
+                instanced_room = self.world.rooms[instanced_room_id]
+        
+                #instanced_room.populate()
 
-            self.remove_actor(actor)
-            if not silent and actor.room != self:
-                actor.simple_broadcast('',f'{actor.pretty_name()} has left.')
+                self.remove_actor(actor)
+                if not silent and actor.room != self:
+                    actor.simple_broadcast('',f'{actor.pretty_name()} has left.')
 
-            actor.room = instanced_room
-            instanced_room.actors[actor.id] = actor
+                actor.room = instanced_room
+                instanced_room.actors[actor.id] = actor
 
-            if not silent:
-                actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.')
+                if not silent:
+                    actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.')
+            else:
+                self.world.rooms[instanced_room_id].move_actor(actor)
             
 
         
