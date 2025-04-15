@@ -148,6 +148,7 @@ class CowardAI(AI):
 
                 
                 world = self.actor.room.world
+                self.actor.status = ActorStatusType.NORMAL
                 world.rooms[new_room].move_actor(self.actor, silent = True)
                 self.actor.finish_turn()
                 return
