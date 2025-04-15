@@ -31,6 +31,9 @@ class AI:
 
 
     def use_best_skill(self):
+        if self.actor.room.combat == None:
+            return
+        
         allies, enemies = self.get_targets()
         skills = self.get_skills()
 
@@ -149,6 +152,41 @@ class CowardAI(AI):
                 self.actor.finish_turn()
                 return
             self.use_best_skill()
+
+class BossRatAI(AI):
+    def __init__(self, actor):
+        self.actor = actor
+        self.turn = 0
+    
+    def tick(self):
+        if not super().tick():
+            return
+        
+        self.turn += 1
+        
+        if self.turn == 6:
+            to_devour = []
+            for par in self.actor.room.combat.participants.values():
+                if type(par).__name__ != 'Player':
+                    if par.npc_id == 'rat':
+                        to_devour.append(par)
+            for par in to_devour:
+                par.die()
+            self.turn = 0
+            self.actor.finish_turn()
+            return
+
+        if self.turn == 3:
+            for i in range(1,3):
+                rat = create_npc(self.actor.room, 'rat')
+                rat.room.join_combat(rat)
+            self.actor.finish_turn()
+            return
+            
+        self.use_best_skill()
+        
+        return
+
     
 def get_ai(ai_name):
     match ai_name:
@@ -158,5 +196,7 @@ def get_ai(ai_name):
             return EnemyAI
         case 'Coward':
             return CowardAI
+        case 'BossRat':
+            return BossRatAI
         case _:
             return EnemyAI

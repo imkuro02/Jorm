@@ -384,7 +384,10 @@ class Actor:
         
         self.room.combat.next_turn()
 
+    
     def set_turn(self):
+        if self.room.combat == None:
+            return
         
         if type(self).__name__ == "Player":
             output = f'@yellowYour turn.@normal'
