@@ -152,7 +152,8 @@ class CowardAI(AI):
                 world.rooms[new_room].move_actor(self.actor, silent = True)
                 self.actor.finish_turn()
                 return
-            self.use_best_skill()
+                
+        self.use_best_skill()
 
 class BossRatAI(AI):
     def __init__(self, actor):
