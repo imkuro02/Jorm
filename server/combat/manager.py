@@ -37,8 +37,9 @@ class Combat:
 
         self.time_since_turn_finished += 1
 
-        if len(self.participants) == 0:
-            self.combat_over()
+        #if len(self.participants) == 0:
+        #    self.combat_over()
+        #    return
 
         #print(self.time_since_turn_finished, len(self.participants))
         if self.time_since_turn_finished == 30*20:
@@ -81,10 +82,11 @@ class Combat:
         #if team1_died or team2_died:
         #    self.combat_over()
 
-        if self.current_actor.room != self.room:
+        #if self.current_actor.room != self.room:
+        if self.current_actor.status == ActorStatusType.NORMAL:
             print(self.current_actor.name, 'removed from combat')
             if self.current_actor.id in self.participants: 
-                self.participants[self.current_actor.id].status = ActorStatusType.NORMAL
+                #self.participants[self.current_actor.id].status = ActorStatusType.NORMAL
                 del self.participants[self.current_actor.id]
             self.next_turn()
             return
@@ -95,7 +97,8 @@ class Combat:
 
     def combat_over(self):
         for i in self.participants.values():
-            if i.status == ActorStatusType.FIGHTING: i.status = ActorStatusType.NORMAL
+            if i.status == ActorStatusType.FIGHTING: 
+                i.status = ActorStatusType.NORMAL
             if type(i).__name__ == "Player":
                 #i.sendLine('@yellowCombat over!@normal')
                 i.combat_over_prompt()
@@ -150,8 +153,8 @@ class Combat:
                 participating_parties.append(i.party_manager.get_party_id())
 
         if len(participating_parties) <= 1:
-            self.combat_over()
-            return
+           self.combat_over()
+           return
 
         self.time_since_turn_finished = 0
         if len(self.order) == 0:
@@ -163,7 +166,10 @@ class Combat:
 
         self.current_actor = self.order[0]
         self.order.pop(0)
+        if self.current_actor.room != self.room:
+            return
         self.current_actor.set_turn()
+
 
     def initiative(self):
         for i in self.participants.values():
@@ -182,11 +188,13 @@ class Combat:
         """
         self.round += 1
         for i in self.order:
+            if i.room != self.room:
+                continue
             i.status = ActorStatusType.FIGHTING
 
-        if len(self.order) == 0:
-            self.combat_over()
-            return
+        #if len(self.order) == 0:
+        #    self.combat_over()
+        #    return
 
         self.next_turn()
         #self.current_actor = self.order[0]

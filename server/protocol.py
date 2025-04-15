@@ -2,7 +2,7 @@ from twisted.internet import protocol
 from actors.player import Player
 from items.manager import load_item, save_item
 import utils
-from configuration.config import StatType, ItemType, SPLASH_SCREENS
+from configuration.config import StatType, ItemType, SPLASH_SCREENS, ActorStatusType
 import uuid
 import copy
 import random
@@ -329,6 +329,7 @@ class Protocol(protocol.Protocol):
             self.actor.affect_manager.unload_all_affects(silent = True)
             self.actor.trade_manager.trade_stop()
             self.actor.party_manager.party_leave()
+            self.actor.status = ActorStatusType.NORMAL
             self.save_actor()
             
 
