@@ -263,34 +263,37 @@ class Actor:
         
         return output
 
+    def heal(self, heal_hp = True, heal_mp = True, value = 1, silent = True):
+        if heal_hp:
+            damage_obj = Damage(
+                damage_taker_actor = self,
+                damage_source_actor = self,
+                damage_source_action = self,
+                damage_value = value,
+                damage_type = DamageType.HEALING,
+                silent = silent
+                )
+            damage_obj.run()      
+        if heal_mp:    
+            damage_obj = Damage(
+                damage_taker_actor = self,
+                damage_source_actor = self,
+                damage_source_action = self,
+                damage_value = value,
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MP,
+                silent = silent
+                )
+            damage_obj.run()   
+        self.stat_manager.hp_mp_clamp_update()
+        
     def tick(self):
-        
-        
         if self.status != ActorStatusType.FIGHTING:
             self.cooldown_manager.unload_all_cooldowns()
-
             if self.status != ActorStatusType.DEAD and self.factory.ticks_passed % 30 == 0:
-                damage_obj = Damage(
-                    damage_taker_actor = self,
-                    damage_source_actor = self,
-                    damage_source_action = self,
-                    damage_value = 1,
-                    damage_type = DamageType.HEALING,
-                    silent = True
-                    )
-                damage_obj.run()          
-                damage_obj = Damage(
-                    damage_taker_actor = self,
-                    damage_source_actor = self,
-                    damage_source_action = self,
-                    damage_value = 1,
-                    damage_type = DamageType.HEALING,
-                    damage_to_stat = StatType.MP,
-                    silent = True
-                    )
-                damage_obj.run()   
+                self.heal()
                 
-                self.stat_manager.hp_mp_clamp_update()
+                
 
     '''
     def deal_damage(self, damage_obj: Damage):
