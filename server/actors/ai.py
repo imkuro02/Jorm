@@ -23,7 +23,8 @@ class AI:
         
         #s['script_values']['cooldown'][level]
         skills = [  skill_id for skill_id in self.actor.skill_manager.skills
-                    if skill_id not in self.actor.cooldown_manager.cooldowns ]
+                    if skill_id not in self.actor.cooldown_manager.cooldowns 
+                    and self.actor.skill_manager.skills[skill_id] >= 1]
 
         return skills
                     
@@ -167,19 +168,32 @@ class BossRatAI(AI):
         self.turn += 1
         
         if self.turn == 6:
+
+            heal = 0
             to_devour = []
             for par in self.actor.room.combat.participants.values():
                 if type(par).__name__ != 'Player':
                     if par.npc_id == 'rat':
                         to_devour.append(par)
+
+            if to_devour == []:
+                self.turn = 0
+                self.use_best_skill()
+                return
+
             for par in to_devour:
                 par.die()
+                heal += 20
+            self.actor.simple_broadcast('',f'{self.actor.pretty_name()} Devours the rats! healing for {heal}')
+            self.actor.heal(value=heal, silent = True)
+                
             self.turn = 0
             self.actor.finish_turn()
             return
 
         if self.turn == 3:
-            for i in range(1,3):
+            self.actor.simple_broadcast('',f'{self.actor.pretty_name()} roars loudly!')
+            for i in range(0,random.randint(1,3)):
                 rat = create_npc(self.actor.room, 'rat')
                 rat.room.join_combat(rat)
             self.actor.finish_turn()
