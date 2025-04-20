@@ -1,31 +1,36 @@
 
-const Cy = document.createElement("div");
-Cy.id = 'cy';
-document.body.appendChild(Cy)
+//const Cy = document.createElement("div");
+//Cy.id = 'cy';
+//document.body.appendChild(Cy)
+
+const Cy = document.getElementById('cy');
+
+container = document.getElementById('containers');
 
 
-const Editor = document.createElement("div");
-Editor.id = 'editor';
-document.body.appendChild(Editor)
+
 
 const FileInput = document.createElement("input");
 FileInput.id = 'fileInput';
 FileInput.type = 'file';
-Editor.appendChild(FileInput)
+container.appendChild(FileInput)
 
 const BtnUp = document.createElement("button");
 BtnUp.onclick = handleFileUpload;
 BtnUp.textContent = 'Load';
-Editor.appendChild(BtnUp)
+container.appendChild(BtnUp)
 
 const BtnDown = document.createElement("button");
 BtnDown.onclick = export_json;
 BtnDown.textContent = 'Save';
-Editor.appendChild(BtnDown)
+container.appendChild(BtnDown)
+
+const BR = document.createElement("br");
+container.appendChild(BR);
 
 const JsonEditor = document.createElement("textarea");
-JsonEditor.id = 'json-editor';
-Editor.appendChild(JsonEditor)
+JsonEditor.id = 'json-container';
+container.appendChild(JsonEditor)
 
 
 var selectedNode = null; // Track the currently selected node or edge
@@ -200,25 +205,25 @@ cy.on('cxttap', function(event) {
     //selectedNode = null;
     NODEsetSelectedNode(null);
     NODEsetSelectedEdge(null);
-    document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
+    document.getElementById('containers').classList.remove('no-pointer-events'); // Enable pointer events
 
     new_node(data = null, position = event.position);
-    document.getElementById('json-editor').value = ''; // Clear editor on empty space click
+    document.getElementById('json-container').value = ''; // Clear container on empty space click
     } /* else {
     if (event.target.isNode()) {
         var node = event.target;
         node.remove();
         selectedNode = null;
         NODEsetSelectedEdge(null);
-        document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
-        document.getElementById('json-editor').value = ''; // Clear editor on node removal
+        document.getElementById('container').classList.remove('no-pointer-events'); // Enable pointer events
+        document.getElementById('json-container').value = ''; // Clear container on node removal
     } else if (event.target.isEdge()) {
         var edge = event.target;
         edge.remove();
         selectedNode = null;
         NODEsetSelectedEdge(null);
-        document.getElementById('editor').classList.remove('no-pointer-events'); // Enable pointer events
-        document.getElementById('json-editor').value = ''; // Clear editor on edge removal
+        document.getElementById('container').classList.remove('no-pointer-events'); // Enable pointer events
+        document.getElementById('json-container').value = ''; // Clear container on edge removal
     }
     } */
 });
@@ -247,8 +252,8 @@ cy.on('tap', 'node', function(event) {
     NODEsetSelectedNode(node);
     NODEsetSelectedEdge(null); // Clear edge selection
     console.log('Node selected: ' + node.id());
-    document.getElementById('json-editor').value = JSON.stringify(node.data().json, null, 2); // Display node data
-    document.getElementById('json-editor').focus();
+    document.getElementById('json-container').value = JSON.stringify(node.data().json, null, 2); // Display node data
+    document.getElementById('json-container').focus();
     } else {
     console.log('edge');
 
@@ -271,8 +276,8 @@ cy.on('tap', 'edge', function(event) {
     NODEsetSelectedEdge(edge);
     NODEsetSelectedNode(null); // Clear node selection
     console.log('Edge selected: ' + edge.id());
-    document.getElementById('json-editor').value = JSON.stringify(edge.data().json, null, 2); // Display edge data
-    document.getElementById('json-editor').focus();
+    document.getElementById('json-container').value = JSON.stringify(edge.data().json, null, 2); // Display edge data
+    document.getElementById('json-container').focus();
 });
 
 // Deselect node or edge on tapping elsewhere
@@ -283,38 +288,38 @@ cy.on('tap', function(event) {
     if (selectedNode || selectedEdge) {
         NODEsetSelectedNode(null);
         NODEsetSelectedEdge(null);
-        document.getElementById('json-editor').value = ''; // Clear editor
+        document.getElementById('json-container').value = ''; // Clear container
         console.log('Deselected');
     }
     }
 });
 
 // Save the edited JSON back to the node or edge
-document.getElementById('json-editor').addEventListener('input', function() {
-const editor = this;  // Reference to the editor element
+document.getElementById('json-container').addEventListener('input', function() {
+const container = this;  // Reference to the container element
 
 if (selectedNode) {
 try {
-    selectedNode.data().json=(JSON.parse(editor.value)); // Update the node's JSON data
-    editor.style.backgroundColor = 'white';  // Set background to white if JSON is valid
+    selectedNode.data().json=(JSON.parse(container.value)); // Update the node's JSON data
+    container.style.backgroundColor = 'white';  // Set background to white if JSON is valid
 } catch (e) {
     console.error('Invalid JSON');
-    editor.style.backgroundColor = 'lightgray';  // Set background to light gray if JSON is invalid
+    container.style.backgroundColor = 'lightgray';  // Set background to light gray if JSON is invalid
 }
 } else if (selectedEdge) {
 try {
-    selectedEdge.data().json=(JSON.parse(editor.value)); // Update the edge's JSON data
-    editor.style.backgroundColor = 'white';  // Set background to white if JSON is valid
+    selectedEdge.data().json=(JSON.parse(container.value)); // Update the edge's JSON data
+    container.style.backgroundColor = 'white';  // Set background to white if JSON is valid
 } catch (e) {
     console.error('Invalid JSON');
-    editor.style.backgroundColor = 'lightgray';  // Set background to light gray if JSON is invalid
+    container.style.backgroundColor = 'lightgray';  // Set background to light gray if JSON is invalid
 }
 }
 });
 
 
 // Allow Tab key to insert spaces in the textarea
-document.getElementById('json-editor').addEventListener('keydown', function(event) {
+document.getElementById('json-container').addEventListener('keydown', function(event) {
     if (event.key === 'Tab') {
     event.preventDefault();
     var cursorPos = this.selectionStart;

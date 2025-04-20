@@ -10,12 +10,15 @@ function br(){
     return br;
 }
 
-const formContainer = document.createElement("div");
-document.body.appendChild(formContainer)
-formContainer.id = 'form-container';
+const nodeFormContainer = document.createElement("div");
+
+//document.body.appendChild(formContainer)
+container = document.getElementById('containers');
+container.appendChild(nodeFormContainer)
+nodeFormContainer.id = 'node-form-container';
 
 //const formContainer = document.getElementById("form-container");
-formContainer.innerHTML = '';
+nodeFormContainer.innerHTML = '';
 
 const nodeGroup = document.createElement("div");
 nodeGroup.classList.add("input-nodeGroup");
@@ -74,7 +77,7 @@ const nodeSpawnGroupInput = document.createElement("textarea");
 nodeGroup.appendChild(nodeSpawnGroupInput);
 nodeGroup.appendChild(br());
 
-formContainer.appendChild(nodeGroup);
+nodeFormContainer.appendChild(nodeGroup);
 
 function guiNodeSetSelectedNode(node){
     if(node !== null){

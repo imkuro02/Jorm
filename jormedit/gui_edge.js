@@ -11,7 +11,9 @@ function br(){
 }
 
 const edgeFormContainer = document.createElement("div");
-document.body.appendChild(edgeFormContainer)
+//document.body.appendChild(edgeFormContainer)
+container = document.getElementById('containers');
+container.appendChild(edgeFormContainer)
 edgeFormContainer.id = 'edge-form-container';
 
 //const edgeFormContainer = document.getElementById("form-container");
