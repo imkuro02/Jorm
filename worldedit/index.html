@@ -74,16 +74,23 @@
   <script>
     var selectedNode = null; // Track the currently selected node or edge
     var selectedEdge = null;
-	var copiedData = null;
+	  var copiedData = null;
 
     function new_node(data = null, position = null) {
       var node_template = { 
         group: 'nodes',
         position: { x: 0, y: 0 },
         data: { 
+<<<<<<< Updated upstream
 			id: generateUUID4(), 
 			json: {} 
 		}
+=======
+        id: generateUUID4(), 
+        name: 'node name', 
+        json: {} 
+		    }
+>>>>>>> Stashed changes
       };
 
       if (data !== null) {
@@ -98,19 +105,23 @@
     }
 
     function new_edge(data = null) {
+<<<<<<< Updated upstream
     
 		console.log(data);
+=======
+		  //console.log(data);
+>>>>>>> Stashed changes
       var edge_template = {
         group: 'edges',
         data: {
-		  id: generateUUID4(),
+          id: generateUUID4(),
           source: null,
           target: null,
           json: {}
         }
       };
 
-	  if (data !== null) {
+      if (data !== null) {
         edge_template.data = data;
       }
 
