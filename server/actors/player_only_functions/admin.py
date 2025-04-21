@@ -222,6 +222,10 @@ def command_kill(self, line):
     actor.die()
 
 def command_export(self, line):
+    if line == '':
+        self.sendLine(str(self.room.__dict__))
+        return
+    
     list_of_actors = [actor.name for actor in self.room.actors.values()]
     list_of_inventory = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
     whole_list = list_of_actors + list_of_inventory

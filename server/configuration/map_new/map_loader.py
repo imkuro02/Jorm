@@ -12,38 +12,46 @@ def load_map():
                 file_path = os.path.join(root, filename)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
+                    for node in data['nodes']:
+                        data['nodes'][node]['data']['from_file'] = file_path.replace(MAP_DIRECTORY,'').replace('.json','')
                     all_data['nodes'].update(data['nodes'])
                     all_data['edges'].update(data['edges'])
+                    #all_data['file'] = file_path.replace(MAP_DIRECTORY,'')
 
     for node in all_data['nodes'].values():
         data =      node['data']
         json_data = node['data']['json']
 
-        room_id = data['id']
+        room_id = data['from_file']+'/'+data['id']
         room_name = 'somewhere'
         room_desc = 'There is nothing noteworthy here'
         room_safe = False
         room_instanced = False
         room_spawner = []
+        room_from_file = data['from_file']
+        
+
+        skip_loading = False
 
         if 'id' in json_data:
-            new_id = json_data['id']
+            new_id = data['from_file']+'/'+json_data['id']
 
-            skip_loading = False
+            
             if '!' == new_id[0]:
                 new_id = new_id.replace('!','')
                 skip_loading = True
 
             room_id = new_id
-            for edge in all_data['edges'].values():
-                edge_data = edge['data']
-                if edge_data['source'] == data['id']:
-                    all_data['edges'][edge_data['id']]['data']['source'] = new_id
-                if edge_data['target'] == data['id']:
-                    all_data['edges'][edge_data['id']]['data']['target'] = new_id
+            
+        for edge in all_data['edges'].values():
+            edge_data = edge['data']
+            if edge_data['source'] == data['id']:
+                all_data['edges'][edge_data['id']]['data']['source'] = room_id
+            if edge_data['target'] == data['id']:
+                all_data['edges'][edge_data['id']]['data']['target'] = room_id
 
-            if skip_loading:
-                continue
+        if skip_loading:
+            continue
 
         if 'name' in json_data:
             room_name = json_data['name']
@@ -74,8 +82,12 @@ def load_map():
             'can_be_recall_site': room_safe,
             'instanced': room_instanced,
             'spawner': room_spawner,
+            'from_file': room_from_file
             #'items': room_items
         }
+
+        #print(room_from_file, room_id)
+
 
 
     for edge in all_data['edges'].values():

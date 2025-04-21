@@ -36,7 +36,7 @@ class Spawner:
         room_id = self.room.id
         if room_id not in WORLD['world']:
             # remove the username affix on instanced rooms
-            room_id = room_id.split('/')[0]
+            room_id = room_id.split('#')[0]
 
         room = WORLD['world'][room_id]
         return room
@@ -135,13 +135,13 @@ class Exit:
 
 
 class Room:
-    def __init__(self, world, _id, name, description, exits, can_be_recall_site, instanced):
+    def __init__(self, world, _id, name, description, from_file, exits, can_be_recall_site, instanced):
         self.world = world
-        self.id = _id
-        self.name = name
-        self.description = description
-
-        self.exits = []
+        self.id = _id                   # id of the room
+        self.name = name                # display name
+        self.description = description  # display desc
+        self.from_file = from_file      # which file loaded this room
+        self.exits = []                 # exits in this room
         for _exit in exits:
             #print(_exit)
             if type(_exit).__name__ == 'Exit':
@@ -164,15 +164,15 @@ class Room:
                                 )
                             )
         
-        self.can_be_recall_site = can_be_recall_site
-        self.instanced = instanced
+        self.can_be_recall_site = can_be_recall_site # whether you can rest now / rest set
+        self.instanced = instanced        # is this room a private instance?
         self.inventory_manager = InventoryManager(self, limit = 20)
-        self.combat = None
-        self.actors = {}
-        self.spawner = Spawner(self)
+        self.combat = None                # placeholder for combat
+        self.actors = {}                  # actors in room dict
+        self.spawner = Spawner(self)      # spawner
 
     def is_an_instance(self):
-        if '/' in self.id:
+        if '#' in self.id:
             return True
         return False
 
@@ -272,9 +272,9 @@ class Room:
         else:
             if type(actor).__name__ != 'Player':
                 return
-            instanced_room_id = self.id+'/'+actor.name
+            instanced_room_id = self.id+'#'+actor.name
             if instanced_room_id not in self.world.rooms:
-                self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.exits, self.can_be_recall_site, instanced=False)
+                self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.from_file, self.exits, self.can_be_recall_site, instanced=False)
                 instanced_room = self.world.rooms[instanced_room_id]
         
                 #instanced_room.populate()
@@ -354,7 +354,7 @@ class World:
 
             #if room['instanced'] == True:
             #print(room['exits'])
-            self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['can_be_recall_site'], room['instanced']) 
+            self.rooms[r] = Room(self, r, room['name'], room['description'], room['from_file'], room['exits'], room['can_be_recall_site'], room['instanced']) 
             #else:
             #    self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
             #self.rooms[r].populate()

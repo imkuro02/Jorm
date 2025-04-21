@@ -6,6 +6,10 @@ import csv
 import os
 import configuration.read_from_excel as rfe
 
+class StaticRooms:
+    LOADING = 'overworld/loading'
+    TUTORIAL = 'overworld/tutorial'
+
 SkillScriptValuesToNames = {
     'levels':       'LEVEL',
     'damage':       'DAMAGE',

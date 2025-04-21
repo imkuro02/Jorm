@@ -90,6 +90,7 @@ def command_look(self, line):
             
         for r in range(0,1):
             for room_loc in _grid:
+                #print(_grid[room_loc])
                 if grid[room_loc] == 'PATH':
                     continue
                 room = self.protocol.factory.world.rooms[grid[room_loc]]
