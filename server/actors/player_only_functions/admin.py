@@ -5,7 +5,7 @@ import configuration.config as config
 import yaml
 import os
 import utils
-from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE
+from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms
 
 def command_help(self, line):
     files = os.listdir('help')
@@ -258,7 +258,7 @@ def command_export(self, line):
 
 @check_is_admin
 def command_reload_config(self, line):
-    self.sendLine('Reloading config')
+    self.sendLine(StaticRooms.LOADING)
     import configuration.config as config
     config.load()
 
