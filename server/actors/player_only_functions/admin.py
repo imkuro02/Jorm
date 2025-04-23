@@ -409,7 +409,7 @@ def command_lore(self, line):
         
         all_rooms_e_spawns_in = []
         for room in LORE['rooms'].values():
-            for spawn_points in room['npcs']:
+            for spawn_points in room['spawner']:
                 if e_id in spawn_points:
                     if room['name'] in all_rooms_e_spawns_in:
                         continue
