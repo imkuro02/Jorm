@@ -402,7 +402,7 @@ def command_lore(self, line):
     
     if to_find in list_of_enemies:
         e_id = LORE['enemies'][to_find]['npc_id']
-        e = create_npc(self.room.world.rooms['loading'], e_id, spawn_for_lore = True)
+        e = create_npc(self.room.world.rooms[StaticRooms.LOADING], e_id, spawn_for_lore = True)
         if e == None:
             return
         
