@@ -92,7 +92,7 @@ class QuestManager:
                             break
         
         
-    def start_quest(self, quest_id):
+    def start_quest(self, quest_id, silent = False):
         if quest_id in self.quests:
             self.actor.sendLine('You already have this quest')
             return False
@@ -109,7 +109,8 @@ class QuestManager:
         
 
         self.quests[quest_id] = quest
-        self.actor.sendLine(f'@greenNew quest@normal: {quest.name}')
+        if silent == False:
+            self.actor.sendLine(f'@greenNew quest@normal: {quest.name}')
         self.actor.inventory_manager.count_quest_items()
 
         return True # if quest was started succesfully

@@ -245,7 +245,7 @@ class Protocol(protocol.Protocol):
 
             # add quests
             for quest in actor['quests']:
-                if self.actor.quest_manager.start_quest(quest):
+                if self.actor.quest_manager.start_quest(quest, silent = True):
                     for objective in actor['quests'][quest]:
                         if objective not in self.actor.quest_manager.quests[quest].objectives:
                             continue
