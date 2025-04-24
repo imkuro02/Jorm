@@ -99,6 +99,7 @@ def command_go(self, line):
                 #par.command_go(line)
                 self.room.move_actor(par, silent = True)
                 par.sendLine('You follow.')
+                par.finish_turn(force_cooldown = True)
         for par in self.party_manager.party.participants.values():
             par.command_look('')
     else:
