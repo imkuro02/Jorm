@@ -45,7 +45,7 @@ class Protocol(protocol.Protocol):
         splash = splash.replace('#ONLINE#',f'{len(self.factory.protocols)}')
         splash = f'@bwhite{splash}@normal'
         self.sendLine(splash)
-        self.transport.write(IAC+WILL+GMCP)
+        #self.transport.write(IAC+WILL+GMCP)
  
 
     def change_state(self, state):

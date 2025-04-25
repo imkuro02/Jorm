@@ -155,30 +155,34 @@
 
         // Handle messages from the server
         socket.onmessage = (event) => {
-            console.log(event.data);
-            /**
-             * If input is a password, change input type to password.  
-             * This hides it using asterisks.
-             * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password
-             * 
-             * If more things should be hidden, consider adding a flag instead of using the message string itself.
-            **/
-           var prev_type = input.type;
 
-           if (event.data === "Your \u001b[1;32mpassword\u001b[0m:\n" || 
-               event.data === "Enter your \u001b[1;32mpassword\u001b[0m:\n" ||
-               event.data === "Enter \u001b[1;32mpassword\u001b[0m again:\n") {
-                input.type = "password";
-                input.value = "";
-            } else {
-                input.type = "text";
-            }
+            //console.log(event.data.text());
+            event.data.text().then(text => {
+                console.log(text);
+                /**
+                 * If input is a password, change input type to password.  
+                 * This hides it using asterisks.
+                 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password
+                 * 
+                 * If more things should be hidden, consider adding a flag instead of using the message string itself.
+                **/
+            var prev_type = input.type;
 
-            if(input.type != prev_type){
-                input.value = "";
-            }
+            if (text === "Your \u001b[1;32mpassword\u001b[0m:\n" || 
+                text === "Enter your \u001b[1;32mpassword\u001b[0m:\n" ||
+                text === "Enter \u001b[1;32mpassword\u001b[0m again:\n") {
+                    input.type = "password";
+                    input.value = "";
+                } else {
+                    input.type = "text";
+                }
 
-            appendAnsiMessage(event.data);
+                if(input.type != prev_type){
+                    input.value = "";
+                }
+
+            appendAnsiMessage(text);
+            });
         };
 
         // Handle connection close

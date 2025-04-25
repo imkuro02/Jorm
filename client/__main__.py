@@ -1,54 +1,60 @@
 import asyncio
 import websockets
 import ssl
-import telnetlib3
-
 
 # Configuration
-MUD_SERVER = "127.0.0.1"  # Replace with your MUD server address
-MUD_PORT = 4001  # Standard Telnet port
-WEBSOCKET_PORT = 8001  # Port for the WebSocket server
-SSL_CERT_FILE = "../server/server.crt"  # Path to your SSL certificate file
-SSL_KEY_FILE = "../server/server.key"  # Path to your SSL private key file
-
+MUD_SERVER = "127.0.0.1"      # MUD server address
+MUD_PORT = 4001               # Telnet port (raw TCP)
+WEBSOCKET_PORT = 8001         # WebSocket port
+SSL_CERT_FILE = "../server/server.crt"  # SSL certificate
+SSL_KEY_FILE = "../server/server.key"   # SSL private key
 
 async def handle_websocket(websocket):
-    # Connect to the Telnet server
-    reader, writer = await telnetlib3.open_connection(MUD_SERVER, MUD_PORT, encoding='utf8', force_binary=True)
-    
-    # Handle communication
-    async def read_from_telnet():
-        try:
-            async for line in reader:
-                await websocket.send(line)
-        except Exception as e:
-            print(f"Telnet read error: {e}")
-            await websocket.close()
+    try:
+        # Connect to MUD server via raw TCP
+        reader, writer = await asyncio.open_connection(MUD_SERVER, MUD_PORT)
 
-    async def write_to_telnet():
-        try:
-            async for message in websocket:
-                writer.write(message + '\n')
-        except Exception as e:
-            print(f"WebSocket read error: {e}")
-            writer.close()
-        finally:
-            # Close the MUD connection when the WebSocket connection is closed
-            writer.close()
+        async def relay_from_mud():
+            try:
+                while True:
+                    data = await reader.read(1024*2)
+                    if not data:
+                        break
+                    # Send as binary to preserve all byte sequences
+                    await websocket.send(data)
+            except Exception as e:
+                print(f"Error reading from MUD: {e}")
+            finally:
+                await websocket.close()
 
-    # Run reading and writing tasks concurrently
-    await asyncio.gather(read_from_telnet(), write_to_telnet())
+        async def relay_to_mud():
+            try:
+                async for message in websocket:
+                    if isinstance(message, str):
+                        message = message.encode('utf-8') + b'\n'
+                    writer.write(message)
+                    await writer.drain()
+            except Exception as e:
+                print(f"Error writing to MUD: {e}")
+            finally:
+                writer.close()
+                await writer.wait_closed()
+
+        await asyncio.gather(relay_from_mud(), relay_to_mud())
+
+    except Exception as e:
+        print(f"Connection error: {e}")
+        await websocket.close()
 
 async def main():
-    # SSL context setup
+    # SSL setup
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain(certfile=SSL_CERT_FILE, keyfile=SSL_KEY_FILE)
 
-    # Start the WebSocket server with SSL
     print(f"WebSocket server running on wss://0.0.0.0:{WEBSOCKET_PORT}")
+    #async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT):
     async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT, ssl=ssl_context):
-        await asyncio.Future()  # Keep the server running indefinitely
+        await asyncio.Future()  # run forever
 
-# Start the server
-asyncio.run(main())
-
+if __name__ == "__main__":
+    asyncio.run(main())
