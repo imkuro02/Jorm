@@ -46,6 +46,7 @@ class Damage:
                 pass
             case DamageType.HEALING:
                 self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] += self.damage_value
+                '''
                 if not self.silent:
                     self.damage_taker_actor.simple_broadcast(
                         indent(f'You heal {self.damage_value} {StatType.name[self.damage_to_stat]}', IndentType.MINOR),
@@ -53,9 +54,10 @@ class Damage:
                         )
 
                 #self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
+                '''
                 return self.damage_value
 
-        
+        '''
         if self.damage_value <= 0:
             if not self.silent:
                 self.damage_taker_actor.simple_broadcast(
@@ -63,9 +65,11 @@ class Damage:
                 indent(f'{self.damage_taker_actor.pretty_name()} blocks', IndentType.MINOR)
                 )
             return self
+        '''
 
         self.damage_taker_actor.stat_manager.stats[self.damage_to_stat ] -= self.damage_value
 
+        '''
         if self.damage_to_stat == StatType.HP:
             if not self.silent:
                 self.damage_taker_actor.simple_broadcast(
@@ -79,6 +83,7 @@ class Damage:
                     indent(f'You lose {self.damage_value} Magicka', IndentType.MINOR),
                     indent(f'{self.damage_taker_actor.pretty_name()} loses {self.damage_value} Magicka', IndentType.MINOR)
                     )
+        '''
 
 
         #self.damage_taker_actor.stat_manager.hp_mp_clamp_update()

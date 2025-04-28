@@ -83,7 +83,7 @@ def command_bonus(self, line):
         self.sendLine('check help admin for syntax')
         return
     
-    item_name, type, key, val = line.split(',')
+    item_name, _type, key, val = line.split(',')
     item = self.get_item(item_name)
     
     if item == None:
@@ -105,7 +105,7 @@ def command_bonus(self, line):
         return
 
     from items.equipment import EquipmentBonus
-    boon = EquipmentBonus(type, key, val)
+    boon = EquipmentBonus(_type, key, val)
     item.manager.add_bonus(boon)
 
     
