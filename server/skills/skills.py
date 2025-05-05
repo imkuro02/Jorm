@@ -5,6 +5,7 @@ from combat.damage_event import Damage
 from configuration.config import SKILLS
 import random
 
+
 class Skill:
     def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False):
         self.skill_id = skill_id

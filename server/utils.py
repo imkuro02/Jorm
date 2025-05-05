@@ -341,6 +341,10 @@ def indent(line, indent: IndentType):
             _indent = '>> '
     return (_indent) + line
         
+# returns the topmost parent class name
+def get_object_parent(obj):
+    parent = obj.__class__.__mro__[-2].__name__
+    return parent
 
 
 if __name__ == '__main__':

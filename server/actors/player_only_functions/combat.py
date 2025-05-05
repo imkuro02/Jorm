@@ -3,6 +3,7 @@ from configuration.config import DamageType, ItemType, ActorStatusType, StatType
 import utils
 from skills.manager import get_skills, use_skill
 
+
 @check_your_turn
 @check_alive
 
@@ -54,8 +55,8 @@ def command_use(self, line):
 
     id_to_name, name_to_id = get_skills()
     list_of_skill_names = [skill for skill in name_to_id.keys()]
-    list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values() if item.item_type == ItemType.CONSUMABLE]
-    #list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
+    #list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values() if item.item_type == ItemType.CONSUMABLE]
+    list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
     whole_list = list_of_items + list_of_skill_names
     list_of_actors = [actor.name for actor in self.room.actors.values()]
 
@@ -72,7 +73,7 @@ def command_use(self, line):
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
         action = utils.match_word(action, list_of_items + list_of_skill_names)
-        #target = utils.match_word(target, list_of_items + list_of_actors)
+        target = utils.match_word(target, list_of_items + list_of_actors)
 
 
     _action = None
@@ -84,10 +85,11 @@ def command_use(self, line):
         _action = name_to_id[action]
 
     if isinstance(target, str): 
-        #if target in list_of_items:
-        #    _target = self.get_item(target)
-        
-        _target = self.get_actor(target)
+        if target in list_of_items:
+            _target = self.get_item(target)
+        if target in list_of_actors:
+            _target = self.get_actor(target)
+        #_target = self.get_actor(target)
     else:
         _target = target
 
@@ -98,6 +100,44 @@ def command_use(self, line):
     if _target == None:
         self.sendLine('On who?')
         return
+
+    '''
+    #is_target_actor = type(target).__name__ == "Actor"
+    is_target_item  = target in list_of_items
+    is_target_actor = not target in list_of_items
+    is_action_item  = action in list_of_items
+    is_action_skill = action in list_of_skill_names
+
+
+    # using a item on a actor
+    if is_target_actor and is_action_item:
+        if _action.use(self, _target):
+            self.finish_turn()
+            return
+        
+    # using a skill on a actor
+    if is_target_actor and is_action_skill:
+        if use_skill(self, _target, _action):
+            self.finish_turn()
+            return
+
+    # using an item on another item
+    if is_target_item and is_action_item:
+        if _action.use(self, _target):
+            self.finish_turn()
+            return
+    
+    # dont allow using skills on items EVER
+    if is_target_item and is_action_skill:
+        if use_skill(self, _target, _action):
+            self.finish_turn()
+            return
+    
+
+
+    print(is_target_actor, is_target_item, is_action_item, is_action_skill, type(target).__name__ )
+    return False
+    '''
 
     if action in list_of_skill_names:
         if use_skill(self, _target, _action):

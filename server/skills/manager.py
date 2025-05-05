@@ -4,6 +4,7 @@ import random
 from configuration.config import SKILLS, DamageType, ActorStatusType, StatType
 import skills.skills 
 
+
 def get_skills():
     name_to_id = {}
     id_to_name = {}
@@ -47,12 +48,18 @@ def skill_checks(user, target, skill_id):
     if target != user and not skill['target_others_is_valid']:
         error(user, f'You can\'t use {skill_name} on others')
         return False
+    
+    if utils.get_object_parent(target) != "Actor":
+        error(user, f'You can\'t use {skill_name} on {target.name}')
+        return False
 
     if skill['must_be_fighting']:
         if user.status != ActorStatusType.FIGHTING:
             error(user, f'{skill_name} can only be used during a fight')
             return False
 
+    
+    
     # allow using skills on dead targets
     if user.status == ActorStatusType.FIGHTING and (target.status != ActorStatusType.FIGHTING and target.status != ActorStatusType.DEAD):
         error(user, f'You are in a fight but {target.name} is not participating!')

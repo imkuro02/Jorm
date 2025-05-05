@@ -1,4 +1,5 @@
 import uuid
+from utils import get_object_parent
 from configuration.config import ItemType, SKILLS
 from items.misc import Item
 from skills.manager import use_skill_from_consumable, get_skills
@@ -46,6 +47,10 @@ class Consumable(Item):
         return output
 
     def use(self, user, target):
+        if get_object_parent(target) != "Actor":
+            super().use(user,target)
+            return
+        
         # do these checks if the user is attempting to use the item on something else
         if user is not target:
             if user.room.combat == None:
