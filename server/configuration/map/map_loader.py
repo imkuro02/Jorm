@@ -1,155 +1,120 @@
 import json
 import os
-# load map.json into trizbort.io and configure it there 
-import random
-import uuid
 def load_map():
-    # Path to the JSON file
-    #file_path = "configuration/map/map.json"
-    #data = ''
-    # Open and read the JSON file
-    #with open(file_path, "r") as file:
-    #    data = json.load(file)
-
-    rooms = {}
-    connectors = {}
+    nodes = {}
+    edges = {}
+    all_data = {'nodes':{},'edges':{}}
+    
     MAP_DIRECTORY = 'configuration/map/'
     for root, dirs, files in os.walk(MAP_DIRECTORY):
         for filename in files:
             if filename.endswith('.json'):
                 file_path = os.path.join(root, filename)
-                print(file_path)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
-                    file_path = file_path.replace('configuration/map/','').replace('.json','')
-                    
-                    objects = {}
-                    elems = data ['elements']
-                    for i in elems:
-                        objects[i['id']] = i
-                        print(i)
+                    for node in data['nodes']:
+                        data['nodes'][node]['data']['from_file'] = file_path.replace(MAP_DIRECTORY,'').replace('.json','')
+                    all_data['nodes'].update(data['nodes'])
+                    all_data['edges'].update(data['edges'])
+                    #all_data['file'] = file_path.replace(MAP_DIRECTORY,'')
 
-                    for i in objects.values():
-                        if i['_type'] == 'Room':
-                            if '#' in i['_subtitle']:
-                                continue
+    for node in all_data['nodes'].values():
+        data =      node['data']
+        json_data = node['data']['json']
 
-                            ROOM_ID = file_path+'#'+i['_subtitle']
-                            #print(i['_subtitle'] == 'loading',i['_subtitle'] )
-                            
-                            # skip if this room has already been loaded
-                            if ROOM_ID in rooms:
-                                continue
-
-                            rooms[ROOM_ID] = {}
-                            room = rooms[ROOM_ID]
-
-                            room['id'] = ROOM_ID
-                            room['name'] = i['_name']
-                            room['description'] = i['_description']
-                            room['exits'] = {}
-                            room['secret_exits'] = {}
-                            room['blocked_exits'] = []
-                            room['can_be_recall_site'] = False
-                            room['instanced'] = False
-
-                            if '_fillColor' in i:
-                                #print(i['_subtitle'], i['_fillColor'])
-                                room['can_be_recall_site'] = i['_fillColor'] == 'rgb(213, 229, 214)' or i['_fillColor'] == '#D5E5D6'
-                                room['instanced'] = i['_fillColor'] == '#F6D5D5'
-                                #print(room['instanced'])
-
-                            room['enemies'] = []
-                            for obj in i['objects']:
-                                obj_name = obj['_name']
-                                if 'enemy:' in obj_name:
-                                    enemies = obj_name.replace('enemy:','').split(', ')
-                                    #picked_enemy = random.choice(enemies).strip()
-                                    room['enemies'].append(enemies)
-
-                            room['items'] = []
-                            for obj in i['objects']:
-                                obj_name = obj['_name']
-                                if 'item:' in obj_name:
-                                    items = obj_name.replace('item:','').split(', ')
-                                    #item_picked = random.choice(items).strip()
-                                    room['items'].append(items)
-
-                            room['npcs'] = []
-                            for obj in i['objects']:
-                                obj_name = obj['_name']
-                                if 'npc:' in obj_name:
-                                    npcs = obj_name.replace('npc:','').split(', ')
-                                    #npc_picked = random.choice(npcs).strip()
-                                    room['npcs'].append(npcs)
-                                
-                            
-
-                            # work on dis yknow
-                            #room['instanced'] = False
-
-                            
-
-                        if i['_type'] == 'Connector':
-
-                            from_id = objects[i['_dockEnd']]['_subtitle']
-                            if '#' not in from_id:
-                                from_id= file_path+'#'+from_id
-
-                            to_id = objects[i['_dockStart']]['_subtitle']
-                            if '#' not in to_id:
-                                to_id = file_path+'#'+to_id
-
-                            conn = {
-                                    'from':{
-                                        'direction': i['_endLabel'],
-                                        'room_id': from_id
-                                    },
-                                    'to': {
-                                        'direction': i['_startLabel'],
-                                        'room_id': to_id
-                                    }
-                                }
-                            
-                            connectors[uuid.uuid4()] = conn
-                            
-    for conn in connectors.values():
-        if conn['from']['direction'] != '':
-            rooms[conn['from']['room_id']]['exits'][conn['from']['direction']] = conn['to']['room_id']
-
-        if conn['to']['direction'] != '':
-            rooms[conn['to']['room_id']]['exits'][conn['to']['direction']] = conn['from']['room_id']
+        room_id = data['from_file']+'/'+data['id']
+        room_name = 'somewhere'
+        room_desc = 'There is nothing noteworthy here'
+        room_safe = False
+        room_instanced = False
+        room_spawner = []
+        room_from_file = data['from_file']
         
-        '''
-        if conn['from']['direction'] != '':
-            if 'secret:' not in conn['from']['direction']:
-                if 'blocked:' in conn['from']['direction']:
-                    rooms[conn['from']['room_id']]['exits'][conn['from']['direction'].replace('blocked:','')] = conn['to']['room_id']
-                    rooms[conn['from']['room_id']]['blocked_exits'].append(conn['from']['direction'].replace('blocked:',''))
-                else:
-                    rooms[conn['from']['room_id']]['exits'][conn['from']['direction']] = conn['to']['room_id']
-            else:   
-                rooms[conn['from']['room_id']]['secret_exits'][conn['from']['direction'].replace('secret:','')] = conn['to']['room_id']
 
-        if conn['to']['direction'] != '':
-            if 'secret:' not in conn['to']['direction']:
-                if 'blocked:' in conn['to']['direction']:
-                    rooms[conn['to']['room_id']]['exits'][conn['to']['direction'].replace('blocked:','')] = conn['from']['room_id']
-                    rooms[conn['to']['room_id']]['blocked_exits'].append(conn['to']['direction'].replace('blocked:',''))
-                else:
-                    rooms[conn['to']['room_id']]['exits'][conn['to']['direction']] = conn['from']['room_id']
-            else:
-                rooms[conn['to']['room_id']]['secret_exits'][conn['to']['direction'].replace('secret:','')] = conn['from']['room_id']
-        '''
+        skip_loading = False
 
-    #for r in rooms.values():
-    #    if 'tutorial' not in r['id']:
-    #        continue 
-        #print(r)
+        if 'id' in json_data:
+            new_id = data['from_file']+'/'+json_data['id']
+
             
-                    
-    return(rooms)
+            if '!' == new_id[0]:
+                new_id = new_id.replace('!','')
+                skip_loading = True
+
+            room_id = new_id
+            
+        for edge in all_data['edges'].values():
+            edge_data = edge['data']
+            if edge_data['source'] == data['id']:
+                all_data['edges'][edge_data['id']]['data']['source'] = room_id
+            if edge_data['target'] == data['id']:
+                all_data['edges'][edge_data['id']]['data']['target'] = room_id
+
+        if skip_loading:
+            continue
+
+        if 'name' in json_data:
+            room_name = json_data['name']
+
+        if 'description' in json_data:
+            if type(json_data['description']) == str:
+                room_desc = json_data['description']
+            if type(json_data['description']) == list:
+                room_desc = '\n'.join(json_data['description'])
+
+        if 'instanced' in json_data:
+            room_instanced = json_data['instanced']
+
+        if 'can_be_recall_site' in json_data:
+            room_safe = json_data['can_be_recall_site']
+
+        if 'spawner' in json_data:
+            for i in [json_data['spawner'].split('\n')]:
+                for x in i:
+                    room_spawner.append(x.split(', '))
+
+        #print(room_spawner)
+        nodes[room_id] = {
+            'id': room_id,
+            'name': room_name,
+            'description': room_desc,
+            'exits': [],
+            'can_be_recall_site': room_safe,
+            'instanced': room_instanced,
+            'spawner': room_spawner,
+            'from_file': room_from_file
+            #'items': room_items
+        }
+
+        #print(room_from_file, room_id)
+
+
+
+    for edge in all_data['edges'].values():
+        edge_data = edge['data']
+        json_data = edge_data['json']
+
+        if edge_data['source'] in nodes:
+            
+            new_exit = {
+                'from': edge_data['source'], 
+                'to_room_id': edge_data['target'], 
+                'direction': 'edge.data.json has no direction',
+                'secret': False,
+                'blocked': False
+            }
+
+
+            if 'secret' in json_data:
+                new_exit['secret'] = json_data['secret']
+            if 'blocked' in json_data:
+                new_exit['blocked'] = json_data['blocked']
+            if 'direction' in json_data:
+                new_exit['direction'] = json_data['direction']
+
+            nodes[edge_data['source']]['exits'].append(new_exit)
+
+    return(nodes)
 
 if __name__ == '__main__':
-    w = load_map()
-    #print(w)
+    print(load_map())
