@@ -108,6 +108,7 @@ def command_bonus(self, line):
     boon = EquipmentBonus(_type, key, val)
     item.manager.add_bonus(boon)
 
+@check_is_admin
 def command_sethp(self, line):
     try:
         line = int(line)
