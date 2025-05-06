@@ -1,0 +1,22 @@
+<button onclick="playSound('attack')">Play Attack Sound</button>
+<button onclick="playSound('heal')">Play Heal Sound</button>
+<button onclick="playSound('death')">Play Death Sound</button>
+
+<audio id="sfx-player"></audio>
+
+<script>
+function playSound(effect) {
+  const audio = document.getElementById('sfx-player');
+
+  // Pick the sound based on what was requested
+  if (effect === 'attack') {
+    audio.src = 'attack.wav';
+  } else if (effect === 'heal') {
+    audio.src = 'sounds/heal.mp3';
+  } else if (effect === 'death') {
+    audio.src = 'sounds/death.mp3';
+  }
+
+  audio.play();
+}
+</script>

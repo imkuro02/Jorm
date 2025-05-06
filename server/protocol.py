@@ -38,6 +38,14 @@ class Protocol(protocol.Protocol):
         self.sendLine('\x1b[0m')
         self.sendLine('\u001B[2J')
 
+    def start_gmcp(self):
+        self.transport.write(IAC+WILL+GMCP)
+
+    def send_gmcp(self, gmcp_data):
+        gmcp_data = 'Core.Hello {"da": "me", "daa": "nee"}'
+        packet = IAC + SB + GMCP + gmcp_data.encode('utf-8') + IAC + SE
+        self.transport.write(packet)
+
     def splash_screen(self):
         splash = random.choice(SPLASH_SCREENS['screens'])
         splash = 'Art source: https://www.asciiart.eu/plants/mushroom\n' + splash
@@ -45,7 +53,10 @@ class Protocol(protocol.Protocol):
         splash = splash.replace('#ONLINE#',f'{len(self.factory.protocols)}')
         splash = f'@bwhite{splash}@normal'
         self.sendLine(splash)
-        #self.transport.write(IAC+WILL+GMCP)
+
+        #self.start_gmcp()
+
+        
  
 
     def change_state(self, state):
@@ -90,6 +101,7 @@ class Protocol(protocol.Protocol):
 
     def PLAY(self, line):
         self.actor.handle(line)
+        #self.send_gmcp('')
         return
             
     def REGISTER_USERNAME(self, line):
