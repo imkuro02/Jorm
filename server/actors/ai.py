@@ -31,7 +31,7 @@ class AI:
 
 
 
-    def use_best_skill(self):
+    def use_best_skill(self, offensive_only = False):
         if self.actor.room.combat == None:
             return
         
@@ -48,6 +48,11 @@ class AI:
             skill_to_use = random.choice(skills)
 
             targets = []
+
+            if offensive_only:
+                if not SKILLS[skill_to_use]['is_offensive']:
+                    continue
+
             if SKILLS[skill_to_use]['is_offensive']:
                 targets = enemies
             else:
@@ -104,7 +109,7 @@ class PlayerAI(AI):
         if self.actor.room.combat.current_actor != self.actor:
             return False
 
-        self.use_best_skill()
+        self.use_best_skill(offensive_only = True)
 
 class EnemyAI(AI):
     def tick(self):

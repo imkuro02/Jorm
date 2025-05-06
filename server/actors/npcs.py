@@ -119,7 +119,7 @@ class Npc(Actor):
             self.simple_broadcast('',f'{new_item.name} hits the ground with a thud.')
             self.room.inventory_manager.add_item(new_item)
 
-    '''
+    
     def drop_loot(self,actor):
         all_items = ITEMS
         
@@ -131,10 +131,11 @@ class Npc(Actor):
             new_item = load_item(item)
 
             if actor.inventory_manager.add_item(new_item):   
-                actor.sendLine(f'You loot {new_item.name}')
+                actor.sendLine(f'You loot {new_item.name}.')
             else:
-                actor.sendLine(f'Your inventory is full and you missed out on {new_item.name}')
-    '''
+                actor.sendLine(f'Your inventory is full, {new_item.name} has been dropped on the ground.')
+                self.room.inventory_manager.add_item(new_item)
+    
 
     def die(self):
         
@@ -151,8 +152,8 @@ class Npc(Actor):
         for actor in self.room.combat.participants.values():
             if type(actor).__name__ == "Player":
                 actor.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
-                #self.drop_loot(actor)
-                self.drop_loot_on_ground()
+                self.drop_loot(actor)
+                #self.drop_loot_on_ground()
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
                 actor.quest_manager.propose_objective_count_addition(proposal)
                 
