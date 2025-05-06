@@ -30,7 +30,8 @@ class ActorStatManager:
             StatType.EXP: 0,
             StatType.PP: 0,
 
-            StatType.THREAT: 0
+            StatType.THREAT: 0,
+            StatType.INITIATIVE: 0
             }
         
     def hp_mp_clamp_update(self):

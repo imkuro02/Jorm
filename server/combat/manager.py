@@ -14,8 +14,10 @@ class Combat:
         for p in self.participants.values():
             if type(p).__name__ == 'Player':
                 p.stat_manager.stats[StatType.THREAT] = 200 
+                p.stat_manager.stats[StatType.INITIATIVE] = 0 
             else: 
-                p.stat_manager.stats[StatType.THREAT] = 0  
+                p.stat_manager.stats[StatType.THREAT] = 0 
+                p.stat_manager.stats[StatType.INITIATIVE] = 0  
 
         #self.initiative()
         
@@ -151,6 +153,7 @@ class Combat:
         for i in self.participants.values():
             if i.status != ActorStatusType.DEAD and i.party_manager.get_party_id() not in participating_parties:
                 participating_parties.append(i.party_manager.get_party_id())
+                
 
         
         
@@ -161,6 +164,25 @@ class Combat:
            self.combat_over()
            return
 
+
+        
+
+        for i in self.participants.values():
+            if self.current_actor == None:
+                self.current_actor = i
+            if i.stat_manager.stats[StatType.INITIATIVE] > self.current_actor.stat_manager.stats[StatType.INITIATIVE]:
+                self.current_actor = i
+
+        self.current_actor.stat_manager.stats[StatType.INITIATIVE] = 0 #int(self.current_actor.stat_manager.stats[StatType.INITIATIVE] *.25)
+        self.current_actor.set_turn()
+        #self.current_actor.simple_broadcast(self.current_actor.stat_manager.stats[StatType.INITIATIVE],self.current_actor.stat_manager.stats[StatType.INITIATIVE] )
+        self.time_since_turn_finished = 0
+
+        for i in self.participants.values():
+            i.stat_manager.stats[StatType.INITIATIVE] += i.stat_manager.stats[StatType.FLOW]
+        
+
+        '''
         self.time_since_turn_finished = 0
         if len(self.order) == 0:
             self.initiative()
@@ -176,6 +198,7 @@ class Combat:
         if self.current_actor.room != self.room:
             return
         self.current_actor.set_turn()
+        '''
 
 
     def initiative(self):

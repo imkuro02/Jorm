@@ -102,9 +102,11 @@ class StatType:
     EXP =       'exp'
     LVL =       'lvl'
     PP =        'pp'
+    
 
     # not saved in db
     THREAT =    'threat'
+    INITIATIVE = 'initiative'
     
     name = {
         HPMAX:  'Max Health',
@@ -122,7 +124,8 @@ class StatType:
         PP:     'Practice Points',
 
         # not saved in db
-        THREAT: 'Threat'
+        THREAT: 'Threat',
+        INITIATIVE: 'Initiative'
     }
 
 #data = rfe.load()
