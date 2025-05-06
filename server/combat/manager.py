@@ -152,6 +152,11 @@ class Combat:
             if i.status != ActorStatusType.DEAD and i.party_manager.get_party_id() not in participating_parties:
                 participating_parties.append(i.party_manager.get_party_id())
 
+        
+        
+        
+
+
         if len(participating_parties) <= 1:
            self.combat_over()
            return
@@ -160,12 +165,10 @@ class Combat:
         if len(self.order) == 0:
             self.initiative()
             return
-        
+
         if self.order[0].status == ActorStatusType.DEAD:
             self.order.pop(0)
-            self.next_turn()
-
-        
+            return
 
         self.current_actor = self.order[0]
         self.order.pop(0)
