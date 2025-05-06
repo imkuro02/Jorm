@@ -29,7 +29,7 @@ from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin,
     command_load_item, command_load_npcs, command_export, command_help, command_ranks,
     command_send_prompt, command_reload_config, command_lore, command_quest, command_bonus,
-    command_kill
+    command_kill, command_sethp
 )
 
 shortcuts_to_commands = {
@@ -117,6 +117,7 @@ commands = {
     'npcs':     'command_load_npcs',
     'mexp':     'command_gain_exp',
     'reload':   'command_reload_config',
-    'kill':     'command_kill'
+    'kill':     'command_kill',
+    'sethp':    'command_sethp'
 }
 

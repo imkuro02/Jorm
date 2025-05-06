@@ -108,7 +108,13 @@ def command_bonus(self, line):
     boon = EquipmentBonus(_type, key, val)
     item.manager.add_bonus(boon)
 
-    
+def command_sethp(self, line):
+    try:
+        line = int(line)
+        self.stat_manager.stats[StatType.HP] = line
+    except Exception as e:
+        self.sendLine(str(e))
+
 
 '''
 @check_is_admin

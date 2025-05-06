@@ -1,6 +1,6 @@
 from actors.actor import Actor
 from dialog import Dialog
-from configuration.config import NPCS, ENEMIES, StatType, ITEMS
+from configuration.config import NPCS, ENEMIES, StatType, ITEMS, ActorStatusType
 import copy
 import actors.ai
 import random
@@ -151,6 +151,8 @@ class Npc(Actor):
         
         for actor in self.room.combat.participants.values():
             if type(actor).__name__ == "Player":
+                if actor.status == ActorStatusType.DEAD:
+                    continue
                 actor.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
                 self.drop_loot(actor)
                 #self.drop_loot_on_ground()

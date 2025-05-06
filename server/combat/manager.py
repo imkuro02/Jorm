@@ -161,6 +161,9 @@ class Combat:
             self.initiative()
             return
         
+        if self.order[0].status == ActorStatusType.DEAD:
+            self.order.pop(0)
+            self.next_turn()
 
         
 
