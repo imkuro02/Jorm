@@ -158,21 +158,31 @@
         socket.onmessage = async (event) => {
             
             
-            let result = await displayBlobContent(event.data);
-            console.log(result);
-
             
+            let result = await displayBlobContent(event.data);
 
-            //console.log(event.data.text());
-            event.data.text().then(text => {
-                //console.log(text);
-                /**
-                 * If input is a password, change input type to password.  
-                 * This hides it using asterisks.
-                 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password
-                 * 
-                 * If more things should be hidden, consider adding a flag instead of using the message string itself.
-                **/
+            // ignore the iac will gmcp packet
+            // TEMPORARY,, the client should accept and the server should be able to kno dat
+            result = result.replace('\\xff\\xfb\\xc9','');
+
+            // get text without any gmcp data.
+            // this functions handles gmcp stuff
+            let text = extractGmcpData(result);
+
+            // replace all the other binary slop with different kind of binary slop
+            // because js sucks and i just want to get done with it
+            // this is needed, otherwise ansiup doesnt know how to color the text...
+            text = text.replace(/\\x([0-9A-Fa-f]{2})/g, (match, hex) => {
+                return String.fromCharCode(parseInt(hex, 16));
+            });
+            
+            /**
+             * If input is a password, change input type to password.  
+             * This hides it using asterisks.
+             * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password
+             * 
+             * If more things should be hidden, consider adding a flag instead of using the message string itself.
+            **/
             var prev_type = input.type;
             
 
@@ -193,7 +203,7 @@
                 appendAnsiMessage(text);
 
             
-            });
+            //});
         };
 
         // Handle connection close
@@ -250,7 +260,7 @@
             const div = document.createElement('div');
             // Convert ANSI codes to HTML
             let htmlMessage = ansi_up.ansi_to_html(message);
-            console.log(message);
+            //console.log(message);
             // Pattern for matching https://
             const urlPattern = /(https:\/\/[^\s]+)/g;
             const parts = htmlMessage.split(urlPattern);
@@ -284,67 +294,75 @@
         function playSound(effect) {
           let soundSrc = '';
         
-          // Choose the correct sound file
-          switch (effect) {
-            case 'step':
-              soundSrc = 'step.mp3';
-              break;
-          }
+          soundSrc = effect;
         
           if (soundSrc) {
             const audio = new Audio(soundSrc);
+            audio.playbackRate = 0.95 + Math.random() * 0.45;
             audio.play().catch(error => {
               console.error('Playback error:', error);
             });
           }
         }
 
-        function extractBetweenBytes(input) {
-            const start = '\xff\xfa\xc9';
-            const end = '\xff\xf0';
+        function extractGmcpData(data) {
+            // Regular expression to match everything from \xff\xfa\xc9 to \xff\xf0, including the markers
+            const regex = /\\xff\\xfa\\xc9(.*?)\\xff\\xf0/g;
 
-            const startIndex = input.indexOf(start);
-            const endIndex = input.indexOf(end, startIndex + start.length);
+            let match;
+            let lastIndex = 0;
+            let result = "";
 
-            if (startIndex !== -1 && endIndex !== -1) {
-                return input.slice(startIndex + start.length, endIndex);
+            // Loop through all matches in the data
+            while ((match = regex.exec(data)) !== null) {
+                // Log the data found between \xff\xfa\xc9 and \xff\xf0
+                console.log("Found GMCP data:", match[1]);
+                playSound('walk.mp3')
+
+                // Add the part of the string before the match
+                result += data.slice(lastIndex, match.index);
+
+                // Update lastIndex to continue after the current match
+                lastIndex = regex.lastIndex;
             }
 
-            return null; // Return null if the byte sequences are not found
-            }
+            // Add any remaining data after the last match
+            result += data.slice(lastIndex);
 
-            const displayBlobContent = async (blob) => {
-                // Convert Blob to ArrayBuffer
-                const buffer = await blob.arrayBuffer();
-                const uint8Array = new Uint8Array(buffer);
+            return result;
+        }
+        const displayBlobContent = async (blob) => {
+            // Convert Blob to ArrayBuffer
+            const buffer = await blob.arrayBuffer();
+            const uint8Array = new Uint8Array(buffer);
 
-                let result = '';
-                let hexBuffer = '';
+            let result = '';
+            let hexBuffer = '';
 
-                // Iterate over each byte in the ArrayBuffer
-                uint8Array.forEach(byte => {
-                    if (byte >= 32 && byte <= 126) { // Printable ASCII range
-                    if (hexBuffer) {
-                        result += `\\x${hexBuffer}`;
-                        hexBuffer = '';
-                    }
-                    result += String.fromCharCode(byte);
-                    } else {
-                    //hexBuffer += byte.toString(16).padStart(2, '0');
-                    result += "\\x" + byte.toString(16).padStart(2, '0');
-                    }
-                });
-
-                // Append any remaining hexadecimal bytes
+            // Iterate over each byte in the ArrayBuffer
+            uint8Array.forEach(byte => {
+                if (byte >= 32 && byte <= 126) { // Printable ASCII range
                 if (hexBuffer) {
                     result += `\\x${hexBuffer}`;
+                    hexBuffer = '';
                 }
+                result += String.fromCharCode(byte);
+                } else {
+                //hexBuffer += byte.toString(16).padStart(2, '0');
+                result += "\\x" + byte.toString(16).padStart(2, '0');
+                }
+            });
 
-                //console.log(result);
-                console.log(result);
-                return result;
-                
-                };
+            // Append any remaining hexadecimal bytes
+            if (hexBuffer) {
+                result += `\\x${hexBuffer}`;
+            }
+
+            //console.log(result);
+            //console.log(result);
+            return result;
+            
+            };
 
     </script>
 </body>

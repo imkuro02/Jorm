@@ -46,7 +46,7 @@ class Protocol(protocol.Protocol):
         #gmcp_data_type = 'Core.Hello'
         #gmcp_data = '{"da": "me", "daa": "nee"}'
         packet = IAC + SB + GMCP + gmcp_data_type.encode('utf-8') + ' '.encode('utf-8') + gmcp_data.encode('utf-8') + IAC + SE
-        print(packet)
+        #print(packet)
         self.transport.write(packet)
 
     def splash_screen(self):
