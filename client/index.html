@@ -330,7 +330,8 @@
                     }
                     result += String.fromCharCode(byte);
                     } else {
-                    hexBuffer += byte.toString(16).padStart(2, '0');
+                    //hexBuffer += byte.toString(16).padStart(2, '0');
+                    result += "\\x" + byte.toString(16).padStart(2, '0');
                     }
                 });
 
