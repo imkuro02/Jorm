@@ -103,7 +103,8 @@ class Npc(Actor):
     def sendLine(self, line):
         print(f'sendLine called in a object class Npc function? line: {line}')
 
-    
+    def sendSound(self, sfx):
+        print(f'sendSound called in a object class Npc function? line: {line}')
 
     def tick(self):
         super().tick()

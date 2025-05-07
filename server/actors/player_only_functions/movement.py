@@ -82,6 +82,7 @@ def command_go(self, line):
     
 
     world.rooms[new_room].move_actor(self)
+    self.sendSound('walk')
     
 
     if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
@@ -100,6 +101,7 @@ def command_go(self, line):
                 self.room.move_actor(par, silent = True)
                 par.sendLine('You follow.')
                 par.finish_turn(force_cooldown = True)
+                par.sendSound('walk')
         for par in self.party_manager.party.participants.values():
             par.command_look('')
     else:

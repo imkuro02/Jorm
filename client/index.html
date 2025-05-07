@@ -142,11 +142,12 @@
         const input = document.getElementById('input');
         const ansi_up = new AnsiUp(); // Create an instance of AnsiUp for ANSI color parsing
         const maxLines = 1000; // Maximum number of lines allowed in the output
-        
+
         // Get server hostname
         const hostname = window.location.hostname;
         // Connect to the WebSocket server
-        const socket = new WebSocket(`wss://jorm.kurowski.xyz:8001`);
+        const socket = new WebSocket(`ws://localhost:8001`);
+        //socket.binaryType = 'arraybuffer';
 
         // Handle connection open
         socket.onopen = () => {
@@ -154,11 +155,17 @@
         };
 
         // Handle messages from the server
-        socket.onmessage = (event) => {
+        socket.onmessage = async (event) => {
+            
+            
+            let result = await displayBlobContent(event.data);
+            console.log(result);
+
+            
 
             //console.log(event.data.text());
             event.data.text().then(text => {
-                console.log(text);
+                //console.log(text);
                 /**
                  * If input is a password, change input type to password.  
                  * This hides it using asterisks.
@@ -167,6 +174,7 @@
                  * If more things should be hidden, consider adding a flag instead of using the message string itself.
                 **/
             var prev_type = input.type;
+            
 
             if (text === "Your \u001b[1;32mpassword\u001b[0m:\n" || 
                 text === "Enter your \u001b[1;32mpassword\u001b[0m:\n" ||
@@ -181,7 +189,10 @@
                     input.value = "";
                 }
 
-            appendAnsiMessage(text);
+               
+                appendAnsiMessage(text);
+
+            
             });
         };
 
@@ -214,8 +225,9 @@
             // Pattern for matching https://
             const urlPattern = /(https:\/\/[^\s]+)/g;
             const parts = message.split(urlPattern);
-
+            
             parts.forEach(part => {
+                
                 if (urlPattern.test(part)) {
                     const link = document.createElement('a');
                     link.href = part;
@@ -238,6 +250,7 @@
             const div = document.createElement('div');
             // Convert ANSI codes to HTML
             let htmlMessage = ansi_up.ansi_to_html(message);
+            console.log(message);
             // Pattern for matching https://
             const urlPattern = /(https:\/\/[^\s]+)/g;
             const parts = htmlMessage.split(urlPattern);
@@ -266,6 +279,72 @@
                 output.removeChild(lines[0]); // Remove the topmost line
             }
         }
+    </script>
+    <script>
+        function playSound(effect) {
+          let soundSrc = '';
+        
+          // Choose the correct sound file
+          switch (effect) {
+            case 'step':
+              soundSrc = 'step.mp3';
+              break;
+          }
+        
+          if (soundSrc) {
+            const audio = new Audio(soundSrc);
+            audio.play().catch(error => {
+              console.error('Playback error:', error);
+            });
+          }
+        }
+
+        function extractBetweenBytes(input) {
+            const start = '\xff\xfa\xc9';
+            const end = '\xff\xf0';
+
+            const startIndex = input.indexOf(start);
+            const endIndex = input.indexOf(end, startIndex + start.length);
+
+            if (startIndex !== -1 && endIndex !== -1) {
+                return input.slice(startIndex + start.length, endIndex);
+            }
+
+            return null; // Return null if the byte sequences are not found
+            }
+
+            const displayBlobContent = async (blob) => {
+                // Convert Blob to ArrayBuffer
+                const buffer = await blob.arrayBuffer();
+                const uint8Array = new Uint8Array(buffer);
+
+                let result = '';
+                let hexBuffer = '';
+
+                // Iterate over each byte in the ArrayBuffer
+                uint8Array.forEach(byte => {
+                    if (byte >= 32 && byte <= 126) { // Printable ASCII range
+                    if (hexBuffer) {
+                        result += `\\x${hexBuffer}`;
+                        hexBuffer = '';
+                    }
+                    result += String.fromCharCode(byte);
+                    } else {
+                    hexBuffer += byte.toString(16).padStart(2, '0');
+                    }
+                });
+
+                // Append any remaining hexadecimal bytes
+                if (hexBuffer) {
+                    result += `\\x${hexBuffer}`;
+                }
+
+                //console.log(result);
+                console.log(result);
+                return result;
+                
+                };
+
     </script>
 </body>
 </html>

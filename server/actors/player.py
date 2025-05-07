@@ -66,6 +66,9 @@ class Player(Actor):
         else:
             self.sendLine(f'@yellowNext level@back: @green{int((self.stat_manager.stats[StatType.EXP]/self.get_exp_needed_to_level())*100)}@back%')
     
+    def sendSound(self, sfx):
+        self.protocol.send_gmcp({'sound':sfx}, 'Sound')
+
     def sendLine(self, line, color = True):
         if color:
             #start = time.time()

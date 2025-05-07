@@ -41,9 +41,12 @@ class Protocol(protocol.Protocol):
     def start_gmcp(self):
         self.transport.write(IAC+WILL+GMCP)
 
-    def send_gmcp(self, gmcp_data):
-        gmcp_data = 'Core.Hello {"da": "me", "daa": "nee"}'
-        packet = IAC + SB + GMCP + gmcp_data.encode('utf-8') + IAC + SE
+    def send_gmcp(self, gmcp_data, gmcp_data_type):
+        gmcp_data = str(gmcp_data)
+        #gmcp_data_type = 'Core.Hello'
+        #gmcp_data = '{"da": "me", "daa": "nee"}'
+        packet = IAC + SB + GMCP + gmcp_data_type.encode('utf-8') + ' '.encode('utf-8') + gmcp_data.encode('utf-8') + IAC + SE
+        print(packet)
         self.transport.write(packet)
 
     def splash_screen(self):
@@ -53,8 +56,7 @@ class Protocol(protocol.Protocol):
         splash = splash.replace('#ONLINE#',f'{len(self.factory.protocols)}')
         splash = f'@bwhite{splash}@normal'
         self.sendLine(splash)
-
-        #self.start_gmcp()
+        self.start_gmcp()
 
         
  
