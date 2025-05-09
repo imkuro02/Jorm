@@ -5,6 +5,17 @@ import configuration.map.map_loader
 import csv
 import os
 import configuration.read_from_excel as rfe
+import random
+
+class Audio:
+    PLAYER_DEATH = 'die1.wav'
+    ENEMY_DEATH = 'die.wav'
+    BUFF = 'buff.wav'
+    WALK = 'walk1.wav'
+    HURT = 'hurt.wav'
+    ERROR = 'error.wav'
+    def walk():
+        return random.choice(['walk1.wav','walk2.wav','walk3.wav'])
 
 class StaticRooms:
     LOADING = 'overworld/loading'

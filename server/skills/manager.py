@@ -1,7 +1,7 @@
 import utils
 import random
 
-from configuration.config import SKILLS, DamageType, ActorStatusType, StatType
+from configuration.config import SKILLS, DamageType, ActorStatusType, StatType, Audio
 import skills.skills 
 
 
@@ -18,6 +18,7 @@ def get_skills():
 def error(user, err):
     if type(user).__name__ == "Player":
         user.sendLine(err)
+        user.sendSound(Audio.ERROR)
     else:
         print(err)
 

@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_not_in_party, check_not_in_party_or_is_party_leader, check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
-from configuration.config import ActorStatusType
+from configuration.config import ActorStatusType, Audio
 
 @check_your_turn
 @check_not_in_party
@@ -15,7 +15,8 @@ def command_flee(self, line):
     self.status = ActorStatusType.NORMAL
     self.simple_broadcast(
         f'You have fled back to {self.room.name}',
-        f'{self.pretty_name()} comes running in a panic!'
+        f'{self.pretty_name()} comes running in a panic!',
+        sound = Audio.BUFF
     )
 
 @check_no_empty_line
@@ -65,7 +66,8 @@ def command_go(self, line):
     if direction == None:
         self.simple_broadcast(
             f'You walk into a wall',
-            f'{self.pretty_name()} walks into a wall'
+            f'{self.pretty_name()} walks into a wall',
+            sound = Audio.ERROR
             ) 
         return
         
@@ -82,7 +84,7 @@ def command_go(self, line):
     
 
     world.rooms[new_room].move_actor(self)
-    self.sendSound('walk.mp3')
+    self.sendSound(Audio.walk())
     
 
     if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
@@ -101,7 +103,7 @@ def command_go(self, line):
                 self.room.move_actor(par, silent = True)
                 par.sendLine('You follow.')
                 par.finish_turn(force_cooldown = True)
-                par.sendSound('walk.mp3')
+                par.sendSound(Audio.walk())
         for par in self.party_manager.party.participants.values():
             par.command_look('')
     else:

@@ -3,7 +3,7 @@ import uuid
 from combat.damage_event import Damage
 from items.manager import Item
 from affects.manager import AffectsManager
-from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType
+from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType, Audio
 from skills.manager import use_skill
 from inventory import InventoryManager
 import utils
@@ -52,13 +52,6 @@ class ActorStatManager:
         # death
         if self.stats[StatType.HP] <= 0:
             self.stats[StatType.HP] = 0
-            self.status = ActorStatusType.DEAD
-
-            self.actor.simple_broadcast(
-                f'@redYou died@normal "help rest"',
-                f'{self.actor.pretty_name()} has died'
-                )
-
             self.actor.die()
 
 class SkillManager:
@@ -318,6 +311,16 @@ class Actor:
             return
         
         self.status = ActorStatusType.DEAD
+
+        sound = Audio.ENEMY_DEATH
+        if type(self).__name__ == "Player":
+            sound = Audio.PLAYER_DEATH
+
+        self.simple_broadcast(
+                f'@redYou died@normal "help rest"',
+                f'{self.pretty_name()} has died',
+                sound = sound
+                )
         
         if self.room.combat != None:
             if self.room.combat.current_actor == self:
@@ -340,9 +343,11 @@ class Actor:
                 if self.id in self.room.combat.participants:
                     del self.room.combat.participants[self.id]
             self.room = None
+
+        
         
 
-    def simple_broadcast(self, line_self, line_others, worldwide = False):
+    def simple_broadcast(self, line_self, line_others, worldwide = False, sound = None):
         
 
         if self.room == None:
@@ -359,9 +364,13 @@ class Actor:
                 if line_self == None:
                     continue
                 player.sendLine(f'{line_self}')
+                if sound != None:
+                    player.sendSound(sound)
             else:
                 if line_others == None:
                     continue
+                if sound != None:
+                    player.sendSound(sound)
                 player.sendLine(f'{line_others}')
 
     def finish_turn(self, force_cooldown = False):

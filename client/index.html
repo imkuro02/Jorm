@@ -306,31 +306,54 @@
         }
 
         function extractGmcpData(data) {
-            // Regular expression to match everything from \xff\xfa\xc9 to \xff\xf0, including the markers
+            // Regular expression to match everything from \xff\xfa\xc9 to \xff\xf0
             const regex = /\\xff\\xfa\\xc9(.*?)\\xff\\xf0/g;
 
             let match;
             let lastIndex = 0;
             let result = "";
 
-            // Loop through all matches in the data
             while ((match = regex.exec(data)) !== null) {
-                // Log the data found between \xff\xfa\xc9 and \xff\xf0
-                console.log("Found GMCP data:", match[1]);
-                playSound('walk.mp3')
+                const gmcpContent = match[1]; // This is the stuff between \xff\xfa\xc9 and \xff\xf0
+                console.log("Found GMCP data:", gmcpContent);
 
-                // Add the part of the string before the match
+                // Now split gmcpContent into command and data
+                const splitRegex = /^(\S+)\s+(\{.*\})$/;
+                const parts = gmcpContent.match(splitRegex);
+
+                if (parts) {
+                    const command = parts[1];
+                    let dictString = parts[2];
+
+                    // Replace single quotes with double quotes for JSON parsing
+                    dictString = dictString.replace(/'/g, '"');
+
+                    let dict = {};
+                    try {
+                        dict = JSON.parse(dictString);
+                    } catch (e) {
+                        console.error("Error parsing GMCP JSON:", e);
+                    }
+
+                    // If the command is Client.Media.Play, play the sound
+                    if (command === "Client.Media.Play" && dict.name) {
+                        playSound('audio/'+dict.name);
+                    }
+                } else {
+                    console.warn("GMCP content didn't match expected format:", gmcpContent);
+                }
+
+                // Keep the data outside GMCP
                 result += data.slice(lastIndex, match.index);
-
-                // Update lastIndex to continue after the current match
                 lastIndex = regex.lastIndex;
             }
 
-            // Add any remaining data after the last match
             result += data.slice(lastIndex);
 
             return result;
         }
+
+
         const displayBlobContent = async (blob) => {
             // Convert Blob to ArrayBuffer
             const buffer = await blob.arrayBuffer();

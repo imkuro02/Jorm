@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_not_in_party_or_is_party_leader, check_alive, check_no_empty_line, check_no_empty_line, check_your_turn, check_not_in_combat
-from configuration.config import DamageType, ItemType, ActorStatusType, StatType
+from configuration.config import DamageType, ItemType, ActorStatusType, StatType, Audio
 import utils
 from skills.manager import get_skills, use_skill
 
@@ -180,8 +180,11 @@ def rest_now_request(self, line):
     self.rest_now(line)
 
 def rest_now(self, line):
+    self.sendSound(Audio.BUFF)
+    
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL
+        
 
         self.stat_manager.stats[StatType.HP] = self.stat_manager.stats[StatType.HPMAX]
         self.stat_manager.stats[StatType.MP] = self.stat_manager.stats[StatType.MPMAX]

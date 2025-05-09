@@ -1,4 +1,4 @@
-from configuration.config import ActorStatusType, StatType, DamageType
+from configuration.config import ActorStatusType, StatType, DamageType, Audio
 
 class CombatEvent:
     def __init__(self):
@@ -16,7 +16,7 @@ class CombatEvent:
     def print(self):
         
         output = ''
-        
+        sound = None
         
 
         for pop in self.popped:
@@ -33,17 +33,21 @@ class CombatEvent:
             if not pop.silent:
                 if pop.damage_type == DamageType.CANCELLED:
                     output += f'{pop.damage_taker_actor.pretty_name()} cancels {pop.damage_source_action.name}. '
+                    sound = Audio.ERROR
                 elif pop.damage_type == DamageType.HEALING:
                     output += f'{pop.damage_taker_actor.pretty_name()} heals {color}{pop.damage_value} {StatType.name[pop.damage_to_stat]}@back from {pop.damage_source_action.name}'
+                    sound = Audio.BUFF
                 elif pop.damage_value <= 0:
                     output += f'{pop.damage_taker_actor.pretty_name()} blocks {color}{pop.damage_source_action.name}@back. '
+                    sound = Audio.ERROR
                 else:
                     output += f'{pop.damage_taker_actor.pretty_name()} takes {color}{pop.damage_value} damage@back from {pop.damage_source_action.name}. '
+                    sound = Audio.HURT
 
         if output == '': 
             return
 
-        pop.damage_source_actor.simple_broadcast(output,output)
+        pop.damage_source_actor.simple_broadcast(output,output, sound = sound)
         
         actors = []
         for actor in pop.damage_source_actor.room.actors.values():
