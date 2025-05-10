@@ -73,7 +73,8 @@ def command_use(self, line):
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
         action = utils.match_word(action, list_of_items + list_of_skill_names)
-        target = utils.match_word(target, list_of_items + list_of_actors)
+        target = utils.get_match(target, {**self.inventory_manager.items, **self.room.actors})
+        #print(target, list_of_actors)
 
 
     _action = None
@@ -89,6 +90,7 @@ def command_use(self, line):
             _target = self.get_item(target)
         if target in list_of_actors:
             _target = self.get_actor(target)
+            #print(_target.name)
         #_target = self.get_actor(target)
     else:
         _target = target

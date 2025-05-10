@@ -56,7 +56,6 @@ colors = {
 
 def match_word(word: str, l: list, get_score = False):
     best_match, best_score = process.extractOne(word, l)
-    #print(best_match, best_score)
     if get_score:
         return best_match, best_score
     else:

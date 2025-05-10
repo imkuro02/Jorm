@@ -415,6 +415,7 @@
                 }
 
                 currentAudio = new Audio(selectedAudio);
+                currentAudio.volume = slider2.value;
                 currentAudio.play();
 
                 currentAudio.onended = playRandomAudio; // When one finishes, start another
