@@ -11,39 +11,113 @@
     
     
     <style>
+        #volumeButton {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: #443627;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 9998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #volumeButton:hover {
+      background: #222;
+    }
+
+    /* Hidden sliders box */
+    #slidersBox {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 80px;
+      left: 80px;
+      background: #443627;
+      border: 10px solid #53443d;
+      padding: 30px;
+      border-radius: 10px;
+      z-index: 9999;
+      text-align: center;
+      width: 300px;
+    }
+
+    /* Style the sliders */
+    .volume-slider {
+      width: 200px;
+      margin: 15px 0;
+    }
+        
+     #startScreen {
+        animation: none !important;
+        opacity: 1; /* make it visible immediately */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #443627; /* Background color */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    #startButton {
+      padding: 20px 40px;
+      font-size: 32px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      background: #fff;
+      color: #222;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+
+    #startButton:hover {
+      background: #ddd;
+    }
         div {
-   
-    width:99%;
-    opacity: 0;
-    animation: shake 0.5s ease-out forwards, fadeIn 0.5s ease-out forwards;
-}
+            width:99%;
+            opacity: 0;
+            animation: shake 0.5s ease-out forwards, fadeIn 0.5s ease-out forwards;
+        }
 
-@keyframes shake {
-    0% {
-        transform: translateX(2px);
-    }
-    25% {
-        transform: translateX(0px);
-    }
-    50% {
-        transform: translateX(2px);
-    }
-    75% {
-        transform: translateX(1px);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
+        @keyframes shake {
+            0% {
+                transform: translateX(2px);
+            }
+            25% {
+                transform: translateX(0px);
+            }
+            50% {
+                transform: translateX(2px);
+            }
+            75% {
+                transform: translateX(1px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
         @font-face {
             font-family: 'Comic Mono';
             src: url('ComicMono.ttf') format('truetype');
@@ -126,12 +200,24 @@
     </style>
 </head>
 <body>
+    
+    <button id="volumeButton">🔊</button>
+    
     <div id = "chatbox">
         <div id = "inputoutput">
             <div id="output"></div>
             <input type="text" id="input" placeholder="Input">
         </div>
     </div>
+
+
+    <div id="slidersBox">
+        <h3>Adjust Volume</h3>
+        <input type="range" id="slider1" class="volume-slider" min="0" max="1" step="0.01" value="0.1"><br>
+        <input type="range" id="slider2" class="volume-slider" min="0" max="1" step="0.01" value="0.1">
+    </div>
+
+      
     <!-- 
     <div id="iframeContainer">
         <iframe src="jorm_audio.html"></iframe>
@@ -146,7 +232,7 @@
         // Get server hostname
         const hostname = window.location.hostname;
         // Connect to the WebSocket server
-        const socket = new WebSocket(`wss://jorm.kurowski.xyz:8001`);
+        const socket = new WebSocket(`ws://localhost:8001`);
         //socket.binaryType = 'arraybuffer';
 
         // Handle connection open
@@ -291,6 +377,66 @@
         }
     </script>
     <script>
+
+        // Toggle slidersBox on button click
+        volumeButton.addEventListener('click', () => {
+            slidersBox.style.display = (slidersBox.style.display === 'block') ? 'none' : 'block';
+        });
+        
+        const slider1 = document.getElementById('slider1');
+        const slider2 = document.getElementById('slider2');
+
+        let AudioSFXVolume = slider1.value;
+        let AudioMusic = null;
+
+        slider1.addEventListener('input', () => {
+            AudioSFXVolume = slider1.value;
+        });
+
+        slider2.addEventListener('input', () => {
+            AudioMusic.volume = slider2.value;
+        });
+
+        function startRandomAudioPlayer(audioFiles) {
+            if (!audioFiles || audioFiles.length === 0) {
+                console.error("No audio files provided.");
+                return;
+            }
+
+            let currentAudio = null;
+
+            function playRandomAudio() {
+                const randomIndex = Math.floor(Math.random() * audioFiles.length);
+                const selectedAudio = audioFiles[randomIndex];
+
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio = null;
+                }
+
+                currentAudio = new Audio(selectedAudio);
+                currentAudio.play();
+
+                currentAudio.onended = playRandomAudio; // When one finishes, start another
+                AudioMusic = currentAudio;
+            }
+
+            playRandomAudio();
+        }
+
+        // Example usage:
+        const audioList = [
+            'audio/music/7OOO.mp3',
+            'audio/music/0240.mp3',
+            'audio/music/Contrast 100.mp3',
+            'audio/music/Ivory.mp3',
+            'audio/music/N A W A K - FOREST.mp3',
+            'audio/music/N A W A K - SEIZE.mp3',
+            'audio/music/N A W A K - TRIAL.mp3'
+        ];
+        
+        
+
         function playSound(effect) {
           let soundSrc = '';
         
@@ -298,10 +444,13 @@
         
           if (soundSrc) {
             const audio = new Audio(soundSrc);
-            audio.playbackRate = 0.95 + Math.random() * 0.45;
+            audio.volume = AudioSFXVolume;
+            //audio.playbackRate = 0.95 + Math.random() * 0.45;
             audio.play().catch(error => {
               console.error('Playback error:', error);
             });
+            AudioSFX = audio;
+
           }
         }
 
@@ -337,7 +486,7 @@
 
                     // If the command is Client.Media.Play, play the sound
                     if (command === "Client.Media.Play" && dict.name) {
-                        playSound('audio/'+dict.name);
+                        playSound('audio/sfx/'+dict.name);
                     }
                 } else {
                     console.warn("GMCP content didn't match expected format:", gmcpContent);
@@ -386,6 +535,38 @@
             return result;
             
             };
+
+
+        function createStartScreen() {
+            // Create the fullscreen background div
+            const startScreen = document.createElement('div');
+            startScreen.id = 'startScreen';
+
+            // Create the button
+            const button = document.createElement('button');
+            button.id = 'startButton';
+            button.textContent = 'START';
+
+            // Add button into the div
+            startScreen.appendChild(button);
+
+            // Add the div to the body
+            document.body.appendChild(startScreen);
+
+            button.addEventListener('click', function() {
+            // Unlock the audio
+            const unlockAudio = new Audio();
+            unlockAudio.play().catch(() => {});
+
+            // Start playing audio
+            startRandomAudioPlayer(audioList);
+
+            // Remove the entire start screen
+            startScreen.remove();
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', createStartScreen);
 
     </script>
 </body>

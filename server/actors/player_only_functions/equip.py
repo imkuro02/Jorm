@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_alive, check_no_empty_line, check_not_trading, check_not_in_combat
-from configuration.config import ItemType, EquipmentSlotType, StatType
+from configuration.config import ItemType, EquipmentSlotType, StatType, Audio
 
 @check_not_in_combat
 @check_not_trading
@@ -8,6 +8,7 @@ def command_equipment(self, line):
     if line != '':
         item = self.get_item(line, search_mode = 'equipable')
         if item == None:
+            self.sendLine('Equip what?', sound = Audio.ERROR)
             return
         if item.equiped:
             self.inventory_unequip(item)
@@ -31,7 +32,11 @@ def inventory_equip(self, item, forced = False):
         req_not_met = False
         for stat_name in item.stat_manager.reqs:
             if self.stat_manager.stats[stat_name] < item.stat_manager.reqs[stat_name]:
-                if not forced: self.sendLine(f'@redYou do not meet the requirements of {item.stat_manager.reqs[stat_name]} {StatType.name[stat_name]}@normal')
+                if not forced: 
+                    self.sendLine(
+                        f'@redYou do not meet the requirements of {item.stat_manager.reqs[stat_name]} {StatType.name[stat_name]}@normal', 
+                        sound = Audio.ERROR
+                        )
                 req_not_met = True
         
         if req_not_met and forced == False:
@@ -55,6 +60,7 @@ def inventory_equip(self, item, forced = False):
             self.skill_manager.learn(skill, item.skill_manager.skills[skill])
 
         if not forced: 
+            self.sendSound(Audio.ITEM_GET)
             self.simple_broadcast(
                 f'You equip {item.name}',
                 f'{self.pretty_name()} equips {item.name}'
@@ -85,6 +91,7 @@ def inventory_unequip(self, item, silent = False):
             return
             
         self.stat_manager.hp_mp_clamp_update()
+        self.sendSound(Audio.ITEM_GET)
         self.simple_broadcast(
             f'You unequip {item.name}',
             f'{self.pretty_name()} unequips {item.name}'

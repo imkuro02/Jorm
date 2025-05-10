@@ -14,6 +14,8 @@ class Audio:
     WALK = 'walk1.wav'
     HURT = 'hurt.wav'
     ERROR = 'error.wav'
+    ITEM_GET = 'item_get.mp3'
+    ITEM_DROP = 'item_drop.mp3'
     def walk():
         return random.choice(['walk1.wav','walk2.wav','walk3.wav'])
 

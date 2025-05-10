@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_no_combat_in_room, check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
-from configuration.config import ItemType, StatType
+from configuration.config import ItemType, StatType, Audio
 import utils
 
 
@@ -14,6 +14,7 @@ def command_trade(self, line):
 @check_no_combat_in_room
 @check_alive
 def command_get(self, line):
+    '''
     if line.lower() == 'all':
         items_to_get = []
         for item in self.room.inventory_manager.items.values():
@@ -27,12 +28,13 @@ def command_get(self, line):
                     f'{self.pretty_name()} gets {item.name}'
                     )
             else:
-                self.sendLine('Your Inventory is full')
+                self.sendLine('Your Inventory is full') 
         return
+    '''
 
     item = self.get_item(line, search_mode = 'room')
     if item == None:
-        self.sendLine('Get what?')
+        self.sendLine('Get what?', sound = Audio.ERROR)
         return
     if self.inventory_manager.add_item(item):
         self.room.inventory_manager.remove_item(item)
@@ -41,13 +43,14 @@ def command_get(self, line):
             f'{self.pretty_name()} gets {item.name}'
             )
     else:
-        self.sendLine('Your Inventory is full')
+        self.sendLine('Your Inventory is full', sound = Audio.ERROR)
     
 @check_not_trading
 @check_no_empty_line
 @check_not_in_combat
 @check_alive
 def command_drop(self, line):
+    '''
     if line.lower() == 'all':
         items_to_drop = []
         for item in self.inventory_manager.items.values(): 
@@ -68,12 +71,12 @@ def command_drop(self, line):
                 f'You drop {item.name}',
                 f'{self.pretty_name()} drops {item.name}'
                 )
-        
         return
+    '''
 
     item = self.get_item(line)
     if item == None:
-        self.sendLine('Drop what?')
+        self.sendLine('Drop what?', sound = Audio.ERROR)
         return
 
     if item.keep:

@@ -52,8 +52,8 @@ async def main():
     ssl_context.load_cert_chain(certfile=SSL_CERT_FILE, keyfile=SSL_KEY_FILE)
 
     print(f"WebSocket server running on wss://0.0.0.0:{WEBSOCKET_PORT}")
-    #async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT):
-    async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT, ssl=ssl_context):
+    async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT):
+        #async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT, ssl=ssl_context):
         await asyncio.Future()  # run forever
 
 if __name__ == "__main__":
