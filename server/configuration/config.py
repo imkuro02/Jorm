@@ -12,7 +12,7 @@ class Audio:
     ENEMY_DEATH = 'die.wav'
     BUFF = 'buff.wav'
     WALK = 'walk1.wav'
-    HURT = 'hurt.wav'
+    HURT = 'pot-hit.wav'
     ERROR = 'error.wav'
     ITEM_GET = 'item_get.mp3'
     ITEM_DROP = 'item_drop.mp3'
