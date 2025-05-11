@@ -24,7 +24,7 @@ class StaticRooms:
     TUTORIAL = 'overworld/tutorial'
 
 SkillScriptValuesToNames = {
-    'levels':       'LEVEL',
+    #'levels':       'LEVEL',
     'damage':       'DAMAGE',
     # 'chance':       'CHANCE',
     'crit':         'CRIT',
