@@ -11,6 +11,13 @@ class InventoryManager:
         self.limit = limit
         self.items = {}
 
+    def get_item_by_id(self, item_id):
+        for i in self.items.values():
+            #print(i.premade_id)
+            if i.premade_id == item_id:
+                return i
+        return None
+
     def item_count(self):
         return len(self.items)
 
@@ -40,6 +47,7 @@ class InventoryManager:
             
         if len(self.items) >= self.limit:
             return False
+        
         self.items[item.id] = item
         item.new = True
 
@@ -50,12 +58,23 @@ class InventoryManager:
 
         return True
 
-    def remove_item(self, item):
-        if type(self.owner).__name__ == 'Player':
-            self.owner.quest_manager.propose_objective_count_addition(
-                ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item.premade_id, -item.stack)
-            )
-        del self.items[item.id]
+    def remove_item(self, item, stack = 0):
+        if stack == 0:
+            if type(self.owner).__name__ == 'Player':
+                self.owner.quest_manager.propose_objective_count_addition(
+                    ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item.premade_id, -item.stack)
+                )
+            del self.items[item.id]
+        if stack >= 1:
+            if stack <= self.items[item.id].stack:
+                if type(self.owner).__name__ == 'Player':
+                    self.owner.quest_manager.propose_objective_count_addition(
+                        ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item.premade_id, stack)
+                    )
+                self.items[item.id].stack -= stack
+                if self.items[item.id].stack <= 0:
+                    del self.items[item.id]
+
 
     def split_stack(self, item, value):
         # dont split if you are trying to take more than what is there

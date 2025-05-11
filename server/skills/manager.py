@@ -25,7 +25,7 @@ def error(user, err):
 def get_user_skill_level_as_index(user,skill_id):
     skill = SKILLS[skill_id]
     users_skill_level = -1
-    _users_skill_level = user.skill_manager.skills[skill_id]
+    _users_skill_level = user.stat_manager.stats[StatType.LVL] #user.skill_manager.skills[skill_id]
     for i in range(0,len(skill['script_values']['levels'])):
         if _users_skill_level >= skill['script_values']['levels'][i]:
             users_skill_level = i
@@ -137,11 +137,15 @@ def use_skill(user, target, skill_id, no_checks = False):
     if skill_id not in user.skill_manager.skills:
         user.sendLine(f'You do not know {skill["name"]}')
         return
-
+    
+    if user.skill_manager.skills[skill_id] <= 0:
+        user.sendLine(f'You do not know {skill["name"]}')
+        return
+    
     users_skill_level = get_user_skill_level_as_index(user,skill_id)
 
     if users_skill_level == -1:
-        user.sendLine(f'You do not know {skill["name"]}')
+        user.sendLine(f'You are not high enough level to use {skill["name"]}')
         return
 
     if skill_checks(user, target, skill_id) or no_checks:

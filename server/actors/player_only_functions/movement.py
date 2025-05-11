@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_not_in_party, check_not_in_party_or_is_party_leader, check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
-from configuration.config import ActorStatusType, Audio
+from configuration.config import ActorStatusType, Audio, ITEMS
 
 @check_your_turn
 @check_not_in_party
@@ -75,7 +75,16 @@ def command_go(self, line):
         self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path.')
         return
 
-    
+    if direction.item_required != None:
+        item = self.inventory_manager.get_item_by_id(direction.item_required)
+        if item == None:
+            self.sendLine(f'You need {ITEMS[direction.item_required]["name"]}.')
+            return
+        else:
+            if direction.item_required_consume == True:
+                self.sendLine(f'{item.name} crumbles to dust.')
+                self.inventory_manager.remove_item(item,1)
+                
     
 
     old_room = self.room

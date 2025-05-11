@@ -101,7 +101,9 @@ def load_map():
                 'to_room_id': edge_data['target'], 
                 'direction': 'edge.data.json has no direction',
                 'secret': False,
-                'blocked': False
+                'blocked': False,
+                'item_required': None,
+                'item_required_consume': False
             }
 
 
@@ -111,6 +113,10 @@ def load_map():
                 new_exit['blocked'] = json_data['blocked']
             if 'direction' in json_data:
                 new_exit['direction'] = json_data['direction']
+            if 'item_required' in json_data:
+                new_exit['item_required'] = json_data['item_required']
+            if 'item_required_consume' in json_data:
+                new_exit['item_required_consume'] = json_data['item_required_consume']
 
             nodes[edge_data['source']]['exits'].append(new_exit)
 

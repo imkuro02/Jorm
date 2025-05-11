@@ -231,14 +231,16 @@ def command_skills(self, line):
             self.sendLine('You do not know any skills...')
             return
 
-        t = utils.Table(3, spaces = 2)
+        t = utils.Table(2, spaces = 2)
         t.add_data('Skill')
         t.add_data('R')
-        t.add_data('Lvl')
+        #t.add_data('Lvl')
 
         for skill_id in SKILLS:
             if skill_id not in self.skill_manager.skills:
                 continue # skip unknown skills
+            if self.skill_manager.skills[skill_id] <= 0:
+                continue
                 
             t.add_data(id_to_name[skill_id])
             if skill_id not in self.cooldown_manager.cooldowns:
@@ -246,19 +248,6 @@ def command_skills(self, line):
             else: 
                 t.add_data(f'{self.cooldown_manager.cooldowns[skill_id]}', '@red')
 
-            #t.add_data(self.skill_manager.skills[skill_id])
-            col = '@red'
-            if skill_id not in self.skill_manager.skills.keys():
-                learned = 0
-            else:
-                learned = self.skill_manager.skills[skill_id]
-            if learned >= 1:
-                col = '@yellow'
-            if learned >= 50:
-                col = '@green'
-            if learned >= 95:
-                col = '@bgreen'
-            t.add_data(self.skill_manager.skills[skill_id], col)
         
         self.sendLine(t.get_table())
 

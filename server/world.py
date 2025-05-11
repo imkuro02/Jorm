@@ -112,12 +112,14 @@ class Spawner:
             self.respawn_all()
 
 class Exit:
-    def __init__(self, room, direction, to_room_id, blocked = False, secret = False):
+    def __init__(self, room, direction, to_room_id, blocked = False, secret = False, item_required = None, item_required_consume = False):
         self.room = room
         self.direction = direction
         self.to_room_id = to_room_id
         self.blocked = blocked
         self.secret = secret
+        self.item_required = item_required
+        self.item_required_consume = item_required_consume
 
     #def get_room_name(self):
     #    if self.to_room_id not in WORLD['world']:
@@ -152,7 +154,9 @@ class Room:
                 'direction': _exit['direction'], 
                 'to_room_id': _exit['to_room_id'],
                 'blocked': _exit['blocked'], 
-                'secret': _exit['secret']}
+                'secret': _exit['secret'],
+                'item_required': _exit['item_required'], 
+                'item_required_consume': _exit['item_required_consume'], }
 
             self.exits.append(
                                 Exit(
@@ -160,7 +164,9 @@ class Room:
                                     direction = _exit_dict['direction'],
                                     to_room_id = _exit_dict['to_room_id'],
                                     blocked = _exit_dict['blocked'],
-                                    secret = _exit_dict['secret']
+                                    secret = _exit_dict['secret'],
+                                    item_required = _exit_dict['item_required'],
+                                    item_required_consume = _exit_dict['item_required_consume']
                                 )
                             )
         
