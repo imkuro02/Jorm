@@ -18,8 +18,8 @@ class ActorStatManager:
         self.stats = {
             StatType.HPMAX: 30,
             StatType.HP:    30,
-            StatType.MPMAX: 30,
-            StatType.MP:    30,
+            StatType.MPMAX: 0,
+            StatType.MP:    0,
             StatType.ARMOR: 0,
             StatType.MARMOR:0,
             StatType.GRIT: 10,

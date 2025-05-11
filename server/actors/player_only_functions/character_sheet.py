@@ -203,6 +203,9 @@ def command_skills(self, line):
 
             
             for val_nam in SkillScriptValuesToNames:
+                #print(val_nam)
+                if val_nam == 'levels':
+                    continue
                 dic = SkillScriptValuesToNames
                 if val_nam in skill['script_values']:
                     t.add_data(dic[val_nam]+':')

@@ -131,6 +131,8 @@ class Exit:
         return self.room.world.rooms[self.to_room_id]
 
     def pretty_direction(self):
+        if self.item_required:
+            return f'({self.direction})'
         if self.blocked:
             return f'[{self.direction}]'
         return self.direction
