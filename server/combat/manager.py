@@ -168,6 +168,8 @@ class Combat:
         
 
         for i in self.participants.values():
+            if i not in self.room.actors.values():
+                continue
             if self.current_actor == None:
                 self.current_actor = i
             if i.stat_manager.stats[StatType.INITIATIVE] > self.current_actor.stat_manager.stats[StatType.INITIATIVE]:

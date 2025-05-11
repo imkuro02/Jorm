@@ -46,6 +46,19 @@ const edgeDirectionInput = document.createElement("input");
 edgeGroup.appendChild(edgeDirectionInput);
 edgeGroup.appendChild(br());
 
+edgeGroup.appendChild(label('item_required'));
+edgeGroup.appendChild(br());
+const edgeItemRequiredInput = document.createElement("input");
+edgeGroup.appendChild(edgeItemRequiredInput);
+edgeGroup.appendChild(br());
+
+const edgeItemRequiredConsumeInput = document.createElement("input");
+edgeItemRequiredConsumeInput.type = 'checkbox';
+edgeGroup.appendChild(edgeItemRequiredConsumeInput);
+edgeGroup.appendChild(label('item_required_consume'));
+edgeGroup.appendChild(br());
+
+
 const edgeBlockedInput = document.createElement("input");
 edgeBlockedInput.type = 'checkbox';
 edgeGroup.appendChild(edgeBlockedInput);
@@ -57,6 +70,7 @@ edgeSecretInput.type = 'checkbox';
 edgeGroup.appendChild(edgeSecretInput);
 edgeGroup.appendChild(label('secret'));
 edgeGroup.appendChild(br());
+
 
 
 edgeFormContainer.appendChild(edgeGroup);
@@ -94,6 +108,18 @@ function guiEdgeSetSelectedEdge(edge){
         } else {
             edgeSecretInput.checked = false;
         }
+
+        if (typeof data['item_required'] !== "undefined"){
+            edgeItemRequiredInput.value = data['item_required'];
+        } else {
+            edgeItemRequiredInput.value = '';
+        }
+
+        if (typeof data['item_required_consume'] !== "undefined"){
+            edgeItemRequiredConsumeInput.checked = data['item_required_consume'];
+        } else {
+            edgeItemRequiredConsumeInput.checked = false;
+        }
     }
 }
 
@@ -102,8 +128,11 @@ function edge_save_json() {
         'id': edgeIdInput.value,
         'label': edgeLabelInput.value,
         'direction': edgeDirectionInput.value,
+        'item_required': edgeItemRequiredInput.value,
+        'item_required_consume': edgeItemRequiredConsumeInput.checked,
         'secret': edgeSecretInput.checked,
         'blocked': edgeBlockedInput.checked
+        
     };
 
     
