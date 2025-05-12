@@ -15,6 +15,7 @@ class Combat:
             if type(p).__name__ == 'Player':
                 p.stat_manager.stats[StatType.THREAT] = 200 
                 p.stat_manager.stats[StatType.INITIATIVE] = 0 
+                p.sendLine('@tipA fight has started!@back')
             else: 
                 p.stat_manager.stats[StatType.THREAT] = 0 
                 p.stat_manager.stats[StatType.INITIATIVE] = 0  
@@ -99,11 +100,25 @@ class Combat:
 
     def combat_over(self):
         for i in self.participants.values():
-            if i.status == ActorStatusType.FIGHTING: 
-                i.status = ActorStatusType.NORMAL
             if type(i).__name__ == "Player":
                 #i.sendLine('@yellowCombat over!@normal')
                 i.combat_over_prompt()
+
+            if i.party_manager.party != None:
+                one_alive = False
+                for par in i.party_manager.party.participants.values():
+                    if par.status != ActorStatusType.DEAD:
+                        one_alive = True
+                
+                if one_alive:
+                    if i.status == ActorStatusType.DEAD:
+                        i.simple_broadcast(f'You get up again.', f'{i.pretty_name()} gets up again.')
+                    i.status = ActorStatusType.NORMAL
+            
+            if i.status != ActorStatusType.DEAD:
+                i.status = ActorStatusType.NORMAL
+                
+            
               
             #self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False
             '''
@@ -168,7 +183,10 @@ class Combat:
         
 
         for i in self.participants.values():
+
             if i not in self.room.actors.values():
+                continue
+            if i.status != ActorStatusType.FIGHTING:
                 continue
             if self.current_actor == None:
                 self.current_actor = i
