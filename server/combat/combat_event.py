@@ -41,7 +41,10 @@ class CombatEvent:
                     output += f'{pop.damage_taker_actor.pretty_name()} blocks {color}{pop.damage_source_action.name}@back. '
                     sound = Audio.ERROR
                 else:
-                    output += f'{pop.damage_taker_actor.pretty_name()} takes {color}{pop.damage_value} damage@back from {pop.damage_source_action.name}. '
+                    if pop.damage_to_stat == StatType.MP:
+                        output += f'{pop.damage_taker_actor.pretty_name()} loses {color}{pop.damage_value} magicka@back from {pop.damage_source_action.name}. '
+                    else:
+                        output += f'{pop.damage_taker_actor.pretty_name()} takes {color}{pop.damage_value} damage@back from {pop.damage_source_action.name}. '
                     sound = Audio.HURT
 
         if output == '': 

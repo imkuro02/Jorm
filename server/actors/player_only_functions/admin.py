@@ -395,7 +395,6 @@ from actors.npcs import create_npc
 @check_no_empty_line
 def command_lore(self, line):
     
-
     list_of_enemies = [enemy for enemy in LORE['enemies']]
     list_of_items = [item for item in LORE['items']]
     list_of_rooms = [room for room in LORE['rooms']]
@@ -462,7 +461,7 @@ def command_lore(self, line):
         output = '@yellowYou are pondering@normal: '
         if to_find in LORE['items']:
             item_id = LORE['items'][to_find]['premade_id']
-            i = load_item(item_id)
+            i = load_item(item_id, max_stats = True)
             i.new = False
             output += i.identify(self) + '\n'
             output += '@yellowLooted from@normal: '

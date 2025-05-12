@@ -112,6 +112,36 @@ class SkillCureLightWounds(Skill):
                 damage_type = DamageType.HEALING
                 )
             damage_obj.run()
+
+class SkillManaFeed(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            dmg = int(self.user.stat_manager.stats[StatType.MPMAX] * self.script_values['bonus'][self.users_skill_level])
+            damage_obj = Damage(
+                damage_taker_actor = self.user,
+                damage_source_actor = self.user,
+                damage_source_action = self,
+                damage_value = dmg,
+                damage_type = DamageType.PURE,
+                damage_to_stat = StatType.MP
+                )
+            current_mp = self.user.stat_manager.stats[StatType.MP]
+            mana_dmg = damage_obj.run()
+            if current_mp >= dmg:
+                pass
+            else:
+                dmg = current_mp
+            
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_actor = self.user,
+                damage_source_action = self,
+                damage_value = dmg,
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MP
+                )
+            damage_obj.run()
             
 class SkillBash(SkillSwing):
     def use(self):

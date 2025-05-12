@@ -91,6 +91,9 @@ class EquipmentBonusManager:
     def add_bonus(self, bonus): 
         id = len(self.bonuses)
         
+        if bonus.val == 0:
+            return
+
         if id in self.bonuses:
             self.bonuses[id].val += bonus.val
         else:
