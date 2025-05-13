@@ -302,7 +302,7 @@ class SkillRefreshingDrink(Skill):
     def use(self):
         super().use()
         if self.success:
-            power = self.script_values['crit'][self.users_skill_level]
+            power = self.script_values['bonus'][self.users_skill_level]
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_action = self,

@@ -4,8 +4,11 @@ tutorial_1:
     They just stand there menacingly..
   tree:
     start:
-      dialog: |
-        says "Hello there"
+      dialog: 
+        - | 
+          says "Hello there"
+        - | 
+          says "Greetings"
       options:
         - say: Where am I?
           goto: where_am_i

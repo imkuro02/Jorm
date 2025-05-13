@@ -5,7 +5,55 @@ bartender:
   tree:
     start:
       dialog: 
-        - says "Take a seat, or don't... I don't car..."
-        - says "Life is meaningless and im going to kill myself"
-        - burps loudly
+        - |
+          says "Take a seat, or don't... I don't car..."
+        - |
+          says "Life is meaningless and im going to kill myself"
+        - |
+          burps loudly
+      options:
+        - say: How are you?
+          goto: not_started
+          quest_check:
+            - id: rat_king
+              state: not_started
+        - say: I took care of your problem.
+          goto: completed
+          quest_check:
+            - id: rat_king
+              state: completed
+          quest_turn_in:
+            id: rat_king
+            reward_exp: 50
+            reward:
+              - beer_stein
+              
+    not_started:
+      dialog:
+        - |
+          says "Been better, these dang rats keep gnawing at my boots.
+          There is a big rat problem in this tavern, if you find the key
+          to the cellar, would you mind helping me out?"
+
+          They point behind them at a beer keg "I'll pay you for your effors"
+      options:
+        - say: Sure
+          goto: accepted
+          quest_start:
+            id: rat_king
+        - say: No thanks
+          goto: declined
+    accepted:
+      dialog: 
+        - |
+          says "Thank you, I lost my key, but it should be here somewhere"
+    declined:
+      dialog:
+        - | 
+          says "Bummer..."
+    completed:
+      dialog:
+        - |
+          says "Good job! here take this"
+   
       

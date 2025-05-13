@@ -1,0 +1,16 @@
+rat_king:
+  name: Rat infestation
+  description: 
+    in_progress: |
+      The bartender told me about a rat problem in the tavern cellar.
+      The trapdoor leading to the cellar is locked. I need a key.
+    completed: |
+      I neutralized the problem, at the cost of my own sanity.
+    turned_in: |
+      The bartender was pleased with my efforts, and Im pleased with my drink.
+  objectives:
+    Kill the rat king:
+      type: kill_x
+      objective: boss_rat
+      completed_at: 1
+      
