@@ -28,11 +28,11 @@ SkillScriptValuesToNames = {
     'damage':       'DAMAGE',
     # 'chance':       'CHANCE',
     'crit':         'CRIT',
-    'hp_cost':      'HP-COST',
-    'mp_cost':      'MP-COST',
+    'bonus':        'BONUS'
     'duration':     'DURATION',
     'cooldown':     'COOLDOWN',
-    'bonus':        'BONUS'
+    'hp_cost':      'HP-COST',
+    'mp_cost':      'MP-COST',
 }
 
 class IndentType:

@@ -25,8 +25,8 @@ def error(user, err):
 def get_user_skill_level_as_index(user,skill_id):
     skill = SKILLS[skill_id]
     users_skill_level = -1
-    _users_skill_level = user.stat_manager.stats[StatType.LVL] 
-    #_users_skill_level = user.skill_manager.skills[skill_id]
+    #_users_skill_level = user.stat_manager.stats[StatType.LVL] 
+    _users_skill_level = user.skill_manager.skills[skill_id]
     for i in range(0,len(skill['script_values']['levels'])):
         if _users_skill_level >= skill['script_values']['levels'][i]:
             users_skill_level = i
