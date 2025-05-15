@@ -202,6 +202,18 @@ class Room:
         for e in actors.values():
             e.tick()
 
+        # remove items that have been on the ground for too long
+        items_to_remove = []
+        for i in self.inventory_manager.items.values():
+            if i in self.spawner.spawn_points.values():
+                continue
+            i.time_on_ground += 1
+            if i.time_on_ground >= 30*120:
+                items_to_remove.append(i)
+        for i in items_to_remove:
+            self.inventory_manager.remove_item(i)
+    
+
         if self.combat == None:
             return
         self.combat.tick()

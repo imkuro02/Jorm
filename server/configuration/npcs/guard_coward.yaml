@@ -1,0 +1,10 @@
+guard_coward:
+  name: Bartender
+  description: |
+    The tired bartender nods at you.
+  tree:
+    start:
+      dialog: 
+        - |
+          says "Step away from the gate"
+    

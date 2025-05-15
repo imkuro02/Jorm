@@ -246,7 +246,7 @@ def command_export(self, line):
             self.sendLine('cant find this item to export')
             return
 
-        self.sendLine(item.__dict__)
+        self.sendLine(str(item.__dict__))
         '''
         item_dict = item.to_dict()
         

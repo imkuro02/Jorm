@@ -12,6 +12,7 @@ class Item:
         self.keep = False
         self.inventory_manager = None # the inventory manager of this item
         self.new = True # show if item is newly added to inv
+        self.time_on_ground = 0
     
     def pretty_name(self, rank_only = False):
         output = f'@white{self.name}@normal'
