@@ -192,13 +192,11 @@ class Actor:
     def talk_to(self, talker):
         if talker.current_dialog != None:
             talker.sendLine('You are already conversing.')
-            return
+            return False
         if self.dialog_tree == None:
             talker.sendLine('There is nothing to talk about.')
-            return
-            
-        talker.current_dialog = Dialog(talker, self, self.dialog_tree)
-        talker.current_dialog.print_dialog()
+            return False
+        return True # return true if no errors
         
     def pretty_name(self):
         output = ''
@@ -451,5 +449,10 @@ class Actor:
         self.affect_manager.set_turn()
         self.cooldown_manager.set_turn()
 
+    def sendLine(self, line):
+        print(f'sendLine called in a object class Npc function? line: {line}')
+
+    def sendSound(self, sfx):
+        print(f'sendSound called in a object class Npc function? line: {line}')
     
 

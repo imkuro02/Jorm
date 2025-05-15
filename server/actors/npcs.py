@@ -99,12 +99,12 @@ class Npc(Actor):
 
         #self.ai = EnemyAI(self)
 
-
-    def sendLine(self, line):
-        print(f'sendLine called in a object class Npc function? line: {line}')
-
-    def sendSound(self, sfx):
-        print(f'sendSound called in a object class Npc function? line: {line}')
+    def talk_to(self, talker):
+        if not super().talk_to(talker): 
+            return
+        # if returned true, start dialog
+        talker.current_dialog = Dialog(talker, self, self.dialog_tree)
+        talker.current_dialog.print_dialog()
 
     def tick(self):
         super().tick()
