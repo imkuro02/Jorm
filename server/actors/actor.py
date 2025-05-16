@@ -236,7 +236,7 @@ class Actor:
     def get_character_sheet(self):
         output = f'{self.pretty_name()} ({self.status})\n'
         # if no description then ignore
-        if self.description != '': 
+        if self.description != None: 
             output += f'@cyan{self.description}@normal\n'
 
         output += self.get_character_equipment()

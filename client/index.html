@@ -235,8 +235,23 @@
         // Get server hostname
         const hostname = window.location.hostname;
         // Connect to the WebSocket server
-        const socket = new WebSocket(`wss://jorm.kurowski.xyz:8001`);
-        //socket.binaryType = 'arraybuffer';
+        let socket;
+
+        function connectWebSocket(url, fallbackUrl) {
+            socket = new WebSocket(url);
+
+            socket.onerror = (error) => {
+                console.error(`WebSocket error on ${url}:`, error);
+
+                if (url !== fallbackUrl) {
+                    console.log(`Falling back to ${fallbackUrl}`);
+                    connectWebSocket(fallbackUrl,fallbackUrl); // Try fallback
+                } else {
+                    console.error("Both WebSocket connections failed.");
+                }
+            };
+
+            //socket.binaryType = 'arraybuffer';
 
         // Handle connection open
         socket.onopen = () => {
@@ -300,11 +315,15 @@
             appendMessage('Disconnected from WebSocket server.');
         };
 
-        // Handle errors
-        socket.onerror = (error) => {
-            appendMessage('WebSocket error: ' + error.message);
-        };
+        }
 
+        // Try localhost first, fallback to public URL
+        connectWebSocket("ws://localhost:8002", "wss://jorm.kurowski.xyz:8001");
+        
+        
+        
+
+       
         input.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 // Prevent the default Enter key behavior (like submitting a form, if applicable)

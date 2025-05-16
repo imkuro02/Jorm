@@ -1,6 +1,7 @@
 import asyncio
 import websockets
 import ssl
+from contextlib import AsyncExitStack
 
 # Configuration
 MUD_SERVER = "127.0.0.1"      # MUD server address
@@ -53,7 +54,15 @@ async def main():
 
     print(f"WebSocket server running on wss://0.0.0.0:{WEBSOCKET_PORT}")
     #async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT):
-    async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT, ssl=ssl_context):
+
+    #async with websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT, ssl=ssl_context):
+    #    await asyncio.Future()  # run forever
+
+    async with AsyncExitStack() as stack:
+        await stack.enter_async_context(websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT + 1))  # plain
+        await stack.enter_async_context(websockets.serve(handle_websocket, "0.0.0.0", WEBSOCKET_PORT, ssl=ssl_context))  # SSL
+
+        print(f"Servers running on ports {WEBSOCKET_PORT} (wss) and {WEBSOCKET_PORT + 1} (ws)")
         await asyncio.Future()  # run forever
 
 if __name__ == "__main__":
