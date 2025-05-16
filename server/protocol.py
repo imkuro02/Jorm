@@ -77,11 +77,11 @@ class Protocol(protocol.Protocol):
                 self.sendLine('Your @bgreenpassword@normal:')
 
             case self.REGISTER_USERNAME:
-                self.sendLine('Please use a unique username, not linking your Jorm account to anything private')
+                self.sendLine('Please use a unique username, not linking your Jorm account to anything private.')
+                self.sendLine('Please use a unique password, only for Jorm. Never share it.')
                 self.sendLine('Creating new account. enter your @bgreenusername@normal:')
 
             case self.REGISTER_PASSWORD1:
-                self.sendLine('Please use a unique password, only for Jorm')
                 self.sendLine('Enter your @bgreenpassword@normal:')
 
             case self.REGISTER_PASSWORD2:
