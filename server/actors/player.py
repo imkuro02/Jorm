@@ -7,7 +7,7 @@ from actors.player_only_functions.commands import one_letter_commands, commands,
 import actors.player_only_functions.commands 
 from configuration.config import StatType
 import time
-
+from actors.player_only_functions.settings import Settings
 #from actors.enemy_ai import AIBasic
 from actors.ai import PlayerAI
 
@@ -33,7 +33,8 @@ class Player(Actor):
         self.date_of_last_login = utils.get_unix_timestamp()
         self.time_in_game = 0
         self.recently_send_message_count = 0
-
+        
+        self.settings_manager = Settings(self)
         self.ai = PlayerAI(self)
         
     def check_if_admin(self):

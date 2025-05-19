@@ -191,7 +191,7 @@ class BossRatAI(AI):
 
             for par in to_devour:
                 par.die()
-                heal += 20
+                heal += 10
             self.actor.simple_broadcast('',f'{self.actor.pretty_name()} Devours the rats! healing for {heal}')
             self.actor.heal(value=heal, silent = True)
                 

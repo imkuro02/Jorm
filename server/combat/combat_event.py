@@ -15,7 +15,7 @@ class CombatEvent:
 
     def print(self):
         
-        output = ''
+        output_other = ''
         sound = None
         
 
@@ -32,22 +32,26 @@ class CombatEvent:
                     color = '@yellow'
             if not pop.silent:
                 if pop.damage_type == DamageType.CANCELLED:
-                    output += f'{pop.damage_taker_actor.pretty_name()} cancels {pop.damage_source_action.name}. '
+                    output_self =  f'You cancel {pop.damage_source_action.name}. '
+                    output_other = f'{pop.damage_taker_actor.pretty_name()} cancels {pop.damage_source_action.name}. '
                     sound = Audio.ERROR
                 elif pop.damage_type == DamageType.HEALING:
-                    output += f'{pop.damage_taker_actor.pretty_name()} heals {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
+                    output_self = f'You heal {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
+                    output_other = f'{pop.damage_taker_actor.pretty_name()} heals {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
                     sound = Audio.BUFF
                 elif pop.damage_value <= 0:
-                    output += f'{pop.damage_taker_actor.pretty_name()} blocks {color}{pop.damage_source_action.name}@back. '
+                    output_self = f'You block {color}{pop.damage_source_action.name}@back. '
+                    output_other = f'{pop.damage_taker_actor.pretty_name()} blocks {color}{pop.damage_source_action.name}@back. '
                     sound = Audio.ERROR
                 else:
-                    output += f'{pop.damage_taker_actor.pretty_name()} loses {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
+                    output_self =f'You lose {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
+                    output_other = f'{pop.damage_taker_actor.pretty_name()} loses {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
                     sound = Audio.HURT
 
-        if output == '': 
+        if output_other == '': 
             return
 
-        pop.damage_source_actor.simple_broadcast(output,output, sound = sound)
+        pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound)
         
         actors = []
         for actor in pop.damage_source_actor.room.actors.values():

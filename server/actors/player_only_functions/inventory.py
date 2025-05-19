@@ -124,7 +124,13 @@ def command_split(self, line):
 
 def command_inventory(self, line):
 
-    t = utils.Table(1)
+    columns = 1
+    items = self.inventory_manager.item_count()
+    if items >= 21:
+        columns = 2
+    if items >= 41:
+        columns = 3
+    t = utils.Table(columns)
 
     for i in self.inventory_manager.items:
         output = self.inventory_manager.items[i].pretty_name()

@@ -32,6 +32,10 @@ from actors.player_only_functions.admin import (
     command_kill, command_sethp
 )
 
+from actors.player_only_functions.settings import (
+    command_settings
+)
+
 shortcuts_to_commands = {
     'n':    'go north',
     'e':    'go east',
@@ -118,6 +122,8 @@ commands = {
     'mexp':     'command_gain_exp',
     'reload':   'command_reload_config',
     'kill':     'command_kill',
-    'sethp':    'command_sethp'
+    'sethp':    'command_sethp',
+
+    'settings': 'command_settings'
 }
 

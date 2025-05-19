@@ -6,7 +6,7 @@ from items.manager import load_item
 #               proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
 #                owner.quest_manager.propose_objective_count_addition(proposal)
 class InventoryManager:
-    def __init__(self, owner, limit = 20):
+    def __init__(self, owner, limit = 20*1):
         self.owner = owner
         self.limit = limit
         self.items = {}
