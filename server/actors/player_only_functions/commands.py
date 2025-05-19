@@ -122,8 +122,22 @@ commands = {
     'mexp':     'command_gain_exp',
     'reload':   'command_reload_config',
     'kill':     'command_kill',
-    'sethp':    'command_sethp',
+    'settings': 'command_settings',
+    'sethp':    'command_sethp'
 
-    'settings': 'command_settings'
+    
 }
 
+'''
+ALL_COMMANDS = []
+
+for i in commands:
+    ALL_COMMANDS.append(i)    
+for i in one_letter_commands: 
+    ALL_COMMANDS.append(i)  
+for i in shortcuts_to_commands:
+    ALL_COMMANDS.append(i)  
+
+import actors.player_only_functions.settings
+actors.player_only_functions.settings.BANNED_ALIASES = ALL_COMMANDS
+'''

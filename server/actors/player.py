@@ -96,10 +96,12 @@ class Player(Actor):
         # try to send answer to dialog
         # if you input something that is not a dialog answer
         # stop dialog and continue with command handling
+        
+            
         if self.current_dialog != None:
             if self.current_dialog.answer(line):
                 return
-            
+        
         
         if not line: 
             line = self.last_line_sent
@@ -107,6 +109,16 @@ class Player(Actor):
                 return
 
         self.last_line_sent = line
+
+        command = line.split()[0]
+
+        # replace with aliases as long as it is not a settings command
+        if ' '+command+'' not in ' settings ': 
+            aliases = self.settings_manager.aliases
+            line = ' '+line+' '
+            for alias in aliases:
+                line = line.replace(' '+alias+' ', ' '+aliases[alias]+' ')
+            line = line.strip()
 
         command = line.split()[0]
         full_line =  line

@@ -99,6 +99,14 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
+        self.cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS settings_aliases (
+            actor_id TEXT NOT NULL,
+            key TEXT NOT NULL,
+            value TEXT NOT NULL,
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        )''')
+
         # Commit changes
         self.conn.commit()
 
@@ -342,6 +350,25 @@ class Database:
                         :actor_id, :quest_id, :objective_id, :objective_count
                     )
                     ''', my_dict)
+
+        my_dict = {}
+        my_dict['actor_id'] = actor_id
+
+        self.cursor.execute('''
+            DELETE FROM settings_aliases WHERE actor_id = ?
+        ''', (actor_id,))
+        
+        for key in actor.settings_manager.aliases:
+            value = actor.settings_manager.aliases[key]
+            my_dict['key'] = key
+            my_dict['value'] = value
+            self.cursor.execute('''
+                INSERT INTO settings_aliases (
+                    actor_id, key, value
+                ) VALUES (
+                    :actor_id, :key, :value
+                )
+                ''', my_dict)
                 
         self.write_admins(actor)
         self.conn.commit()
@@ -407,6 +434,12 @@ class Database:
         ''', (actor_id,))
         bonuses = self.cursor.fetchall()
         #print('bonuses', bonuses)
+
+        self.cursor.execute('''
+            SELECT * FROM settings_aliases WHERE actor_id = ?
+        ''', (actor_id,))
+
+        settings_aliases = self.cursor.fetchall()
 
 
         my_dict = {}
@@ -481,8 +514,14 @@ class Database:
                 my_dict['quests'][quest[1]] = my_dict['quests'][quest[1]] | {quest[2]: quest[3]}
             else:
                 my_dict['quests'][quest[1]] = {quest[2]: quest[3]}
+
+        
+        my_dict['settings_aliases'] = {}
+        for alias in settings_aliases:
+            #print(alias)
+            my_dict['settings_aliases'][alias[1]] = alias[2]
        
-        #print(my_dict['quests'])
+        #print(my_dict['settings_aliases'])
         return my_dict
     
     # write down admin on save

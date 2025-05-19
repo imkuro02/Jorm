@@ -275,6 +275,9 @@ class Protocol(protocol.Protocol):
             self.actor.stat_manager.stats.update(actor['stats'])
             self.actor.skill_manager.skills = actor['skills']
 
+            for alias in actor['settings_aliases']:
+                self.actor.settings_manager.aliases[alias] = actor['settings_aliases'][alias]
+
             bonuses = actor['equipment_bonuses']
             
             for item in actor['inventory'].values():

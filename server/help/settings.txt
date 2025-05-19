@@ -1,0 +1,16 @@
+................................................................................
+Title: Settings 
+
+settings: "settings [setting]" you can reset to default with "settings reset" 
+
+alias: "settings alias [alias] [a sentence to replace with]" 
+alias: "settings alias" will display all aliases
+alias: "settings alias [alias]" will remove the alias.
+Aliases can be used to replace text within your input.
+An alias can replace a single word with a sentence.
+For example: "settings alias heal use red potion on" this alias will convert
+any mention of "heal" with "use red potion on" 
+
+gmcp: "settings gmcp [on/off]" 
+This setting does nothing but is a fun fidget toy!
+................................................................................
