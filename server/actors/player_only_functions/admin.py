@@ -274,6 +274,8 @@ def command_reload_config(self, line):
 def command_teleport(self, line):
     user = None
     for proto in self.protocol.factory.protocols:
+        if proto.actor == None:
+            continue
         if line == proto.actor.name:
             user = proto.actor
             break
@@ -288,6 +290,8 @@ def command_teleport(self, line):
 def command_kick(self, line):
     user = None
     for proto in self.protocol.factory.protocols:
+        if proto.actor == None:
+            continue
         if line == proto.actor.name:
             user = proto.actor
             break
