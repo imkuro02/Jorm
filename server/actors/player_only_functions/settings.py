@@ -1,7 +1,7 @@
 from utils import match_word
 from actors.player_only_functions.checks import check_no_empty_line
 
-BANNED_ALIASES = ['settings','help'] # this gets set in actors.player_only_functions.commands
+BANNED_ALIASES = ['settings','help','alias','reset'] # this gets set in actors.player_only_functions.commands
 
 class SETTINGS:
     GMCP = 'gmcp'
