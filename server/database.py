@@ -474,7 +474,7 @@ class Database:
             SELECT * FROM settings WHERE actor_id = ?
         ''', (actor_id,))
 
-        settings = self.cursor.fetchall()
+        settings = self.cursor.fetchone()
 
 
         my_dict = {}
@@ -557,7 +557,8 @@ class Database:
             my_dict['settings_aliases'][alias[1]] = alias[2]
 
         my_dict['settings'] = {}
-        if len(settings) == 4:
+        #print(settings)
+        if settings != None:
             my_dict['settings'] = {
                 'gmcp': settings[1],
                 'view_room': settings[2],
