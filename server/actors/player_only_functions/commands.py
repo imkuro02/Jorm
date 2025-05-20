@@ -9,7 +9,7 @@ from actors.player_only_functions.combat import (
     command_use, command_rest, rest_set, rest_now, rest_now_request, command_party
 )
 
-from actors.player_only_functions.look import command_look
+from actors.player_only_functions.look import command_look, command_map, new_room_look
 
 from actors.player_only_functions.equip import (
     command_equipment, inventory_equip, inventory_unequip
@@ -79,6 +79,7 @@ commands = {
     #'setcall':  'command_recall_set',
     #'gocall':   'command_recall_go',
     'look':     'command_look',
+    'map':      'command_map',
     'lore':     'command_lore',
     'trade':    'command_trade',
     

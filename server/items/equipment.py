@@ -254,9 +254,11 @@ class Equipment(Item):
                     new = curr + val
                     #print(new,curr,val)
                     if new > curr:
-                        output += f"@goodUpgrade@back {SKILLS[bonus['key']]['name']}\n"
+                        #output += f"@goodUpgrade@back {SKILLS[bonus['key']]['name']}\n"
+                        pass
                     elif new < curr and new >= 1:
-                        output += f"@badDowngrade@back {SKILLS[bonus['key']]['name']}\n"
+                        #output += f"@badDowngrade@back {SKILLS[bonus['key']]['name']}\n"
+                        pass
                     elif new <= 0:
                         output += f"@badForget@back {SKILLS[bonus['key']]['name']}\n"
                     else: 

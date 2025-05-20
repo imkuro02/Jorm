@@ -114,9 +114,9 @@ def command_go(self, line):
                 par.finish_turn(force_cooldown = True)
                 par.sendSound(Audio.walk())
         for par in self.party_manager.party.participants.values():
-            par.command_look('')
+            par.new_room_look()
     else:
-        self.command_look('')
+        self.new_room_look()
 
 
 

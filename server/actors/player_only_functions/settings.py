@@ -6,9 +6,12 @@ BANNED_ALIASES = ['settings','help','alias','reset'] # this gets set in actors.p
 class SETTINGS:
     GMCP = 'gmcp'
     ALIAS = 'alias'
+    LOOK = 'look'
+    VIEW_ROOM = 'viewroom'
+    VIEW_MAP = 'view_map'
     RESET = 'reset'
     LIST_SETTINGS = [
-        GMCP, ALIAS, RESET
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, RESET
     ]
 
 
@@ -17,13 +20,16 @@ LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = False):
+    def __init__(self, actor, aliases = None, gmcp = False, view_room = True, view_map = True):
         self.actor = actor
         if aliases == None:
             self.aliases = {}
         else:
             self.aliases = aliases
         self.gmcp = gmcp
+
+        self.view_room = view_room
+        self.view_map = view_map
         
     def true_or_false(self, value):
         if value in LIST_ON:
@@ -76,6 +82,22 @@ class Settings:
                 value = line[1]
                 self.gmcp = self.true_or_false(value)
                 self.actor.sendLine(f'GMCP enabled: {self.gmcp}')
+
+            case SETTINGS.VIEW_MAP:
+                if len(line) == 1:
+                    self.actor.sendLine('View Map setting needs an argument (on or off?)')
+                    return
+                value = line[1]
+                self.view_map = self.true_or_false(value)
+                self.actor.sendLine(f'View Map enabled: {self.view_map}')
+
+            case SETTINGS.VIEW_ROOM:
+                if len(line) == 1:
+                    self.actor.sendLine('View Room setting needs an argument (on or off?)')
+                    return
+                value = line[1]
+                self.view_room = self.true_or_false(value)
+                self.actor.sendLine(f'View Room enabled: {self.view_room}')
         
 @check_no_empty_line
 def command_settings(self, line):

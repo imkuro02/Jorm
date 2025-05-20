@@ -107,6 +107,15 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
+        self.cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS settings (
+            actor_id TEXT PRIMARY KEY,
+            gmcp BOOL NOT NULL,
+            view_room BOOL NOT NULL,
+            view_map BOOL NOT NULL,
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        )''')
+
         # Commit changes
         self.conn.commit()
 
@@ -371,6 +380,24 @@ class Database:
                     :actor_id, :key, :value
                 )
                 ''', my_dict)
+
+
+        my_dict = {}
+        my_dict['actor_id'] = actor_id
+
+        self.cursor.execute('''
+            DELETE FROM settings WHERE actor_id = ?
+        ''', (actor_id,))
+        my_dict['gmcp'] = actor.settings_manager.gmcp
+        my_dict['view_room'] = actor.settings_manager.view_room
+        my_dict['view_map'] = actor.settings_manager.view_map
+        self.cursor.execute('''
+            INSERT INTO settings (
+                actor_id, gmcp, view_room, view_map
+            ) VALUES (
+                :actor_id, :gmcp, :view_room, :view_map
+            )
+        ''', my_dict)
                 
         self.write_admins(actor)
         self.conn.commit()
@@ -442,6 +469,12 @@ class Database:
         ''', (actor_id,))
 
         settings_aliases = self.cursor.fetchall()
+
+        self.cursor.execute('''
+            SELECT * FROM settings WHERE actor_id = ?
+        ''', (actor_id,))
+
+        settings = self.cursor.fetchall()
 
 
         my_dict = {}
@@ -522,6 +555,14 @@ class Database:
         for alias in settings_aliases:
             #print(alias)
             my_dict['settings_aliases'][alias[1]] = alias[2]
+
+        my_dict['settings'] = {}
+        if len(settings) == 4:
+            my_dict['settings'] = {
+                'gmcp': settings[1],
+                'view_room': settings[2],
+                'view_map': settings[3]
+            }
        
         #print(my_dict['settings_aliases'])
         return my_dict
