@@ -175,6 +175,7 @@ class Room:
         self.can_be_recall_site = can_be_recall_site # whether you can rest now / rest set
         self.instanced = instanced        # is this room a private instance?
         self.inventory_manager = InventoryManager(self, limit = 20)
+        self.inventory_manager.can_pick_up_anything = True
         self.combat = None                # placeholder for combat
         self.actors = {}                  # actors in room dict
         self.spawner = Spawner(self)      # spawner
@@ -205,6 +206,7 @@ class Room:
         # remove items that have been on the ground for too long
         items_to_remove = []
         for i in self.inventory_manager.items.values():
+            i.tick()
             if i in self.spawner.spawn_points.values():
                 continue
             i.time_on_ground += 1

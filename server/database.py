@@ -137,6 +137,7 @@ class Database:
 
             # Fetch account details
             actor = self.read_actor(acc[0])  # Assuming acc[0] is the account ID or relevant identifier
+            # 'quests': {'tutorial_1': {'Get a corpse': 0, 'turned_in': 1}
             if actor == None:
                 continue
             
@@ -147,7 +148,8 @@ class Database:
                 'lvl': actor['stats']['lvl'],  # Extract level from actor stats
                 'date_of_creation': actor['meta_data']['date_of_creation'],
                 'date_of_last_login': actor['meta_data']['date_of_last_login'],
-                'time_in_game': actor['meta_data']['time_in_game']
+                'time_in_game': actor['meta_data']['time_in_game'], 
+                'quests_turned_in': len([q for q in actor['quests'].values() if q['turned_in'] == 1]) 
             }
             actor_objs.append(actor_obj)
 
@@ -549,8 +551,59 @@ class Database:
 
         admins = self.cursor.fetchone()
         return admins
+
+    def delete(self, username):
+        self.cursor.execute('''
+            SELECT name 
+            FROM sqlite_master 
+            WHERE type = 'table'
+            AND name NOT LIKE 'sqlite_%'
+            AND sql LIKE '%actor_id%';
+        ''', ())
+
+        tables_actors = self.cursor.fetchall()
+        
+        self.cursor.execute('''
+            SELECT name 
+            FROM sqlite_master 
+            WHERE type = 'table'
+            AND name NOT LIKE 'sqlite_%'
+            AND sql LIKE '%unique_id%';
+        ''', ())
+
+        tables_accounts = self.cursor.fetchall()
+
+        self.cursor.execute(f'''
+            SELECT unique_id, actor_id
+            FROM actors
+            WHERE actor_name = ?
+            ''',(username,))
+        
+        acc = self.cursor.fetchone()
+        if acc == None:
+            print('cant remove this pogchamp')
+            return
+        unique_id = acc[0]
+        actor_id = acc[1]
+        
+        return
+
+        for i in tables_actors:
+            self.cursor.execute(f'''
+            DELETE FROM {i} WHERE actor_id = ?
+            ''', (actor_id,))
+
+        for i in tables_actors:
+            self.cursor.execute(f'''
+            DELETE FROM {i} WHERE unique_id = ?
+            ''', (unique_id,))
+
+
       
     def close(self):
         # Close the database connection
         self.conn.close()
 
+if __name__ == '__main__':
+    db = Database()
+    db.delete('kuro1')

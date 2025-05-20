@@ -29,30 +29,41 @@ def command_ranks(self, line):
     limit = 200
     if limit >= 500: limit = 500
     if limit <= 1: limit = 1
-    t = utils.Table(6, 3)
+    t = utils.Table(7, 3)
     ranks = self.factory.ranks
     #ranks = ranks[::-1]
     
     t.add_data('Rank')
-    t.add_data('Level')
+    t.add_data('LVL')
     t.add_data('Name')
     t.add_data('EXP')
+    t.add_data('Cred')
     #t.add_data('Created')
-    t.add_data('Last Login')
-    t.add_data('In game time')
+    t.add_data('Logged In')
+    t.add_data('Game Time')
+    
     
     length = len(ranks)
     if length >= limit:
         length = limit
+    rank = 1
     for i in range(0,length):
+        if ranks[i]['time_in_game'] == 0:
+            continue
+        if ranks[i]['quests_turned_in'] == 0:
+            continue
         #t.add_data(f'{len(ranks)-i}. ')
-        t.add_data(f'{i+1}. ')
+        
+        t.add_data(f'{rank}. ')
         t.add_data(ranks[i]['lvl'])
         t.add_data(ranks[i]['name'])
         t.add_data(ranks[i]['exp'])
+        t.add_data(ranks[i]['quests_turned_in'])
         #t.add_data(utils.get_datetime_from_unix(ranks[i]['date_of_creation']))
         t.add_data(utils.get_datetime_ago_from_unix(ranks[i]['date_of_last_login']))
         t.add_data(utils.seconds_to_dhms(ranks[i]['time_in_game']))
+        rank += 1
+        
         
     
     output = t.get_table()

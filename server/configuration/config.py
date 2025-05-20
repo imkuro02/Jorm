@@ -16,6 +16,7 @@ class Audio:
     ERROR = 'error.wav'
     ITEM_GET = 'item_get.mp3'
     ITEM_DROP = 'item_drop.mp3'
+    FIREPLACE = 'fireplace.wav'
     def walk():
         return random.choice(['walk1.wav','walk2.wav','walk3.wav'])
 
@@ -45,11 +46,13 @@ class ItemType:
     EQUIPMENT = 'equipment'
     CONSUMABLE = 'consumable'
     ERROR = 'error_item'
+    SCENERY = 'scenery'
     name = {
         MISC: 'Misc',
         EQUIPMENT: 'Equipment',
         CONSUMABLE: 'Consumable',
-        ERROR: 'Error Item'
+        ERROR: 'Error Item',
+        SCENERY : 'Scenery'
     }
 
 class DamageType:

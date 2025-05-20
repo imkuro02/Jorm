@@ -231,24 +231,41 @@ def command_look(self, line):
 
         exits = self.protocol.factory.world.rooms[room.id].exits
         #blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
-        see = see + f'You can go: '
+        exit_count = 0
+        see_exits = ''
         for _exit in exits:
             #if exit_name not in blocked_exits:
             if _exit.secret:
                 continue
             #if _exit.blocked and self.room.is_enemy_present():
             #    continue
-            see = see + f'@yellow{_exit.pretty_direction()}@normal, '
+            see_exits = see_exits + f'@yellow{_exit.pretty_direction()}@normal, '
+            exit_count += 1
             #else:
             #    see = see + f'@red{exit_name}@normal, '
+
+        if exit_count == 0:
+            see = see + 'You don\'t see any exits.'
+        else:
+            see = see + 'You can go: ' + see_exits
 
         #see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         see = see + '\n'
 
         if not room.inventory_manager.is_empty():
-            see = see + 'On the ground you see:\n'
+            see_items = ''
             for i in room.inventory_manager.items.values():
-                see = see + f'{i.pretty_name()}' + '\n'
+                #see = see + f'{i.pretty_name()} @cyan{i.description}@back' + '\n'
+                if i.invisible:
+                    continue
+
+                if i.can_pick_up:
+                    see_items = see_items + f'{i.pretty_name()}' + '\n'
+                else:
+                    see_items = see_items + f'{i.description}' + '\n'
+
+            if see_items != '':
+                see = see + 'You see:\n' + see_items
         
         
         

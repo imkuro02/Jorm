@@ -24,6 +24,7 @@ def read_from_ods_file():
     SHEET['skills'] =              read_ods(file_path, 'skills')
     SHEET['items_equipment'] =     read_ods(file_path, 'items_equipment')
     SHEET['items_misc'] =          read_ods(file_path, 'items_misc')
+    SHEET['items_scenery'] =          read_ods(file_path, 'items_scenery')
     SHEET['enemy_skills'] =        read_ods(file_path, 'enemy_skills')
     SHEET['loot'] =                read_ods(file_path, 'loot')
     SHEET['enemies'] =             read_ods(file_path, 'enemies')
@@ -152,6 +153,19 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'item_type':        'misc'
             }
 
+    for row in SHEET['items_scenery']:
+        x = SHEET['items_scenery']
+        for index in range(0, len(x[row])):
+            ITEMS[x['premade_id'][index]] = {
+                'premade_id':       x['premade_id'][index],
+                'name':             x['name'][index],
+                'description':      str_with_newlines(x['description'][index]),
+                'item_type':        'scenery',
+                'ambience':         x['ambience'][index],
+                'ambience_sfx':     x['ambience_sfx'][index],
+                'invisible':        x['invisible'][index]
+            }
+
 
     for row in SHEET['items_consumable']:
         x = SHEET['items_consumable']
@@ -164,6 +178,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'skills':           [x['skill'][index]],
                 'use_perspectives': USE_PERSPECTIVES[x['use_perspectives'][index]],
                 'item_type':        'consumable'
+                
             }
     
     for row in SHEET['items_equipment']:

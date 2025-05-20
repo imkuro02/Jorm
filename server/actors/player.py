@@ -47,6 +47,8 @@ class Player(Actor):
             self.admin = 0
         else:
             self.admin = admins[1]
+
+        self.inventory_manager.can_pick_up_anything = self.admin >= 1
         
     def set_admin(self, admin_level):
         self.admin = admin_level

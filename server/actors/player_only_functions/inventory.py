@@ -43,7 +43,7 @@ def command_get(self, line):
             f'{self.pretty_name()} gets {item.name}'
             )
     else:
-        self.sendLine('Your Inventory is full', sound = Audio.ERROR)
+        self.sendLine(f'You can\'t pick up {item.name}', sound = Audio.ERROR)
     
 @check_not_trading
 @check_no_empty_line
