@@ -11,4 +11,6 @@ The "look" command without any arguments will display:
 You can look at characters with "look [character]" to view their stats.
 
 To look at an item, use "identify" ( "help identify" )
+
+To view the map, use "map" 
 ................................................................................

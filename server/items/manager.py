@@ -3,6 +3,7 @@
 import copy
 from configuration.config import ItemType, EquipmentSlotType, ITEMS, StatType
 import uuid
+from items.scenery import Scenery
 from items.misc import Item
 from items.consumable import Consumable
 from items.equipment import Equipment, EquipmentBonus
@@ -125,6 +126,13 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
 
     if item_type == ItemType.MISC:
         new_item = Item()
+
+    if item_type == ItemType.SCENERY:
+        new_item = Scenery()
+        new_item.ambience = ITEMS[premade_id]['ambience']
+        new_item.ambience_sfx = ITEMS[premade_id]['ambience_sfx']
+        new_item.invisible = ITEMS[premade_id]['invisible']
+
 
     if item_type == ItemType.CONSUMABLE:
         new_item = Consumable()

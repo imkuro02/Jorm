@@ -13,8 +13,26 @@ class Item:
         self.inventory_manager = None # the inventory manager of this item
         self.new = True # show if item is newly added to inv
         self.time_on_ground = 0
+
+        # scenery stuff
+        self.can_pick_up = True
+        self.invisible = False
+
+    def tick(self):
+        pass
     
     def pretty_name(self, rank_only = False):
+        def get_article(word): # chatGPT
+            vowels = "aeiou"
+            if word == "":
+                return "a"  # fallback
+            if word[0].lower() in vowels:
+                return "an"
+            if 'the ' in word.lower():
+                return ''
+            return "a"
+
+        #output = f'@white{get_article(self.name)} {self.name}@normal'
         output = f'@white{self.name}@normal'
         if rank_only:
             if self.item_type == ItemType.EQUIPMENT:  

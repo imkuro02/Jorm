@@ -278,6 +278,12 @@ class Protocol(protocol.Protocol):
             for alias in actor['settings_aliases']:
                 self.actor.settings_manager.aliases[alias] = actor['settings_aliases'][alias]
 
+            print(actor['settings'])
+            if actor['settings'] != {}:
+                self.actor.settings_manager.gmcp = actor['settings']['gmcp']
+                self.actor.settings_manager.view_room = actor['settings']['view_room']
+                self.actor.settings_manager.view_map = actor['settings']['view_map']
+
             bonuses = actor['equipment_bonuses']
             
             for item in actor['inventory'].values():
@@ -327,7 +333,7 @@ class Protocol(protocol.Protocol):
                 self.actor.recall_site = StaticRooms.TUTORIAL
 
         self.actor.room.world.rooms[self.actor.recall_site].move_actor(self.actor)
-        self.actor.command_look('')
+        self.actor.new_room_look()
         
     def save_actor(self):
         self.factory.db.write_actor(self.actor)

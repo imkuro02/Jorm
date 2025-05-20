@@ -10,6 +10,7 @@ class InventoryManager:
         self.owner = owner
         self.limit = limit
         self.items = {}
+        self.can_pick_up_anything = False
 
     def get_item_by_id(self, item_id):
         for i in self.items.values():
@@ -30,6 +31,11 @@ class InventoryManager:
         return False
 
     def add_item(self, item, stack_items = True, dont_send_objective_proposal = False):
+        if item.can_pick_up or self.can_pick_up_anything:
+            pass
+        else:
+            return False
+
         if stack_items:
             for _i in self.items.values():
                 if item.premade_id != _i.premade_id:
@@ -50,13 +56,18 @@ class InventoryManager:
             return False
         
         self.items[item.id] = item
-        item.new = True
+
+        if type(self.owner).__name__ != 'Room':
+            item.new = True
+        else:
+            item.new = False
 
         if not dont_send_objective_proposal and type(self.owner).__name__ == 'Player':
             self.owner.quest_manager.propose_objective_count_addition(
                 ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item.premade_id, item.stack)
             )
 
+        item.inventory_manager = self
         return True
 
     def remove_item(self, item, stack = 0):
