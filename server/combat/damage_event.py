@@ -67,6 +67,8 @@ class Damage:
             return self
         '''
 
+        if self.damage_value <= 0:
+            self.damage_value = 0
         self.damage_taker_actor.stat_manager.stats[self.damage_to_stat ] -= self.damage_value
 
         '''
