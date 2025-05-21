@@ -63,35 +63,37 @@ def command_use(self, line):
     action = None
     target = None
 
+    skills_dict = {}
+
+    class FakeSkill:
+        def __init__(self, name):
+            self.name = name
+    for skill in list_of_skill_names:
+        skills_dict[skill] = FakeSkill(skill)
+
     # target yourself if not trying to target anything else
     if ' on ' not in line and ' at ' not in line:
         action = line
-        action = utils.match_word(action, list_of_items + list_of_skill_names)
+        action = utils.get_match(action, {**self.inventory_manager.items, **skills_dict})
         target = self
 
     # if you are targetting something else set target to that
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
-        action = utils.match_word(action, list_of_items + list_of_skill_names)
+        action = utils.get_match(action, {**self.inventory_manager.items, **skills_dict})
         target = utils.get_match(target, {**self.inventory_manager.items, **self.room.actors})
-        #print(target, list_of_actors)
 
+    #self.sendLine(action.name)
 
     _action = None
     _target = None
 
-    if action in list_of_items:
-        _action = self.get_item(action)
-    if action in list_of_skill_names:
-        _action = name_to_id[action]
-
+    _action = action
     if isinstance(target, str): 
         if target in list_of_items:
-            _target = self.get_item(target)
+            _target = target #self.get_item(target)
         if target in list_of_actors:
             _target = self.get_actor(target)
-            #print(_target.name)
-        #_target = self.get_actor(target)
     else:
         _target = target
 
@@ -103,50 +105,13 @@ def command_use(self, line):
         self.sendLine('On who?')
         return
 
-    '''
-    #is_target_actor = type(target).__name__ == "Actor"
-    is_target_item  = target in list_of_items
-    is_target_actor = not target in list_of_items
-    is_action_item  = action in list_of_items
-    is_action_skill = action in list_of_skill_names
 
-
-    # using a item on a actor
-    if is_target_actor and is_action_item:
-        if _action.use(self, _target):
-            self.finish_turn()
-            return
-        
-    # using a skill on a actor
-    if is_target_actor and is_action_skill:
-        if use_skill(self, _target, _action):
+    if _action in skills_dict.values():
+        if use_skill(self, _target, name_to_id[_action.name]):
             self.finish_turn()
             return
 
-    # using an item on another item
-    if is_target_item and is_action_item:
-        if _action.use(self, _target):
-            self.finish_turn()
-            return
-    
-    # dont allow using skills on items EVER
-    if is_target_item and is_action_skill:
-        if use_skill(self, _target, _action):
-            self.finish_turn()
-            return
-    
-
-
-    print(is_target_actor, is_target_item, is_action_item, is_action_skill, type(target).__name__ )
-    return False
-    '''
-
-    if action in list_of_skill_names:
-        if use_skill(self, _target, _action):
-            self.finish_turn()
-            return
-
-    if action in list_of_items:
+    if _action in self.inventory_manager.items.values():
         if _action.use(self, _target):
             self.finish_turn()
             return

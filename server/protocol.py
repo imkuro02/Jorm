@@ -278,7 +278,7 @@ class Protocol(protocol.Protocol):
             for alias in actor['settings_aliases']:
                 self.actor.settings_manager.aliases[alias] = actor['settings_aliases'][alias]
 
-            print(actor['settings'])
+            #print(actor['settings'])
             if actor['settings'] != {}:
                 self.actor.settings_manager.gmcp = actor['settings']['gmcp']
                 self.actor.settings_manager.view_room = actor['settings']['view_room']

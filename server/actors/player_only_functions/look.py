@@ -85,11 +85,12 @@ def command_map(self, line):
     for r in grid:
         _grid[r] = grid[r]
         
-    for r in range(0,1):
+    for r in range(0,VIEW_RANGE):
         for room_loc in _grid:
             #print(_grid[room_loc])
             if grid[room_loc] == 'PATH':
                 continue
+
             room = self.protocol.factory.world.rooms[grid[room_loc]]
             _x = int(room_loc.split(',')[0])
             _y = int(room_loc.split(',')[1])
@@ -107,7 +108,10 @@ def command_map(self, line):
                 y += offsets[_exit.direction][0] 
                 _loc = f'{x},{y}'
 
-                grid[_loc] = _exit.to_room_id
+                if _exit.to_room_id not in grid.values():
+                    grid[_loc] = _exit.to_room_id 
+                                  
+                
                 x += -offsets_path[_exit.direction][1]
                 y += -offsets_path[_exit.direction][0]
                 _loc = f'{x},{y}'
