@@ -1,9 +1,10 @@
 from actors.player_only_functions.checks import check_not_in_party, check_not_in_party_or_is_party_leader, check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
 from configuration.config import ActorStatusType, Audio, ITEMS
 
+@check_not_in_party_or_is_party_leader
 @check_your_turn
-@check_not_in_party
 def command_flee(self, line):
+    '''
     if self.room.combat == None:
         self.sendLine('You are not in combat, you don\'t need to flee')
         return
@@ -18,6 +19,25 @@ def command_flee(self, line):
         f'{self.pretty_name()} comes running in a panic!',
         sound = Audio.BUFF
     )
+    '''
+    if self.status != ActorStatusType.FIGHTING:
+        self.sendLine('You must be fighting to flee!')
+        return
+
+    self.simple_broadcast('You flee!', f'{self.pretty_name()} flees!')
+
+    self.status = ActorStatusType.NORMAL
+    if self.party_manager.party != None:
+        if self.party_manager.party.actor == self:
+            for par in self.party_manager.party.participants.values():
+                if par == self:
+                    continue
+                par.status = ActorStatusType.NORMAL
+                par.sendLine('You flee too!')
+
+    
+            
+
 
 @check_no_empty_line
 @check_not_in_combat

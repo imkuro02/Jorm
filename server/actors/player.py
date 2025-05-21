@@ -62,12 +62,12 @@ class Player(Actor):
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
 
-    def combat_over_prompt(self):
-        self.sendLine('@yellowCombat over!@normal')
-        if (self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level()):
-            self.sendLine('@greenYou can level up!@back')
-        else:
-            self.sendLine(f'@yellowNext level@back: @green{int((self.stat_manager.stats[StatType.EXP]/self.get_exp_needed_to_level())*100)}@back%')
+    #def combat_over_prompt(self):
+    #    self.sendLine('@yellowCombat over!@normal')
+    #    if (self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level()):
+    #        self.sendLine('@greenYou can level up!@back')
+    #    else:
+    #        self.sendLine(f'@yellowNext level@back: @green{int((self.stat_manager.stats[StatType.EXP]/self.get_exp_needed_to_level())*100)}@back%')
     
     def sendSound(self, sfx):
         self.protocol.send_gmcp({'name':sfx}, 'Client.Media.Play')

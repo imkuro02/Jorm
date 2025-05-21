@@ -9,9 +9,10 @@ class SETTINGS:
     LOOK = 'look'
     VIEW_ROOM = 'viewroom'
     VIEW_MAP = 'view_map'
+    PVP = 'pvp'
     RESET = 'reset'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, RESET
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET
     ]
 
 
@@ -20,7 +21,7 @@ LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = True):
+    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = True, pvp = False):
         self.actor = actor
         if aliases == None:
             self.aliases = {}
@@ -30,6 +31,7 @@ class Settings:
 
         self.view_room = view_room
         self.view_map = view_map
+        self.pvp = pvp
         
     def true_or_false(self, value):
         if value in LIST_ON:
@@ -98,6 +100,14 @@ class Settings:
                 value = line[1]
                 self.view_room = self.true_or_false(value)
                 self.actor.sendLine(f'View Room enabled: {self.view_room}')
+
+            case SETTINGS.PVP:
+                if len(line) == 1:
+                    self.actor.sendLine('PVP setting needs an argument (on or off?)')
+                    return
+                value = line[1]
+                self.view_room = self.true_or_false(value)
+                self.actor.sendLine(f'PVP enabled: {self.pvp}')
         
 @check_no_empty_line
 def command_settings(self, line):

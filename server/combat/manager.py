@@ -9,16 +9,20 @@ class Combat:
         self.current_actor = None
         self.time_since_turn_finished = 0
         self.round = 1
+        self.turn = 0
 
         # reset threat
         for p in self.participants.values():
             if type(p).__name__ == 'Player':
                 p.stat_manager.stats[StatType.THREAT] = 200 
                 p.stat_manager.stats[StatType.INITIATIVE] = 0 
-                p.sendLine('@tipA fight has started!@back')
             else: 
                 p.stat_manager.stats[StatType.THREAT] = 0 
                 p.stat_manager.stats[StatType.INITIATIVE] = 0  
+
+        for p in self.room.actors.values():
+            if type(p).__name__ == 'Player':
+                p.sendLine('@tipA fight has started!@back')
 
         #self.initiative()
         
@@ -99,10 +103,10 @@ class Combat:
             return      
 
     def combat_over(self):
-        for i in self.participants.values():
+        for i in self.room.actors.values():
             if type(i).__name__ == "Player":
-                #i.sendLine('@yellowCombat over!@normal')
-                i.combat_over_prompt()
+                i.sendLine('@yellowCombat over!@normal')
+            #    i.combat_over_prompt()
 
             if i.party_manager.party != None:
                 one_alive = False
@@ -155,7 +159,7 @@ class Combat:
         print('combat over')
 
     def next_turn(self):
-
+        #print('next turn', self.turn)
         actors = []
         for actor in self.participants.values():
             actors.append(actor)
@@ -166,7 +170,7 @@ class Combat:
 
         participating_parties = []
         for i in self.participants.values():
-            if i.status != ActorStatusType.DEAD and i.party_manager.get_party_id() not in participating_parties:
+            if i.status == ActorStatusType.FIGHTING and i.party_manager.get_party_id() not in participating_parties:
                 participating_parties.append(i.party_manager.get_party_id())
                 
 
@@ -174,8 +178,8 @@ class Combat:
         
         
 
-
-        if len(participating_parties) <= 1:
+        #print(participating_parties)
+        if len(participating_parties) <= 1 and self.turn >= 1:
            self.combat_over()
            return
 
@@ -200,6 +204,8 @@ class Combat:
 
         for i in self.participants.values():
             i.stat_manager.stats[StatType.INITIATIVE] += i.stat_manager.stats[StatType.FLOW]
+
+        self.turn += 1
         
 
         '''

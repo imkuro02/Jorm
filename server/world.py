@@ -243,17 +243,18 @@ class Room:
                             players_here = True
                     ### PARTY CODE
 
+                #participants[i.id] = i
                 if type(i).__name__ == "Enemy":
                     participants[i.id] = i
-                    npcs_here = True
+                #    npcs_here = True
 
-                if type(i).__name__ == "Npc":
-                    participants[i.id] = i
-                    npcs_here = True
+                #if type(i).__name__ == "Npc":
+                #    participants[i.id] = i
+                #    npcs_here = True
 
-            if players_here and npcs_here:
-                self.combat = Combat(self, participants)
-                self.combat.initiative()
+            #if players_here and npcs_here:
+            self.combat = Combat(self, participants)
+            self.combat.initiative()
         else:
             self.combat.add_participant(player_participant)
 
