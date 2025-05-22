@@ -1,0 +1,60 @@
+tavern_cellar_bank_robber:
+  tree:
+    start:
+      dialog: 
+        - |
+          says "My hero!"
+      options:
+        - say: Who are you?
+          goto: a
+
+    a:
+      dialog:
+        - |
+          says "Nobody..."
+      options:
+        - say: What are you doing here?
+          goto: b
+
+    b:
+      dialog:
+        - |
+          says "Nothing..."
+      options:
+        - say: Tell me now!
+          goto: c
+    
+    c:
+      dialog:
+        - |
+          says "Alright alright!! You see, I was going to mine from under the tavern, until I mined into the bank... 
+          but I mined into a rat infested cave instead... My mineshaft is hidden.
+          Its north from the storage room..."
+      options:
+        - say: Is that all?
+          goto: d
+
+    d:
+      dialog:
+        - |
+          says "Well, yea... So what now?"
+      options:
+        - say: What now? now you die!
+          goto: die
+        - say: Nothing, thanks for the information.
+          goto: ok
+
+    die:
+      dialog:
+        - |
+          says "WHAT THE FUCK!"
+    
+    ok:
+      dialog:
+        - |
+          says "Haha.. Yep yep!"
+
+
+
+
+        

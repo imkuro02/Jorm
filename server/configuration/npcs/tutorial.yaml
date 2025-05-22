@@ -1,7 +1,4 @@
 tutorial_1:
-  name: A shadowy figure
-  description: |
-    They just stand there menacingly..
   tree:
     start:
       dialog: 
