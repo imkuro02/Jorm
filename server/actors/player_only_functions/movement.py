@@ -45,16 +45,16 @@ def command_flee(self, line):
 @check_not_in_party_or_is_party_leader
 def command_go(self, line):
 
-    if self.room.is_an_instance():
-        can_move = True
-
-        if self.room.is_enemy_present():
-            can_move = False
-  
-
-        if not can_move:
-            self.sendLine('Its not safe to go further.')
-            return
+    #if self.room.is_an_instance():
+    #    can_move = True
+    #
+    #    if self.room.is_enemy_present():
+    #        can_move = False
+    #
+    #
+    #    if not can_move:
+    #        self.sendLine('Its not safe to go further.')
+    #        return
         
     if line == '':
         self.sendLine('Go where?')

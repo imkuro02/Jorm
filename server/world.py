@@ -146,6 +146,7 @@ class Room:
         self.description = description  # display desc
         self.from_file = from_file      # which file loaded this room
         self.exits = []                 # exits in this room
+        self.tick_when_loaded = self.world.factory.ticks_passed
         for _exit in exits:
             #print(_exit)
             if type(_exit).__name__ == 'Exit':
@@ -191,11 +192,12 @@ class Room:
                 return i
         return False
 
+    
 
     def tick(self):
         actors = {}
-        #if not self.is_an_instance():
-        self.spawner.tick()
+        if not self.is_an_instance():
+            self.spawner.tick()
         
         for a in self.actors.values():
             actors[a.id] = a
@@ -359,6 +361,17 @@ class World:
 
     def reload(self):
         print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
+        to_del = []
+        for r in self.rooms:
+            players = [actor for actor in self.rooms[r].actors.values() if type(actor).__name__ == "Player"]
+            if len(players) >= 1:
+                continue
+            print('del room: ', self.rooms[r].id)
+            to_del.append(r)
+
+        for d in to_del:
+            del self.rooms[d]
+
         world = WORLD
         #print('>.', world)
         for r in world['world']:

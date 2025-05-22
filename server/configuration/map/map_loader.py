@@ -34,13 +34,14 @@ def load_map():
         skip_loading = False
 
         if 'id' in json_data:
-            new_id = data['from_file']+'/'+json_data['id']
+            new_id = json_data['id']
 
             
             if '!' == new_id[0]:
                 new_id = new_id.replace('!','')
                 skip_loading = True
 
+            new_id = data['from_file']+'/'+new_id
             room_id = new_id
             
         for edge in all_data['edges'].values():

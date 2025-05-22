@@ -62,9 +62,12 @@ def command_map(self, line):
             continue
         if _exit.secret:
             continue
+        if _exit.item_required != None:
+            continue
         # do not duplicate if room leads to one that already is placed
         if _exit.to_room_id in grid.values():
             continue
+
         x = 0
         y = 0
         x += offsets[_exit.direction][1] + VIEW_RANGE
@@ -72,12 +75,15 @@ def command_map(self, line):
         _loc = f'{x},{y}'
 
         
-                
+        
         if _loc not in grid:
             grid[_loc] = _exit.to_room_id
+        
+
         x += -offsets_path[_exit.direction][1]
         y += -offsets_path[_exit.direction][0]
         _loc = f'{x},{y}'
+
         if _loc not in grid:
             grid[_loc] = 'PATH'
 
@@ -99,6 +105,8 @@ def command_map(self, line):
                     continue
                 if _exit.secret:
                     continue
+                if _exit.item_required != None:
+                    continue
                 # do not duplicate if room leads to one that already is placed
                 #if _exit.to_room_id in grid.values():
                 #    continue
@@ -108,7 +116,12 @@ def command_map(self, line):
                 y += offsets[_exit.direction][0] 
                 _loc = f'{x},{y}'
 
+                #if _loc not in grid:
+                #    continue
+
                 if _exit.to_room_id not in grid.values():
+                    if _loc in grid:
+                        continue
                     grid[_loc] = _exit.to_room_id 
                                   
                 

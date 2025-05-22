@@ -276,9 +276,11 @@ def command_export(self, line):
 
 @check_is_admin
 def command_reload_config(self, line):
-    self.sendLine(StaticRooms.LOADING)
-    import configuration.config as config
-    config.load()
+    #self.sendLine(StaticRooms.LOADING)
+    
+    #import configuration.config as config
+    self.room.world.reload()
+    #config.load()
 
 @check_not_in_combat
 @check_is_admin

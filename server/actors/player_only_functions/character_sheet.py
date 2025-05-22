@@ -294,27 +294,19 @@ def command_stats(self, line):
 
     self.sendLine(output)
 
-@check_alive
+#@check_alive
 def command_affects(self, line):
-    def get_affects():
-        if len(self.affect_manager.affects) == 0:
-            output = 'You are not affected by anything'
-        else:
-            output = 'You are affected by:\n' 
-            t = utils.Table(3,1)
-            t.add_data('Aff')
-            t.add_data('x')
-            t.add_data('Description')
-            #output += f'{"Affliction":<15} {"For":<3} {"Info"}\n'
-            
-            for aff in self.affect_manager.affects.values():
-                #output += f'{aff.info()}'
-                t.add_data(aff.name)
-                t.add_data(aff.turns)
-                t.add_data(aff.description)
-            output = output + t.get_table()
-        return output
-    output = get_affects()
+    target = self
+    if line == '':
+        target = self
+    else:
+        target = self.get_actor(line)
+
+    if target == None:
+        self.sendLine('Check the afflictions of who?')
+        return
+
+    output = self.get_affects(target)
     self.sendLine(output)
 
 def get_exp_needed_to_level(self):
