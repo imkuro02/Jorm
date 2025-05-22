@@ -65,8 +65,10 @@ def match_word(word: str, l: list, get_score = False):
 def get_match(line, things):
     index = 1
 
+
     if '.' in line:
-        index, line = line.split('.')
+        index = line.split('.')[0]
+        line = line.split('.')[1]
     
     line = line.strip()
     #index = index.strip()

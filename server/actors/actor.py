@@ -305,10 +305,11 @@ class Actor:
         self.stat_manager.hp_mp_clamp_update()
         
     def tick(self):
-        if self.status != ActorStatusType.FIGHTING:
+        if self.status == ActorStatusType.NORMAL:
             self.cooldown_manager.unload_all_cooldowns()
-            if self.status != ActorStatusType.DEAD and self.factory.ticks_passed % 30 == 0:
-                self.heal()
+            if self.factory.ticks_passed % 30 == 0:
+                if not self.room.is_an_instance():
+                    self.heal()
                 
                 
 
