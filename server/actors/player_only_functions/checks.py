@@ -16,6 +16,16 @@ def check_is_admin(func):
         return func(self, line)
     return wrapper
             
+def check_not_spamming(func):
+    def wrapper(self, line):
+        self.recently_send_message_count += 100
+        if self.recently_send_message_count >= 1000: 
+            self.recently_send_message_count = 1500
+            return
+        else:
+            return func(self, line)
+    return wrapper
+
 def check_not_trading(func):
     def wrapper(self, line):
         if self.trade_manager.trade != None:

@@ -1,31 +1,43 @@
-from actors.player_only_functions.checks import check_no_empty_line
+from actors.player_only_functions.checks import check_no_empty_line, check_not_spamming
+import random
+
 @check_no_empty_line
+@check_not_spamming
 def command_say(self, line):
-    self.recently_send_message_count += 100
-    if self.recently_send_message_count >= 500:
-        if self.recently_send_message_count >= 1000: self.recently_send_message_count = 1000
-        return
     self.simple_broadcast(
         f'You say "{line}"',
         f'{self.pretty_name()} says "{line}"'
         )
 
+@check_no_empty_line
+@check_not_spamming
 def command_shout(self, line):
-    self.recently_send_message_count += 100
-    if self.recently_send_message_count >= 500:
-        if self.recently_send_message_count >= 1000: self.recently_send_message_count = 1000
-        return
     self.simple_broadcast(
         f'You shout "{line}"',
         f'{self.pretty_name()} shouts from {self.room.name} "{line}"',
         worldwide = True)
 
-import random
+'''
+emotes = {
+    'sing': ['You sing', '#USER# sings']
+}
+@check_no_empty_line
+@check_not_spamming
+def command_emote(self, line):
+    words = line.split()
+    match words[0]:
+        case 'sing'
+'''
+
+@check_no_empty_line
+@check_not_spamming
+def command_emote(self, line):
+    return
+
+
+@check_no_empty_line
+@check_not_spamming
 def command_roll(self, line):
-    self.recently_send_message_count += 100
-    if self.recently_send_message_count >= 500:
-        if self.recently_send_message_count >= 1000: self.recently_send_message_count = 1000
-        return
     rmin = 0
     rmax = 100
 
@@ -43,6 +55,6 @@ def command_roll(self, line):
 
     roll = random.randint(rmin,rmax)
     self.simple_broadcast(
-        f'You roll: @green{roll}@normal',
-        f'{self.pretty_name()} rolls: @green{roll}@normal')
+        f'You roll: @green{roll}/{rmax}@normal',
+        f'{self.pretty_name()} rolls: @green{roll}/{rmax}@normal')
     

@@ -1,7 +1,7 @@
 from actors.player_only_functions.utils import get_actor, get_item
 from actors.player_only_functions.movement import command_flee, command_go
 from actors.player_only_functions.checks import *
-from actors.player_only_functions.emotes import command_say, command_shout, command_roll
+from actors.player_only_functions.emotes import command_say, command_shout, command_roll, command_emote
 from actors.player_only_functions.talk import command_talk
 
 from actors.player_only_functions.combat import (
@@ -43,8 +43,8 @@ shortcuts_to_commands = {
     'w':    'go west',
     'u':    'go up',
     'd':    'go down'
-
 }
+
 # one letter command mapper
 # this sets priority for commands with same starting letter
 one_letter_commands = {
