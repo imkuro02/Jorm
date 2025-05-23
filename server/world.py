@@ -248,6 +248,8 @@ class Room:
                 #participants[i.id] = i
                 if type(i).__name__ == "Enemy":
                     participants[i.id] = i
+                if type(i).__name__ == "Npc":
+                    participants[i.id] = i
                 #    npcs_here = True
 
                 #if type(i).__name__ == "Npc":

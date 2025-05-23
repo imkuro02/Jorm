@@ -3,6 +3,7 @@ from combat.combat_event import CombatEvent
 from combat.damage_event import Damage
 class Combat:
     def __init__(self, room, participants):
+        self.combat_active = True
         self.room = room
         self.participants = participants
         self.order = []
@@ -103,6 +104,10 @@ class Combat:
             return      
 
     def combat_over(self):
+        if not self.combat_active:
+            return
+        else:
+            self.combat_active = False
         for i in self.room.actors.values():
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')

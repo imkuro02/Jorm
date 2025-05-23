@@ -103,8 +103,10 @@ class Npc(Actor):
         if not super().talk_to(talker): 
             return
         # if returned true, start dialog
+        talker.simple_broadcast(f'You talk to {self.pretty_name()}.', f'{talker.pretty_name()} talks to {self.pretty_name()}.')
         talker.current_dialog = Dialog(talker, self, self.dialog_tree)
         talker.current_dialog.print_dialog()
+        #return True
 
     def tick(self):
         super().tick()
