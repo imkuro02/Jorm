@@ -11,8 +11,9 @@ class SETTINGS:
     VIEW_MAP = 'view_map'
     PVP = 'pvp'
     RESET = 'reset'
+    LOGOUT = 'logout'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT
     ]
 
 
@@ -108,6 +109,11 @@ class Settings:
                 value = line[1]
                 self.view_room = self.true_or_false(value)
                 self.actor.sendLine(f'PVP enabled: {self.pvp}')
+
+            case SETTINGS.LOGOUT:
+                proto = self.actor.protocol
+                proto.unload_actor()
+                proto.change_state(proto.LOGIN_OR_REGISTER)
         
 @check_no_empty_line
 def command_settings(self, line):

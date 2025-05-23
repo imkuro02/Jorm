@@ -267,11 +267,7 @@ class Protocol(protocol.Protocol):
                             continue
                         self.actor.quest_manager.quests[quest].objectives[objective].count = actor['quests'][quest][objective]
 
-
-
-
             #self.actor.date_of_last_login = actor['meta_data']['date_of_last_login']
-
             self.actor.stat_manager.stats.update(actor['stats'])
             self.actor.skill_manager.skills = actor['skills']
 
@@ -342,24 +338,27 @@ class Protocol(protocol.Protocol):
     def disconnect(self):
         self.transport.abortConnection()
 
+    def unload_actor(self):
+        self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
+        #self.actor.ai = None
+        self.actor.affect_manager.unload_all_affects(silent = True)
+        self.actor.trade_manager.trade_stop()
+        self.actor.party_manager.party_leave()
+        self.actor.status = ActorStatusType.NORMAL
+        self.save_actor()
+        
+        # teleport player to loading to remove them safely
+        self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
+        # remove player from combat
+        del self.actor.room.actors[self.actor.id]
+        self.actor = None
+
     # override
     def connectionLost(self, reason):
         print('DISCONNECTED')
         utils.logging.debug(self.id + f' Connection lost: {reason}')
         if self.actor != None:
-            self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
-            #self.actor.ai = None
-            self.actor.affect_manager.unload_all_affects(silent = True)
-            self.actor.trade_manager.trade_stop()
-            self.actor.party_manager.party_leave()
-            self.actor.status = ActorStatusType.NORMAL
-            self.save_actor()
-            
-
-            # teleport player to loading to remove them safely
-            self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
-            # remove player from combat
-            del self.actor.room.actors[self.actor.id]
+           self.unload_actor()
             
         self.factory.protocols.remove(self)
 
