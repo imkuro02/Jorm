@@ -166,6 +166,32 @@ class AffectMageArmor(Affect):
         return damage_obj
     
 class AffectEnrage(Affect):
+    def __init__(self, affect_manager, name, description, turns, bonus):
+        super().__init__(affect_manager, name, description, turns)
+        self._stats = self.actor.stat_manager.stats
+        
+        self.bonus = bonus
+
+        self.bonus_grit = 0 #int(stats[StatType.GRIT] * bonus)
+        self.bonus_armor = 0 #extra_armor
+
+
+    def on_applied(self):
+        super().on_applied()
+        self.bonus_grit = int(self._stats[StatType.GRIT] * self.bonus)
+        self.bonus_armor = -int(self._stats[StatType.ARMOR] * self.bonus)
+        self.bonus_marmor = -int(self._stats[StatType.MARMOR] * self.bonus)
+        self.actor.stat_manager.stats[StatType.GRIT] += self.bonus_grit
+        self.actor.stat_manager.stats[StatType.ARMOR] += self.bonus_armor
+        self.actor.stat_manager.stats[StatType.MARMOR] += self.bonus_marmor
+
+    def on_finished(self, silent=False):
+        self.actor.stat_manager.stats[StatType.GRIT] -= self.bonus_grit
+        self.actor.stat_manager.stats[StatType.ARMOR] -= self.bonus_armor
+        self.actor.stat_manager.stats[StatType.MARMOR] -= self.bonus_marmor
+        return super().on_finished(silent)
+    
+class AffectAdrenaline(Affect):
     def __init__(self, affect_manager, name, description, turns, extra_hp):
         super().__init__(affect_manager, name, description, turns)
         self.extra_hp = extra_hp

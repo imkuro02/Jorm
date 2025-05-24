@@ -231,10 +231,22 @@ class SkillEnrage(Skill):
         super().use()
         if self.success:
             turns =         int(self.script_values['duration'][self.users_skill_level])
-            extra_hp =      self.script_values['bonus'][self.users_skill_level]
+            bonus =      self.script_values['bonus'][self.users_skill_level]
             enrage_affect = affects.AffectEnrage(
                 affect_manager = self.other.affect_manager, 
-                name = 'Enraged', description = f'Temporary {int(extra_hp*100)}% Health', 
+                name = 'Enraged', description = f'Grit increased, and all armor decreased by {int(bonus*100)}%', 
+                turns = turns, bonus = bonus)
+            self.user.affect_manager.set_affect_object(enrage_affect)  
+
+class SkillAdrenaline(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            turns =         int(self.script_values['duration'][self.users_skill_level])
+            extra_hp =      self.script_values['bonus'][self.users_skill_level]
+            enrage_affect = affects.AffectAdrenaline(
+                affect_manager = self.other.affect_manager, 
+                name = 'Surging', description = f'Temporary {int(extra_hp*100)}% Health', 
                 turns = turns, extra_hp = extra_hp)
             self.user.affect_manager.set_affect_object(enrage_affect)  
             
