@@ -67,9 +67,11 @@ def command_level_up(self, stat):
 def command_practice(self, line):
     if len(line) <= 1:
         output = f'You have {self.stat_manager.stats[StatType.PP]} practice points left.\n'
-        t = utils.Table(2)
+        t = utils.Table(3,2)
         t.add_data('Skill')
-        t.add_data('Practiced')
+        t.add_data('Cost')
+        t.add_data('LvL')
+
         #t.add_data('Req')
         for skill_id in SKILLS.keys():
             if SKILLS[skill_id]['can_be_practiced'] == False:
@@ -77,18 +79,51 @@ def command_practice(self, line):
             if SKILLS[skill_id]['level_req'] > self.stat_manager.stats[StatType.LVL]:
                 continue
 
+            # name
+            t.add_data(SKILLS[skill_id]["name"])
+            # add cost
             col = '@red'
             cost = SKILLS[skill_id]['practice_cost']
+            if cost <= self.stat_manager.stats[StatType.PP]:
+                col = '@yellow'
+            t.add_data(f'{cost} PP', col)
+            lvl = 0
+            col = '@yellow'
+            if skill_id in self.skill_manager.skills.keys():
+                lvl = self.skill_manager.skills[skill_id]
+                if lvl >= 1:
+                    col = '@good'
+                elif lvl == 0:
+                    col = '@yellow'
+                else:
+                    col = '@bad'
+
+            if lvl == 0:
+                lvl = '-'
+            t.add_data(lvl, col)
+
+            '''
+            # level
+
+            t.add_data(SKILLS[skill_id]["name"])
+
             if skill_id not in self.skill_manager.skills.keys():
                 learned = f'{int(cost)} PP'
                 if cost <= self.stat_manager.stats[StatType.PP]:
                     col = '@yellow'
             else:
-                learned = 'Practiced'
-                col = '@green'
+                if self.skill_manager.skills[skill_id] >= 1:
+                    learned = f'Practiced ({self.skill_manager.skills[skill_id]})'
+                    col = '@good'
+                else:
+                    learned = f'Forgotten ({self.skill_manager.skills[skill_id]})'
+                    col = '@bad'
+            
+
 
             t.add_data(SKILLS[skill_id]["name"])
             t.add_data(learned, col)
+            '''
 
         self.sendLine(t.get_table() + output)
     else:
@@ -111,14 +146,22 @@ def command_practice(self, line):
             return
         
         #print(SKILLS[skill_id])
-        minimum_practice_req = SKILLS[skill_id]['script_values']['levels'][0]
-        current_prac_level = 0
+        #minimum_practice_req = SKILLS[skill_id]['script_values']['levels'][0]
+        #current_prac_level = 0
 
-        if skill_id in self.skill_manager.skills:
-            current_prac_level = self.skill_manager.skills[skill_id]
+        #if skill_id in self.skill_manager.skills:
+        #    if self.skill_manager.skills[skill_id] >= 1:
+        #        self.sendLine(f'{skill_name} is learned.')
+        #    else:
+        #        self.sendLine(f'{skill_name} is forgotten.')
+        #    return
+            
 
         #pp_to_spend = #new_prac_level - current_prac_level
-        new_prac_level = 1 #current_prac_level + pp_to_spend
+        if skill_id in self.skill_manager.skills:
+            new_prac_level = self.skill_manager.skills[skill_id] + 1
+        else:
+            new_prac_level = 1 
         
         if pp_to_spend <= 0:
             self.sendLine('@redYou can\'t spend negative amount of Practice Points@normal')
@@ -128,9 +171,9 @@ def command_practice(self, line):
         #    self.sendLine(f'@redYou must practice {skill_name} to a minium of {minimum_practice_req}@normal')
         #    return
         
-        if new_prac_level > SKILLS[skill_id]['script_values']['levels'][-1]:
-            self.sendLine(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]["script_values"]["levels"][-1]}@normal')
-            return
+        #if new_prac_level > SKILLS[skill_id]['script_values']['levels'][-1]:
+        #    self.sendLine(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]["script_values"]["levels"][-1]}@normal')
+        #    return
 
         if pp_to_spend > self.stat_manager.stats[StatType.PP]:
             self.sendLine('@redYou don\'t have enough Practice Points@normal')

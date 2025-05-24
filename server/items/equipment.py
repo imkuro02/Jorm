@@ -200,7 +200,7 @@ class Equipment(Item):
             eq = None
             if identifier.slots_manager.slots[self.slot] != None and identifier.slots_manager.slots[self.slot] != self.id:
                 eq = identifier.inventory_manager.items[identifier.slots_manager.slots[self.slot]]
-
+            
             t = Table(3,3)
             for stat in ordered_stats:
                 difference = self.stat_manager.stats[stat]
@@ -212,14 +212,15 @@ class Equipment(Item):
                 if new_stat == identifier.stat_manager.stats[stat]:
                     continue
                 elif new_stat < identifier.stat_manager.stats[stat]:
-                    t.add_data(StatType.name[stat])
-                    t.add_data(new_stat)
+                    t.add_data(f'{StatType.name[stat]}')
                     t.add_data(difference, col='@bad')
+                    t.add_data(f'({new_stat})')
                 elif new_stat > identifier.stat_manager.stats[stat]:
-                    t.add_data(StatType.name[stat])
-                    t.add_data(new_stat)
+                    t.add_data(f'{StatType.name[stat]}')
                     t.add_data(f'+{difference}', col='@good')
-            output += t.get_table()
+                    t.add_data(f'({new_stat})')
+            #output += t.get_table()
+            
 
             def construct_id(bonus):
                 return f'{bonus.type}/{bonus.key}'
@@ -246,6 +247,7 @@ class Equipment(Item):
                for bonus in eq.manager.bonuses.values():
                     bonuses = construct_dict(bonuses, bonus, positive = False)
 
+            '''
             for bonus in bonuses.values():
                 #output += f"{'@goodLearn ' if bonus['val'] >= 1 else '@badForgor'}@normal {SKILLS[bonus['key']]['name']} \n"
                 if bonus['key'] in identifier.skill_manager.skills:
@@ -254,18 +256,40 @@ class Equipment(Item):
                     new = curr + val
                     #print(new,curr,val)
                     if new > curr:
-                        #output += f"@goodUpgrade@back {SKILLS[bonus['key']]['name']}\n"
+                        output += f"@goodUpgrade@back {SKILLS[bonus['key']]['name']} by {new-curr}({new})\n"
                         pass
                     elif new < curr and new >= 1:
-                        #output += f"@badDowngrade@back {SKILLS[bonus['key']]['name']}\n"
+                        output += f"@badDowngrade@back {SKILLS[bonus['key']]['name']} by {new-curr}({new})\n"
                         pass
                     elif new <= 0:
-                        output += f"@badForget@back {SKILLS[bonus['key']]['name']}\n"
+                        output += f"@badForget@back {SKILLS[bonus['key']]['name']} ({new})\n"
                     else: 
                         continue
                 else:
-                    output += f"{'@goodLearn@back ' if bonus['val'] >= 1 else '@badForget@back'}@normal {SKILLS[bonus['key']]['name']} \n"
+                    output += f"{'@goodLearn@back' if bonus['val'] >= 1 else '@badForget@back'}@normal {SKILLS[bonus['key']]['name']} \n"
+            '''
+            #t = Table(3,3)
+            for bonus in bonuses.values():
+                val = bonus['val']
+                curr = 0
+                new = bonus['val']
+                if bonus['key'] in identifier.skill_manager.skills:
+                    val = bonus['val']
+                    curr = identifier.skill_manager.skills[bonus['key']] 
+                    new = curr + val
+                
+                if new == curr:
+                    continue
 
+                t.add_data(f"{SKILLS[bonus['key']]['name']}")
+                if new < curr:
+                    t.add_data(f'{val}','@bad')
+                else:
+                    t.add_data(f'+{val}','@good')
+                t.add_data(f'({new})')
+                
+                
+            output += t.get_table()
             #print(bonuses)
 
             
