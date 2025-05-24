@@ -133,6 +133,8 @@ class Player(Actor):
         if command in one_letter_commands:
             script = getattr(self, commands[one_letter_commands[command]])
             self.last_command_used = one_letter_commands[command]
+            if self.settings_manager.debug == 1:
+                self.sendLine(commands[one_letter_commands[command]])
             script(line)
             return
 
@@ -144,6 +146,8 @@ class Player(Actor):
         
         script = getattr(self, commands[best_match])
         self.last_command_used = best_match
+        if self.settings_manager.debug == 1:
+            self.sendLine(str(commands[best_match]))
         script(line)
 
 # Compile all player functions

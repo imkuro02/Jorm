@@ -141,6 +141,8 @@ class AffectMageArmor(Affect):
                 return damage_obj
             case DamageType.HEALING:
                 return damage_obj
+            case DamageType.PURE:
+                return damage_obj
             case _:
                 hp_dmg = round(damage_obj.damage_value*(1 - self.reduction))
                 mp_dmg = round(damage_obj.damage_value*self.reduction)

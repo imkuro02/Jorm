@@ -17,5 +17,8 @@ This setting does nothing but is a fun fidget toy!
 viewroom: "settings viewroom [on/off]" display room information when you move
 viewmap: "settings viewmap [on/off]" display map when you move
 
+debug: "settings debug [on/off]" displays information about which command
+you are attempting to use.
+
 logout: "settings logout" logs you out and sends you to login screen.
 ................................................................................

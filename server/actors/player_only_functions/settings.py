@@ -12,8 +12,9 @@ class SETTINGS:
     PVP = 'pvp'
     RESET = 'reset'
     LOGOUT = 'logout'
+    DEBUG = 'debug'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG
     ]
 
 
@@ -22,7 +23,7 @@ LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = True, pvp = False):
+    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = True, pvp = False, debug = False):
         self.actor = actor
         if aliases == None:
             self.aliases = {}
@@ -33,6 +34,7 @@ class Settings:
         self.view_room = view_room
         self.view_map = view_map
         self.pvp = pvp
+        self.debug = debug
         
     def true_or_false(self, value):
         if value in LIST_ON:
@@ -109,6 +111,14 @@ class Settings:
                 value = line[1]
                 self.view_room = self.true_or_false(value)
                 self.actor.sendLine(f'PVP enabled: {self.pvp}')
+
+            case SETTINGS.DEBUG:
+                if len(line) == 1:
+                    self.actor.sendLine('Debug setting needs an argument (on or off?)')
+                    return
+                value = line[1]
+                self.debug = self.true_or_false(value)
+                self.actor.sendLine(f'Debug enabled: {self.debug}')
 
             case SETTINGS.LOGOUT:
                 proto = self.actor.protocol

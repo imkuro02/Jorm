@@ -492,6 +492,7 @@ def command_lore(self, line):
     if to_find in list_of_rooms:
         return
 
+    
     if to_find in list_of_skills:
         self.command_skills(to_find)
         output = '@tipItems with this skill@back:\n'
@@ -504,15 +505,17 @@ def command_lore(self, line):
         t.add_data('Name')
 
         sorted_items = {}
+        item_count = 0
         for i in LORE['items'].values():
             if i['item_type'] != ItemType.EQUIPMENT:
                 continue
             if LORE['skills'][to_find]['skill_id'] in str(i['bonuses']):
                 t.add_data(f"{i['requirements']['lvl']}.")
                 t.add_data(f"{i['name']}")
-
-        output += t.get_table()
-        self.sendLine(output)
+                item_count += 1
+        if item_count != 0:
+            output += t.get_table()
+            self.sendLine(output)
 
     
     return

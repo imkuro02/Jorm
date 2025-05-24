@@ -64,16 +64,13 @@ tutorial_1:
 
     help_practice:
       dialog: |
-        says "Whenever you level up, you get 20 practice points.
+        says "Whenever you level up, you get one practice point.
         Type "practice" to view all skills you can practice.
         When you find a skill that sounds interesting, type "skill [skill name]"
         This will show you more information about the skill.
 
         Then to actually practice;
-        You need to type "practice [skill name] [amount]"
-
-        You gain 20 points per level up. Try practicing now
-        Type "practice swing 20" this will make you spend 20 points in swing"
+        You need to type "practice [skill name]"
       options: 
         - say: What else?
           goto: help_me
@@ -94,8 +91,8 @@ tutorial_1:
       options:
         - say: How do I level up?
           goto: help_level
-        #- say: How do I practice skills?
-        #  goto: help_practice
+        - say: How do I practice skills?
+          goto: help_practice
         - say: What else?
           goto: help_help
         - say: I just want to leave

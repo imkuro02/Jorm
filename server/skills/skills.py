@@ -200,7 +200,7 @@ class SkillDamageByMind(SkillDamage):
         super().use(StatType.MIND, DamageType.MAGICAL)
 class SkillDamageBySoul(SkillDamage):
     def use(self):
-        super().use(StatType.SOUL, DamageType.MAGICAL)
+        super().use(StatType.SOUL, DamageType.PURE)
 
 class SkillBecomeEthereal(Skill):
     def use(self):

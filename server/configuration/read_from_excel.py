@@ -125,6 +125,7 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
                 'target_self_is_valid':     bool(x['target_self_is_valid'][index]),
                 'must_be_fighting':         bool(x['must_be_fighting'][index]),
                 'can_be_practiced':         bool(x['can_be_practiced'][index]),
+                'practice_cost':            int(x['practice_cost'][index]),
                 'level_req':                x['level_req'][index],
                 'use_perspectives':         USE_PERSPECTIVES[x['use_perspectives'][index]],
                 #'weight_low_hp_ally':       x['weight_low_hp_ally'][index],

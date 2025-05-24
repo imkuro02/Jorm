@@ -47,7 +47,7 @@ def command_level_up(self, stat):
     
     self.stat_manager.stats[StatType.LVL] += 1
     self.stat_manager.stats[stat] += 1
-    #self.stat_manager.stats[StatType.PP] += 20
+    self.stat_manager.stats[StatType.PP] += 1
 
     #hp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.GRIT] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
     #mp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.MIND] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
@@ -67,10 +67,10 @@ def command_level_up(self, stat):
 def command_practice(self, line):
     if len(line) <= 1:
         output = f'You have {self.stat_manager.stats[StatType.PP]} practice points left.\n'
-        t = utils.Table(3)
+        t = utils.Table(2)
         t.add_data('Skill')
-        t.add_data('Lvl')
-        t.add_data('Req')
+        t.add_data('Practiced')
+        #t.add_data('Req')
         for skill_id in SKILLS.keys():
             if SKILLS[skill_id]['can_be_practiced'] == False:
                 continue
@@ -78,37 +78,25 @@ def command_practice(self, line):
                 continue
 
             col = '@red'
+            cost = SKILLS[skill_id]['practice_cost']
             if skill_id not in self.skill_manager.skills.keys():
-                learned = 0
+                learned = f'{int(cost)} PP'
+                if cost <= self.stat_manager.stats[StatType.PP]:
+                    col = '@yellow'
             else:
-                learned = self.skill_manager.skills[skill_id]
-            if learned >= 1:
-                col = '@yellow'
-            if learned >= 50:
+                learned = 'Practiced'
                 col = '@green'
-            if learned >= 95:
-                col = '@bgreen'
 
             t.add_data(SKILLS[skill_id]["name"])
             t.add_data(learned, col)
-            t.add_data(int(SKILLS[skill_id]['level_req']))
+
         self.sendLine(t.get_table() + output)
     else:
-        line = line.split()
-        if len(line) < 2:
-            self.sendLine('@redWrong syntax for practicing@normal')
-            return
-        
-        try:
-            pp_to_spend = int(''.join(line[-1::1]))
-            line = " ".join(line[:-1:])
-        except ValueError as e:
-            self.sendLine('@redWrong syntax for practicing@normal')
-            return
-
         id_to_name, name_to_id = get_skills()
         skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
         skill_id = name_to_id[skill_name]
+
+        pp_to_spend = SKILLS[skill_id]['practice_cost']
 
         if skill_id not in SKILLS.keys():
             self.sendLine('This skill does not exist')
@@ -130,7 +118,7 @@ def command_practice(self, line):
             current_prac_level = self.skill_manager.skills[skill_id]
 
         #pp_to_spend = #new_prac_level - current_prac_level
-        new_prac_level = current_prac_level + pp_to_spend
+        new_prac_level = 1 #current_prac_level + pp_to_spend
         
         if pp_to_spend <= 0:
             self.sendLine('@redYou can\'t spend negative amount of Practice Points@normal')
@@ -150,7 +138,10 @@ def command_practice(self, line):
 
         
         self.stat_manager.stats[StatType.PP] -= pp_to_spend
-        self.sendLine(f'@greenYou spend {pp_to_spend} Practice Points on "{skill_name}"@normal')
+        if pp_to_spend == 1:
+            self.sendLine(f'@greenYou spend {pp_to_spend} Practice Point on "{skill_name}"@normal')
+        else:
+            self.sendLine(f'@greenYou spend {pp_to_spend} Practice Points on "{skill_name}"@normal')
         self.skill_manager.skills[skill_id] = new_prac_level
        
 def command_skills(self, line):
@@ -290,7 +281,7 @@ def command_stats(self, line):
     #exp_needed = self.get_exp_needed_to_level() - self.stat_manager.stats[StatType.EXP]
     #output += f'{StatType.name[StatType.LVL]} {self.stat_manager.stats[StatType.LVL]}\n'
     output += f'{StatType.name[StatType.EXP]}: {self.stat_manager.stats[StatType.EXP]}/{self.get_exp_needed_to_level()}\n'
-    #output += f'{StatType.name[StatType.PP]}: {self.stat_manager.stats[StatType.PP]}\n'
+    output += f'{StatType.name[StatType.PP]}: {self.stat_manager.stats[StatType.PP]}\n'
 
     self.sendLine(output)
 

@@ -84,7 +84,7 @@ commands = {
     'trade':    'command_trade',
     
     'level':    'command_level_up',
-    #'practice': 'command_practice',
+    'practice': 'command_practice',
 
     #'name':     'command_name_change',
     'stats':    'command_stats',
@@ -97,6 +97,7 @@ commands = {
 
     'identify': 'command_identify',
     'get':      'command_get',
+    'pick':     'command_get',
     'drop':     'command_drop',
     #'wear':     'command_wear',
     'keep':     'command_keep',
