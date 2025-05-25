@@ -16,7 +16,9 @@ class CombatEvent:
     def print(self):
         
         output_other = ''
+        output_self = ''
         sound = None
+        
         
 
         for pop in self.popped:
@@ -31,6 +33,7 @@ class CombatEvent:
                 case DamageType.PURE:
                     color = '@yellow'
             if not pop.silent:
+                #print(pop)
                 if pop.damage_type == DamageType.CANCELLED:
                     output_self =  f'You cancel {pop.damage_source_action.name}. '
                     output_other = f'{pop.damage_taker_actor.pretty_name()} cancels {pop.damage_source_action.name}. '
@@ -44,14 +47,16 @@ class CombatEvent:
                     output_other = f'{pop.damage_taker_actor.pretty_name()} blocks {color}{pop.damage_source_action.name}@back. '
                     sound = Audio.ERROR
                 else:
-                    output_self =f'You lose {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
+                    output_self = f'You lose {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
                     output_other = f'{pop.damage_taker_actor.pretty_name()} loses {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
                     sound = Audio.HURT
 
-        if output_other == '': 
-            return
+                pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound)
 
-        pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound)
+
+        
+
+        
         
         actors = []
         for actor in pop.damage_source_actor.room.actors.values():
