@@ -479,6 +479,6 @@ class Actor:
         print(f'sendLine called in a object class Npc function? line: {line}')
 
     def sendSound(self, sfx):
-        print(f'sendSound called in a object class Npc function? line: {line}')
+        print(f'sendSound called in a object class Npc function? line: {sfx}')
     
 

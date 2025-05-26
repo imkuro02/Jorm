@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_not_in_combat, check_alive
-from configuration.config import StatType, SKILLS, SkillScriptValuesToNames
+from configuration.config import StatType, SKILLS, SkillScriptValuesToNames, Audio
 from skills.manager import get_skills, get_user_skill_level_as_index
 import utils
 
@@ -297,6 +297,11 @@ def command_respec(self, line):
     #        self.sendLine('@redYou must unequip everything to respec@normal')
     #        return
 
+    if not self.room.can_be_recall_site:
+        self.sendLine('@redIt is not safe to respec here.@back')
+        self.sendSound(Audio.ERROR)
+        return
+    
     list_of_requips = []
     for i in self.slots_manager.slots.values():
         if i != None:
