@@ -9,8 +9,11 @@ def command_map(self, line):
 
     class Art:
         # all
-        GROUND =         '@yellow.'
+        GROUND =         '@yellow*'
+        NS =         '@yellow|'
+        EW =         '@yellow - '
         EMPTY =         ' '
+        WALL = '@yellow[#]'
 
         # middle
         RECALL_SITE =   '@green+'
@@ -158,12 +161,74 @@ def command_map(self, line):
             cell = ''
 
             if loc not in grid:
-                cell = Art.EMPTY*3
-                t.add_data(cell)
+                __x, __y = loc.split(',')
+                __x = int(__x)
+                __y = int(__y)
+                left  = f'{__x-1},{__y}'
+                right = f'{__x+1},{__y}'
+                north = f'{__x},{__y+1}'
+                south = f'{__x},{__y-1}'
+                ne  = f'{__x+1},{__y+1}'
+                nw = f'{__x-1},{__y+1}'
+                se = f'{__x+1},{__y-1}'
+                sw = f'{__x-1},{__y-1}'
+                walled = False
+
+                if not walled:
+                    if left not in grid and right not in grid and north not in grid and south not in grid and ne not in grid and nw not in grid and se not in grid and sw not in grid:
+                        cell = Art.EMPTY*3
+                        t.add_data(cell)
+                        walled = True
+                        continue 
+
+                if not walled:
+                    if left not in grid or right not in grid:
+                        cell = Art.WALL #Art.EMPTY*3
+                        t.add_data(cell)  
+                        walled = True
+                        continue
+
+                if not walled:
+                    if north not in grid or south not in grid:
+                        cell = Art.WALL #Art.EMPTY*3
+                        t.add_data(cell)  
+                        walled = True
+                        continue
+                
+                if not walled:
+                    cell = Art.EMPTY*3
+                    t.add_data(cell) 
                 continue
             
+            #if grid[loc] == 'PATH':
+            #    cell = ' '+Art.GROUND+' '
+            #    t.add_data(cell)
+            #    continue
+
             if grid[loc] == 'PATH':
+                __x, __y = loc.split(',')
+                __x = int(__x)
+                __y = int(__y)
+                left  = f'{__x-1},{__y}'
+                right = f'{__x+1},{__y}'
+                north = f'{__x},{__y+1}'
+                south = f'{__x},{__y-1}'
                 cell = ' '+Art.GROUND+' '
+                _left = left in grid
+                _right = right in grid
+                _north = north in grid
+                _south = south in grid
+
+                if _left or _right:
+                    cell = ' '+Art.NS+' '
+                if _north or _south:
+                    cell = ''+Art.EW+''
+                cross = 0
+                for i in [_left,_right,_south,_north]:
+                    cross += i
+                if cross >= 3:
+                    cell = ' + '
+
                 t.add_data(cell)
                 continue
 
@@ -197,10 +262,7 @@ def command_map(self, line):
             else:
                 cell += Art.EMPTY
 
-            if grid[loc] == 'PATH':
-                cell = ' '+Art.GROUND+' '
-                t.add_data(cell)
-                continue
+            
 
             t.add_data(cell)
 
