@@ -81,7 +81,7 @@ def command_use(self, line):
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
         action = utils.get_match(action, {**self.inventory_manager.items, **skills_dict})
-        target = utils.get_match(target, {**self.inventory_manager.items, **self.room.actors})
+        target = utils.get_match(target, {**self.room.actors, **self.inventory_manager.items})
 
     #self.sendLine(action.name)
 
