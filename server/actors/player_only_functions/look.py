@@ -4,7 +4,7 @@ import utils
 
 def command_map(self, line):
     room_id = self.room.id
-    VIEW_RANGE = 5
+    VIEW_RANGE = 4
     START_LOC = f'{VIEW_RANGE},{VIEW_RANGE}'
 
     class Art:
