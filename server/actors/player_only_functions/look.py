@@ -3,6 +3,7 @@ from configuration.config import ActorStatusType
 import utils
 
 def command_map(self, line):
+    setting_render_walls = False
     room_id = self.room.id
     VIEW_RANGE = 4
     START_LOC = f'{VIEW_RANGE},{VIEW_RANGE}'
@@ -10,10 +11,11 @@ def command_map(self, line):
     class Art:
         # all
         GROUND =         '@yellow.'
-        NS =         '@yellow|'
-        EW =         '@yellow - '
+        NS =         '@yellow:'
+        EW =         '@yellow---'
         EMPTY =         ' '
         WALL = '@wall[/]'
+        DOOR ='@red/'
 
         # middle
         RECALL_SITE =   '@green+'
@@ -94,7 +96,7 @@ def command_map(self, line):
     for r in grid:
         _grid[r] = grid[r]
         
-    for r in range(0,VIEW_RANGE*2):
+    for r in range(0,VIEW_RANGE*4):
         for room_loc in _grid:
             #print(_grid[room_loc])
             if grid[room_loc] == 'PATH':
@@ -107,6 +109,7 @@ def command_map(self, line):
 
             _x = int(room_loc.split(',')[0])
             _y = int(room_loc.split(',')[1])
+
             for _exit in room.exits:
                 if _exit.direction not in offsets:
                     continue
@@ -167,6 +170,9 @@ def command_map(self, line):
             
             cell = ''
 
+            _grid = grid
+
+
             if loc not in grid:
                 __x, __y, = map(int, loc.split(','))
                 
@@ -180,31 +186,40 @@ def command_map(self, line):
                     'se': f'{__x+1},{__y-1}',
                     'sw': f'{__x-1},{__y-1}'
                 }
+
                 walled = False
+                '''
+                if any(
+                    d in grid and grid[d] in self.room.world.rooms and self.room.world.rooms[grid[d]].doorway is True
+                    for d in directions.values()
+                ):
+                    cell = 'x' * 3
+                    t.add_data(cell)
+                    walled = True
+                    continue
+                '''
+                if not setting_render_walls:
+                    if not walled:
+                        #if d['n'] not in grid and d['w'] not in grid and d['e'] not in grid and d['s'] not in grid     and d['sw'] not in grid and d['se'] not in grid and d['nw'] not in grid and d['ne'] not in grid:
+                        if all(d not in grid for d in directions.values()):
+                            cell = Art.EMPTY * 3
+                            t.add_data(cell)
+                            walled = True
+                            continue
+                            
+                    if not walled:
+                        if directions['w'] not in grid or directions['e'] not in grid:
+                            cell = Art.WALL #Art.EMPTY*3
+                            t.add_data(cell)  
+                            walled = True
+                            continue
 
-                if not walled:
-                    d = directions
-                    # if d['n'] not in grid and d['w'] not in grid and d['e'] not in grid and d['s'] not in grid     and d['sw'] not in grid and d['se'] not in grid and d['nw'] not in grid and d['ne'] not in grid:
-                    if all(d not in grid for d in directions.values()):
-                        cell = Art.EMPTY * 3
-                        t.add_data(cell)
-                        walled = True
-                        continue
-                
-
-                if not walled:
-                    if directions['w'] not in grid or directions['e'] not in grid:
-                        cell = Art.WALL #Art.EMPTY*3
-                        t.add_data(cell)  
-                        walled = True
-                        continue
-
-                if not walled:
-                    if directions['n'] not in grid or directions['s'] not in grid:
-                        cell = Art.WALL #Art.EMPTY*3
-                        t.add_data(cell)  
-                        walled = True
-                        continue
+                    if not walled:
+                        if directions['n'] not in grid or directions['s'] not in grid:
+                            cell = Art.WALL #Art.EMPTY*3
+                            t.add_data(cell)  
+                            walled = True
+                            continue
                 
                 if not walled:
                     cell = Art.EMPTY*3
@@ -215,7 +230,8 @@ def command_map(self, line):
             #    cell = ' '+Art.GROUND+' '
             #    t.add_data(cell)
             #    continue
-           
+            
+
             if grid[loc] == 'PATH':
                 __x, __y = loc.split(',')
                 __x = int(__x)
@@ -255,12 +271,15 @@ def command_map(self, line):
             # mid
             if 100 == 10:
                 pass
+            
             elif room.can_be_recall_site and loc == START_LOC:
                 cell += Art.RECALL_SITE_AND_PLAYER
             elif len([ x for x in room.exits if x.direction not in offsets ]) != 0 and loc == START_LOC: #set(offsets.keys()) - set(grid[loc].exits.keys()):
                 cell += Art.SPECIAL_EXIT_AND_PLAYER
             elif loc == START_LOC:
                 cell += Art.PLAYER_HERE
+            elif room.doorway:
+                cell += Art.DOOR
             elif room.can_be_recall_site:
                 cell += Art.RECALL_SITE
             elif len([ x for x in room.exits if x.direction not in offsets ]) != 0:
