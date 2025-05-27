@@ -101,6 +101,10 @@ def command_map(self, line):
                 continue
 
             room = self.protocol.factory.world.rooms[grid[room_loc]]
+            
+            #if room.id == 'overworld/d60632d8-22bd-43c2-aafa-e98e0f62b106':
+            #    continue
+
             _x = int(room_loc.split(',')[0])
             _y = int(room_loc.split(',')[1])
             for _exit in room.exits:
@@ -110,6 +114,7 @@ def command_map(self, line):
                     continue
                 if _exit.item_required != None:
                     continue
+                
                 # do not duplicate if room leads to one that already is placed
                 #if _exit.to_room_id in grid.values():
                 #    continue
@@ -126,6 +131,7 @@ def command_map(self, line):
                 if _exit.to_room_id not in grid.values():
                     if _loc in grid:
                         continue
+                    
                     grid[_loc] = _exit.to_room_id 
                                   
                 
@@ -162,35 +168,39 @@ def command_map(self, line):
             cell = ''
 
             if loc not in grid:
-                __x, __y = loc.split(',')
-                __x = int(__x)
-                __y = int(__y)
-                left  = f'{__x-1},{__y}'
-                right = f'{__x+1},{__y}'
-                north = f'{__x},{__y+1}'
-                south = f'{__x},{__y-1}'
-                ne  = f'{__x+1},{__y+1}'
-                nw = f'{__x-1},{__y+1}'
-                se = f'{__x+1},{__y-1}'
-                sw = f'{__x-1},{__y-1}'
+                __x, __y, = map(int, loc.split(','))
+                
+                directions = {
+                    'w': f'{__x-1},{__y}',
+                    'e': f'{__x+1},{__y}',
+                    'n': f'{__x},{__y+1}',
+                    's': f'{__x},{__y-1}',
+                    'ne': f'{__x+1},{__y+1}',
+                    'nw': f'{__x-1},{__y+1}',
+                    'se': f'{__x+1},{__y-1}',
+                    'sw': f'{__x-1},{__y-1}'
+                }
                 walled = False
 
                 if not walled:
-                    if left not in grid and right not in grid and north not in grid and south not in grid and ne not in grid and nw not in grid and se not in grid and sw not in grid:
-                        cell = Art.EMPTY*3
+                    d = directions
+                    # if d['n'] not in grid and d['w'] not in grid and d['e'] not in grid and d['s'] not in grid     and d['sw'] not in grid and d['se'] not in grid and d['nw'] not in grid and d['ne'] not in grid:
+                    if all(d not in grid for d in directions.values()):
+                        cell = Art.EMPTY * 3
                         t.add_data(cell)
                         walled = True
-                        continue 
+                        continue
+                
 
                 if not walled:
-                    if left not in grid or right not in grid:
+                    if directions['w'] not in grid or directions['e'] not in grid:
                         cell = Art.WALL #Art.EMPTY*3
                         t.add_data(cell)  
                         walled = True
                         continue
 
                 if not walled:
-                    if north not in grid or south not in grid:
+                    if directions['n'] not in grid or directions['s'] not in grid:
                         cell = Art.WALL #Art.EMPTY*3
                         t.add_data(cell)  
                         walled = True
@@ -205,7 +215,7 @@ def command_map(self, line):
             #    cell = ' '+Art.GROUND+' '
             #    t.add_data(cell)
             #    continue
-
+           
             if grid[loc] == 'PATH':
                 __x, __y = loc.split(',')
                 __x = int(__x)
@@ -234,6 +244,7 @@ def command_map(self, line):
                 continue
 
             room = self.protocol.factory.world.rooms[grid[loc]]
+           
             #print(room)
             # left
             if 'up' in [ x.direction for x in room.exits ]:
