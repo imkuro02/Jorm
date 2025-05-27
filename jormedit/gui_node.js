@@ -71,6 +71,12 @@ nodeGroup.appendChild(nodeInstancedInput);
 nodeGroup.appendChild(label('instanced'));
 nodeGroup.appendChild(br());
 
+const nodeDoorwayInput = document.createElement("input");
+nodeDoorwayInput.type = 'checkbox';
+nodeGroup.appendChild(nodeDoorwayInput);
+nodeGroup.appendChild(label('doorway'));
+nodeGroup.appendChild(br());
+
 nodeGroup.appendChild(label('spawner syntax'));
 nodeGroup.appendChild(br());
 const nodeSpawnGroupInput = document.createElement("textarea");
@@ -125,6 +131,12 @@ function guiNodeSetSelectedNode(node){
             nodeInstancedInput.checked = false;
         }
 
+        if (typeof data['doorway'] !== "undefined"){
+            nodeDoorwayInput.checked = data['doorway'];
+        } else {
+            nodeDoorwayInput.checked = false;
+        }
+
         if (typeof data['spawner'] !== "undefined"){
             nodeSpawnGroupInput.value = data['spawner'];
         } else {
@@ -142,7 +154,9 @@ function save_json() {
         'description': nodeDescInput.value,
         'can_be_recall_site': nodeCanBeRecallSiteInput.checked,
         'instanced': nodeInstancedInput.checked,
+        'doorway': nodeDoorwayInput.checked,
         'spawner': nodeSpawnGroupInput.value
+
     };
 
     for (const key in data) {

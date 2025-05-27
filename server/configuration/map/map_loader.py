@@ -27,6 +27,7 @@ def load_map():
         room_desc = 'There is nothing noteworthy here'
         room_safe = False
         room_instanced = False
+        room_doorway = False
         room_spawner = []
         room_from_file = data['from_file']
         
@@ -69,6 +70,9 @@ def load_map():
         if 'can_be_recall_site' in json_data:
             room_safe = json_data['can_be_recall_site']
 
+        if 'doorway' in json_data:
+            room_doorway = json_data['doorway']
+
         if 'spawner' in json_data:
             for i in [json_data['spawner'].split('\n')]:
                 for x in i:
@@ -82,6 +86,7 @@ def load_map():
             'exits': [],
             'can_be_recall_site': room_safe,
             'instanced': room_instanced,
+            'doorway': room_doorway,
             'spawner': room_spawner,
             'from_file': room_from_file
             #'items': room_items

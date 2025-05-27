@@ -4,7 +4,7 @@ import utils
 
 def command_map(self, line):
     room_id = self.room.id
-    VIEW_RANGE = 4
+    VIEW_RANGE = 5
     START_LOC = f'{VIEW_RANGE},{VIEW_RANGE}'
 
     class Art:
@@ -94,7 +94,7 @@ def command_map(self, line):
     for r in grid:
         _grid[r] = grid[r]
         
-    for r in range(0,VIEW_RANGE):
+    for r in range(0,VIEW_RANGE*2):
         for room_loc in _grid:
             #print(_grid[room_loc])
             if grid[room_loc] == 'PATH':
@@ -102,8 +102,8 @@ def command_map(self, line):
 
             room = self.protocol.factory.world.rooms[grid[room_loc]]
             
-            #if room.id == 'overworld/d60632d8-22bd-43c2-aafa-e98e0f62b106':
-            #    continue
+            if room.doorway:
+                continue
 
             _x = int(room_loc.split(',')[0])
             _y = int(room_loc.split(',')[1])
@@ -112,8 +112,8 @@ def command_map(self, line):
                     continue
                 if _exit.secret:
                     continue
-                if _exit.item_required != None:
-                    continue
+                #if _exit.item_required != None:
+                #    continue
                 
                 # do not duplicate if room leads to one that already is placed
                 #if _exit.to_room_id in grid.values():
