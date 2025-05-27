@@ -39,7 +39,7 @@ colors = {
     '@bcyan':   '\x1b[1;36m', 
     '@bwhite':  '\x1b[1;37m', 
 
-    '@bgred':   '\x1b[0;46m',
+    '@bgred':   '\x1b[0;41m',
 
 
     '@good':    '\x1b[0;32m',
@@ -52,6 +52,8 @@ colors = {
     '@color':   '\x1b[0;00y',
     #'@skill':   '\x1b[0;35m',
     '@stat':    '\x1b[0;35m',
+    '@wall':    '\x1b[41;30m'
+    
 }
 
 def match_word(word: str, l: list, get_score = False):

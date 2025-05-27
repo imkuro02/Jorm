@@ -9,11 +9,11 @@ def command_map(self, line):
 
     class Art:
         # all
-        GROUND =         '@yellow*'
+        GROUND =         '@yellow.'
         NS =         '@yellow|'
         EW =         '@yellow - '
         EMPTY =         ' '
-        WALL = '@yellow[#]'
+        WALL = '@wall[/]'
 
         # middle
         RECALL_SITE =   '@green+'
@@ -122,6 +122,7 @@ def command_map(self, line):
                 #if _loc not in grid:
                 #    continue
 
+                #print(_exit.to_room_id, grid.values())
                 if _exit.to_room_id not in grid.values():
                     if _loc in grid:
                         continue
