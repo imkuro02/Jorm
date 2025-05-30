@@ -5,17 +5,18 @@ import utils
 def command_map(self, line):
     setting_render_walls = False
     room_id = self.room.id
-    VIEW_RANGE = 4
+    VIEW_RANGE = 7
     START_LOC = f'{VIEW_RANGE},{VIEW_RANGE}'
 
     class Art:
         # all
-        GROUND =         '@yellow.'
+        GROUND =         '@yellow#'
         NS =         '@yellow:'
         EW =         '@yellow---'
-        EMPTY =         ' '
-        WALL = '@wall[/]'
-        DOOR ='@red/'
+        EMPTY = ' '
+        EMPTYWALL =         '@wall   '
+        WALL = '@wall[#]'
+        DOOR ='@yellow/'
 
         # middle
         RECALL_SITE =   '@green+'
@@ -202,7 +203,8 @@ def command_map(self, line):
                     if not walled:
                         #if d['n'] not in grid and d['w'] not in grid and d['e'] not in grid and d['s'] not in grid     and d['sw'] not in grid and d['se'] not in grid and d['nw'] not in grid and d['ne'] not in grid:
                         if all(d not in grid for d in directions.values()):
-                            cell = Art.EMPTY * 3
+                            cell = Art.EMPTYWALL * 1
+                            #cell = Art.EMPTY * 3
                             t.add_data(cell)
                             walled = True
                             continue

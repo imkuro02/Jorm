@@ -121,8 +121,10 @@
         }
 
         @font-face {
+            /*
             font-family: 'Comic Mono';
             src: url('ComicMono.ttf') format('truetype');
+            */
             font-weight: normal;
             font-style: normal;
         }
@@ -260,6 +262,14 @@
             appendMessage('Connected to WebSocket server.');
         };
 
+        function fixEncoding(mojibakeStr) {
+            // Convert ISO-8859-1 bytes to a Uint8Array
+            const bytes = new Uint8Array([...mojibakeStr].map(c => c.charCodeAt(0)));
+            
+            // Decode as UTF-8
+            return new TextDecoder('utf-8').decode(bytes);
+        }
+
         // Handle messages from the server
         socket.onmessage = async (event) => {
             
@@ -270,17 +280,20 @@
             // ignore the iac will gmcp packet
             // TEMPORARY,, the client should accept and the server should be able to kno dat
             result = result.replace('\\xff\\xfb\\xc9','');
+            
 
             // get text without any gmcp data.
             // this functions handles gmcp stuff
             let text = extractGmcpData(result);
-
+            
             // replace all the other binary slop with different kind of binary slop
             // because js sucks and i just want to get done with it
             // this is needed, otherwise ansiup doesnt know how to color the text...
             text = text.replace(/\\x([0-9A-Fa-f]{2})/g, (match, hex) => {
                 return String.fromCharCode(parseInt(hex, 16));
             });
+
+            text = fixEncoding(text);
             
             /**
              * If input is a password, change input type to password.  
@@ -291,7 +304,7 @@
             **/
             var prev_type = input.type;
             
-            console.log(text)
+            
             if (text === "Your \u001b[1;32mpassword\u001b[0m:\n" || 
                 text === "Enter your \u001b[1;32mpassword\u001b[0m:\n" ||
                 text === "Enter \u001b[1;32mpassword\u001b[0m again:\n") {
