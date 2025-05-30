@@ -52,7 +52,8 @@ colors = {
     '@color':   '\x1b[0;00y',
     #'@skill':   '\x1b[0;35m',
     '@stat':    '\x1b[0;35m',
-    '@wall':    '\x1b[41;30m'
+    #'@wall':    '\x1b[41;30m'
+    '@wall':    '\x1b[43;30m'
     
 }
 

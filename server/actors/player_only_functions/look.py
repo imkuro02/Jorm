@@ -15,7 +15,7 @@ def command_map(self, line):
         EW =         '@yellow---'
         EMPTY = ' '
         EMPTYWALL =         '@wall   '
-        WALL = '@wall[#]'
+        WALL = '@wall   '
         DOOR ='@yellow/'
 
         # middle
@@ -203,8 +203,8 @@ def command_map(self, line):
                     if not walled:
                         #if d['n'] not in grid and d['w'] not in grid and d['e'] not in grid and d['s'] not in grid     and d['sw'] not in grid and d['se'] not in grid and d['nw'] not in grid and d['ne'] not in grid:
                         if all(d not in grid for d in directions.values()):
-                            cell = Art.EMPTYWALL * 1
-                            #cell = Art.EMPTY * 3
+                            #cell = Art.EMPTYWALL * 1
+                            cell = Art.EMPTY * 3
                             t.add_data(cell)
                             walled = True
                             continue
