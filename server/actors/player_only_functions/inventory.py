@@ -31,13 +31,6 @@ def command_get(self, line):
                 self.sendLine('Your Inventory is full') 
         return
     '''
-    # get up and pick up should work now
-    line = line.split()
-    if line[0] == 'up':
-        line = ' '.join(line[1::])
-    else:
-        line = ' '.join(line)
-
 
     item = self.get_item(line, search_mode = 'room')
     if item == None:

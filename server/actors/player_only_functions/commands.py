@@ -97,7 +97,6 @@ commands = {
 
     'identify': 'command_identify',
     'get':      'command_get',
-    'pick':     'command_get',
     'drop':     'command_drop',
     #'wear':     'command_wear',
     'keep':     'command_keep',
@@ -143,3 +142,30 @@ for i in shortcuts_to_commands:
 import actors.player_only_functions.settings
 actors.player_only_functions.settings.BANNED_ALIASES = ALL_COMMANDS
 '''
+
+translations = {
+    'talk to ':          'talk ',
+    'talk with':         'talk ',
+    
+    'pick up ':          'get ',
+    'pick up item ':     'get ',
+    'pick up items ':    'get ',
+
+    'take ':             'get ',
+    'take item ':        'get ',
+    'take items ':       'get ',
+
+    'get item ':         'get ',
+    'get items ':        'get ',
+
+    'leave party':       'party leave',
+    'create party':      'party create',
+
+    'wear ':             'equipment ',
+    'unwear ':           'equipment ',
+    'remove ':           'equipment ',
+    'wield':             'equipment ',
+    'take off':          'equipment ',
+
+    'go to ':            'go '
+}

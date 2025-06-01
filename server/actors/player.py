@@ -2,7 +2,7 @@ from actors.actor import Actor
 import utils
 from trade import TradeManager
 # import commands maps
-from actors.player_only_functions.commands import one_letter_commands, commands, shortcuts_to_commands
+from actors.player_only_functions.commands import one_letter_commands, commands, shortcuts_to_commands, translations
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands 
 from configuration.config import StatType
@@ -93,6 +93,13 @@ class Player(Actor):
         return
 
     def handle(self, line):
+        #print(line)
+        for trans in translations:
+            if line.startswith(trans):
+                line = translations[trans] + line[len(trans):]
+                
+        
+
         # empty lines are handled as resend last line
 
         # try to send answer to dialog
