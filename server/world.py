@@ -189,7 +189,7 @@ class Room:
 
     def is_enemy_present(self):
         for i in self.actors.values():
-            if type(i).__name__ == 'Enemy':
+            if type(i).__name__ != 'Player':
                 return i
         return False
 

@@ -236,7 +236,7 @@ class Quest:
             if completed == False and objective.is_completed() and objective.type != OBJECTIVE_TYPES.TURNED_IN:
                 # this is buggy cuz it displays quest completed BEFORE stuff actually happnes
                 # like before loot is displayed as picked up for example
-                self.quest_manager.actor.sendLine(f'@green{QUESTS[objective.quest_id]["name"]}: {objective.name} completed@normal')
+                self.quest_manager.actor.sendLine(f'@green{QUESTS[objective.quest_id]["name"]}@back: {objective.name} completed@normal')
             if proposal_accepted:
                 continue
 

@@ -1,0 +1,17 @@
+thief:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "What are YOU looking at?"
+      - line: |
+          says "Your pockets look heavy..."
+      - line: |
+          glares at you
+      - line: |
+          says "Keep moving..."
+      - line: |
+          says "Don't think you are tough shit just because you can handle a few rodents"
+        quest_check:
+        - id: rat_king
+          state: turned_in

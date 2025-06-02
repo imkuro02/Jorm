@@ -2,6 +2,6 @@ guard_coward:
   tree:
     start:
       dialog: 
-        - |
-          says "Step away from the gate"
+        - line: |
+            says "Step away from the gate"
     

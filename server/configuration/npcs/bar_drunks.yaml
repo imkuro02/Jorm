@@ -1,0 +1,25 @@
+bar_drunk_1:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Aye!"
+      - line: |
+          Burps loudly!
+      - line: |
+          says "Ayeee!!"
+      - line: |
+          says "Wooo!!!"
+
+bar_drunk_0:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Aye!"
+      - line: |
+          Burps loudly!
+      - line: |
+          says "Ayeee!!"
+      - line: |
+          says "Wooo!!!"

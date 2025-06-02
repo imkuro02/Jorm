@@ -2,10 +2,10 @@ tutorial_1:
   tree:
     start:
       dialog: 
-        - | 
-          says "Hello there"
-        - | 
-          says "Greetings"
+        - line: | 
+            says "Hello there"
+        - line: | 
+            says "Greetings"
       options:
         - say: Where am I?
           goto: where_am_i
@@ -47,47 +47,51 @@ tutorial_1:
               state: turned_in
             
     help_level:
-      dialog: |
-        says "Ah! use the "level" command to level up.
-        You can level one of four main stats,
-        Grit, Flow, Mind and Soul
+      dialog: 
+        - line: |
+            says "Ah! use the "level" command to level up.
+            You can level one of four main stats,
+            Grit, Flow, Mind and Soul
 
-        You can type "stats" to view your current stats
+            You can type "stats" to view your current stats
 
-        type "level grit" to level up grit.
-        type "level soul" to level up soul.
+            type "level grit" to level up grit.
+            type "level soul" to level up soul.
 
-        simple right?"
+            simple right?"
       options: 
         - say: What else?
           goto: help_me
 
     help_practice:
-      dialog: |
-        says "Whenever you level up, you get one practice point.
-        Type "practice" to view all skills you can practice.
-        When you find a skill that sounds interesting, type "skill [skill name]"
-        This will show you more information about the skill.
+      dialog:
+        - line: |
+            says "Whenever you level up, you get one practice point.
+            Type "practice" to view all skills you can practice.
+            When you find a skill that sounds interesting, type "skill [skill name]"
+            This will show you more information about the skill.
 
-        Then to actually practice;
-        You need to type "practice [skill name]"
+            Then to actually practice;
+            You need to type "practice [skill name]"
       options: 
         - say: What else?
           goto: help_me
 
     help_help:
-      dialog: |
-        says "Im not a dictionary, but if you need one"
-        they scratch their chin and say 
-        "use the "help" command to quickly find whatever it is 
-        you are curious about"
+      dialog: 
+      - line: |
+          says "Im not a dictionary, but if you need one"
+          they scratch their chin and say 
+          "use the "help" command to quickly find whatever it is 
+          you are curious about"
       options: 
         - say: What else?
           goto: help_me
 
     help_me:
-      dialog: |
-        says "I can teach you a bunch of stuff!"
+      dialog:
+      - line: |
+          says "I can teach you a bunch of stuff!"
       options:
         - say: How do I level up?
           goto: help_level
@@ -100,59 +104,67 @@ tutorial_1:
       
       
     quest_already_turned_in:
-      dialog: |
-        says "just go to the south-east corner. 
-        Then type "go crossroad" to leave"
+      dialog: 
+      - line: |
+          says "just go to the south-east corner. 
+          Then type "go crossroad" to leave"
     quest_turn_in_failed:
-      dialog: |
-        looks you up and down then says "well where is it?"
-        The corpse is not in your inventory 
-        "You probably didn't pick it up"
+      dialog: 
+      - line: |
+          looks you up and down then says "well where is it?"
+          The corpse is not in your inventory 
+          "You probably didn't pick it up"
     quest_turn_in_success:
-      dialog: |
-        says "Ah! perfect, this will make a fine snack"
-        They smile "but before you go, You should level up first"
+      dialog:
+      - line: |
+          says "Ah! perfect, this will make a fine snack"
+          They smile "but before you go, You should level up first"
       options: 
         - say: Level up?
           goto: help_level
         - say: I just want to leave
           goto: quest_already_turned_in
     tutorial_1_in_progress_help:
-      dialog: |
-        says "As I already told you, go to the Northern wall, and go into the hole.
-        There you will find an enemy, kill it, and bring me the corpse"
+      dialog:
+      - line: |
+          says "As I already told you, go to the Northern wall, and go into the hole.
+          There you will find an enemy, kill it, and bring me the corpse"
       options:
         - say: How do I kill it?
           goto: how_to_fight
         - say: Why?
           goto: why_fight
     start_tutorial_1:
-      dialog: |
-        says "Simple, go to the Northern wall, crawl into the hole.
-        kill whatever is there, and bring me the corpse"
+      dialog: 
+      - line: |
+          says "Simple, go to the Northern wall, crawl into the hole.
+          kill whatever is there, and bring me the corpse"
       options:
         - say: How do I kill it?
           goto: how_to_fight
         - say: Why?
           goto: why_fight
     how_to_fight:
-      dialog: |
-        says "fighting is very simple.
-        To start a fight type @tip"fight"@back. 
-        This will put you in combat with all enemies in the room.
+      dialog:
+      - line: |
+          says "fighting is very simple.
+          To start a fight type @tip"fight"@back. 
+          This will put you in combat with all enemies in the room.
 
-        to actually fight them, you need to use your skills during your turn.
-        type @tip"skills"@back to view all your skills.
-        and when in combat type @tip"use [skill] on [enemy]"@back to use your skills on them."
+          to actually fight them, you need to use your skills during your turn.
+          type @tip"skills"@back to view all your skills.
+          and when in combat type @tip"use [skill] on [enemy]"@back to use your skills on them."
     why_fight:
-      dialog: |
-        says "Just do it" 
+      dialog: 
+      - line: |
+          says "Just do it" 
       options:
         - say: How do I kill it?
           goto: how_to_fight
     where_am_i:
-      dialog: |
-        says "A sanctuary of sorts"
+      dialog: 
+      - line: |
+          says "A sanctuary of sorts"
       options:
         - say: How do I get out?
           goto: start_tutorial_1

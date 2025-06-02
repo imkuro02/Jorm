@@ -71,10 +71,24 @@ class Dialog:
 
     def print_dialog(self):
         dialog_line = self.dialog_tree[self.current_line]['dialog']
-        if type(dialog_line) == list:
-            output = f'{self.npc.pretty_name()} '+random.choice(dialog_line)+'@normal'
-        else:
-            output = f'{self.npc.pretty_name()} '+dialog_line+'@normal'
+
+        available_dialogs = []
+        for option in self.dialog_tree[self.current_line]['dialog']:
+            dic = {}
+            if 'quest_check' in option:
+                this_option_is_good = True
+                for check in option['quest_check']:
+                    quest_id =      check['id']
+                    quest_state =   check['state']
+
+                    if not self.player.quest_manager.check_quest_state(quest_id) == quest_state:
+                        this_option_is_good = False
+
+                if not this_option_is_good:
+                    continue
+            available_dialogs.append(option)
+        output = f'{self.npc.pretty_name()} '+random.choice(available_dialogs)['line']+'@normal'
+
 
 
         #print('>',output)

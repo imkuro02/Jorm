@@ -2,19 +2,43 @@ bartender:
   tree:
     start:
       dialog: 
-        - |
-          says "Take a seat, or don't... I don't car..."
-        - |
-          says "Life is meaningless and im going to kill myself"
-        - |
-          burps loudly
+        - line: |
+            says "Take a seat, or don't... I don't car..."
+          quest_check:
+          - id: rat_king
+            state: not_started
+        - line: |
+            says "Life is meaningless and im going to kill myself"
+          quest_check:
+          - id: rat_king
+            state: not_started
+        - line: |
+            says "Is it done?"
+          quest_check:
+          - id: rat_king
+            state: in_progress
+        - line: |
+            says "Is it done?"
+          quest_check:
+          - id: rat_king
+            state: completed
+        - line: |
+            says "Thanks for the help with the rat problem, appreciate it!"
+          quest_check:
+            - id: rat_king
+              state: turned_in
       options:
         - say: How are you?
           goto: not_started
           quest_check:
             - id: rat_king
               state: not_started
-        - say: I took care of your problem.
+        - say: No.
+          goto: in_progress
+          quest_check:
+          - id: rat_king
+            state: in_progress
+        - say: Yes.
           goto: completed
           quest_check:
             - id: rat_king
@@ -24,15 +48,18 @@ bartender:
             reward_exp: 50
             reward:
               - beer_stein
-              
+    in_progress:
+      dialog: 
+      - line: |
+          says "Oh..."
     not_started:
       dialog:
-        - |
-          says "Been better, these dang rats keep gnawing at my boots.
-          There is a big rat problem in this tavern, if you find the key
-          to the cellar, would you mind helping me out?"
+        - line: |
+            says "Been better, these dang rats keep gnawing at my boots.
+            There is a big rat problem in this tavern, if you find the key
+            to the cellar, would you mind helping me out?"
 
-          They point behind them at a beer keg "I'll pay you for your effors"
+            They point behind them at a beer keg "I'll pay you for your effors"
       options:
         - say: Sure
           goto: accepted
@@ -42,15 +69,15 @@ bartender:
           goto: declined
     accepted:
       dialog: 
-        - |
-          says "Thank you, I lost my key, but it should be here somewhere"
+        - line: |
+            says "Thank you, I lost my key, but it should be here somewhere"
     declined:
       dialog:
-        - | 
-          says "Bummer..."
+        - line: | 
+            says "Bummer..."
     completed:
       dialog:
-        - |
-          says "Good job! here take this"
+        - line: |
+            says "Good job! here take this"
    
       
