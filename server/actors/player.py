@@ -15,7 +15,7 @@ class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
         self.protocol = protocol
         self.admin = 0
-        
+        self.queued_lines = []
 
         super().__init__(name = name, room = room, _id = _id)
 
@@ -62,12 +62,10 @@ class Player(Actor):
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
 
-    #def combat_over_prompt(self):
-    #    self.sendLine('@yellowCombat over!@normal')
-    #    if (self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level()):
-    #        self.sendLine('@greenYou can level up!@back')
-    #    else:
-    #        self.sendLine(f'@yellowNext level@back: @green{int((self.stat_manager.stats[StatType.EXP]/self.get_exp_needed_to_level())*100)}@back%')
+        if len(self.queued_lines) >= 1:
+            self.handle(self.queued_lines[0])
+            self.queued_lines.pop(0)
+
     
     def sendSound(self, sfx):
         self.protocol.send_gmcp({'name':sfx}, 'Client.Media.Play')
@@ -91,6 +89,9 @@ class Player(Actor):
             #self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
             self.protocol.transport.write(line.encode('utf-8'))
         return
+
+    def queue_handle(self, line):
+        self.queued_lines.append(line)
 
     def handle(self, line):
         #print(line)

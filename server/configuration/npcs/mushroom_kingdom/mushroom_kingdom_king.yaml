@@ -1,0 +1,8 @@
+mushroom_kingdom_king:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          fidgets with their scepter nervously.
+     
+

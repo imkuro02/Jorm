@@ -1,0 +1,35 @@
+mushroom_kingdom_queen:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Lovely to meet you"
+
+mushroom_kingdom_citizen:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Aye!"
+
+mushroom_kingdom_entrance_guard:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "My cap will fall before the day this gate is breached!"
+      - line: |
+          says "Halt!... Nevermind..."
+      - line: |
+          says "We don't see non-mushrooms around here often"
+
+mushroom_kingdom_guard:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Halt!... Nevermind..."
+      - line: |
+          says "We don't see non-mushrooms around here often"
+
+

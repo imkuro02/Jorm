@@ -102,7 +102,7 @@ class Protocol(protocol.Protocol):
             
 
     def PLAY(self, line):
-        self.actor.handle(line)
+        self.actor.queue_handle(line)
         #self.send_gmcp('')
         return
             

@@ -146,6 +146,9 @@ actors.player_only_functions.settings.BANNED_ALIASES = ALL_COMMANDS
 translations = {
     'talk to ':          'talk ',
     'talk with':         'talk ',
+    'speak':             'talk ',
+    'speak to':          'talk ',
+    'speak with':        'talk ',
     
     'pick up ':          'get ',
     'pick up item ':     'get ',

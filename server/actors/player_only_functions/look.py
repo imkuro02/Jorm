@@ -97,7 +97,7 @@ def command_map(self, line):
     for r in grid:
         _grid[r] = grid[r]
         
-    for r in range(0,VIEW_RANGE*4):
+    for r in range(0,VIEW_RANGE*2):
         for room_loc in _grid:
             #print(_grid[room_loc])
             if grid[room_loc] == 'PATH':
