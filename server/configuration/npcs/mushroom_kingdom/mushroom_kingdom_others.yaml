@@ -4,13 +4,92 @@ mushroom_kingdom_queen:
       dialog: 
       - line: |
           says "Lovely to meet you"
+      - line: |
+          says "something plague"
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+          quest_objective: 
+            requirement_id: mushroom_kingdom_1/clue_a
+
+mushroom_kingdom_chef:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Hello..."
+    # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+    mushroom_kingdom_1:
+      dialog:
+      - line: |
+          says "No sorry."
+    #   #   #
+
+mushroom_kingdom_cook:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Hello..."
+    # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+    mushroom_kingdom_1:
+      dialog:
+      - line: |
+          says "No sorry."
+    #   #   #
+
+mushroom_kingdom_wizard:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Hello..."
+    # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+    mushroom_kingdom_1:
+      dialog:
+      - line: |
+          says "No sorry."
+    #   #   #
 
 mushroom_kingdom_citizen:
   tree:
     start:
       dialog: 
       - line: |
-          says "Aye!"
+          says "Hello..."
+    # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+    mushroom_kingdom_1:
+      dialog:
+      - line: |
+          says "No sorry."
+    #   #   #
 
 mushroom_kingdom_entrance_guard:
   tree:
@@ -22,6 +101,18 @@ mushroom_kingdom_entrance_guard:
           says "Halt!... Nevermind..."
       - line: |
           says "We don't see non-mushrooms around here often"
+      # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+      mushroom_kingdom_1:
+        dialog:
+        - line: |
+            says "No sorry."
+      #   #   #
 
 mushroom_kingdom_guard:
   tree:
@@ -31,5 +122,17 @@ mushroom_kingdom_guard:
           says "Halt!... Nevermind..."
       - line: |
           says "We don't see non-mushrooms around here often"
+      # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+      mushroom_kingdom_1:
+        dialog:
+        - line: |
+            says "No sorry."
+      #   #   #
 
 

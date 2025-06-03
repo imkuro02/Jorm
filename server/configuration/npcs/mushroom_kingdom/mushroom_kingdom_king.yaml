@@ -4,5 +4,17 @@ mushroom_kingdom_king:
       dialog: 
       - line: |
           fidgets with their scepter nervously.
-     
+      options:
+        - say: dawg whatsup with all da zombies
+          goto: bye
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: not_started
+          quest_start:
+            id: mushroom_kingdom_1
+
+    bye:
+      dialog:
+      - line: |
+          aah
 

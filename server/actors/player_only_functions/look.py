@@ -97,7 +97,7 @@ def command_map(self, line):
     for r in grid:
         _grid[r] = grid[r]
         
-    for r in range(0,VIEW_RANGE*2):
+    for r in range(0,VIEW_RANGE*1):
         for room_loc in _grid:
             #print(_grid[room_loc])
             if grid[room_loc] == 'PATH':
@@ -301,9 +301,37 @@ def command_map(self, line):
 
             
             
-
+    # empty space stripper
     output = t.get_table()
-    self.sendLine('<Map Start>\n'+output+'<Map End>')
+    split_output = output.split('\n')
+    combined_output = ''
+    left_strip_len = 1000
+
+    for i in split_output[:-1]:
+        strip_len = 0
+        i = i.replace('\n','')
+        x = 0
+        while x < len(i):
+            if i[x] == ' ':
+                strip_len += 1
+                x += 1
+            elif i.startswith('@normal', x):
+                strip_len += len('@normal')
+                x += len('@normal')
+            else:
+                break
+        #print(strip_len, left_strip_len)
+        if strip_len < left_strip_len:
+            left_strip_len = strip_len
+            #print(i[x-10:])
+
+    for i in split_output:            
+        if (i).replace('@normal','').replace(' ','') != '':
+            combined_output = combined_output + i[left_strip_len:] + '\n'
+    ##############################################################################
+
+
+    self.sendLine('<Map Start>\n'+combined_output+'<Map End>')
 
 def command_look(self, line):
     def look_room(self, room_id):

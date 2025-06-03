@@ -412,5 +412,8 @@ class World:
         #if self.factory.ticks_passed % (30*(60*10)) == 0 or self.factory.ticks_passed == 1:
         #    for i in self.rooms.values():
         #        i.respawn_enemies()
+        rooms = []
         for i in self.rooms.values():
+            rooms.append(i)
+        for i in rooms:
             i.tick()

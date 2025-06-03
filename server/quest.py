@@ -180,7 +180,7 @@ class Quest:
                         output += f'Collect @white{enemy_name}@normal: {objective.count}/{objective.goal}' + '\n'
                     case OBJECTIVE_TYPES.CONVERSATION:
                         #npc = NPCS[objective.requirement_id]['name']
-                        output += f'{objective.name}' + '\n'
+                        output += f'{objective.name}: {"Done" if objective.count == objective.goal else "In progress"}' + '\n'
         output += self.get_state(as_string = True) + '\n'
         return output
 

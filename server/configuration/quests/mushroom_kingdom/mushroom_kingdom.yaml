@@ -1,0 +1,24 @@
+mushroom_kingdom_1:
+  name: Investigate The Plague
+  description: 
+    in_progress: |
+      The mushroom king has asked of me to find out what is causing 
+      all their civilians to turn into zombies! I should investigate!
+    completed: |
+      I discovered that someone in the kerning city slums has been raising the dead.
+      This has somehow spread to the mushroom kingdom.
+    turned_in: |
+      The king was not pleased with this information.
+  objectives:
+    Find clue (a):
+      type: conversation
+      objective: mushroom_kingdom_1/clue_a
+      completed_at: 1
+    Find clue (b):
+      type: conversation
+      objective: mushroom_kingdom_1/clue_b
+      completed_at: 1
+    Find clue (c):
+      type: conversation
+      objective: mushroom_kingdom_1/clue_c
+      completed_at: 1
