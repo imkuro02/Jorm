@@ -96,7 +96,7 @@ class Player(Actor):
     def handle(self, line):
         #print(line)
         for trans in translations:
-            if line.startswith(trans):
+            if line.lower().startswith(trans):
                 line = translations[trans] + line[len(trans):]
                 
         
@@ -120,7 +120,7 @@ class Player(Actor):
 
         self.last_line_sent = line
 
-        command = line.split()[0]
+        command = line.split()[0].lower()
 
         # replace with aliases as long as it is not a settings command
         if ' '+command+'' not in ' settings ': 
@@ -130,7 +130,7 @@ class Player(Actor):
                 line = line.replace(' '+alias+' ', ' '+aliases[alias]+' ')
             line = line.strip()
 
-        command = line.split()[0]
+        command = line.split()[0].lower()
         full_line =  line
         line = " ".join(line.split()[1::]).strip() 
 

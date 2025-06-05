@@ -280,7 +280,12 @@
 
             // ignore the iac will gmcp packet
             // TEMPORARY,, the client should accept and the server should be able to kno dat
+
             result = result.replace('\\xff\\xfb\\xc9','');
+            // ignore IAC WILL MSSP
+            // F is x46 but FUCK THIS CLIENT ALREADY!!!@
+            // IT FUCKING THINKS x46 IS THE LETTER F WHY_?
+            result = result.replace('\\xff\\xfbF','');
             
 
             // get text without any gmcp data.
@@ -495,8 +500,9 @@
 
         function extractGmcpData(data) {
             // Regular expression to match everything from \xff\xfa\xc9 to \xff\xf0
+            
             const regex = /\\xff\\xfa\\xc9(.*?)\\xff\\xf0/g;
-
+            
             let match;
             let lastIndex = 0;
             let result = "";

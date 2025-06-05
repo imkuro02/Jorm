@@ -19,6 +19,7 @@ DONT = b'\xfe'      # Please Don’t
 ECHO = b'\x01'      # Echo
 LINEMODE = b'\x22'  # Line mode
 GMCP = b'\xc9'
+MSSP = b'\x46'
 
 class Protocol(protocol.Protocol):
     def __init__(self, factory):
@@ -38,11 +39,24 @@ class Protocol(protocol.Protocol):
         self.sendLine('\x1b[0m')
         self.sendLine('\u001B[2J')
 
+    def start_mssp(self):
+        self.transport.write(IAC+WILL+MSSP)
+
+    def send_mssp(self):
+        
+        data = IAC+SB+MSSP 
+        data += b'\x01NAME\x02Jorm' 
+        data += b'\x01PLAYERS\x02'+str(len(self.factory.protocols)).encode('utf-8')
+        data += b'\x01UPTIME\x02'+str(int(self.factory.start)).encode('utf-8')
+        data += IAC+SE
+        self.transport.write(data)
+
     def start_gmcp(self):
         self.transport.write(IAC+WILL+GMCP)
+        
 
     def send_gmcp(self, gmcp_data, gmcp_data_type):
-        gmcp_data = str(gmcp_data)
+        gmcp_data  = str(gmcp_data)
         #gmcp_data_type = 'Core.Hello'
         #gmcp_data = '{"da": "me", "daa": "nee"}'
         packet = IAC + SB + GMCP + gmcp_data_type.encode('utf-8') + ' '.encode('utf-8') + gmcp_data.encode('utf-8') + IAC + SE
@@ -56,7 +70,7 @@ class Protocol(protocol.Protocol):
         splash = splash.replace('#ONLINE#',f'{len(self.factory.protocols)}')
         splash = f'@bwhite{splash}@normal'
         self.sendLine(splash)
-        self.start_gmcp()
+        
 
         
  
@@ -235,6 +249,9 @@ class Protocol(protocol.Protocol):
     # override
     def connectionMade(self):
         #utils.logging.debug(self.id + 'Connection made')
+        self.start_mssp()
+        self.start_gmcp()
+
         self.factory.protocols.add(self)
         self.splash_screen()
         self.change_state(self.LOGIN_OR_REGISTER)
@@ -370,9 +387,11 @@ class Protocol(protocol.Protocol):
             self.disconnect()
             return
         
-        if IAC in data:
+        if IAC in data or 'piss' in str(data):
             # IAC   SB GMCP 'MSDP {"COMMANDS" : ["LIST", "REPORT", "RESET", "SEND", "UNREPORT"]}' IAC SE
             #self.transport.write(IAC + SB + GMCP + '{"COMMANDS" : ["LIST", "REPORT", "RESET", "SEND", "UNREPORT"]}'.encode('utf-8') + IAC + SE)
+            if data == IAC+DO+MSSP or 'piss' in str(data):
+                self.send_mssp()
             return
         
 
