@@ -338,9 +338,9 @@ def command_look(self, line):
         room = self.factory.world.rooms[room_id]
 
         if room_id == self.room.id:
-            see = f'You are in @yellow{room.name}@normal\n'
+            see = f'You are in @yellow{room.pretty_name()}@normal\n'
         else:
-            see = f'You look at @yellow{room.name}@normal\n'
+            see = f'You look at @yellow{room.pretty_name()}@normal\n'
         #see += draw_local_area(self, room_id)
         see = see + f'@cyan{room.description}@normal\n'
 

@@ -29,7 +29,7 @@ from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin,
     command_load_item, command_load_npcs, command_export, command_help, command_ranks,
     command_send_prompt, command_reload_config, command_lore, command_quest, command_bonus,
-    command_kill, command_sethp
+    command_kill, command_sethp, command_history
 )
 
 from actors.player_only_functions.settings import (
@@ -70,6 +70,7 @@ commands = {
     
     'quest':    'command_quest',
     'help':     'command_help',
+    'history':  'command_history',
     'ranks':    'command_ranks',
     'say':      'command_say',
     'shout':    'command_shout',
@@ -170,5 +171,15 @@ translations = {
     'wield':             'equipment ',
     'take off':          'equipment ',
 
-    'go to ':            'go '
+    'go to ':            'go ',
+    'go in ':            'go ',
+    'recall':            'rest now',
+    'recall set':        'rest set',
+
+    'north':             'go north',
+    'east':              'go east',
+    'south':             'go south',
+    'west':              'go west',
+    'up':                'go up',
+    'down':              'go down'
 }

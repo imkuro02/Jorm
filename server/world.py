@@ -182,6 +182,15 @@ class Room:
         self.actors = {}                  # actors in room dict
         self.spawner = Spawner(self)      # spawner
 
+    def pretty_name(self):
+        col = '@yellow'
+        if self.is_an_instance():
+            col = '@bad'
+        if self.can_be_recall_site:
+            col = '@good'
+
+        return col+self.name+'@back'
+
     def is_an_instance(self):
         if '#' in self.id:
             return True

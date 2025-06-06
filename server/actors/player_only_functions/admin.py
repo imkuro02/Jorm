@@ -25,6 +25,28 @@ def command_help(self, line):
 
     self.sendLine(content)
 
+def command_history(self, line):
+    messages = []
+    start = 0
+    for i in sorted(self.msg_history.keys(), reverse = True):
+        start = i
+
+    if start <= 0:
+        start = 0
+
+    maximum = 20
+    for i in sorted(self.msg_history.keys(), reverse = True):
+        if any(word.lower() in self.msg_history[i]['type'] for word in line.split()) or 'all' in line.lower():
+            messages.append(f'{i} - '+self.msg_history[i]['line'])
+            maximum -= 1
+        if maximum == 0:
+            break
+    self.sendLine('<History Start>')
+    for i in reversed(messages):
+        self.sendLine(i, msg_type = None)
+    self.sendLine('<History End>')
+    
+
 def command_ranks(self, line):
     limit = 200
     if limit >= 500: limit = 500

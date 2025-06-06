@@ -7,6 +7,13 @@ import os
 import configuration.read_from_excel as rfe
 import random
 
+class MsgType:
+    SAY = 'say'
+    SHOUT = 'shout'
+    COMBAT = 'combat'
+    CHAT = 'chat'
+    ALL = 'all'
+    
 class Audio:
     PLAYER_DEATH = 'die1.wav'
     ENEMY_DEATH = 'die.wav'

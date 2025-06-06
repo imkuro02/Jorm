@@ -371,7 +371,7 @@ class Actor:
         
         
 
-    def simple_broadcast(self, line_self, line_others, worldwide = False, sound = None):
+    def simple_broadcast(self, line_self, line_others, worldwide = False, sound = None, msg_type = None):
         
 
         if self.room == None:
@@ -387,7 +387,7 @@ class Actor:
             if player == self:
                 if line_self == None:
                     continue
-                player.sendLine(f'{line_self}')
+                player.sendLine(f'{line_self}', msg_type = msg_type)
                 if sound != None:
                     player.sendSound(sound)
             else:
@@ -395,7 +395,7 @@ class Actor:
                     continue
                 if sound != None:
                     player.sendSound(sound)
-                player.sendLine(f'{line_others}')
+                player.sendLine(f'{line_others}', msg_type = msg_type)
 
     def finish_turn(self, force_cooldown = False):
         # force_cooldown forces timers to go down for affects and skills
@@ -475,7 +475,7 @@ class Actor:
         self.affect_manager.set_turn()
         self.cooldown_manager.set_turn()
 
-    def sendLine(self, line):
+    def sendLine(self, line, msg_type):
         print(f'sendLine called in a object class Npc function? line: {line}')
 
     def sendSound(self, sfx):

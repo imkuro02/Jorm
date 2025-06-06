@@ -1,0 +1,13 @@
+................................................................................
+Title: History, chatlog
+Syntax: "history [log option]" 
+
+Options: chat, say, shout, combat
+
+You can look at the last 20 messages sent with the history command.
+You can filter the history with the options above like so:
+ "history shout" - this will display the last 20 shouts (including yours)
+
+You can use more than one setting:
+ "history say combat" - this will display the last 20 combat and say messages 
+................................................................................

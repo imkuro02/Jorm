@@ -5,17 +5,19 @@ from trade import TradeManager
 from actors.player_only_functions.commands import one_letter_commands, commands, shortcuts_to_commands, translations
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands 
-from configuration.config import StatType
+from configuration.config import StatType, MsgType
 import time
 from actors.player_only_functions.settings import Settings
 #from actors.enemy_ai import AIBasic
 from actors.ai import PlayerAI
+
 
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
         self.protocol = protocol
         self.admin = 0
         self.queued_lines = []
+        self.msg_history = {}
 
         super().__init__(name = name, room = room, _id = _id)
 
@@ -70,7 +72,13 @@ class Player(Actor):
     def sendSound(self, sfx):
         self.protocol.send_gmcp({'name':sfx}, 'Client.Media.Play')
 
-    def sendLine(self, line, color = True, sound = None):
+    def sendLine(self, line, color = True, sound = None, msg_type = None):
+
+        if msg_type != None:
+            _msg_type = msg_type
+            msg_type = ' '.join(_msg_type)
+            self.msg_history[len(self.msg_history)] = {'type':msg_type, 'line':line}
+
         if sound != None:
             self.sendSound(sound)
             
@@ -88,6 +96,10 @@ class Player(Actor):
         else:
             #self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
             self.protocol.transport.write(line.encode('utf-8'))
+
+        
+
+        
         return
 
     def queue_handle(self, line):

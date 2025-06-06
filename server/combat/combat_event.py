@@ -1,4 +1,4 @@
-from configuration.config import ActorStatusType, StatType, DamageType, Audio
+from configuration.config import ActorStatusType, StatType, DamageType, Audio, MsgType
 
 class CombatEvent:
     def __init__(self):
@@ -51,7 +51,7 @@ class CombatEvent:
                     output_other = f'{pop.damage_taker_actor.pretty_name()} loses {color}{pop.damage_value}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
                     sound = Audio.HURT
 
-                pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound)
+                pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
 
 
         

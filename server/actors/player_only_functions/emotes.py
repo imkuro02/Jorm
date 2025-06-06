@@ -1,21 +1,21 @@
 from actors.player_only_functions.checks import check_no_empty_line, check_not_spamming
 import random
-
+from configuration.config import MsgType
 @check_no_empty_line
 @check_not_spamming
 def command_say(self, line):
     self.simple_broadcast(
-        f'You say "{line}"',
-        f'{self.pretty_name()} says "{line}"'
-        )
+        f'You say "@cyan{line}@back"',
+        f'{self.pretty_name()} says "@cyan{line}@back"',
+        msg_type = [MsgType.SAY, MsgType.CHAT])
 
 @check_no_empty_line
 @check_not_spamming
 def command_shout(self, line):
     self.simple_broadcast(
-        f'You shout "{line}"',
-        f'{self.pretty_name()} shouts from {self.room.name} "{line}"',
-        worldwide = True)
+        f'You shout "@cyan{line}@back"',
+        f'{self.pretty_name()} shouts "@cyan{line}@back" from "{self.room.pretty_name()}"',
+        worldwide = True, msg_type = [MsgType.SHOUT, MsgType.CHAT])
 
 '''
 emotes = {
