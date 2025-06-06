@@ -19,7 +19,7 @@ def create_npc(room, npc_id, spawn_for_lore = False):
     ai =            None
 
     if npc_id in ENEMIES:
-        names = 'Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
+        names = 'Tanni Rahji Rahj Rahjii Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan Arr\'zTh-The\'RchEndrough'
         name = random.choice(names.split())
         name = name + ' The ' + ENEMIES[npc_id]['name']
         desc =      ENEMIES[npc_id]['description']
