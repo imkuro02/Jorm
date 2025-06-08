@@ -8,9 +8,12 @@ from configuration.config import IndentType
 logging.basicConfig(
     filename=   'logs.log',     # Log file name
     level=      logging.DEBUG,  # Log level
-    format=     '%(asctime)s - %(levelname)s - %(message)s',  # Log message format
+    format='%(asctime)s - %(levelname)s - [%(name)s] - %(message)s',
     filemode=   'a'  # Append mode; use 'w' to overwrite
 )
+
+
+logging.getLogger("fuzzywuzzy").setLevel(logging.ERROR)
 
 '''
 logging.debug("This is a debug message.")
@@ -58,6 +61,10 @@ colors = {
 }
 
 def match_word(word: str, l: list, get_score = False):
+    # dont process empty, return first
+    if not word.strip():
+        return l[0]
+    
     best_match, best_score = process.extractOne(word, l)
     if get_score:
         return best_match, best_score
@@ -67,7 +74,6 @@ def match_word(word: str, l: list, get_score = False):
 
 def get_match(line, things):
     index = 1
-
 
     if '.' in line:
         index = line.split('.')[0]
@@ -112,6 +118,9 @@ def get_match(line, things):
             i += 1
 
 def match_word_get_list(word: str, l: list):
+    # dont process empty, return first
+    if not word.strip(): 
+        return [match for match in l]
     
     matches = process.extract(word, l, limit=None)
     best_matches = [match for match in matches]

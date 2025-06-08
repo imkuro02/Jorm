@@ -261,6 +261,15 @@
         // Handle connection open
         socket.onopen = () => {
             appendMessage('Connected to WebSocket server.');
+            const IAC  = 0xFF;
+            const WILL = 0xFB;
+            const DO   = 0xFD;
+            const DONT = 0xFE;
+            const GMCP = 0xC9;
+
+            const msg = new Uint8Array([IAC, DO, GMCP]);
+            //const msg = new Uint8Array([IAC, DONT, GMCP]);
+            socket.send(msg);
         };
 
         function fixEncoding(mojibakeStr) {

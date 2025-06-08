@@ -372,8 +372,6 @@ class Actor:
         
 
     def simple_broadcast(self, line_self, line_others, worldwide = False, sound = None, msg_type = None):
-        
-
         if self.room == None:
             return
 

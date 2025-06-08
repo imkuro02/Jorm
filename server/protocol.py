@@ -25,7 +25,9 @@ class Protocol(protocol.Protocol):
     def __init__(self, factory):
         self.factory = factory
         self.state: callable = self.LOGIN_OR_REGISTER
-        
+
+        self.enabled_gmcp = False
+
         self.actor = None
 
         self.account = None
@@ -43,7 +45,6 @@ class Protocol(protocol.Protocol):
         self.transport.write(IAC+WILL+MSSP)
 
     def send_mssp(self):
-        
         data = IAC+SB+MSSP 
         data += b'\x01NAME\x02Jorm' 
         data += b'\x01PLAYERS\x02'+str(len(self.factory.protocols)).encode('utf-8')
@@ -56,6 +57,9 @@ class Protocol(protocol.Protocol):
         
 
     def send_gmcp(self, gmcp_data, gmcp_data_type):
+        if not self.enabled_gmcp:
+            return
+        
         gmcp_data  = str(gmcp_data)
         #gmcp_data_type = 'Core.Hello'
         #gmcp_data = '{"da": "me", "daa": "nee"}'
@@ -357,7 +361,6 @@ class Protocol(protocol.Protocol):
 
     def unload_actor(self):
         self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
-        #self.actor.ai = None
         self.actor.affect_manager.unload_all_affects(silent = True)
         self.actor.trade_manager.trade_stop()
         self.actor.party_manager.party_leave()
@@ -372,8 +375,7 @@ class Protocol(protocol.Protocol):
 
     # override
     def connectionLost(self, reason):
-        print('DISCONNECTED')
-        utils.logging.debug(self.id + f' Connection lost: {reason}')
+        #utils.logging.debug(self.id + f' Connection lost: {reason}')
         if self.actor != None:
            self.unload_actor()
             
@@ -387,15 +389,16 @@ class Protocol(protocol.Protocol):
             self.disconnect()
             return
         
-        if IAC in data or 'piss' in str(data):
+        if IAC in data :
             # IAC   SB GMCP 'MSDP {"COMMANDS" : ["LIST", "REPORT", "RESET", "SEND", "UNREPORT"]}' IAC SE
             #self.transport.write(IAC + SB + GMCP + '{"COMMANDS" : ["LIST", "REPORT", "RESET", "SEND", "UNREPORT"]}'.encode('utf-8') + IAC + SE)
-            if data == IAC+DO+MSSP or 'piss' in str(data):
+            if data == IAC+DO+MSSP:
                 self.send_mssp()
+            if data == IAC+DO+GMCP:
+                self.enabled_gmcp = True
+            if data == IAC+DONT+GMCP:
+                self.enabled_gmcp = False
             return
-        
-
-        
 
         # decode and process input data
         line = data.decode('utf-8', errors='ignore').strip()
@@ -411,9 +414,5 @@ class Protocol(protocol.Protocol):
         return
 
     def sendLine(self, line):
-       
-
-            
-
         line = utils.add_color(line)
         self.transport.write(f'{line}\n'.encode('utf-8'))
