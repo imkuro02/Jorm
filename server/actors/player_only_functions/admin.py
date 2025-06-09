@@ -26,6 +26,9 @@ def command_help(self, line):
     self.sendLine(content)
 
 def command_history(self, line):
+    if line == '':
+        line = 'all'
+
     messages = []
     start = 0
     for i in sorted(self.msg_history.keys(), reverse = True):

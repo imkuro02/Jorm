@@ -149,7 +149,7 @@ class CowardAI(AI):
         if len(self.actor.room.exits) >= 1:
             stats = self.actor.stat_manager.stats
             roll = (100 - (stats[StatType.HP] / stats[StatType.HPMAX] * 100)) / 5 
-            print(roll)
+            #print(roll)
             if roll > random.randint(1,100):
                 random_dir = random.choice(self.actor.room.exits)
                 self.actor.simple_broadcast('',f'{self.actor.pretty_name()} flees {random_dir.direction}!')

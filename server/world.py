@@ -295,16 +295,43 @@ class Room:
             self.combat = Combat(self, participants)
         
     def move_actor(self, actor, silent = False):
+        self.remove_actor(actor)
+        if not silent and actor.room != self:
+            if actor.party_manager.party == None:
+                actor.simple_broadcast('',f'{actor.pretty_name()} leaves', send_to = 'room_not_party')
+            else:
+                actor.simple_broadcast('',f'{actor.pretty_name()} and their party leaves', send_to = 'room_not_party')
+
+
+        if not self.instanced:
+            actor.room = self
+            self.actors[actor.id] = actor
+        else:
+            instanced_room_id = self.id+'#'+actor.name
+            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.from_file, self.exits, self.can_be_recall_site, self.doorway, instanced=False)
+            instanced_room = self.world.rooms[instanced_room_id]
+            actor.room = instanced_room
+            instanced_room.actors[actor.id] = actor
+
+
+        if not silent:
+            if actor.party_manager.party == None:
+                actor.simple_broadcast('',f'{actor.pretty_name()} arrives', send_to = 'room_not_party')
+            else:
+                actor.simple_broadcast('',f'{actor.pretty_name()} and their party arrives', send_to = 'room_not_party')
+
+
+        '''
         if not self.instanced:
             self.remove_actor(actor)
             if not silent and actor.room != self:
-                actor.simple_broadcast('',f'{actor.pretty_name()} has left.', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} leaves', send_to = 'room_not_party')
 
             actor.room = self
             self.actors[actor.id] = actor
 
             if not silent:
-                actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} arrives', send_to = 'room_not_party')
         
         else:
             if type(actor).__name__ != 'Player':
@@ -318,15 +345,16 @@ class Room:
 
                 self.remove_actor(actor)
                 if not silent and actor.room != self:
-                    actor.simple_broadcast('',f'{actor.pretty_name()} has left.', send_to = 'room_not_party')
+                    actor.simple_broadcast('',f'{actor.pretty_name()} leaves', send_to = 'room_not_party')
 
                 actor.room = instanced_room
                 instanced_room.actors[actor.id] = actor
 
                 if not silent:
-                    actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.', send_to = 'room_not_party')
+                    actor.simple_broadcast('',f'{actor.pretty_name()} arrives', send_to = 'room_not_party')
             else:
                 self.world.rooms[instanced_room_id].move_actor(actor)
+        '''
             
 
         
