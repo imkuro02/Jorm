@@ -21,7 +21,7 @@ class Player(Actor):
         super().__init__(name = name, room = room, _id = _id)
 
         self.last_line_sent = None
-        self.last_line_received = None
+        #self.last_line_received = None
         self.last_command_used = None
 
         self.check_if_admin()
@@ -73,8 +73,9 @@ class Player(Actor):
         self.protocol.send_gmcp({'name':sfx}, 'Client.Media.Play')
 
     def sendLine(self, line, color = True, sound = None, msg_type = None):
-        if self.last_line_received == line:
-            return
+        #if self.last_line_received == line:
+        #   return
+        
         self.last_line_received = line
         if msg_type != None:
             _msg_type = msg_type

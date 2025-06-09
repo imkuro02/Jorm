@@ -130,7 +130,7 @@ def command_go(self, line):
                     continue
                 #par.command_go(line)
                 self.room.move_actor(par, silent = True)
-                par.sendLine(f'You follow {self.pretty_name()}', sound = Audio.walk())
+                #par.sendLine(f'You follow {self.pretty_name()}', sound = Audio.walk())
                 par.finish_turn(force_cooldown = True)
                 #par.sendSound(Audio.walk())
         for par in self.party_manager.party.participants.values():

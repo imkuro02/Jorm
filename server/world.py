@@ -298,9 +298,9 @@ class Room:
         self.remove_actor(actor)
         if not silent and actor.room != self:
             if actor.party_manager.party == None:
-                actor.simple_broadcast('',f'{actor.pretty_name()} leaves', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} leaves.', send_to = 'room_not_party')
             else:
-                actor.simple_broadcast('',f'{actor.pretty_name()} and their party leaves', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} and their party leaves.', send_to = 'room_not_party')
 
 
         if not self.instanced:
@@ -316,9 +316,9 @@ class Room:
 
         if not silent:
             if actor.party_manager.party == None:
-                actor.simple_broadcast('',f'{actor.pretty_name()} arrives', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} arrives.', send_to = 'room_not_party')
             else:
-                actor.simple_broadcast('',f'{actor.pretty_name()} and their party arrives', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} and their party arrives.', send_to = 'room_not_party')
 
 
         '''

@@ -26,7 +26,7 @@ class Party:
         participant.party_manager.party = self
 
         if self.actor != participant:
-            participant.sendLine(f'You join {self.actor.pretty_name()}\'s party')
+            participant.sendLine(f'You join {self.actor.pretty_name()}\'s party. (help party for more information)')
             
 
     def remove_participant(self, participant):

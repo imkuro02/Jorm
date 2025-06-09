@@ -10,12 +10,10 @@ Syntax:
     Promote to leader: "party leader [player name]" **Work in progress**    
     View party stats:  "party" 
 
-The party leader controls the movement of all members.
-Members can freely choose to walk in another direction,
-But will tag along where the leader goes whenever they are visible.
-
-Party leaders can start fights, all members join on turn one.
-Party members cannot start fights.
-
+Party members will automatically follow the party leader.
+When the party leaders enters combat, all members join automatically.
+When a party member dies in combat, they ressurect at the end of combat.
+When the whole party dies, the leader has to rest for everyone to ressurect.
+When a party leader rests, all members follow them to THEIR resting spot.
 Parties get disbanded when the leader leaves.
 ................................................................................
