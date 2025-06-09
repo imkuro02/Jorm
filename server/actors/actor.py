@@ -371,15 +371,21 @@ class Actor:
         
         
 
-    def simple_broadcast(self, line_self, line_others, worldwide = False, sound = None, msg_type = None):
+    def simple_broadcast(self, line_self, line_others, send_to = 'room', sound = None, msg_type = None):
         if self.room == None:
             return
 
-        if worldwide:
+        if send_to == 'world':
             players = [proto.actor for proto in self.factory.protocols if proto.actor != None]
 
-        else:
+        if send_to == 'room':
             players = [actor for actor in self.room.actors.values() if type(actor).__name__ == "Player"]
+
+        if send_to == 'room_not_party':
+            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == "Player" and actor.party_manager.get_party_id() != self.party_manager.get_party_id()]
+
+        if send_to == 'room_party':
+            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == "Player" and actor.party_manager.get_party_id() == self.party_manager.get_party_id()]
             
         for player in players:
             if player == self:

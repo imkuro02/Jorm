@@ -298,13 +298,13 @@ class Room:
         if not self.instanced:
             self.remove_actor(actor)
             if not silent and actor.room != self:
-                actor.simple_broadcast('',f'{actor.pretty_name()} has left.')
+                actor.simple_broadcast('',f'{actor.pretty_name()} has left.', send_to = 'room_not_party')
 
             actor.room = self
             self.actors[actor.id] = actor
 
             if not silent:
-                actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.')
+                actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.', send_to = 'room_not_party')
         
         else:
             if type(actor).__name__ != 'Player':
@@ -318,13 +318,13 @@ class Room:
 
                 self.remove_actor(actor)
                 if not silent and actor.room != self:
-                    actor.simple_broadcast('',f'{actor.pretty_name()} has left.')
+                    actor.simple_broadcast('',f'{actor.pretty_name()} has left.', send_to = 'room_not_party')
 
                 actor.room = instanced_room
                 instanced_room.actors[actor.id] = actor
 
                 if not silent:
-                    actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.')
+                    actor.simple_broadcast('',f'{actor.pretty_name()} has arrived.', send_to = 'room_not_party')
             else:
                 self.world.rooms[instanced_room_id].move_actor(actor)
             

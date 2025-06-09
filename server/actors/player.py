@@ -5,7 +5,7 @@ from trade import TradeManager
 from actors.player_only_functions.commands import one_letter_commands, commands, shortcuts_to_commands, translations
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands 
-from configuration.config import StatType
+from configuration.config import StatType, MsgType
 import time
 from actors.player_only_functions.settings import Settings
 #from actors.enemy_ai import AIBasic
@@ -16,6 +16,7 @@ class Player(Actor):
         self.protocol = protocol
         self.admin = 0
         self.queued_lines = []
+        self.msg_history = {}
 
         super().__init__(name = name, room = room, _id = _id)
 
@@ -71,6 +72,11 @@ class Player(Actor):
         self.protocol.send_gmcp({'name':sfx}, 'Client.Media.Play')
 
     def sendLine(self, line, color = True, sound = None, msg_type = None):
+        if msg_type != None:
+            _msg_type = msg_type
+            msg_type = ' '.join(_msg_type)
+            self.msg_history[len(self.msg_history)] = {'type':msg_type, 'line':line}
+
         if sound != None:
             self.sendSound(sound)
             

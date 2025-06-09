@@ -15,7 +15,7 @@ def command_shout(self, line):
     self.simple_broadcast(
         f'You shout "@cyan{line}@back"',
         f'{self.pretty_name()} shouts "@cyan{line}@back" from "{self.room.pretty_name()}"',
-        worldwide = True, msg_type = [MsgType.SHOUT, MsgType.CHAT])
+        send_to = 'world', msg_type = [MsgType.SHOUT, MsgType.CHAT])
 
 '''
 emotes = {

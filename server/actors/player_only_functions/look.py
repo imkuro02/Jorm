@@ -302,6 +302,7 @@ def command_map(self, line):
             
             
     # empty space stripper
+    '''
     output = t.get_table()
     split_output = output.split('\n')
     combined_output = ''
@@ -329,6 +330,8 @@ def command_map(self, line):
         if (i).replace('@normal','').replace(' ','') != '':
             combined_output = combined_output + i[left_strip_len:] + '\n'
     ##############################################################################
+    '''
+    combined_output = t.get_table()
 
 
     self.sendLine('<Map Start>\n'+combined_output+'<Map End>')

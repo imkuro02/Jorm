@@ -87,7 +87,7 @@ def command_go(self, line):
         self.simple_broadcast(
             f'You walk into a wall',
             f'{self.pretty_name()} walks into a wall',
-            sound = Audio.ERROR
+            sound = Audio.ERROR, send_to = 'room_party'
             ) 
         return
         
@@ -130,7 +130,7 @@ def command_go(self, line):
                     continue
                 #par.command_go(line)
                 self.room.move_actor(par, silent = True)
-                par.sendLine('You follow.')
+                #par.sendLine('You follow.')
                 par.finish_turn(force_cooldown = True)
                 par.sendSound(Audio.walk())
         for par in self.party_manager.party.participants.values():
