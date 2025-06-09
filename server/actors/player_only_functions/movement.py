@@ -130,11 +130,12 @@ def command_go(self, line):
                     continue
                 #par.command_go(line)
                 self.room.move_actor(par, silent = True)
-                #par.sendLine('You follow.')
+                par.sendLine(f'You follow {self.pretty_name()}', sound = Audio.walk())
                 par.finish_turn(force_cooldown = True)
-                par.sendSound(Audio.walk())
+                #par.sendSound(Audio.walk())
         for par in self.party_manager.party.participants.values():
-            par.new_room_look()
+            if par == self:
+                par.new_room_look()
     else:
         self.new_room_look()
 
