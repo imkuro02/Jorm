@@ -19,14 +19,17 @@ class Party:
         self.add_participant(self.actor)
 
     def add_participant(self, participant):
-        for par in self.participants.values():
-            par.sendLine(f'{participant.pretty_name()} joins the party')
+        #self.actor.simple_broadcast('You join the party', f'{participant.pretty_name()} joins the party', send_to = 'room_party')
+        #for par in self.participants.values():
+        #    par.sendLine(f'{participant.pretty_name()} joins the party')
 
         self.participants[participant.id] = participant
         participant.party_manager.party = self
 
         if self.actor != participant:
-            participant.sendLine(f'You join {self.actor.pretty_name()}\'s party. (help party for more information)')
+            participant.simple_broadcast(
+                f'You join {self.actor.pretty_name()}\'s party. (help party for more information)', f'{participant.pretty_name()} joins the party', 
+                send_to = 'room_party')
             
 
     def remove_participant(self, participant):
@@ -34,8 +37,10 @@ class Party:
         if participant.id not in self.participants:
             return
 
-        for par in self.participants.values():
-            par.sendLine(f'{participant.pretty_name()} leaves the party')
+
+        participant.simple_broadcast('You leave the party', f'{participant.pretty_name()} leaves the party', send_to = 'room_party')
+        #for par in self.participants.values():
+        #    par.sendLine(f'{participant.pretty_name()} leaves the party')
 
         if participant == self.actor:
             to_remove = []
@@ -57,8 +62,10 @@ class PartyManager:
 
     def get_party_id(self):
         if self.party != None:
-            return self.party.actor.id
-        return self.actor.id
+            _id = self.party.actor.id
+        else:
+            _id = self.actor.id
+        return _id
         
     def clear_invites(self):
         self.invitations = []
@@ -140,7 +147,7 @@ class PartyManager:
             self.actor.sendLine('You are not in a party')
             return
         self.party.remove_participant(self.actor)
-        self.actor.sendLine('You left the party')
+        #self.actor.sendLine('You left the party')
         self.clear_invites()
 
     def party_leader(self, line):
@@ -164,6 +171,7 @@ class PartyManager:
             t.add_data(i.pretty_name())
             t.add_data(i.prompt())
         output = t.get_table()
+        output = self.get_party_id() + output
         self.actor.sendLine(output)
     
     def handle_party_message(self, line):

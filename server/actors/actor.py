@@ -379,14 +379,15 @@ class Actor:
             players = [proto.actor for proto in self.factory.protocols if proto.actor != None]
 
         if send_to == 'room':
-            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == "Player"]
+            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player']
 
         if send_to == 'room_not_party':
-            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == "Player" and actor.party_manager.get_party_id() != self.party_manager.get_party_id()]
+            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player' and actor.party_manager.get_party_id() != self.party_manager.get_party_id()]
 
         if send_to == 'room_party':
-            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == "Player" and actor.party_manager.get_party_id() == self.party_manager.get_party_id()]
+            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player' and  actor.party_manager.get_party_id() == self.party_manager.get_party_id()]
             
+        #print(players)
         for player in players:
             if player == self:
                 if line_self == None:
