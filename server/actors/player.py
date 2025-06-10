@@ -76,7 +76,7 @@ class Player(Actor):
         #if self.last_line_received == line:
         #   return
         
-        self.last_line_received = line
+        #self.last_line_received = line
         if msg_type != None:
             _msg_type = msg_type
             msg_type = ' '.join(_msg_type)
