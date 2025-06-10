@@ -87,7 +87,7 @@ def command_go(self, line):
         self.simple_broadcast(
             f'You walk into a wall',
             f'{self.pretty_name()} walks into a wall',
-            sound = Audio.ERROR, send_to = 'room_party'
+            sound = Audio.ERROR, send_to = 'room'
             ) 
         return
         

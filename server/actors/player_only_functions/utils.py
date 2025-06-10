@@ -38,6 +38,9 @@ def get_item(self, line, search_mode = 'self', inventory = None):
     if search_mode == 'room':
         inventory = self.room.inventory_manager.items
 
+    if search_mode == 'self_and_room':
+        inventory = {**self.inventory_manager.items, **self.room.inventory_manager.items}
+
     # search only equiped items
     if search_mode == 'equipment':
         inventory = {}

@@ -27,7 +27,7 @@ def command_help(self, line):
 
 def command_history(self, line):
     if line == '':
-        line = 'all'
+        line = 'chat'
 
     messages = []
     start = 0

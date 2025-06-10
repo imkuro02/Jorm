@@ -76,6 +76,7 @@ commands = {
     'shout':    'command_shout',
     'roll':     'command_roll',
     
+    
     'go':       'command_go',
     #'setcall':  'command_recall_set',
     #'gocall':   'command_recall_go',
@@ -83,6 +84,8 @@ commands = {
     'map':      'command_map',
     'lore':     'command_lore',
     'trade':    'command_trade',
+
+    'emote':    'command_emote',
     
     'level':    'command_level_up',
     'practice': 'command_practice',
@@ -181,5 +184,47 @@ translations = {
     'south':             'go south',
     'west':              'go west',
     'up':                'go up',
-    'down':              'go down'
+    'down':              'go down',
+
+    # EMOTES
+    'wave at ':         'emote wave ',
+    'wave':             'emote wave',
+
+    'sing to ':         'emote sing ',
+    'sing with ':       'emote sing_with ',
+    'sing':             'emote sing',
+
+    'dance with ':      'emote dance ',
+    'dance':            'emote dance',
+
+    'laugh at ':        'emote laugh_at ',
+    'laugh with ':      'emote laugh_with ',
+    'laugh':            'emote laugh',
+
+    'spit on ':         'emote spit ',
+    'spit at ':         'emote spit ',
+    'spit':             'emote spit',
+
+    'smile at ':        'emote smile ',
+    'smile':            'emote smile',
+
+    'hug':              'emote hug',
+    
+    'nod at ':          'emote nod ',
+    'nod':              'emote nod',
+
+    'shrug at ':        'emote shrug ',
+    'shrug':            'emote shrug',
+
+    'facepalm at':      'emote facepalm ',
+    'facepalm':         'emote facepalm',
+
+    'applaud':          'emote applaud',
+    
+    'point at ':        'emote point ',
+    'point':            'emote point',
+
+    'SEX SFDSFDSFDSF':  'dsdadsad'
+    
+    
 }

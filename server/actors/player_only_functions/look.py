@@ -424,7 +424,7 @@ def command_look(self, line):
     
     list_of_actors =        [actor.name for actor in self.room.actors.values()]
     list_of_directions =    [] #[_exit.direction for _exit in self.room.exits.values()]
-    list_of_items =         [item.name for item in self.room.inventory_manager.items.values()]
+    list_of_items =         [item.name for item in self.inventory_manager.items.values()] + [item.name for item in self.room.inventory_manager.items.values()]
     whole_list = list_of_items + list_of_directions + list_of_actors
 
     look_at = utils.match_word(line, whole_list)
@@ -441,7 +441,7 @@ def command_look(self, line):
         look_actor(actor)
 
     if look_at in list_of_items:
-        item = self.get_item(line, search_mode = 'room')
+        item = self.get_item(line, search_mode = 'self_and_room')
         if item == None:
             return
         look_item(self, item)

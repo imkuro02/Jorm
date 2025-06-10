@@ -1,4 +1,9 @@
 ................................................................................
+ "Identify command is being replaced with the look command"
+ "Please get comfortable using the look command before identify is removed" 
+ "help look for info on look" 
+
+
 Title: Identify
 Syntax: "identify [item in inventory]" 
 

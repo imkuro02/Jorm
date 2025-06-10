@@ -28,7 +28,7 @@ class Party:
 
         if self.actor != participant:
             participant.simple_broadcast(
-                f'You join {self.actor.pretty_name()}\'s party. (help party for more information)', f'{participant.pretty_name()} joins the party', 
+                f'You join {self.actor.pretty_name()}\'s party. You will automatically follow, and fight with your party.\n(help party for more information)', f'{participant.pretty_name()} joins the party', 
                 send_to = 'room_party')
             
 

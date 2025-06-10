@@ -9,8 +9,8 @@ The "look" command without any arguments will display:
 - Items on ground
 
 You can look at characters with "look [character]" to view their stats.
-
-To look at an item, use "identify" ( "help identify" )
+You can look at items both on ground and in your inventory with "look [item]" 
+Inventory items get prioritized
 
 To view the map, use "map" 
 ................................................................................

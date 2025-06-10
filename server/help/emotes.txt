@@ -1,0 +1,10 @@
+................................................................................
+Title: Emotes
+Syntax: "emote [emote] [target]"
+
+You can view the full list of emotes with "emote" only
+Most emotes can be triggered without typing out the correct syntax
+Such as "dance with [target]" will correct to "emote dance_with [target]" 
+
+Try them out!
+................................................................................

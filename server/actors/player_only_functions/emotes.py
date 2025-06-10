@@ -1,4 +1,5 @@
 from actors.player_only_functions.checks import check_no_empty_line, check_not_spamming
+from actors.player_only_functions import emote_presets
 import random
 from configuration.config import MsgType
 @check_no_empty_line
@@ -17,21 +18,58 @@ def command_shout(self, line):
         f'{self.pretty_name()} shouts "@cyan{line}@back" from "{self.room.pretty_name()}"',
         send_to = 'world', msg_type = [MsgType.SHOUT, MsgType.CHAT])
 
-'''
-emotes = {
-    'sing': ['You sing', '#USER# sings']
-}
-@check_no_empty_line
 @check_not_spamming
 def command_emote(self, line):
-    words = line.split()
-    match words[0]:
-        case 'sing'
-'''
+    emotes = emote_presets.emotes
 
-@check_no_empty_line
-@check_not_spamming
-def command_emote(self, line):
+    line = line.split()
+    emote = None
+    if len(line) >= 1:
+        emote = line[0]
+    if emote not in emotes:
+        self.sendLine(f'Here is a list of emotes: {[e for e in emotes.keys()]}')
+        return
+    target = None
+    if len(line) >= 2:
+        target = self.get_actor(line[1])
+    if target == None:
+        target = self
+
+    
+        
+    
+    
+    perspectives = {
+        'you on you':       emotes[emote]['you on you'],
+        'you on other':     emotes[emote]['you on other'],
+        'user on user':     emotes[emote]['user on user'],
+        'user on you':      emotes[emote]['user on you'],
+        'user on other':    emotes[emote]['user on other']
+    }
+
+    for perspective in perspectives:
+        perspectives[perspective] = perspectives[perspective].replace('#USER#', self.pretty_name())
+        perspectives[perspective] = perspectives[perspective].replace('#OTHER#', target.pretty_name())
+
+    for receiver in self.room.actors.values():
+        if type(receiver).__name__ != "Player":
+            continue
+
+        if receiver == self and receiver == target:
+            receiver.sendLine(perspectives['you on you'])
+            continue
+        if receiver == self and receiver != target:
+            receiver.sendLine(perspectives['you on other'])
+            continue
+        if receiver != self and receiver != target and self == target:
+            receiver.sendLine(perspectives['user on user'])
+            continue
+        if receiver != self and receiver == target:
+            receiver.sendLine(perspectives['user on you'])
+            continue
+        if receiver != self and receiver != target:
+            receiver.sendLine(perspectives['user on other'])
+            continue
     return
 
 
