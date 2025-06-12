@@ -1,0 +1,24 @@
+mushroom_kingdom_2:
+  name: Investigate The Plague
+  description: 
+    in_progress: |
+      The mushroom king fears the plague that turns the mushrooms into zombies.
+      I should speak everyone to figure out whats going on.
+    completed: |
+      There are many rumors regarding the zombie pleague. I should go visit the wizard.
+    turned_in: |
+      The wizards sources have informed him of a necromancer near the kerning slums.
+  objectives:
+    Speak with the queen:
+      type: conversation
+      objective: mushroom_kingdom_1/clue_a
+      completed_at: 1
+    Speak with the chef:
+      type: conversation
+      objective: mushroom_kingdom_1/clue_b
+      completed_at: 1
+    Speak with a citizen:
+      type: conversation
+      objective: mushroom_kingdom_1/clue_c
+      completed_at: 1
+  

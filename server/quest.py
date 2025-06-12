@@ -1,8 +1,9 @@
 
 
-from configuration.config import QUESTS, ENEMIES, ITEMS, NPCS
+from configuration.config import QUESTS, ENEMIES, ITEMS, NPCS, StatType
 import utils
 from items.manager import load_item
+import random
 
 class OBJECTIVE_TYPES:
     KILL_X =        'kill_x'        # kill x amount of mobs
@@ -93,11 +94,17 @@ class QuestManager:
         
         
     def start_quest(self, quest_id, silent = False):
+        # if quest is already in your quests, skip and throw an error
+        # unless its a daily quest, then delete that quest
+        # and create new daily quest
         if quest_id in self.quests:
-            self.actor.sendLine('You already have this quest')
-            return False
+            if quest_id != 'daily_quest': 
+                self.actor.sendLine('You already have this quest')
+                return False
+            else:
+                del self.quests[quest_id]
 
-        quest = create_quest(quest_id)
+        quest = create_quest(quest_id, self.actor)
         if quest == None:
             self.actor.sendLine(f'@redError starting quest@normal: "{quest_id}"')
             return False
@@ -149,7 +156,7 @@ class QuestManager:
         return proposal_accepted
 
 class Quest:
-    def __init__(self, _id, _name, _description = ''):
+    def __init__(self, _id, _name, _description):
         self.id = _id
         self.quest_manager = None
         self.name = _name
@@ -160,9 +167,10 @@ class Quest:
         output = ''
         output += '@yellow' + self.name + '@normal' + '\n'
         output += '@cyan' + self.description['in_progress'] + '@normal\n'
-        if self.is_completed():
+        if self.is_completed() and not self.is_turned_in():
             output += '@cyan' + self.description['completed'] + '@normal\n'
         if self.is_turned_in():
+            output += '@cyan' + self.description['completed'] + '@normal\n'
             output += '@cyan' + self.description['turned_in'] + '@normal\n'
 
         for objective in self.objectives.values():
@@ -291,8 +299,38 @@ class Objective:
         self.count += objective_count_proposal.to_add
         return True
         
-def create_quest(quest_id):
-    if quest_id not in  QUESTS:
+def create_daily_quest(quest_id, actor):
+    quest_dict =  QUESTS[quest_id]
+
+    def create_objective(player_level):
+        possible_enemies = [enemy for enemy in ENEMIES if ENEMIES[enemy]['stats']['lvl'] <= player_level + 3 and ENEMIES[enemy]['include_in_daily_quests']]
+        enemy = random.choice(possible_enemies)
+        return {
+        'Kill':{
+            'type': OBJECTIVE_TYPES.KILL_X,
+            'objective': enemy,
+            'completed_at': random.randint(20 + player_level, 20 + (player_level*3))
+            }
+        }
+
+    player_level = actor.stat_manager.stats[StatType.LVL]
+    random_quest_objective = create_objective(player_level)
+
+    objectives = {}
+    quest = Quest(quest_id, QUESTS[quest_id]['name'], QUESTS[quest_id]['description'])
+    for objective_name in random_quest_objective:
+        objective = random_quest_objective[objective_name]
+        quest.add_objective( Objective(quest_id, objective_name, objective['type'], objective['objective'], objective['completed_at']) )
+
+    quest.add_objective( Objective(quest_id, OBJECTIVE_TYPES.TURNED_IN, OBJECTIVE_TYPES.TURNED_IN, OBJECTIVE_TYPES.TURNED_IN, 1) )
+    return quest
+
+def create_quest(quest_id, actor):
+    if quest_id == 'daily_quest':
+        quest = create_daily_quest(quest_id, actor)
+        return quest
+
+    if quest_id not in QUESTS:
         print(quest_id, 'does not exist in configuration.config QUESTS')
         return
     

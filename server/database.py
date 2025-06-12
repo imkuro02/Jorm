@@ -94,8 +94,11 @@ class Database:
         CREATE TABLE IF NOT EXISTS quests (
             actor_id TEXT NOT NULL,
             quest_id TEXT NOT NULL,
-            objective_id TEXT NOT NULL,
-            objective_count INT NOT NULL,
+            objective_name TEXT NOT NULL,
+            objective_type TEXT,
+            objective_requirement_id TEXT,
+            objective_count INT,
+            objective_goal INT,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
@@ -158,8 +161,10 @@ class Database:
                 'date_of_creation': actor['meta_data']['date_of_creation'],
                 'date_of_last_login': actor['meta_data']['date_of_last_login'],
                 'time_in_game': actor['meta_data']['time_in_game'], 
-                'quests_turned_in': len([q for q in actor['quests'].values() if q['turned_in'] == 1]) 
+                #'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in'] == 1])
+                'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in']['count'] == 1 and q != 'daily_quest'] )  
             }
+            #print(actor['quests'], actor['quests'].values())
             actor_objs.append(actor_obj)
 
 
@@ -349,16 +354,22 @@ class Database:
         ''', (actor_id,))
         
         for quest in actor.quest_manager.quests.values():
+            #if quest.id == 'daily_quest': 
+            #    continue
+
             for objective in quest.objectives.values():
                 #print(objective)
                 my_dict['quest_id'] = objective.quest_id
-                my_dict['objective_id'] = objective.name
+                my_dict['objective_name'] = objective.name
+                my_dict['objective_type'] = objective.type
+                my_dict['objective_requirement_id'] = objective.requirement_id
                 my_dict['objective_count'] = objective.count
+                my_dict['objective_goal'] = objective.goal
                 self.cursor.execute('''
                     INSERT INTO quests (
-                        actor_id, quest_id, objective_id, objective_count
+                        actor_id, quest_id, objective_name, objective_requirement_id, objective_type, objective_count, objective_goal
                     ) VALUES (
-                        :actor_id, :quest_id, :objective_id, :objective_count
+                        :actor_id, :quest_id, :objective_name, :objective_requirement_id, :objective_type, :objective_count, :objective_goal
                     )
                     ''', my_dict)
 
@@ -542,13 +553,11 @@ class Database:
             my_dict['skills'][skill[1]] = skill[2]
 
         my_dict['quests'] = {}
-        for quest in quests:
-            
+        for quest in quests:            
             if quest[1] in my_dict['quests']:
-                
-                my_dict['quests'][quest[1]] = my_dict['quests'][quest[1]] | {quest[2]: quest[3]}
+                my_dict['quests'][quest[1]] = my_dict['quests'][quest[1]] | {quest[2]: {'type': quest[3], 'req_id': quest[4], 'count': quest[5], 'goal': quest[6]}}
             else:
-                my_dict['quests'][quest[1]] = {quest[2]: quest[3]}
+                my_dict['quests'][quest[1]] = {quest[2]: {'type': quest[3], 'req_id': quest[4], 'count': quest[5], 'goal': quest[6]}}
 
         
         my_dict['settings_aliases'] = {}

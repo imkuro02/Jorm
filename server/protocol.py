@@ -286,7 +286,14 @@ class Protocol(protocol.Protocol):
                             continue
                         if self.actor.quest_manager.quests[quest].objectives[objective].type == OBJECTIVE_TYPES.COLLECT_X:
                             continue
-                        self.actor.quest_manager.quests[quest].objectives[objective].count = actor['quests'][quest][objective]
+
+                        # if it is a daily quest, load in everything from db, otherwise, load it from config
+                        self.actor.quest_manager.quests[quest].objectives[objective].count = actor['quests'][quest][objective]['count']
+                        if quest == 'daily_quest':
+                            self.actor.quest_manager.quests[quest].objectives[objective].requirement_id = actor['quests'][quest][objective]['req_id']
+                            self.actor.quest_manager.quests[quest].objectives[objective].goal = actor['quests'][quest][objective]['goal']
+                            self.actor.quest_manager.quests[quest].objectives[objective].type = actor['quests'][quest][objective]['type']
+                        
 
             #self.actor.date_of_last_login = actor['meta_data']['date_of_last_login']
             self.actor.stat_manager.stats.update(actor['stats'])

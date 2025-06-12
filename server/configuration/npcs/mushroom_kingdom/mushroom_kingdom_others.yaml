@@ -49,8 +49,8 @@ mushroom_kingdom_cook:
             state: in_progress
     mushroom_kingdom_1:
       dialog:
-      - line: |
-          says "No sorry."
+      - line: -|
+          says "What about it"
     #   #   #
 
 mushroom_kingdom_wizard:

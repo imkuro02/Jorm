@@ -48,6 +48,8 @@ class Dialog:
                     dic['reward'] =          option['quest_turn_in']['reward']
                 if 'reward_exp' in option['quest_turn_in']: 
                     dic['reward_exp'] =      option['quest_turn_in']['reward_exp'] 
+                if 'reward_practice_points' in option['quest_turn_in']: 
+                    dic['reward_practice_points'] =      option['quest_turn_in']['reward_practice_points'] 
 
             if 'quest_start' in option:
                 quest_id =              option['quest_start']['id']
@@ -170,6 +172,10 @@ class Dialog:
             if 'reward_exp' in answer:
                 self.player.stat_manager.stats[StatType.EXP] += answer['reward_exp']
                 self.player.sendLine(f'You got: {answer["reward_exp"]} Experience')
+
+            if 'reward_practice_points' in answer:
+                self.player.stat_manager.stats[StatType.PP] += answer['reward_practice_points']
+                self.player.sendLine(f'You got: {answer["reward_practice_points"]} Practice point'+('s' if answer['reward_practice_points'] >= 2 else ''))
 
             
             return True

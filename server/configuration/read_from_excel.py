@@ -243,6 +243,7 @@ def configure_ENEMIES(SHEET):
                     'exp':      int(x['exp'][index]),
                     'lvl':      int(x['lvl'][index])
                 },
+                'include_in_daily_quests': bool(x['include_in_daily_quests'][index]),
                 'skills': {},       # EMPTY DICT TO STORE SKILLS
                 'loot': {},         # EMPTY DICT TO STORE LOOT
                 'combat_loop': {}   # EMPTY DICT TO STORE COMBAT LOOP

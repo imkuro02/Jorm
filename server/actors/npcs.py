@@ -157,6 +157,7 @@ class Npc(Actor):
                 if actor.status == ActorStatusType.DEAD:
                     continue
                 actor.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
+                actor.sendLine('You got: @yellow' + str(self.stat_manager.stats[StatType.EXP]) + ' experience@back')
                 self.drop_loot(actor)
                 #self.drop_loot_on_ground()
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)

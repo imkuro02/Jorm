@@ -370,8 +370,7 @@ class Room:
     #def move_enemy(self, enemy):
     #    enemy.room = self
     #    self.actors[enemy.id] = enemy
- 
-        
+
 class World:
     def __init__(self, factory):
         self.factory = factory

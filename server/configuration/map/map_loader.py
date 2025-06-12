@@ -56,7 +56,7 @@ def load_map():
             continue
 
         if 'name' in json_data:
-            room_name = json_data['name']
+            room_name = json_data['name'] 
 
         if 'description' in json_data:
             if type(json_data['description']) == str:
