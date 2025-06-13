@@ -29,6 +29,18 @@ class ServerFactory(protocol.Factory):
         
     def tick(self):
         
+        # kick afk users after 16 min, notified at min 15
+        to_disconnect = []
+        for i in self.protocols:
+            if i.tick_since_last_message == (self.ticks_passed - (30*60*15)):
+                i.sendLine('@yellow!!!@normal You are @redAFK@normal and will be logged out soon @yellow!!!@normal')
+            if i.tick_since_last_message == (self.ticks_passed - (30*60*16)):
+                to_disconnect.append(i)
+        for i in to_disconnect:
+            i.disconnect()
+            #i.connectionLost('AFK')
+            
+
         self.ticks_passed += 1
         self.world.tick()
         #for room in self.world.rooms.values():

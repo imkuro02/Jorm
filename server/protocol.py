@@ -34,6 +34,8 @@ class Protocol(protocol.Protocol):
         self.username = None
         self.password = None
 
+        self.tick_since_last_message = self.factory.ticks_passed
+
         self.id = str(uuid.uuid4())
         
 
@@ -253,6 +255,7 @@ class Protocol(protocol.Protocol):
     # override
     def connectionMade(self):
         #utils.logging.debug(self.id + 'Connection made')
+        self.tick_since_last_message = self.factory.ticks_passed
         self.start_mssp()
         self.start_gmcp()
 
@@ -390,6 +393,7 @@ class Protocol(protocol.Protocol):
 
     # override
     def dataReceived(self, data):
+        self.tick_since_last_message = self.factory.ticks_passed
         
         # interrupt
         if data == b'\xff\xf4\xff\xfd\x06':

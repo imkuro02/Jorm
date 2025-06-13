@@ -98,10 +98,12 @@ class QuestManager:
         # unless its a daily quest, then delete that quest
         # and create new daily quest
         if quest_id in self.quests:
-            if quest_id != 'daily_quest': 
-                self.actor.sendLine('You already have this quest')
+            if quest_id != 'daily_quest':
+                if not silent: 
+                    self.actor.sendLine('You already have this quest')
                 return False
             else:
+                # remove daily_quest so it can be re-added
                 del self.quests[quest_id]
 
         quest = create_quest(quest_id, self.actor)
