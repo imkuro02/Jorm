@@ -160,6 +160,7 @@ WORLD = {}
 SPLASH_SCREENS = {}
 LORE = {}
 QUESTS = {}
+HELPFILES = {}
 
 def load_lore():
     LORE['enemies'] = {}
@@ -189,6 +190,8 @@ def load():
     global ITEMS
     global ENEMIES
     global SKILLS  # Declare the global variables here
+    global HELPFILES
+
     data = rfe.load()
     for k in data['items']:
         ITEMS[k] = data['items'][k]
@@ -197,6 +200,11 @@ def load():
     for k in data['skills']:
         SKILLS[k] = data['skills'][k]
 
+    with open('configuration/help.yaml', 'r') as file:
+        ALL_HELP = yaml.safe_load(file)
+        for i in ALL_HELP:
+            if 'template' not in i:
+                HELPFILES[i] = ALL_HELP[i]
 
     QUESTS_DIRECTORY = 'configuration/quests/'
     

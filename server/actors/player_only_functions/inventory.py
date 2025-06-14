@@ -94,7 +94,7 @@ def command_drop(self, line):
         f'{self.pretty_name()} drops {item.name}'
         )
 
-
+@check_not_trading
 def command_split(self, line):
     all_words = line.split(' ')
     if len(all_words) <= 1:

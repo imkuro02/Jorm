@@ -1,0 +1,406 @@
+commands:
+  say:
+    syntax:
+      - say <words>
+    description: |
+      Say something to be displayed for all players in the room.
+    related:
+      - shout
+      - emote
+      - history
+      - room
+  shout:
+    syntax:
+      - shout <words>
+    description: |
+      Shout something to be displayed to all players globally.
+      This will also display which room you are shouting from.
+    related:
+      - say
+      - emote
+      - history
+      - room
+  emote:
+    syntax:
+      - emote <emote>
+    description: |
+      Emotes are currently very weird. You can view a full list of all emotes with 'emote'.
+      Most emotes are aliased. stuff like 'point at <character>' will automatically 
+      correct to proper syntax.
+    related:
+      - say
+      - shout
+      - history
+      - room
+  fight:
+    syntax: 
+      - fight
+    description: |
+      Start a fight / Automatically use first offensive skill available if already in a fight.
+    related:
+      - use
+      - pass
+      - rest
+      - party
+  pass:
+    syntax:
+      - pass
+    description: |
+      Pass your turn.
+      If not in combat, you still spend one turn.
+      Passing a turn out of combat might be beneficial to wait out debuffs without resting.
+    related:
+      - rest
+      - affects
+  use:
+    syntax:
+      - use <skill|item>
+      - use <skill|item> on <character|item>
+    description: |
+      Use a skill or an item on someone / something.
+      Using a skill or an item without specifying a target will attempt to use it on yourself.
+      Using a skill or an item will spend one turn in combat.
+      Some skills cannot be used on others (help skills). 
+      Items can always be used on yourself. 
+      Items can only be used on others in combat.
+    related:
+      - skills
+      - items
+      - inventory
+      - look
+  rest:
+    syntax:
+      - rest
+      - rest set
+      - rest now
+    description: |
+      Resting is a way of quickly recovering aswell as fast travel.
+      Using the rest command without arguments displays your spawn point.
+      The set argument will set a spawn point, while the now argument will make you rest;
+      Resting ressurects, resets cooldowns, resets afflictions, heals you to full
+      and teleports you to your rest site. 
+    related:
+      - stats
+      - room
+  party:
+    syntax:
+      - party
+      - party create
+      - party invite <player name>
+      - party leave
+      - party join <player name>
+    description: |
+      Using the rest command without arguments displays the party stats.
+      You must first create a party to be able to invite others.
+      Parties move as a group, led by the party leader (the one to create the party).
+      Party members cannot move, or start fights.
+      Party leader can move, start fights, and rest.
+      When party leader rests, the whole party rests at the leaders resting spot.
+      When a party member dies, but the party wins combat, they get ressurected.
+      When a whole party dies, the leader has to 'rest now' to ressurect everyone.
+    related:
+      - rest
+      - fight
+      - go
+  equipment:
+    syntax:
+      - equipment
+      - equipment <item|slot>
+    description: |
+      The equipment command without any arguments displays all your equipped items.
+      Using an item as an argument will equip or unequip depending on its state.
+      Equipped items have a (@greenE@normal) affix.
+    related:
+      - affixes
+      - inventory
+      - look
+  affixes:
+    description: |
+      Items often have affixes. They all have a meaning and are;
+      (@greenE@normal) - Item is currently equipped.
+      (@redK@normal) - Item is kept.
+      (@yellowN@normal) - Item is newly added to inventory.
+      (@yellowT@normal) - Item is being traded away.
+    related:
+      - look
+      - keep
+      - equipment
+  inventory:
+    syntax: 
+      - inventory
+    description: |
+      Display your whole inventory in order from oldest to newest.
+    related:
+      - look
+      - keep
+      - equipment   
+      - get
+      - drop
+  keep:
+    syntax:
+      - keep <item>
+    description: |
+      Keep an item, appending the (@redK@normal) affix.
+      Kept items cannot be traded or dropped, but can still be consumed.
+    related:
+      - inventory
+      - trade
+      - get
+      - drop
+  get:
+    syntax: 
+      - get <item>
+    description: | 
+      Pick an item up and put it in your inventory.
+    related:
+      - inventory
+      - drop
+  drop:
+    syntax: 
+      - drop <item>
+    description: | 
+      Drop an item on the ground.
+      Kept (@redK@normal) or equipped (@greenE@normal) items cannot be dropped.
+      Items cannot be dropped during an ongoing trade.
+    related:
+      - inventory
+      - get
+      - keep
+      - equipment
+      - trade
+  trade:
+    syntax:
+      - trade with <player>       (a way to both request and accept a trade)
+      - trade offer <item>        (offer an item for trade)
+      - trade identify <item>     (view a specific trade offered item)
+      - trade look                (overview of the entire trade)
+      - trade cancel              (cancel trade)
+      - trade accept              (when both parties accept, the trade completes)
+    description: |
+      Trades are a secure way of moving items from one account to another.
+      Kept (@redK@normal) or equipped (@greenE@normal) items cannot be traded.
+      Items offered for a trade will have the (@yellowT@normal) affix.
+    related:  
+      - keep
+      - equipment
+      - affixes
+  split:
+    syntax:
+      - split <item> <1-99>
+    description: |
+      Split a stack of items into multiple stacks.
+    related:
+      - inventory
+      - get
+      - drop
+  level:
+    syntax:
+      - level <stat>
+    description: |
+      After accumulating enough experience, you can use the level command to level up.
+      You can level up grit/flow/mind/soul.
+      Leveling up gives you one practice point.
+    related: 
+      - stats
+      - practice
+  respec:
+    syntax:
+      - respec
+    description: |
+      Reset your character to level 1, keeping all experience.
+      Stats and practice points gained through other means than leveling 
+      will NOT be kept.
+    related:
+      - stats
+      - level
+  practice:
+    syntax:
+      - practice
+      - practice <skill>
+    description: |
+      The command without any arguments displays all skills you can practice.
+      The skills will show your current practice level, and how much it costs 
+      practice again.
+      Using the command with a skill at the end will spend x amount of 
+      practice points to level it up once.
+    related:
+      - skills
+      - level
+  skills:
+    syntax:
+      - skills
+      - skills <skill>
+    description: |
+      The command without any arguments displays all your currently available skills.
+      This will also display how many turns until the skill is usable again.
+      'skill <skill>' will display extra skill information.
+    related:
+      - practice
+  stats:
+    syntax:
+      - stats
+    description: |
+      View your current stats
+      - Health    - Take a wild guess what this does.
+      - Magicka   - Take a WILD guess what this does.
+      - Grit      - Physical damage and max health.
+      - Flow      - Physical damage and initiative.
+      - Mind      - Magical damage and max magicka.
+      - Soul      - Pure and Healing damage.
+      - Level     - Your current level.
+      - Exp       - Your current experience.
+      - Practices - Your leftover practice points.
+    related:
+      - level
+      - practice
+  affects:
+    syntax:
+      - affects
+      - affects <character>
+    description: |
+      View your own or somebody elses afflictions.
+      Afflictions are status effects that linger between turns.
+      Afflictions will display the duration of turns until it ends
+      and a short description of what it does. 
+  history:
+    syntax:
+      - history <chat|say|shout|combat>
+    description: |
+      View a brief log of what your character has seen while online this session.
+      A very handy command, if you just moved right after somebody said something
+      and don't want to scroll up.
+    related:
+      - say
+      - shout
+      - emote
+  settings:
+    syntax: 
+      - settings alias                                    
+      - settings alias <your alias> <a command>
+      - settings alias <your alias>                       
+      - settings <gmcp|viewroom|viewmap|debug> <on|off>   
+      - settings logout
+    description: |
+      'settings alias' will display all aliases.
+      Setting an alias without <a command> will remove it
+      gmcp      - toggle gmcp
+      debug     - toggle debug (dont)
+      viewroom  - toggle to automatically view rooms with 'look' command when moving
+      viewmap   - toggle to automatically view ascii map with 'map' command when moving
+      logout will log you out of the game and close the connection. It is OK to just close
+      the game in browser, or kill connection in desktop client.
+    related:
+      - look
+      - map
+# - mexp
+# - teleport
+  online:
+    syntax:
+      - online
+    description: |
+      View all online players.
+    related:
+      - say
+      - shout
+      - rank
+  help:
+    syntax:
+      - help
+      - help <helpfile>
+    description: |
+      'help' alone shows all help files, you can then 'help <helpfile>' 
+      to view other helpfiles in search for what you need help with.
+      If you still can't figure something out, contact @vinmonopolet on discord.
+      Alternatively if someone is online, try shouting :)
+    related:
+      - shout
+  rank:
+    syntax:
+      - rank
+    description: |
+      Display a table of all ranked players. Ranked players are players with more than 1exp,
+      and atleast one quest completed. (Not counting daily quests)
+    related:
+      - online
+  lore:
+    syntax: 
+      - lore <item|npc|skill>
+    description: |
+      View all details of an item, npc or skill. Including room spawns, drop rates and what items 
+      grant that skill as a bonus.
+  quest:
+    syntax:
+      - quest
+      - quest all
+      - quest view <quest>
+      - quest drop <quest>
+    description: |
+      By default, view all currently not turned in quests.
+      Quests have different states;
+      - not started     - quest has not been started and will not display in your log.
+      - in progress     - quest has been started and is in progress.
+      - completed       - quest can be turned in to an npc.
+      - turned in       - quest is turned in and reward received.
+      Viewing a quest will display information about what you need to do to finish it.
+# - export
+
+
+# - kick
+# - admin
+# - item
+# - npcs
+
+# - kick
+# - sethp
+# - reload
+
+  room:
+    syntax:
+      - map
+      - look
+    description: |
+      Rooms are not literal rooms, but more like positions in the world you are in.
+      Rooms have a name, description, exits and items / characters in them.
+      Rooms with a @greengreen@normal name are resting spots.
+      Rooms with a @badpurple@normal name are dungeon rooms. 
+      Where you do not regenerate passively.
+      @badPurple@normal rooms are also instanced, meaning unless in a party, other players will not be seen.
+      Rooms with a @yellowyellow@normal name are regular rooms. Where you do regenerate passively.
+    related:
+      - look
+      - map
+      - party
+  look: 
+    syntax: 
+      - look
+      - look <character|item>
+    description: |
+      View information about a character, item or room, if you use 'look'
+      without arguments, you will see the room
+    related:
+      - map
+  map:
+    syntax:
+      - map
+    description: |
+      View ascii map
+    related:
+      - look
+  indexes:
+    syntax:
+      - <get|drop|look|equipment> <index>.<item|character>
+    description: |
+      indexes, or indexing, is a way of specifying which character or item you are targetting.
+      if you have more than one Handaxe in your inventory, it could be difficult to specify which 
+      one you want to look at.
+
+      You can use indexes by specifying a number. For example;
+      'look 2.handaxe' will display the second handaxe in your inventory
+      'look -1.handaxe' will display the last handaxe available.
+    related:
+      - look
+      - get
+      - drop
+      - use
+      - equipment
+

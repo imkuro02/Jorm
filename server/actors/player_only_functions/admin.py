@@ -5,8 +5,41 @@ import configuration.config as config
 import yaml
 import os
 import utils
-from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms
+from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms, HELPFILES
 
+def command_help(self, line):
+    help = HELPFILES
+    print(help)
+    output = ''
+    if line == '':
+        for i in help['commands']:
+            output = output + str(i) + '\n'
+    else:
+        best_match = utils.match_word(line, help['commands'].keys())
+        if best_match in help['commands']:
+            output = output + str(best_match) + '\n'
+
+            if 'syntax' in help['commands'][best_match]:
+                output += 'Syntax:\n'
+                syntax      = (help['commands'][best_match]['syntax']) 
+                for i in syntax:
+                    output = output + '   - '+ i + '\n'
+            
+            if 'description' in help['commands'][best_match]:
+                description = (help['commands'][best_match]['description']) 
+                output = output + description + ''
+
+            if 'related' in help['commands'][best_match]:
+                output = output + 'Also check out: '
+                related      = (help['commands'][best_match]['related']) 
+                for i in related:
+                    output = output + '' + i + ' '
+
+    self.sendLine(output)
+        
+
+
+'''
 def command_help(self, line):
     files = os.listdir('help')
     file_text = [f.replace('.txt', '') for f in files]
@@ -24,6 +57,7 @@ def command_help(self, line):
         content = content.replace('" ','"@normal ')
 
     self.sendLine(content)
+'''
 
 def command_history(self, line):
     if line == '':
