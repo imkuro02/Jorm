@@ -441,7 +441,7 @@ commands:
   indexes:
     group: other
     syntax:
-      - <get|drop|look|equipment> <index>.<item|character>
+      - <get|drop|look|talk|equipment> <index>.<item|character>
     description: |
       indexes, or indexing, is a way of specifying which character or item you are targetting.
       if you have more than one Handaxe in your inventory, it could be difficult to specify which 
@@ -456,4 +456,19 @@ commands:
       - drop
       - use
       - equipment
+  talk:
+    group: talking
+    syntax:
+      - talk <character>
+    description: |
+      You can talk to certain npc's in game with the talk command.
+      After using the talk command, you might get some response options.
+      Type the number without anything extra to respond to what the npc has said.
+      When you no longer see any options, the conversation is over.
+      You can leave a conversation or just not respond at any time and the 
+      conversation will end.
+    related:
+      - indexes
+      - look
+
 
