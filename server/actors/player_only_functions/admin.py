@@ -9,28 +9,42 @@ from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, 
 
 def command_help(self, line):
     help = HELPFILES
-    print(help)
     output = ''
+
     if line == '':
+        groups = {}
         for i in help['commands']:
-            output = output + str(i) + '\n'
+            if help['commands'][i]['group'] not in groups:
+                groups[help['commands'][i]['group']] = []
+            groups[help['commands'][i]['group']].append(i)
+            
+        output = 'Here are all helpfiles, sorted by GROUP.\n'
+        t = utils.Table(2,3)
+        for group in groups:
+            t.add_data(str(group).upper())
+            t.add_data(" ".join(groups[group]))
+            #output = f'{output}{str(group)}: {" ".join(groups[group])}\n'
+        output = output + t.get_table()
     else:
         best_match = utils.match_word(line, help['commands'].keys())
         if best_match in help['commands']:
-            output = output + str(best_match) + '\n'
+            output = f'<@yellowHelpfile@normal for @yellow{best_match}@normal>\n'
 
             if 'syntax' in help['commands'][best_match]:
+                output += '\n'
                 output += 'Syntax:\n'
                 syntax      = (help['commands'][best_match]['syntax']) 
                 for i in syntax:
-                    output = output + '   - '+ i + '\n'
+                    output = output + ' - '+ i + '\n'
             
             if 'description' in help['commands'][best_match]:
+                output += '\n'
                 description = (help['commands'][best_match]['description']) 
                 output = output + description + ''
 
             if 'related' in help['commands'][best_match]:
-                output = output + 'Also check out: '
+                output += '\n'
+                output = output + '@yellowAlso check out@normal: '
                 related      = (help['commands'][best_match]['related']) 
                 for i in related:
                     output = output + '' + i + ' '

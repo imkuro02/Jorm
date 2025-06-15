@@ -1,5 +1,6 @@
 commands:
   say:
+    group: talking
     syntax:
       - say <words>
     description: |
@@ -10,6 +11,7 @@ commands:
       - history
       - room
   shout:
+    group: talking
     syntax:
       - shout <words>
     description: |
@@ -21,11 +23,16 @@ commands:
       - history
       - room
   emote:
+    group: talking
     syntax:
       - emote <emote>
     description: |
-      Emotes are currently very weird. You can view a full list of all emotes with 'emote'.
-      Most emotes are aliased. stuff like 'point at <character>' will automatically 
+      Emotes are currently very weird. 
+
+      You can view a full list of all emotes with 'emote'.
+      Most emotes are aliased. 
+
+      stuff like 'point at <character>' will automatically 
       correct to proper syntax.
     related:
       - say
@@ -33,32 +40,40 @@ commands:
       - history
       - room
   fight:
+    group: combat
     syntax: 
       - fight
     description: |
-      Start a fight / Automatically use first offensive skill available if already in a fight.
+      Start a fight / Automatically use first offensive 
+      skill available if already in a fight.
     related:
       - use
       - pass
       - rest
       - party
   pass:
+    group: combat
     syntax:
       - pass
     description: |
       Pass your turn.
       If not in combat, you still spend one turn.
-      Passing a turn out of combat might be beneficial to wait out debuffs without resting.
+      Passing a turn out of combat might be beneficial 
+      to wait out debuffs without resting.
     related:
       - rest
       - affects
   use:
+    group: combat
     syntax:
       - use <skill|item>
       - use <skill|item> on <character|item>
     description: |
       Use a skill or an item on someone / something.
-      Using a skill or an item without specifying a target will attempt to use it on yourself.
+
+      Using a skill or an item without specifying a target 
+      will attempt to use it on yourself.
+
       Using a skill or an item will spend one turn in combat.
       Some skills cannot be used on others (help skills). 
       Items can always be used on yourself. 
@@ -69,20 +84,31 @@ commands:
       - inventory
       - look
   rest:
+    group: combat
     syntax:
       - rest
       - rest set
       - rest now
     description: |
       Resting is a way of quickly recovering aswell as fast travel.
-      Using the rest command without arguments displays your spawn point.
-      The set argument will set a spawn point, while the now argument will make you rest;
-      Resting ressurects, resets cooldowns, resets afflictions, heals you to full
-      and teleports you to your rest site. 
+      
+      Using the rest command without 
+      arguments displays your spawn point.
+
+      The set argument will set a spawn point, 
+      while the now argument will make you rest.
+
+      Resting;
+        - ressurects 
+        - resets cooldowns 
+        - resets afflictions 
+        - heals you to full
+        - teleports you to your rest site. 
     related:
       - stats
       - room
   party:
+    group: combat
     syntax:
       - party
       - party create
@@ -90,7 +116,7 @@ commands:
       - party leave
       - party join <player name>
     description: |
-      Using the rest command without arguments displays the party stats.
+      Using the party command without arguments displays the party stats.
       You must first create a party to be able to invite others.
       Parties move as a group, led by the party leader (the one to create the party).
       Party members cannot move, or start fights.
@@ -103,6 +129,7 @@ commands:
       - fight
       - go
   equipment:
+    group: items
     syntax:
       - equipment
       - equipment <item|slot>
@@ -115,6 +142,7 @@ commands:
       - inventory
       - look
   affixes:
+    group: items
     description: |
       Items often have affixes. They all have a meaning and are;
       (@greenE@normal) - Item is currently equipped.
@@ -126,6 +154,7 @@ commands:
       - keep
       - equipment
   inventory:
+    group: items
     syntax: 
       - inventory
     description: |
@@ -137,6 +166,7 @@ commands:
       - get
       - drop
   keep:
+    group: items
     syntax:
       - keep <item>
     description: |
@@ -148,6 +178,7 @@ commands:
       - get
       - drop
   get:
+    group: items
     syntax: 
       - get <item>
     description: | 
@@ -156,6 +187,7 @@ commands:
       - inventory
       - drop
   drop:
+    group: items
     syntax: 
       - drop <item>
     description: | 
@@ -169,6 +201,7 @@ commands:
       - equipment
       - trade
   trade:
+    group: items
     syntax:
       - trade with <player>       (a way to both request and accept a trade)
       - trade offer <item>        (offer an item for trade)
@@ -185,6 +218,7 @@ commands:
       - equipment
       - affixes
   split:
+    group: items
     syntax:
       - split <item> <1-99>
     description: |
@@ -194,16 +228,20 @@ commands:
       - get
       - drop
   level:
+    group: character
     syntax:
       - level <stat>
     description: |
-      After accumulating enough experience, you can use the level command to level up.
+      After accumulating enough experience, 
+      you can use the level command to level up.
+      
       You can level up grit/flow/mind/soul.
       Leveling up gives you one practice point.
     related: 
       - stats
       - practice
   respec:
+    group: character
     syntax:
       - respec
     description: |
@@ -214,6 +252,7 @@ commands:
       - stats
       - level
   practice:
+    group: character
     syntax:
       - practice
       - practice <skill>
@@ -227,6 +266,7 @@ commands:
       - skills
       - level
   skills:
+    group: character
     syntax:
       - skills
       - skills <skill>
@@ -237,6 +277,7 @@ commands:
     related:
       - practice
   stats:
+    group: character
     syntax:
       - stats
     description: |
@@ -254,6 +295,7 @@ commands:
       - level
       - practice
   affects:
+    group: character
     syntax:
       - affects
       - affects <character>
@@ -263,6 +305,7 @@ commands:
       Afflictions will display the duration of turns until it ends
       and a short description of what it does. 
   history:
+    group: talking
     syntax:
       - history <chat|say|shout|combat>
     description: |
@@ -274,6 +317,7 @@ commands:
       - shout
       - emote
   settings:
+    group: other
     syntax: 
       - settings alias                                    
       - settings alias <your alias> <a command>
@@ -295,6 +339,7 @@ commands:
 # - mexp
 # - teleport
   online:
+    group: other
     syntax:
       - online
     description: |
@@ -304,6 +349,7 @@ commands:
       - shout
       - rank
   help:
+    group: other
     syntax:
       - help
       - help <helpfile>
@@ -315,6 +361,7 @@ commands:
     related:
       - shout
   rank:
+    group: other
     syntax:
       - rank
     description: |
@@ -323,12 +370,14 @@ commands:
     related:
       - online
   lore:
+    group: other
     syntax: 
       - lore <item|npc|skill>
     description: |
       View all details of an item, npc or skill. Including room spawns, drop rates and what items 
       grant that skill as a bonus.
   quest:
+    group: other
     syntax:
       - quest
       - quest all
@@ -355,6 +404,7 @@ commands:
 # - reload
 
   room:
+    group: other
     syntax:
       - map
       - look
@@ -371,6 +421,7 @@ commands:
       - map
       - party
   look: 
+    group: other
     syntax: 
       - look
       - look <character|item>
@@ -380,6 +431,7 @@ commands:
     related:
       - map
   map:
+    group: other
     syntax:
       - map
     description: |
@@ -387,6 +439,7 @@ commands:
     related:
       - look
   indexes:
+    group: other
     syntax:
       - <get|drop|look|equipment> <index>.<item|character>
     description: |
