@@ -521,7 +521,7 @@ def command_lore(self, line):
 
         all_loot_they_drop = {}
         for loot in e.loot:
-            all_loot_they_drop[LORE['items_name_to_id'][loot]] = str(float(e.loot[loot])*100)+'%'
+            all_loot_they_drop[LORE['items_name_to_id'][loot]] = f'{round(e.loot[loot]*100,5)}%'
 
         
         t = utils.Table(4,3)
@@ -555,11 +555,17 @@ def command_lore(self, line):
             i = load_item(item_id, max_stats = True)
             i.new = False
             output += i.identify(self) + '\n'
-            output += '@yellowLooted from@normal: '
+            output += '@yellowLooted from@normal: \n'
+            all_dropped_from = []
             for e in LORE['enemies']:
                 if item_id in LORE['enemies'][e]['loot']:
-                    output += f'{e}: {float(LORE["enemies"][e]["loot"][item_id]*100)}%, '
-            output[-2] == '.'
+                    all_dropped_from.append([e,f'{round(LORE["enemies"][e]["loot"][item_id]*100,5)}%'])
+            
+        t = utils.Table(4,3)
+        for i in all_dropped_from:
+            t.add_data(f'{i[0]}: ')
+            t.add_data(i[1])
+        output = output + t.get_table()
         self.sendLine(output)
         return
     

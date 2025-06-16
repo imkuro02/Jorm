@@ -164,7 +164,8 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'item_type':        'scenery',
                 'ambience':         x['ambience'][index],
                 'ambience_sfx':     x['ambience_sfx'][index],
-                'invisible':        x['invisible'][index]
+                'invisible':        x['invisible'][index],
+                'random_drop_lvl': int(x['random_drop_lvl'][index])
             }
 
 
@@ -178,7 +179,8 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'description':      str_with_newlines(x['description'][index]),
                 'skills':           [x['skill'][index]],
                 'use_perspectives': USE_PERSPECTIVES[x['use_perspectives'][index]],
-                'item_type':        'consumable'
+                'item_type':        'consumable',
+                'random_drop_lvl': int(x['random_drop_lvl'][index])
                 
             }
     
@@ -192,7 +194,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'description':  str_with_newlines(x['description'][index]),
                 'item_type':    'equipment',
                 'slot':         x['slot'][index],
-                'bonuses':   x['bonuses'][index],
+                'bonuses':      x['bonuses'][index],
                 'stats': {
                     'grit':     int(x['grit'][index]),
                     'hp_max':   int(x['hp_max'][index]),
@@ -213,14 +215,15 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     'flow':     int(x['rflow'][index]),
                     'mind':     int(x['rmind'][index]),
                     'soul':     int(x['rsoul'][index])
-                }
+                },
+                'random_drop_lvl': int(x['random_drop_lvl'][index])
             }
 
     end = time.time()
     print(end - start,'ITEMS')
     return ITEMS
 
-def configure_ENEMIES(SHEET):
+def configure_ENEMIES(SHEET, ITEMS):
     start = time.time()
     ENEMIES = {}
     for row in SHEET['enemies']:
@@ -273,6 +276,47 @@ def configure_ENEMIES(SHEET):
 
     for loot_table in LOOT:
         ENEMIES[loot_table]['loot'] = LOOT[loot_table]
+
+    for e in ENEMIES:
+        loot = {}
+        for i in ITEMS:
+            if 'random_drop_lvl' in ITEMS[i]:
+                if ITEMS[i]['random_drop_lvl'] == 0:
+                    continue
+
+                highest_enemy_stat = {'stat':'grit','val':-10000}
+                for s in ['grit','flow','mind','soul']:
+                    if ENEMIES[e]['stats'][s] > highest_enemy_stat['val']:
+                        highest_enemy_stat = {'stat':s,'val':ENEMIES[e]['stats'][s]}
+                    
+                if 'stats' in ITEMS[i]:
+                    highest_item_stat = {'stat':'grit','val':-10000}
+                    for s in ['grit','flow','mind','soul']:
+                        if ITEMS[i]['stats'][s] + ITEMS[i]['requirements'][s] > highest_item_stat['val']:
+                            highest_item_stat = {'stat':s,'val': ITEMS[i]['stats'][s] + ITEMS[i]['requirements'][s]} 
+                    if highest_item_stat['stat'] != highest_enemy_stat['stat']:
+                        
+                        continue
+                #if 'stats' in ITEMS[i]: 
+                #   print(e, highest_item_stat['stat'],i , highest_enemy_stat['stat'])
+                match abs(ITEMS[i]['random_drop_lvl'] - ENEMIES[e]['stats']['lvl']):
+                    case 0:
+                        loot[i] = 0.02
+                    case 1:
+                        loot[i] = 0.02
+                    case 2:
+                        loot[i] = 0.005
+                    case 3:
+                        loot[i] = 0.005
+                    case 5:
+                        loot[i] = 0.001
+                    case 6:
+                        loot[i] = 0.001
+                    case _:
+                        continue
+
+                if i not in ENEMIES[e]['loot']:
+                    ENEMIES[e]['loot'][i] = loot[i]
 
     end = time.time()
     print(end - start,'LOOT')
@@ -346,7 +390,7 @@ def load():
     USE_PERSPECTIVES =        configure_USE_PERSPECTIVES(SHEET)
     SKILLS =                  configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES)
     ITEMS =                   configure_ITEMS(SHEET, USE_PERSPECTIVES)
-    ENEMIES =                 configure_ENEMIES(SHEET)
+    ENEMIES =                 configure_ENEMIES(SHEET, ITEMS)
         
     
 

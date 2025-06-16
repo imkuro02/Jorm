@@ -24,10 +24,30 @@ def create_npc(room, npc_id, spawn_for_lore = False):
         name = name + ' The ' + ENEMIES[npc_id]['name']
         desc =      ENEMIES[npc_id]['description']
         stats =     ENEMIES[npc_id]['stats']
-        loot =      ENEMIES[npc_id]['loot']
+        _loot =      ENEMIES[npc_id]['loot']
         skills =    ENEMIES[npc_id]['skills']
         ai =        ENEMIES[npc_id]['ai']
-    
+        loot = _loot # {}
+        '''
+        for i in ITEMS:
+            if 'requirements' in ITEMS[i]:
+                match abs(ITEMS[i]['requirements']['lvl'] - stats[StatType.LVL]):
+                    case 0:
+                        loot[i] = 0.01
+                    case 1:
+                        loot[i] = 0.009
+                    case 2:
+                        loot[i] = 0.008
+                    case 3:
+                        loot[i] = 0.007
+                    case 5:
+                        loot[i] = 0.006
+                    case 6:
+                        loot[i] = 0.005
+        for i in _loot:
+            loot[i] = _loot[i]
+        '''
+            
     if npc_id in NPCS:
         #name =      NPCS[npc_id]['name']
         #desc =      NPCS[npc_id]['description']
