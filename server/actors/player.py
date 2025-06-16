@@ -17,6 +17,8 @@ class Player(Actor):
         self.admin = 0
         self.queued_lines = []
         self.msg_history = {}
+        self.recently_send_message_count = 0
+        self.instanced_rooms = []
         
         super().__init__(name = name, room = room, _id = _id)
 
@@ -34,10 +36,12 @@ class Player(Actor):
         self.date_of_creation = utils.get_unix_timestamp()
         self.date_of_last_login = utils.get_unix_timestamp()
         self.time_in_game = 0
-        self.recently_send_message_count = 0
+        
         
         self.settings_manager = Settings(self)
         self.ai = PlayerAI(self)
+
+        
         
     def check_if_admin(self):
         if self.protocol == None:

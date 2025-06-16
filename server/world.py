@@ -202,7 +202,11 @@ class Room:
                 return i
         return False
 
-    
+    def is_player_present(self):
+        for i in self.actors.values():
+            if type(i).__name__ == 'Player':
+                return i
+        return False 
 
     def tick(self):
         actors = {}
@@ -306,12 +310,30 @@ class Room:
         if not self.instanced:
             actor.room = self
             self.actors[actor.id] = actor
+            all_instaneced_rooms_empty = True
+            if type(actor).__name__ == 'Player':
+                for i in actor.instanced_rooms:
+                    if i in self.world.rooms:
+                        if self.world.rooms[i].is_player_present():
+                            all_instaneced_rooms_empty = False
+                            break
+                if all_instaneced_rooms_empty:
+                    for i in actor.instanced_rooms:
+                        if i in actor.room.world.rooms:
+                            if actor.settings_manager.debug:
+                                actor.sendLine(f'instanced room: {i} deleted')
+                            del self.world.rooms[i]
+                    actor.instanced_rooms = []
         else:
             instanced_room_id = self.id+'#'+actor.name
-            self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.from_file, self.exits, self.can_be_recall_site, self.doorway, instanced=False)
+            if instanced_room_id not in self.world.rooms:
+                self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.from_file, self.exits, self.can_be_recall_site, self.doorway, instanced=False)
+                if type(actor).__name__ == 'Player':
+                    actor.instanced_rooms.append(instanced_room_id)
+            instanced_room = self.world.rooms[instanced_room_id]
+            instanced_room.actors[actor.id] = actor
             instanced_room = self.world.rooms[instanced_room_id]
             actor.room = instanced_room
-            instanced_room.actors[actor.id] = actor
 
 
         if not silent:
@@ -320,6 +342,7 @@ class Room:
             else:
                 actor.simple_broadcast('',f'{actor.pretty_name()} and their party arrives.', send_to = 'room_not_party')
 
+        
 
         '''
         if not self.instanced:
