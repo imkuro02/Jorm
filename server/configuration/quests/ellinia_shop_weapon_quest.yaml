@@ -1,0 +1,47 @@
+ellinia_shop_weapon_quest_1:
+  name: Ellinian Beginner Wand
+  description: 
+    in_progress: |
+      I've asked the wand seller fairy to craft me a wand, she says she will if I bring her
+      some branches... I think looking around Ellinia and Perion might be a good start.
+    completed: |
+      I've gathered the branches required to craft the wand, I should return to Flora.
+    turned_in: |
+      I've handed in the branches, and I got a pretty wand for my troubles!
+  objectives:
+    Collect tree branches:
+      type: collect_x
+      objective: tree_branch
+      completed_at: 3
+
+ellinia_shop_weapon_quest_2:
+  name: Ellinian Intermediate Wand
+  description: 
+    in_progress: |
+      I've asked the wand seller fairy to craft me another wand, she says she will if I bring her
+      some branches... I think looking around Ellinia and Perion might be a good start.
+    completed: |
+      I've gathered the branches required to craft the wand, I should return to Flora.
+    turned_in: |
+      I've handed in the branches, and I got a pretty wand for my troubles!
+  objectives:
+    Collect tree branches:
+      type: collect_x
+      objective: tree_branch
+      completed_at: 12
+
+ellinia_shop_weapon_quest_3:
+  name: Ellinian Master Wand
+  description: 
+    in_progress: |
+      I've asked the wand seller fairy to craft me yet another wand, this time she has asked me to 
+      bring her some roots.
+    completed: |
+      I've gathered the roots required to craft the wand, I should return to Flora.
+    turned_in: |
+      I've handed in the roots, and I got a pretty wand for my troubles!
+  objectives:
+    Collect tree roots:
+      type: collect_x
+      objective: tree_root
+      completed_at: 3
