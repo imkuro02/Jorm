@@ -372,10 +372,16 @@ commands:
   lore:
     group: other
     syntax: 
-      - lore <item|npc|skill>
+      - lore <item|npc|skill|stat>
     description: |
       View all details of an item, npc or skill. Including room spawns, drop rates and what items 
       grant that skill as a bonus.
+
+      You can lore for the following stats; grit, flow, mind, soul, hp, mp, armor and marmr.
+      Loring for a stat will display best in slot equipment at your level that boosts the 
+      stat you lored for the most.
+
+      Example: "lore grit" -> "Best in slot equipment for grit".
   quest:
     group: other
     syntax:

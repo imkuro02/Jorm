@@ -484,11 +484,44 @@ def command_quest(self, line = 'list'):
 from actors.npcs import create_npc
 @check_no_empty_line
 def command_lore(self, line):
+
+   
+
     
     list_of_enemies = [enemy for enemy in LORE['enemies']]
     list_of_items = [item for item in LORE['items']]
     list_of_rooms = [room for room in LORE['rooms']]
     list_of_skills = [skill for skill in LORE['skills']]
+
+    if line in 'grit flow mind soul armor marmor hp mp'.split():
+        line = line.strip()
+        if line in 'hp mp'.strip():
+            line += '_max'
+        temp_slots_manager = {}
+        for slot in self.slots_manager.slots:
+            temp_slots_manager[slot] = None
+
+        for item in list_of_items:
+            if 'stats' in LORE['items'][item]:
+                if LORE['items'][item]['requirements']['lvl'] > self.stat_manager.stats[StatType.LVL]:
+                    continue
+                if temp_slots_manager[LORE['items'][item]['slot']] != None:
+                    if LORE['items'][item]['stats'][line] + LORE['items'][item]['requirements']['lvl'] >= temp_slots_manager[LORE['items'][item]['slot']]['stats'][line] + temp_slots_manager[LORE['items'][item]['slot']]['requirements']['lvl']:
+                        temp_slots_manager[LORE['items'][item]['slot']] = LORE['items'][item]
+                else:
+                    temp_slots_manager[LORE['items'][item]['slot']] = LORE['items'][item]
+        
+        t = utils.Table(2,3)
+        for slot in temp_slots_manager:
+            t.add_data(slot)
+            if temp_slots_manager[slot] == None:
+                t.add_data(temp_slots_manager[slot]['nothing'])
+            else:
+                t.add_data(temp_slots_manager[slot]['name'])
+        self.sendLine(f'Best in slot equipment for your level:\n{t.get_table()}')
+        return
+
+
     
     whole_list = list_of_enemies + list_of_items + list_of_rooms + list_of_skills
 
