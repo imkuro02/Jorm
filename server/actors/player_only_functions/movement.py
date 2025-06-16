@@ -114,7 +114,7 @@ def command_go(self, line):
     self.simple_broadcast('',f'You follow {self.pretty_name()}', send_to = 'room_party', sound = Audio.walk())
     
     world.rooms[new_room].move_actor(self)
-    self.sendSound(Audio.walk())
+    #self.sendSound(Audio.walk())
     
 
     if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
