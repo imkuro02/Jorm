@@ -13,8 +13,10 @@ class SETTINGS:
     RESET = 'reset'
     LOGOUT = 'logout'
     DEBUG = 'debug'
+    PWD = 'password'
+    USR = 'username' # not in LIST_SETTINGS
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, 
     ]
 
 
@@ -45,6 +47,7 @@ class Settings:
 
     
     def command_settings(self, line):
+        original_line = line
         line = line.split()
 
         command = match_word(line[0], SETTINGS.LIST_SETTINGS)
@@ -124,6 +127,18 @@ class Settings:
                 proto = self.actor.protocol
                 proto.unload_actor()
                 proto.change_state(proto.LOGIN_OR_REGISTER)
+
+            case SETTINGS.USR:
+                proto = self.actor.protocol
+                password = proto.password
+                username = ' '.join(original_line.split()[1:])
+                proto.register_account_changes(username, password)
+        
+            case SETTINGS.PWD:
+                proto = self.actor.protocol
+                password = ' '.join(original_line.split()[1:])
+                username = proto.username
+                proto.register_account_changes(username, password)
         
 @check_no_empty_line
 def command_settings(self, line):

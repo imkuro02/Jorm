@@ -171,7 +171,7 @@ class PartyManager:
             t.add_data(i.pretty_name())
             t.add_data(i.prompt())
         output = t.get_table()
-        output = self.get_party_id() + output
+        #output = self.get_party_id() + output
         self.actor.sendLine(output)
     
     def handle_party_message(self, line):

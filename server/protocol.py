@@ -107,15 +107,17 @@ class Protocol(protocol.Protocol):
             case self.REGISTER_PASSWORD2:
                 self.sendLine('Enter @bgreenpassword@normal again:')
 
-            case self.PLAY_OR_SETTINGS:
-                self.sendLine(f'You are now logged in as @bcyan{self.username}@normal')
-                self.sendLine(f'Type @bgreenplay@normal to enter the game')
-                self.sendLine(f'Type @bgreenback@normal to log out')
-                self.sendLine(f'...')
-                #self.sendLine(f'To set new username or password type:')
-                #self.sendLine(f'username "new_username" "current_password"\n(This is NOT your in game name)')
-                #self.sendLine(f'username "new_username" "current_password"')
-                self.sendLine(f'Set new password with:\npassword "new_password" "current_password"')
+           
+
+            case self.PLAY:
+                self.account = self.factory.db.find_account_from_username(self.username)
+                self.id = self.account[0]
+                self.username = self.account[1]
+                self.password = self.account[2]
+                for online_account in self.factory.protocols:
+                    if self.id == online_account.id and self != online_account:
+                        online_account.disconnect()
+                self.load_actor()
                 
 
         self.state = state
@@ -123,7 +125,6 @@ class Protocol(protocol.Protocol):
 
     def PLAY(self, line):
         self.actor.queue_handle(line)
-        #self.send_gmcp('')
         return
             
     def REGISTER_USERNAME(self, line):
@@ -162,8 +163,11 @@ class Protocol(protocol.Protocol):
             return
         
         self.factory.db.create_new_account(self.id, self.username, self.password)
-        self.sendLine('Account created! you can now log in!')
-        self.change_state(self.LOGIN_OR_REGISTER)
+        #self.sendLine('Account created! you can now log in!')
+        #self.change_state(self.LOGIN_OR_REGISTER)
+
+        self.sendLine('Account created! logging in!')
+        self.change_state(self.PLAY)
 
     def LOGIN_PASSWORD(self, line):
         self.password = line
@@ -177,22 +181,8 @@ class Protocol(protocol.Protocol):
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        #utils.logging.debug(self.id + ' -> ' + self.account[0])
-        self.id = self.account[0]
-        self.username = self.account[1]
-        self.password = self.account[2]
+        self.change_state(self.PLAY)
 
-        for online_account in self.factory.protocols:
-            if self.id == online_account.id and self != online_account:
-                #self.sendLine('@redYou are already logged in on another device@normal')
-                online_account.disconnect()
-                #self.change_state(self.LOGIN_OR_REGISTER)
-                #return
-            #print(online_account.id)
-        self.change_state(self.PLAY_OR_SETTINGS)
-        #self.sendLine(str(self.account))
-        
-        
     def LOGIN_USERNAME(self, line):
         self.account = self.factory.db.find_account_from_username(line)
         self.username = line
@@ -209,49 +199,33 @@ class Protocol(protocol.Protocol):
         self.change_state(self.LOGIN_OR_REGISTER)
         return
 
-    def PLAY_OR_SETTINGS(self, line):
-        if line == 'back' or line == 'b':
-            self.change_state(self.LOGIN_OR_REGISTER)
+    
+    def register_account_changes(self, username, password):
+        if len(password) < 6:
+            self.sendLine('Your password must be a minimum of 6 character')
             return
 
-        if line == 'play' or line == 'p':
-            self.load_actor()
-            self.change_state(self.PLAY)
+        self.account = self.factory.db.find_account_from_username(username)
+        print(self.account)
+        if self.account != None and self.account[1] != username:
+            self.sendLine('This username is already taken')
             return
-
         
-        try:
-            vals = line.split('"')
-            setting = vals[0].strip()
-            new_val = vals[1]
-            cur_pwd = vals[3]
-        except IndexError:
+        if len(username) >= 21 or len(username) <= 3:
+            self.sendLine('Username must be between 4 and 20 characters long')
             return
 
-        
-        if setting.lower() not in 'username password'.split():
-            self.change_state(self.PLAY_OR_SETTINGS)
+        if not username.isalnum():
+            self.sendLine('Username can only contain letters and numbers')
             return
 
-        if cur_pwd != self.password:
-            self.sendLine('Wrong password')
-            return
+        self.username = username
+        self.password = password
+        if self.actor != None:
+            self.actor.name = self.username
+        self.factory.db.create_new_account(self.id, username, password)
+        self.sendLine('@greenAccount information updated@normal')
 
-        '''
-        if setting.lower() == 'username':
-            acc = self.factory.db.find_account_from_username(new_val)
-            #print(acc)
-            if acc != None:
-                self.sendLine('@redThis login username is taken@normal')
-                return
-            self.username = new_val
-        '''
-        if setting.lower() == 'password':
-            self.password = new_val
-        
-
-        self.factory.db.create_new_account(self.id, self.username, self.password)
-        self.sendLine('@bgreenAccount updated@normal')
     # override
     def connectionMade(self):
         #utils.logging.debug(self.id + 'Connection made')
