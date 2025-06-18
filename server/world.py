@@ -8,7 +8,7 @@ import time
 import uuid
 import random
 from combat.manager import Combat
-from configuration.config import WORLD, StatType, ActorStatusType
+from configuration.config import WORLD, StatType, ActorStatusType, ITEMS
 import copy
 from inventory import InventoryManager
 
@@ -131,11 +131,21 @@ class Exit:
         return self.room.world.rooms[self.to_room_id]
 
     def pretty_direction(self):
-        if self.item_required:
-            return f'({self.direction})'
+        direction_name = self.direction.capitalize()
+        direction_room_name = self.room.world.rooms[self.to_room_id].pretty_name()
+        dir_name_and_room = direction_name #f'"{direction_name}" to {direction_room_name}'
+        
         if self.blocked:
-            return f'[{self.direction}]'
-        return self.direction
+            e = self.room.is_enemy_present()
+            if e != False:
+                return f'{dir_name_and_room}, is blocked by {e.pretty_name()}'
+
+        if self.item_required:
+            if self.item_required_consume:
+                return f'{dir_name_and_room}, requires one "{ITEMS[self.item_required]["name"]}"'
+            else:
+                return f'{dir_name_and_room}, requires "{ITEMS[self.item_required]["name"]}"'
+        return f'{dir_name_and_room}'
 
 
 class Room:
@@ -150,16 +160,21 @@ class Room:
         for _exit in exits:
             #print(_exit)
             if type(_exit).__name__ == 'Exit':
-                self.exits.append(_exit)
-                continue
-
-            _exit_dict = {
-                'direction': _exit['direction'], 
-                'to_room_id': _exit['to_room_id'],
-                'blocked': _exit['blocked'], 
-                'secret': _exit['secret'],
-                'item_required': _exit['item_required'], 
-                'item_required_consume': _exit['item_required_consume'], }
+                _exit_dict = {
+                    'direction': _exit.direction, 
+                    'to_room_id': _exit.to_room_id,
+                    'blocked': _exit.blocked, 
+                    'secret': _exit.secret,
+                    'item_required': _exit.item_required, 
+                    'item_required_consume': _exit.item_required_consume, }
+            else:
+                _exit_dict = {
+                    'direction': _exit['direction'], 
+                    'to_room_id': _exit['to_room_id'],
+                    'blocked': _exit['blocked'], 
+                    'secret': _exit['secret'],
+                    'item_required': _exit['item_required'], 
+                    'item_required_consume': _exit['item_required_consume'], }
 
             self.exits.append(
                                 Exit(
@@ -264,11 +279,6 @@ class Room:
                     participants[i.id] = i
                 if type(i).__name__ == "Npc":
                     participants[i.id] = i
-                #    npcs_here = True
-
-                #if type(i).__name__ == "Npc":
-                #    participants[i.id] = i
-                #    npcs_here = True
 
             #if players_here and npcs_here:
             self.combat = Combat(self, participants)
@@ -335,52 +345,11 @@ class Room:
             instanced_room = self.world.rooms[instanced_room_id]
             actor.room = instanced_room
 
-
         if not silent:
             if actor.party_manager.party == None:
                 actor.simple_broadcast('',f'{actor.pretty_name()} arrives.', send_to = 'room_not_party')
             else:
                 actor.simple_broadcast('',f'{actor.pretty_name()} and their party arrives.', send_to = 'room_not_party')
-
-        
-
-        '''
-        if not self.instanced:
-            self.remove_actor(actor)
-            if not silent and actor.room != self:
-                actor.simple_broadcast('',f'{actor.pretty_name()} leaves', send_to = 'room_not_party')
-
-            actor.room = self
-            self.actors[actor.id] = actor
-
-            if not silent:
-                actor.simple_broadcast('',f'{actor.pretty_name()} arrives', send_to = 'room_not_party')
-        
-        else:
-            if type(actor).__name__ != 'Player':
-                return
-            instanced_room_id = self.id+'#'+actor.name
-            if instanced_room_id not in self.world.rooms:
-                self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.from_file, self.exits, self.can_be_recall_site, self.doorway, instanced=False)
-                instanced_room = self.world.rooms[instanced_room_id]
-        
-                #instanced_room.populate()
-
-                self.remove_actor(actor)
-                if not silent and actor.room != self:
-                    actor.simple_broadcast('',f'{actor.pretty_name()} leaves', send_to = 'room_not_party')
-
-                actor.room = instanced_room
-                instanced_room.actors[actor.id] = actor
-
-                if not silent:
-                    actor.simple_broadcast('',f'{actor.pretty_name()} arrives', send_to = 'room_not_party')
-            else:
-                self.world.rooms[instanced_room_id].move_actor(actor)
-        '''
-            
-
-        
 
     def remove_actor(self, actor):
         if actor.room == None:
@@ -388,11 +357,6 @@ class Room:
         if actor.id not in actor.room.actors:
             return
         del actor.room.actors[actor.id]
-
-
-    #def move_enemy(self, enemy):
-    #    enemy.room = self
-    #    self.actors[enemy.id] = enemy
 
 class World:
     def __init__(self, factory):
@@ -420,7 +384,6 @@ class World:
             boss_mob.stat_manager.stats[s] = boss_mob.stat_manager.stats[s] * 2
         boss_mob.stat_manager.stats[StatType.EXP] = boss_mob.stat_manager.stats[StatType.EXP] * 5
 
-
     def reload(self):
         print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
         to_del = []
@@ -435,11 +398,10 @@ class World:
             del self.rooms[d]
 
         world = WORLD
-        #print('>.', world)
+
         for r in world['world']:
             room = world['world'][r]
             
-
             if r in self.rooms:
                 players = [actor for actor in self.rooms[r].actors.values() if type(actor).__name__ == "Player"]
                 if len(players) >= 1:
@@ -450,27 +412,16 @@ class World:
                     e.room = None
                 del self.rooms[r]
 
-            #if room['instanced'] == True:
-            #print(room['exits'])
-            self.rooms[r] = Room(self, r, room['name'], room['description'], room['from_file'], room['exits'], room['can_be_recall_site'], room['doorway'], room['instanced']) 
-            #else:
-            #    self.rooms[r] = Room(self, r, room['name'], room['description'], room['exits'], room['secret_exits'], room['can_be_recall_site']) 
-            #self.rooms[r].populate()
-            
-
-
+            self.rooms[r] = Room(self, r, 
+            room['name'], room['description'], 
+            room['from_file'], room['exits'], 
+            room['can_be_recall_site'], room['doorway'],
+            room['instanced']) 
 
     def save_world(self):
         pass
 
     def tick(self):
-        #if self.factory.ticks_passed % (30*(60*1)) == 0 or self.factory.ticks_passed == 3:
-        #    self.reload()
-            #self.spawn_boss()
-            
-        #if self.factory.ticks_passed % (30*(60*10)) == 0 or self.factory.ticks_passed == 1:
-        #    for i in self.rooms.values():
-        #        i.respawn_enemies()
         rooms = []
         for i in self.rooms.values():
             rooms.append(i)

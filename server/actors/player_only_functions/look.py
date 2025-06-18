@@ -351,12 +351,12 @@ def command_look(self, line):
         if len(room.actors) == 1:
             see = see + 'You are alone.\n'
         else:
-            see = see + 'there are others here:\n'
+            see = see + 'There are others here:\n'
             for i in room.actors.values():
                 if i == self:
                     pass
                 else:
-                    see = see + i.pretty_name() 
+                    see = see + '   '+i.pretty_name() 
                     if i.status == ActorStatusType.DEAD:
                         see = see + f' @yellow(DEAD)@normal'
                     if i.status == ActorStatusType.FIGHTING:
@@ -373,16 +373,16 @@ def command_look(self, line):
                 continue
             #if _exit.blocked and self.room.is_enemy_present():
             #    continue
-            see_exits = see_exits + f'@yellow{_exit.pretty_direction()}@normal, '
+            see_exits = see_exits + f'   {_exit.pretty_direction()}\n'
             exit_count += 1
             #else:
             #    see = see + f'@red{exit_name}@normal, '
 
         if exit_count == 0:
-            see = see + 'You don\'t see any exits.'
+            see = see + 'You don\'t see any exits'
         else:
-            see = see + 'You can go: ' + see_exits
-            see = see + '\n'
+            see = see + 'You can go: \n' + see_exits
+            #see = see + '\n'
 
         #see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         
@@ -395,9 +395,9 @@ def command_look(self, line):
                     continue
 
                 if i.can_pick_up:
-                    see_items = see_items + f'{i.pretty_name()}' + '\n'
+                    see_items = see_items + f'   {i.pretty_name()}' + '\n'
                 else:
-                    see_items = see_items + f'{i.description}' + '\n'
+                    see_items = see_items + f'   {i.description}' + '\n'
 
             if see_items != '':
                 see = see + 'You see:\n' + see_items
