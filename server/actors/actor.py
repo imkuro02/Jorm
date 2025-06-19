@@ -178,6 +178,10 @@ class Actor:
         mhp =   self.stat_manager.stats[StatType.HPMAX]
         mp =    self.stat_manager.stats[StatType.MP]
         mmp =   self.stat_manager.stats[StatType.MPMAX]
+        #xp =    self.stat_manager.stats[StatType.EXP]
+        #mxp =   self.stat_manager.stats[StatType.MPMAX]
+
+        return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
         if hp <= 0:
             output = f'[@red{hp}@normal/@red{mhp}@normal] (@red0@normal%)@normal '
         else:
@@ -438,42 +442,17 @@ class Actor:
         if type(self).__name__ == "Player":
             output = f'@yellowYour turn.@normal'
             self.sendLine(output)
-            t = utils.Table(10,0)
+
             par = self
-            hp =    par.stat_manager.stats[StatType.HP]
-            mhp =   par.stat_manager.stats[StatType.HPMAX]
-            mp =    par.stat_manager.stats[StatType.MP]
-            mmp =   par.stat_manager.stats[StatType.MPMAX]
-            t.add_data(f'[')
-            t.add_data(f'@red{hp}')
-            t.add_data(f'/')
-            t.add_data(f'@red{mhp}')
-            t.add_data(f'|')
-            t.add_data(f'@cyan{mp}')
-            t.add_data(f'/')
-            t.add_data(f'@cyan{mmp}')
-            t.add_data(f']')
-            t.add_data(f' {par.pretty_name()}')
+            
+            output = par.prompt()+par.pretty_name() + '\n'
 
             for par in self.room.combat.participants.values():
                 if par == self: 
                     continue
-                hp =    par.stat_manager.stats[StatType.HP]
-                mhp =   par.stat_manager.stats[StatType.HPMAX]
-                mp =    par.stat_manager.stats[StatType.MP]
-                mmp =   par.stat_manager.stats[StatType.MPMAX]
-                t.add_data(f'[')
-                t.add_data(f'@red{hp}')
-                t.add_data(f'/')
-                t.add_data(f'@red{mhp}')
-                t.add_data(f'|')
-                t.add_data(f'@cyan{mp}')
-                t.add_data(f'/')
-                t.add_data(f'@cyan{mmp}')
-                t.add_data(f']')
-                t.add_data(f' {par.pretty_name()}')
+                output = output + par.prompt()+par.pretty_name()+'\n'
             
-            output = t.get_table()
+            
             output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)
 

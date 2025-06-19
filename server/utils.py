@@ -372,28 +372,53 @@ def progress_bar(size, cur_value, max_value, color = '@white'):
 
     bg_color = '@bg'+color[1::]
     
-    percentage = int((cur_value / max_value) * 100)
+    if max_value == 0:
+        percentage = 0
+    else:
+        percentage = int((cur_value / max_value) * 100)
     percentage_text = f'{percentage}%'
     percentage_size = len(percentage_text)
 
     size -= percentage_size
 
-    scaled_size = round((cur_value / max_value) * size) 
+    if max_value == 0 or cur_value == 0:
+        scaled_size = 0
+    else:
+        scaled_size = round((cur_value / max_value) * size) 
 
 
     #output = ' '*(scaled_size+remaining_size)
     #output = bg_color + output
     
 
+    #output = '#'*scaled_size 
+    #output = output + '.'*(size-scaled_size)
+    output = ' '*(size)
+    output = output[:round(size/2)] + percentage_text + output[round(size/2):]
+    #print(len(output))
+    output = output
+    scaled_size += round(percentage_size/2) 
+    if percentage == 0:
+        scaled_size = 0
+    if percentage >= 100:
+        scaled_size += round(percentage_size/2) 
+
+    output = bg_color + output[:scaled_size] + '@normal' + output[scaled_size:] 
     
+    #output = bg_color + output[:scaled_size-int(percentage_size/2)] + color + output[scaled_size-int(percentage_size/2):] 
+    #output = bg_color + output
+    
+    '''
 
     output = ('#'*scaled_size) + (','*(size-scaled_size)) 
     middle = math.ceil(len(output)/2)
     output = output[:middle] + percentage_text + output[middle:]
-    output = bg_color + output[:scaled_size+percentage_size] + color + output[scaled_size+percentage_size:] 
+    output = bg_color + output
+    output = output[:scaled_size+len(bg_color)] + color + output[scaled_size+len(bg_color):] 
     #output = output[:len(bg_color)+scaled_size] + color
+    '''
 
-    output = f'@normal[{output}]@normal'
+    output = f'@normal[{output}@normal]'
 
     #output = '.'*(scaled_size+remaining_size) + percentage_text
     #output = output[int(len(output)):] + percentage_text  
@@ -404,16 +429,13 @@ def progress_bar(size, cur_value, max_value, color = '@white'):
 
     return output
 
-    
-print(add_color(progress_bar(25,1,20,'@red')))
-print(add_color(progress_bar(25,2,20,'@blue')))
-print(add_color(progress_bar(25,3,20,'@green')))
-print(add_color(progress_bar(25,4,20,'@yellow')))
-print(add_color(progress_bar(25,20,20,'@red')))
-print(add_color(progress_bar(10,15,20,'@blue')))
-print(add_color(progress_bar(10,10,20,'@green')))
-print(add_color(progress_bar(10,5,20,'@yellow')))
-print(add_color(progress_bar(10,20,20,'@red')))
+'''
+import random
+for i in range(0,101):
+    col = random.choice('@red @green @cyan @yellow'.split())
+    print(add_color(progress_bar(8,i,100,col)))
+'''
+
 
 if __name__ == '__main__':
     
