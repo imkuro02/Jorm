@@ -378,25 +378,42 @@ def progress_bar(size, cur_value, max_value, color = '@white'):
 
     size -= percentage_size
 
-    scaled_value = round((cur_value / max_value) * size)
-    remaining_value = size - scaled_value
+    scaled_size = round((cur_value / max_value) * size) 
 
-    #scaled_value = scaled_value - math.ceil(percentage_size/2)
-    #remaining_value = remaining_value - math.floor(percentage_size/2)
 
-    output = start + bg_color + (' '*scaled_value) + percentage_text + color + (' '*remaining_value) + '@normal' + end
+    #output = ' '*(scaled_size+remaining_size)
+    #output = bg_color + output
+    
+
+    
+
+    output = ('#'*scaled_size) + (','*(size-scaled_size)) 
+    middle = math.ceil(len(output)/2)
+    output = output[:middle] + percentage_text + output[middle:]
+    output = bg_color + output[:scaled_size+percentage_size] + color + output[scaled_size+percentage_size:] 
+    #output = output[:len(bg_color)+scaled_size] + color
+
+    output = f'@normal[{output}]@normal'
+
+    #output = '.'*(scaled_size+remaining_size) + percentage_text
+    #output = output[int(len(output)):] + percentage_text  
+    #output = output[:scaled_size] + color + output[scaled_size:]
+    #output = '['+bg_color + output + '@normal]'
+
+    #output = start + bg_color + (' '*scaled_size) + color + (' '*remaining_size) + '@normal' + end
 
     return output
 
     
-print(add_color(progress_bar(10,1,20,'@red')))
-print(add_color(progress_bar(10,2,20,'@blue')))
-print(add_color(progress_bar(10,3,20,'@green')))
-print(add_color(progress_bar(10,4,20,'@yellow')))
-print(add_color(progress_bar(10,20,20,'@red')))
+print(add_color(progress_bar(25,1,20,'@red')))
+print(add_color(progress_bar(25,2,20,'@blue')))
+print(add_color(progress_bar(25,3,20,'@green')))
+print(add_color(progress_bar(25,4,20,'@yellow')))
+print(add_color(progress_bar(25,20,20,'@red')))
 print(add_color(progress_bar(10,15,20,'@blue')))
 print(add_color(progress_bar(10,10,20,'@green')))
 print(add_color(progress_bar(10,5,20,'@yellow')))
+print(add_color(progress_bar(10,20,20,'@red')))
 
 if __name__ == '__main__':
     
