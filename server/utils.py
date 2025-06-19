@@ -4,6 +4,7 @@ import datetime
 import time
 import re
 from configuration.config import IndentType
+import math
 
 logging.basicConfig(
     filename=   'logs.log',     # Log file name
@@ -43,6 +44,12 @@ colors = {
     '@bwhite':  '\x1b[1;37m', 
 
     '@bgred':   '\x1b[0;41m',
+    '@bggreen':   '\x1b[0;42m', 
+    '@bgyellow':  '\x1b[0;43m', 
+    '@bgblue':    '\x1b[0;44m', 
+    '@bgpurple':  '\x1b[0;45m', 
+    '@bgcyan':    '\x1b[0;46m', 
+    '@bgwhite':   '\x1b[0;47m', 
 
 
     '@good':    '\x1b[0;32m',
@@ -359,6 +366,37 @@ def get_object_parent(obj):
     parent = obj.__class__.__mro__[-2].__name__
     return parent
 
+def progress_bar(size, cur_value, max_value, color = '@white'):
+    start = '['
+    end = ']'
+
+    bg_color = '@bg'+color[1::]
+    
+    percentage = int((cur_value / max_value) * 100)
+    percentage_text = f'{percentage}%'
+    percentage_size = len(percentage_text)
+
+    size -= percentage_size
+
+    scaled_value = round((cur_value / max_value) * size)
+    remaining_value = size - scaled_value
+
+    #scaled_value = scaled_value - math.ceil(percentage_size/2)
+    #remaining_value = remaining_value - math.floor(percentage_size/2)
+
+    output = start + bg_color + (' '*scaled_value) + percentage_text + color + (' '*remaining_value) + '@normal' + end
+
+    return output
+
+    
+print(add_color(progress_bar(10,1,20,'@red')))
+print(add_color(progress_bar(10,2,20,'@blue')))
+print(add_color(progress_bar(10,3,20,'@green')))
+print(add_color(progress_bar(10,4,20,'@yellow')))
+print(add_color(progress_bar(10,20,20,'@red')))
+print(add_color(progress_bar(10,15,20,'@blue')))
+print(add_color(progress_bar(10,10,20,'@green')))
+print(add_color(progress_bar(10,5,20,'@yellow')))
 
 if __name__ == '__main__':
     
