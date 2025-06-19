@@ -190,7 +190,7 @@ class Combat:
 
 
         
-
+        '''
         for i in self.participants.values():
 
             if i not in self.room.actors.values():
@@ -211,9 +211,9 @@ class Combat:
             i.stat_manager.stats[StatType.INITIATIVE] += i.stat_manager.stats[StatType.FLOW]
 
         self.turn += 1
-        
-
         '''
+
+        
         self.time_since_turn_finished = 0
         if len(self.order) == 0:
             self.initiative()
@@ -229,13 +229,15 @@ class Combat:
         if self.current_actor.room != self.room:
             return
         self.current_actor.set_turn()
-        '''
+        self.turn += 1
+        
 
 
     def initiative(self):
         for i in self.participants.values():
             if i.status != ActorStatusType.DEAD:
                 self.order.append(i)
+        self.order.sort(key=lambda x: x.stat_manager.stats[StatType.FLOW], reverse=True)
         
         """
         for i in self.order:
