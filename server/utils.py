@@ -366,7 +366,7 @@ def get_object_parent(obj):
     parent = obj.__class__.__mro__[-2].__name__
     return parent
 
-def progress_bar(size, cur_value, max_value, color = '@white'):
+def progress_bar(size, cur_value, max_value, color = '@white', style=0):
     start = '['
     end = ']'
 
@@ -374,15 +374,28 @@ def progress_bar(size, cur_value, max_value, color = '@white'):
     
     if max_value == 0:
         percentage = 0
+    elif max_value == cur_value:
+        percentage = 100
     else:
         percentage = int((cur_value / max_value) * 100)
-    percentage_text = f'{percentage}%'
+
+
+
+    match style:
+        case 0:
+            percentage_text = f'{percentage}%'
+        case 1:
+            percentage_text = f'{cur_value}/{max_value}'
+
     percentage_size = len(percentage_text)
+
 
     size -= percentage_size
 
-    if max_value == 0 or cur_value == 0:
+    if max_value == 0:
         scaled_size = 0
+    elif max_value == cur_value:
+        scaled_size = size + percentage_size
     else:
         scaled_size = round((cur_value / max_value) * size) 
 

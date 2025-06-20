@@ -143,7 +143,7 @@ class Npc(Actor):
             self.room.inventory_manager.add_item(new_item)
 
     
-    def drop_loot(self,actor):
+    def drop_loot(self, actor, room):
         all_items = ITEMS
         
         for item in self.loot: 
@@ -157,7 +157,7 @@ class Npc(Actor):
                 actor.sendLine(f'You loot {new_item.name}.')
             else:
                 actor.sendLine(f'Your inventory is full, {new_item.name} has been dropped on the ground.')
-                self.room.inventory_manager.add_item(new_item)
+                room.inventory_manager.add_item(new_item)
     
 
     def die(self):
@@ -172,18 +172,22 @@ class Npc(Actor):
             super().die()
             return
         
-        for actor in self.room.combat.participants.values():
+       
+        room = self.room
+
+        super().die()
+
+        
+        for actor in room.combat.participants.values():
             if type(actor).__name__ == "Player":
                 if actor.status == ActorStatusType.DEAD:
                     continue
                 actor.stat_manager.stats[StatType.EXP] += self.stat_manager.stats[StatType.EXP]
                 actor.sendLine('You got: @yellow' + str(self.stat_manager.stats[StatType.EXP]) + ' experience@back')
-                self.drop_loot(actor)
+                self.drop_loot(actor, room)
                 #self.drop_loot_on_ground()
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
                 actor.quest_manager.propose_objective_count_addition(proposal)
-                
-        super().die()
 
 
     def set_turn(self):

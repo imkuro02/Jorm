@@ -180,18 +180,8 @@ class Actor:
         mmp =   self.stat_manager.stats[StatType.MPMAX]
         #xp =    self.stat_manager.stats[StatType.EXP]
         #mxp =   self.stat_manager.stats[StatType.MPMAX]
-
         return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
-        if hp <= 0:
-            output = f'[@red{hp}@normal/@red{mhp}@normal] (@red0@normal%)@normal '
-        else:
-            output = f'[@red{hp}@normal/@red{mhp}@normal] (@red{int((hp/mhp)*100)}@normal%)@normal '
-
-        if mp <= 0:
-            output += f'[@cyan{mp}@normal/@cyan{mmp}@normal] (@cyan0@normal%)@normal '
-        else:   
-            output += f'[@cyan{mp}@normal/@cyan{mmp}@normal] (@cyan{int((mp/mmp)*100)}@normal%)@normal'
-        return output
+        
 
     def talk_to(self, talker):
         if talker.current_dialog != None:
@@ -269,15 +259,38 @@ class Actor:
             output += f'@cyan{self.description}@normal\n'
 
         output += self.get_character_equipment()
+        
+        hp =    self.stat_manager.stats[StatType.HP]
+        mhp =   self.stat_manager.stats[StatType.HPMAX]
+        mp =    self.stat_manager.stats[StatType.MP]
+        mmp =   self.stat_manager.stats[StatType.MPMAX]
         t = utils.Table(2,1)
-        t.add_data(StatType.name[StatType.HP])
-        t.add_data(f'(@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal)')
-        t.add_data(StatType.name[StatType.MP])
-        t.add_data(f'(@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal)')
+
+        t.add_data('HP:')
+        x = utils.progress_bar(20,hp,mhp,"@red",style=1)
+        t.add_data(x)
+        t.add_data('MP:')
+        x = utils.progress_bar(20,mp,mmp,"@blue",style=1)
+        t.add_data(x)
+        
+        
+        # t.add_data(StatType.name[StatType.HP])
+        # t.add_data(f'(@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal)')
+        # t.add_data(StatType.name[StatType.MP])
+        # t.add_data(f'(@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal)')
         _piss = [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR, StatType.LVL]
         for _shit in _piss:
             t.add_data(StatType.name[_shit]+':')
             t.add_data(self.stat_manager.stats[_shit])
+
+
+        if type(self).__name__ == 'Player':
+            t.add_data(StatType.name[StatType.EXP][:3]+':')
+            xp = self.stat_manager.stats[StatType.EXP]
+            mxp = self.get_exp_needed_to_level()
+            t.add_data(utils.progress_bar(20,xp,mxp,'@yellow',1))
+            t.add_data(StatType.name[StatType.PP][:4]+':')
+            t.add_data(self.stat_manager.stats[StatType.PP])
 
         output += t.get_table()
        
@@ -353,17 +366,6 @@ class Actor:
         if self.room.combat != None:
             if self.room.combat.current_actor == self:
                 self.room.combat.next_turn()
-
-        
-
-        # create a temporary corpse item 
-        # this items name and description is NOT stored in db
-        #item = Item()
-        #item.name = f'Corpse of {self.name}'
-        #item.premade_id = 'corpse'
-        #item.item_type = 'misc'
-        #item.description = f'This is the corpse of {self.name}, kinda gross...'
-        #self.room.inventory_manager.add_item(item)
 
         if type(self).__name__ != "Player":
             del self.room.actors[self.id]
