@@ -49,12 +49,12 @@ class TradeWindow:
         
         if trader == self.trader1:
             self.offers1[item.id] = item
-            self.trader1.sendLine(f'You offer {item.name}')
-            self.trader2.sendLine(f'{self.trader1.pretty_name()} offers {item.name}')
+            self.trader1.sendLine(f'You offer {item.pretty_name()}')
+            self.trader2.sendLine(f'{self.trader1.pretty_name()} offers {item.pretty_name()}')
         if trader == self.trader2:
             self.offers2[item.id] = item
-            self.trader2.sendLine(f'You offer {item.name}')
-            self.trader1.sendLine(f'{self.trader2.pretty_name()} offers {item.name}')
+            self.trader2.sendLine(f'You offer {item.pretty_name()}')
+            self.trader1.sendLine(f'{self.trader2.pretty_name()} offers {item.pretty_name()}')
 
 
 
@@ -170,12 +170,12 @@ class TradeManager:
         output = 'You will trade \n'
         
         for of in offers_me.values():
-            output += of.name + '\n'
+            output += of.pretty_name() + '\n'
 
         output += 'You will receive \n'
 
         for of in offers_other.values():
-            output += of.name + '\n'
+            output += of.pretty_name() + '\n'
 
         #output += '"trade cancel" or "trade accept"?'
         trader_me.sendLine(output)

@@ -173,6 +173,10 @@ class Player(Actor):
             self.sendLine(str(commands[best_match]))
         script(line)
 
+    def finish_turn(self, force_cooldown = False):
+        super().finish_turn()
+        self.trade_manager.trade_stop(silent=True)
+
 # Compile all player functions
 # grabs all imported functions inside of actors.player_only_functions 
 # and adds those functions to the player object 
