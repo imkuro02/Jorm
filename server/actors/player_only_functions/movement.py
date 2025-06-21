@@ -120,9 +120,8 @@ def command_go(self, line):
     if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
         self.command_rest('set')
 
-    
-   
     self.finish_turn(force_cooldown = True)
+
 
     if self.party_manager.party != None:
         if self.party_manager.party.actor == self:

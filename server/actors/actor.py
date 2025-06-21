@@ -414,7 +414,7 @@ class Actor:
         # like passing a turn out of combat, but NOT set to true if inside of combat
         # as while you are in combat set_turn gets called on turn start, so
         # that would make all timers go down twice
-        if force_cooldown == True:
+        if force_cooldown:
             self.affect_manager.set_turn()
             self.cooldown_manager.set_turn()
 

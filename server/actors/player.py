@@ -174,7 +174,7 @@ class Player(Actor):
         script(line)
 
     def finish_turn(self, force_cooldown = False):
-        super().finish_turn()
+        super().finish_turn(force_cooldown=force_cooldown)
         self.trade_manager.trade_stop(silent=True)
 
 # Compile all player functions
