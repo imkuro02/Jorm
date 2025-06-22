@@ -120,6 +120,7 @@ class QuestManager:
         self.quests[quest_id] = quest
         if silent == False:
             self.actor.sendLine(f'@greenNew quest@normal: {quest.name}')
+            self.view(quest.name)
         self.actor.inventory_manager.count_quest_items()
 
         return True # if quest was started succesfully
