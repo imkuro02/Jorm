@@ -185,10 +185,10 @@ class Actor:
 
     def talk_to(self, talker):
         if talker.current_dialog != None:
-            talker.sendLine('You are already conversing.')
+            talker.sendLine('You are already conversing')
             return False
         if self.dialog_tree == None:
-            talker.sendLine('There is nothing to talk about.')
+            talker.sendLine('There is nothing to talk about')
             return False
         return True # return true if no errors
         

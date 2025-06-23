@@ -3,15 +3,15 @@ mushroom_kingdom_king:
     start:
       dialog: 
       - line: |
-          <npc> fidgets with their scepter nervously.
+          fidgets with their scepter nervously.
       options:
-        - line: Hello
+        - say: Hello
           goto: mushroom_kingdom_1
           quest_check:
           - id: mushroom_kingdom_1
             state: not_started
 
-        - line: I killed the zombies
+        - say: I killed the zombies
           goto: mushroom_kingdom_1.c
           quest_check:
             - id: mushroom_kingdom_1
@@ -24,17 +24,18 @@ mushroom_kingdom_king:
     mushroom_kingdom_1:
       dialog:
       - line: |
-          <npc> clears their throat "Ehm! Hello there! an adventurer I assume? good timing! For you see, my kingdom has a small issue..."
+          clears their throat "Ehm! Hello there! an adventurer I assume? good timing! For you see, my kingdom has a small issue..."
       options:
-        - line: Ask about the issue
+        - say: |
+            What issue?
           goto: mushroom_kingdom_1.1
 
     mushroom_kingdom_1.1: 
       dialog:
       - line: |
-          "well..." <npc> gulps and says "if you havent noticed, we got a little @badmushroom zombie problem@normal!"
+          "well" they say "if you havent noticed, we got a little @badmushroom zombie problem@normal!"
       options: 
-      - line: Say "I will handle it"
+      - say: Ok
         goto: mushroom_kingdom_1.a
         quest_check:
           - id: mushroom_kingdom_1
@@ -42,22 +43,26 @@ mushroom_kingdom_king:
         quest_start:
           id: mushroom_kingdom_1
 
-      - line: Turn away
+      - say: No
         goto: mushroom_kingdom_1.x
 
     mushroom_kingdom_1.a:
       dialog:
       - line: |
-          <npc> says "Thank you!"
+          says "Thank you!"
      
     mushroom_kingdom_1.x:
       dialog:
       - line: |
-          <npc> gulps as they watch you turn away
+          says "Too bad..."
 
     mushroom_kingdom_1.c:
       dialog:
       - line: |
-          <npc> says "This is great news!! thank you so much for your help!"
+          says "This is great news!! thank you so much for your help!"
 
+    bye:
+      dialog:
+      - line: |
+          aah
 

@@ -9,6 +9,9 @@ class Dialog:
         self.dialog_tree = _dialog_tree
         self.current_line = 'start' 
 
+    def send_output(self, output):
+        self.player.sendLine(output.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name()))
+
     def get_valid_options(self):
         options = []
         if 'options' not in self.dialog_tree[self.current_line]:
@@ -35,7 +38,7 @@ class Dialog:
                     continue
 
             dic['index'] = i
-            dic['say'] = option['say']
+            dic['line'] = option['line']
             dic['goto'] = option['goto']
 
             if 'quest_turn_in' in option:
@@ -89,7 +92,7 @@ class Dialog:
                 if not this_option_is_good:
                     continue
             available_dialogs.append(option)
-        output = f'{self.npc.pretty_name()} '+random.choice(available_dialogs)['line']+'@normal'
+        output = random.choice(available_dialogs)['line']+'@normal'
 
 
 
@@ -100,10 +103,11 @@ class Dialog:
 
         #if len(self.get_valid_options()) >= 2:
         for i in self.get_valid_options():
-            output += f'{i["index"]}: {i["say"]}\n'
+            output += f'{i["index"]}: {i["line"]}\n'
 
 
-        self.player.sendLine(f'{output}')
+        self.send_output(output)
+        #self.player.sendLine(f'{output}')
 
         # if this is the end, or there is only one option
         # end dialogue
@@ -137,7 +141,7 @@ class Dialog:
             return False
 
 
-        self.player.sendLine('You say "'+answer['say']+'"')
+        self.player.sendLine('You '+answer['line'])
         self.current_line = answer['goto']
 
         if 'quest_objective_count_proposal' in answer:

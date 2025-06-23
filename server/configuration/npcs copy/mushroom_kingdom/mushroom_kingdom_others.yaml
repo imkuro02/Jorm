@@ -1,0 +1,162 @@
+mushroom_kingdom_queen:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Hello there"
+        quest_check:
+          - id: mushroom_kingdom_1
+            state: not_started
+        
+      
+      - line: |
+          says "We are glad you wish to help us adventurer."
+        quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+
+      - line: | 
+          says "You helped a lot, and for that I am grateful."
+        quest_check:
+          - id: mushroom_kingdom_1
+            state: turned_in
+
+      - line: | 
+          says "You helped a lot, and for that I am grateful. You should speak with the king now, they will reward you"
+        quest_check:
+          - id: mushroom_kingdom_1
+            state: completed
+
+      options:
+          - say: Do you have any quests?
+            goto: do_you_have_any_quests
+            quest_check:
+            - id: mushroom_kingdom_1
+              state: not_started
+          
+    do_you_have_any_quests:
+      dialog:
+      - line: |
+          says "Quests? Ah you are an an adventurer. We are having trouble outside the gates, you should speak to the king, they can tell you more."
+
+mushroom_kingdom_chef:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Hello..."
+    # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+    mushroom_kingdom_1:
+      dialog:
+      - line: |
+          says "No sorry."
+    #   #   #
+
+mushroom_kingdom_cook:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Hello..."
+    # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+    mushroom_kingdom_1:
+      dialog:
+      - line: -|
+          says "What about it"
+    #   #   #
+
+mushroom_kingdom_wizard:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Hello..."
+    # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+    mushroom_kingdom_1:
+      dialog:
+      - line: |
+          says "No sorry."
+    #   #   #
+
+mushroom_kingdom_citizen:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Hello..."
+    # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+    mushroom_kingdom_1:
+      dialog:
+      - line: |
+          says "No sorry."
+    #   #   #
+
+mushroom_kingdom_entrance_guard:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "My cap will fall before the day this gate is breached!"
+      - line: |
+          says "Halt!... Nevermind..."
+      - line: |
+          says "We don't see non-mushrooms around here often"
+      # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+      mushroom_kingdom_1:
+        dialog:
+        - line: |
+            says "No sorry."
+      #   #   #
+
+mushroom_kingdom_guard:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          says "Halt!... Nevermind..."
+      - line: |
+          says "We don't see non-mushrooms around here often"
+      # ask about plague
+      options:
+        - say: Plague?
+          goto: start
+          quest_check:
+          - id: mushroom_kingdom_1
+            state: in_progress
+      mushroom_kingdom_1:
+        dialog:
+        - line: |
+            says "No sorry."
+      #   #   #
+
+

@@ -3,9 +3,9 @@ daily_quest_board:
     start:
       dialog: 
       - line: |
-          To your surprise, the creaking wood twists and turns as if to look up at you
+          "Hello..." the wooden board murmurs.
       options:
-        - line: grab a quest leaflet from the board
+        - say: I would like a quest
           goto: daily_quest_new
           quest_check:
           - id: daily_quest
@@ -13,7 +13,7 @@ daily_quest_board:
           quest_start:
             id: daily_quest
 
-        - line: grab a quest leaflet from the board
+        - say: I would like a quest
           goto: daily_quest_new
           quest_check:
           - id: daily_quest
@@ -21,7 +21,7 @@ daily_quest_board:
           quest_start:
             id: daily_quest
 
-        - line: grab a quest leaflet from the board
+        - say: I would like a quest
           goto: daily_quest_redo_new
           quest_check:
           - id: daily_quest
@@ -29,7 +29,7 @@ daily_quest_board:
           quest_start:
             id: daily_quest
 
-        - line: say "I would like to turn in my quest"
+        - say: I would like to turn in my quest
           goto: daily_quest_completed
           quest_check:
             - id: daily_quest
@@ -41,20 +41,20 @@ daily_quest_board:
     daily_quest_new:
       dialog:
         - line: |
-            "Ouch..." (help quests)
+            "I got the perfect quest for you... (help quests)"
 
     daily_quest_redo_new:
       dialog:
         - line: |
-            <npc> twists and turns "You already have a quest... Remember? No matter, this one surely is fit for you..." (help quests)
+            "You already have a quest... Remember? No matter, this one surely is fit for you... (help quests)"
 
     daily_quest_completed:
       dialog:
         - line: |
-            "Good job..." <npc> murmurs
+            "Good job..."
 
     bye:
       dialog:
-        - line: |
-            "Good bye..." <npc> murmurs
+      - line: |
+          "Good bye..."
 

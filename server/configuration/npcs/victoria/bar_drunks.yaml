@@ -1,0 +1,22 @@
+bar_drunk_1:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          "Aye!" they yell
+      - line: |
+          <npc> burps loudly!
+      - line: |
+          <npc> yells "Ayeee!!"
+
+
+bar_drunk_0:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          "Aye!" they yell
+      - line: |
+          <npc> burps loudly!
+      - line: |
+          <npc> yells "Ayeee!!"

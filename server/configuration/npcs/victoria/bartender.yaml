@@ -1,0 +1,83 @@
+bartender:
+  tree:
+    start:
+      dialog: 
+        - line: |
+            <npc> says "Take a seat, or don't... I don't car..."
+          quest_check:
+          - id: rat_king
+            state: not_started
+        - line: |
+            <npc> says "Life is meaningless and im going to kill myself"
+          quest_check:
+          - id: rat_king
+            state: not_started
+        - line: |
+            <npc> says "Is it done?"
+          quest_check:
+          - id: rat_king
+            state: in_progress
+        - line: |
+            <npc> says "Is it done?"
+          quest_check:
+          - id: rat_king
+            state: completed
+        - line: |
+            <npc> says "Thanks for the help with the rat problem, appreciate it!"
+          quest_check:
+            - id: rat_king
+              state: turned_in
+      options:
+        - line: Inquire about their wellbeing
+          goto: not_started
+          quest_check:
+            - id: rat_king
+              state: not_started
+        - line: Shake your head
+          goto: in_progress
+          quest_check:
+          - id: rat_king
+            state: in_progress
+        - line: Smile and tell them of how you slayed the rat king
+          goto: completed
+          quest_check:
+            - id: rat_king
+              state: completed
+          quest_turn_in:
+            id: rat_king
+            reward_exp: 50
+            reward:
+              - beer_stein
+    in_progress:
+      dialog: 
+      - line: |
+          "Oh..." They utter
+    not_started:
+      dialog:
+        - line: |
+            <npc> says "Been better, these dang rats keep gnawing at my boots.
+            There is a big rat problem in this tavern, if you find the key
+            to the cellar, would you mind helping me out?"
+
+            They point behind them at a beer keg "I'll pay you for your effors"
+      options:
+        - line: Accept
+          goto: accepted
+          quest_start:
+            id: rat_king
+        - line: Decline
+          goto: declined
+    accepted:
+      dialog: 
+        - line: |
+            <npc> says "Thank you, I lost my key, but it should be here somewhere"
+    declined:
+      dialog:
+        - line: | 
+            <npc> says "Bummer..."
+    completed:
+      dialog:
+        - line: |
+            <npc> says "Good job! here take this"
+   
+      
