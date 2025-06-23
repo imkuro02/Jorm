@@ -8,7 +8,7 @@ import time
 import uuid
 import random
 from combat.manager import Combat
-from configuration.config import WORLD, StatType, ActorStatusType, ITEMS
+from configuration.config import WORLD, StatType, ActorStatusType, ITEMS, Audio
 import copy
 from inventory import InventoryManager
 
@@ -312,9 +312,9 @@ class Room:
         self.remove_actor(actor)
         if not silent and actor.room != self:
             if actor.party_manager.party == None:
-                actor.simple_broadcast('',f'{actor.pretty_name()} leaves.', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} leaves', send_to = 'room_not_party', sound = Audio.walk())
             else:
-                actor.simple_broadcast('',f'{actor.pretty_name()} and their party leaves.', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} and their party leaves', send_to = 'room_not_party', sound = Audio.walk())
 
 
         if not self.instanced:
@@ -347,9 +347,9 @@ class Room:
 
         if not silent:
             if actor.party_manager.party == None:
-                actor.simple_broadcast('',f'{actor.pretty_name()} arrives.', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} arrives', send_to = 'room_not_party', sound = Audio.walk())
             else:
-                actor.simple_broadcast('',f'{actor.pretty_name()} and their party arrives.', send_to = 'room_not_party')
+                actor.simple_broadcast('',f'{actor.pretty_name()} and their party arrives', send_to = 'room_not_party', sound = Audio.walk())
 
     def remove_actor(self, actor):
         if actor.room == None:

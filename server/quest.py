@@ -114,8 +114,6 @@ class QuestManager:
         quest.quest_manager = self
         for objective in quest.objectives.values():
             objective.quest_manager = self
-        
-        
 
         self.quests[quest_id] = quest
         if silent == False:

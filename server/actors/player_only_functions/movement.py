@@ -92,17 +92,17 @@ def command_go(self, line):
         return
         
     if direction.blocked and self.room.is_enemy_present():
-        self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path.')
+        self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path', sound=Audio.ERROR)
         return
 
     if direction.item_required != None:
         item = self.inventory_manager.get_item_by_id(direction.item_required)
         if item == None:
-            self.sendLine(f'You need {ITEMS[direction.item_required]["name"]}.')
+            self.sendLine(f'You need {ITEMS[direction.item_required]["name"]}',sound=Audio.ERROR)
             return
         else:
             if direction.item_required_consume == True:
-                self.sendLine(f'{item.name} crumbles to dust.')
+                self.sendLine(f'{item.name} crumbles to dust')
                 self.inventory_manager.remove_item(item,1)
                 
     
