@@ -13,3 +13,17 @@ mushroom_kingdom_1:
       objective: mushroom_zombie
       completed_at: 20
   
+mushroom_kingdom_2:
+  name: Mushroom Necromancer Problem
+  description: 
+    in_progress: |
+      The mushroom king has tasked me to kill a mushroom necromancer
+    completed: |
+      I killed a mushroom necromancer, but did it even help?
+    turned_in: |
+      The king seems to be pleased regardless.
+  objectives:
+    Kill the zombies:
+      type: kill_x
+      objective: mushroom_kingdom_necromancer
+      completed_at: 1

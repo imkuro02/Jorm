@@ -165,6 +165,14 @@ commands:
       - equipment   
       - get
       - drop
+  sort:
+    group: items
+    syntax: 
+      - sort
+    description: |
+      Sort your items alphabetically, then sort by equipped, then by kept
+    related:
+      - inventory
   keep:
     group: items
     syntax:

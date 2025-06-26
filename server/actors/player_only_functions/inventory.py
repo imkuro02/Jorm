@@ -96,6 +96,10 @@ def command_drop(self, line):
 
 @check_not_trading
 def command_split(self, line):
+    if self.inventory_manager.item_free_space() <= 0:
+        self.sendLine('You don\'t have enough inventory space')
+        return
+    
     all_words = line.split(' ')
     if len(all_words) <= 1:
         self.sendLine('Command "split" needs an item, and a value')
@@ -120,7 +124,39 @@ def command_split(self, line):
     
     self.inventory_manager.split_stack(item, value)
     
+@check_not_trading
+def command_sort(self, line):
+    def get_name(item):
+        return item[1].name.lower()
     
+    items = []
+    for key in self.inventory_manager.items.keys():
+        item = self.inventory_manager.items[key]
+        items.append(item)
+        
+    for item in items:
+        self.inventory_manager.remove_item(item)
+    for item in items:
+        new = item.new 
+        self.inventory_manager.add_item(item)
+        item.new = new
+
+    
+    sorted_items = dict(sorted(self.inventory_manager.items.items(), key=get_name))
+    self.inventory_manager.items = sorted_items
+    self.sendLine('You sort your inventory')
+
+    # raise kept
+    for key in reversed(list(self.inventory_manager.items.keys())):
+        if self.inventory_manager.items[key].keep:
+            self.raise_item(key)
+
+
+    # raise equipped
+    for key in reversed(list(self.slots_manager.slots.keys())):
+        self.raise_item(self.slots_manager.slots[key])
+
+
 
 def command_inventory(self, line):
 
@@ -295,16 +331,16 @@ def command_keep(self, line):
     else:
         self.sendLine(f'Unkeeping {item.name}')
         self.lower_item(item.id)
+'''
 
 def raise_item(self, item_id):
     # move the item to the first position
-    if item_id in self.inventory:
-        value = self.inventory.pop(item_id)             # remove the key value pair
-        self.inventory = {item_id: value, **self.inventory}    # reconstruct with the item first
+    if item_id in self.inventory_manager.items:
+        value = self.inventory_manager.items.pop(item_id)             # remove the key value pair
+        self.inventory_manager.items = {item_id: value, **self.inventory_manager.items}    # reconstruct with the item first
 
 def lower_item(self, item_id):
     # move the item to the first position
-    if item_id in self.inventory:
-        value = self.inventory.pop(item_id) # remove the keyvalue pair
-        self.inventory[item_id] = value     # reconstruct with the item last
-'''
+    if item_id in self.inventory_manager.items:
+        value = self.inventory_manager.items.pop(item_id) # remove the keyvalue pair
+        self.inventory_manager.items[item_id] = value     # reconstruct with the item last

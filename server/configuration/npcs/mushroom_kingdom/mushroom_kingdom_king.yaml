@@ -3,61 +3,129 @@ mushroom_kingdom_king:
     start:
       dialog: 
       - line: |
-          <npc> fidgets with their scepter nervously.
+          <npc> fidgets with their scepter nervously
       options:
-        - line: Hello
+        # quest 1
+        - line: introduce yourself
           goto: mushroom_kingdom_1
           quest_check:
           - id: mushroom_kingdom_1
             state: not_started
 
-        - line: I killed the zombies
-          goto: mushroom_kingdom_1.c
+        - line: tell them you handled the zombies
+          goto: mushroom_kingdom_1.turn_in
           quest_check:
             - id: mushroom_kingdom_1
               state: completed
           quest_turn_in:
             id: mushroom_kingdom_1
             reward_exp: 100
-       
 
+        # quest 2
+        - line: tell them you want to help more
+          goto: mushroom_kingdom_2
+          quest_check:
+          - id: mushroom_kingdom_2
+            state: not_started
+          - id: mushroom_kingdom_1
+            state: turned_in
+
+        - line: ask where you can find the necromancer
+          goto: mushroom_kingdom_2.ask_about_necromancer
+          quest_check:
+            - id: mushroom_kingdom_2
+              state: in_progress
+
+        - line: tell them you handled the zombies
+          goto: mushroom_kingdom_2.turn_in
+          quest_check:
+            - id: mushroom_kingdom_2
+              state: completed
+          quest_turn_in:
+            id: mushroom_kingdom_2
+            reward_exp: 100
+       
+    decline:
+      dialog:
+      - line: |
+          <npc> gulps as they watch you turn away
+
+    # quest 1
     mushroom_kingdom_1:
       dialog:
       - line: |
           <npc> clears their throat "Ehm! Hello there! an adventurer I assume? good timing! For you see, my kingdom has a small issue..."
       options:
-        - line: Ask about the issue
+        - line: ask about the issue
           goto: mushroom_kingdom_1.1
 
     mushroom_kingdom_1.1: 
       dialog:
       - line: |
-          "well..." <npc> gulps and says "if you havent noticed, we got a little @badmushroom zombie problem@normal!"
+          "well..." <npc> gulps and says "if you havent noticed, we got a little @badMushroom Zombie@normal problem!"
       options: 
-      - line: Say "I will handle it"
-        goto: mushroom_kingdom_1.a
+      - line: say "I will handle it"
+        goto: mushroom_kingdom_1.accept
         quest_check:
           - id: mushroom_kingdom_1
             state: not_started
         quest_start:
           id: mushroom_kingdom_1
 
-      - line: Turn away
-        goto: mushroom_kingdom_1.x
+      - line: turn away
+        goto: decline
 
-    mushroom_kingdom_1.a:
+    mushroom_kingdom_1.accept:
       dialog:
       - line: |
           <npc> says "Thank you!"
      
-    mushroom_kingdom_1.x:
-      dialog:
-      - line: |
-          <npc> gulps as they watch you turn away
-
-    mushroom_kingdom_1.c:
+    mushroom_kingdom_1.turn_in:
       dialog:
       - line: |
           <npc> says "This is great news!! thank you so much for your help!"
+
+    # quest 2
+
+    mushroom_kingdom_2.ask_about_necromancer:
+      dialog:
+      - line: |
+          <npc> says "You should speak with the royal wizard, he is here somewhere surely!"
+
+    mushroom_kingdom_2:
+      dialog:
+      - line: |
+          <npc> clears their throat "Ehm! Hello there! You have helped us so much... But the horde grows for each day still..."
+      options:
+        - line: ask about the issue
+          goto: mushroom_kingdom_2.1
+
+    mushroom_kingdom_2.1: 
+      dialog:
+      - line: |
+          "well..." <npc> gulps and says "Our royal wizard has figured out why the dead keep rising! It turns out, some evil @badMushroom Necromancers@normal are rising the dead!"
+      options: 
+      - line: say "I will handle it"
+        goto: mushroom_kingdom_2.accept
+        quest_check:
+          - id: mushroom_kingdom_2
+            state: not_started
+        quest_start:
+          id: mushroom_kingdom_2
+
+      - line: turn away
+        goto: decline
+
+    mushroom_kingdom_2.accept:
+      dialog:
+      - line: |
+          <npc> says "Thank you! With the necromancer gone things will improve for real this time!"
+     
+    mushroom_kingdom_2.turn_in:
+      dialog:
+      - line: |
+          <npc> says "Yippe!!!"
+
+
 
 

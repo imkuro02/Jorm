@@ -3,35 +3,35 @@ tutorial_1:
     start:
       dialog: 
         - line: | 
-            says "Hello there"
+            <npc> says "Hello there"
         - line: | 
-            says "Greetings"
+            <npc> says "Greetings"
       options:
-        - line: Where am I?
+        - line: ask "Where am I?"
           goto: where_am_i
           quest_check:
             - id: tutorial_1
               state: not_started
 
-        - line: How do I get out?
+        - line: ask "How do I get out?"
           goto: tutorial_1_in_progress_help
           quest_check:
             - id: tutorial_1
               state: in_progress
 
-        - line: How do I get out?
+        - line: ask "How do I get out?"
           goto: quest_already_turned_in
           quest_check:
             - id: tutorial_1
               state: turned_in
 
-        - line: I got your corpse
+        - line: say "I got your corpse"
           goto: quest_turn_in_failed
           quest_check:
             - id: tutorial_1
               state: in_progress
 
-        - line: I got your corpse
+        - line: say "I got your corpse"
           goto: quest_turn_in_success
           quest_check:
             - id: tutorial_1
@@ -40,7 +40,7 @@ tutorial_1:
             id: tutorial_1
             reward_exp: 4
 
-        - line: What can you teach me?
+        - line: ask "What can you teach me?"
           goto: help_me
           quest_check:
             - id: tutorial_1
@@ -49,7 +49,7 @@ tutorial_1:
     help_level:
       dialog: 
         - line: |
-            says "Ah! use the "level" command to level up.
+            <npc> says "Ah! use the "level" command to level up.
             You can level one of four main stats,
             Grit, Flow, Mind and Soul
 
@@ -66,7 +66,7 @@ tutorial_1:
     help_practice:
       dialog:
         - line: |
-            says "Whenever you level up, you get one practice point.
+            <npc> says "Whenever you level up, you get one practice point.
             Type "practice" to view all skills you can practice.
             When you find a skill that sounds interesting, type "skill [skill name]"
             This will show you more information about the skill.
@@ -74,18 +74,18 @@ tutorial_1:
             Then to actually practice;
             You need to type "practice [skill name]"
       options: 
-        - line: What else?
+        - line: ask "What else?"
           goto: help_me
 
     help_help:
       dialog: 
       - line: |
-          says "Im not a dictionary, but if you need one"
+          <npc> says "Im not a dictionary, but if you need one"
           they scratch their chin and say 
           "use the "help" command to quickly find whatever it is 
           you are curious about"
       options: 
-        - line: What else?
+        - line: ask "What else?"
           goto: help_me
 
     help_me:
@@ -93,51 +93,51 @@ tutorial_1:
       - line: |
           says "I can teach you a bunch of stuff!"
       options:
-        - line: How do I level up?
+        - line: ask "How do I level up?"
           goto: help_level
-        - line: How do I practice skills?
+        - line: ask "How do I practice skills?"
           goto: help_practice
-        - line: What else?
+        - line: ask "What else?"
           goto: help_help
-        - line: I just want to leave
+        - line: say "I just want to leave"
           goto: quest_already_turned_in
       
       
     quest_already_turned_in:
       dialog: 
       - line: |
-          says "just go to the south-east corner. 
+          <npc> says "just go to the south-east corner. 
           Then type "go crossroad" to leave"
     quest_turn_in_failed:
       dialog: 
       - line: |
-          looks you up and down then says "well where is it?"
+          <npc> looks you up and down then says "well where is it?"
           The corpse is not in your inventory 
           "You probably didn't pick it up"
     quest_turn_in_success:
       dialog:
       - line: |
-          says "Ah! perfect, this will make a fine snack"
+          <npc> says "Ah! perfect, this will make a fine snack"
           They smile "but before you go, You should level up first"
       options: 
-        - line: Level up?
+        - line: ask "Level up?"
           goto: help_level
-        - line: I just want to leave
+        - line: say "I just want to leave"
           goto: quest_already_turned_in
     tutorial_1_in_progress_help:
       dialog:
       - line: |
-          says "As I already told you, go to the Northern wall, and go into the hole.
+          <npc> says "As I already told you, go to the Northern wall, and go into the hole.
           There you will find an enemy, kill it, and bring me the corpse"
       options:
-        - line: How do I kill it?
+        - line: ask "How do I kill it?"
           goto: how_to_fight
-        - line: Why?
+        - line: ask "Why?"
           goto: why_fight
     start_tutorial_1:
       dialog: 
       - line: |
-          says "Simple, go to the Northern wall, crawl into the hole.
+          <npc> says "Simple, go to the Northern wall, crawl into the hole.
           kill whatever is there, and bring me the corpse"
       options:
         - line: How do I kill it?
@@ -147,7 +147,7 @@ tutorial_1:
     how_to_fight:
       dialog:
       - line: |
-          says "fighting is very simple.
+          <npc> says "fighting is very simple.
           To start a fight type @tip"fight"@back. 
           This will put you in combat with all enemies in the room.
 
@@ -157,16 +157,16 @@ tutorial_1:
     why_fight:
       dialog: 
       - line: |
-          says "Just do it" 
+          <npc> says "Just do it" 
       options:
-        - line: How do I kill it?
+        - line: ask "How do I kill it?"
           goto: how_to_fight
     where_am_i:
       dialog: 
       - line: |
-          says "A sanctuary of sorts"
+          <npc> answers "A sanctuary of sorts"
       options:
-        - line: How do I get out?
+        - line: ask "How do I get out?"
           goto: start_tutorial_1
           quest_check:
             - id: tutorial_1
@@ -175,7 +175,7 @@ tutorial_1:
             id: tutorial_1
     end:
       dialog: |
-        turns away from you.
+        <npc> turns away from you.
 
 
 

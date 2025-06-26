@@ -2,12 +2,22 @@ mushroom_kingdom_queen:
   tree:
     start:
       dialog: 
+      # not started
       - line: |
-          <npc> says "Hello there"
+          <npc> sighs "If only a brave hero would save us from these zombies..."
         quest_check:
           - id: mushroom_kingdom_1
             state: not_started
+          
+      - line: |
+          <npc> sighs "The horde keeps growing, what is there to do?"
+        quest_check:
+          - id: mushroom_kingdom_1
+            state: turned_in
+          - id: mushroom_kingdom_2
+            state: not_started
         
+      # in progress
       - line: |
           <npc> says "We are glad you wish to help us adventurer."
         quest_check:
@@ -15,15 +25,21 @@ mushroom_kingdom_queen:
             state: in_progress
 
       - line: | 
-          <npc> says "You helped a lot, and for that I am grateful."
+          <npc> says "Are you truly ready to go toe to toe with a necromancer? Very brave of you"
         quest_check:
-          - id: mushroom_kingdom_1
-            state: turned_in
+          - id: mushroom_kingdom_2
+            state: in_progress
 
+      # completed
       - line: | 
           <npc> says "You helped a lot, and for that I am grateful. You should speak with the king now, they will reward you"
         quest_check:
           - id: mushroom_kingdom_1
+            state: completed
+      - line: | 
+          <npc> says "You helped a lot, and for that I am grateful. You should speak with the king now, they will reward you"
+        quest_check:
+          - id: mushroom_kingdom_2
             state: completed
 
       options:
@@ -32,8 +48,149 @@ mushroom_kingdom_queen:
             quest_check:
             - id: mushroom_kingdom_1
               state: not_started
+
+          - line: Do you have any quests?
+            goto: do_you_have_any_quests
+            quest_check:
+            - id: mushroom_kingdom_1
+              state: turned_in
+            - id: mushroom_kingdom_2
+              state: not_started
           
     do_you_have_any_quests:
       dialog:
       - line: |
           <npc> says "Quests? Ah you are an an adventurer. We are having trouble outside the gates, you should speak to the king, they can tell you more."
+
+mushroom_kingdom_jester:
+  tree:
+    start:
+      dialog: 
+        - line: |
+            <npc> says "Oh wow! you made it past the horde?! You must run fast!"
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: not_started
+            - id: mushroom_kingdom_2
+              state: not_started
+        - line: |
+            <npc> says "A brave hero is here to feed the zombies so they don't attack us! oh thank you HERO!"
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: in_progress
+            - id: mushroom_kingdom_2
+              state: not_started
+        - line: |
+            <npc> says "You know? I don't care what they say about you! you did it! You really did all those zombies!"
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: completed
+            - id: mushroom_kingdom_2
+              state: not_started
+
+              
+        - line: |
+            <npc> says "You know? I don't care what they say about you! you did it!"
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: turned_in
+            - id: mushroom_kingdom_2
+              state: not_started
+
+
+        - line: |
+            <npc> says "No WAY... you are going to square off with a necromancer!?"
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: turned_in
+            - id: mushroom_kingdom_2
+              state: in_progress
+
+        - line: |
+            <npc> yells "HOLY FREAKING COW!! You did it you slayed the necromancer!"
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: turned_in
+            - id: mushroom_kingdom_2
+              state: completed
+        - line: |
+            <npc> sings a song about your heroism, it's awful but whatever
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: turned_in
+            - id: mushroom_kingdom_2
+              state: turned_in
+
+      options:
+        - line: ask about where the necromancer is
+          goto: where_is_necromancer
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: turned_in
+            - id: mushroom_kingdom_2
+              state: in_progress
+        
+
+    where_is_necromancer:
+      dialog:
+        - line: |
+            <npc> says "I got no clue! but the wizard might know!"
+      options:
+        - line: ask where the wizard is
+          goto: where_is_wizard
+    
+    where_is_wizard:
+      dialog:
+        - line: |
+            <npc> grimaces "They are in the wizard tower ofcourse! just right above the barracks!"
+
+mushroom_kingdom_wizard:
+  tree:
+    start:
+      dialog: 
+        - line: |
+            <npc> says "Do not bother me, speak with the king first"
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: not_started
+
+        - line: |
+            <npc> says "Do not bother me, speak with the king first"
+          quest_check:
+            - id: mushroom_kingdom_2
+              state: not_started
+
+        
+
+        - line: |
+            <npc> asks "Did the king send you? Don't you have better things to do than to bother me?"
+          quest_check:
+            - id: mushroom_kingdom_1
+              state: in_progress
+
+        - line: |
+            <npc> asks "Did the king send you?"
+          quest_check:
+            - id: mushroom_kingdom_2
+              state: in_progress
+
+        - line: |
+            <npc> says "You did well, now stop bothering me"
+          quest_check:
+            - id: mushroom_kingdom_2
+              state: turned_in
+      options:
+        - line: ask where the necromancer is
+          goto: where_is_necromancer
+          quest_check:
+            - id: mushroom_kingdom_2
+              state: in_progress
+      
+    where_is_necromancer:
+      dialog: 
+        - line: |
+            <npc> grabs you gently by the arm, and pulls you closer to the ledge, "look" they say while tilting their cap towards the ledge. 
+            "Our kingdom is not the only place riddled with undead, it looks like a couple necromancers have taken refuge in the kerning city slums.
+            Far north from here, especially search the huts, magic is a fragile art, that needs the least amount of disturbance" they let go of you.
+            "Now... You know where im going with this, go do your thing, and stop bothering me."
+

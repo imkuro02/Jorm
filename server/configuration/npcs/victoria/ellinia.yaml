@@ -3,10 +3,10 @@ ellinia_shop_weapon:
     start:
       dialog: 
       - line: |
-          says "Hello there, how may I help you today?"
+          <npc> says "Hello there, how may I help you today?"
       options:
         # quest 1
-        - line: I need a wand.
+        - line: say "I need a wand."
           goto: ellinia_shop_weapon_quest_1_start     
           quest_check:
             - id: ellinia_shop_weapon_quest_1
@@ -16,7 +16,7 @@ ellinia_shop_weapon:
           quest_check:
             - id: ellinia_shop_weapon_quest_1
               state: in_progress
-        - line: I got the branches!
+        - line: say "I got the branches!"
           goto: ellinia_shop_weapon_quest_any_completed        
           quest_check:
             - id: ellinia_shop_weapon_quest_1
@@ -27,7 +27,7 @@ ellinia_shop_weapon:
             reward: 
               - ellinia_shop_weapon_quest_1
         # quest 2
-        - line: I need a wand..
+        - line: say "I need a wand.."
           goto: ellinia_shop_weapon_quest_2_start       
           quest_check:
             - id: ellinia_shop_weapon_quest_2
@@ -39,7 +39,7 @@ ellinia_shop_weapon:
           quest_check:
             - id: ellinia_shop_weapon_quest_2
               state: in_progress
-        - line: I got the branches!
+        - line: say "I got the branches!"
           goto: ellinia_shop_weapon_quest_any_completed        
           quest_check:
             - id: ellinia_shop_weapon_quest_2
@@ -50,7 +50,7 @@ ellinia_shop_weapon:
             reward: 
               - ellinia_shop_weapon_quest_2
         # quest 3
-        - line: I need a wand...
+        - line: say "I need a wand..."
           goto: ellinia_shop_weapon_quest_3_start    
           quest_check:
             - id: ellinia_shop_weapon_quest_3
@@ -59,12 +59,12 @@ ellinia_shop_weapon:
               state: turned_in
             - id: ellinia_shop_weapon_quest_1
               state: turned_in
-        - line: Where should I look for the roots?
+        - line: ask "Where should I look for the roots?"
           goto: how_to_lore_root         
           quest_check:
             - id: ellinia_shop_weapon_quest_3
               state: in_progress
-        - line: I got the roots!
+        - line: say "I got the roots!"
           goto: ellinia_shop_weapon_quest_any_completed        
           quest_check:
             - id: ellinia_shop_weapon_quest_3
@@ -77,11 +77,11 @@ ellinia_shop_weapon:
     end:
       dialog: 
       - line: |
-          says "Farewell"
+          <npc> says "Farewell"
     x:
       dialog:
       - line: |
-          says "Too bad"
+          <npc> says "Too bad"
     # 
 
 
@@ -90,49 +90,49 @@ ellinia_shop_weapon:
     ellinia_shop_weapon_quest_1_start:
       dialog:
       - line: |
-          says "Sorry, I don't have any for sale right now, 
+          <npc> says "Sorry, I don't have any for sale right now, 
           but maybe you could bring me the ingredients and I could make you one?"
       options:
-        - line: Ok.
+        - line: accept
           goto: ellinia_shop_weapon_quest_1_accepted
           quest_check:
             - id: ellinia_shop_weapon_quest_1
               state: not_started
           quest_start:
               id: ellinia_shop_weapon_quest_1
-        - line: No.
+        - line: decline
           goto: x
 
     ellinia_shop_weapon_quest_2_start:
       dialog:
       - line: |
-          says "Sorry, I don't have any for sale right now, 
+          <npc> says "Sorry, I don't have any for sale right now, 
           but maybe you could bring me the ingredients and I could make you one?"
       options:
-        - line: Ok.
+        - line: accept
           goto: ellinia_shop_weapon_quest_2_accepted
           quest_check:
             - id: ellinia_shop_weapon_quest_2
               state: not_started
           quest_start:
               id: ellinia_shop_weapon_quest_2
-        - line: No.
+        - line: decline
           goto: x
 
     ellinia_shop_weapon_quest_3_start:
       dialog:
       - line: |
-          says "Sorry, I don't have any for sale right now, 
+          <npc> says "Sorry, I don't have any for sale right now, 
           but maybe you could bring me the ingredients and I could make you one?"
       options:
-        - line: Ok.
+        - line: accept
           goto: ellinia_shop_weapon_quest_3_accepted
           quest_check:
             - id: ellinia_shop_weapon_quest_3
               state: not_started
           quest_start:
               id: ellinia_shop_weapon_quest_3
-        - line: No.
+        - line: decline
           goto: x
 
 
@@ -140,27 +140,27 @@ ellinia_shop_weapon:
     ellinia_shop_weapon_quest_1_accepted:  
       dialog:
       - line: |
-          says "Great! all I need is jsut a few tree branches!"
+          <npc> says "Great! all I need is jsut a few tree branches!"
     ellinia_shop_weapon_quest_2_accepted:  
       dialog:
       - line: |
-          says "Great! just bring me a couple more tree branches!"
+          <npc> says "Great! just bring me a couple more tree branches!"
     ellinia_shop_weapon_quest_3_accepted:  
       dialog:
       - line: |
-          says "Great! come back when you got a few tree roots on you!"
+          <npc> says "Great! come back when you got a few tree roots on you!"
     ellinia_shop_weapon_quest_any_completed:
       dialog:
       - line: |
-          yells "Tada! enjoy your new wand!"
+          <npc> yells "Tada! enjoy your new wand!"
     how_to_lore_branch:
       dialog:
       - line: |
-         says "Here is a tip for you @tip"Lore tree branch"@back. You can do a lot more with the Lore command too!"
+          <npc> says "Here is a tip for you @tip"Lore tree branch"@back. You can do a lot more with the Lore command too!"
     how_to_lore_root:
       dialog:
       - line: |
-          says "Here is a tip for you @tip"Lore tree branch"@back. You can do a lot more with the Lore command too!"
+          <npc> says "Here is a tip for you @tip"Lore tree branch"@back. You can do a lot more with the Lore command too!"
     
 
 

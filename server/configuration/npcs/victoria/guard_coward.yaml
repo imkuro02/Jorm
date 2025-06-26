@@ -3,5 +3,5 @@ guard_coward:
     start:
       dialog: 
         - line: |
-            says "Step away from the gate"
+            <npc> says "Step away from the gate"
     
