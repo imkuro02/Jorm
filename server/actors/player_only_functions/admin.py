@@ -554,7 +554,7 @@ def command_lore(self, line):
 
         all_loot_they_drop = {}
         for loot in e.loot:
-            all_loot_they_drop[LORE['items_name_to_id'][loot]] = f'{round(e.loot[loot]*100,5)}%'
+            all_loot_they_drop[LORE['items_name_to_id'][loot]] = f'1:{int(e.loot[loot])}'
 
         
         t = utils.Table(4,3)
@@ -592,7 +592,7 @@ def command_lore(self, line):
             all_dropped_from = []
             for e in LORE['enemies']:
                 if item_id in LORE['enemies'][e]['loot']:
-                    all_dropped_from.append([e,f'{round(LORE["enemies"][e]["loot"][item_id]*100,5)}%'])
+                    all_dropped_from.append([e,f'1:{int(LORE["enemies"][e]["loot"][item_id])}'])
             
         t = utils.Table(4,3)
         for i in all_dropped_from:

@@ -147,8 +147,8 @@ class Npc(Actor):
         all_items = ITEMS
         
         for item in self.loot: 
-            roll = random.random()
-            if roll >= self.loot[item]:
+            roll = random.randrange(1,self.loot[item])
+            if roll != 1:
                 continue
 
             new_item = load_item(item)

@@ -301,19 +301,21 @@ def configure_ENEMIES(SHEET, ITEMS):
                 #   print(e, highest_item_stat['stat'],i , highest_enemy_stat['stat'])
                 match abs(ITEMS[i]['random_drop_lvl'] - ENEMIES[e]['stats']['lvl']):
                     case 0:
-                        loot[i] = 0.02
+                        loot[i] = 10
                     case 1:
-                        loot[i] = 0.02
+                        loot[i] = 20
                     case 2:
-                        loot[i] = 0.005
+                        loot[i] = 30
                     case 3:
-                        loot[i] = 0.005
+                        loot[i] = 100
                     case 5:
-                        loot[i] = 0.001
+                        loot[i] = 200
                     case 6:
-                        loot[i] = 0.001
+                        loot[i] = 300
                     case _:
                         continue
+
+                loot[i] = loot[i] * (1+ITEMS[i]['random_drop_lvl']*1+ENEMIES[e]['stats']['lvl'])
 
                 if i not in ENEMIES[e]['loot']:
                     ENEMIES[e]['loot'][i] = loot[i]
