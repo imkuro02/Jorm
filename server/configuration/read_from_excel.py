@@ -315,7 +315,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                     case _:
                         continue
 
-                loot[i] = loot[i] * (1+ITEMS[i]['random_drop_lvl']*1+ENEMIES[e]['stats']['lvl'])
+                loot[i] = int(loot[i] * (1+ITEMS[i]['random_drop_lvl']*1+ENEMIES[e]['stats']['lvl']))
 
                 if i not in ENEMIES[e]['loot']:
                     ENEMIES[e]['loot'][i] = loot[i]

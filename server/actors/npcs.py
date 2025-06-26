@@ -154,7 +154,7 @@ class Npc(Actor):
             new_item = load_item(item)
 
             if actor.inventory_manager.add_item(new_item):   
-                actor.sendLine(f'You loot {new_item.name}.')
+                actor.sendLine(f'You loot {new_item.name}. (1 in {self.loot[item]} chance)')
             else:
                 actor.sendLine(f'Your inventory is full, {new_item.name} has been dropped on the ground.')
                 room.inventory_manager.add_item(new_item)

@@ -543,7 +543,8 @@ def command_lore(self, line):
                 if e_id in spawn_points:
                     #if room['name'] in all_rooms_e_spawns_in:
                     #    continue
-                    all_rooms_e_spawns_in.append(room['name'])
+                    if room['name'] not in all_rooms_e_spawns_in:
+                        all_rooms_e_spawns_in.append(room['name'])
 
         t = utils.Table(3,3)
         for room in all_rooms_e_spawns_in:
