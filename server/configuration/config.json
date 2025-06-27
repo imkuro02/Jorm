@@ -23,7 +23,7 @@
                 "swing": 1
             },
             "loot": {
-                "tutorial_quest_item_1": 1.0,
+                "tutorial_quest_item_1": 1,
                 "red potion": 400,
                 "blue potion": 400,
                 "translucent scroll": 2100,
@@ -228,7 +228,7 @@
                 "nudge": 1
             },
             "loot": {
-                "tree_branch": 10.0,
+                "tree_branch": 10,
                 "red potion": 150,
                 "blue potion": 150,
                 "translucent scroll": 1600,
@@ -1449,8 +1449,8 @@
                 "swing": 1
             },
             "loot": {
-                "tree_root": 10.0,
-                "tree_branch": 10.0,
+                "tree_root": 10,
+                "tree_branch": 10,
                 "translucent scroll": 280,
                 "grit body 1": 2700,
                 "grit head 1": 2700,
@@ -1553,7 +1553,7 @@
                 "swing": 1
             },
             "loot": {
-                "key_tavern_cellar": 10.0,
+                "key_tavern_cellar": 10,
                 "red potion": 70,
                 "blue potion": 70,
                 "translucent scroll": 1000,
@@ -1599,7 +1599,7 @@
                 "swing": 1
             },
             "loot": {
-                "key_tavern_cellar": 10.0,
+                "key_tavern_cellar": 10,
                 "red potion": 150,
                 "blue potion": 150,
                 "translucent scroll": 1600,
@@ -1641,7 +1641,7 @@
                 "swing": 1
             },
             "loot": {
-                "key_tavern_cellar": 10.0,
+                "key_tavern_cellar": 10,
                 "red potion": 150,
                 "blue potion": 150,
                 "translucent scroll": 1600,
