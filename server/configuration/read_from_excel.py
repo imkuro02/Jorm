@@ -5,6 +5,9 @@ from pandas_ods_reader import read_ods
 #SHEET = {}
 
 import time
+import json
+import hashlib
+
 
 def str_with_newlines(s):
     if s == None:
@@ -386,26 +389,77 @@ def configure_ENEMIES(SHEET, ITEMS):
     '''
     return ENEMIES
 
-def load():
+def load_from_excel():
     SHEET = read_from_ods_file()
     SKILL_SCRIPT_VALUES =     configure_skill_script_values(SHEET)
     USE_PERSPECTIVES =        configure_USE_PERSPECTIVES(SHEET)
     SKILLS =                  configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES)
     ITEMS =                   configure_ITEMS(SHEET, USE_PERSPECTIVES)
     ENEMIES =                 configure_ENEMIES(SHEET, ITEMS)
-        
     
-
-    
-
     # PACK IT ALL UP
     whole_dict = {
         'enemies': ENEMIES,
         'skills': SKILLS,
         'items': ITEMS,
     }
+
     return whole_dict
+
+from pathlib import Path
+
+def is_checksum_same():
+    excel_checksum = get_checksum('configuration/config.ods', "sha256")
+    json_checksum = None
+    file_json = Path('configuration/config.json')
+    print(f"Excel SHA-256: {excel_checksum}")
+
+    data = {}
+    if file_json.exists() and file_json.is_file():
+        try:
+            with open(file_json, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            print("JSON data successfully loaded")
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON: {e}")
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+    else:
+        print("Json config file does not exist.")
+
+    if data != {}:
+        json_checksum = data['SHA-256']
+
+    return json_checksum == excel_checksum
     
+
+
+def load():
+    data = {}
+    file_json = 'configuration/config.json'
+    if is_checksum_same():
+        with open(file_json, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        excel_checksum = get_checksum('configuration/config.ods', "sha256")
+        whole_dict = load_from_excel()
+        data = {
+            'SHA-256': excel_checksum,
+            'enemies': whole_dict['enemies'],
+            'skills': whole_dict['skills'],
+            'items': whole_dict['items']
+        }
+        with open(file_json, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+    return data
+
+def get_checksum(file_path, algorithm='sha256'):
+    hash_func = getattr(hashlib, algorithm)()
+    with open(file_path, 'rb') as f:
+        for chunk in iter(lambda: f.read(4096), b''):
+            hash_func.update(chunk)
+    return hash_func.hexdigest()
+
 if __name__ == '__main__':
     load()
     
