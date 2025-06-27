@@ -41,39 +41,45 @@ def skill_checks(user, target, skill_id):
         error(user, f'{skill_name} is not learned yet')
         return False
 
-    # cant target yourself
-    if target == user and not skill['target_self_is_valid']:
-        error(user, f'You can\'t use {skill_name} on yourself')
-        return False
-
-    # cant target others
-    if target != user and not skill['target_others_is_valid']:
-        error(user, f'You can\'t use {skill_name} on others')
-        return False
+    if skill_id in user.cooldown_manager.cooldowns:
+            error(user, f'{skill_name} is on cooldown!')
+            return False
     
-    if utils.get_object_parent(target) != "Actor":
-        error(user, f'You can\'t use {skill_name} on {target.name}')
-        return False
-
-    if skill['must_be_fighting']:
-        if user.status != ActorStatusType.FIGHTING:
-            error(user, f'{skill_name} can only be used during a fight')
+    if utils.get_object_parent(target) == 'Actor':
+        # cant target yourself
+        if target == user and not skill['target_self_is_valid']:
+            error(user, f'You can\'t use {skill_name} on yourself')
             return False
 
+        # cant target others
+        if target != user and not skill['target_others_is_valid']:
+            if utils.get_object_parent(target) != 'Item':
+                error(user, f'You can\'t use {skill_name} on others')
+                return False
+            
+        #if utils.get_object_parent(target) != "Actor":
+        #    error(user, f'You can\'t use {skill_name} on {target.name}')
+        #    return False
+
+        if skill['must_be_fighting']:
+            if user.status != ActorStatusType.FIGHTING:
+                error(user, f'{skill_name} can only be used during a fight')
+                return False
+
+        # allow using skills on dead targets
+        if user.status == ActorStatusType.FIGHTING and (target.status != ActorStatusType.FIGHTING and target.status != ActorStatusType.DEAD):
+            error(user, f'You are in a fight but {target.name} is not participating!')
+            return False
+
+        if user.status != ActorStatusType.FIGHTING and target.status == ActorStatusType.FIGHTING:
+            error(user, f'{target.name} is in a fight you are not participating in!')
+            return False
+        
+    if utils.get_object_parent(target) == 'Item' and not skill['target_item_is_valid']:
+        error(user, f'You can\'t use {skill_name} on items')
+        return False
     
     
-    # allow using skills on dead targets
-    if user.status == ActorStatusType.FIGHTING and (target.status != ActorStatusType.FIGHTING and target.status != ActorStatusType.DEAD):
-        error(user, f'You are in a fight but {target.name} is not participating!')
-        return False
-
-    if user.status != ActorStatusType.FIGHTING and target.status == ActorStatusType.FIGHTING:
-        error(user, f'{target.name} is in a fight you are not participating in!')
-        return False
-
-    if skill_id in user.cooldown_manager.cooldowns:
-        error(user, f'{skill_name} is on cooldown!')
-        return False
 
 
     users_skill_level = get_user_skill_level_as_index(user,skill_id)

@@ -203,13 +203,45 @@ def command_skills(self, line):
         else:
             users_skill_level = 0
 
+        _target_self = skill["target_self_is_valid"]
+        _target_others = skill["target_others_is_valid"]
+        _target_items = skill["target_item_is_valid"]
+        _combat_only = skill["must_be_fighting"]
+        _can_practice = skill["can_be_practiced"]
+        _is_offensive = skill["is_offensive"]
+        _name = skill["name"]
+        _target = ''
+        _targets = [_target_self, _target_others, _target_items]
+        match _targets:
+            case [0,0,0]:
+                _target = 'cannot be used on anything (what)'
+            case [1,0,0]:
+                _target = 'can be used on yourself only'
+            case [0,1,0]:
+                _target = 'can be used on others only'
+            case [0,0,1]:
+                _target = 'can be used on items only'
+            case [1,1,0]:
+                _target = 'can be used on anyone'
+            case [0,1,1]:
+                _target = 'can be used on others and items'
+            case [1,0,1]:
+                _target = 'can be used on yourself and items'
+            
+        extra_info = (
+            f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.\n'
+            f'It {"can only be used in combat" if _combat_only else "can be used outside of combat"}, and '
+            f'it {"can" if _can_practice else "cannot"} be practiced.'
+        )
+        extra_info = f'@cyan{extra_info}@normal'
+
         t = utils.Table(2,1)
         #t.add_data(':')
         #if skill_learned:
         #    t.add_data(self.skill_manager.skills[skill_id],'@green')
         #else:
         #    t.add_data('No','@red')
-
+        '''
         t.add_data('Target self:')
         if skill["target_self_is_valid"]:
             t.add_data('Yes','@yellow')
@@ -227,8 +259,9 @@ def command_skills(self, line):
             t.add_data('Yes','@yellow')
         else:
             t.add_data('No','@red')
+        '''
 
-        output += t.get_table()
+        output += t.get_table() 
         #if skill['can_be_practiced'] == False:
         #    output += f'@redThis skill cannot be practied!@normal\n'
 
@@ -262,7 +295,7 @@ def command_skills(self, line):
             output += t.get_table()
 
 
-        self.sendLine(output)
+        self.sendLine(output + extra_info.strip())
     else:
         if len(self.skill_manager.skills) == 0:
             self.sendLine('You do not know any skills...')

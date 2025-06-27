@@ -332,3 +332,28 @@ class SkillRefreshingDrink(Skill):
                 damage_to_stat = StatType.MP
                 )
             damage_obj.run()          
+
+class SkillAlchemy(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            failed = False
+            if type(self.other).__name__ != 'Equipment' :
+                failed = 'Only equipment can be alchemized'
+                self.user.simple_broadcast(f'Suddenly, it mends itself again, and you feel like nothing ever happened, '+failed, 
+                                        'Suddenly, it mends itself again as if nothing happened')
+                return
+            if self.other.keep:
+                failed = 'Kept items cannot be alchemized'
+                self.user.simple_broadcast(f'Suddenly, it mends itself again, and you feel like nothing ever happened, '+failed, 
+                                        'Suddenly, it mends itself again as if nothing happened')
+                return
+            if self.other.equiped:
+                failed = 'Equipped items cannot be alchemized'
+                self.user.simple_broadcast(f'Suddenly, it mends itself again, and you feel like nothing ever happened, '+failed, 
+                                        'Suddenly, it mends itself again as if nothing happened')
+                return
+            
+            lvl = self.other.stat_manager.reqs[StatType.LVL] * self.other.stack
+            self.user.gain_exp(lvl)
+            self.user.inventory_manager.remove_item(self.other)

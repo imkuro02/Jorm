@@ -125,6 +125,7 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
                 'description':              str_with_newlines(x['description'][index]),
                 'script_to_run':            x['script_to_run'][index],
                 'target_others_is_valid':   bool(x['target_others_is_valid'][index]),
+                'target_item_is_valid':     bool(x['target_item_is_valid'][index]),
                 'target_self_is_valid':     bool(x['target_self_is_valid'][index]),
                 'must_be_fighting':         bool(x['must_be_fighting'][index]),
                 'can_be_practiced':         bool(x['can_be_practiced'][index]),

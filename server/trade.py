@@ -66,7 +66,7 @@ class TradeManager:
    
     def trade_request(self, line):
         other = self.actor.get_actor(line)
-        print(other.name)
+
         # dont trade if no target found
         if other == None:
             self.actor.sendLine('Trade with who?')

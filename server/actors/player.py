@@ -105,6 +105,10 @@ class Player(Actor):
             self.protocol.transport.write(line.encode('utf-8'))
         return
 
+    def gain_exp(self, exp):
+        self.stat_manager.stats[StatType.EXP] += exp
+        self.sendLine('You got: @yellow' + str(exp) + ' experience@back')
+
     def queue_handle(self, line):
         self.queued_lines.append(line)
 
