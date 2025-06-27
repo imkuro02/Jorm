@@ -265,7 +265,7 @@ def configure_ENEMIES(SHEET, ITEMS):
         x = SHEET['loot']
         for index in range(0,len(x[row])):
             d_vals = {
-                x['item_id'][index]: float(x['drop_rate'][index])
+                x['item_id'][index]: int(x['drop_rate'][index])
             }
 
             if x['npc_id'][index] in LOOT:
@@ -321,7 +321,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                 loot[i] = int(loot[i] * (1+ITEMS[i]['random_drop_lvl']*1+ENEMIES[e]['stats']['lvl']))
 
                 if i not in ENEMIES[e]['loot']:
-                    ENEMIES[e]['loot'][i] = loot[i]
+                    ENEMIES[e]['loot'][i] = int(loot[i])
 
     end = time.time()
     print(end - start,'LOOT')
