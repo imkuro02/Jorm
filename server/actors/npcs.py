@@ -175,10 +175,11 @@ class Npc(Actor):
        
         room = self.room
 
+        participants = room.combat.participants.values()
         super().die()
 
         
-        for actor in room.combat.participants.values():
+        for actor in participants:
             if type(actor).__name__ == "Player":
                 if actor.status == ActorStatusType.DEAD:
                     continue
