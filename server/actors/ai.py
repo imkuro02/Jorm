@@ -56,6 +56,9 @@ class AI:
             if 'swing' == skill_to_use and i<15:
                 continue
 
+            if i>15:
+                skill_to_use = 'swing'
+
             if SKILLS[skill_to_use]['is_offensive']:
                 targets = enemies
             else:

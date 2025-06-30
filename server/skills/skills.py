@@ -355,5 +355,6 @@ class SkillAlchemy(Skill):
                 return
             
             lvl = self.other.stat_manager.reqs[StatType.LVL] * self.other.stack
+            lvl = int(lvl * self.script_values['bonus'][self.users_skill_level])
             self.user.gain_exp(lvl)
             self.user.inventory_manager.remove_item(self.other)
