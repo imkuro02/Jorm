@@ -100,3 +100,27 @@ class Item:
                 f'{user.pretty_name()} rubs {self.pretty_name()} on themselves... Nothing happens.'
             )
         return False
+
+    # called at start of turn
+    def set_turn(self):
+        pass
+
+    # called at end of turn
+    def finish_turn(self):
+        pass
+
+    # called whenever hp updates in any way
+    def take_damage(self, damage_obj):
+        return damage_obj
+    
+    def deal_damage(self, damage_obj):
+        return damage_obj
+    
+    def dealt_damage(self, damage_obj):
+        #if self.stack >= 10:
+        #    self.inventory_manager.owner.simple_broadcast(f'You are carrying so much of {self.name} it deals extra damage!','')
+        return damage_obj
+    
+    # called when exp is gained
+    def gain_exp(self, exp):
+        return exp

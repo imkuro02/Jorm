@@ -417,9 +417,11 @@ class Actor:
         if force_cooldown:
             self.affect_manager.set_turn()
             self.cooldown_manager.set_turn()
+            self.inventory_manager.set_turn()
 
         self.affect_manager.finish_turn()
         self.cooldown_manager.finish_turn()
+        self.inventory_manager.finish_turn()
         
         if self.room == None:
             return
@@ -460,6 +462,7 @@ class Actor:
 
         self.affect_manager.set_turn()
         self.cooldown_manager.set_turn()
+        self.inventory_manager.set_turn()
 
     def sendLine(self, line, msg_type):
         print(f'sendLine called in a object class Npc function? line: {line}')

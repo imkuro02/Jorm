@@ -2,15 +2,111 @@ from configuration.config import ItemType
 from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
 from items.manager import load_item
 
+class TriggerableManager:
+    def __init__(self, inventory):
+        self.inventory = inventory
+        self.actor = self.inventory.owner
+        self.triggered = []
+
+    def items(self):
+        return [item for item in self.inventory.items.values()]
+    
+    def reset_triggered(self):
+        self.triggered = []
+
+    # basically make sure an item can be triggered once even if you have multiple stacks!
+    def add_triggered(self,item):
+        self.triggered.append(item.premade_id)
+
+    # called at start of turn
+    def set_turn(self):
+        if self.actor.status != 'Fighting': 
+            return
+        for item in self.items():
+            if item.premade_id in self.triggered:
+                continue
+            item.set_turn()
+            self.add_triggered(item)
+        self.reset_triggered()
+
+    # called at end of turn
+    def finish_turn(self):
+        if self.actor.status != 'Fighting': 
+            return
+        for item in self.items():
+            if item.premade_id in self.triggered:
+                continue
+            item.finish_turn()
+            self.add_triggered(item)
+        self.reset_triggered()
+
+    # called whenever hp updates in any way
+    def take_damage(self, damage_obj: 'Damage'):
+        if self.actor.status != 'Fighting': 
+            return damage_obj
+        for item in self.items():
+            if item.premade_id in self.triggered:
+                continue
+            damage_obj = item.take_damage(damage_obj)
+            self.add_triggered(item)
+        self.reset_triggered()
+        return damage_obj
+    
+    def deal_damage(self, damage_obj: 'Damage'):
+        if self.actor.status != 'Fighting': 
+            return damage_obj
+        for item in self.items():
+            if item.premade_id in self.triggered:
+                continue
+            damage_obj = item.deal_damage(damage_obj)
+            self.add_triggered(item)
+        self.reset_triggered()
+        return damage_obj
+    
+    def dealt_damage(self, damage_obj: 'Damage'):
+        if self.actor.status != 'Fighting': 
+            return damage_obj
+        for item in self.items():
+            if item.premade_id in self.triggered:
+                continue
+            damage_obj = item.dealt_damage(damage_obj)
+            self.add_triggered(item)
+        self.reset_triggered()
+        return damage_obj
+    
+    def gain_exp(self, exp):
+        for item in self.items():
+            if item.premade_id in self.triggered:
+                continue
+            exp = item.gain_exp(exp)
+            self.add_triggered(item)
+        self.reset_triggered()
+        return exp
+        
 
 #               proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
 #                owner.quest_manager.propose_objective_count_addition(proposal)
 class InventoryManager:
     def __init__(self, owner, limit = 20*1):
         self.owner = owner
+        self.triggerable_manager = TriggerableManager(self)
         self.limit = limit
         self.items = {}
         self.can_pick_up_anything = False
+
+    # forward to triggerable manager
+    def set_turn(self):
+        return self.triggerable_manager.set_turn()
+    def finish_turn(self):
+        return self.triggerable_manager.finish_turn()
+    def take_damage(self, damage_obj: 'Damage'):
+        return self.triggerable_manager.take_damage(damage_obj)
+    def deal_damage(self, damage_obj: 'Damage'):
+        return self.triggerable_manager.deal_damage(damage_obj)
+    def dealt_damage(self, damage_obj: 'Damage'):
+        return self.triggerable_manager.dealt_damage(damage_obj)
+    def gain_exp(self, exp):
+        return self.triggerable_manager.gain_exp(exp)
 
     def get_item_by_id(self, item_id):
         for i in self.items.values():

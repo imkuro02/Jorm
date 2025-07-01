@@ -54,12 +54,14 @@ class ItemType:
     CONSUMABLE = 'consumable'
     ERROR = 'error_item'
     SCENERY = 'scenery'
+    TRIGGERABLE = 'triggerable'
     name = {
         MISC: 'Misc',
         EQUIPMENT: 'Equipment',
         CONSUMABLE: 'Consumable',
         ERROR: 'Error Item',
-        SCENERY : 'Scenery'
+        SCENERY : 'Scenery',
+        TRIGGERABLE: 'Triggerable'
     }
 
 class DamageType:

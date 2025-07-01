@@ -86,12 +86,15 @@ class CombatEvent:
 
         # add attacker buffs
         damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(damage_obj)
+        damage_obj = damage_obj.damage_source_actor.inventory_manager.deal_damage(damage_obj)
         # add receiver buffs
         damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage(damage_obj)
+        damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage(damage_obj)
         # +/- armor calculation and hp removal
         damage_obj.calculate()
         # effects after successful attack
         damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
+        damage_obj.damage_source_actor.inventory_manager.dealt_damage(damage_obj)
         # add threat to the attacker
         damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += damage_obj.damage_value
         self.pop_from_queue()
