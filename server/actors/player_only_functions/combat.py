@@ -12,9 +12,14 @@ def command_fight(self, line):
     #if isinstance(error_output, str):
     #    self.sendLine(error_output)
 
+    
+    
+
     if self.status == ActorStatusType.FIGHTING:
         self.ai.tick()
         return
+    else:
+        self.finish_turn()
     
     if self.party_manager.party == None:
         self.room.join_combat(self)
