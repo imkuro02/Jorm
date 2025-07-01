@@ -9,6 +9,10 @@ from actors.player_only_functions.combat import (
     command_use, command_rest, rest_set, rest_now, rest_now_request, command_party
 )
 
+from actors.player_only_functions.charging_mini_game import (
+    command_charging_mini_game_toggle
+)
+
 from actors.player_only_functions.look import command_look, command_map, new_room_look
 
 from actors.player_only_functions.equip import (
@@ -116,6 +120,8 @@ commands = {
     
     'respec':   'command_respec',
     'prompt':   'command_send_prompt',
+
+    'pray':     'command_charging_mini_game_toggle',
 
     'teleport': 'command_teleport',  
     'online':   'command_online',

@@ -431,7 +431,7 @@ class Actor:
             return
         
         self.room.combat.next_turn()
-
+        
     
     def set_turn(self):
         

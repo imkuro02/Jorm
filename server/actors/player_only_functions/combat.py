@@ -148,6 +148,7 @@ def rest_now_request(self, line):
 
 def rest_now(self, line):
     self.sendSound(Audio.BUFF)
+    self.finish_turn()
     
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL

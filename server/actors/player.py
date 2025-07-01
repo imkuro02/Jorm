@@ -10,7 +10,70 @@ import time
 from actors.player_only_functions.settings import Settings
 #from actors.enemy_ai import AIBasic
 from actors.ai import PlayerAI
+import random
 
+class ChargingMiniGame:
+    def __init__(self, owner):
+        self.owner = owner
+        self.ticks_passed = 0
+        self.charging = False
+
+        self.ticks_to_seconds = 30
+        self.ticks_for_charge = 10 * self.ticks_to_seconds
+
+        self.charges = 0
+        self.tries = 0
+    
+    def fail(self):
+        self.owner.sendLine(f'You failed to charge ({self.charges})')
+
+    def success(self):
+        self.charges += 1
+        self.owner.sendLine(f'You got one charge ({self.charges})')
+        
+
+    def stop(self):
+        if not self.charging:
+            return
+        self.owner.sendLine('You stop charging')
+        self.charging = False
+        self.owner.gain_exp(self.charges)
+        
+
+    def start(self):
+        self.owner.sendLine('You begin to charge')
+        self.charging = True
+        self.ticks_passed = 0
+        self.charges = 0
+        self.tries = 0
+
+    def toggle(self):
+        if self.charging:
+            self.stop()
+        else:
+            self.start()
+
+    def charge(self):
+        #charge_tick_amount = self.ticks_passed / self.ticks_to_seconds
+        
+        roll = random.randint(0,10)
+        if roll > self.charges:
+            self.success()
+        else:
+            self.fail()
+        self.tries += 1
+
+        if self.tries >= 10:
+            self.stop()
+
+    def tick(self):
+        if not self.charging:
+            return
+        
+        self.ticks_passed += 1
+        if self.ticks_passed % self.ticks_for_charge == 0:
+            self.charge()
+        
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
         self.protocol = protocol
@@ -41,7 +104,7 @@ class Player(Actor):
         self.settings_manager = Settings(self)
         self.ai = PlayerAI(self)
 
-        
+        self.charging_mini_game = ChargingMiniGame(self)
         
     def check_if_admin(self):
         if self.protocol == None:
@@ -65,6 +128,8 @@ class Player(Actor):
 
     def tick(self):
         super().tick()
+        self.charging_mini_game.tick()
+
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
 
@@ -178,8 +243,11 @@ class Player(Actor):
         script(line)
 
     def finish_turn(self, force_cooldown = False):
-        super().finish_turn(force_cooldown=force_cooldown)
         self.trade_manager.trade_stop(silent=True)
+        self.charging_mini_game.stop()
+        super().finish_turn(force_cooldown=force_cooldown)
+        
+
 
 # Compile all player functions
 # grabs all imported functions inside of actors.player_only_functions 
