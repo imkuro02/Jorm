@@ -99,7 +99,7 @@ class AI:
         if self.actor.room.combat.current_actor != self.actor:
             return False
 
-        if self.actor.room.combat.time_since_turn_finished <= int(30*0.5):
+        if self.actor.room.combat.time_since_turn_finished <= int(6):
             return False
         
         return True
