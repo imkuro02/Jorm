@@ -1,0 +1,164 @@
+#volumeButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #443627;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#volumeButton:hover {
+    background: #222;
+}
+
+#slidersBox {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 80px;
+    background: #443627;
+    border: 10px solid #53443d;
+    padding: 30px;
+    border-radius: 10px;
+    z-index: 9999;
+    text-align: center;
+    width: 300px;
+}
+
+.volume-slider {
+    width: 200px;
+}
+
+#startScreen {
+    animation: none !important;
+    opacity: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #C9B194;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+#startButton {
+    padding: 20px 40px;
+    font-size: 32px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    background: #fff;
+    color: #222;
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+
+#startButton:hover {
+    background: #ddd;
+}
+
+div {
+    width: 99%;
+    opacity: 0;
+    animation: shake 0.0s ease-out forwards, fadeIn 0.0s ease-out forwards;
+}
+
+@keyframes shake {
+    0% { transform: translateX(2px); }
+    25% { transform: translateX(0px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(1px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@font-face {
+    font-family: 'Comic Mono';
+    src: url('ComicMono.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+iframe {
+    width: 200px;
+    height: 250px;
+}
+
+#iframeContainer {
+    border: none;
+    position: fixed;
+    top: 25px;
+    right: 25px;
+}
+
+a {
+    color: cyan;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+input[type="text"] {
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    font-family: 'Comic Mono', monospace;
+    border-radius: 4px;
+}
+
+body {
+    font-family: 'Comic Mono', monospace;
+    color: #fbf1c7;
+    background-color: #C9B194;
+    margin: 0;
+    padding: 10px;
+}
+
+#game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Comic Mono', monospace;
+}
+
+#inputoutput {
+    font-size: 16px;
+    background-color: black;
+    width: 900px;
+    margin: 20px;
+    padding: 10px;
+    border: 12px solid #53443d;
+    border-radius: 10px;
+}
+
+#output {
+    font-family: 'Comic Mono', monospace;
+    height: calc(100vh - 190px);
+    margin-bottom: 10px;
+    overflow-y: auto;
+    color: #fff;
+    width: 100%;
+    white-space: pre-wrap;
+}
+
+#input {
+    width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+}

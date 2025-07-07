@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jorm</title>
+    <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.1/ansi_up.min.js"></script>
+    <link href="https://fonts.cdnfonts.com/css/comic-mono" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    
+    <button id="volumeButton">⚙️</button>
+    
+    <div id = "game">
+        <div id = "inputoutput">
+            <div id="output"></div>
+            <input type="text" id="input" placeholder="Input">
+        </div>
+     
+    </div>
+    <div>Progress bars . . .</div>
+
+
+    <div id="slidersBox">
+        <h3>Adjust Volume</h3>
+        <p>SFX</p>
+        <input type="range" id="slider1" class="volume-slider" min="0" max="1" step="0.01" value="0.25"><br>
+        <p>Music</p>
+        <input type="range" id="slider2" class="volume-slider" min="0" max="1" step="0.01" value="0.05">
+    </div>
+
+</body>
+</html>
+<script src="script.js"></script>
