@@ -15,7 +15,7 @@ def command_map(self, line):
         EW =         '@yellow---'
         EMPTY = ' '
         EMPTYWALL =         '@wall   '
-        WALL = '@wall   '
+        WALL = '@wall###'
         DOOR ='@yellow/'
 
         # middle

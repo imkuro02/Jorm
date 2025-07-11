@@ -89,6 +89,7 @@ class Settings:
                     return
                 value = line[1]
                 self.gmcp = self.true_or_false(value)
+                self.actor.protocol.enabled_gmcp = self.gmcp
                 self.actor.sendLine(f'GMCP enabled: {self.gmcp}')
 
             case SETTINGS.VIEW_MAP:
