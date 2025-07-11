@@ -56,7 +56,6 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="debug" type="RichTextLabel" parent="canvas/HBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 2

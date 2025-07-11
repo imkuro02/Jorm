@@ -12,6 +12,111 @@ from actors.player_only_functions.settings import Settings
 from actors.ai import PlayerAI
 from actors.player_only_functions.charging_mini_game import ChargingMiniGame
         
+class UpdateChecker:
+    def __init__(self,actor):
+        self.actor = actor
+        self.protocol = actor.protocol
+
+        self.last_room = None
+        
+
+    def tick(self):
+        if self.last_room != self.actor.room:
+            self.last_room = self.actor.room
+            offsets = {
+                'north': [ 0  ,  -1 , 0],
+                'west':  [ -1 ,  0 , 0],
+                'south': [ 0  , 1 , 0],
+                'east':  [ 1  ,  0 , 0],
+                'up':    [0,0,1],
+                'down':  [0,0,-1]
+            }
+            room_id = self.actor.room.id
+            VIEW_RANGE = 7
+            START_LOC = f'{0},{0},{0}'
+            start_room = self.protocol.factory.world.rooms[room_id]
+            grid = {}
+            grid[START_LOC] = room_id
+
+            for _exit in start_room.exits:
+                if _exit.direction not in offsets:
+                    continue
+                if _exit.secret:
+                    continue
+                if _exit.item_required != None:
+                    continue
+                # do not duplicate if room leads to one that already is placed
+                if _exit.to_room_id in grid.values():
+                    continue
+
+                x = 0
+                y = 0
+                z = 0
+                x += offsets[_exit.direction][0] #+ VIEW_RANGE
+                y += offsets[_exit.direction][1] #+ VIEW_RANGE
+                z += offsets[_exit.direction][2] 
+                _loc = f'{x},{y},{z}'
+
+                
+                
+                if _loc not in grid:
+                    grid[_loc] = _exit.to_room_id
+                
+
+
+
+            _grid = {}
+            for r in grid:
+                _grid[r] = grid[r]
+                
+            for r in range(0,VIEW_RANGE*1):
+                for room_loc in _grid:
+                    #print(_grid[room_loc])
+                    if grid[room_loc] == 'PATH':
+                        continue
+
+                    room = self.protocol.factory.world.rooms[grid[room_loc]]
+                    
+                    if room.doorway:
+                        continue
+
+                    _x = int(room_loc.split(',')[0])
+                    _y = int(room_loc.split(',')[1])
+                    _z = int(room_loc.split(',')[2])
+
+                    for _exit in room.exits:
+                        if _exit.direction not in offsets:
+                            continue
+                        if _exit.secret:
+                            continue
+                        #if _exit.item_required != None:
+                        #    continue
+                        
+                        # do not duplicate if room leads to one that already is placed
+                        #if _exit.to_room_id in grid.values():
+                        #    continue
+        
+                        x = _x + offsets[_exit.direction][0] #+ VIEW_RANGE
+                        y = _y + offsets[_exit.direction][1] #+ VIEW_RANGE
+                        z = _z + offsets[_exit.direction][2] 
+                        _loc = f'{x},{y},{z}'
+               
+
+                        #if _loc not in grid:
+                        #    continue
+
+                        #print(_exit.to_room_id, grid.values())
+                        if _loc not in grid:
+                            grid[_loc] = _exit.to_room_id
+
+                _grid = {}
+                for r in grid:
+                    _grid[r] = grid[r]
+
+            self.protocol.send_gmcp(_grid,'Map')
+
+
+        
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
         self.protocol = protocol
@@ -43,6 +148,8 @@ class Player(Actor):
         self.ai = PlayerAI(self)
 
         self.charging_mini_game = ChargingMiniGame(self)
+
+        self.update_checker = UpdateChecker(self)
         
     def check_if_admin(self):
         if self.protocol == None:
@@ -74,6 +181,8 @@ class Player(Actor):
         if len(self.queued_lines) >= 1:
             self.handle(self.queued_lines[0])
             self.queued_lines.pop(0)
+
+        self.update_checker.tick()
 
     
     def sendSound(self, sfx):

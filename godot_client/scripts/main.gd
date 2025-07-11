@@ -44,7 +44,8 @@ func _ready():
 	INPUT.text_submitted.connect(_on_input_submitted)
 
 	# Connect to WebSocket server
-	var err = socket.connect_to_url(websocket_url)
+	var err = socket.connect_to_url(websocket_url_local
+	)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
@@ -81,7 +82,8 @@ func extract_gmcp(int_data: Array[int]) -> void:
 		if i == SE:         
 			var data = PackedByteArray(segment).get_string_from_utf8()
 			DEBUG.append_text(data+'\n')
-			handle_gmcp(data)
+			if len(data)>0:
+				handle_gmcp(data)
 			segment = []
 		else:
 			segment.append(i)
