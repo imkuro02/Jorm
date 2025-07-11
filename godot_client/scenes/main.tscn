@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=4 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
 [ext_resource type="Script" path="res://scripts/output.gd" id="3_gkcnj"]
-[ext_resource type="Script" path="res://scripts/sfx_manager.gd" id="4_jqy7i"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -57,6 +56,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="debug" type="RichTextLabel" parent="canvas/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 2
@@ -65,4 +65,4 @@ bbcode_enabled = true
 selection_enabled = true
 
 [node name="sfx_manager" type="AudioStreamPlayer" parent="."]
-script = ExtResource("4_jqy7i")
+volume_db = -20.292

@@ -1,7 +1,7 @@
 extends Control
 
-@export var websocket_url = "ws://localhost:8002"
-#@export var websocket_url = "wss://jorm.kurowski.xyz:8001"
+@export var websocket_url_local = "ws://localhost:8002"
+@export var websocket_url = "wss://jorm.kurowski.xyz:8001"
 
 var socket = WebSocketPeer.new()
 
@@ -9,6 +9,7 @@ var socket = WebSocketPeer.new()
 @onready var INPUT = $canvas/input
 @onready var OUTPUT = $canvas/HBoxContainer/output
 @onready var DEBUG = $canvas/HBoxContainer/debug
+@onready var SFX_MAN = $sfx_manager
 
 
 
@@ -50,17 +51,37 @@ func _ready():
 	else:
 		print("Connecting...")
 		await get_tree().create_timer(2).timeout
+		socket.send(PackedByteArray([IAC,DO,GMCP]))
 		#socket.send_text("Test packet")
 
+func handle_gmcp(message: String):
+	var command = ''
+	var data = ''
+	var parts = message.split(" ", false, 1)
+	var prefix = parts[0]
+	var dict_string = parts[1]
 
+	# Convert string to actual Dictionary using JSON
+	# First, replace single quotes with double quotes for JSON compatibility
+	dict_string = dict_string.replace("'", '"')
+	var data_dict = JSON.parse_string(dict_string)
 
-func handle_gmcp(int_data: Array[int]) -> void:
+	#print(prefix)     
+	#print(data_dict)  
+	match prefix:
+		'Client.Media.Play':
+			var sfx = load("res://audio/sfx/"+data_dict['name'])
+			SFX_MAN.stream = sfx
+			SFX_MAN.play()
+	
+func extract_gmcp(int_data: Array[int]) -> void:
 	var start := 0                      
 	var segment := []
 	for i in int_data:
 		if i == SE:         
 			var data = PackedByteArray(segment).get_string_from_utf8()
 			DEBUG.append_text(data+'\n')
+			handle_gmcp(data)
 			segment = []
 		else:
 			segment.append(i)
@@ -103,7 +124,7 @@ func _process(_delta):
 
 			# print subnegotiation
 			if int_subnegotiation.size() > 0:
-				handle_gmcp(int_subnegotiation)
+				extract_gmcp(int_subnegotiation)
 
 			var message = _message.get_string_from_utf8()
 			OUTPUT.get_message(message)
@@ -119,8 +140,11 @@ func _process(_delta):
 		set_process(false)
 
 func _on_input_submitted(text: String) -> void:
-	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN and text.strip_edges() != "":
-		socket.send_text(text)
-		INPUT.select_all()
+	# and text.strip_edges() != ""
+	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
+		socket.send_text(text.strip_edges())
+		OUTPUT.append_text('>'+text+'\n')
+		#INPUT.select_all()
+		INPUT.clear()
 	else:
 		print("Socket not ready or input was empty.")
