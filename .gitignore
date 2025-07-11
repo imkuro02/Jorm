@@ -1,5 +1,6 @@
 server/server.crt
 server/server.key
+godot_client/export
 */database.db
 server/logs.log
 

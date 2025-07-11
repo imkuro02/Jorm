@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://flfy2vf3hr7f"
+path="res://.godot/imported/N A W A K - TRIAL.mp3-77dd317f340b9d235ff674c7425bea86.mp3str"
+
+[deps]
+
+source_file="res://audio/music/N A W A K - TRIAL.mp3"
+dest_files=["res://.godot/imported/N A W A K - TRIAL.mp3-77dd317f340b9d235ff674c7425bea86.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
