@@ -22,16 +22,24 @@ class UpdateChecker:
     
 
     def tick_show_actors(self):
-        output = ''
+        if not self.actor.factory.ticks_passed % 30/10 == 0:
+            return
+        
+        output = 'Entities:\n'
         _list = self.actor.room.actors.values()
 
         for par in _list:
             if par == self.actor: 
                 continue
-            output = output + par.prompt()+par.pretty_name()+'\n'
+            output = output + par.pretty_name()+'\n'+par.prompt()+'\n'
+        
         
         output = output[:-1] if output.endswith("\n") else output
-        self.actor.protocol.send_gmcp({'actors':output}, 'Actors')
+        #output = output + self.actor.get_affects(self.actor)
+        output = utils.add_color(output)
+        #output = {"actors":output}
+        
+        self.actor.protocol.send_gmcp(output, 'Actors')
 
 
     def tick_show_map(self):
@@ -126,7 +134,7 @@ class UpdateChecker:
             self.protocol.send_gmcp(_grid,'Map')
 
     def tick(self):
-        return
+        #return
         self.tick_show_actors()
         
 class Player(Actor):

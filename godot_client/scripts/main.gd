@@ -9,6 +9,7 @@ var socket = WebSocketPeer.new()
 @onready var INPUT = $canvas/HBoxContainer/input_output/input
 @onready var OUTPUT = $canvas/HBoxContainer/input_output/HBoxContainer/output
 @onready var DEBUG = $canvas/HBoxContainer/input_output/HBoxContainer/debug
+@onready var ACTORS_OUTPUT = $canvas/HBoxContainer/Control/actors_output
 @onready var SFX_MAN = $sfx_manager
 
 
@@ -44,7 +45,7 @@ func _ready():
 	INPUT.text_submitted.connect(_on_input_submitted)
 
 	# Connect to WebSocket server
-	var err = socket.connect_to_url(websocket_url)
+	var err = socket.connect_to_url(websocket_url_local)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
@@ -54,25 +55,75 @@ func _ready():
 		socket.send(PackedByteArray([IAC,DO,GMCP]))
 		#socket.send_text("Test packet")
 
+func string_to_dict(source: String) -> Dictionary:
+	var result := {}
+
+	# Remove outer braces and whitespace
+	source = source.strip_edges()
+	if source.begins_with("{") and source.ends_with("}"):
+		source = source.substr(1, source.length() - 2)
+	else:
+		return result
+
+	var pairs = source.split(",", false)
+
+	for pair in pairs:
+		pair = pair.strip_edges()
+		var kv = pair.split(":", false)
+		if kv.size() != 2:
+			continue
+
+		var key = kv[0].strip_edges().replace("'","")
+		var value = kv[1].strip_edges()
+
+		# Remove optional quotes from keys
+		#key = key.replace("'",'"')
+
+
+		# Parse value
+		var val = parse_value(value)
+		result[key] = val
+
+	return result
+
+func parse_value(val: String) -> Variant:
+	val = val.strip_edges()
+	if val == "true":
+		return true
+	elif val == "false":
+		return false
+	elif (val.begins_with("'") and val.ends_with("'")) or (val.begins_with('"') and val.ends_with('"')):
+		return val.substr(1, val.length() - 2)# Remove quotes
+	else:
+		return val  # fallback: return as string
+
+		
 func handle_gmcp(message: String):
 	var command = ''
 	var data = ''
 	var parts = message.split(" ", false, 1)
+	if len(parts) <= 1:
+		return
 	var prefix = parts[0]
 	var dict_string = parts[1]
 
 	# Convert string to actual Dictionary using JSON
 	# First, replace single quotes with double quotes for JSON compatibility
-	dict_string = dict_string.replace("'", '"')
-	var data_dict = JSON.parse_string(dict_string)
+	#dict_string = dict_string.replace("'", '"')
 
-	#print(prefix)     
+	var data_dict = string_to_dict(dict_string)
+	print('d',data_dict)
+	print(dict_string)     
 	#print(data_dict)  
 	match prefix:
 		'Client.Media.Play':
 			var sfx = load("res://audio/sfx/"+data_dict['name'])
 			SFX_MAN.stream = sfx
 			SFX_MAN.play()
+		'Actors':
+			ACTORS_OUTPUT.set_text("")
+			ACTORS_OUTPUT.clear()
+			ACTORS_OUTPUT.get_message(dict_string)
 	
 func extract_gmcp(int_data: Array[int]) -> void:
 	var start := 0                      

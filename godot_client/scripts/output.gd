@@ -1,7 +1,6 @@
 extends RichTextLabel
 
 
-@onready var OUTPUT = self
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,8 +13,8 @@ func _process(delta):
 
 func get_message(message):
 	
-	OUTPUT.append_text(add_ansi_text(message))
-	OUTPUT.scroll_following = true
+	self.append_text(add_ansi_text(message))
+	self.scroll_following = true
 	
 func add_ansi_text(ansi_text: String) -> String:
 	var ansi_to_fg = {

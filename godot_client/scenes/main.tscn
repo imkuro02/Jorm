@@ -37,8 +37,26 @@ custom_minimum_size = Vector2(224, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="Control" type="Control" parent="canvas/HBoxContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+
+[node name="actors_output" type="RichTextLabel" parent="canvas/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.017
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = -0.100037
+offset_bottom = -48.0
+bbcode_enabled = true
+text = "fdsafdsa
+"
+script = ExtResource("3_gkcnj")
+
 [node name="input_output" type="Control" parent="canvas/HBoxContainer"]
-custom_minimum_size = Vector2(850, 0)
+custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 
 [node name="input" type="LineEdit" parent="canvas/HBoxContainer/input_output"]
