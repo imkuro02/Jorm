@@ -288,7 +288,7 @@ class Actor:
             t.add_data(StatType.name[StatType.EXP][:3]+':')
             xp = self.stat_manager.stats[StatType.EXP]
             mxp = self.get_exp_needed_to_level()
-            t.add_data(utils.progress_bar(20,xp,mxp,'@yellow',1))
+            t.add_data(utils.progress_bar(20,xp,mxp,'@purple',1))
             t.add_data(StatType.name[StatType.PP][:4]+':')
             t.add_data(self.stat_manager.stats[StatType.PP])
 
@@ -433,8 +433,7 @@ class Actor:
             return
         
         self.room.combat.next_turn()
-        
-    
+
     def set_turn(self):
         
         if self.room == None:
@@ -446,16 +445,15 @@ class Actor:
         if type(self).__name__ == "Player":
             output = f'@yellowYour turn.@normal'
             self.sendLine(output)
-
             par = self
             
             output = par.prompt()+par.pretty_name() + '\n'
+            _list = self.room.combat.participants.values()
 
-            for par in self.room.combat.participants.values():
+            for par in _list:
                 if par == self: 
                     continue
                 output = output + par.prompt()+par.pretty_name()+'\n'
-            
             
             output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)

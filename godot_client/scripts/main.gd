@@ -6,9 +6,9 @@ extends Control
 var socket = WebSocketPeer.new()
 
 # References to UI nodes
-@onready var INPUT = $canvas/input
-@onready var OUTPUT = $canvas/HBoxContainer/output
-@onready var DEBUG = $canvas/HBoxContainer/debug
+@onready var INPUT = $canvas/HBoxContainer/input_output/input
+@onready var OUTPUT = $canvas/HBoxContainer/input_output/HBoxContainer/output
+@onready var DEBUG = $canvas/HBoxContainer/input_output/HBoxContainer/debug
 @onready var SFX_MAN = $sfx_manager
 
 
@@ -104,6 +104,18 @@ func _process(_delta):
 			var doing_sb = false
 			for idx in range(_message.size()):
 				var i = _message[idx]
+				
+				
+				# a very dirty hack
+				# if byte 70 (which is both MSSP and letter F) check if its somehow related to a subnegotiation
+				# by checking previous byte, if not then skip this otherwise the letter F will get dropped
+				var skip = false
+				if idx != 0:
+					if _message[idx] == 70 and _message[idx-1] not in [IAC, SB, SE, DO, DONT, WILL, WONT]:
+						skip = true
+				if skip:
+					continue
+						
 				if i in telnet_stuff:
 					if i == SB:
 						doing_sb = true
@@ -119,7 +131,7 @@ func _process(_delta):
 			DEBUG.append_text('\n')
 
 			# Second pass: remove collected indices, from back to front
-			to_remove.sort()
+			#to_remove.sort()
 			to_remove.reverse()
 			for idx in to_remove:
 				_message.remove_at(idx)
@@ -130,6 +142,7 @@ func _process(_delta):
 
 			var message = _message.get_string_from_utf8()
 			OUTPUT.get_message(message)
+			
 			
 
 	elif state == WebSocketPeer.STATE_CLOSING:
@@ -145,8 +158,9 @@ func _on_input_submitted(text: String) -> void:
 	# and text.strip_edges() != ""
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
 		socket.send_text(text.strip_edges())
-		OUTPUT.append_text('>'+text+'\n')
-		#INPUT.select_all()
-		INPUT.clear()
+		#OUTPUT.append_text('>'+text+'\n')
+		
+		INPUT.select_all()
+		#INPUT.clear()
 	else:
 		print("Socket not ready or input was empty.")

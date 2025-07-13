@@ -486,5 +486,20 @@ commands:
     related:
       - indexes
       - look
+  go:
+    group: other
+    syntax:
+      - go <exit>
+    description: |
+      You can move from room to room via exits.
+      You use the go command and specify an exit like so: "go west".
+      
+      Directions like NORTH EAST SOUTH WEST UP and DOWN will work 
+      without the "go" command.
+
+      Likewise N E S W U and D will also function as valid exits if present.
+    related:
+      - look
+      - map
 
 

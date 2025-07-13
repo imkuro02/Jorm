@@ -18,9 +18,23 @@ class UpdateChecker:
         self.protocol = actor.protocol
 
         self.last_room = None
-        
 
-    def tick(self):
+    
+
+    def tick_show_actors(self):
+        output = ''
+        _list = self.actor.room.actors.values()
+
+        for par in _list:
+            if par == self.actor: 
+                continue
+            output = output + par.prompt()+par.pretty_name()+'\n'
+        
+        output = output[:-1] if output.endswith("\n") else output
+        self.actor.protocol.send_gmcp({'actors':output}, 'Actors')
+
+
+    def tick_show_map(self):
         if self.last_room != self.actor.room:
             self.last_room = self.actor.room
             offsets = {
@@ -45,7 +59,6 @@ class UpdateChecker:
                     continue
                 if _exit.item_required != None:
                     continue
-                # do not duplicate if room leads to one that already is placed
                 if _exit.to_room_id in grid.values():
                     continue
 
@@ -71,7 +84,7 @@ class UpdateChecker:
                 
             for r in range(0,VIEW_RANGE*1):
                 for room_loc in _grid:
-                    #print(_grid[room_loc])
+
                     if grid[room_loc] == 'PATH':
                         continue
 
@@ -89,23 +102,13 @@ class UpdateChecker:
                             continue
                         if _exit.secret:
                             continue
-                        #if _exit.item_required != None:
-                        #    continue
-                        
-                        # do not duplicate if room leads to one that already is placed
-                        #if _exit.to_room_id in grid.values():
-                        #    continue
         
-                        x = _x + offsets[_exit.direction][0] #+ VIEW_RANGE
-                        y = _y + offsets[_exit.direction][1] #+ VIEW_RANGE
+                        x = _x + offsets[_exit.direction][0] 
+                        y = _y + offsets[_exit.direction][1] 
                         z = _z + offsets[_exit.direction][2] 
                         _loc = f'{x},{y},{z}'
                
 
-                        #if _loc not in grid:
-                        #    continue
-
-                        #print(_exit.to_room_id, grid.values())
                         if _loc not in grid:
                             grid[_loc] = _exit.to_room_id
 
@@ -113,9 +116,18 @@ class UpdateChecker:
                 for r in grid:
                     _grid[r] = grid[r]
 
+            for r in _grid:
+                room = self.actor.room.world.rooms[_grid[r]]
+                exits = []
+                for e in room.exits:
+                    exits.append({'direction':e.direction})
+                _grid[r] = {'id': 0, 'name': room.name, 'exits': exits}
+
             self.protocol.send_gmcp(_grid,'Map')
 
-
+    def tick(self):
+        return
+        self.tick_show_actors()
         
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
