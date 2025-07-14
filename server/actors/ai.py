@@ -7,6 +7,30 @@ from configuration.config import StatType, SKILLS
 class AI:
     def __init__(self, actor):
         self.actor = actor
+        self.prediction_target = None
+        self.prediction_skill = None
+
+    def prediction_is_set(self):
+        if self.prediction_target == None or self.prediction_skill == None:
+            return False
+        return True
+
+    def get_prediction_string(self, who_checks):
+        if type(self.actor).__name__ == 'Player':
+            if self.actor.status == ActorStatusType.DEAD:
+                line = random.choice(['is cooked','wont get up anytime soon','rests in peace'])
+            else:
+                line = random.choice(['is angry','will do something maybe','will win probably','wont lose','is ready to kill'])
+            return f'{line}'
+        if not self.prediction_is_set():
+            return 'will do nothing'
+        if self.prediction_target == self.actor:
+            return f'will use {SKILLS[self.prediction_skill]["name"]}'
+        elif self.prediction_target == who_checks:
+            return f'will use {SKILLS[self.prediction_skill]["name"]} on you'
+        else:
+            return f'will use {SKILLS[self.prediction_skill]["name"]} on {self.prediction_target.pretty_name()}'
+
 
     def get_targets(self):
         actors = self.actor.room.combat.participants.values()
@@ -19,17 +43,86 @@ class AI:
                     and actor.status == ActorStatusType.FIGHTING    ]
         return allies, enemies
 
-    def get_skills(self):
+    def get_skills(self, for_prediction = False):
         
         #s['script_values']['cooldown'][level]
-        skills = [  skill_id for skill_id in self.actor.skill_manager.skills
-                    if skill_id not in self.actor.cooldown_manager.cooldowns 
-                    and self.actor.skill_manager.skills[skill_id] >= 1]
+        #skills = [  skill_id for skill_id in self.actor.skill_manager.skills
+        #            skill_id not in self.actor.cooldown_manager.cooldowns
+        #            and self.actor.skill_manager.skills[skill_id] >= 1]
 
+        skills = []
+        # if for prediction is true, be able to pick skills that are available NEXT TURN
+        for skill_id in self.actor.skill_manager.skills:
+            if skill_id in self.actor.cooldown_manager.cooldowns:
+                if for_prediction and self.actor.cooldown_manager.cooldowns[skill_id] > 1:
+                    #print('WHAT,,',self.actor.cooldown_manager.cooldowns[skill_id])
+                    continue
+                if not for_prediction:
+                    #print('not for prediction!_')
+                    continue
+            if self.actor.skill_manager.skills[skill_id] <= 0:
+                #print('WHAT')
+                continue
+            skills.append(skill_id)
         return skills
                     
+    def use_prediction(self):
+        if use_skill(self.actor, self.prediction_target, self.prediction_skill):
+            self.actor.finish_turn()
+            return True
 
+        self.actor.simple_broadcast('You do nothing.', f'{self.actor.pretty_name()} does nothing.')
+        self.actor.finish_turn()
 
+    def predict_use_best_skill(self, offensive_only = False):
+        self.prediction_target = None
+        self.prediction_skill = None
+        
+        if self.actor.room.combat == None:
+            return False
+        
+        allies, enemies = self.get_targets()
+        skills = self.get_skills(for_prediction = True)
+        #print(self.actor.name,skills)
+        # try to use a skill 5 times, if it fails return false
+        # return true if you managed to use a skill
+        for i in range(0,20):
+            
+            if skills == []:
+                break
+
+            skill_to_use = random.choice(skills)
+
+            targets = []
+
+            if offensive_only:
+                if not SKILLS[skill_to_use]['is_offensive']:
+                    continue
+
+            if 'swing' == skill_to_use and i<15:
+                continue
+
+            if i>15:
+                skill_to_use = 'swing'
+
+            if SKILLS[skill_to_use]['is_offensive']:
+                targets = enemies
+            else:
+                targets = allies
+
+            if targets == []:
+                continue
+
+            #target = random.choice(targets)
+            target = random.choice(targets)
+            for t in targets:
+                if t.stat_manager.stats[StatType.THREAT] > target.stat_manager.stats[StatType.THREAT]:
+                    target = t
+            
+            self.prediction_target = target
+            self.prediction_skill = skill_to_use
+            return True
+        return False
 
     def use_best_skill(self, offensive_only = False):
         if self.actor.room.combat == None:
@@ -122,7 +215,8 @@ class EnemyAI(AI):
         if not super().tick():
             return
         
-        self.use_best_skill()
+        self.use_prediction()
+        
         
 class SlimeAI(AI):
     def tick(self):
@@ -142,7 +236,7 @@ class SlimeAI(AI):
             clone.room.join_combat(clone)
             self.actor.finish_turn()
         else:
-            self.use_best_skill()
+            self.use_prediction()
 
 class CowardAI(AI):
     def tick(self):
@@ -165,7 +259,7 @@ class CowardAI(AI):
                 self.actor.finish_turn()
                 return
                 
-        self.use_best_skill()
+        self.use_prediction()
 
 class BossRatAI(AI):
     def __init__(self, actor):
@@ -210,7 +304,7 @@ class BossRatAI(AI):
             self.actor.finish_turn()
             return
             
-        self.use_best_skill()
+        self.use_prediction()
         
         return
 

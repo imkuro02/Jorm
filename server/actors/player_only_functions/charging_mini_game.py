@@ -115,11 +115,6 @@ class ChargingMiniGame:
                     self.owner.sendLine(f'Your inventory is full, {new_item.name} has been dropped on the ground')
                     self.owner.room.inventory_manager.add_item(new_item)
            
-
-
-
-        
-
     def start(self):
         if self.tick_since_prayer_end + (30*3) - self.owner.factory.ticks_passed >= 0:
             self.owner.sendLine('You just prayed and need a moment to reflect')

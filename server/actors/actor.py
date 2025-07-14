@@ -447,13 +447,14 @@ class Actor:
             self.sendLine(output)
             par = self
             
-            output = par.prompt()+par.pretty_name() + '\n'
+            output = par.prompt()+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
             _list = self.room.combat.participants.values()
 
             for par in _list:
                 if par == self: 
                     continue
-                output = output + par.prompt()+par.pretty_name()+'\n'
+
+                output += par.prompt()+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
             
             output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)

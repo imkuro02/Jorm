@@ -258,6 +258,8 @@ class Combat:
         #if len(self.order) == 0:
         #    self.combat_over()
         #    return
+        for par in self.participants.values():
+            par.ai.predict_use_best_skill()
 
         self.next_turn()
         #self.current_actor = self.order[0]

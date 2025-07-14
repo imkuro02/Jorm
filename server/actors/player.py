@@ -223,7 +223,12 @@ class Player(Actor):
             
         if color:
             #start = time.time()
+            
+            # this line is responsible for making the length of text 28 chars or smth
             line = utils.add_line_breaks(line)
+            
+            
+            
             #print((time.time()-start)*1000)
             line = utils.add_color(line)
             #line += f'\n'
