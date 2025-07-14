@@ -1,5 +1,5 @@
 {
-    "SHA-256": "c49db94a41aeba0ce1eb59d6132e870b19920b591d89153540080c4d1f62ab6c",
+    "SHA-256": "b8f6acdf262b30662c9ad4d1dbba21d86ca38cc042872a11d37aa176b5fc8d25",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3469,6 +3469,170 @@
                     1.5
                 ]
             }
+        },
+        "bless_grit": {
+            "skill_id": "bless_grit",
+            "name": "Bless Grit",
+            "description": "Boost GRIT by BONUS\n",
+            "script_to_run": "BoostStatGrit",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "must_be_fighting": false,
+            "can_be_practiced": true,
+            "practice_cost": 5,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_cure_light_wounds",
+                "you on you": "You pray for yourself",
+                "you on other": "You pray for #OTHER#",
+                "user on user": "#USER# prays for themselves",
+                "user on you": "#USER# prays for you",
+                "user on other": "#USER# prays for #OTHER#",
+                "you on you fail": "You lose concentration while praying for yourself",
+                "you on other fail": "You lose concentration while praying for #OTHER#",
+                "user on user fail": "#USER# loses their concentration while praying for themselves",
+                "user on you fail": "#USER# loses their concentration while praying for you",
+                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
+            },
+            "is_offensive": 0.0,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "duration": [
+                    10
+                ],
+                "bonus": [
+                    0.1
+                ],
+                "cooldown": [
+                    1
+                ]
+            }
+        },
+        "bless_flow": {
+            "skill_id": "bless_flow",
+            "name": "Bless Flow",
+            "description": "Boost FLOW by BONUS\n",
+            "script_to_run": "BoostStatFlow",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "must_be_fighting": false,
+            "can_be_practiced": true,
+            "practice_cost": 5,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_cure_light_wounds",
+                "you on you": "You pray for yourself",
+                "you on other": "You pray for #OTHER#",
+                "user on user": "#USER# prays for themselves",
+                "user on you": "#USER# prays for you",
+                "user on other": "#USER# prays for #OTHER#",
+                "you on you fail": "You lose concentration while praying for yourself",
+                "you on other fail": "You lose concentration while praying for #OTHER#",
+                "user on user fail": "#USER# loses their concentration while praying for themselves",
+                "user on you fail": "#USER# loses their concentration while praying for you",
+                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
+            },
+            "is_offensive": 0.0,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "duration": [
+                    10
+                ],
+                "bonus": [
+                    0.1
+                ],
+                "cooldown": [
+                    1
+                ]
+            }
+        },
+        "bless_mind": {
+            "skill_id": "bless_mind",
+            "name": "Bless Mind",
+            "description": "Boost MIND by BONUS\n",
+            "script_to_run": "BoostStatMind",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "must_be_fighting": false,
+            "can_be_practiced": true,
+            "practice_cost": 5,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_cure_light_wounds",
+                "you on you": "You pray for yourself",
+                "you on other": "You pray for #OTHER#",
+                "user on user": "#USER# prays for themselves",
+                "user on you": "#USER# prays for you",
+                "user on other": "#USER# prays for #OTHER#",
+                "you on you fail": "You lose concentration while praying for yourself",
+                "you on other fail": "You lose concentration while praying for #OTHER#",
+                "user on user fail": "#USER# loses their concentration while praying for themselves",
+                "user on you fail": "#USER# loses their concentration while praying for you",
+                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
+            },
+            "is_offensive": 0.0,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "duration": [
+                    10
+                ],
+                "bonus": [
+                    0.1
+                ],
+                "cooldown": [
+                    1
+                ]
+            }
+        },
+        "bless_soul": {
+            "skill_id": "bless_soul",
+            "name": "Bless Soul",
+            "description": "Boost SOUL by BONUS\n",
+            "script_to_run": "BoostStatSoul",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "must_be_fighting": false,
+            "can_be_practiced": true,
+            "practice_cost": 5,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_cure_light_wounds",
+                "you on you": "You pray for yourself",
+                "you on other": "You pray for #OTHER#",
+                "user on user": "#USER# prays for themselves",
+                "user on you": "#USER# prays for you",
+                "user on other": "#USER# prays for #OTHER#",
+                "you on you fail": "You lose concentration while praying for yourself",
+                "you on other fail": "You lose concentration while praying for #OTHER#",
+                "user on user fail": "#USER# loses their concentration while praying for themselves",
+                "user on you fail": "#USER# loses their concentration while praying for you",
+                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
+            },
+            "is_offensive": 0.0,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "duration": [
+                    10
+                ],
+                "bonus": [
+                    0.1
+                ],
+                "cooldown": [
+                    1
+                ]
+            }
         }
     },
     "items": {
@@ -4020,6 +4184,98 @@
             },
             "item_type": "consumable",
             "random_drop_lvl": 6
+        },
+        "blessing_of_grit": {
+            "premade_id": "blessing_of_grit",
+            "name": "Blessing of Grit",
+            "description": "A physical blessing, how queer",
+            "skills": [
+                "bless_grit"
+            ],
+            "use_perspectives": {
+                "use_case_name": "use_scroll",
+                "you on you": "You recite the scroll",
+                "you on other": "You recite the scroll at #OTHER#",
+                "user on user": "#USER# recites a scroll",
+                "user on you": "#USER# recites a scroll at you",
+                "user on other": "#USER# recites the scroll at #OTHER#",
+                "you on you fail": "You choke on your words as you recite the scroll",
+                "you on other fail": "You choke on your words as you recite the scroll",
+                "user on user fail": "#USER# chokes on their words as they recite the scroll",
+                "user on you fail": "#USER# chokes on their words as they recite the scroll",
+                "user on other fail": "#USER# chokes on their words as they recite the scroll"
+            },
+            "item_type": "consumable",
+            "random_drop_lvl": -10
+        },
+        "blessing_of_flow": {
+            "premade_id": "blessing_of_flow",
+            "name": "Blessing of Flow",
+            "description": "A physical blessing, how queer",
+            "skills": [
+                "bless_flow"
+            ],
+            "use_perspectives": {
+                "use_case_name": "use_scroll",
+                "you on you": "You recite the scroll",
+                "you on other": "You recite the scroll at #OTHER#",
+                "user on user": "#USER# recites a scroll",
+                "user on you": "#USER# recites a scroll at you",
+                "user on other": "#USER# recites the scroll at #OTHER#",
+                "you on you fail": "You choke on your words as you recite the scroll",
+                "you on other fail": "You choke on your words as you recite the scroll",
+                "user on user fail": "#USER# chokes on their words as they recite the scroll",
+                "user on you fail": "#USER# chokes on their words as they recite the scroll",
+                "user on other fail": "#USER# chokes on their words as they recite the scroll"
+            },
+            "item_type": "consumable",
+            "random_drop_lvl": -10
+        },
+        "blessing_of_mind": {
+            "premade_id": "blessing_of_mind",
+            "name": "Blessing of Mind",
+            "description": "A physical blessing, how queer",
+            "skills": [
+                "bless_mind"
+            ],
+            "use_perspectives": {
+                "use_case_name": "use_scroll",
+                "you on you": "You recite the scroll",
+                "you on other": "You recite the scroll at #OTHER#",
+                "user on user": "#USER# recites a scroll",
+                "user on you": "#USER# recites a scroll at you",
+                "user on other": "#USER# recites the scroll at #OTHER#",
+                "you on you fail": "You choke on your words as you recite the scroll",
+                "you on other fail": "You choke on your words as you recite the scroll",
+                "user on user fail": "#USER# chokes on their words as they recite the scroll",
+                "user on you fail": "#USER# chokes on their words as they recite the scroll",
+                "user on other fail": "#USER# chokes on their words as they recite the scroll"
+            },
+            "item_type": "consumable",
+            "random_drop_lvl": -10
+        },
+        "blessing_of_soul": {
+            "premade_id": "blessing_of_soul",
+            "name": "Blessing of Soul",
+            "description": "A physical blessing, how queer",
+            "skills": [
+                "bless_soul"
+            ],
+            "use_perspectives": {
+                "use_case_name": "use_scroll",
+                "you on you": "You recite the scroll",
+                "you on other": "You recite the scroll at #OTHER#",
+                "user on user": "#USER# recites a scroll",
+                "user on you": "#USER# recites a scroll at you",
+                "user on other": "#USER# recites the scroll at #OTHER#",
+                "you on you fail": "You choke on your words as you recite the scroll",
+                "you on other fail": "You choke on your words as you recite the scroll",
+                "user on user fail": "#USER# chokes on their words as they recite the scroll",
+                "user on you fail": "#USER# chokes on their words as they recite the scroll",
+                "user on other fail": "#USER# chokes on their words as they recite the scroll"
+            },
+            "item_type": "consumable",
+            "random_drop_lvl": -10
         },
         "beer_stein": {
             "premade_id": "beer_stein",

@@ -210,3 +210,20 @@ class AffectAdrenaline(Affect):
         self.actor.stat_manager.stats[StatType.HP] -=    self.hp
         self.actor.stat_manager.hp_mp_clamp_update()
         return super().on_finished(silent)
+
+class AffectBoostStat(Affect):
+    def __init__(self, affect_manager, name, description, turns, bonus, stat):
+        super().__init__(affect_manager, name, description, turns)
+        self.bonus = bonus
+        self.stat = stat
+        self.new_stat = 0
+
+    def on_applied(self):
+        super().on_applied()
+        self.new_stat = int( self.actor.stat_manager.stats[self.stat] * self.bonus )
+        self.actor.stat_manager.stats[self.stat] += self.new_stat
+
+    def on_finished(self, silent=False):
+        self.actor.stat_manager.stats[self.stat] -= self.new_stat
+        self.actor.stat_manager.hp_mp_clamp_update()
+        return super().on_finished(silent)

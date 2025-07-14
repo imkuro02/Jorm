@@ -1,7 +1,7 @@
 from actors.player_only_functions.checks import check_not_in_combat
-
+from configuration.config import StatType
 import random
-
+from items.manager import load_item
 
 
 class ChargingMiniGame:
@@ -59,7 +59,7 @@ class ChargingMiniGame:
         self.charging = False
 
         self.ticks_to_seconds = 30
-        self.ticks_for_charge = 5 * self.ticks_to_seconds
+        self.ticks_for_charge = 3 * self.ticks_to_seconds
 
         self.line_id = 0
 
@@ -69,13 +69,14 @@ class ChargingMiniGame:
         self.tick_since_prayer_end = 0
     
     def fail(self):
-        self.owner.sendLine(random.choice(self.LINES_FAIL))
-        self.ticks_passed = - self.ticks_for_charge
-        self.charges -= 1
+        self.owner.sendLine('@bad'+random.choice(self.LINES_FAIL)+'@normal')
+        #self.ticks_passed = - self.ticks_for_charge
+        self.ticks_passed = 0
+        self.charges -= 0
 
     def success(self):
         self.charges += 1
-        self.owner.sendLine(random.choice(self.LINES_SUCCESS))
+        self.owner.sendLine('@good'+random.choice(self.LINES_SUCCESS)+'@normal')
         self.ticks_passed = 0
         
 
@@ -88,7 +89,35 @@ class ChargingMiniGame:
         self.charging = False
         if self.charges <= 0:
             self.charges = 0
+            return
         self.owner.gain_exp(self.charges)
+        return
+        rewards = []
+        for i in range(0,self.charges):
+            loot = {
+                "blessing_of_grit": 10,
+                "blessing_of_flow": 10,
+                "blessing_of_mind": 10,
+                "blessing_of_soul": 10,
+                "translucent scroll": 100,
+            }
+            for item in loot: 
+                if loot[item] != 1:
+                    roll = random.randrange(1,loot[item])
+                    if roll != 1:
+                        continue
+
+                new_item = load_item(item)
+
+                if self.owner.inventory_manager.add_item(new_item):   
+                    self.owner.sendLine(f'You get rewarded with {new_item.name} (1 in {loot[item]} chance)')
+                else:
+                    self.owner.sendLine(f'Your inventory is full, {new_item.name} has been dropped on the ground')
+                    self.owner.room.inventory_manager.add_item(new_item)
+           
+
+
+
         
 
     def start(self):
@@ -111,9 +140,11 @@ class ChargingMiniGame:
 
     def charge(self):
         #charge_tick_amount = self.ticks_passed / self.ticks_to_seconds
-        
-        roll = random.randint(0,10)
-        if roll > self.charges:
+        myrandom = random.Random()
+        lvl = self.owner.stat_manager.stats[StatType.LVL]
+        soul = self.owner.stat_manager.stats[StatType.SOUL]
+        roll = myrandom.randint(0,100)
+        if roll <= 50:
             self.success()
         else:
             self.fail()

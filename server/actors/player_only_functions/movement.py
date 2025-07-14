@@ -1,6 +1,7 @@
 from actors.player_only_functions.checks import check_not_in_party, check_not_in_party_or_is_party_leader, check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
 from configuration.config import ActorStatusType, Audio, ITEMS
-
+from affects.affects import Affect
+import random
 @check_not_in_party_or_is_party_leader
 @check_your_turn
 def command_flee(self, line):
@@ -89,6 +90,15 @@ def command_go(self, line):
             f'{self.pretty_name()} walks into a wall',
             sound = Audio.ERROR, send_to = 'room'
             ) 
+        roll = random.randint(0,100)
+        if roll == 0:
+            aff = Affect(
+                affect_manager=self.affect_manager,
+                name='Bumpy',
+                description='You have a large stupid bump on your head', 
+                turns=100
+                )
+            self.affect_manager.set_affect_object(aff)
         return
         
     if direction.blocked and self.room.is_enemy_present():
