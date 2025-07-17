@@ -354,14 +354,21 @@ class Actor:
         self.status = ActorStatusType.DEAD
 
         sound = Audio.ENEMY_DEATH
+
         if type(self).__name__ == "Player":
             sound = Audio.PLAYER_DEATH
+        else:
+            sound = Audio.ENEMY_DEATH
+            
 
         self.simple_broadcast(
                 f'@redYou died@normal "help rest"',
                 f'{self.pretty_name()} has died',
                 sound = sound
                 )
+        
+        if type(self).__name__ == 'Player':
+            self.gain_exp(-int(self.stat_manager.stats[StatType.EXP]*0.1))
         
         if self.room.combat != None:
             if self.room.combat.current_actor == self:

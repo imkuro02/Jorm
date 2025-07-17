@@ -157,10 +157,9 @@ def rest_now(self, line):
     
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL
-        
 
-        self.stat_manager.stats[StatType.HP] = self.stat_manager.stats[StatType.HPMAX]
-        self.stat_manager.stats[StatType.MP] = self.stat_manager.stats[StatType.MPMAX]
+        self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX]*0.3)
+        self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX]*0.3)
 
         self.simple_broadcast(
             'You ressurect',
@@ -180,9 +179,6 @@ def rest_now(self, line):
             None,
             f'{self.pretty_name()} has ressurected')
     else:
-
-        self.stat_manager.stats[StatType.HP] = self.stat_manager.stats[StatType.HPMAX]
-        self.stat_manager.stats[StatType.MP] = self.stat_manager.stats[StatType.MPMAX]
 
         if self.room.id == self.recall_site:
             self.simple_broadcast(
@@ -209,6 +205,11 @@ def rest_now(self, line):
                 None,
                 f'{self.pretty_name()} has returned to rest'
                 )
+                
+    if self.stat_manager.stats[StatType.HP] <= self.stat_manager.stats[StatType.HPMAX]*0.3:
+        self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX]*0.3)
+    if self.stat_manager.stats[StatType.MP] <= self.stat_manager.stats[StatType.MPMAX]*0.3:
+        self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX]*0.3)
     self.affect_manager.unload_all_affects()
 
 @check_not_in_combat

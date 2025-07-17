@@ -5,6 +5,8 @@ import random
 @check_not_in_party_or_is_party_leader
 @check_your_turn
 def command_flee(self, line):
+    self.sendLine('@redFleeing is temporarely disabled in game sorry...@normal')
+    return
     '''
     if self.room.combat == None:
         self.sendLine('You are not in combat, you don\'t need to flee')
@@ -150,6 +152,24 @@ def command_go(self, line):
                 par.new_room_look()
     else:
         self.new_room_look()
+
+    yes_npcs = False
+    yes_enemies = False
+    for actor in self.room.actors.values():
+        if type(actor).__name__ == 'Npc':
+            yes_npcs = True 
+        if type(actor).__name__ == 'Enemy':
+            yes_enemies = True 
+
+    if yes_enemies and not yes_npcs:
+        roll = random.randint(0,5)
+        if roll == 1:
+            if self.party_manager.party != None:
+                if self.party_manager.party.actor == self:
+                    self.command_fight('')
+            else:
+                self.command_fight('')
+
 
 
 

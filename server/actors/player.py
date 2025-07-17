@@ -244,8 +244,14 @@ class Player(Actor):
 
     def gain_exp(self, exp):
         exp = self.inventory_manager.gain_exp(exp)
+        exp = int(exp)
         self.stat_manager.stats[StatType.EXP] += exp
-        self.sendLine('You got: @yellow' + str(exp) + ' experience@back')
+        if self.stat_manager.stats[StatType.EXP] == 0:
+            self.stat_manager.stats[StatType.EXP] = 0
+        if exp <= 0:
+            self.sendLine('You lost: @bad' + str(abs(exp)) + ' experience@back')
+        else:
+            self.sendLine('You got: @yellow' + str(abs(exp)) + ' experience@back')
 
     def queue_handle(self, line):
         self.queued_lines.append(line)
