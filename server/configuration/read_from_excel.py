@@ -27,10 +27,11 @@ def read_from_ods_file():
     SHEET['skills'] =              read_ods(file_path, 'skills')
     SHEET['items_equipment'] =     read_ods(file_path, 'items_equipment')
     SHEET['items_misc'] =          read_ods(file_path, 'items_misc')
-    SHEET['items_scenery'] =          read_ods(file_path, 'items_scenery')
+    SHEET['items_scenery'] =       read_ods(file_path, 'items_scenery')
     SHEET['enemy_skills'] =        read_ods(file_path, 'enemy_skills')
     SHEET['loot'] =                read_ods(file_path, 'loot')
     SHEET['enemies'] =             read_ods(file_path, 'enemies')
+    SHEET['crafting_recipes'] =    read_ods(file_path, 'crafting_recipes')
     #SHEET['enemy_combat_loop'] =   read_ods(file_path, 'enemy_combat_loop')
     end = time.time()
     print(end - start,'LOADING OF CONFIG.ODS')
@@ -222,6 +223,26 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 },
                 'random_drop_lvl': int(x['random_drop_lvl'][index])
             }
+
+
+    '''
+    for row in SHEET['crafting_recipes']:
+        x = SHEET['crafting_recipes']
+
+        
+        for index in range(0, len(x[row])):
+            sheet = None
+            print(x['premade_id'][index])
+            if x['premade_id'][index] in SHEET['items_equipment']:
+                sheet = 'items_equipment'
+            if x['premade_id'][index] in SHEET['items_consumable']:
+                sheet = 'items_consumable'
+            if x['premade_id'][index] in SHEET['items_misc']:
+                sheet = 'items_misc'
+
+            SHEET[sheet][x['premade_id'][index]] = 1
+    '''
+
 
     end = time.time()
     print(end - start,'ITEMS')

@@ -5,8 +5,8 @@ import random
 @check_not_in_party_or_is_party_leader
 @check_your_turn
 def command_flee(self, line):
-    self.sendLine('@redFleeing is temporarely disabled in game sorry...@normal')
-    return
+    #self.sendLine('@redFleeing is temporarely disabled in game sorry...@normal')
+    #return
     '''
     if self.room.combat == None:
         self.sendLine('You are not in combat, you don\'t need to flee')
