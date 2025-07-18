@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_no_combat_in_room, check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
-from configuration.config import ItemType, StatType, Audio
+from configuration.config import ItemType, StatType, Audio, LORE
 import utils
 
 
@@ -344,3 +344,56 @@ def lower_item(self, item_id):
     if item_id in self.inventory_manager.items:
         value = self.inventory_manager.items.pop(item_id) # remove the keyvalue pair
         self.inventory_manager.items[item_id] = value     # reconstruct with the item last
+
+def command_craft(self, line):
+    line = line.split(',')
+    item_to_craft = line[0]
+    ingredients = line[1:]
+
+    list_of_items = [item for item in LORE['items']]
+    to_find = utils.match_word(item_to_craft, list_of_items)
+    
+    if to_find not in list_of_items:
+        self.sendLine('Can\'t craft that')
+        return
+
+    item_id = LORE['items'][to_find]['premade_id']
+    item_crafting_recipes = LORE['items'][to_find]['crafting_recipe_ingredients']
+        
+    recipe_to_use = None
+    ingredients_to_use = []
+    for item in range(0,len(ingredients)):
+        ingredients_to_use.append(self.get_item(ingredients[item]))
+
+    for recipe in item_crafting_recipes:
+        recipe_failed = False
+
+        if len(ingredients_to_use) != len(recipe):
+            continue
+
+        #print(ingredients_to_use, len(ingredients_to_use))
+        #print(recipe, len(recipe))
+        for index in range(0,len(recipe)):
+            if ingredients_to_use[index].premade_id != list(recipe)[index]:
+                recipe_failed = True
+
+        if recipe_failed:
+            continue
+
+        recipe_to_use = recipe
+
+
+    if recipe_to_use == None:
+        self.sendLine('Recipe not found, maybe ingredients were in the wrong order?')
+        return
+    
+    for index in range(0,len(recipe)):
+        if ingredients_to_use[index].stack < list(recipe.values())[index]: 
+            self.sendLine(f'Not enough {ingredients_to_use[index].name}')
+            return
+                
+
+    
+
+        
+
