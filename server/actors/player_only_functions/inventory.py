@@ -1,7 +1,7 @@
 from actors.player_only_functions.checks import check_no_combat_in_room, check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
 from configuration.config import ItemType, StatType, Audio, LORE
 import utils
-
+import items.manager as items
 
 @check_no_empty_line
 @check_not_in_combat
@@ -346,6 +346,11 @@ def lower_item(self, item_id):
         self.inventory_manager.items[item_id] = value     # reconstruct with the item last
 
 def command_craft(self, line):
+
+    if self.inventory_manager.item_free_space() < 1:
+        self.sendLine('You need atleast one empty inventory space to craft')
+        return
+        
     line = line.split(',')
     item_to_craft = line[0]
     ingredients = line[1:]
@@ -364,6 +369,10 @@ def command_craft(self, line):
     ingredients_to_use = []
     for item in range(0,len(ingredients)):
         ingredients_to_use.append(self.get_item(ingredients[item]))
+
+    if None in ingredients_to_use:
+        self.sendLine('You are lacking some materials')
+        return
 
     for recipe in item_crafting_recipes:
         recipe_failed = False
@@ -391,7 +400,23 @@ def command_craft(self, line):
         if ingredients_to_use[index].stack < list(recipe.values())[index]: 
             self.sendLine(f'Not enough {ingredients_to_use[index].name}')
             return
-                
+        
+    
+    
+    output = ''
+            
+    for index in range(0,len(recipe_to_use)):
+        output = output + f"{list(recipe_to_use.values())[index]} {ingredients_to_use[index].name}, "
+        #print(':::', ingredients_to_use[index], list(recipe_to_use.values())[index])
+        self.inventory_manager.remove_item(item = ingredients_to_use[index], stack = list(recipe_to_use.values())[index])
+            
+        
+
+    item = items.load_item(item_id)
+    self.inventory_manager.add_item(item)
+
+    output = f'You craft {item.name} using: ' + output[:-2]
+    self.sendLine(output)
 
     
 
