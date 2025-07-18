@@ -225,23 +225,39 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
             }
 
 
-    '''
+    for i in ITEMS:
+        ITEMS[i]['crafting_recipe_ingredients'] = []
+        ITEMS[i]['crafting_ingredient_for'] = []
+
     for row in SHEET['crafting_recipes']:
         x = SHEET['crafting_recipes']
-
         
         for index in range(0, len(x[row])):
-            sheet = None
-            print(x['premade_id'][index])
-            if x['premade_id'][index] in SHEET['items_equipment']:
-                sheet = 'items_equipment'
-            if x['premade_id'][index] in SHEET['items_consumable']:
-                sheet = 'items_consumable'
-            if x['premade_id'][index] in SHEET['items_misc']:
-                sheet = 'items_misc'
 
-            SHEET[sheet][x['premade_id'][index]] = 1
-    '''
+            ingredients = {}
+            premade_id = x['premade_id'][index]
+            
+            for i in range(0,4):
+                i += 1
+                #print(i)
+                
+                ingredient = str(x[f'ingredient_{i}'][index])
+                quantity = int(x[f'quantity_{i}'][index])
+
+                if ingredient in '0.0 0'.split(' '):
+                    continue
+
+                ingredients[ingredient] = quantity
+                #print(f'ingredient_{i}',ingredient)
+                if premade_id not in ITEMS[ingredient]['crafting_ingredient_for']:
+                    ITEMS[ingredient]['crafting_ingredient_for'].append(premade_id)
+                
+            
+            if ingredients not in ITEMS[premade_id]['crafting_recipe_ingredients']:
+                ITEMS[premade_id]['crafting_recipe_ingredients'].append(ingredients)
+                print(f'craft {premade_id} ingredients: ',ingredients)
+
+    
 
 
     end = time.time()

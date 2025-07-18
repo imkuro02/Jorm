@@ -1,5 +1,5 @@
 import uuid
-from configuration.config import ItemType
+from configuration.config import ItemType, ITEMS
 
 class Item:
     def __init__(self):
@@ -17,6 +17,10 @@ class Item:
         # scenery stuff
         self.can_pick_up = True
         self.invisible = False
+
+        # crafting
+        self.crafting_recipe_ingredients = []
+        self.crafting_ingredient_for = []
 
     def tick(self):
         pass
@@ -85,6 +89,21 @@ class Item:
     def identify(self, identifier = None):
         output = f'{self.pretty_name()}\n'
         output += f'@cyan{self.description}@normal\n'
+        
+        if self.crafting_ingredient_for != []:
+            output += f'Ingredient for: '
+            for i in self.crafting_ingredient_for:
+                output = output + ITEMS[i]['name'] + ', '
+
+            output = output[:-2]
+
+        if self.crafting_recipe_ingredients != []:
+            output += f'Recipes: \n'
+            for recipe in self.crafting_recipe_ingredients:
+                output = output + str(recipe) + '\n'
+
+            #output = output[:-1]
+        
         self.new = False
         return output
 

@@ -146,6 +146,9 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
     new_item.name = ITEMS[premade_id]['name']
     new_item.description = ITEMS[premade_id]['description']
     new_item.premade_id = ITEMS[premade_id]['premade_id']
+    
+    new_item.crafting_recipe_ingredients =  ITEMS[premade_id]['crafting_recipe_ingredients']
+    new_item.crafting_ingredient_for =      ITEMS[premade_id]['crafting_ingredient_for']
 
 
     # on creation of an item object, it receives a uuid
