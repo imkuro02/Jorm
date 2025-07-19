@@ -89,6 +89,7 @@ class Item:
     def identify(self, identifier = None):
         output = f'{self.pretty_name()}\n'
         output += f'@cyan{self.description}@normal\n'
+        output += '\n'
         
         if self.crafting_ingredient_for != []:
             output += f'Ingredient for: '
@@ -100,9 +101,14 @@ class Item:
         if self.crafting_recipe_ingredients != []:
             output += f'Recipes: \n'
             for recipe in self.crafting_recipe_ingredients:
-                output = output + str(recipe) + '\n'
+                for ingredient in recipe:
+                    output += f"{recipe[ingredient]} {ITEMS[ingredient]['name']}, "
+                output = output[:-2] + '\n'
+                #output = output + str(recipe) + '\n'
+            #output = output[:-2]
 
-            #output = output[:-1]
+        output += '\n'
+            
         
         self.new = False
         return output
