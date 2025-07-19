@@ -202,7 +202,7 @@ class Player(Actor):
             self.handle(self.queued_lines[0])
             self.queued_lines.pop(0)
 
-        self.update_checker.tick()
+        #self.update_checker.tick()
 
     
     def sendSound(self, sfx):

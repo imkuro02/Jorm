@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_not_in_party, check_not_in_party_or_is_party_leader, check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
-from configuration.config import ActorStatusType, Audio, ITEMS
+from configuration.config import ActorStatusType, Audio, ITEMS, StatType
 from affects.affects import Affect
 import random
 @check_not_in_party_or_is_party_leader
@@ -153,15 +153,17 @@ def command_go(self, line):
     else:
         self.new_room_look()
 
-    yes_npcs = False
-    yes_enemies = False
+    yes_any_can_start_fights = False
+    highest_can_start_fights_level = 0
     for actor in self.room.actors.values():
-        if type(actor).__name__ == 'Npc':
+        if type(actor).__name__ in 'Npc Enemy'.split():
             yes_npcs = True 
-        if type(actor).__name__ == 'Enemy':
-            yes_enemies = True 
+            if actor.can_start_fights:
+                yes_any_can_start_fights = True
+                if highest_can_start_fights_level < actor.stat_manager.stats[StatType.LVL]:
+                    highest_can_start_fights_level = actor.stat_manager.stats[StatType.LVL]
 
-    if yes_enemies and not yes_npcs:
+    if yes_any_can_start_fights and self.stat_manager.stats[StatType.LVL] - highest_can_start_fights_level <= 0:
         roll = random.randint(0,5)
         if roll == 1:
             if self.party_manager.party != None:

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "da64394adba9d68ed5544dee81081b417d1b03a8abed2dedb4844cc5c324ce01",
+    "SHA-256": "f6fafb8a6fed0de586e71dfed28fc065bd336e309e37cf56a85ab3703691a146",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -41,7 +41,9 @@
                 "flow trinket 6": 2100,
                 "flow weapon 6": 2100
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "shroom": {
             "npc_id": "shroom",
@@ -82,7 +84,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "rat": {
             "npc_id": "rat",
@@ -123,7 +127,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "big_rat": {
             "npc_id": "big_rat",
@@ -163,7 +169,9 @@
                 "grit weapon 6": 1600,
                 "rusty_axe": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "spore": {
             "npc_id": "spore",
@@ -204,7 +212,9 @@
                 "soul trinket 6": 1600,
                 "soul weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "wood_stump": {
             "npc_id": "wood_stump",
@@ -246,7 +256,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "snail": {
             "npc_id": "snail",
@@ -287,7 +299,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "orange_mushroom": {
             "npc_id": "orange_mushroom",
@@ -332,7 +346,9 @@
                 "flow trinket 9": 3900,
                 "flow weapon 9": 3900
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "green_slime": {
             "npc_id": "green_slime",
@@ -377,7 +393,9 @@
                 "flow trinket 9": 3900,
                 "flow weapon 9": 3900
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "spider": {
             "npc_id": "spider",
@@ -422,7 +440,9 @@
                 "flow trinket 9": 3900,
                 "flow weapon 9": 3900
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "wandering_rock": {
             "npc_id": "wandering_rock",
@@ -467,7 +487,9 @@
                 "flow trinket 9": 3900,
                 "flow weapon 9": 3900
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "pig": {
             "npc_id": "pig",
@@ -512,7 +534,9 @@
                 "flow trinket 9": 3900,
                 "flow weapon 9": 3900
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "blue_mushroom": {
             "npc_id": "blue_mushroom",
@@ -562,7 +586,9 @@
                 "soul weapon 12": 5700,
                 "soul wepaon 9 bone": 5700
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "octopus": {
             "npc_id": "octopus",
@@ -612,7 +638,9 @@
                 "soul weapon 12": 5700,
                 "soul wepaon 9 bone": 5700
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "blue_slime": {
             "npc_id": "blue_slime",
@@ -666,7 +694,9 @@
                 "grit weapon 12": 5700,
                 "grit weapon 9 bone": 5700
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "red_slime": {
             "npc_id": "red_slime",
@@ -720,7 +750,9 @@
                 "grit weapon 12": 5700,
                 "grit weapon 9 bone": 5700
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "red_cap": {
             "npc_id": "red_cap",
@@ -774,7 +806,9 @@
                 "grit weapon 12": 5700,
                 "grit weapon 9 bone": 5700
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "evil_eye": {
             "npc_id": "evil_eye",
@@ -819,7 +853,9 @@
                 "flow weapon 12": 2200,
                 "flow weapon 9 bone": 2200
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "thief": {
             "npc_id": "thief",
@@ -864,7 +900,9 @@
                 "flow weapon 12": 2200,
                 "flow weapon 9 bone": 2200
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "horned_mushroom": {
             "npc_id": "horned_mushroom",
@@ -910,7 +948,9 @@
                 "flow weapon 12": 2200,
                 "flow weapon 9 bone": 2200
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "skeleton_1": {
             "npc_id": "skeleton_1",
@@ -959,7 +999,9 @@
                 "grit weapon 12": 2200,
                 "grit weapon 9 bone": 2200
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "skeleton_mage": {
             "npc_id": "skeleton_mage",
@@ -1004,7 +1046,9 @@
                 "mind trinket 12": 2200,
                 "mind weapon 12": 2200
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "mushroom_soldier": {
             "npc_id": "mushroom_soldier",
@@ -1047,7 +1091,9 @@
                 "grit weapon 12": 250,
                 "grit weapon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_thief": {
             "npc_id": "mushroom_thief",
@@ -1086,7 +1132,9 @@
                 "flow weapon 12": 250,
                 "flow weapon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "mushroom_mage": {
             "npc_id": "mushroom_mage",
@@ -1125,7 +1173,9 @@
                 "mind trinket 12": 250,
                 "mind weapon 12": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_cleric": {
             "npc_id": "mushroom_cleric",
@@ -1166,7 +1216,9 @@
                 "soul weapon 12": 250,
                 "soul wepaon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_zombie": {
             "npc_id": "mushroom_zombie",
@@ -1209,7 +1261,9 @@
                 "grit weapon 12": 250,
                 "grit weapon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "zombie": {
             "npc_id": "zombie",
@@ -1252,7 +1306,9 @@
                 "grit weapon 12": 250,
                 "grit weapon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "crocodile": {
             "npc_id": "crocodile",
@@ -1295,7 +1351,9 @@
                 "grit weapon 12": 250,
                 "grit weapon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "skeleton_soldier": {
             "npc_id": "skeleton_soldier",
@@ -1338,7 +1396,9 @@
                 "grit weapon 12": 250,
                 "grit weapon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "fairy": {
             "npc_id": "fairy",
@@ -1378,7 +1438,9 @@
                 "mind trinket 12": 250,
                 "mind weapon 12": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "fairy_drunk": {
             "npc_id": "fairy_drunk",
@@ -1425,7 +1487,9 @@
                 "grit trinket 9": 3900,
                 "grit weapon 9": 3900
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "wood_stump_large": {
             "npc_id": "wood_stump_large",
@@ -1475,7 +1539,9 @@
                 "grit weapon 12": 4000,
                 "grit weapon 9 bone": 4000
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         },
         "kerning_trainer": {
             "npc_id": "kerning_trainer",
@@ -1529,7 +1595,9 @@
                 "grit weapon 12": 5700,
                 "grit weapon 9 bone": 5700
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "bartender": {
             "npc_id": "bartender",
@@ -1575,7 +1643,9 @@
                 "flow trinket 9": 3900,
                 "flow weapon 9": 3900
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "bar_drunk_0": {
             "npc_id": "bar_drunk_0",
@@ -1617,7 +1687,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "bar_drunk_1": {
             "npc_id": "bar_drunk_1",
@@ -1659,7 +1731,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "tutorial_1": {
             "npc_id": "tutorial_1",
@@ -1699,7 +1773,9 @@
                 "grit weapon 6": 2100,
                 "rusty_axe": 2100
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true
         },
         "boss_rat": {
             "npc_id": "boss_rat",
@@ -1733,7 +1809,9 @@
                 "flow weapon 12": 690,
                 "flow weapon 9 bone": 690
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "guard_coward": {
             "npc_id": "guard_coward",
@@ -1787,7 +1865,9 @@
                 "grit weapon 12": 5700,
                 "grit weapon 9 bone": 5700
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "citizen": {
             "npc_id": "citizen",
@@ -1829,7 +1909,9 @@
                 "grit weapon 6": 1600,
                 "rusty_axe": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "tavern_cellar_bank_robber": {
             "npc_id": "tavern_cellar_bank_robber",
@@ -1870,7 +1952,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_king": {
             "npc_id": "mushroom_kingdom_king",
@@ -1909,7 +1993,9 @@
                 "mind trinket 12": 250,
                 "mind weapon 12": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_entrance_guard": {
             "npc_id": "mushroom_kingdom_entrance_guard",
@@ -1952,7 +2038,9 @@
                 "grit weapon 12": 250,
                 "grit weapon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_guard": {
             "npc_id": "mushroom_kingdom_guard",
@@ -1995,7 +2083,9 @@
                 "grit weapon 12": 250,
                 "grit weapon 9 bone": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_queen": {
             "npc_id": "mushroom_kingdom_queen",
@@ -2036,7 +2126,9 @@
                 "soul trinket 6": 1600,
                 "soul weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_chef": {
             "npc_id": "mushroom_kingdom_chef",
@@ -2078,7 +2170,9 @@
                 "grit weapon 6": 1600,
                 "rusty_axe": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_cook": {
             "npc_id": "mushroom_kingdom_cook",
@@ -2119,7 +2213,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_jester": {
             "npc_id": "mushroom_kingdom_jester",
@@ -2160,7 +2256,9 @@
                 "flow trinket 6": 1600,
                 "flow weapon 6": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_citizen": {
             "npc_id": "mushroom_kingdom_citizen",
@@ -2202,7 +2300,9 @@
                 "grit weapon 6": 1600,
                 "rusty_axe": 1600
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "mushroom_kingdom_wizard": {
             "npc_id": "mushroom_kingdom_wizard",
@@ -2241,7 +2341,9 @@
                 "mind trinket 12": 250,
                 "mind weapon 12": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false
         },
         "daily_quest_board": {
             "npc_id": "daily_quest_board",
@@ -2281,7 +2383,9 @@
                 "grit weapon 6": 2100,
                 "rusty_axe": 2100
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true
         },
         "ellinia_shop_weapon": {
             "npc_id": "ellinia_shop_weapon",
@@ -2321,7 +2425,9 @@
                 "mind trinket 12": 250,
                 "mind weapon 12": 250
             },
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true
         },
         "mushroom_kingdom_necromancer": {
             "npc_id": "mushroom_kingdom_necromancer",
@@ -2347,7 +2453,9 @@
                 "thorns": 2
             },
             "loot": {},
-            "combat_loop": {}
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
         }
     },
     "skills": {

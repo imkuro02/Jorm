@@ -28,6 +28,8 @@ def create_npc(room, npc_id, spawn_for_lore = False):
         _loot =     ENEMIES[npc_id]['loot']
         skills =    ENEMIES[npc_id]['skills']
         ai =        ENEMIES[npc_id]['ai']
+        can_start_fights = ENEMIES[npc_id]['can_start_fights']
+        dont_join_fights = ENEMIES[npc_id]['dont_join_fights']
         loot = _loot # {}
         '''
         for i in ITEMS:
@@ -70,7 +72,9 @@ def create_npc(room, npc_id, spawn_for_lore = False):
         stats = stats, 
         loot = loot, 
         skills = skills,
-        dialog_tree = tree
+        dialog_tree = tree,
+        can_start_fights = can_start_fights,
+        dont_join_fights = dont_join_fights
     )  
 
     return my_npc
@@ -88,7 +92,9 @@ class Npc(Actor):
         stats = None, 
         loot = None, 
         skills = None,
-        dialog_tree = None
+        dialog_tree = None,
+        can_start_fights = False,
+        dont_join_fights = True
     ):
         super().__init__(
             name = name, 
@@ -102,7 +108,8 @@ class Npc(Actor):
         self.dialog_tree = dialog_tree
         self.npc_id = npc_id
         
-
+        self.can_start_fights = can_start_fights
+        self.dont_join_fights = dont_join_fights
         
 
         if stats != None:
@@ -206,7 +213,9 @@ class Enemy(Npc):
         stats = None, 
         loot = None, 
         skills = None,
-        dialog_tree = None
+        dialog_tree = None,
+        can_start_fights = False,
+        dont_join_fights = True
     ):
         super().__init__(
             npc_id = npc_id, 
@@ -217,7 +226,9 @@ class Enemy(Npc):
             stats = stats, 
             loot = loot, 
             skills = skills,
-            dialog_tree = dialog_tree
+            dialog_tree = dialog_tree,
+            can_start_fights = can_start_fights,
+            dont_join_fights = dont_join_fights
         )
 
 

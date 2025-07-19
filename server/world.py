@@ -276,8 +276,12 @@ class Room:
 
                 #participants[i.id] = i
                 if type(i).__name__ == "Enemy":
+                    if i.dont_join_fights:
+                        continue
                     participants[i.id] = i
                 if type(i).__name__ == "Npc":
+                    if i.dont_join_fights:
+                        continue
                     participants[i.id] = i
 
             #if players_here and npcs_here:

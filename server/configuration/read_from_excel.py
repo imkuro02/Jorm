@@ -255,7 +255,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
             
             if ingredients not in ITEMS[premade_id]['crafting_recipe_ingredients']:
                 ITEMS[premade_id]['crafting_recipe_ingredients'].append(ingredients)
-                print(f'craft {premade_id} ingredients: ',ingredients)
+                #print(f'craft {premade_id} ingredients: ',ingredients)
 
     
 
@@ -269,7 +269,9 @@ def configure_ENEMIES(SHEET, ITEMS):
     ENEMIES = {}
     for row in SHEET['enemies']:
         x = SHEET['enemies']
+        
         for index in range(0, len(x[row])):
+            
             ENEMIES[x['npc_id'][index]] = {
                 'npc_id':       x['npc_id'][index],
                 'ai':           x['ai'][index],
@@ -290,7 +292,9 @@ def configure_ENEMIES(SHEET, ITEMS):
                 'include_in_daily_quests': bool(x['include_in_daily_quests'][index]),
                 'skills': {},       # EMPTY DICT TO STORE SKILLS
                 'loot': {},         # EMPTY DICT TO STORE LOOT
-                'combat_loop': {}   # EMPTY DICT TO STORE COMBAT LOOP
+                'combat_loop': {},  # EMPTY DICT TO STORE COMBAT LOOP
+                'can_start_fights': bool(x['can_start_fights'][index]),
+                'dont_join_fights':  bool(x['dont_join_fights'][index]),  
             }
 
     end = time.time()
