@@ -11,6 +11,7 @@ var socket = WebSocketPeer.new()
 @onready var DEBUG = $canvas/HBoxContainer/input_output/HBoxContainer/debug
 @onready var ACTORS_OUTPUT = $canvas/HBoxContainer/Control/actors_output
 @onready var SFX_MAN = $sfx_manager
+@onready var MAP = $canvas/HBoxContainer/side_panel/map
 
 
 
@@ -18,7 +19,7 @@ const IAC      : int = 255   # 0xFF  Interpret‑As‑Command
 const WILL     : int = 251   # 0xFB  Will Perform
 const SE       : int = 240   # 0xF0  Sub‑negotiation End
 const SB       : int = 250   # 0xFA  Sub‑negotiation Begin
-const WONT     : int = 252   # 0xFC  Will Not Perform
+const WONT     : int = 252   # 0xFC  Will Nospritet Perform
 const DO       : int = 253   # 0xFD  Please Do
 const DONT     : int = 254   # 0xFE  Please Don’t
 const ECHO     : int =   1   # 0x01  Echo
@@ -45,7 +46,7 @@ func _ready():
 	INPUT.text_submitted.connect(_on_input_submitted)
 
 	# Connect to WebSocket server
-	var err = socket.connect_to_url(websocket_url)
+	var err = socket.connect_to_url(websocket_url_local)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
@@ -111,12 +112,15 @@ func handle_gmcp(message: String):
 	# First, replace single quotes with double quotes for JSON compatibility
 	#dict_string = dict_string.replace("'", '"')
 
-	var data_dict = string_to_dict(dict_string)
-	print('d',data_dict)
-	print(dict_string)     
+	var data_dict = JSON.parse_string(dict_string.replace("'",'"')) #string_to_dict(dict_string)
+	
+	#print(prefix,data_dict)
+	#print(dict_string)     
 	#print(data_dict)  
+	#print(prefix, data_dict)
 	match prefix:
 		'Client.Media.Play':
+			
 			var sfx = load("res://audio/sfx/"+data_dict['name'])
 			SFX_MAN.stream = sfx
 			SFX_MAN.play()
@@ -124,6 +128,8 @@ func handle_gmcp(message: String):
 			ACTORS_OUTPUT.set_text("")
 			ACTORS_OUTPUT.clear()
 			ACTORS_OUTPUT.get_message(dict_string)
+		'Map':
+			MAP.get_message(data_dict)
 	
 func extract_gmcp(int_data: Array[int]) -> void:
 	var start := 0                      

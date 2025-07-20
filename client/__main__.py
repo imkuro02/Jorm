@@ -18,7 +18,7 @@ async def handle_websocket(websocket):
         async def relay_from_mud():
             try:
                 while True:
-                    data = await reader.read(1024*8)
+                    data = await reader.read(1024*10)
                     if not data:
                         break
                     # Send as binary to preserve all byte sequences

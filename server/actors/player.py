@@ -43,6 +43,7 @@ class UpdateChecker:
 
 
     def tick_show_map(self):
+        split = ','
         if self.last_room != self.actor.room:
             self.last_room = self.actor.room
             offsets = {
@@ -55,7 +56,7 @@ class UpdateChecker:
             }
             room_id = self.actor.room.id
             VIEW_RANGE = 7
-            START_LOC = f'{0},{0},{0}'
+            START_LOC = f'{0}{split}{0}{split}{0}'
             start_room = self.protocol.factory.world.rooms[room_id]
             grid = {}
             grid[START_LOC] = room_id
@@ -76,7 +77,7 @@ class UpdateChecker:
                 x += offsets[_exit.direction][0] #+ VIEW_RANGE
                 y += offsets[_exit.direction][1] #+ VIEW_RANGE
                 z += offsets[_exit.direction][2] 
-                _loc = f'{x},{y},{z}'
+                _loc = f'{x}{split}{y}{split}{z}'
 
                 
                 
@@ -101,9 +102,9 @@ class UpdateChecker:
                     if room.doorway:
                         continue
 
-                    _x = int(room_loc.split(',')[0])
-                    _y = int(room_loc.split(',')[1])
-                    _z = int(room_loc.split(',')[2])
+                    _x = int(room_loc.split(f'{split}')[0])
+                    _y = int(room_loc.split(f'{split}')[1])
+                    _z = int(room_loc.split(f'{split}')[2])
 
                     for _exit in room.exits:
                         if _exit.direction not in offsets:
@@ -114,7 +115,7 @@ class UpdateChecker:
                         x = _x + offsets[_exit.direction][0] 
                         y = _y + offsets[_exit.direction][1] 
                         z = _z + offsets[_exit.direction][2] 
-                        _loc = f'{x},{y},{z}'
+                        _loc = f'{x}{split}{y}{split}{z}'
                
 
                         if _loc not in grid:
@@ -128,14 +129,17 @@ class UpdateChecker:
                 room = self.actor.room.world.rooms[_grid[r]]
                 exits = []
                 for e in room.exits:
+                    if e.secret:
+                        continue
                     exits.append({'direction':e.direction})
-                _grid[r] = {'id': 0, 'name': room.name, 'exits': exits}
+                _grid[r] = {'id': room.id, 'name': room.name, 'exits': exits, 'doorway': int(room.doorway)}
 
             self.protocol.send_gmcp(_grid,'Map')
 
     def tick(self):
         #return
         self.tick_show_actors()
+        self.tick_show_map()
         
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
@@ -202,7 +206,7 @@ class Player(Actor):
             self.handle(self.queued_lines[0])
             self.queued_lines.pop(0)
 
-        #self.update_checker.tick()
+        self.update_checker.tick()
 
     
     def sendSound(self, sfx):

@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=11 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
+[ext_resource type="Script" path="res://scripts/map.gd" id="2_nu7tc"]
 [ext_resource type="Script" path="res://scripts/output.gd" id="3_gkcnj"]
+[ext_resource type="Texture2D" uid="uid://dpuscwjfy0f3p" path="res://images/kuro/connection.png" id="3_ic2vh"]
+[ext_resource type="Texture2D" uid="uid://d3qmhola2ro6f" path="res://images/kuro/node.png" id="4_5ypyn"]
+[ext_resource type="Texture2D" uid="uid://cbfef8b7pjws1" path="res://images/kuro/door.png" id="5_kopq2"]
+[ext_resource type="Texture2D" uid="uid://dnj77qukfgln4" path="res://images/kuro/up.png" id="6_d5hl4"]
+[ext_resource type="Texture2D" uid="uid://d07eg5x1ov0v4" path="res://images/kuro/down.png" id="7_1kjrd"]
+[ext_resource type="Texture2D" uid="uid://v04tody351le" path="res://images/kuro/you.png" id="7_ltt0k"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -32,7 +39,63 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="side_panel" type="Panel" parent="canvas/HBoxContainer"]
+custom_minimum_size = Vector2(448, 0)
+layout_mode = 2
+
+[node name="map" type="Panel" parent="canvas/HBoxContainer/side_panel"]
+custom_minimum_size = Vector2(448, 448)
+layout_mode = 0
+offset_right = 288.0
+offset_bottom = 176.0
+script = ExtResource("2_nu7tc")
+
+[node name="64x7" type="Node" parent="canvas/HBoxContainer/side_panel/map"]
+
+[node name="assets" type="Node" parent="canvas/HBoxContainer/side_panel/map"]
+
+[node name="node" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.32549, 0.2, 0.027451, 1)
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("4_5ypyn")
+
+[node name="connection" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.32549, 0.2, 0.027451, 1)
+z_index = 100
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("3_ic2vh")
+
+[node name="up" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.94902, 0.568627, 0, 1)
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("6_d5hl4")
+
+[node name="down" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.94902, 0.568627, 0, 1)
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("7_1kjrd")
+
+[node name="door" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.94902, 0.568627, 0, 1)
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("5_kopq2")
+
+[node name="you" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.266667, 1, 1, 1)
+z_index = 111
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("7_ltt0k")
+
+[node name="map" type="Node" parent="canvas/HBoxContainer/side_panel/map"]
+
 [node name="Panel2" type="Panel" parent="canvas/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(224, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -59,6 +122,7 @@ script = ExtResource("3_gkcnj")
 [node name="input_output" type="Control" parent="canvas/HBoxContainer"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="input" type="LineEdit" parent="canvas/HBoxContainer/input_output"]
 layout_mode = 1
@@ -93,7 +157,6 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="debug" type="RichTextLabel" parent="canvas/HBoxContainer/input_output/HBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 2
@@ -102,9 +165,95 @@ bbcode_enabled = true
 selection_enabled = true
 
 [node name="Panel" type="Panel" parent="canvas/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(224, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="sfx_manager" type="AudioStreamPlayer" parent="."]
 volume_db = -20.292
+
+[node name="Node11" type="CanvasLayer" parent="."]
+visible = false
+scale = Vector2(4, 4)
+transform = Transform2D(4, 0, 0, 4, 0, 0)
+
+[node name="Node" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(16, 24)
+texture = ExtResource("4_5ypyn")
+
+[node name="Node2" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(32, 24)
+texture = ExtResource("4_5ypyn")
+
+[node name="Node3" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(48, 24)
+texture = ExtResource("4_5ypyn")
+
+[node name="Node4" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(32, 8)
+texture = ExtResource("4_5ypyn")
+
+[node name="Door" type="Sprite2D" parent="Node11"]
+modulate = Color(0.666667, 0.34902, 0.0392157, 1)
+texture_filter = 1
+position = Vector2(32, 8)
+texture = ExtResource("5_kopq2")
+metadata/_edit_group_ = true
+
+[node name="Node5" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(16, 40)
+texture = ExtResource("4_5ypyn")
+
+[node name="Node6" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(32, 40)
+texture = ExtResource("4_5ypyn")
+
+[node name="Node7" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(48, 40)
+texture = ExtResource("4_5ypyn")
+
+[node name="Node8" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(16, 56)
+texture = ExtResource("4_5ypyn")
+
+[node name="Node9" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(32, 56)
+texture = ExtResource("4_5ypyn")
+
+[node name="Node10" type="Sprite2D" parent="Node11"]
+modulate = Color(0.211765, 0.0784314, 0, 1)
+texture_filter = 1
+position = Vector2(48, 56)
+texture = ExtResource("4_5ypyn")
+
+[node name="Up" type="Sprite2D" parent="Node11"]
+modulate = Color(0.666667, 0.34902, 0.0392157, 1)
+texture_filter = 1
+position = Vector2(16, 56)
+texture = ExtResource("6_d5hl4")
+metadata/_edit_group_ = true
+
+[node name="Down" type="Sprite2D" parent="Node11"]
+modulate = Color(0.666667, 0.34902, 0.0392157, 1)
+texture_filter = 1
+position = Vector2(48, 56)
+texture = ExtResource("7_1kjrd")
