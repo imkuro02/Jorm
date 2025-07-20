@@ -7,7 +7,7 @@ import random
 def command_flee(self, line):
     #self.sendLine('@redFleeing is temporarely disabled in game sorry...@normal')
     #return
-    '''
+    
     if self.room.combat == None:
         self.sendLine('You are not in combat, you don\'t need to flee')
         return
@@ -18,14 +18,14 @@ def command_flee(self, line):
     self.protocol.factory.world.rooms[self.recall_site].move_actor(self, silent = True)
     self.status = ActorStatusType.NORMAL
     self.simple_broadcast(
-        f'You have fled back to {self.room.name}',
+        f'You have fled back to {self.room.pretty_name()}',
         f'{self.pretty_name()} comes running in a panic!',
         sound = Audio.BUFF
     )
-    '''
-    if self.status != ActorStatusType.FIGHTING:
-        self.sendLine('You must be fighting to flee!')
-        return
+    
+    #if self.status != ActorStatusType.FIGHTING:
+    #    self.sendLine('You must be fighting to flee!')
+    #    return
 
     self.simple_broadcast('You flee!', f'{self.pretty_name()} flees!')
 
@@ -37,6 +37,7 @@ def command_flee(self, line):
                     continue
                 par.status = ActorStatusType.NORMAL
                 par.sendLine('You flee too!')
+                par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
 
     
             
