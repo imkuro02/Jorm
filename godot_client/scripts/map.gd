@@ -58,7 +58,7 @@ func get_message(data):
 		
 		
 		MAP.add_child(_node)
-		MAP.add_child(_label)
+		
 		
 		for conn in data[i]['exits']:
 			if conn['direction'] not in directions:
