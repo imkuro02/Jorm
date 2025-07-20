@@ -447,7 +447,10 @@ def command_look(self, line):
         look_item(self, item)
 
 def new_room_look(self):
+    
     if self.settings_manager.view_room:
         self.command_look('')
     if self.settings_manager.view_map:
         self.command_map('')
+    if self.protocol.enabled_gmcp:
+        self.update_checker.tick_show_map()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=12 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dnj77qukfgln4" path="res://images/kuro/up.png" id="6_d5hl4"]
 [ext_resource type="Texture2D" uid="uid://d07eg5x1ov0v4" path="res://images/kuro/down.png" id="7_1kjrd"]
 [ext_resource type="Texture2D" uid="uid://v04tody351le" path="res://images/kuro/you.png" id="7_ltt0k"]
+[ext_resource type="Texture2D" uid="uid://doybnjy4cr05" path="res://images/kuro/bg.png" id="9_2qqwb"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -42,6 +43,16 @@ grow_vertical = 2
 [node name="side_panel" type="Panel" parent="canvas/HBoxContainer"]
 custom_minimum_size = Vector2(448, 0)
 layout_mode = 2
+
+[node name="Sprite2D" type="TextureRect" parent="canvas/HBoxContainer/side_panel"]
+modulate = Color(0, 0, 0, 1)
+texture_filter = 1
+layout_mode = 0
+offset_right = 112.0
+offset_bottom = 112.0
+scale = Vector2(4, 4)
+texture = ExtResource("9_2qqwb")
+stretch_mode = 1
 
 [node name="map" type="Panel" parent="canvas/HBoxContainer/side_panel"]
 custom_minimum_size = Vector2(448, 448)
@@ -157,6 +168,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="debug" type="RichTextLabel" parent="canvas/HBoxContainer/input_output/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 2

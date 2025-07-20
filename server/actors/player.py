@@ -94,10 +94,13 @@ class UpdateChecker:
             for r in range(0,VIEW_RANGE*1):
                 for room_loc in _grid:
 
-                    if grid[room_loc] == 'PATH':
-                        continue
+                   
+
+                    
 
                     room = self.protocol.factory.world.rooms[grid[room_loc]]
+                    
+
                     
                     if room.doorway:
                         continue
@@ -111,11 +114,15 @@ class UpdateChecker:
                             continue
                         if _exit.secret:
                             continue
+                        
         
                         x = _x + offsets[_exit.direction][0] 
                         y = _y + offsets[_exit.direction][1] 
                         z = _z + offsets[_exit.direction][2] 
                         _loc = f'{x}{split}{y}{split}{z}'
+
+                        if _exit.to_room_id in grid.values():
+                            continue
                
 
                         if _loc not in grid:
@@ -137,9 +144,9 @@ class UpdateChecker:
             self.protocol.send_gmcp(_grid,'Map')
 
     def tick(self):
-        #return
-        self.tick_show_actors()
-        self.tick_show_map()
+        return
+        #self.tick_show_actors()
+        #self.tick_show_map()
         
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
