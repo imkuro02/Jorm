@@ -17,6 +17,7 @@ def create_npc(room, npc_id, spawn_for_lore = False):
     skills =        None
     tree =          None
     ai =            None
+    
 
     if npc_id in ENEMIES:
         names = 'Tanni Rahji Rahj Rahjii Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan'

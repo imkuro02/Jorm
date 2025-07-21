@@ -67,16 +67,25 @@ class AI:
         return skills
                     
     def use_prediction(self):
+        self.actor.simple_broadcast('',f'{self.prediction_skill}')
         if use_skill(self.actor, self.prediction_target, self.prediction_skill):
+            self.predict_use_best_skill()
             self.actor.finish_turn()
+            
             return True
 
         self.actor.simple_broadcast('You do nothing.', f'{self.actor.pretty_name()} does nothing.')
+        self.predict_use_best_skill()
         self.actor.finish_turn()
+        
+        
 
     def predict_use_best_skill(self, offensive_only = False):
         self.prediction_target = None
         self.prediction_skill = None
+
+        #if self.prediction_skill != None:
+        #    return
         
         if self.actor.room.combat == None:
             return False
@@ -189,6 +198,8 @@ class AI:
         if self.actor.room.combat == None:
             return False
 
+        
+
         if self.actor.room.combat.current_actor != self.actor:
             return False
 
@@ -209,6 +220,7 @@ class PlayerAI(AI):
             return False
 
         self.use_best_skill(offensive_only = True)
+        
 
 class EnemyAI(AI):
     def tick(self):
@@ -216,6 +228,7 @@ class EnemyAI(AI):
             return
         
         self.use_prediction()
+        
         
         
 class SlimeAI(AI):
@@ -237,6 +250,7 @@ class SlimeAI(AI):
             self.actor.finish_turn()
         else:
             self.use_prediction()
+            
 
 class CowardAI(AI):
     def tick(self):

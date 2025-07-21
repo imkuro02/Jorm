@@ -249,7 +249,7 @@ class Combat:
                 i.sendLine(combat_stats)
                 #i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
         """
-        self.round += 1
+        
         for i in self.order:
             if i.room != self.room:
                 continue
@@ -258,9 +258,16 @@ class Combat:
         #if len(self.order) == 0:
         #    self.combat_over()
         #    return
-        for par in self.participants.values():
-            par.ai.predict_use_best_skill()
 
+        # only add predictions at the very first round of combat
+        # after that predictions get rolled after turn end
+        for par in self.participants.values():
+            #print(self.round)
+            if self.round == 1:
+                #print(par)
+                par.ai.predict_use_best_skill()
+
+        self.round += 1
         self.next_turn()
         #self.current_actor = self.order[0]
         #self.current_actor.set_turn()
