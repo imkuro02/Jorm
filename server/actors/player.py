@@ -141,6 +141,7 @@ class UpdateChecker:
                     exits.append({'direction':e.direction})
                 _grid[r] = {'id': room.id, 'name': room.name, 'exits': exits, 'doorway': int(room.doorway)}
 
+            print(_grid)
             self.protocol.send_gmcp(_grid,'Map')
 
     def tick(self):

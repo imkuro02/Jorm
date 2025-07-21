@@ -38,7 +38,7 @@ const telnet_stuff := {
 	ECHO:     "ECHO",
 	#LINEMODE: "LINEMODE",
 	GMCP:     "GMCP",
-	MSSP:     "MSSP",
+	#MSSP:     "MSSP",
 }
 
 func _ready():
@@ -145,7 +145,11 @@ func extract_gmcp(int_data: Array[int]) -> void:
 			segment.append(i)
 			
 
-
+func remove_trailing_70(packet: PackedByteArray) -> PackedByteArray:
+	if packet.size() > 0 and packet[packet.size() - 1] == 70:
+		return packet.slice(0, packet.size() - 1)
+	return packet
+	
 func _process(_delta):
 	socket.poll()
 
@@ -154,6 +158,8 @@ func _process(_delta):
 	if state == WebSocketPeer.STATE_OPEN:
 		while socket.get_available_packet_count():
 			var _message := socket.get_packet()
+			_message = remove_trailing_70(_message)
+			
 			var to_remove := []
 			var int_subnegotiation : Array[int] = []
 			# First pass: print commands, collect indices to remove
@@ -165,22 +171,21 @@ func _process(_delta):
 				# a very dirty hack
 				# if byte 70 (which is both MSSP and letter F) check if its somehow related to a subnegotiation
 				# by checking previous byte, if not then skip this otherwise the letter F will get dropped
-				var skip = false
-				if idx != 0:
-					if _message[idx] == 70 and _message[idx-1] not in [IAC, SB, SE, DO, DONT, WILL, WONT]:
-						skip = true
-				if skip:
-					continue
+	
 						
 				if i in telnet_stuff:
 					if i == SB:
+						
 						doing_sb = true
 					if i == SE:
+						
 						int_subnegotiation.append(SE)
 						doing_sb = false
+						
 					#print(telnet_stuff[i])
 					#DEBUG.append_text(telnet_stuff[i]+' ')
 					to_remove.append(idx)
+					
 				if doing_sb and i not in telnet_stuff:
 					int_subnegotiation.append(i)
 					to_remove.append(idx)
@@ -198,6 +203,8 @@ func _process(_delta):
 
 			var message = _message.get_string_from_utf8()
 			OUTPUT.get_message(message)
+			#print(message)
+			#print(_message)
 			
 			
 

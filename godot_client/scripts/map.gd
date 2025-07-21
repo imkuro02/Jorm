@@ -17,7 +17,16 @@ var directions_vertical = {'up': up, 'down': down}
 func _ready():
 	for child in ASS.get_children():
 		child.visible = false
-	pass # Replace with function body.
+		
+	var size = 64
+	var center_x = 0*size + (size*3) + size/2
+	var center_y = 0*size + (size*3) + size/2
+	
+	var _center = you.duplicate()
+	_center.position.x = center_x
+	_center.position.y = center_y
+	_center.visible = true
+	MAP.get_parent().add_child(_center)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -36,11 +45,8 @@ func get_message(data):
 	var center_x = 0*size + (size*3) + size/2
 	var center_y = 0*size + (size*3) + size/2
 	
-	var _center = you.duplicate()
-	you.position.x = center_x
-	you.position.y = center_y
-	you.visible = true
-	MAP.add_child(you)
+	
+
 	
 	
 	for i in data:
@@ -104,7 +110,7 @@ func update_children(to_add: Array, to_delete: Array) -> void:
 	await get_tree().process_frame
 	for child in to_delete:
 		child.visible = false
-		remove_child(child)
+		MAP.remove_child(child)
 		child.queue_free()
 
 	for child in to_add:
