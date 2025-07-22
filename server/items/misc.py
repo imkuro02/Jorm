@@ -1,6 +1,7 @@
 import uuid
 from configuration.config import ItemType, ITEMS
-
+import random
+from utils import get_object_parent
 class Item:
     def __init__(self):
         self.id = str(uuid.uuid4())
@@ -8,22 +9,43 @@ class Item:
         self.item_type = ItemType.MISC
         self.name = 'Name of item'
         self.description = 'Description here'
+        self.description_room = None
         self.stack = 1
         self.keep = False
         self.inventory_manager = None # the inventory manager of this item
         self.new = True # show if item is newly added to inv
         self.time_on_ground = 0
+        self.ticks_until_ambience = 100
 
         # scenery stuff
         self.can_pick_up = True
-        self.invisible = False
+        # if invisible is true, then the room wont display it in the list of items on ground
+        # but if description_room is anything but false, that will still be displayed
+        self.invisible = False 
 
         # crafting
         self.crafting_recipe_ingredients = []
         self.crafting_ingredient_for = []
 
     def tick(self):
-        pass
+        if self.ambience == None:
+            return
+
+        self.ticks_until_ambience -= 1
+
+        if self.ticks_until_ambience <= 0:
+            self.ticks_until_ambience = random.randint(30*60,30*120)
+
+            owner = self.inventory_manager.owner
+            if get_object_parent(owner) == 'Room':
+                owner = owner
+            else:
+                owner = owner.room
+
+            if len(owner.actors) >= 1:
+                
+                ac = random.choice(list(owner.actors.values()))
+                ac.simple_broadcast(self.ambience, self.ambience, sound = self.ambience_sfx)
     
     def pretty_name(self, rank_only = False):
         def get_article(word): # chatGPT
@@ -89,14 +111,16 @@ class Item:
     def identify(self, identifier = None):
         output = f'{self.pretty_name()}\n'
         output += f'@cyan{self.description}@normal\n'
-        output += '\n'
+        
         
         if self.crafting_ingredient_for != []:
+            output += '\n'
             output += f'Ingredient for: '
             for i in self.crafting_ingredient_for:
                 output = output + ITEMS[i]['name'] + ', '
 
             output = output[:-2]
+            output += '\n'
 
         if self.crafting_recipe_ingredients != []:
             output += f'Recipes: \n'
@@ -106,8 +130,9 @@ class Item:
                 output = output[:-2] + '\n'
                 #output = output + str(recipe) + '\n'
             #output = output[:-2]
+            output += '\n'
 
-        output += '\n'
+        
             
         
         self.new = False

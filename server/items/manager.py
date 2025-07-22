@@ -17,6 +17,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
         new_item = ErrorItem()
         new_item.name = '@yellowERROR@normal'
         new_item.description = 'id: '+str(premade_id)
+        new_item.description_room = None
         new_item.premade_id = premade_id
         return new_item
 
@@ -129,9 +130,8 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
 
     if item_type == ItemType.SCENERY:
         new_item = Scenery()
-        new_item.ambience = ITEMS[premade_id]['ambience']
-        new_item.ambience_sfx = ITEMS[premade_id]['ambience_sfx']
-        new_item.invisible = ITEMS[premade_id]['invisible']
+        
+        
 
 
     if item_type == ItemType.CONSUMABLE:
@@ -145,6 +145,12 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
     
     new_item.name = ITEMS[premade_id]['name']
     new_item.description = ITEMS[premade_id]['description']
+    new_item.description_room = ITEMS[premade_id]['description_room']
+    new_item.invisible = ITEMS[premade_id]['invisible']
+    new_item.ambience = ITEMS[premade_id]['ambience']
+    new_item.ambience_sfx = ITEMS[premade_id]['ambience_sfx']
+    new_item.can_pick_up = ITEMS[premade_id]['can_pick_up']
+
     new_item.premade_id = ITEMS[premade_id]['premade_id']
     
     new_item.crafting_recipe_ingredients =  ITEMS[premade_id]['crafting_recipe_ingredients']

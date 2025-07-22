@@ -156,9 +156,15 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'premade_id':       x['premade_id'][index],
                 'name':             x['name'][index],
                 'description':      str_with_newlines(x['description'][index]),
+                'description_room': None if str(x['description_room'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['description_room'][index],
+                'invisible':        x['invisible'][index],
+                'ambience':          None if str(x['ambience'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience'][index],
+                'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
+                'can_pick_up':  bool(x['can_pick_up'][index]),
                 'item_type':        'misc'
             }
 
+    '''
     for row in SHEET['items_scenery']:
         x = SHEET['items_scenery']
         for index in range(0, len(x[row])):
@@ -166,12 +172,15 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'premade_id':       x['premade_id'][index],
                 'name':             x['name'][index],
                 'description':      str_with_newlines(x['description'][index]),
-                'item_type':        'scenery',
-                'ambience':         x['ambience'][index],
-                'ambience_sfx':     x['ambience_sfx'][index],
+                'description_room': None if str(x['description_room'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['description_room'][index],
                 'invisible':        x['invisible'][index],
+                'item_type':        'scenery',
+                'ambience':          None if str(x['ambience'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience'][index],
+                'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
+                'can_pick_up':      bool(x['can_pick_up'][index]),
                 'random_drop_lvl': int(x['random_drop_lvl'][index])
             }
+    '''
 
 
     for row in SHEET['items_consumable']:
@@ -182,9 +191,14 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'premade_id':       x['premade_id'][index],
                 'name':             x['name'][index],
                 'description':      str_with_newlines(x['description'][index]),
+                'description_room': None if str(x['description_room'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['description_room'][index],
+                'invisible':        x['invisible'][index],
                 'skills':           [x['skill'][index]],
                 'use_perspectives': USE_PERSPECTIVES[x['use_perspectives'][index]],
                 'item_type':        'consumable',
+                'ambience':          None if str(x['ambience'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience'][index],
+                'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
+                'can_pick_up':  bool(x['can_pick_up'][index]),
                 'random_drop_lvl': int(x['random_drop_lvl'][index])
                 
             }
@@ -192,12 +206,16 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
     for row in SHEET['items_equipment']:
         x = SHEET['items_equipment']
         for index in range(0, len(x[row])):
-
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':   x['premade_id'][index],
                 'name':         x['name'][index],
                 'description':  str_with_newlines(x['description'][index]),
+                'description_room': None if str(x['description_room'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['description_room'][index],
+                'invisible':        x['invisible'][index],
                 'item_type':    'equipment',
+                'ambience':          None if str(x['ambience'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience'][index],
+                'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
+                'can_pick_up':  bool(x['can_pick_up'][index]),
                 'slot':         x['slot'][index],
                 'bonuses':      x['bonuses'][index],
                 'stats': {

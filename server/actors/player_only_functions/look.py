@@ -345,7 +345,7 @@ def command_look(self, line):
         else:
             see = f'You look at @yellow{room.pretty_name()}@normal\n'
         #see += draw_local_area(self, room_id)
-        see = see + f'@cyan{room.description}@normal\n'
+        see = see + f'@cyan{room.get_description()}@normal\n'
 
 
         if len(room.actors) == 1:
@@ -379,7 +379,7 @@ def command_look(self, line):
             #    see = see + f'@red{exit_name}@normal, '
 
         if exit_count == 0:
-            see = see + 'You don\'t see any exits'
+            see = see + 'You don\'t see any exits\n'
         else:
             see = see + 'You can go: \n' + see_exits
             #see = see + '\n'
@@ -394,10 +394,11 @@ def command_look(self, line):
                 if i.invisible:
                     continue
 
+                #see_items = see_items + f'   {i.pretty_name()}' + '\n'
                 if i.can_pick_up:
                     see_items = see_items + f'   {i.pretty_name()}' + '\n'
-                else:
-                    see_items = see_items + f'   {i.description}' + '\n'
+                #else:
+                #    see_items = see_items + f'   {i.description}' + '\n'
 
             if see_items != '':
                 see = see + 'You see:\n' + see_items
@@ -424,7 +425,8 @@ def command_look(self, line):
     
     list_of_actors =        [actor.name for actor in self.room.actors.values()]
     list_of_directions =    [] #[_exit.direction for _exit in self.room.exits.values()]
-    list_of_items =         [item.name for item in self.inventory_manager.items.values()] + [item.name for item in self.room.inventory_manager.items.values()]
+    #list_of_items =        [item.name for item in self.inventory_manager.items.values()] + [item.name for item in self.room.inventory_manager.items.values()]
+    list_of_items =         [item.name for item in self.room.inventory_manager.items.values()]
     whole_list = list_of_items + list_of_directions + list_of_actors
 
     look_at = utils.match_word(line, whole_list)

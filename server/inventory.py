@@ -132,6 +132,9 @@ class InventoryManager:
         else:
             return False
 
+        if type(self.owner).__name__ == "Room":
+            item.new = False
+
         if stack_items:
             for _i in self.items.values():
                 if item.premade_id != _i.premade_id:

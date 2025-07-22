@@ -129,14 +129,14 @@ commands = {
     'kick':     'command_kick',
     'admin':    'command_grant_admin',
 
-    'export':   'command_export',
-    'item':     'command_load_item',
-    'npcs':     'command_load_npcs',
-    'mexp':     'command_gain_exp',
-    'reload':   'command_reload_config',
-    'kill':     'command_kill',
+    '_dict':   'command_export',
+    '_item':     'command_load_item',
+    '_npcs':     'command_load_npcs',
+    '_mexp':     'command_gain_exp',
+    '_reload':   'command_reload_config',
+    '_kill':     'command_kill',
     'settings': 'command_settings',
-    'sethp':    'command_sethp'
+    '_sethp':    'command_sethp'
 
     
 }
@@ -184,6 +184,7 @@ translations = {
 
     'go to ':            'go ',
     'go in ':            'go ',
+    'enter ':            'go ',
     'recall':            'rest now',
     'recall set':        'rest set',
 

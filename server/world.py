@@ -223,6 +223,13 @@ class Room:
                 return i
         return False 
 
+    def get_description(self):
+        desc = self.description
+        for i in self.inventory_manager.items.values(): 
+            if i.description_room != None:
+                desc = desc + f' {i.description_room}.'
+        return desc
+
     def tick(self):
         actors = {}
         if not self.is_an_instance():
