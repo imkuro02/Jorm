@@ -443,7 +443,7 @@ def command_look(self, line):
         look_actor(actor)
 
     if look_at in list_of_items:
-        item = self.get_item(line, search_mode = 'self_and_room')
+        item = self.get_item(line, search_mode = 'room')
         if item == None:
             return
         look_item(self, item)
