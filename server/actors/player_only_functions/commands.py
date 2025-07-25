@@ -233,7 +233,10 @@ translations = {
     'point at ':        'emote point ',
     'point':            'emote point',
 
-    'SEX SFDSFDSFDSF':  'dsdadsad'
+    'SEX SFDSFDSFDSF':  'dsdadsad',
+
+    'score': 'stats',
+    'who': 'online'
     
     
 }

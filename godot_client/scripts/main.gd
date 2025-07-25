@@ -46,7 +46,7 @@ func _ready():
 	INPUT.text_submitted.connect(_on_input_submitted)
 
 	# Connect to WebSocket server
-	var err = socket.connect_to_url(websocket_url)
+	var err = socket.connect_to_url(websocket_url_local)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
@@ -222,8 +222,11 @@ func _on_input_submitted(text: String) -> void:
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
 		socket.send_text(text.strip_edges())
 		#OUTPUT.append_text('>'+text+'\n')
-		
-		INPUT.select_all()
+		if text.split(" ")[0] in ['say','shout']:
+			INPUT.text = text.split(" ")[0] + ' '
+			INPUT.caret_column = INPUT.text.length()
+		else:
+			INPUT.select_all()
 		#INPUT.clear()
 	else:
 		print("Socket not ready or input was empty.")

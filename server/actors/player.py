@@ -145,9 +145,9 @@ class UpdateChecker:
             self.protocol.send_gmcp(_grid,'Map')
 
     def tick(self):
-        return
+        #return
         #self.tick_show_actors()
-        #self.tick_show_map()
+        self.tick_show_map()
         
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):

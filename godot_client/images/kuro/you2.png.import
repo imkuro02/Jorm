@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuq4hncqshlyn"
-path="res://.godot/imported/urizen_onebit_tileset__v1d1.png-9789d4bc423e1faab28e11a3da26a2c6.ctex"
+uid="uid://bp1b7bxigyfjb"
+path="res://.godot/imported/you2.png-a23d1490cf67a0a75bdbc899104631d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/urizen_onebit_tileset__v1d1.png"
-dest_files=["res://.godot/imported/urizen_onebit_tileset__v1d1.png-9789d4bc423e1faab28e11a3da26a2c6.ctex"]
+source_file="res://images/kuro/you2.png"
+dest_files=["res://.godot/imported/you2.png-a23d1490cf67a0a75bdbc899104631d0.ctex"]
 
 [params]
 
