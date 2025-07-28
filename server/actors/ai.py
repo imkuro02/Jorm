@@ -67,7 +67,6 @@ class AI:
         return skills
                     
     def use_prediction(self):
-        self.actor.simple_broadcast('',f'{self.prediction_skill}')
         if use_skill(self.actor, self.prediction_target, self.prediction_skill):
             self.predict_use_best_skill()
             self.actor.finish_turn()

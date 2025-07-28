@@ -31,6 +31,20 @@ class Damage:
         return self
 
     def calculate(self):
+        
+        #lvl_taker = self.damage_taker_actor.stat_manager.stats[StatType.LVL]
+        #lvl_source = self.damage_taker_actor.stat_manager.stats[StatType.LVL]
+        #lvl_diff = lvl_source - lvl_taker
+        #if lvl_diff <= 0:
+        #    lvl_diff = 0
+
+        # add 20% of max hp of the taker to damage
+        #if self.damage_taker_actor.room.combat != None:
+        #    combat_round = self.damage_taker_actor.room.combat.round
+        #    taker_max_hp = self.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
+        #    self.damage_value += int(self.damage_value * (0.05 * (combat_round-1)))
+        
+
         match self.damage_type:
             # meaning the damage was completely cancelled by something
             # the affect should sendLine what exactly happened
@@ -69,6 +83,7 @@ class Damage:
 
         if self.damage_value <= 0:
             self.damage_value = 0
+            
         self.damage_taker_actor.stat_manager.stats[self.damage_to_stat ] -= self.damage_value
 
         '''
