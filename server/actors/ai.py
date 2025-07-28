@@ -85,6 +85,9 @@ class AI:
 
         #if self.prediction_skill != None:
         #    return
+
+        if self.actor.room == None:
+            return False
         
         if self.actor.room.combat == None:
             return False
