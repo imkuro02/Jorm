@@ -1,5 +1,5 @@
 {
-    "SHA-256": "3ab13747b13508685c03ee527ed1064b783535bc3db6c5b5f322a8238e538bab",
+    "SHA-256": "58635b4c4fedf2f4dbeaad9d4cda95aed54726904d9a872f291f0c0910b2707e",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3208,12 +3208,12 @@
                     0.65
                 ],
                 "duration": [
-                    8,
-                    8,
-                    8,
-                    8,
-                    8,
-                    8
+                    99,
+                    99,
+                    99,
+                    99,
+                    99,
+                    99
                 ],
                 "mp_cost": [
                     20,
@@ -3423,12 +3423,12 @@
                     2
                 ],
                 "duration": [
-                    8,
-                    8,
-                    8,
-                    8,
-                    8,
-                    8
+                    99,
+                    99,
+                    99,
+                    99,
+                    99,
+                    99
                 ],
                 "cooldown": [
                     7,
@@ -3522,12 +3522,12 @@
                     0.15
                 ],
                 "duration": [
-                    6,
-                    6,
-                    6,
-                    6,
-                    6,
-                    6
+                    99,
+                    99,
+                    99,
+                    99,
+                    99,
+                    99
                 ],
                 "cooldown": [
                     5,
@@ -3589,11 +3589,11 @@
                     4
                 ],
                 "duration": [
-                    5,
-                    5,
-                    6,
-                    6,
-                    7
+                    99,
+                    99,
+                    99,
+                    99,
+                    99
                 ],
                 "levels": [
                     1,
@@ -3638,7 +3638,7 @@
                     8
                 ],
                 "duration": [
-                    16
+                    99
                 ],
                 "levels": [
                     1
@@ -3762,7 +3762,7 @@
             "target_item_is_valid": true,
             "target_self_is_valid": false,
             "must_be_fighting": false,
-            "can_be_practiced": true,
+            "can_be_practiced": false,
             "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
@@ -3814,6 +3814,50 @@
                 ]
             }
         },
+        "bless": {
+            "skill_id": "bless",
+            "name": "Bless",
+            "description": "Boost all primary stats by BONUS\n",
+            "script_to_run": "BoostStats",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "must_be_fighting": false,
+            "can_be_practiced": true,
+            "practice_cost": 5,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_cure_light_wounds",
+                "you on you": "You pray for yourself",
+                "you on other": "You pray for #OTHER#",
+                "user on user": "#USER# prays for themselves",
+                "user on you": "#USER# prays for you",
+                "user on other": "#USER# prays for #OTHER#",
+                "you on you fail": "You lose concentration while praying for yourself",
+                "you on other fail": "You lose concentration while praying for #OTHER#",
+                "user on user fail": "#USER# loses their concentration while praying for themselves",
+                "user on you fail": "#USER# loses their concentration while praying for you",
+                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
+            },
+            "is_offensive": 0.0,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "duration": [
+                    10
+                ],
+                "bonus": [
+                    0.25
+                ],
+                "cooldown": [
+                    1
+                ],
+                "mp_cost": [
+                    50
+                ]
+            }
+        },
         "bless_grit": {
             "skill_id": "bless_grit",
             "name": "Bless Grit",
@@ -3823,7 +3867,7 @@
             "target_item_is_valid": false,
             "target_self_is_valid": true,
             "must_be_fighting": false,
-            "can_be_practiced": true,
+            "can_be_practiced": false,
             "practice_cost": 5,
             "level_req": 0.0,
             "use_perspectives": {
@@ -3864,7 +3908,7 @@
             "target_item_is_valid": false,
             "target_self_is_valid": true,
             "must_be_fighting": false,
-            "can_be_practiced": true,
+            "can_be_practiced": false,
             "practice_cost": 5,
             "level_req": 0.0,
             "use_perspectives": {
@@ -3905,7 +3949,7 @@
             "target_item_is_valid": false,
             "target_self_is_valid": true,
             "must_be_fighting": false,
-            "can_be_practiced": true,
+            "can_be_practiced": false,
             "practice_cost": 5,
             "level_req": 0.0,
             "use_perspectives": {
@@ -3946,7 +3990,7 @@
             "target_item_is_valid": false,
             "target_self_is_valid": true,
             "must_be_fighting": false,
-            "can_be_practiced": true,
+            "can_be_practiced": false,
             "practice_cost": 5,
             "level_req": 0.0,
             "use_perspectives": {

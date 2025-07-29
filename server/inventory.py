@@ -20,7 +20,7 @@ class TriggerableManager:
 
     # called at start of turn
     def set_turn(self):
-        if self.actor.status != 'Fighting': 
+        if self.actor.status != ActorStatusType.FIGHTING: 
             return
         for item in self.items():
             if item.premade_id in self.triggered:
@@ -31,7 +31,7 @@ class TriggerableManager:
 
     # called at end of turn
     def finish_turn(self):
-        if self.actor.status != 'Fighting': 
+        if self.actor.status != ActorStatusType.FIGHTING: 
             return
         for item in self.items():
             if item.premade_id in self.triggered:
@@ -42,7 +42,7 @@ class TriggerableManager:
 
     # called whenever hp updates in any way
     def take_damage(self, damage_obj: 'Damage'):
-        if self.actor.status != 'Fighting': 
+        if self.actor.status != ActorStatusType.FIGHTING: 
             return damage_obj
         for item in self.items():
             if item.premade_id in self.triggered:
@@ -53,7 +53,7 @@ class TriggerableManager:
         return damage_obj
     
     def deal_damage(self, damage_obj: 'Damage'):
-        if self.actor.status != 'Fighting': 
+        if self.actor.status != ActorStatusType.FIGHTING: 
             return damage_obj
         for item in self.items():
             if item.premade_id in self.triggered:
@@ -64,7 +64,7 @@ class TriggerableManager:
         return damage_obj
     
     def dealt_damage(self, damage_obj: 'Damage'):
-        if self.actor.status != 'Fighting': 
+        if self.actor.status != ActorStatusType.FIGHTING: 
             return damage_obj
         for item in self.items():
             if item.premade_id in self.triggered:

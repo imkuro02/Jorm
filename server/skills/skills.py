@@ -208,7 +208,7 @@ class SkillDamageBySoul(SkillDamage):
 
 class SkillBoostStat(Skill):
     def use(self, name_of_boost = 'boosted', stat = StatType.GRIT):
-        super().use()
+        #super().use()
         if self.success:
             turns =         int(self.script_values['duration'][self.users_skill_level])
             bonus =         self.script_values['bonus'][self.users_skill_level]
@@ -216,20 +216,30 @@ class SkillBoostStat(Skill):
                     affect_manager = self.other.affect_manager, 
                     name = name_of_boost, description = f'Temporary boost {StatType.name[stat].lower()} by {int(bonus*100)}% (+{int(self.other.stat_manager.stats[stat]*bonus)})', 
                     turns = turns, bonus = bonus, stat=stat)
-            self.other.affect_manager.set_affect_object(aff) 
-            
+            self.other.affect_manager.set_affect_object(aff)        
 class SkillBoostStatGrit(SkillBoostStat):
     def use(self):
-        super().use(name_of_boost='Boosted',stat=StatType.GRIT)
+        Skill.use(self)
+        super().use(name_of_boost='Grit Blessed',stat=StatType.GRIT)
 class SkillBoostStatFlow(SkillBoostStat):
     def use(self):
-        super().use(name_of_boost='Boosted',stat=StatType.FLOW)
+        Skill.use(self)
+        super().use(name_of_boost='Flow Blessed',stat=StatType.FLOW)
 class SkillBoostStatMind(SkillBoostStat):
     def use(self):
-        super().use(name_of_boost='Boosted',stat=StatType.MIND)
+        Skill.use(self)
+        super().use(name_of_boost='Mind Blessed',stat=StatType.MIND)
 class SkillBoostStatSoul(SkillBoostStat):
     def use(self):
-        super().use(name_of_boost='Boosted',stat=StatType.SOUL)
+        Skill.use(self)
+        super().use(name_of_boost='Soul Blessed',stat=StatType.SOUL)
+class SkillBoostStats(SkillBoostStat):
+    def use(self):
+        Skill.use(self)
+        super().use(name_of_boost='Grit Blessed',stat=StatType.GRIT)
+        super().use(name_of_boost='Flow Blessed',stat=StatType.FLOW)
+        super().use(name_of_boost='Mind Blessed',stat=StatType.MIND)
+        super().use(name_of_boost='Soul Blessed',stat=StatType.SOUL)
 
 class SkillBecomeEthereal(Skill):
     def use(self):
