@@ -465,12 +465,14 @@ class Actor:
             
             output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)
+           
+            
 
         self.affect_manager.set_turn()
         self.cooldown_manager.set_turn()
         self.inventory_manager.set_turn()
 
-    def sendLine(self, line, msg_type):
+    def sendLine(self, line, msg_type = None):
         print(f'sendLine called in a object class Npc function? line: {line}')
 
     def sendSound(self, sfx):

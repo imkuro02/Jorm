@@ -124,11 +124,15 @@ class AI:
             if targets == []:
                 continue
 
-            #target = random.choice(targets)
-            target = random.choice(targets)
-            for t in targets:
-                if t.stat_manager.stats[StatType.THREAT] > target.stat_manager.stats[StatType.THREAT]:
-                    target = t
+            target = self.actor
+            if SKILLS[skill_to_use]['target_others_is_valid']:
+                for t in targets:
+                    if t.stat_manager.stats[StatType.THREAT] > target.stat_manager.stats[StatType.THREAT]:
+                        target = t
+            
+                
+                
+            
             
             self.prediction_target = target
             self.prediction_skill = skill_to_use
@@ -205,8 +209,6 @@ class AI:
         
         if self.actor.room.combat == None:
             return False
-
-        
 
         if self.actor.room.combat.current_actor != self.actor:
             return False

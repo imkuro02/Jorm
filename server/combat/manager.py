@@ -1,6 +1,8 @@
 from configuration.config import ActorStatusType, StatType, DamageType
 from combat.combat_event import CombatEvent
 from combat.damage_event import Damage
+import random
+
 class Combat:
     def __init__(self, room, participants):
         self.combat_active = True
@@ -237,7 +239,20 @@ class Combat:
         for i in self.participants.values():
             if i.status != ActorStatusType.DEAD:
                 self.order.append(i)
-        self.order.sort(key=lambda x: x.stat_manager.stats[StatType.FLOW], reverse=True)
+        self.order.sort(key=lambda x: random.randint(0,x.stat_manager.stats[StatType.FLOW]), reverse=True)
+
+        for par in self.participants.values():
+            if type(par).__name__ != 'Player':
+                continue
+            order = ''
+            for i in self.order:
+                if par == i:
+                    order = order + 'YOU' + ' -> '
+                else:
+                    order = order + i.pretty_name() + ' -> '
+                
+            order = order + f'ROUND {self.round}'
+            par.sendLine(order)
         
         """
         for i in self.order:
