@@ -17,6 +17,11 @@ def create_npc(room, npc_id, spawn_for_lore = False):
     skills =        None
     tree =          None
     ai =            None
+    can_start_fights = False
+    dont_join_fights = False
+
+    #if npc_id not in ENEMIES:
+    #    return
     
 
     if npc_id in ENEMIES:
