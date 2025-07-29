@@ -1,5 +1,5 @@
 {
-    "SHA-256": "2ca52ad719ad951616a84408baa0f7fdfa6ae94c7b4bf40a2cca3cb3bda90881",
+    "SHA-256": "3ab13747b13508685c03ee527ed1064b783535bc3db6c5b5f322a8238e538bab",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -56,9 +56,9 @@
                 "mp": 10,
                 "armor": 0,
                 "marmor": 0,
-                "flow": 10,
-                "mind": 0,
-                "soul": 0,
+                "flow": 5,
+                "mind": 5,
+                "soul": 10,
                 "exp": 1,
                 "lvl": 1
             },
@@ -70,22 +70,22 @@
                 "red potion": 150,
                 "blue potion": 150,
                 "translucent scroll": 1600,
-                "flow body 1": 30,
-                "flow head 1": 30,
-                "flow relic 1": 30,
-                "flow trinket 1": 30,
-                "flow weapon 1": 30,
-                "flow body 3": 150,
-                "flow head 3": 150,
-                "flow trinket 3": 150,
-                "flow weapon 3": 150,
-                "flow body 6": 1600,
-                "flow head 6": 1600,
-                "flow trinket 6": 1600,
-                "flow weapon 6": 1600
+                "soul body 1": 30,
+                "soul head 1": 30,
+                "soul relic 1": 30,
+                "soul trinket 1": 30,
+                "soul weapon 1": 30,
+                "soul body 3": 150,
+                "soul head 3": 150,
+                "soul trinket 3": 150,
+                "soul weapon 3": 150,
+                "soul body 6": 1600,
+                "soul head 6": 1600,
+                "soul trinket 6": 1600,
+                "soul weapon 6": 1600
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false
         },
         "rat": {
@@ -94,13 +94,13 @@
             "name": "Rat",
             "description": "A greasy brown rat. Its body is muscular, and it is the size of a small cat. Its ears are scarred. It scurries around quickly.",
             "stats": {
-                "grit": 0,
+                "grit": 5,
                 "hp": 30,
                 "mp": 10,
                 "armor": 0,
                 "marmor": 0,
                 "flow": 10,
-                "mind": 0,
+                "mind": 5,
                 "soul": 0,
                 "exp": 1,
                 "lvl": 1
@@ -181,12 +181,12 @@
             "stats": {
                 "grit": 5,
                 "hp": 30,
-                "mp": 10,
+                "mp": 30,
                 "armor": 0,
                 "marmor": 0,
-                "flow": 10,
-                "mind": 0,
-                "soul": 12,
+                "flow": 5,
+                "mind": 10,
+                "soul": 5,
                 "exp": 1,
                 "lvl": 1
             },
@@ -198,22 +198,22 @@
                 "red potion": 150,
                 "blue potion": 150,
                 "translucent scroll": 1600,
-                "soul body 1": 30,
-                "soul head 1": 30,
-                "soul relic 1": 30,
-                "soul trinket 1": 30,
-                "soul weapon 1": 30,
-                "soul body 3": 150,
-                "soul head 3": 150,
-                "soul trinket 3": 150,
-                "soul weapon 3": 150,
-                "soul body 6": 1600,
-                "soul head 6": 1600,
-                "soul trinket 6": 1600,
-                "soul weapon 6": 1600
+                "mind body 1": 30,
+                "mind head 1": 30,
+                "mind relic 1": 30,
+                "mind trinket 1": 30,
+                "mind weapon 1": 30,
+                "mind body 3": 150,
+                "mind head 3": 150,
+                "mind trinket 3": 150,
+                "mind weapon 3": 150,
+                "mind body 6": 1600,
+                "mind head 6": 1600,
+                "mind trinket 6": 1600,
+                "mind weapon 6": 1600
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false
         },
         "wood_stump": {
@@ -222,13 +222,13 @@
             "name": "Wood Stump",
             "description": "A reanimated stump of a large tree. Its dirt-covered roots act like tentacles. It has one central eye. With each step, the stump creaks. It moves deliberately.",
             "stats": {
-                "grit": 5,
+                "grit": 10,
                 "hp": 30,
                 "mp": 10,
                 "armor": 0,
                 "marmor": 0,
-                "flow": 10,
-                "mind": 0,
+                "flow": 5,
+                "mind": 5,
                 "soul": 0,
                 "exp": 1,
                 "lvl": 1
@@ -242,19 +242,20 @@
                 "red potion": 150,
                 "blue potion": 150,
                 "translucent scroll": 1600,
-                "flow body 1": 30,
-                "flow head 1": 30,
-                "flow relic 1": 30,
-                "flow trinket 1": 30,
-                "flow weapon 1": 30,
-                "flow body 3": 150,
-                "flow head 3": 150,
-                "flow trinket 3": 150,
-                "flow weapon 3": 150,
-                "flow body 6": 1600,
-                "flow head 6": 1600,
-                "flow trinket 6": 1600,
-                "flow weapon 6": 1600
+                "grit body 1": 30,
+                "grit head 1": 30,
+                "grit relic 1": 30,
+                "grit trinket 1": 30,
+                "grit weapon 1": 30,
+                "grit body 3": 150,
+                "grit head 3": 150,
+                "grit trinket 3": 150,
+                "grit weapon 3": 150,
+                "grit body 6": 1600,
+                "grit head 6": 1600,
+                "grit trinket 6": 1600,
+                "grit weapon 6": 1600,
+                "rusty_axe": 1600
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -272,7 +273,7 @@
                 "armor": 0,
                 "marmor": 0,
                 "flow": 10,
-                "mind": 0,
+                "mind": 5,
                 "soul": 0,
                 "exp": 1,
                 "lvl": 1
@@ -309,12 +310,12 @@
             "name": "Orange Mushroom",
             "description": "A large, orange-capped mushroom, the size of a big dog. Its stem is the color of an eggshell. It has no arms or legs—its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops when it moves, its body making a loud thud with each short jump.",
             "stats": {
-                "grit": 12,
+                "grit": 15,
                 "hp": 50,
                 "mp": 20,
                 "armor": 1,
                 "marmor": 1,
-                "flow": 15,
+                "flow": 10,
                 "mind": 10,
                 "soul": 10,
                 "exp": 3,
@@ -328,23 +329,24 @@
                 "red potion": 70,
                 "blue potion": 70,
                 "translucent scroll": 1000,
-                "flow body 1": 150,
-                "flow head 1": 150,
-                "flow relic 1": 150,
-                "flow trinket 1": 150,
-                "flow weapon 1": 150,
-                "flow body 3": 70,
-                "flow head 3": 70,
-                "flow trinket 3": 70,
-                "flow weapon 3": 70,
-                "flow body 6": 1000,
-                "flow head 6": 1000,
-                "flow trinket 6": 1000,
-                "flow weapon 6": 1000,
-                "flow body 9": 3900,
-                "flow head 9": 3900,
-                "flow trinket 9": 3900,
-                "flow weapon 9": 3900
+                "grit body 1": 150,
+                "grit head 1": 150,
+                "grit relic 1": 150,
+                "grit trinket 1": 150,
+                "grit weapon 1": 150,
+                "grit body 3": 70,
+                "grit head 3": 70,
+                "grit trinket 3": 70,
+                "grit weapon 3": 70,
+                "grit body 6": 1000,
+                "grit head 6": 1000,
+                "grit trinket 6": 1000,
+                "grit weapon 6": 1000,
+                "rusty_axe": 1000,
+                "grit body 9": 3900,
+                "grit head 9": 3900,
+                "grit trinket 9": 3900,
+                "grit weapon 9": 3900
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -356,13 +358,13 @@
             "name": "Green Slime",
             "description": "A mass of green ooze. It is sticky yet bouncy, moving with no purpose.",
             "stats": {
-                "grit": 12,
+                "grit": 10,
                 "hp": 50,
                 "mp": 20,
                 "armor": 1,
                 "marmor": 1,
-                "flow": 15,
-                "mind": 10,
+                "flow": 10,
+                "mind": 15,
                 "soul": 10,
                 "exp": 3,
                 "lvl": 3
@@ -375,26 +377,26 @@
                 "red potion": 70,
                 "blue potion": 70,
                 "translucent scroll": 1000,
-                "flow body 1": 150,
-                "flow head 1": 150,
-                "flow relic 1": 150,
-                "flow trinket 1": 150,
-                "flow weapon 1": 150,
-                "flow body 3": 70,
-                "flow head 3": 70,
-                "flow trinket 3": 70,
-                "flow weapon 3": 70,
-                "flow body 6": 1000,
-                "flow head 6": 1000,
-                "flow trinket 6": 1000,
-                "flow weapon 6": 1000,
-                "flow body 9": 3900,
-                "flow head 9": 3900,
-                "flow trinket 9": 3900,
-                "flow weapon 9": 3900
+                "mind body 1": 150,
+                "mind head 1": 150,
+                "mind relic 1": 150,
+                "mind trinket 1": 150,
+                "mind weapon 1": 150,
+                "mind body 3": 70,
+                "mind head 3": 70,
+                "mind trinket 3": 70,
+                "mind weapon 3": 70,
+                "mind body 6": 1000,
+                "mind head 6": 1000,
+                "mind trinket 6": 1000,
+                "mind weapon 6": 1000,
+                "mind body 9": 3900,
+                "mind head 9": 3900,
+                "mind trinket 9": 3900,
+                "mind weapon 9": 3900
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false
         },
         "spider": {
@@ -497,12 +499,12 @@
             "name": "Pig",
             "description": "Oink.",
             "stats": {
-                "grit": 12,
+                "grit": 15,
                 "hp": 50,
                 "mp": 20,
                 "armor": 1,
                 "marmor": 1,
-                "flow": 15,
+                "flow": 10,
                 "mind": 10,
                 "soul": 10,
                 "exp": 3,
@@ -516,23 +518,24 @@
                 "red potion": 70,
                 "blue potion": 70,
                 "translucent scroll": 1000,
-                "flow body 1": 150,
-                "flow head 1": 150,
-                "flow relic 1": 150,
-                "flow trinket 1": 150,
-                "flow weapon 1": 150,
-                "flow body 3": 70,
-                "flow head 3": 70,
-                "flow trinket 3": 70,
-                "flow weapon 3": 70,
-                "flow body 6": 1000,
-                "flow head 6": 1000,
-                "flow trinket 6": 1000,
-                "flow weapon 6": 1000,
-                "flow body 9": 3900,
-                "flow head 9": 3900,
-                "flow trinket 9": 3900,
-                "flow weapon 9": 3900
+                "grit body 1": 150,
+                "grit head 1": 150,
+                "grit relic 1": 150,
+                "grit trinket 1": 150,
+                "grit weapon 1": 150,
+                "grit body 3": 70,
+                "grit head 3": 70,
+                "grit trinket 3": 70,
+                "grit weapon 3": 70,
+                "grit body 6": 1000,
+                "grit head 6": 1000,
+                "grit trinket 6": 1000,
+                "grit weapon 6": 1000,
+                "rusty_axe": 1000,
+                "grit body 9": 3900,
+                "grit head 9": 3900,
+                "grit trinket 9": 3900,
+                "grit weapon 9": 3900
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -602,66 +605,14 @@
                 "armor": 1,
                 "marmor": 1,
                 "flow": 15,
-                "mind": 10,
-                "soul": 20,
+                "mind": 15,
+                "soul": 15,
                 "exp": 6,
                 "lvl": 6
             },
             "include_in_daily_quests": true,
             "skills": {
                 "smite": 1
-            },
-            "loot": {
-                "red potion": 1000,
-                "blue potion": 1000,
-                "translucent scroll": 130,
-                "soul body 1": 1600,
-                "soul head 1": 1600,
-                "soul relic 1": 1600,
-                "soul trinket 1": 1600,
-                "soul weapon 1": 1600,
-                "soul body 3": 1000,
-                "soul head 3": 1000,
-                "soul trinket 3": 1000,
-                "soul weapon 3": 1000,
-                "soul body 6": 130,
-                "soul head 6": 130,
-                "soul trinket 6": 130,
-                "soul weapon 6": 130,
-                "soul body 9": 1600,
-                "soul head 9": 1600,
-                "soul trinket 9": 1600,
-                "soul weapon 9": 1600,
-                "soul body 12": 5700,
-                "soul head 12": 5700,
-                "soul trinket 12": 5700,
-                "soul weapon 12": 5700,
-                "soul wepaon 9 bone": 5700
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false
-        },
-        "blue_slime": {
-            "npc_id": "blue_slime",
-            "ai": "Slime",
-            "name": "Blue Slime",
-            "description": "A mass of blue ooze, sticky yet bouncy, moves aimlessly with a strange, unsettling fluidity.",
-            "stats": {
-                "grit": 20,
-                "hp": 80,
-                "mp": 40,
-                "armor": 1,
-                "marmor": 1,
-                "flow": 15,
-                "mind": 10,
-                "soul": 10,
-                "exp": 6,
-                "lvl": 6
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "swing": 1
             },
             "loot": {
                 "red potion": 1000,
@@ -693,6 +644,58 @@
                 "grit trinket 12 sword": 5700,
                 "grit weapon 12": 5700,
                 "grit weapon 9 bone": 5700
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false
+        },
+        "blue_slime": {
+            "npc_id": "blue_slime",
+            "ai": "Slime",
+            "name": "Blue Slime",
+            "description": "A mass of blue ooze, sticky yet bouncy, moves aimlessly with a strange, unsettling fluidity.",
+            "stats": {
+                "grit": 10,
+                "hp": 80,
+                "mp": 40,
+                "armor": 1,
+                "marmor": 1,
+                "flow": 15,
+                "mind": 20,
+                "soul": 10,
+                "exp": 6,
+                "lvl": 6
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "red potion": 1000,
+                "blue potion": 1000,
+                "translucent scroll": 130,
+                "mind body 1": 1600,
+                "mind head 1": 1600,
+                "mind relic 1": 1600,
+                "mind trinket 1": 1600,
+                "mind weapon 1": 1600,
+                "mind body 3": 1000,
+                "mind head 3": 1000,
+                "mind trinket 3": 1000,
+                "mind weapon 3": 1000,
+                "mind body 6": 130,
+                "mind head 6": 130,
+                "mind trinket 6": 130,
+                "mind weapon 6": 130,
+                "mind body 9": 1600,
+                "mind head 9": 1600,
+                "mind trinket 9": 1600,
+                "mind weapon 9": 1600,
+                "mind body 12": 5700,
+                "mind head 12": 5700,
+                "mind head 9 bone": 5700,
+                "mind trinket 12": 5700,
+                "mind weapon 12": 5700
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -760,12 +763,12 @@
             "name": "Red Cap",
             "description": "A large red-capped mushroom with grayish spots. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs; its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump",
             "stats": {
-                "grit": 20,
+                "grit": 15,
                 "hp": 80,
                 "mp": 40,
                 "armor": 1,
                 "marmor": 1,
-                "flow": 15,
+                "flow": 20,
                 "mind": 10,
                 "soul": 10,
                 "exp": 6,
@@ -779,32 +782,28 @@
                 "red potion": 1000,
                 "blue potion": 1000,
                 "translucent scroll": 130,
-                "grit body 1": 1600,
-                "grit head 1": 1600,
-                "grit relic 1": 1600,
-                "grit trinket 1": 1600,
-                "grit weapon 1": 1600,
-                "grit body 3": 1000,
-                "grit head 3": 1000,
-                "grit trinket 3": 1000,
-                "grit weapon 3": 1000,
-                "grit body 6": 130,
-                "grit head 6": 130,
-                "grit trinket 6": 130,
-                "grit weapon 6": 130,
-                "rusty_axe": 130,
-                "grit body 9": 1600,
-                "grit head 9": 1600,
-                "grit trinket 9": 1600,
-                "grit weapon 9": 1600,
-                "grit body 12": 5700,
-                "grit body 9 bone": 5700,
-                "grit head 12": 5700,
-                "grit head 9 bone": 5700,
-                "grit trinket 12 shield ": 5700,
-                "grit trinket 12 sword": 5700,
-                "grit weapon 12": 5700,
-                "grit weapon 9 bone": 5700
+                "flow body 1": 1600,
+                "flow head 1": 1600,
+                "flow relic 1": 1600,
+                "flow trinket 1": 1600,
+                "flow weapon 1": 1600,
+                "flow body 3": 1000,
+                "flow head 3": 1000,
+                "flow trinket 3": 1000,
+                "flow weapon 3": 1000,
+                "flow body 6": 130,
+                "flow head 6": 130,
+                "flow trinket 6": 130,
+                "flow weapon 6": 130,
+                "flow body 9": 1600,
+                "flow head 9": 1600,
+                "flow trinket 9": 1600,
+                "flow weapon 9": 1600,
+                "flow body 12": 5700,
+                "flow head 12": 5700,
+                "flow trinket 12": 5700,
+                "flow weapon 12": 5700,
+                "flow weapon 9 bone": 5700
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -819,11 +818,11 @@
                 "grit": 10,
                 "hp": 100,
                 "mp": 140,
-                "armor": 3,
+                "armor": 2,
                 "marmor": 3,
                 "flow": 15,
                 "mind": 10,
-                "soul": 10,
+                "soul": 20,
                 "exp": 9,
                 "lvl": 9
             },
@@ -835,23 +834,23 @@
                 "red potion": 3900,
                 "blue potion": 3900,
                 "translucent scroll": 1600,
-                "flow body 3": 3900,
-                "flow head 3": 3900,
-                "flow trinket 3": 3900,
-                "flow weapon 3": 3900,
-                "flow body 6": 1600,
-                "flow head 6": 1600,
-                "flow trinket 6": 1600,
-                "flow weapon 6": 1600,
-                "flow body 9": 190,
-                "flow head 9": 190,
-                "flow trinket 9": 190,
-                "flow weapon 9": 190,
-                "flow body 12": 2200,
-                "flow head 12": 2200,
-                "flow trinket 12": 2200,
-                "flow weapon 12": 2200,
-                "flow weapon 9 bone": 2200
+                "soul body 3": 3900,
+                "soul head 3": 3900,
+                "soul trinket 3": 3900,
+                "soul weapon 3": 3900,
+                "soul body 6": 1600,
+                "soul head 6": 1600,
+                "soul trinket 6": 1600,
+                "soul weapon 6": 1600,
+                "soul body 9": 190,
+                "soul head 9": 190,
+                "soul trinket 9": 190,
+                "soul weapon 9": 190,
+                "soul body 12": 2200,
+                "soul head 12": 2200,
+                "soul trinket 12": 2200,
+                "soul weapon 12": 2200,
+                "soul wepaon 9 bone": 2200
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -868,7 +867,7 @@
                 "mp": 50,
                 "armor": 3,
                 "marmor": 3,
-                "flow": 15,
+                "flow": 20,
                 "mind": 10,
                 "soul": 10,
                 "exp": 9,
@@ -910,11 +909,11 @@
             "name": "Horned Mushroom",
             "description": "A large blue-capped mushroom with grayish spots. The mushroom cap is covered in thorns the size of glass bottles. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs; its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
             "stats": {
-                "grit": 10,
+                "grit": 20,
                 "hp": 100,
                 "mp": 30,
-                "armor": 3,
-                "marmor": 3,
+                "armor": 4,
+                "marmor": 2,
                 "flow": 15,
                 "mind": 10,
                 "soul": 10,
@@ -930,23 +929,27 @@
                 "red potion": 3900,
                 "blue potion": 3900,
                 "translucent scroll": 1600,
-                "flow body 3": 3900,
-                "flow head 3": 3900,
-                "flow trinket 3": 3900,
-                "flow weapon 3": 3900,
-                "flow body 6": 1600,
-                "flow head 6": 1600,
-                "flow trinket 6": 1600,
-                "flow weapon 6": 1600,
-                "flow body 9": 190,
-                "flow head 9": 190,
-                "flow trinket 9": 190,
-                "flow weapon 9": 190,
-                "flow body 12": 2200,
-                "flow head 12": 2200,
-                "flow trinket 12": 2200,
-                "flow weapon 12": 2200,
-                "flow weapon 9 bone": 2200
+                "grit body 3": 3900,
+                "grit head 3": 3900,
+                "grit trinket 3": 3900,
+                "grit weapon 3": 3900,
+                "grit body 6": 1600,
+                "grit head 6": 1600,
+                "grit trinket 6": 1600,
+                "grit weapon 6": 1600,
+                "rusty_axe": 1600,
+                "grit body 9": 190,
+                "grit head 9": 190,
+                "grit trinket 9": 190,
+                "grit weapon 9": 190,
+                "grit body 12": 2200,
+                "grit body 9 bone": 2200,
+                "grit head 12": 2200,
+                "grit head 9 bone": 2200,
+                "grit trinket 12 shield ": 2200,
+                "grit trinket 12 sword": 2200,
+                "grit weapon 12": 2200,
+                "grit weapon 9 bone": 2200
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -958,11 +961,11 @@
             "name": "Skeleton",
             "description": "A tall skeletal humanoid, its eye sockets empty and lifeless, its jaw loose and hanging from its skull. Each step it takes makes a loud crackling sound.",
             "stats": {
-                "grit": 26,
+                "grit": 20,
                 "hp": 100,
                 "mp": 0,
-                "armor": 3,
-                "marmor": 3,
+                "armor": 0,
+                "marmor": 0,
                 "flow": 15,
                 "mind": 10,
                 "soul": 10,
@@ -1010,10 +1013,10 @@
             "description": "A tall skeletal humanoid wearing a thin, loosely fit robe. Its eye sockets are empty and lifeless, its jaw loose and hanging from its skull. Each step it takes makes a loud crackling sound.",
             "stats": {
                 "grit": 10,
-                "hp": 150,
+                "hp": 100,
                 "mp": 300,
                 "armor": 0,
-                "marmor": 0,
+                "marmor": 3,
                 "flow": 15,
                 "mind": 40,
                 "soul": 10,
@@ -1144,11 +1147,11 @@
             "stats": {
                 "grit": 10,
                 "hp": 120,
-                "mp": 400,
+                "mp": 200,
                 "armor": 3,
                 "marmor": 6,
                 "flow": 20,
-                "mind": 40,
+                "mind": 30,
                 "soul": 10,
                 "exp": 12,
                 "lvl": 12
@@ -1184,13 +1187,13 @@
             "description": "A large yellow-capped mushroom with grayish spots. The mushroom cap is covered in blunt thorns the size of fists. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs, yet it holds a mace in one spore-covered hand. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
             "stats": {
                 "grit": 10,
-                "hp": 60,
-                "mp": 300,
+                "hp": 100,
+                "mp": 150,
                 "armor": 5,
                 "marmor": 5,
                 "flow": 15,
                 "mind": 10,
-                "soul": 25,
+                "soul": 30,
                 "exp": 12,
                 "lvl": 12
             },
@@ -1319,8 +1322,8 @@
                 "grit": 40,
                 "hp": 300,
                 "mp": 40,
-                "armor": 1,
-                "marmor": 1,
+                "armor": 4,
+                "marmor": 2,
                 "flow": 20,
                 "mind": 10,
                 "soul": 10,
@@ -1361,12 +1364,12 @@
             "name": "Skeleton Soldier",
             "description": "A tall skeletal humanoid in rusty chainmail armor. It drags its broken sword behind it as it moves deliberately.",
             "stats": {
-                "grit": 30,
+                "grit": 20,
                 "hp": 200,
                 "mp": 40,
-                "armor": 6,
-                "marmor": 3,
-                "flow": 20,
+                "armor": 2,
+                "marmor": 2,
+                "flow": 30,
                 "mind": 10,
                 "soul": 10,
                 "exp": 12,
@@ -1378,23 +1381,19 @@
             },
             "loot": {
                 "translucent scroll": 5700,
-                "grit body 6": 5700,
-                "grit head 6": 5700,
-                "grit trinket 6": 5700,
-                "grit weapon 6": 5700,
-                "rusty_axe": 5700,
-                "grit body 9": 2200,
-                "grit head 9": 2200,
-                "grit trinket 9": 2200,
-                "grit weapon 9": 2200,
-                "grit body 12": 250,
-                "grit body 9 bone": 250,
-                "grit head 12": 250,
-                "grit head 9 bone": 250,
-                "grit trinket 12 shield ": 250,
-                "grit trinket 12 sword": 250,
-                "grit weapon 12": 250,
-                "grit weapon 9 bone": 250
+                "flow body 6": 5700,
+                "flow head 6": 5700,
+                "flow trinket 6": 5700,
+                "flow weapon 6": 5700,
+                "flow body 9": 2200,
+                "flow head 9": 2200,
+                "flow trinket 9": 2200,
+                "flow weapon 9": 2200,
+                "flow body 12": 250,
+                "flow head 12": 250,
+                "flow trinket 12": 250,
+                "flow weapon 12": 250,
+                "flow weapon 9 bone": 250
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -1409,7 +1408,7 @@
                 "grit": 10,
                 "hp": 150,
                 "mp": 350,
-                "armor": 6,
+                "armor": 2,
                 "marmor": 4,
                 "flow": 10,
                 "mind": 40,
@@ -1503,8 +1502,8 @@
                 "armor": 10,
                 "marmor": 5,
                 "flow": 10,
-                "mind": 0,
-                "soul": 0,
+                "mind": 5,
+                "soul": 5,
                 "exp": 10,
                 "lvl": 7
             },
@@ -1616,7 +1615,7 @@
                 "exp": 3,
                 "lvl": 3
             },
-            "include_in_daily_quests": true,
+            "include_in_daily_quests": false,
             "skills": {
                 "swing": 1
             },
@@ -1886,7 +1885,7 @@
                 "exp": 1,
                 "lvl": 1
             },
-            "include_in_daily_quests": false,
+            "include_in_daily_quests": true,
             "skills": {
                 "swing": 1
             },
@@ -2014,7 +2013,7 @@
                 "exp": 12,
                 "lvl": 12
             },
-            "include_in_daily_quests": true,
+            "include_in_daily_quests": false,
             "skills": {
                 "swing": 1
             },
@@ -2101,30 +2100,28 @@
                 "flow": 10,
                 "mind": 10,
                 "soul": 50,
-                "exp": 1,
-                "lvl": 1
+                "exp": 12,
+                "lvl": 12
             },
             "include_in_daily_quests": false,
             "skills": {
                 "nudge": 1
             },
             "loot": {
-                "red potion": 150,
-                "blue potion": 150,
-                "translucent scroll": 1600,
-                "soul body 1": 30,
-                "soul head 1": 30,
-                "soul relic 1": 30,
-                "soul trinket 1": 30,
-                "soul weapon 1": 30,
-                "soul body 3": 150,
-                "soul head 3": 150,
-                "soul trinket 3": 150,
-                "soul weapon 3": 150,
-                "soul body 6": 1600,
-                "soul head 6": 1600,
-                "soul trinket 6": 1600,
-                "soul weapon 6": 1600
+                "translucent scroll": 5700,
+                "soul body 6": 5700,
+                "soul head 6": 5700,
+                "soul trinket 6": 5700,
+                "soul weapon 6": 5700,
+                "soul body 9": 2200,
+                "soul head 9": 2200,
+                "soul trinket 9": 2200,
+                "soul weapon 9": 2200,
+                "soul body 12": 250,
+                "soul head 12": 250,
+                "soul trinket 12": 250,
+                "soul weapon 12": 250,
+                "soul wepaon 9 bone": 250
             },
             "combat_loop": {},
             "can_start_fights": false,
@@ -2147,7 +2144,7 @@
                 "exp": 1,
                 "lvl": 1
             },
-            "include_in_daily_quests": true,
+            "include_in_daily_quests": false,
             "skills": {
                 "swing": 1
             },
@@ -2191,7 +2188,7 @@
                 "exp": 1,
                 "lvl": 1
             },
-            "include_in_daily_quests": true,
+            "include_in_daily_quests": false,
             "skills": {
                 "swing": 1
             },
@@ -2234,7 +2231,7 @@
                 "exp": 1,
                 "lvl": 1
             },
-            "include_in_daily_quests": true,
+            "include_in_daily_quests": false,
             "skills": {
                 "swing": 1
             },
@@ -2321,7 +2318,7 @@
                 "exp": 12,
                 "lvl": 12
             },
-            "include_in_daily_quests": true,
+            "include_in_daily_quests": false,
             "skills": {
                 "magic_missile": 1
             },
@@ -2710,13 +2707,13 @@
             },
             "is_offensive": 1.0,
             "script_values": {
-                "cooldown": [
-                    1,
-                    2,
-                    3,
-                    4,
+                "damage": [
                     5,
-                    6
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
                 ],
                 "crit": [
                     0.75,
@@ -2726,13 +2723,13 @@
                     0.75,
                     0.75
                 ],
-                "damage": [
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10
+                "cooldown": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
                 ],
                 "levels": [
                     1,
@@ -2771,14 +2768,6 @@
             },
             "is_offensive": 1.0,
             "script_values": {
-                "crit": [
-                    0.6,
-                    0.62,
-                    0.64,
-                    0.66,
-                    0.68,
-                    0.7
-                ],
                 "damage": [
                     8,
                     8,
@@ -2786,6 +2775,14 @@
                     9,
                     10,
                     10
+                ],
+                "crit": [
+                    0.6,
+                    0.62,
+                    0.64,
+                    0.66,
+                    0.68,
+                    0.7
                 ],
                 "duration": [
                     1,
@@ -2795,14 +2792,6 @@
                     1,
                     1
                 ],
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
-                ],
                 "cooldown": [
                     4,
                     4,
@@ -2810,6 +2799,14 @@
                     4,
                     4,
                     4
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
                 ]
             }
         },
@@ -2840,13 +2837,13 @@
             },
             "is_offensive": 1.0,
             "script_values": {
-                "cooldown": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
+                "damage": [
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
                 ],
                 "crit": [
                     0.6,
@@ -2856,13 +2853,21 @@
                     0.6,
                     0.6
                 ],
-                "damage": [
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12
+                "mp_cost": [
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
+                ],
+                "cooldown": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
                 ],
                 "levels": [
                     1,
@@ -2871,14 +2876,6 @@
                     4,
                     5,
                     6
-                ],
-                "mp_cost": [
-                    2,
-                    2,
-                    2,
-                    2,
-                    2,
-                    2
                 ]
             }
         },
@@ -2909,13 +2906,13 @@
             },
             "is_offensive": 1.0,
             "script_values": {
-                "cooldown": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
+                "damage": [
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15
                 ],
                 "crit": [
                     0.8,
@@ -2925,13 +2922,21 @@
                     0.8,
                     0.8
                 ],
-                "damage": [
-                    10,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15
+                "mp_cost": [
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5
+                ],
+                "cooldown": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
                 ],
                 "levels": [
                     1,
@@ -2940,14 +2945,6 @@
                     4,
                     5,
                     6
-                ],
-                "mp_cost": [
-                    5,
-                    5,
-                    5,
-                    5,
-                    5,
-                    5
                 ]
             }
         },
@@ -2978,17 +2975,17 @@
             },
             "is_offensive": 1.0,
             "script_values": {
-                "cooldown": [
-                    1
-                ],
-                "levels": [
-                    1
-                ],
                 "damage": [
                     1
                 ],
                 "crit": [
                     0.65
+                ],
+                "cooldown": [
+                    1
+                ],
+                "levels": [
+                    1
                 ]
             }
         },
@@ -3019,13 +3016,13 @@
             },
             "is_offensive": 1.0,
             "script_values": {
-                "cooldown": [
+                "damage": [
                     1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
+                    3,
+                    5,
+                    7,
+                    9,
+                    11
                 ],
                 "crit": [
                     0.65,
@@ -3035,13 +3032,13 @@
                     0.85,
                     0.9
                 ],
-                "damage": [
+                "cooldown": [
                     1,
-                    3,
-                    5,
-                    7,
-                    9,
-                    11
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
                 ],
                 "levels": [
                     1,
@@ -3080,13 +3077,13 @@
             },
             "is_offensive": 1.0,
             "script_values": {
-                "cooldown": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
+                "damage": [
+                    5,
+                    7,
+                    9,
+                    11,
+                    13,
+                    15
                 ],
                 "crit": [
                     0.8,
@@ -3096,13 +3093,13 @@
                     0.8,
                     0.8
                 ],
-                "damage": [
-                    5,
-                    7,
-                    9,
-                    11,
-                    13,
-                    15
+                "cooldown": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
                 ],
                 "levels": [
                     1,
@@ -3141,13 +3138,13 @@
             },
             "is_offensive": 1.0,
             "script_values": {
-                "cooldown": [
-                    2,
-                    2,
-                    2,
-                    2,
-                    2,
-                    2
+                "damage": [
+                    10,
+                    15,
+                    20,
+                    25,
+                    30,
+                    35
                 ],
                 "crit": [
                     1.0,
@@ -3157,14 +3154,6 @@
                     1.0,
                     1.0
                 ],
-                "damage": [
-                    10,
-                    15,
-                    20,
-                    25,
-                    30,
-                    35
-                ],
                 "levels": [
                     1,
                     2,
@@ -3172,6 +3161,14 @@
                     4,
                     5,
                     6
+                ],
+                "cooldown": [
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
                 ]
             }
         },
@@ -3210,7 +3207,7 @@
                     0.6,
                     0.65
                 ],
-                "cooldown": [
+                "duration": [
                     8,
                     8,
                     8,
@@ -3218,7 +3215,15 @@
                     8,
                     8
                 ],
-                "duration": [
+                "mp_cost": [
+                    20,
+                    20,
+                    20,
+                    20,
+                    20,
+                    20
+                ],
+                "cooldown": [
                     8,
                     8,
                     8,
@@ -3233,14 +3238,6 @@
                     4,
                     5,
                     6
-                ],
-                "mp_cost": [
-                    20,
-                    20,
-                    20,
-                    20,
-                    20,
-                    20
                 ]
             }
         },
@@ -3277,17 +3274,7 @@
                     1.4,
                     1.35,
                     1.3,
-                    1.25,
-                    1.2
-                ],
-                "cooldown": [
-                    6,
-                    6,
-                    6,
-                    6,
-                    6,
-                    6,
-                    6
+                    1.25
                 ],
                 "duration": [
                     4,
@@ -3295,17 +3282,7 @@
                     4,
                     4,
                     4,
-                    4,
                     4
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7
                 ],
                 "mp_cost": [
                     30,
@@ -3313,8 +3290,23 @@
                     30,
                     30,
                     30,
-                    30,
                     30
+                ],
+                "cooldown": [
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
                 ]
             }
         },
@@ -3345,13 +3337,13 @@
             },
             "is_offensive": 0.0,
             "script_values": {
-                "cooldown": [
+                "damage": [
+                    2,
+                    4,
                     6,
-                    6,
-                    6,
-                    6,
-                    6,
-                    6
+                    8,
+                    10,
+                    12
                 ],
                 "crit": [
                     2.0,
@@ -3361,13 +3353,21 @@
                     2.0,
                     2.0
                 ],
-                "damage": [
-                    2,
-                    4,
-                    6,
-                    8,
+                "mp_cost": [
                     10,
-                    12
+                    10,
+                    10,
+                    10,
+                    10,
+                    10
+                ],
+                "cooldown": [
+                    6,
+                    6,
+                    6,
+                    6,
+                    6,
+                    6
                 ],
                 "levels": [
                     1,
@@ -3376,14 +3376,6 @@
                     4,
                     5,
                     6
-                ],
-                "mp_cost": [
-                    10,
-                    10,
-                    10,
-                    10,
-                    10,
-                    10
                 ]
             }
         },
@@ -3422,13 +3414,13 @@
                     0.8999999999999996,
                     0.9999999999999994
                 ],
-                "cooldown": [
-                    7,
-                    7,
-                    7,
-                    7,
-                    7,
-                    7
+                "hp_cost": [
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
                 ],
                 "duration": [
                     8,
@@ -3438,13 +3430,13 @@
                     8,
                     8
                 ],
-                "hp_cost": [
-                    2,
-                    2,
-                    2,
-                    2,
-                    2,
-                    2
+                "cooldown": [
+                    7,
+                    7,
+                    7,
+                    7,
+                    7,
+                    7
                 ],
                 "levels": [
                     1,
@@ -3483,14 +3475,14 @@
             },
             "is_offensive": 0.0,
             "script_values": {
-                "levels": [
-                    1
+                "bonus": [
+                    0.2
                 ],
                 "cooldown": [
                     1
                 ],
-                "bonus": [
-                    0.2
+                "levels": [
+                    1
                 ]
             }
         },
@@ -3529,14 +3521,6 @@
                     0.14,
                     0.15
                 ],
-                "cooldown": [
-                    5,
-                    5,
-                    5,
-                    5,
-                    5,
-                    5
-                ],
                 "duration": [
                     6,
                     6,
@@ -3544,6 +3528,14 @@
                     6,
                     6,
                     6
+                ],
+                "cooldown": [
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5
                 ],
                 "levels": [
                     1,
@@ -3750,14 +3742,14 @@
             },
             "is_offensive": 0.0,
             "script_values": {
+                "bonus": [
+                    0.2
+                ],
                 "cooldown": [
                     10
                 ],
                 "levels": [
                     1
-                ],
-                "bonus": [
-                    0.2
                 ]
             }
         },
@@ -3788,6 +3780,22 @@
             },
             "is_offensive": 0.0,
             "script_values": {
+                "bonus": [
+                    1.0,
+                    1.1,
+                    1.2,
+                    1.3,
+                    1.4,
+                    1.5
+                ],
+                "mp_cost": [
+                    10,
+                    10,
+                    10,
+                    10,
+                    10,
+                    10
+                ],
                 "cooldown": [
                     1,
                     1,
@@ -3803,22 +3811,6 @@
                     4,
                     5,
                     6
-                ],
-                "mp_cost": [
-                    10,
-                    10,
-                    10,
-                    10,
-                    10,
-                    10
-                ],
-                "bonus": [
-                    1.0,
-                    1.1,
-                    1.2,
-                    1.3,
-                    1.4,
-                    1.5
                 ]
             }
         },

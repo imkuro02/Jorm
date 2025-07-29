@@ -143,17 +143,17 @@ def use_skill(user, target, skill_id, no_checks = False):
 
     if skill_id not in user.skill_manager.skills:
         user.sendLine(f'You do not know {skill["name"]}')
-        return
+        return False
     
     if user.skill_manager.skills[skill_id] <= 0:
         user.sendLine(f'You do not know {skill["name"]}')
-        return
+        return False
     
     users_skill_level = get_user_skill_level_as_index(user,skill_id)
 
     if users_skill_level == -1:
         user.sendLine(f'You are not high enough level to use {skill["name"]}')
-        return
+        return False
 
     if skill_checks(user, target, skill_id) or no_checks:
         try:

@@ -160,7 +160,7 @@ class AI:
             if 'swing' == skill_to_use and i<15:
                 continue
 
-            if i>15:
+            if i>=15:
                 skill_to_use = 'swing'
 
             if SKILLS[skill_to_use]['is_offensive']:
@@ -177,10 +177,16 @@ class AI:
                 if t.stat_manager.stats[StatType.THREAT] > target.stat_manager.stats[StatType.THREAT]:
                     target = t
             
-            if use_skill(self.actor, target, skill_to_use):
+            if use_skill(self.actor, target, skill_to_use) == True:
                 self.actor.finish_turn()
                 return True
-            skills.remove(skill_to_use)
+            else:
+                skills.remove(skill_to_use)
+
+            
+
+            #skills.remove(skill_to_use)
+
         self.actor.simple_broadcast('You do nothing.',f'{self.actor.pretty_name()} does nothing.')
         self.actor.finish_turn()
         return False
