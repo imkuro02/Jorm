@@ -205,11 +205,13 @@ class Protocol(protocol.Protocol):
             self.sendLine('Your password must be a minimum of 6 character')
             return
 
-        self.account = self.factory.db.find_account_from_username(username)
-        print(self.account)
-        if self.account != None and self.account[1] != username:
+        account = self.factory.db.find_account_from_username(username)
+        #print(self.account)
+        if account != None and account[0] != self.id:
             self.sendLine('This username is already taken')
             return
+
+        self.account = account
         
         if len(username) >= 21 or len(username) <= 3:
             self.sendLine('Username must be between 4 and 20 characters long')
@@ -224,7 +226,7 @@ class Protocol(protocol.Protocol):
         if self.actor != None:
             self.actor.name = self.username
         self.factory.db.create_new_account(self.id, username, password)
-        self.sendLine('@greenAccount information updated@normal')
+        self.sendLine(f'@greenAccount information updated\n@red[@yellow!@red]@normal   your login username is: "@yellow{self.username}@normal"   @red[@yellow!@red]@normal')
 
     # override
     def connectionMade(self):

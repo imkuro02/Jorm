@@ -16,7 +16,7 @@ class SETTINGS:
     PWD = 'password'
     USR = 'username' # not in LIST_SETTINGS
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, 
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, USR 
     ]
 
 
