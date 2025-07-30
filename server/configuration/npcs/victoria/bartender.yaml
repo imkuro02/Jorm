@@ -63,6 +63,9 @@ bartender:
       options:
         - line: Accept
           goto: accepted
+          quest_check:
+            - id: rat_king
+              state: not_started
           quest_start:
             id: rat_king
         - line: Decline

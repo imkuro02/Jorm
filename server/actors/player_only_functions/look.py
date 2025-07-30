@@ -276,16 +276,16 @@ def command_map(self, line):
             
             elif room.can_be_recall_site and loc == START_LOC:
                 cell += Art.RECALL_SITE_AND_PLAYER
-            elif len([ x for x in room.exits if x.direction not in offsets ]) != 0 and loc == START_LOC: #set(offsets.keys()) - set(grid[loc].exits.keys()):
-                cell += Art.SPECIAL_EXIT_AND_PLAYER
+            #elif len([ x for x in room.exits if x.direction not in offsets ]) != 0 and loc == START_LOC: #set(offsets.keys()) - set(grid[loc].exits.keys()):
+            #    cell += Art.SPECIAL_EXIT_AND_PLAYER
             elif loc == START_LOC:
                 cell += Art.PLAYER_HERE
             elif room.doorway:
                 cell += Art.DOOR
             elif room.can_be_recall_site:
                 cell += Art.RECALL_SITE
-            elif len([ x for x in room.exits if x.direction not in offsets ]) != 0:
-                cell += Art.SPECIAL_EXIT
+            #elif len([ x for x in room.exits if x.direction not in offsets ]) != 0:
+            #    cell += Art.SPECIAL_EXIT
             else:
                 cell += Art.GROUND
 
@@ -414,6 +414,11 @@ def command_look(self, line):
 
     def look_actor(actor):
         sheet = actor.get_character_sheet()
+
+        important_dialog = actor.get_important_dialog(actor_to_compare = self)
+        if important_dialog != False:
+            sheet = sheet + f'@yellow{important_dialog}@normal'
+
         self.sendLine(f'You are looking at {sheet}')
         return 
 

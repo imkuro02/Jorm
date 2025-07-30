@@ -109,6 +109,8 @@ mushroom_kingdom_king:
         goto: mushroom_kingdom_2.accept
         quest_check:
           - id: mushroom_kingdom_2
+            state: turned_in
+          - id: mushroom_kingdom_2
             state: not_started
         quest_start:
           id: mushroom_kingdom_2

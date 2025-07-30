@@ -182,6 +182,9 @@ class Actor:
         #mxp =   self.stat_manager.stats[StatType.MPMAX]
         return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
         
+    # only npc class has this
+    def get_important_dialog(self, actor_to_compare):
+        return False
 
     def talk_to(self, talker):
         if talker.current_dialog != None:
@@ -292,7 +295,7 @@ class Actor:
             t.add_data(StatType.name[StatType.PP][:4]+':')
             t.add_data(self.stat_manager.stats[StatType.PP])
 
-        output += t.get_table()
+        output += t.get_table()[:-2]
        
         
         return output

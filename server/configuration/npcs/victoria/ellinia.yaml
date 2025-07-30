@@ -112,6 +112,8 @@ ellinia_shop_weapon:
         - line: accept
           goto: ellinia_shop_weapon_quest_2_accepted
           quest_check:
+            - id: ellinia_shop_weapon_quest_1
+              state: turned_in
             - id: ellinia_shop_weapon_quest_2
               state: not_started
           quest_start:
@@ -128,6 +130,10 @@ ellinia_shop_weapon:
         - line: accept
           goto: ellinia_shop_weapon_quest_3_accepted
           quest_check:
+            - id: ellinia_shop_weapon_quest_1
+              state: turned_in
+            - id: ellinia_shop_weapon_quest_2
+              state: turned_in
             - id: ellinia_shop_weapon_quest_3
               state: not_started
           quest_start:

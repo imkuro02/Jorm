@@ -142,6 +142,55 @@ class Npc(Actor):
         talker.current_dialog.print_dialog()
         #return True
 
+    # this function returns whether the npc has a quest to hand out or turn in / both
+    # actor_to_compare is the player that is checking 
+    def get_important_dialog(self, actor_to_compare):
+        has_quest_to_start = False
+        has_quest_to_turn_in = False
+        quest_man = actor_to_compare.quest_manager
+        output = ''
+        
+        for branch in self.dialog_tree.values():
+            
+            if 'options' not in branch:
+                continue
+            #print(branch['options'])
+            for option in branch['options']:
+                #print('!')
+                if 'quest_check' not in option:
+                    continue
+
+                if 'quest_start' not in option and 'quest_turn_in' not in option:
+                    continue
+
+                #print('checking, ',option['quest_check'])
+                check_valid = True
+                for quest_to_check in option['quest_check']:
+                    not_valid = quest_man.check_quest_state(quest_to_check['id']) != quest_to_check['state']
+                    #print(not_valid, quest_man.check_quest_state(quest_to_check['id']) , quest_to_check['state'])
+                    if not_valid:    
+                        check_valid = False
+                        
+                        
+                    #output = output + quest_to_check['id'] + ': ' + quest_to_check['state'] + ' ### '
+
+                if check_valid:
+                    if 'quest_start' in option:
+                        has_quest_to_start = True
+                    if 'quest_turn_in' in option:
+                        has_quest_to_turn_in = True
+
+        
+        if has_quest_to_start and has_quest_to_turn_in:
+            output = output + '\nHas both a quest to start and a quest to turn in'
+        else:
+            if has_quest_to_start:
+                output = output + '\nhas a quest to start'
+            if has_quest_to_turn_in:
+                output = output + '\nhas a quest to turn in'
+
+        return output
+
     def tick(self):
         super().tick()
         self.ai.tick()
@@ -236,6 +285,9 @@ class Enemy(Npc):
             can_start_fights = can_start_fights,
             dont_join_fights = dont_join_fights
         )
+
+    def get_important_dialog(self, actor_to_compare):
+        return False
 
 
 actors.ai.create_npc = create_npc
