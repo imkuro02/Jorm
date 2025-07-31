@@ -1,5 +1,5 @@
 {
-    "SHA-256": "58635b4c4fedf2f4dbeaad9d4cda95aed54726904d9a872f291f0c0910b2707e",
+    "SHA-256": "21aa3ea3325879183cf4351a215561f9762d5e11bcce617f20b08b3d3f28034e",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -162,6 +162,7 @@
                 "grit body 3": 150,
                 "grit head 3": 150,
                 "grit trinket 3": 150,
+                "grit weapon alt 3": 150,
                 "grit weapon 3": 150,
                 "grit body 6": 1600,
                 "grit head 6": 1600,
@@ -250,6 +251,7 @@
                 "grit body 3": 150,
                 "grit head 3": 150,
                 "grit trinket 3": 150,
+                "grit weapon alt 3": 150,
                 "grit weapon 3": 150,
                 "grit body 6": 1600,
                 "grit head 6": 1600,
@@ -337,6 +339,7 @@
                 "grit body 3": 70,
                 "grit head 3": 70,
                 "grit trinket 3": 70,
+                "grit weapon alt 3": 70,
                 "grit weapon 3": 70,
                 "grit body 6": 1000,
                 "grit head 6": 1000,
@@ -526,6 +529,7 @@
                 "grit body 3": 70,
                 "grit head 3": 70,
                 "grit trinket 3": 70,
+                "grit weapon alt 3": 70,
                 "grit weapon 3": 70,
                 "grit body 6": 1000,
                 "grit head 6": 1000,
@@ -626,6 +630,7 @@
                 "grit body 3": 1000,
                 "grit head 3": 1000,
                 "grit trinket 3": 1000,
+                "grit weapon alt 3": 1000,
                 "grit weapon 3": 1000,
                 "grit body 6": 130,
                 "grit head 6": 130,
@@ -734,6 +739,7 @@
                 "grit body 3": 1000,
                 "grit head 3": 1000,
                 "grit trinket 3": 1000,
+                "grit weapon alt 3": 1000,
                 "grit weapon 3": 1000,
                 "grit body 6": 130,
                 "grit head 6": 130,
@@ -803,7 +809,7 @@
                 "flow head 12": 5700,
                 "flow trinket 12": 5700,
                 "flow weapon 12": 5700,
-                "flow weapon 9 bone": 5700
+                "flow weapon 12 bone": 5700
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -897,7 +903,7 @@
                 "flow head 12": 2200,
                 "flow trinket 12": 2200,
                 "flow weapon 12": 2200,
-                "flow weapon 9 bone": 2200
+                "flow weapon 12 bone": 2200
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -932,6 +938,7 @@
                 "grit body 3": 3900,
                 "grit head 3": 3900,
                 "grit trinket 3": 3900,
+                "grit weapon alt 3": 3900,
                 "grit weapon 3": 3900,
                 "grit body 6": 1600,
                 "grit head 6": 1600,
@@ -983,6 +990,7 @@
                 "grit body 3": 3900,
                 "grit head 3": 3900,
                 "grit trinket 3": 3900,
+                "grit weapon alt 3": 3900,
                 "grit weapon 3": 3900,
                 "grit body 6": 1600,
                 "grit head 6": 1600,
@@ -1018,7 +1026,7 @@
                 "armor": 0,
                 "marmor": 3,
                 "flow": 15,
-                "mind": 40,
+                "mind": 25,
                 "soul": 10,
                 "exp": 9,
                 "lvl": 9
@@ -1133,7 +1141,7 @@
                 "flow head 12": 250,
                 "flow trinket 12": 250,
                 "flow weapon 12": 250,
-                "flow weapon 9 bone": 250
+                "flow weapon 12 bone": 250
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -1393,7 +1401,7 @@
                 "flow head 12": 250,
                 "flow trinket 12": 250,
                 "flow weapon 12": 250,
-                "flow weapon 9 bone": 250
+                "flow weapon 12 bone": 250
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -1475,6 +1483,7 @@
                 "grit body 3": 70,
                 "grit head 3": 70,
                 "grit trinket 3": 70,
+                "grit weapon alt 3": 70,
                 "grit weapon 3": 70,
                 "grit body 6": 1000,
                 "grit head 6": 1000,
@@ -1575,6 +1584,7 @@
                 "grit body 3": 1000,
                 "grit head 3": 1000,
                 "grit trinket 3": 1000,
+                "grit weapon alt 3": 1000,
                 "grit weapon 3": 1000,
                 "grit body 6": 130,
                 "grit head 6": 130,
@@ -1765,6 +1775,7 @@
                 "grit body 3": 400,
                 "grit head 3": 400,
                 "grit trinket 3": 400,
+                "grit weapon alt 3": 400,
                 "grit weapon 3": 400,
                 "grit body 6": 2100,
                 "grit head 6": 2100,
@@ -1806,7 +1817,7 @@
                 "flow head 12": 690,
                 "flow trinket 12": 690,
                 "flow weapon 12": 690,
-                "flow weapon 9 bone": 690
+                "flow weapon 12 bone": 690
             },
             "combat_loop": {},
             "can_start_fights": false,
@@ -1845,6 +1856,7 @@
                 "grit body 3": 1000,
                 "grit head 3": 1000,
                 "grit trinket 3": 1000,
+                "grit weapon alt 3": 1000,
                 "grit weapon 3": 1000,
                 "grit body 6": 130,
                 "grit head 6": 130,
@@ -1901,6 +1913,7 @@
                 "grit body 3": 150,
                 "grit head 3": 150,
                 "grit trinket 3": 150,
+                "grit weapon alt 3": 150,
                 "grit weapon 3": 150,
                 "grit body 6": 1600,
                 "grit head 6": 1600,
@@ -2160,6 +2173,7 @@
                 "grit body 3": 150,
                 "grit head 3": 150,
                 "grit trinket 3": 150,
+                "grit weapon alt 3": 150,
                 "grit weapon 3": 150,
                 "grit body 6": 1600,
                 "grit head 6": 1600,
@@ -2290,6 +2304,7 @@
                 "grit body 3": 150,
                 "grit head 3": 150,
                 "grit trinket 3": 150,
+                "grit weapon alt 3": 150,
                 "grit weapon 3": 150,
                 "grit body 6": 1600,
                 "grit head 6": 1600,
@@ -2373,6 +2388,7 @@
                 "grit body 3": 400,
                 "grit head 3": 400,
                 "grit trinket 3": 400,
+                "grit weapon alt 3": 400,
                 "grit weapon 3": 400,
                 "grit body 6": 2100,
                 "grit head 6": 2100,
@@ -2484,7 +2500,7 @@
                 "flow head 12": 2800,
                 "flow trinket 12": 2800,
                 "flow weapon 12": 2800,
-                "flow weapon 9 bone": 2800
+                "flow weapon 12 bone": 2800
             },
             "combat_loop": {},
             "can_start_fights": false,
@@ -2635,7 +2651,7 @@
                 "flow head 12": 2800,
                 "flow trinket 12": 2800,
                 "flow weapon 12": 2800,
-                "flow weapon 9 bone": 2800
+                "flow weapon 12 bone": 2800
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -2672,7 +2688,7 @@
                 "flow head 12": 2800,
                 "flow trinket 12": 2800,
                 "flow weapon 12": 2800,
-                "flow weapon 9 bone": 2800
+                "flow weapon 12 bone": 2800
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -2716,12 +2732,12 @@
                     10
                 ],
                 "crit": [
-                    0.75,
-                    0.75,
-                    0.75,
-                    0.75,
-                    0.75,
-                    0.75
+                    0.6,
+                    0.61,
+                    0.62,
+                    0.63,
+                    0.64,
+                    0.65
                 ],
                 "cooldown": [
                     1,
@@ -2847,11 +2863,11 @@
                 ],
                 "crit": [
                     0.6,
-                    0.6,
-                    0.6,
-                    0.6,
-                    0.6,
-                    0.6
+                    0.61,
+                    0.62,
+                    0.63,
+                    0.64,
+                    0.65
                 ],
                 "mp_cost": [
                     2,
@@ -2915,12 +2931,12 @@
                     15
                 ],
                 "crit": [
-                    0.8,
-                    0.8,
-                    0.8,
-                    0.8,
-                    0.8,
-                    0.8
+                    0.6,
+                    0.61,
+                    0.62,
+                    0.63,
+                    0.64,
+                    0.65
                 ],
                 "mp_cost": [
                     5,
@@ -3086,12 +3102,12 @@
                     15
                 ],
                 "crit": [
+                    0.6,
+                    0.65,
+                    0.7,
+                    0.75,
                     0.8,
-                    0.8,
-                    0.8,
-                    0.8,
-                    0.8,
-                    0.8
+                    0.85
                 ],
                 "cooldown": [
                     1,
@@ -3147,12 +3163,12 @@
                     35
                 ],
                 "crit": [
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0
+                    0.6,
+                    0.61,
+                    0.62,
+                    0.63,
+                    0.64,
+                    0.65
                 ],
                 "levels": [
                     1,
@@ -3207,14 +3223,6 @@
                     0.6,
                     0.65
                 ],
-                "duration": [
-                    99,
-                    99,
-                    99,
-                    99,
-                    99,
-                    99
-                ],
                 "mp_cost": [
                     20,
                     20,
@@ -3222,6 +3230,14 @@
                     20,
                     20,
                     20
+                ],
+                "duration": [
+                    99,
+                    99,
+                    99,
+                    99,
+                    99,
+                    99
                 ],
                 "cooldown": [
                     8,
@@ -3476,13 +3492,28 @@
             "is_offensive": 0.0,
             "script_values": {
                 "bonus": [
-                    0.2
+                    0.2,
+                    0.3,
+                    0.39999999999999997,
+                    0.49999999999999994,
+                    0.5999999999999999,
+                    0.7
                 ],
                 "cooldown": [
-                    1
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
                 ],
                 "levels": [
-                    1
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
                 ]
             }
         },
@@ -3575,6 +3606,7 @@
             "is_offensive": 0.0,
             "script_values": {
                 "bonus": [
+                    0.25,
                     0.3,
                     0.35,
                     0.4,
@@ -3586,9 +3618,11 @@
                     4,
                     4,
                     4,
+                    4,
                     4
                 ],
                 "duration": [
+                    99,
                     99,
                     99,
                     99,
@@ -3600,7 +3634,8 @@
                     2,
                     3,
                     4,
-                    5
+                    5,
+                    6
                 ]
             }
         },
@@ -3632,16 +3667,36 @@
             "is_offensive": 0.0,
             "script_values": {
                 "bonus": [
-                    0.2
+                    0.2,
+                    0.2,
+                    0.3,
+                    0.3,
+                    0.4,
+                    0.4
                 ],
                 "cooldown": [
+                    8,
+                    8,
+                    8,
+                    8,
+                    8,
                     8
                 ],
                 "duration": [
+                    99,
+                    99,
+                    99,
+                    99,
+                    99,
                     99
                 ],
                 "levels": [
-                    1
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
                 ]
             }
         },
@@ -5637,7 +5692,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": null,
             "stats": {
                 "grit": 2,
                 "hp_max": 0,
@@ -5826,7 +5881,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:mana_feed=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -5863,7 +5918,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:magic_missile=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -6011,7 +6066,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:cure_light_wounds=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -6048,7 +6103,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:smite=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -6196,7 +6251,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:stab=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -6370,6 +6425,43 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
+        "grit weapon alt 3": {
+            "premade_id": "grit weapon alt 3",
+            "name": "Rusty sword",
+            "description": "None",
+            "description_room": NaN,
+            "invisible": NaN,
+            "item_type": "equipment",
+            "ambience": NaN,
+            "ambience_sfx": NaN,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:slash=1",
+            "stats": {
+                "grit": 4,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0
+            },
+            "requirements": {
+                "lvl": 3,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "grit": 11,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0
+            },
+            "random_drop_lvl": 3,
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
         "grit weapon 3": {
             "premade_id": "grit weapon 3",
             "name": "Spear",
@@ -6494,7 +6586,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:mana_feed=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -6531,7 +6623,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:magic_missile=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -6642,7 +6734,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:cure_light_wounds=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -6679,7 +6771,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:smite=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -6702,43 +6794,6 @@
                 "soul": 11
             },
             "random_drop_lvl": 3,
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "ellinia_shop_weapon_quest_2": {
-            "premade_id": "ellinia_shop_weapon_quest_2",
-            "name": "Refined branchy wand",
-            "description": "Made from several tree branches fused together, its perfect for intermediate mages.",
-            "description_room": null,
-            "invisible": 0.0,
-            "item_type": "equipment",
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "slot": "weapon",
-            "bonuses": 0.0,
-            "stats": {
-                "grit": 0,
-                "hp_max": 0,
-                "mp_max": 65,
-                "armor": 0,
-                "marmor": 0,
-                "flow": 0,
-                "mind": 6,
-                "soul": 0
-            },
-            "requirements": {
-                "lvl": 6,
-                "hp_max": 0,
-                "mp_max": 0,
-                "armor": 0,
-                "marmor": 0,
-                "grit": 0,
-                "flow": 0,
-                "mind": 13,
-                "soul": 0
-            },
-            "random_drop_lvl": 0,
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
@@ -6790,7 +6845,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:leech=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 25,
@@ -6827,7 +6882,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:stab=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -6864,7 +6919,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1",
+            "bonuses": "skill_level:stab=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -6901,7 +6956,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:adrenaline=1",
             "stats": {
                 "grit": 2,
                 "hp_max": 45,
@@ -7012,7 +7067,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1",
+            "bonuses": "skill_level:slash=2",
             "stats": {
                 "grit": 6,
                 "hp_max": 0,
@@ -7038,6 +7093,43 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
+        "rusty_axe": {
+            "premade_id": "rusty_axe",
+            "name": "Rusty axe",
+            "description": "This massive axe is rusted at its blade, yet sharper than most swords, your face distorts in the reflection of its rusted blade.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:slash=1",
+            "stats": {
+                "grit": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0
+            },
+            "random_drop_lvl": 6,
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
         "mind body 6": {
             "premade_id": "mind body 6",
             "name": "Apprentice robe",
@@ -7049,7 +7141,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:mage_armor=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 15,
@@ -7086,7 +7178,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:mana_feed=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 15,
@@ -7123,7 +7215,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:magic_missile=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -7160,7 +7252,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:magic_missile=2",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -7186,10 +7278,10 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
-        "rusty_axe": {
-            "premade_id": "rusty_axe",
-            "name": "Rusty axe",
-            "description": "This massive axe is rusted at its blade, yet sharper than most swords, your face distorts in the reflection of its rusted blade.",
+        "ellinia_shop_weapon_quest_2": {
+            "premade_id": "ellinia_shop_weapon_quest_2",
+            "name": "Refined branchy wand",
+            "description": "Made from several tree branches fused together, its perfect for intermediate mages.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7197,15 +7289,15 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:magic_missile=2",
             "stats": {
-                "grit": 6,
+                "grit": 0,
                 "hp_max": 0,
-                "mp_max": 0,
+                "mp_max": 35,
                 "armor": 0,
                 "marmor": 0,
                 "flow": 0,
-                "mind": 0,
+                "mind": 8,
                 "soul": 0
             },
             "requirements": {
@@ -7216,10 +7308,10 @@
                 "marmor": 0,
                 "grit": 0,
                 "flow": 0,
-                "mind": 0,
+                "mind": 13,
                 "soul": 0
             },
-            "random_drop_lvl": 6,
+            "random_drop_lvl": 0,
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
@@ -7271,7 +7363,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:cure_light_wounds=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 25,
@@ -7308,7 +7400,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:cure_light_wounds=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -7345,7 +7437,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": "skill_level:bash=1,skill_level:smite=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -7368,43 +7460,6 @@
                 "soul": 13
             },
             "random_drop_lvl": 6,
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "ellinia_shop_weapon_quest_3": {
-            "premade_id": "ellinia_shop_weapon_quest_3",
-            "name": "Tree root wand",
-            "description": "Masterfully crafted from the roots of a tree, this wand is perfect for adept mages.",
-            "description_room": null,
-            "invisible": 0.0,
-            "item_type": "equipment",
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "slot": "weapon",
-            "bonuses": 0.0,
-            "stats": {
-                "grit": 0,
-                "hp_max": 0,
-                "mp_max": 100,
-                "armor": 0,
-                "marmor": 0,
-                "flow": 0,
-                "mind": 8,
-                "soul": 0
-            },
-            "requirements": {
-                "lvl": 9,
-                "hp_max": 0,
-                "mp_max": 0,
-                "armor": 0,
-                "marmor": 0,
-                "grit": 0,
-                "flow": 0,
-                "mind": 15,
-                "soul": 0
-            },
-            "random_drop_lvl": 0,
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
@@ -7456,7 +7511,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:leech=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 30,
@@ -7493,7 +7548,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": "skill_level:bash=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -7530,7 +7585,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": "skill_level:stab=2",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -7567,7 +7622,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:thorns=1",
             "stats": {
                 "grit": 3,
                 "hp_max": 55,
@@ -7641,7 +7696,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:bash=1",
             "stats": {
                 "grit": 4,
                 "hp_max": 30,
@@ -7678,7 +7733,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1",
+            "bonuses": "skill_level:slash=2",
             "stats": {
                 "grit": 8,
                 "hp_max": 0,
@@ -7715,7 +7770,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:mage_armor=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 20,
@@ -7752,7 +7807,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:mana_feed=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 20,
@@ -7789,7 +7844,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:magic_missile=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -7826,7 +7881,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:magic_missile=2",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -7849,6 +7904,43 @@
                 "soul": 0
             },
             "random_drop_lvl": 9,
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "ellinia_shop_weapon_quest_3": {
+            "premade_id": "ellinia_shop_weapon_quest_3",
+            "name": "Tree root wand",
+            "description": "Masterfully crafted from the roots of a tree, this wand is perfect for adept mages.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:magic_missile=3",
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 100,
+                "armor": 0,
+                "marmor": 0,
+                "flow": 0,
+                "mind": 8,
+                "soul": 0
+            },
+            "requirements": {
+                "lvl": 9,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 15,
+                "soul": 0
+            },
+            "random_drop_lvl": 0,
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
@@ -7900,7 +7992,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:cure_light_wounds=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 30,
@@ -7937,7 +8029,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:cure_light_wounds=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 50,
@@ -7974,7 +8066,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:smite=2",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -8037,43 +8129,6 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
-        "flow body 9 bone": {
-            "premade_id": "flow body 9 bone",
-            "name": "NOT FINISHED",
-            "description": "pee",
-            "description_room": null,
-            "invisible": 0.0,
-            "item_type": "equipment",
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "slot": "body",
-            "bonuses": 0.0,
-            "stats": {
-                "grit": 0,
-                "hp_max": 0,
-                "mp_max": 0,
-                "armor": 0,
-                "marmor": 0,
-                "flow": 4,
-                "mind": 0,
-                "soul": 0
-            },
-            "requirements": {
-                "lvl": 12,
-                "hp_max": 0,
-                "mp_max": 0,
-                "armor": 0,
-                "marmor": 0,
-                "grit": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0
-            },
-            "random_drop_lvl": 0,
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
         "flow head 12": {
             "premade_id": "flow head 12",
             "name": "Night cloth hood",
@@ -8108,43 +8163,6 @@
                 "soul": 0
             },
             "random_drop_lvl": 12,
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "flow head 9 bone": {
-            "premade_id": "flow head 9 bone",
-            "name": "NOT FINISHED",
-            "description": "pee",
-            "description_room": null,
-            "invisible": 0.0,
-            "item_type": "equipment",
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "slot": "head",
-            "bonuses": 0.0,
-            "stats": {
-                "grit": 0,
-                "hp_max": 0,
-                "mp_max": 0,
-                "armor": 0,
-                "marmor": 0,
-                "flow": 4,
-                "mind": 0,
-                "soul": 0
-            },
-            "requirements": {
-                "lvl": 12,
-                "hp_max": 0,
-                "mp_max": 0,
-                "armor": 0,
-                "marmor": 0,
-                "grit": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0
-            },
-            "random_drop_lvl": 0,
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
@@ -8222,8 +8240,82 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
-        "flow weapon 9 bone": {
-            "premade_id": "flow weapon 9 bone",
+        "flow body 12 bone": {
+            "premade_id": "flow body 12 bone",
+            "name": "NOT FINISHED",
+            "description": "pee",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "body",
+            "bonuses": 0.0,
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "flow": 4,
+                "mind": 0,
+                "soul": 0
+            },
+            "requirements": {
+                "lvl": 12,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0
+            },
+            "random_drop_lvl": 0,
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "flow head 12 bone": {
+            "premade_id": "flow head 12 bone",
+            "name": "NOT FINISHED",
+            "description": "pee",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "head",
+            "bonuses": 0.0,
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "flow": 4,
+                "mind": 0,
+                "soul": 0
+            },
+            "requirements": {
+                "lvl": 12,
+                "hp_max": 0,
+                "mp_max": 0,
+                "armor": 0,
+                "marmor": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0
+            },
+            "random_drop_lvl": 0,
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "flow weapon 12 bone": {
+            "premade_id": "flow weapon 12 bone",
             "name": "Bone dirk",
             "description": "A dagger carved from bone, lightweight yet deadly in skilled hands.",
             "description_room": null,
