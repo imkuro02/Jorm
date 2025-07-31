@@ -14,17 +14,20 @@ var directions = 'up down north west east south'.split(' ')
 var directions_rotations = {'north': 0, 'east': 90, 'south': 180, 'west': 270}
 var directions_vertical = {'up': up, 'down': down}
 # Called when the node enters the scene tree for the first time.
+
+
 func _ready():
 	for child in ASS.get_children():
 		child.visible = false
 		
 	var size = 64
-	var center_x = 0*size + (size*3) + size/2
-	var center_y = 0*size + (size*3) + size/2
+	var center_x = position.x + (0*size) + (size*3) + size/2
+	var center_y = position.y + (0*size) + (size*3) + size/2
 	
 	var _center = you.duplicate()
-	_center.position.x = center_x
-	_center.position.y = center_y
+	_center.position.x = position.x + center_x
+	_center.position.y = -position.y + center_y
+	#_center.scale = _center.scale * 10
 	_center.visible = true
 	MAP.get_parent().add_child(_center)
 
@@ -42,8 +45,8 @@ func get_message(data):
 		to_delete.append(child)
 		
 		
-	var center_x = 0*size + (size*3) + size/2
-	var center_y = 0*size + (size*3) + size/2
+	var center_x = position.x + (0*size) + (size*3) + size/2
+	var center_y = position.y + (0*size) + (size*3) + size/2
 	
 	
 
@@ -61,8 +64,8 @@ func get_message(data):
 			continue
 		
 		var _node = node.duplicate()
-		var pos_x = x*size + (size*3) + size/2
-		var pos_y = y*size + (size*3) + size/2
+		var pos_x = position.x + x*size + (size*3) + size/2
+		var pos_y = position.y + y*size + (size*3) + size/2
 		
 		_node.position.x = pos_x
 		_node.position.y = pos_y

@@ -49,8 +49,9 @@ layout_mode = 2
 modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 layout_mode = 0
+offset_top = 512.0
 offset_right = 112.0
-offset_bottom = 112.0
+offset_bottom = 624.0
 scale = Vector2(4, 4)
 texture = ExtResource("9_2qqwb")
 stretch_mode = 1
@@ -58,8 +59,9 @@ stretch_mode = 1
 [node name="map" type="Panel" parent="canvas/HBoxContainer/side_panel"]
 custom_minimum_size = Vector2(448, 448)
 layout_mode = 0
-offset_right = 288.0
-offset_bottom = 176.0
+offset_top = 512.0
+offset_right = 448.0
+offset_bottom = 960.0
 script = ExtResource("2_nu7tc")
 
 [node name="64x7" type="Node" parent="canvas/HBoxContainer/side_panel/map"]
