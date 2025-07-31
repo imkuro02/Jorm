@@ -230,9 +230,14 @@ class Player(Actor):
             msg_type = ' '.join(_msg_type)
             self.msg_history[len(self.msg_history)] = {'type':msg_type, 'line':line}
 
+        if self.settings_manager.debug == False and msg_type == MsgType.DEBUG:
+            return
+
         if sound != None:
             self.sendSound(sound)
             
+        
+
         if color:
             #start = time.time()
             
@@ -316,8 +321,7 @@ class Player(Actor):
         if command in one_letter_commands:
             script = getattr(self, commands[one_letter_commands[command]])
             self.last_command_used = one_letter_commands[command]
-            if self.settings_manager.debug == 1:
-                self.sendLine(commands[one_letter_commands[command]])
+            self.sendLine(commands[one_letter_commands[command]], msg_type = [MsgType.DEBUG])
             script(line)
             return
 
@@ -329,8 +333,7 @@ class Player(Actor):
         
         script = getattr(self, commands[best_match])
         self.last_command_used = best_match
-        if self.settings_manager.debug == 1:
-            self.sendLine(str(commands[best_match]))
+        self.sendLine('Command found: '+str(commands[best_match]), msg_type = [MsgType.DEBUG])
         script(line)
 
     def finish_turn(self, force_cooldown = False):

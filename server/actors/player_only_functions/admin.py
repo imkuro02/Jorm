@@ -85,7 +85,7 @@ def command_history(self, line):
     if start <= 0:
         start = 0
 
-    maximum = 20
+    maximum = 100
     for i in sorted(self.msg_history.keys(), reverse = True):
         if any(word.lower() in self.msg_history[i]['type'] for word in line.split()) or 'all' in line.lower():
             messages.append(f'{i} - '+self.msg_history[i]['line'])

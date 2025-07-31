@@ -13,6 +13,7 @@ class MsgType:
     COMBAT = 'combat'
     CHAT = 'chat'
     ALL = 'all'
+    DEBUG = 'debug'
     
 class Audio:
     PLAYER_DEATH = 'die1.wav'

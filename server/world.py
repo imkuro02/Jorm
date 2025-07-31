@@ -341,8 +341,7 @@ class Room:
                 if all_instaneced_rooms_empty:
                     for i in actor.instanced_rooms:
                         if i in actor.room.world.rooms:
-                            if actor.settings_manager.debug:
-                                actor.sendLine(f'instanced room: {i} deleted')
+                            actor.sendLine(f'instanced room: {i} deleted', msg_type = [MsgType.DEBUG])
                             del self.world.rooms[i]
                     actor.instanced_rooms = []
         else:
