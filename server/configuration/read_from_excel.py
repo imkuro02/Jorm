@@ -10,6 +10,7 @@ import hashlib
 
 
 def str_with_newlines(s):
+    s = str(s)
     if s == None:
         s = 'None'
         return s
@@ -27,12 +28,10 @@ def read_from_ods_file():
     SHEET['skills'] =              read_ods(file_path, 'skills')
     SHEET['items_equipment'] =     read_ods(file_path, 'items_equipment')
     SHEET['items_misc'] =          read_ods(file_path, 'items_misc')
-    SHEET['items_scenery'] =       read_ods(file_path, 'items_scenery')
     SHEET['enemy_skills'] =        read_ods(file_path, 'enemy_skills')
     SHEET['loot'] =                read_ods(file_path, 'loot')
     SHEET['enemies'] =             read_ods(file_path, 'enemies')
     SHEET['crafting_recipes'] =    read_ods(file_path, 'crafting_recipes')
-    #SHEET['enemy_combat_loop'] =   read_ods(file_path, 'enemy_combat_loop')
     end = time.time()
     print(end - start,'LOADING OF CONFIG.ODS')
 
@@ -161,27 +160,17 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'ambience':          None if str(x['ambience'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience'][index],
                 'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
                 'can_pick_up':  bool(x['can_pick_up'][index]),
-                'item_type':        'misc'
-            }
+                'item_type':        'misc',
 
-    '''
-    for row in SHEET['items_scenery']:
-        x = SHEET['items_scenery']
-        for index in range(0, len(x[row])):
-            ITEMS[x['premade_id'][index]] = {
-                'premade_id':       x['premade_id'][index],
-                'name':             x['name'][index],
-                'description':      str_with_newlines(x['description'][index]),
-                'description_room': None if str(x['description_room'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['description_room'][index],
-                'invisible':        x['invisible'][index],
-                'item_type':        'scenery',
-                'ambience':          None if str(x['ambience'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience'][index],
-                'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
-                'can_pick_up':      bool(x['can_pick_up'][index]),
-                'random_drop_lvl': int(x['random_drop_lvl'][index])
+                'drop_from_random':         int(x['drop_from_random'][index]),
+                'drop_chance_base':         int(x['drop_chance_base'][index]),
+                'drop_chance_level':        int(x['drop_chance_level'][index]),
+                'drop_chance_under_bonus':  int(x['drop_chance_under_bonus'][index]),
+                'drop_chance_over_bonus':   int(x['drop_chance_over_bonus'][index]),
+                'drop_chance_range_under':  int(x['drop_chance_range_under'][index]),
+                'drop_chance_range_over':   int(x['drop_chance_range_over'][index]),
+                'drop_chance_stat_filter':  str(x['drop_chance_stat_filter'][index]),
             }
-    '''
-
 
     for row in SHEET['items_consumable']:
         x = SHEET['items_consumable']
@@ -199,7 +188,15 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'ambience':          None if str(x['ambience'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience'][index],
                 'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
                 'can_pick_up':  bool(x['can_pick_up'][index]),
-                'random_drop_lvl': int(x['random_drop_lvl'][index])
+                
+                'drop_from_random':         int(x['drop_from_random'][index]),
+                'drop_chance_base':         int(x['drop_chance_base'][index]),
+                'drop_chance_level':        int(x['drop_chance_level'][index]),
+                'drop_chance_under_bonus':  int(x['drop_chance_under_bonus'][index]),
+                'drop_chance_over_bonus':   int(x['drop_chance_over_bonus'][index]),
+                'drop_chance_range_under':  int(x['drop_chance_range_under'][index]),
+                'drop_chance_range_over':   int(x['drop_chance_range_over'][index]),
+                'drop_chance_stat_filter':  str(x['drop_chance_stat_filter'][index]),
                 
             }
     
@@ -239,7 +236,16 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     'mind':     int(x['rmind'][index]),
                     'soul':     int(x['rsoul'][index])
                 },
-                'random_drop_lvl': int(x['random_drop_lvl'][index])
+
+                'drop_from_random':         int(x['drop_from_random'][index]),
+                'drop_chance_base':         int(x['drop_chance_base'][index]),
+                'drop_chance_level':        int(x['drop_chance_level'][index]),
+                'drop_chance_under_bonus':  int(x['drop_chance_under_bonus'][index]),
+                'drop_chance_over_bonus':   int(x['drop_chance_over_bonus'][index]),
+                'drop_chance_range_under':  int(x['drop_chance_range_under'][index]),
+                'drop_chance_range_over':   int(x['drop_chance_range_over'][index]),
+                'drop_chance_stat_filter':  str(x['drop_chance_stat_filter'][index]),
+
             }
 
 
@@ -343,42 +349,50 @@ def configure_ENEMIES(SHEET, ITEMS):
     for e in ENEMIES:
         loot = {}
         for i in ITEMS:
-            if 'random_drop_lvl' in ITEMS[i]:
-                if ITEMS[i]['random_drop_lvl'] == 0:
+            if 'drop_from_random' in ITEMS[i]:
+                # if its 0 then will not drop from mobs normally
+                if ITEMS[i]['drop_from_random'] == 0:
                     continue
 
                 highest_enemy_stat = {'stat':'grit','val':-10000}
                 for s in ['grit','flow','mind','soul']:
                     if ENEMIES[e]['stats'][s] > highest_enemy_stat['val']:
                         highest_enemy_stat = {'stat':s,'val':ENEMIES[e]['stats'][s]}
-                    
-                if 'stats' in ITEMS[i]:
-                    highest_item_stat = {'stat':'grit','val':-10000}
-                    for s in ['grit','flow','mind','soul']:
-                        if ITEMS[i]['stats'][s] + ITEMS[i]['requirements'][s] > highest_item_stat['val']:
-                            highest_item_stat = {'stat':s,'val': ITEMS[i]['stats'][s] + ITEMS[i]['requirements'][s]} 
-                    if highest_item_stat['stat'] != highest_enemy_stat['stat']:
-                        
-                        continue
-                #if 'stats' in ITEMS[i]: 
-                #   print(e, highest_item_stat['stat'],i , highest_enemy_stat['stat'])
-                match abs(ITEMS[i]['random_drop_lvl'] - ENEMIES[e]['stats']['lvl']):
-                    case 0:
-                        loot[i] = 10
-                    case 1:
-                        loot[i] = 20
-                    case 2:
-                        loot[i] = 30
-                    case 3:
-                        loot[i] = 100
-                    case 5:
-                        loot[i] = 200
-                    case 6:
-                        loot[i] = 300
-                    case _:
-                        continue
 
-                loot[i] = int(loot[i] * (1+ITEMS[i]['random_drop_lvl']*1+ENEMIES[e]['stats']['lvl']))
+                # if stat filter does not matchhighest stat and stat filter is not "none" skip
+                if ITEMS[i]['drop_chance_stat_filter'] != highest_enemy_stat['stat'] and ITEMS[i]['drop_chance_stat_filter'] != 'none':
+                    continue
+                
+                base_drop_chance = ITEMS[i]['drop_chance_base']
+                lvl_diff = ENEMIES[e]['stats']['lvl'] - ITEMS[i]['drop_chance_level']
+
+                #if ENEMIES[e]['stats']['lvl'] - ITEMS[i]['drop_chance_level'] < ITEMS[i]['drop_chance_range_under']:
+                #    continue
+                
+
+                # negative diff means enemy is lower level
+                # positive diff means enemy is higher level
+                # diff of 0 means they are same level
+                if lvl_diff != 0:
+                    if lvl_diff > 0:
+                        if abs(lvl_diff) > ITEMS[i]['drop_chance_range_over']:
+                            continue
+                        base_drop_chance += abs(lvl_diff) * ITEMS[i]['drop_chance_over_bonus']
+                        
+                    else:
+                        if abs(lvl_diff) > ITEMS[i]['drop_chance_range_under']:
+                            continue
+                        base_drop_chance += abs(lvl_diff) * ITEMS[i]['drop_chance_under_bonus']
+
+                if base_drop_chance <= 0:
+                    base_drop_chance = 1
+
+                loot[i] = int(base_drop_chance)
+
+
+
+
+                #loot[i] = int(loot[i] * (1+ITEMS[i]['random_drop_lvl']*1+ENEMIES[e]['stats']['lvl']))
 
                 if i not in ENEMIES[e]['loot']:
                     ENEMIES[e]['loot'][i] = int(loot[i])
