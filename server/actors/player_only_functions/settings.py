@@ -25,7 +25,7 @@ LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = True, pvp = False, debug = False):
+    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = False, pvp = False, debug = False):
         self.actor = actor
         if aliases == None:
             self.aliases = {}

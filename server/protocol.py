@@ -336,7 +336,18 @@ class Protocol(protocol.Protocol):
                 self.actor.recall_site = StaticRooms.TUTORIAL
 
         self.actor.room.world.rooms[self.actor.recall_site].move_actor(self.actor)
+
+        # disable / enable ascii map depending on gmcp settings
+        self.actor.settings_manager.view_map = not self.enabled_gmcp
+        self.sendLine('You are now in JORM! ascii map has been turned ' + ('on' if self.actor.settings_manager.view_map else 'off' )+ ' due to current gmcp settings (help settings)')
+
         self.actor.new_room_look()
+        
+        
+
+        
+        
+            
         
     def save_actor(self):
         self.factory.db.write_actor(self.actor)
