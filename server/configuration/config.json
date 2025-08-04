@@ -1,5 +1,5 @@
 {
-    "SHA-256": "3f4ec403e9d5bdeb71423396522534c44d3d07ca569fa3ec8fd42898f825caa8",
+    "SHA-256": "674c1a1429a1bf096ffa40c7f333f8e1c2c9258caee48e49ef53be8cc9d4c6c3",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4447,6 +4447,27 @@
             "name": "Tree root",
             "description": "This root's surface is rough and twisted, covered in patches of dirt and moss, it has a faint earthy smell to it.",
             "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "scenery_ioizor_statue": {
+            "premade_id": "scenery_ioizor_statue",
+            "name": "Statue of Ioizor",
+            "description": "A large marble statue of a maple legend named Ioizor.. atleast thats what it says on the plaque...",
+            "description_room": "A large marble statue shadows over you",
             "invisible": 0.0,
             "ambience": null,
             "ambience_sfx": null,
