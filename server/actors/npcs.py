@@ -185,9 +185,9 @@ class Npc(Actor):
             output = output + '\nHas both a quest to start and a quest to turn in'
         else:
             if has_quest_to_start:
-                output = output + '\nhas a quest to start'
+                output = output + '\nHas a quest to start'
             if has_quest_to_turn_in:
-                output = output + '\nhas a quest to turn in'
+                output = output + '\nHas a quest to turn in'
 
         return output
 
