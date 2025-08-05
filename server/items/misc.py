@@ -11,6 +11,7 @@ class Item:
         self.description = 'Description here'
         self.description_room = None
         self.stack = 1
+        self.stack_max = 100
         self.keep = False
         self.inventory_manager = None # the inventory manager of this item
         self.new = True # show if item is newly added to inv

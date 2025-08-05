@@ -13,6 +13,7 @@ class Consumable(Item):
     def __init__(self):
         super().__init__()
         self.item_type = ItemType.CONSUMABLE
+        self.stack_max = 3
         
         self.skill_manager = ConsumableSkillManager(self)
         
@@ -68,5 +69,5 @@ class Consumable(Item):
         first_skill = True
         for skill in self.skill_manager.skills:
             use_skill_from_consumable(user = user, target = target, skill_id = skill, consumable_item = self)
-        user.inventory_manager.remove_item(self)
+        user.inventory_manager.remove_item(self, stack = 1)
         return True

@@ -139,10 +139,25 @@ class InventoryManager:
             for _i in self.items.values():
                 if item.premade_id != _i.premade_id:
                     continue
-                if item.item_type != ItemType.MISC:
+                #if item.item_type != ItemType.MISC:
+                #    continue
+                #if _i.item_type != ItemType.MISC:
+                #    continue
+
+                if _i.stack == _i.stack_max:
                     continue
-                if _i.item_type != ItemType.MISC:
-                    continue
+                    
+                if _i.stack + item.stack > _i.stack_max:
+                    _i.time_on_ground = 0
+                    item.stack -= (_i.stack_max - _i.stack)
+                    _i.stack = _i.stack_max 
+                    self.items[item.id] = item
+                    if not dont_send_objective_proposal and type(self.owner).__name__ == 'Player':
+                        self.owner.quest_manager.propose_objective_count_addition(
+                            ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item.premade_id, item.stack)
+                        )
+                    return True
+
                 _i.time_on_ground = 0
                 _i.stack += item.stack
                 if not dont_send_objective_proposal and type(self.owner).__name__ == 'Player':

@@ -1,3 +1,4 @@
+'''
 import uuid
 from configuration.config import ItemType
 from items.misc import Item
@@ -32,4 +33,4 @@ class Scenery(Item):
                 
                 ac = random.choice(list(owner.actors.values()))
                 ac.simple_broadcast(self.ambience, self.ambience, sound = self.ambience_sfx)
-            
+'''

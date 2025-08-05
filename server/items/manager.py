@@ -3,7 +3,7 @@
 import copy
 from configuration.config import ItemType, EquipmentSlotType, ITEMS, StatType
 import uuid
-from items.scenery import Scenery
+#from items.scenery import Scenery
 from items.misc import Item
 from items.consumable import Consumable
 from items.equipment import Equipment, EquipmentBonus

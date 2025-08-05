@@ -129,6 +129,7 @@ class Equipment(Item):
     def __init__(self):
         super().__init__()
         self.item_type = ItemType.EQUIPMENT
+        self.stack_max = 1
 
         self.slot = EquipmentSlotType.TRINKET
         self.equiped = False
