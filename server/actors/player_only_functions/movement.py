@@ -109,7 +109,7 @@ def command_go(self, line):
         return
 
     if direction.item_required != None:
-        item = self.inventory_manager.get_item_by_id(direction.item_required)
+        item = self.inventory_manager.get_item_by_premade_id(direction.item_required)
         if item == None:
             self.sendLine(f'You need {ITEMS[direction.item_required]["name"]}',sound=Audio.ERROR)
             return

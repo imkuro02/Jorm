@@ -72,6 +72,12 @@ class QuestManager:
                     continue
                 
                 stacks_to_remove = objective.goal
+                removed = self.actor.inventory_manager.remove_items_by_id(objective.requirement_id, stacks_to_remove)
+                if not removed:
+                    return False
+                else:
+                    return True
+                '''
                 for item in items.values():
                     if objective.requirement_id == item.premade_id:
                         # if stack is exact, remove that item
@@ -91,6 +97,7 @@ class QuestManager:
                         # if you have turned_in all items then escape
                         if stacks_to_remove == 0:
                             break
+                '''
         
         
     def start_quest(self, quest_id, silent = False):
@@ -189,7 +196,7 @@ class Quest:
                         output += f'Collect @white{enemy_name}@normal: {objective.count}/{objective.goal}' + '\n'
                     case OBJECTIVE_TYPES.CONVERSATION:
                         #npc = NPCS[objective.requirement_id]['name']
-                        output += f'{objective.name}: {"Done" if objective.count == objective.goal else "In progress"}' + '\n'
+                        output += f'{objective.name}: {"Done" if objective.count >= objective.goal else "In progress"}' + '\n'
         output += self.get_state(as_string = True) + '\n'
         return output
 

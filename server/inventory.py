@@ -108,17 +108,24 @@ class InventoryManager:
     def gain_exp(self, exp):
         return self.triggerable_manager.gain_exp(exp)
 
-    def get_item_by_id(self, item_id):
+    def get_item_by_premade_id(self, item_id):
         for i in self.items.values():
             #print(i.premade_id)
             if i.premade_id == item_id:
                 return i
         return None
 
+    def get_stacks_of_premade_id(self, premade_id):
+        stack = 0
+        for i in self.items.values():
+            if i.premade_id == premade_id:
+                stack += i.stack
+        return stack
+
     def item_count(self):
         return len(self.items)
 
-    def item_free_space(self):
+    def get_amount_of_free_item_slots(self):
         return self.limit - len(self.items)
 
     def is_empty(self):
@@ -183,6 +190,56 @@ class InventoryManager:
 
         item.inventory_manager = self
         return True
+
+    # used for removing several stacks of an item by the premade_id
+    def remove_items_by_id(self, item_premade_id, stack = 0):
+        stacks_to_remove = stack
+        for i in self.items.values():
+            if item_premade_id == i.premade_id:
+                stacks_to_remove -= i.stack
+
+        # not enough items of this id in your inv
+        if stacks_to_remove >= 1:
+            return False
+
+        stacks_removed = 0
+        to_del = []
+        for i in self.items.values():
+            if item_premade_id == i.premade_id:
+                
+                # if this item has more stacks than what needs to be removed
+                if i.stack > (stack - stacks_removed):
+                    _stack = (stack - stacks_removed)
+                    i.stack -= _stack
+                    stacks_removed += _stack
+                    continue
+                    
+
+                # if this item has less stacks than what needs to be removed
+                if i.stack <= (stack - stacks_removed):
+                    stacks_removed += i.stack
+                    to_del.append(i.id)
+                    continue
+
+                if stacks_removed > stack:
+                    self.owner.sendLine('Too much of item got removed contact admin')
+                    break
+
+                if stacks_removed == stack:
+                    break
+
+        for i in to_del:
+            del self.items[i]
+
+        if type(self.owner).__name__ == 'Player':
+            self.owner.quest_manager.propose_objective_count_addition(
+                ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item_premade_id, -stacks_removed)
+            )
+
+        return True
+                
+
+
 
     def remove_item(self, item, stack = 0):
         if stack == 0:

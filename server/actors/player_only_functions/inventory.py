@@ -96,7 +96,7 @@ def command_drop(self, line):
 
 @check_not_trading
 def command_split(self, line):
-    if self.inventory_manager.item_free_space() <= 0:
+    if self.inventory_manager.get_amount_of_free_item_slots() <= 0:
         self.sendLine('You don\'t have enough inventory space')
         return
     
@@ -347,7 +347,7 @@ def lower_item(self, item_id):
 
 def command_craft(self, line):
 
-    if self.inventory_manager.item_free_space() < 1:
+    if self.inventory_manager.get_amount_of_free_item_slots() < 1:
         self.sendLine('You need atleast one empty inventory space to craft')
         return
         

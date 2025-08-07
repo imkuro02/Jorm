@@ -48,6 +48,84 @@ bartender:
             reward_exp: 50
             reward:
               - beer_stein
+        - line: Ask about equipment
+          goto: ask_about_equipment
+          quest_check:
+            - id: first_equipment_set
+              state: not_started
+        - line: Tell them about the wasted with the potion
+          goto: first_equipment_set_completed
+          quest_check:
+            - id: first_equipment_set
+              state: completed
+          
+              
+
+    ask_about_equipment:
+      dialog: 
+        - line: |
+            "Oh I have some adventuring equipment around here somewhere" they say...
+            "I can give you some, if you can go talk to the drunkards and tell them to calm down a bit"
+            Just as the bartender finishes their sentence, you hear a loud "WOOO!!!" from behind you
+      options:
+        - line: say "Ok"
+          goto: ask_about_equipment_accept
+          quest_check:
+            - id: first_equipment_set
+              state: not_started
+          quest_start:
+            id: first_equipment_set
+
+    ask_about_equipment_accept:
+      dialog: 
+        - line: |
+            "Great!" they say enthusiastically
+
+    first_equipment_set_completed:
+      dialog: 
+        - line: |
+            "Oh god..." they say while cleaning a fork, "Alright what gear do you want? I got all sorts of trash left behind by adventurers"
+      options:
+        - line: pick something for survivability
+          goto: first_equipment_set_turn_in
+          quest_turn_in:
+            id: first_equipment_set
+            reward_exp: 10
+            reward:
+              - grit body 1
+              - grit head 1
+        - line: pick something for avoidability
+          goto: first_equipment_set_turn_in
+          quest_turn_in:
+            id: first_equipment_set
+            reward_exp: 10
+            reward:
+              - flow body 1
+              - flow head 1
+        - line: pick something smart
+          goto: first_equipment_set_turn_in
+          quest_turn_in:
+            id: first_equipment_set
+            reward_exp: 10
+            reward:
+              - mind body 1
+              - mind head 1  
+        - line: pick something the developer has a preference for
+          goto: first_equipment_set_turn_in
+          quest_turn_in:
+            id: first_equipment_set
+            reward_exp: 11
+            reward:
+              - soul body 1
+              - soul head 1
+
+    first_equipment_set_turn_in:
+      dialog: 
+        - line: |
+            They duck under the counter and pull out a big box full of clothes and weapons. "here you go"
+
+        
+
     in_progress:
       dialog: 
       - line: |

@@ -31,15 +31,50 @@ class Dialog:
                     quest_id =      check['id']
                     quest_state =   check['state']
 
-                    if not self.player.quest_manager.check_quest_state(quest_id) == quest_state:
-                        this_option_is_good = False
+                    if not 'NOT' in check:
+                        if not self.player.quest_manager.check_quest_state(quest_id) == quest_state:
+                            this_option_is_good = False
+                    else:
+                        if self.player.quest_manager.check_quest_state(quest_id) == quest_state:
+                            this_option_is_good = False
 
                 if not this_option_is_good:
                     continue
+      
+
+            if 'quest_objective_check' in option:
+                this_option_is_good = True
+                for check in option['quest_objective_check']:
+                    quest_id =      check['id']
+                    quest_objective_id = check['objective_id']
+                    quest_objective_count = check['objective_count']
+
+                    if self.player.quest_manager.check_quest_state(quest_id) == 'not_started':
+                        this_option_is_good = False
+                        continue
+
+                    if quest_objective_id not in self.player.quest_manager.quests[quest_id].objectives:
+                        this_option_is_good = False
+                        continue
+
+                    if self.player.quest_manager.quests[quest_id].objectives[quest_objective_id].count < quest_objective_count:
+                        this_option_is_good = False
+                        continue
+
+                if not 'NOT' in check:
+                    if not this_option_is_good:
+                        continue
+                else:
+                    if this_option_is_good:
+                        continue
 
             dic['index'] = i
             dic['line'] = option['line']
             dic['goto'] = option['goto']
+
+
+            if 'trade' in option:
+                dic['trade'] = option['trade']
 
             if 'quest_turn_in' in option:
                 quest_id =      option['quest_turn_in']['id']
@@ -86,11 +121,45 @@ class Dialog:
                     quest_id =      check['id']
                     quest_state =   check['state']
 
-                    if not self.player.quest_manager.check_quest_state(quest_id) == quest_state:
-                        this_option_is_good = False
-
+                    if not 'NOT' in check:
+                        if not self.player.quest_manager.check_quest_state(quest_id) == quest_state:
+                            this_option_is_good = False
+                    else:
+                        if self.player.quest_manager.check_quest_state(quest_id) == quest_state:
+                            this_option_is_good = False
+                            
                 if not this_option_is_good:
                     continue
+
+            if 'quest_objective_check' in option:
+                this_option_is_good = True
+                for check in option['quest_objective_check']:
+                    quest_id =      check['id']
+                    quest_objective_id = check['objective_id']
+                    quest_objective_count = check['objective_count']
+
+                    if self.player.quest_manager.check_quest_state(quest_id) == 'not_started':
+                        this_option_is_good = False
+                        continue
+
+                    if quest_objective_id not in self.player.quest_manager.quests[quest_id].objectives:
+                        this_option_is_good = False
+                        continue
+
+                    if self.player.quest_manager.quests[quest_id].objectives[quest_objective_id].count < quest_objective_count:
+                        this_option_is_good = False
+                        continue
+
+                if not 'NOT' in check:
+                    if not this_option_is_good:
+                        continue
+                else:
+                    if this_option_is_good:
+                        continue
+
+               
+
+
             available_dialogs.append(option)
         output = random.choice(available_dialogs)['line']+'@normal'
 
@@ -144,24 +213,53 @@ class Dialog:
         self.player.sendLine('You '+answer['line'])
         self.current_line = answer['goto']
 
+        if 'trade' in answer:
+            escape = False
+            if 'give_to_player' in answer['trade']:
+                if self.player.inventory_manager.get_amount_of_free_item_slots() < len(answer['trade']['give_to_player']):
+                    escape = True
+            if 'give_to_npc' in answer['trade']:
+                for i in answer['trade']['give_to_npc']:
+                    if self.player.inventory_manager.get_stacks_of_premade_id(i['item']) < i['amount']:
+                        escape = True
+
+            if escape:
+                self.player.sendLine('You either lack items to give or item slots to receive.')
+                self.end_dialog()
+                return True
+
+            if 'give_to_player' in answer['trade']:
+                for i in answer['trade']['give_to_player']:
+                    item = load_item(i['item'])
+                    if item == None:
+                        continue
+                    item.stack = i['amount']
+                    self.player.inventory_manager.add_item(item)
+                    self.player.sendLine(f'You got: {item.pretty_name()}')
+
+            if 'give_to_npc' in answer['trade']:
+                for i in answer['trade']['give_to_npc']:
+                    removed = self.player.inventory_manager.remove_items_by_id(i['item'], i['amount'])
+                self.player.sendLine(f'You give away the items requested')
+
         if 'quest_objective_count_proposal' in answer:
-            self.print_dialog()
+            #self.print_dialog()
             self.player.quest_manager.propose_objective_count_addition(answer['quest_objective_count_proposal'])
-            return True
+            #return True
 
         if 'quest_start' in answer:
-            self.print_dialog()
+            #self.print_dialog()
             self.player.quest_manager.start_quest(answer['quest_start']['id'])
-            return True
+            #return True
 
         if 'quest_turn_in' in answer:
             if 'reward' in answer:
-                if len(answer['reward']) > self.player.inventory_manager.item_free_space():
+                if len(answer['reward']) > self.player.inventory_manager.get_amount_of_free_item_slots():
                     self.player.sendLine('You need more space in your inventory')
                     self.end_dialog()
                     return True
 
-            self.print_dialog()
+            #self.print_dialog()
             self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
             self.player.sendLine(f'@greenQuest turned in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
 
@@ -182,7 +280,7 @@ class Dialog:
                 self.player.sendLine(f'You got: {answer["reward_practice_points"]} Practice point'+('s' if answer['reward_practice_points'] >= 2 else ''))
 
             
-            return True
+            #return True
             
 
         self.print_dialog()

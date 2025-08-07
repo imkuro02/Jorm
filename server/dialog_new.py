@@ -153,7 +153,7 @@ class Dialog:
 
         if 'quest_turn_in' in answer:
             if 'reward' in answer:
-                if len(answer['reward']) > self.player.inventory_manager.item_free_space():
+                if len(answer['reward']) > self.player.inventory_manager.get_amount_of_free_item_slots():
                     self.player.sendLine('You need more space in your inventory')
                     self.end_dialog()
                     return True

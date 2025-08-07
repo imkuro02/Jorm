@@ -1,0 +1,20 @@
+first_equipment_set:
+  name: My first equipment set
+  description: 
+    in_progress: |
+      The bartender told me drunken adventurers come and go all the time.
+      They told me that if I can get the drunk people in the tavern to stop being such a nuiseance I can 
+      have the equipment for free!
+    completed: |
+      I spoke with both the drunks and the wasted, and now I can speak with the bartender.
+    turned_in: |
+      The bartender was pleased with my efforts, and Im pleased with my equipment.
+  objectives:
+    Speak with a wasted:
+      type: conversation
+      objective: first_equipment_set/wasted
+      completed_at: 1
+    Speak with a drunk:
+      type: conversation
+      objective: first_equipment_set/drunk
+      completed_at: 1
