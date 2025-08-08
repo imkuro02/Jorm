@@ -91,6 +91,9 @@ bar_drunk_0:
               NOT: 1
 
       - line: |
+          <npc> seems to be having a good time!
+
+      - line: |
           <npc> is barely standing upright, smiling while shuffling side to side, holding an empty bottle in one hand.
         quest_check:
           - id: first_equipment_set
