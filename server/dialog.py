@@ -51,16 +51,17 @@ class Dialog:
 
                     if self.player.quest_manager.check_quest_state(quest_id) == 'not_started':
                         this_option_is_good = False
-                        continue
+                        break
 
                     if quest_objective_id not in self.player.quest_manager.quests[quest_id].objectives:
                         this_option_is_good = False
-                        continue
+                        break
 
-                    if self.player.quest_manager.quests[quest_id].objectives[quest_objective_id].count < quest_objective_count:
+                    if self.player.quest_manager.quests[quest_id].objectives[quest_objective_id].count != quest_objective_count:
                         this_option_is_good = False
-                        continue
+                        break
 
+                
                 if not 'NOT' in check:
                     if not this_option_is_good:
                         continue
@@ -146,7 +147,7 @@ class Dialog:
                         this_option_is_good = False
                         continue
 
-                    if self.player.quest_manager.quests[quest_id].objectives[quest_objective_id].count < quest_objective_count:
+                    if self.player.quest_manager.quests[quest_id].objectives[quest_objective_id].count != quest_objective_count:
                         this_option_is_good = False
                         continue
 
