@@ -8,7 +8,7 @@ import time
 import uuid
 import random
 from combat.manager import Combat
-from configuration.config import WORLD, StatType, ActorStatusType, ITEMS, Audio
+from configuration.config import WORLD, StatType, ActorStatusType, ITEMS, Audio, MsgType
 import copy
 from inventory import InventoryManager
 
