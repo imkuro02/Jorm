@@ -16,7 +16,8 @@ def command_fight(self, line):
     
 
     if self.status == ActorStatusType.FIGHTING:
-        self.ai.tick()
+        self.ai.use_best_skill(offensive_only = True)
+        #self.ai.tick()
         return
     else:
         self.finish_turn()

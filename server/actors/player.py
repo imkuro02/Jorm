@@ -205,6 +205,10 @@ class Player(Actor):
 
     def tick(self):
         super().tick()
+        
+        if self.settings_manager.autobattler:
+            self.ai.tick()
+
         self.charging_mini_game.tick()
 
         if self.recently_send_message_count > 0:

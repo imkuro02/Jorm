@@ -229,15 +229,12 @@ class AI:
 class PlayerAI(AI):
     def tick(self):
         # early return if not in combat
-        #if not super().tick():
-        #    return
-        if self.actor.room.combat == None:
-            return False
+        if not super().tick():
+           return
 
-        if self.actor.room.combat.current_actor != self.actor:
-            return False
+        
 
-        self.use_best_skill(offensive_only = True)
+        self.use_best_skill(offensive_only = False)
         
 
 class EnemyAI(AI):

@@ -15,8 +15,9 @@ class SETTINGS:
     DEBUG = 'debug'
     PWD = 'password'
     USR = 'username' # not in LIST_SETTINGS
+    AUTO_BATTLER = 'autobattler'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, USR 
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, USR, AUTO_BATTLER
     ]
 
 
@@ -37,6 +38,7 @@ class Settings:
         self.view_map = view_map
         self.pvp = pvp
         self.debug = debug
+        self.autobattler = False
         
     def true_or_false(self, value):
         if value in LIST_ON:
@@ -140,6 +142,16 @@ class Settings:
                 password = ' '.join(original_line.split()[1:])
                 username = proto.username
                 proto.register_account_changes(username, password)
+
+            case SETTINGS.AUTO_BATTLER:
+                if len(line) == 1:
+                    self.actor.sendLine('Autobattler setting needs an argument (on or off?)')
+                    return
+                value = line[1]
+                self.autobattler = self.true_or_false(value)
+                self.actor.sendLine(f'Autobattler enabled: {self.autobattler}')
+
+
         
 @check_no_empty_line
 def command_settings(self, line):
