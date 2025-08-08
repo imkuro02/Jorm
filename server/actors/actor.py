@@ -183,7 +183,7 @@ class Actor:
         return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
         
     # only npc class has this
-    def get_important_dialog(self, actor_to_compare):
+    def get_important_dialog(self, actor_to_compare, return_dict = False):
         return False
 
     def talk_to(self, talker):

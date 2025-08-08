@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=19 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
@@ -10,8 +10,16 @@
 [ext_resource type="Texture2D" uid="uid://cbfef8b7pjws1" path="res://images/kuro/door.png" id="5_kopq2"]
 [ext_resource type="Texture2D" uid="uid://c206b3u0kif7x" path="res://images/kuro/connection4.png" id="5_lg83h"]
 [ext_resource type="Texture2D" uid="uid://dnj77qukfgln4" path="res://images/kuro/up.png" id="6_d5hl4"]
+[ext_resource type="Script" path="res://scripts/node.gd" id="6_qe2bg"]
 [ext_resource type="Texture2D" uid="uid://d07eg5x1ov0v4" path="res://images/kuro/down.png" id="7_1kjrd"]
 [ext_resource type="Texture2D" uid="uid://doybnjy4cr05" path="res://images/kuro/bg.png" id="9_2qqwb"]
+[ext_resource type="Texture2D" uid="uid://hb7c7k13u80" path="res://images/kuro/quest_turn_in.png" id="10_g7o4q"]
+[ext_resource type="Texture2D" uid="uid://bpj1614sj6bm1" path="res://images/kuro/quest_not_started.png" id="11_lm5rf"]
+[ext_resource type="Texture2D" uid="uid://cu7xomnl37t4g" path="res://images/kuro/enemy.png" id="12_5afyf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4171q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_723ol"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -32,7 +40,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0.211765, 0.290196, 1)
+color = Color(0.239216, 0.176471, 0.109804, 1)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="canvas"]
 anchors_preset = 15
@@ -80,6 +88,7 @@ modulate = Color(0.32549, 0.2, 0.027451, 1)
 texture_filter = 1
 scale = Vector2(4, 4)
 texture = ExtResource("4_fy0g3")
+script = ExtResource("6_qe2bg")
 
 [node name="connection" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
 modulate = Color(0.32549, 0.2, 0.027451, 1)
@@ -108,6 +117,27 @@ z_index = 3
 texture_filter = 1
 scale = Vector2(4, 4)
 texture = ExtResource("5_kopq2")
+
+[node name="quest_turn_in" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.94902, 0.568627, 0, 1)
+z_index = 3
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("10_g7o4q")
+
+[node name="quest_not_started" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.94902, 0.568627, 0, 1)
+z_index = 3
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("11_lm5rf")
+
+[node name="enemy" type="Sprite2D" parent="canvas/HBoxContainer/side_panel/map/assets"]
+modulate = Color(0.94902, 0.568627, 0, 1)
+z_index = 3
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("12_5afyf")
 
 [node name="map" type="Node" parent="canvas/HBoxContainer/side_panel/map"]
 
@@ -153,6 +183,7 @@ offset_right = -8.0
 offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4171q")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="canvas/HBoxContainer/input_output"]
 layout_mode = 1
@@ -169,6 +200,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("2_ckiy7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
 selection_enabled = true
 script = ExtResource("3_gkcnj")

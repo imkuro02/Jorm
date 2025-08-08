@@ -9,6 +9,8 @@ extends Panel
 @onready var down = $assets/down
 @onready var door = $assets/door
 @onready var you =  $assets/you
+@onready var quest_not_started = $assets/quest_not_started
+@onready var quest_turn_in =  $assets/quest_turn_in
 
 var directions = 'up down north west east south'.split(' ')
 var directions_rotations = {'north': 0, 'east': 90, 'south': 180, 'west': 270}
@@ -47,10 +49,7 @@ func get_message(data):
 		
 	var center_x = position.x + (0*size) + (size*3) + size/2
 	var center_y = position.y + (0*size) + (size*3) + size/2
-	
-	
-
-	
+		
 	
 	for i in data:
 		var x = int(i.split(',')[0])
@@ -101,6 +100,20 @@ func get_message(data):
 			_doorway.position.x = pos_x
 			_doorway.position.y = pos_y
 			to_add.append(_doorway)
+			
+		var has_quest_not_started = bool(data[i]['quest_not_started'])
+		if has_quest_not_started:
+			var _quest_not_started = quest_not_started.duplicate()
+			_quest_not_started.position.x = pos_x
+			_quest_not_started.position.y = pos_y
+			to_add.append(_quest_not_started)
+			
+		var has_quest_turn_in = bool(data[i]['quest_turn_in'])
+		if has_quest_turn_in:
+			var _quest_turn_in = quest_turn_in.duplicate()
+			_quest_turn_in.position.x = pos_x
+			_quest_turn_in.position.y = pos_y
+			to_add.append(_quest_turn_in)
 			
 	
 		

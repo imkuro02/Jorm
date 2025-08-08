@@ -144,11 +144,14 @@ class Npc(Actor):
 
     # this function returns whether the npc has a quest to hand out or turn in / both
     # actor_to_compare is the player that is checking 
-    def get_important_dialog(self, actor_to_compare):
+    def get_important_dialog(self, actor_to_compare, return_dict = False):
         has_quest_to_start = False
         has_quest_to_turn_in = False
         quest_man = actor_to_compare.quest_manager
         output = ''
+        
+        if self.dialog_tree == None:
+            return False
         
         for branch in self.dialog_tree.values():
             
@@ -180,6 +183,8 @@ class Npc(Actor):
                     if 'quest_turn_in' in option:
                         has_quest_to_turn_in = True
 
+        if return_dict:
+            return {'quest_not_started': has_quest_to_start, 'quest_turn_in': has_quest_to_turn_in}
         
         if has_quest_to_start and has_quest_to_turn_in:
             output = output + '\nHas both a quest to start and a quest to turn in'
@@ -285,9 +290,6 @@ class Enemy(Npc):
             can_start_fights = can_start_fights,
             dont_join_fights = dont_join_fights
         )
-
-    def get_important_dialog(self, actor_to_compare):
-        return False
 
 
 actors.ai.create_npc = create_npc

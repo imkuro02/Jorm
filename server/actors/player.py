@@ -18,6 +18,7 @@ class UpdateChecker:
         self.protocol = actor.protocol
 
         self.last_room = None
+        self.last_grid = None
 
     
 
@@ -44,108 +45,139 @@ class UpdateChecker:
 
     def tick_show_map(self):
         split = ','
-        if self.last_room != self.actor.room:
-            self.last_room = self.actor.room
-            offsets = {
-                'north': [ 0  ,  -1 , 0],
-                'west':  [ -1 ,  0 , 0],
-                'south': [ 0  , 1 , 0],
-                'east':  [ 1  ,  0 , 0],
-                'up':    [0,0,1],
-                'down':  [0,0,-1]
-            }
-            room_id = self.actor.room.id
-            VIEW_RANGE = 7
-            START_LOC = f'{0}{split}{0}{split}{0}'
-            start_room = self.protocol.factory.world.rooms[room_id]
-            grid = {}
-            grid[START_LOC] = room_id
 
-            for _exit in start_room.exits:
-                if _exit.direction not in offsets:
-                    continue
-                if _exit.secret:
-                    continue
-                if _exit.item_required != None:
-                    continue
-                if _exit.to_room_id in grid.values():
-                    continue
+        
 
-                x = 0
-                y = 0
-                z = 0
-                x += offsets[_exit.direction][0] #+ VIEW_RANGE
-                y += offsets[_exit.direction][1] #+ VIEW_RANGE
-                z += offsets[_exit.direction][2] 
-                _loc = f'{x}{split}{y}{split}{z}'
+        #if self.last_room == self.actor.room:
+        #    return
+
+        self.last_room = self.actor.room
+        offsets = {
+            'north': [ 0  ,  -1 , 0],
+            'west':  [ -1 ,  0 , 0],
+            'south': [ 0  , 1 , 0],
+            'east':  [ 1  ,  0 , 0],
+            'up':    [0,0,1],
+            'down':  [0,0,-1]
+        }
+        room_id = self.actor.room.id
+        VIEW_RANGE = 7
+        START_LOC = f'{0}{split}{0}{split}{0}'
+        start_room = self.protocol.factory.world.rooms[room_id]
+        grid = {}
+        grid[START_LOC] = room_id
+
+        for _exit in start_room.exits:
+            if _exit.direction not in offsets:
+                continue
+            if _exit.secret:
+                continue
+            if _exit.item_required != None:
+                continue
+            if _exit.to_room_id in grid.values():
+                continue
+
+            x = 0
+            y = 0
+            z = 0
+            x += offsets[_exit.direction][0] #+ VIEW_RANGE
+            y += offsets[_exit.direction][1] #+ VIEW_RANGE
+            z += offsets[_exit.direction][2] 
+            _loc = f'{x}{split}{y}{split}{z}'
+
+            
+            
+            if _loc not in grid:
+                grid[_loc] = _exit.to_room_id
+            
+
+
+
+        _grid = {}
+        for r in grid:
+            _grid[r] = grid[r]
+            
+        for r in range(0,VIEW_RANGE*1):
+            for room_loc in _grid:
 
                 
-                
-                if _loc not in grid:
-                    grid[_loc] = _exit.to_room_id
+
                 
 
+                room = self.protocol.factory.world.rooms[grid[room_loc]]
+                
 
+                
+                if room.doorway:
+                    continue
+
+                _x = int(room_loc.split(f'{split}')[0])
+                _y = int(room_loc.split(f'{split}')[1])
+                _z = int(room_loc.split(f'{split}')[2])
+
+                for _exit in room.exits:
+                    if _exit.direction not in offsets:
+                        continue
+                    if _exit.secret:
+                        continue
+                    
+    
+                    x = _x + offsets[_exit.direction][0] 
+                    y = _y + offsets[_exit.direction][1] 
+                    z = _z + offsets[_exit.direction][2] 
+                    _loc = f'{x}{split}{y}{split}{z}'
+
+                    if _exit.to_room_id in grid.values():
+                        continue
+            
+
+                    if _loc not in grid:
+                        grid[_loc] = _exit.to_room_id
 
             _grid = {}
             for r in grid:
                 _grid[r] = grid[r]
-                
-            for r in range(0,VIEW_RANGE*1):
-                for room_loc in _grid:
 
-                   
+        for r in _grid:
+            room = self.actor.room.world.rooms[_grid[r]]
+            exits = []
+            for e in room.exits:
+                if e.secret:
+                    continue
+                exits.append({'direction':e.direction})
+            
+            quest_not_started = False
+            quest_turn_in = False
 
-                    
+            for actor in room.actors.values():
+                important_dialog_dict = actor.get_important_dialog(actor_to_compare = self.actor, return_dict = True)
+                if important_dialog_dict == False:
+                    continue
+                if important_dialog_dict['quest_not_started']:
+                    quest_not_started = True
+                if important_dialog_dict['quest_turn_in']:
+                    quest_turn_in = True
 
-                    room = self.protocol.factory.world.rooms[grid[room_loc]]
-                    
+            _grid[r] = {
+                'id': room.id, 
+                'name': room.name, 
+                'exits': exits, 
+                'doorway': int(room.doorway), 
+                'quest_not_started': int(quest_not_started),
+                'quest_turn_in': int(quest_turn_in)
+                }
 
-                    
-                    if room.doorway:
-                        continue
 
-                    _x = int(room_loc.split(f'{split}')[0])
-                    _y = int(room_loc.split(f'{split}')[1])
-                    _z = int(room_loc.split(f'{split}')[2])
-
-                    for _exit in room.exits:
-                        if _exit.direction not in offsets:
-                            continue
-                        if _exit.secret:
-                            continue
-                        
-        
-                        x = _x + offsets[_exit.direction][0] 
-                        y = _y + offsets[_exit.direction][1] 
-                        z = _z + offsets[_exit.direction][2] 
-                        _loc = f'{x}{split}{y}{split}{z}'
-
-                        if _exit.to_room_id in grid.values():
-                            continue
-               
-
-                        if _loc not in grid:
-                            grid[_loc] = _exit.to_room_id
-
-                _grid = {}
-                for r in grid:
-                    _grid[r] = grid[r]
-
-            for r in _grid:
-                room = self.actor.room.world.rooms[_grid[r]]
-                exits = []
-                for e in room.exits:
-                    if e.secret:
-                        continue
-                    exits.append({'direction':e.direction})
-                _grid[r] = {'id': room.id, 'name': room.name, 'exits': exits, 'doorway': int(room.doorway)}
-
-            #print(_grid)
-            self.protocol.send_gmcp(_grid,'Map')
+        #print(_grid)
+        if self.last_grid == _grid:
+            return
+        self.last_grid = _grid
+        self.protocol.send_gmcp(_grid,'Map')
 
     def tick(self):
         #return
+        if self.actor.factory.ticks_passed % 30 != 0:
+            return
         #self.tick_show_actors()
         self.tick_show_map()
         
