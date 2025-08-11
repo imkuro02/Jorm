@@ -35,7 +35,13 @@ class CombatEvent:
             if not pop.silent:
                 #print(pop)
                 percentage = int((pop.damage_value / pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'])*100)
-                damage_txt = f'{pop.damage_value} @normal(@back {percentage}% @normal)@back'
+                
+                if pop.damage_value < 0:
+                    damage_txt = f'{abs(pop.damage_value)}@back'
+                else:
+                    damage_txt = f'{abs(pop.damage_value)} @normal(@back {percentage}% @normal)@back'
+
+                
                 if pop.damage_type == DamageType.CANCELLED:
                     output_self =  f'You cancel {pop.damage_source_action.name}. '
                     output_other = f'{pop.damage_taker_actor.pretty_name()} cancels {pop.damage_source_action.name}. '
@@ -44,14 +50,16 @@ class CombatEvent:
                     output_self = f'You heal {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
                     output_other = f'{pop.damage_taker_actor.pretty_name()} heals {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
                     sound = Audio.BUFF
-                elif pop.damage_value <= 0:
-                    output_self = f'You block {color}{pop.damage_source_action.name}@back. '
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} blocks {color}{pop.damage_source_action.name}@back. '
-                    sound = Audio.ERROR
-                else:
-                    output_self = f'You lose {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} loses {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
-                    sound = Audio.HURT
+                
+                if pop.damage_type == DamageType.PHYSICAL or pop.damage_type == DamageType.MAGICAL or pop.damage_type == DamageType.PURE:
+                    if pop.damage_value <= 0:
+                        output_self = f'You block {color}{damage_txt} from {pop.damage_source_action.name}. '
+                        output_other = f'{pop.damage_taker_actor.pretty_name()} blocks {color}{damage_txt} from {pop.damage_source_action.name}. '
+                        sound = Audio.ERROR
+                    else:
+                        output_self = f'You lose {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
+                        output_other = f'{pop.damage_taker_actor.pretty_name()} loses {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
+                        sound = Audio.HURT
 
                 pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
 
@@ -80,6 +88,31 @@ class CombatEvent:
         # get damage_obj first in queue
         damage_obj = self.queue[0]
 
+        # before calc on damage_source_actor 
+        damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(damage_obj)
+        damage_obj = damage_obj.damage_source_actor.inventory_manager.deal_damage(damage_obj)
+
+        # before calc on damage_taker_actor
+        damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_before_calc(damage_obj)
+        damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_before_calc(damage_obj)
+       
+        # +/- armor calculation and hp removal
+        damage_obj.calculate()
+
+        # after calc on damage_taker_actor
+        damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_after_calc(damage_obj)
+        damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_after_calc(damage_obj)
+
+        # after calc on damage_source_actor 
+        damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
+        damage_obj.damage_source_actor.inventory_manager.dealt_damage(damage_obj)
+
+        # add threat to the attacker
+        damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += damage_obj.damage_value
+        self.pop_from_queue()
+
+
+        '''
         # break loop if someone is dead
         #if damage_obj.damage_source_actor.status == ActorStatusType.DEAD:
         #    return
@@ -87,19 +120,39 @@ class CombatEvent:
         #    return
 
         # add attacker buffs
+        print('base dmg:',damage_obj.damage_value)
         damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(damage_obj)
+        print('deal_damage dmg:',damage_obj.damage_value)
         damage_obj = damage_obj.damage_source_actor.inventory_manager.deal_damage(damage_obj)
-        # add receiver buffs
-        damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage(damage_obj)
-        damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage(damage_obj)
+        print('deal_damage dmg:',damage_obj.damage_value)
+
+        # before taking damage, receiver buffs
+        damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_before_calc(damage_obj)
+        print('take_damage dmg:',damage_obj.damage_value)
+        damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_before_calc(damage_obj)
+        print('take_damage dmg:',damage_obj.damage_value)
+       
         # +/- armor calculation and hp removal
         damage_obj.calculate()
+        print('calculated',damage_obj.damage_value)
+
+        # after taking damage, receiver buffs
+        damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_after_calc(damage_obj)
+        print('take_damage dmg:',damage_obj.damage_value)
+        damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_after_calc(damage_obj)
+        print('take_damage dmg:',damage_obj.damage_value)
+
+
         # effects after successful attack
         damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
+        print('dealt_damage',damage_obj.damage_value)
         damage_obj.damage_source_actor.inventory_manager.dealt_damage(damage_obj)
+        print('dealt_damage',damage_obj.damage_value)
         # add threat to the attacker
         damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += damage_obj.damage_value
         self.pop_from_queue()
         # rerun if any affect_manager functions triggered another attack to be added to queue
-        
+        '''
+
+        # rerun if any affect_manager functions triggered another attack to be added to queue
         self.run()

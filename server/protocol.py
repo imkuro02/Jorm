@@ -275,6 +275,7 @@ class Protocol(protocol.Protocol):
                         
 
             #self.actor.date_of_last_login = actor['meta_data']['date_of_last_login']
+            
             self.actor.stat_manager.stats.update(actor['stats'])
             self.actor.skill_manager.skills = actor['skills']
 

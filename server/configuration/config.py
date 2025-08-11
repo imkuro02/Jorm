@@ -125,6 +125,8 @@ class StatType:
     SOUL =      'soul'
     ARMOR =     'armor'
     MARMOR =    'marmor'
+    ARMORMAX =     'armor_max'
+    MARMORMAX =    'marmor_max'
     EXP =       'exp'
     LVL =       'lvl'
     PP =        'pp'
@@ -145,6 +147,8 @@ class StatType:
         SOUL:   'Soul',
         ARMOR:  'Armor',
         MARMOR: 'Marmor',
+        ARMORMAX:  'Max Armor',
+        MARMORMAX: 'Max Marmor',
         EXP:    'Experience',
         LVL:    'Level',
         PP:     'Practice Points',

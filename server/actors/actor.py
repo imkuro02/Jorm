@@ -16,12 +16,14 @@ class ActorStatManager:
     def __init__(self, actor):
         self.actor = actor
         self.stats = {
-            StatType.HPMAX: 30,
-            StatType.HP:    30,
-            StatType.MPMAX: 0,
-            StatType.MP:    0,
-            StatType.ARMOR: 0,
-            StatType.MARMOR:0,
+            StatType.HPMAX:     30,
+            StatType.HP:        30,
+            StatType.MPMAX:     0,
+            StatType.MP:        0,
+            StatType.ARMOR:     0,
+            StatType.ARMORMAX:  0,
+            StatType.MARMOR:    0,
+            StatType.MARMORMAX: 0,
             StatType.GRIT: 10,
             StatType.FLOW: 10,
             StatType.MIND: 10,
@@ -35,6 +37,20 @@ class ActorStatManager:
             }
         
     def hp_mp_clamp_update(self):
+        # max
+        if self.stats[StatType.ARMOR] >= self.stats[StatType.ARMORMAX]:
+            self.stats[StatType.ARMOR] = self.stats[StatType.ARMORMAX]
+
+        if self.stats[StatType.MARMOR] >= self.stats[StatType.MARMORMAX]:
+            self.stats[StatType.MARMOR] = self.stats[StatType.MARMORMAX]
+
+        # min 
+        if self.stats[StatType.ARMOR] <= 0:
+            self.stats[StatType.ARMOR] = 0
+
+        if self.stats[StatType.MARMOR] <= 0:
+            self.stats[StatType.MARMOR] = 0
+
         # max
         if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
             self.stats[StatType.HP] = self.stats[StatType.HPMAX]
@@ -180,7 +196,8 @@ class Actor:
         mmp =   self.stat_manager.stats[StatType.MPMAX]
         #xp =    self.stat_manager.stats[StatType.EXP]
         #mxp =   self.stat_manager.stats[StatType.MPMAX]
-        return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
+        #return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
+        return(f'{utils.progress_bar(12,hp,mhp,"@red")}')
         
     # only npc class has this
     def get_important_dialog(self, actor_to_compare, return_dict = False):
@@ -267,13 +284,26 @@ class Actor:
         mhp =   self.stat_manager.stats[StatType.HPMAX]
         mp =    self.stat_manager.stats[StatType.MP]
         mmp =   self.stat_manager.stats[StatType.MPMAX]
+
+        ahp =    self.stat_manager.stats[StatType.ARMOR]
+        amhp =   self.stat_manager.stats[StatType.ARMORMAX]
+        amp =    self.stat_manager.stats[StatType.MARMOR]
+        ammp =   self.stat_manager.stats[StatType.MARMORMAX]
         t = utils.Table(2,1)
 
-        t.add_data('HP:')
+        t.add_data('Health:')
         x = utils.progress_bar(20,hp,mhp,"@red",style=1)
         t.add_data(x)
-        t.add_data('MP:')
+        t.add_data('Armor:')
+        x = utils.progress_bar(20,ahp,amhp,"@red",style=1)
+        t.add_data(x)
+
+
+        t.add_data('Magicka:')
         x = utils.progress_bar(20,mp,mmp,"@blue",style=1)
+        t.add_data(x)
+        t.add_data('Marmor:')
+        x = utils.progress_bar(20,amp,ammp,"@blue",style=1)
         t.add_data(x)
         
         
@@ -281,7 +311,7 @@ class Actor:
         # t.add_data(f'(@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal)')
         # t.add_data(StatType.name[StatType.MP])
         # t.add_data(f'(@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal)')
-        _piss = [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR, StatType.LVL]
+        _piss = [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
         for _shit in _piss:
             t.add_data(StatType.name[_shit]+':')
             t.add_data(self.stat_manager.stats[_shit])
@@ -301,6 +331,7 @@ class Actor:
         return output
 
     def heal(self, heal_hp = True, heal_mp = True, value = 1, silent = True):
+         
         if heal_hp:
             damage_obj = Damage(
                 damage_taker_actor = self,
@@ -319,6 +350,29 @@ class Actor:
                 damage_value = value,
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MP,
+                silent = silent
+                )
+            damage_obj.run()   
+
+        if heal_hp:
+            damage_obj = Damage(
+                damage_taker_actor = self,
+                damage_source_actor = self,
+                damage_source_action = self,
+                damage_value = value,
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.ARMOR,
+                silent = silent
+                )
+            damage_obj.run()      
+        if heal_mp:    
+            damage_obj = Damage(
+                damage_taker_actor = self,
+                damage_source_actor = self,
+                damage_source_action = self,
+                damage_value = value,
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MARMOR,
                 silent = silent
                 )
             damage_obj.run()   

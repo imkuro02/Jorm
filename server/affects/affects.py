@@ -38,7 +38,10 @@ class Affect:
         pass
 
     # called whenever hp updates in any way
-    def take_damage(self, damage_obj):
+    def take_damage_before_calc(self, damage_obj):
+        return damage_obj
+
+    def take_damage_after_calc(self, damage_obj):
         return damage_obj
     
     def deal_damage(self, damage_obj):
@@ -66,7 +69,7 @@ class Leech(Affect):
         if damage_obj.damage_type != DamageType.PHYSICAL:
             return damage_obj
 
-        if damage_obj.damage_value == 0:
+        if damage_obj.damage_value <= 0:
             return damage_obj
         
         leech_heal_damage_obj = Damage(
@@ -85,18 +88,18 @@ class Thorns(Affect):
         super().__init__(affect_manager, name, description, turns)
         self.damage_reflected_power = damage_reflected_power # how much in % to reflect
 
-    def take_damage(self, damage_obj):
+    def take_damage_after_calc(self, damage_obj):
         if damage_obj.damage_type != DamageType.PHYSICAL:
             return damage_obj
 
-        if damage_obj.damage_value <= 0:
+        if damage_obj.damage_value > 0:
             return damage_obj
         
         thorns_damage = Damage(
             damage_source_actor = self.actor,
             damage_taker_actor = damage_obj.damage_source_actor,
             damage_source_action = self,
-            damage_value = int(damage_obj.damage_value * self.damage_reflected_power),
+            damage_value = abs(int(damage_obj.damage_value * self.damage_reflected_power)),
             damage_type = DamageType.PURE,
             combat_event = damage_obj.combat_event
         )
@@ -108,7 +111,7 @@ class AffectEthereal(Affect):
         super().__init__(affect_manager, name, description, turns)
         self.dmg_amp = dmg_amp
     
-    def take_damage(self, damage_obj: Damage):
+    def take_damage_before_calc(self, damage_obj: Damage):
         if damage_obj.damage_type == DamageType.PHYSICAL:
             damage_obj.damage_type = DamageType.CANCELLED
             damage_obj.damage_taker_actor.simple_broadcast(
@@ -135,17 +138,19 @@ class AffectMageArmor(Affect):
         super().__init__(affect_manager, name, description, turns)
         self.reduction = reduction
     
-    def take_damage(self, damage_obj: 'Damage'):
+    def take_damage_before_calc(self, damage_obj: 'Damage'):
         match damage_obj.damage_type:
             case DamageType.CANCELLED:
                 return damage_obj
             case DamageType.HEALING:
                 return damage_obj
-            case DamageType.PURE:
-                return damage_obj
             case _:
+            
+                if damage_obj.damage_value < 0:
+                    return damage_obj
+
                 hp_dmg = round(damage_obj.damage_value*(1 - self.reduction))
-                mp_dmg = round(damage_obj.damage_value*self.reduction)
+                mp_dmg = round(damage_obj.damage_value*self.reduction*2)
 
                 damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP] -= mp_dmg
                 if damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP] <= 0:
@@ -154,16 +159,6 @@ class AffectMageArmor(Affect):
                 damage_obj.damage_value = hp_dmg
 
                 return damage_obj
-            
-        if damage_obj.damage_type == DamageType.PHYSICAL:
-            damage_obj.damage_type = DamageType.CANCELLED
-            damage_obj.damage_taker_actor.simple_broadcast(
-                    f'You take no damage because you are ethereal',
-                    f'{damage_obj.damage_taker_actor.pretty_name()} takes no damage because they are ethereal'
-                    )
-
-        if damage_obj.damage_type == DamageType.MAGICAL:
-            damage_obj.damage_value = int(damage_obj.damage_value * self.dmg_amp)
 
         return damage_obj
     

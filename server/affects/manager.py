@@ -54,9 +54,14 @@ class AffectsManager:
         pass
 
     # called whenever hp updates in any way
-    def take_damage(self, damage_obj: 'Damage'):
+    def take_damage_before_calc(self, damage_obj: 'Damage'):
         for aff in self.affects.values():
-            damage_obj = aff.take_damage(damage_obj)
+            damage_obj = aff.take_damage_before_calc(damage_obj)
+        return damage_obj
+
+    def take_damage_after_calc(self, damage_obj: 'Damage'):
+        for aff in self.affects.values():
+            damage_obj = aff.take_damage_after_calc(damage_obj)
         return damage_obj
     
     def deal_damage(self, damage_obj: 'Damage'):

@@ -41,13 +41,25 @@ class TriggerableManager:
         self.reset_triggered()
 
     # called whenever hp updates in any way
-    def take_damage(self, damage_obj: 'Damage'):
+    def take_damage_before_calc(self, damage_obj: 'Damage'):
         if self.actor.status != ActorStatusType.FIGHTING: 
             return damage_obj
         for item in self.items():
             if item.premade_id in self.triggered:
                 continue
-            damage_obj = item.take_damage(damage_obj)
+            damage_obj = item.take_damage_before_calc(damage_obj)
+            self.add_triggered(item)
+        self.reset_triggered()
+        return damage_obj
+
+    # called whenever hp updates in any way
+    def take_damage_after_calc(self, damage_obj: 'Damage'):
+        if self.actor.status != ActorStatusType.FIGHTING: 
+            return damage_obj
+        for item in self.items():
+            if item.premade_id in self.triggered:
+                continue
+            damage_obj = item.take_damage_after_calc(damage_obj)
             self.add_triggered(item)
         self.reset_triggered()
         return damage_obj
@@ -99,8 +111,10 @@ class InventoryManager:
         return self.triggerable_manager.set_turn()
     def finish_turn(self):
         return self.triggerable_manager.finish_turn()
-    def take_damage(self, damage_obj: 'Damage'):
-        return self.triggerable_manager.take_damage(damage_obj)
+    def take_damage_before_calc(self, damage_obj: 'Damage'):
+        return self.triggerable_manager.take_damage_before_calc(damage_obj)
+    def take_damage_after_calc(self, damage_obj: 'Damage'):
+        return self.triggerable_manager.take_damage_after_calc(damage_obj)
     def deal_damage(self, damage_obj: 'Damage'):
         return self.triggerable_manager.deal_damage(damage_obj)
     def dealt_damage(self, damage_obj: 'Damage'):
