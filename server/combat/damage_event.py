@@ -59,18 +59,18 @@ class Damage:
                 return self
 
             case DamageType.PHYSICAL:
-                self.damage_taker_actor.stat_manager.stats[StatType.ARMOR] -= self.damage_value
-                if self.damage_taker_actor.stat_manager.stats[StatType.ARMOR] < 0:
-                    self.damage_value = -1*self.damage_taker_actor.stat_manager.stats[StatType.ARMOR]
+                self.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR] -= self.damage_value
+                if self.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR] < 0:
+                    self.damage_value = -1*self.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
                     self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] -= self.damage_value
                 else:
                     self.damage_value = -1*self.damage_value
                     
 
             case DamageType.MAGICAL:
-                self.damage_taker_actor.stat_manager.stats[StatType.MARMOR] -= self.damage_value
-                if self.damage_taker_actor.stat_manager.stats[StatType.MARMOR] < 0:
-                    self.damage_value = -1*self.damage_taker_actor.stat_manager.stats[StatType.MARMOR]
+                self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR] -= self.damage_value
+                if self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR] < 0:
+                    self.damage_value = -1*self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
                     self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] -= self.damage_value
                 else:
                     self.damage_value = -1*self.damage_value

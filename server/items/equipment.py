@@ -33,8 +33,8 @@ class EquipmentStatManager:
         self.stats = {
             StatType.HPMAX: 0,
             StatType.MPMAX: 0,
-            StatType.ARMORMAX: 0,
-            StatType.MARMORMAX:0,
+            StatType.PHYARMORMAX: 0,
+            StatType.MAGARMORMAX:0,
             StatType.GRIT: 0,
             StatType.FLOW: 0,
             StatType.MIND: 0,
@@ -44,8 +44,8 @@ class EquipmentStatManager:
         self.reqs = {
             StatType.HPMAX: 0,
             StatType.MPMAX: 0,
-            StatType.ARMORMAX: 0,
-            StatType.MARMORMAX:0,
+            StatType.PHYARMORMAX: 0,
+            StatType.MAGARMORMAX:0,
             StatType.GRIT: 0,
             StatType.FLOW: 0,
             StatType.MIND: 0,
@@ -111,7 +111,7 @@ class EquipmentBonusManager:
                 if bonus.key in [
                     StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
                     StatType.FLOW, StatType.MIND, StatType.SOUL, 
-                    StatType.ARMOR, StatType.MARMOR
+                    StatType.PHYARMOR, StatType.MAGARMOR
                     ]:
                     self.item.stat_manager.stats[bonus.key] += bonus.val
                     return
@@ -167,7 +167,7 @@ class Equipment(Item):
         output += f'@tipEquipment slot:@normal {EquipmentSlotType.name[self.slot]}\n'
         output += '@tipRequirements to equip:@normal\n'
         t = Table(2,3)
-        ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.MPMAX, StatType.ARMORMAX, StatType.MARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL]
+        ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL]
         for stat in ordered_stats:
             if self.stat_manager.reqs[stat] == 0:
                 continue
@@ -178,7 +178,7 @@ class Equipment(Item):
        
         output += '\n@tipTotal stats with bonuses:@normal\n'
         t = Table(2,3)
-        ordered_stats = [StatType.HPMAX, StatType.MPMAX, StatType.ARMORMAX, StatType.MARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL]
+        ordered_stats = [StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL]
         for stat in ordered_stats:
             if self.stat_manager.stats[stat] == 0:
                 continue
@@ -326,7 +326,7 @@ class Equipment(Item):
         #t.add_data('Stat')
         #t.add_data('Bonus')
         #t.add_data('Req')
-        for stat in [StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.ARMOR, StatType.MARMOR]:
+        for stat in [StatType.HPMAX, StatType.MPMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.PHYARMOR, StatType.MAGARMOR]:
             s = self.stat_manager.stats[stat]
             r = self.stat_manager.reqs[stat]
             

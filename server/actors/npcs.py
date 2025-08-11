@@ -122,8 +122,8 @@ class Npc(Actor):
             self.stat_manager.stats = {**self.stat_manager.stats, **stats}
             self.stat_manager.stats[StatType.HPMAX] = self.stat_manager.stats[StatType.HP]
             self.stat_manager.stats[StatType.MPMAX] = self.stat_manager.stats[StatType.MP]
-            self.stat_manager.stats[StatType.ARMORMAX] = self.stat_manager.stats[StatType.ARMOR]
-            self.stat_manager.stats[StatType.MARMORMAX] = self.stat_manager.stats[StatType.MARMOR]
+            self.stat_manager.stats[StatType.PHYARMORMAX] = self.stat_manager.stats[StatType.PHYARMOR]
+            self.stat_manager.stats[StatType.MAGARMORMAX] = self.stat_manager.stats[StatType.MAGARMOR]
 
         if loot != None:
             self.loot = copy.deepcopy(loot)

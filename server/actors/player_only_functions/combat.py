@@ -161,8 +161,8 @@ def rest_now(self, line):
 
         self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
         self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
-        self.stat_manager.stats[StatType.ARMOR] = int(self.stat_manager.stats[StatType.ARMORMAX])
-        self.stat_manager.stats[StatType.MARMOR] = int(self.stat_manager.stats[StatType.MARMORMAX])
+        self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
+        self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
 
         self.simple_broadcast(
             'You ressurect',
@@ -211,8 +211,8 @@ def rest_now(self, line):
                 
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
     self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
-    self.stat_manager.stats[StatType.ARMOR] = int(self.stat_manager.stats[StatType.ARMORMAX])
-    self.stat_manager.stats[StatType.MARMOR] = int(self.stat_manager.stats[StatType.MARMORMAX])
+    self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
+    self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects()
 
 @check_not_in_combat

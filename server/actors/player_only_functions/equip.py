@@ -53,8 +53,8 @@ def inventory_equip(self, item, forced = False):
             #print(stat_name, item.stat_manager.stats[stat_name])
             if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] += stat_val
             if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] += stat_val
-            if stat_name == StatType.ARMORMAX: self.stat_manager.stats[StatType.ARMOR] += stat_val
-            if stat_name == StatType.MARMORMAX: self.stat_manager.stats[StatType.MARMOR] += stat_val
+            if stat_name == StatType.PHYARMORMAX: self.stat_manager.stats[StatType.PHYARMOR] += stat_val
+            if stat_name == StatType.MAGARMORMAX: self.stat_manager.stats[StatType.MAGARMOR] += stat_val
             self.stat_manager.stats[stat_name] += stat_val
             #print(self.stat_manager.stats[stat_name])
         
@@ -84,8 +84,8 @@ def inventory_unequip(self, item, silent = False):
             stat_val = item.stat_manager.stats[stat_name]
             if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] -= stat_val
             if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] -= stat_val
-            if stat_name == StatType.ARMORMAX: self.stat_manager.stats[StatType.ARMOR] -= stat_val
-            if stat_name == StatType.MARMORMAX: self.stat_manager.stats[StatType.MARMOR] -= stat_val
+            if stat_name == StatType.PHYARMORMAX: self.stat_manager.stats[StatType.PHYARMOR] -= stat_val
+            if stat_name == StatType.MAGARMORMAX: self.stat_manager.stats[StatType.MAGARMOR] -= stat_val
             self.stat_manager.stats[stat_name] -= stat_val
         
         for skill in item.skill_manager.skills:

@@ -46,10 +46,10 @@ class Database:
             flow INT NOT NULL,
             mind INT NOT NULL,
             soul INT NOT NULL,
-            armor INT NOT NULL,
-            marmor INT NOT NULL,
-            armor_max INT NOT NULL,
-            marmor_max INT NOT NULL,
+            phy_armor INT NOT NULL,
+            mag_armor INT NOT NULL,
+            phy_armor_max INT NOT NULL,
+            mag_armor_max INT NOT NULL,
             exp INT NOT NULL,
             lvl INT NOT NULL,
             pp INT NOT NULL,
@@ -252,11 +252,11 @@ class Database:
         self.cursor.execute('''
             INSERT INTO stats (
                 actor_id, hp_max, mp_max, hp, mp,
-                armor, marmor, armor_max, marmor_max, grit, flow, mind, soul,
+                phy_armor, mag_armor, phy_armor_max, mag_armor_max, grit, flow, mind, soul,
                 exp, lvl, pp
             ) VALUES (
                 :actor_id, :hp_max, :mp_max, :hp, :mp,
-                :armor, :marmor, :armor_max, :marmor_max, :grit, :flow, :mind, :soul,
+                :phy_armor, :mag_armor, :phy_armor_max, :mag_armor_max, :grit, :flow, :mind, :soul,
                 :exp, :lvl, :pp
             )
             ON CONFLICT(actor_id) DO UPDATE SET
@@ -264,10 +264,10 @@ class Database:
                 mp_max = excluded.mp_max,
                 hp = excluded.hp,
                 mp = excluded.mp,
-                armor = excluded.armor,
-                marmor = excluded.marmor,
-                armor_max = excluded.armor_max,
-                marmor_max = excluded.marmor_max,
+                phy_armor = excluded.phy_armor,
+                mag_armor = excluded.mag_armor,
+                phy_armor_max = excluded.phy_armor_max,
+                mag_armor_max = excluded.mag_armor_max,
                 grit = excluded.grit,
                 flow = excluded.flow,
                 mind = excluded.mind,
@@ -518,10 +518,10 @@ class Database:
             'flow':stats[6],
             'mind': stats[7],
             'soul': stats[8],
-            'armor': stats[9],
-            'marmor': stats[10],
-            'armor_max': stats[11],
-            'marmor_max': stats[12],
+            'phy_armor': stats[9],
+            'mag_armor': stats[10],
+            'phy_armor_max': stats[11],
+            'mag_armor_max': stats[12],
             'exp': stats[13],
             'lvl': stats[14],
             'pp': stats[15],

@@ -20,10 +20,10 @@ class ActorStatManager:
             StatType.HP:        30,
             StatType.MPMAX:     0,
             StatType.MP:        0,
-            StatType.ARMOR:     0,
-            StatType.ARMORMAX:  0,
-            StatType.MARMOR:    0,
-            StatType.MARMORMAX: 0,
+            StatType.PHYARMOR:     0,
+            StatType.PHYARMORMAX:  0,
+            StatType.MAGARMOR:    0,
+            StatType.MAGARMORMAX: 0,
             StatType.GRIT: 10,
             StatType.FLOW: 10,
             StatType.MIND: 10,
@@ -38,18 +38,18 @@ class ActorStatManager:
         
     def hp_mp_clamp_update(self):
         # max
-        if self.stats[StatType.ARMOR] >= self.stats[StatType.ARMORMAX]:
-            self.stats[StatType.ARMOR] = self.stats[StatType.ARMORMAX]
+        if self.stats[StatType.PHYARMOR] >= self.stats[StatType.PHYARMORMAX]:
+            self.stats[StatType.PHYARMOR] = self.stats[StatType.PHYARMORMAX]
 
-        if self.stats[StatType.MARMOR] >= self.stats[StatType.MARMORMAX]:
-            self.stats[StatType.MARMOR] = self.stats[StatType.MARMORMAX]
+        if self.stats[StatType.MAGARMOR] >= self.stats[StatType.MAGARMORMAX]:
+            self.stats[StatType.MAGARMOR] = self.stats[StatType.MAGARMORMAX]
 
         # min 
-        if self.stats[StatType.ARMOR] <= 0:
-            self.stats[StatType.ARMOR] = 0
+        if self.stats[StatType.PHYARMOR] <= 0:
+            self.stats[StatType.PHYARMOR] = 0
 
-        if self.stats[StatType.MARMOR] <= 0:
-            self.stats[StatType.MARMOR] = 0
+        if self.stats[StatType.MAGARMOR] <= 0:
+            self.stats[StatType.MAGARMOR] = 0
 
         # max
         if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
@@ -285,16 +285,16 @@ class Actor:
         mp =    self.stat_manager.stats[StatType.MP]
         mmp =   self.stat_manager.stats[StatType.MPMAX]
 
-        ahp =    self.stat_manager.stats[StatType.ARMOR]
-        amhp =   self.stat_manager.stats[StatType.ARMORMAX]
-        amp =    self.stat_manager.stats[StatType.MARMOR]
-        ammp =   self.stat_manager.stats[StatType.MARMORMAX]
+        ahp =    self.stat_manager.stats[StatType.PHYARMOR]
+        amhp =   self.stat_manager.stats[StatType.PHYARMORMAX]
+        amp =    self.stat_manager.stats[StatType.MAGARMOR]
+        ammp =   self.stat_manager.stats[StatType.MAGARMORMAX]
         t = utils.Table(2,1)
 
         t.add_data('Health:')
         x = utils.progress_bar(20,hp,mhp,"@red",style=1)
         t.add_data(x)
-        t.add_data('Armor:')
+        t.add_data('PhyArmor:')
         x = utils.progress_bar(20,ahp,amhp,"@red",style=1)
         t.add_data(x)
 
@@ -302,7 +302,7 @@ class Actor:
         t.add_data('Magicka:')
         x = utils.progress_bar(20,mp,mmp,"@blue",style=1)
         t.add_data(x)
-        t.add_data('Marmor:')
+        t.add_data('MagArmor:')
         x = utils.progress_bar(20,amp,ammp,"@blue",style=1)
         t.add_data(x)
         
@@ -361,7 +361,7 @@ class Actor:
                 damage_source_action = self,
                 damage_value = value,
                 damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.ARMOR,
+                damage_to_stat = StatType.PHYARMOR,
                 silent = silent
                 )
             damage_obj.run()      
@@ -372,7 +372,7 @@ class Actor:
                 damage_source_action = self,
                 damage_value = value,
                 damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.MARMOR,
+                damage_to_stat = StatType.MAGARMOR,
                 silent = silent
                 )
             damage_obj.run()   

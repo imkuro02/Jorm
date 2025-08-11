@@ -117,7 +117,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
             if stat_to_affect in [StatType.HPMAX, StatType.MPMAX]:
                 boost = boost * 5
             new_item.stat_manager.stats[stat_to_affect] += boost
-            if stat_to_affect not in [StatType.ARMOR, StatType.MARMOR]:
+            if stat_to_affect not in [StatType.PHYARMOR, StatType.MAGARMOR]:
                 new_item.stat_manager.reqs[stat_to_affect] += abs(boost) 
         new_item.rank = rank
         '''

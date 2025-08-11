@@ -123,10 +123,10 @@ class StatType:
     FLOW =      'flow'
     MIND =      'mind'
     SOUL =      'soul'
-    ARMOR =     'armor'
-    MARMOR =    'marmor'
-    ARMORMAX =     'armor_max'
-    MARMORMAX =    'marmor_max'
+    PHYARMOR =     'phy_armor'
+    MAGARMOR =    'mag_armor'
+    PHYARMORMAX =     'phy_armor_max'
+    MAGARMORMAX =    'mag_armor_max'
     EXP =       'exp'
     LVL =       'lvl'
     PP =        'pp'
@@ -145,10 +145,10 @@ class StatType:
         FLOW:   'Flow',
         MIND:   'Mind',
         SOUL:   'Soul',
-        ARMOR:  'Armor',
-        MARMOR: 'Marmor',
-        ARMORMAX:  'Max Armor',
-        MARMORMAX: 'Max Marmor',
+        PHYARMOR:  'Phy Armor',
+        MAGARMOR: 'Mag Aarmor',
+        PHYARMORMAX:  'Max Phy Armor',
+        MAGARMORMAX: 'Max Mag Armor',
         EXP:    'Experience',
         LVL:    'Level',
         PP:     'Practice Points',
