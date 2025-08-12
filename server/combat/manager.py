@@ -113,7 +113,7 @@ class Combat:
         for i in self.room.actors.values():
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
-            #    i.combat_over_prompt()
+            #    i.combat_over_prompt(self)
 
             if i.party_manager.party != None:
                 one_alive = False

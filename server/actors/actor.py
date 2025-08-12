@@ -189,7 +189,55 @@ class Actor:
         if self.room != None:
             self.room.move_actor(self, silent = True)
    
-    def prompt(self):
+    def add_prompt_syntax(self, prompt_syntax):
+        justing = 3
+        translations = {
+            '#HP#':             str(self.stat_manager.stats[StatType.HP]).rjust(justing),
+            '#HPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).rjust(justing),
+
+            '#MP#':             str(self.stat_manager.stats[StatType.MP]).rjust(justing),
+            '#MPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).rjust(justing),
+
+            '#PHYARM#':         str(self.stat_manager.stats[StatType.PHYARMOR]).rjust(justing),
+            '#PHYARMMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).rjust(justing),
+
+            '#MAGARM#':         str(self.stat_manager.stats[StatType.MAGARMOR]).rjust(justing),
+            '#MAGARMMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).rjust(justing),
+
+            # int((cur_value / max_value) * 100)
+            '#HP%#':             str('0' if self.stat_manager.stats[StatType.HP] == 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing),
+            '#MP%#':             str('0' if self.stat_manager.stats[StatType.MP] == 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).rjust(justing),
+            '#PHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMOR] == 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing),
+            '#MAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMOR] == 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing),
+   
+            '#LHP#':             str(self.stat_manager.stats[StatType.HP]).ljust(justing),
+            '#LHPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).ljust(justing),
+
+            '#LMP#':             str(self.stat_manager.stats[StatType.MP]).ljust(justing),
+            '#LMPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).ljust(justing),
+
+            '#LPHYARM#':         str(self.stat_manager.stats[StatType.PHYARMOR]).ljust(justing),
+            '#LPHYARMMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).ljust(justing),
+
+            '#LMAGARM#':         str(self.stat_manager.stats[StatType.MAGARMOR]).ljust(justing),
+            '#LMAGARMMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).ljust(justing),
+
+            # int((cur_value / max_value) * 100)
+            '#LHP%#':             str('0' if self.stat_manager.stats[StatType.HP] == 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).ljust(justing),
+            '#LMP%#':             str('0' if self.stat_manager.stats[StatType.MP] == 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).ljust(justing),
+            '#LPHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMOR] == 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing),
+            '#LMAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMOR] == 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing),
+        }
+
+        for trans in translations:
+            prompt_syntax = prompt_syntax.replace(trans, str(translations[trans]))
+
+        return prompt_syntax
+
+    def prompt(self, actor_that_asked = None):
+        if actor_that_asked == None:
+            return 'who asked? (def prompt error)'
+
         hp =    self.stat_manager.stats[StatType.HP]
         mhp =   self.stat_manager.stats[StatType.HPMAX]
         mp =    self.stat_manager.stats[StatType.MP]
@@ -197,7 +245,8 @@ class Actor:
         #xp =    self.stat_manager.stats[StatType.EXP]
         #mxp =   self.stat_manager.stats[StatType.MPMAX]
         #return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
-        return(f'{utils.progress_bar(12,hp,mhp,"@red")}')
+        #return(f'{utils.progress_bar(12,hp,mhp,"@red")}')
+        return self.add_prompt_syntax(actor_that_asked.settings_manager.prompt)
         
     # only npc class has this
     def get_important_dialog(self, actor_to_compare, return_dict = False):
@@ -280,6 +329,10 @@ class Actor:
 
         output += self.get_character_equipment()
         
+        
+        
+        t = utils.Table(2,1)
+        '''
         hp =    self.stat_manager.stats[StatType.HP]
         mhp =   self.stat_manager.stats[StatType.HPMAX]
         mp =    self.stat_manager.stats[StatType.MP]
@@ -289,7 +342,6 @@ class Actor:
         amhp =   self.stat_manager.stats[StatType.PHYARMORMAX]
         amp =    self.stat_manager.stats[StatType.MAGARMOR]
         ammp =   self.stat_manager.stats[StatType.MAGARMORMAX]
-        t = utils.Table(2,1)
 
         t.add_data('Health:')
         x = utils.progress_bar(20,hp,mhp,"@red",style=1)
@@ -305,24 +357,38 @@ class Actor:
         t.add_data('MagArmor:')
         x = utils.progress_bar(20,amp,ammp,"@blue",style=1)
         t.add_data(x)
+        '''
         
         
         # t.add_data(StatType.name[StatType.HP])
         # t.add_data(f'(@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal)')
         # t.add_data(StatType.name[StatType.MP])
         # t.add_data(f'(@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal)')
-        _piss = [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
+        _piss = [StatType.HP, StatType.HPMAX, StatType.MP, StatType.MPMAX, StatType.PHYARMOR, StatType.PHYARMORMAX, StatType.MAGARMOR, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
         for _shit in _piss:
             t.add_data(StatType.name[_shit]+':')
             t.add_data(self.stat_manager.stats[_shit])
 
 
         if type(self).__name__ == 'Player':
+            '''
             t.add_data(StatType.name[StatType.EXP][:3]+':')
             xp = self.stat_manager.stats[StatType.EXP]
             mxp = self.get_exp_needed_to_level()
             t.add_data(utils.progress_bar(20,xp,mxp,'@purple',1))
             t.add_data(StatType.name[StatType.PP][:4]+':')
+            t.add_data(self.stat_manager.stats[StatType.PP])
+            '''
+            t.add_data('Exp (current):')
+            t.add_data(self.stat_manager.stats[StatType.EXP])
+            t.add_data('Exp (left):')
+            if self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level() <= 0:
+                t.add_data(str(0))
+            else:
+                t.add_data(str(self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level()))
+            t.add_data('Can level?:')
+            t.add_data('@goodYES@normal' if self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level() else '@badNO@normal')
+            t.add_data('Practice Points:')
             t.add_data(self.stat_manager.stats[StatType.PP])
 
         output += t.get_table()[:-2]
@@ -511,14 +577,14 @@ class Actor:
             self.sendLine(output)
             par = self
             
-            output = par.prompt()+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
+            output = par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
             _list = self.room.combat.participants.values()
 
             for par in _list:
                 if par == self: 
                     continue
 
-                output += par.prompt()+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
+                output += par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
             
             output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)

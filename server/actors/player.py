@@ -32,7 +32,7 @@ class UpdateChecker:
         for par in _list:
             if par == self.actor: 
                 continue
-            output = output + par.pretty_name()+'\n'+par.prompt()+'\n'
+            output = output + par.pretty_name()+'\n'+par.prompt(self)+'\n'
         
         
         output = output[:-1] if output.endswith("\n") else output
@@ -183,6 +183,7 @@ class UpdateChecker:
         
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):
+        self.loaded = False
         self.protocol = protocol
         self.admin = 0
         self.queued_lines = []
@@ -214,6 +215,7 @@ class Player(Actor):
         self.charging_mini_game = ChargingMiniGame(self)
 
         self.update_checker = UpdateChecker(self)
+        self.loaded = True
         
     def check_if_admin(self):
         if self.protocol == None:
@@ -236,8 +238,11 @@ class Player(Actor):
     #    return output
 
     def tick(self):
+        if not self.loaded:
+            return
+            
         super().tick()
-        
+
         if self.settings_manager.autobattler:
             self.ai.tick()
 

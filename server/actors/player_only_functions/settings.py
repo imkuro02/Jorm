@@ -16,8 +16,9 @@ class SETTINGS:
     PWD = 'password'
     USR = 'username' # not in LIST_SETTINGS
     AUTO_BATTLER = 'autobattler'
+    PROMPT = 'prompt'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, USR, AUTO_BATTLER
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, USR, AUTO_BATTLER, PROMPT
     ]
 
 
@@ -26,7 +27,7 @@ LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = False, pvp = False, debug = False):
+    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = False, pvp = False, debug = False, prompt = None):
         self.actor = actor
         if aliases == None:
             self.aliases = {}
@@ -39,6 +40,20 @@ class Settings:
         self.pvp = pvp
         self.debug = debug
         self.autobattler = False
+        
+        #self.prompt_default2 = '[@bred#HP#@normal/@bred#HPMAX#@normal | @bred#PHYARM#@normal/@bred#PHYARMMAX#@normal] [@bcyan#MP#@normal/@bcyan#MPMAX#@normal | @bcyan#MAGARM#@normal/@bcyan#MAGARMMAX#@normal]>'
+        #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
+        #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
+        self.prompt_default = {
+            '1': '[ @bred#HP#@normal/@bred#LHPMAX#@normal HP| @bred#PHYARM#@normal/@bred#LPHYARMMAX#@normal PA] [ @bcyan#MP#@normal/@bcyan#LMPMAX#@normal MP| @bcyan#MAGARM#@normal/@bcyan#LMAGARMMAX#@normal MA]',
+            '2': '[ @bred#HP%#@normal% HP| @bred#PHYARM%#@normal% PA] [ @bcyan#MP%#@normal% MP| @bcyan#MAGARM%#@normal% MA]',
+            '3': '[ @good#HP#@normal/@good#LHPMAX#@normal HP| @good#PHYARM#@normal/@good#LPHYARMMAX#@normal PA] [ @bad#MP#@normal/@bad#LMPMAX#@normal MP| @bad#MAGARM#@normal/@bad#LMAGARMMAX#@normal MA]',
+            '4': '[ @good#HP%#@normal% HP| @good#PHYARM%#@normal% PA] [ @bad#MP%#@normal% MP| @bad#MAGARM%#@normal% MA]',
+        }
+        if prompt != None:
+            self.prompt = prompt
+        else:
+            self.prompt = self.prompt_default['1']        
         
     def true_or_false(self, value):
         if value in LIST_ON:
@@ -150,6 +165,14 @@ class Settings:
                 value = line[1]
                 self.autobattler = self.true_or_false(value)
                 self.actor.sendLine(f'Autobattler enabled: {self.autobattler}')
+
+            case SETTINGS.PROMPT:
+                prompt = ' '.join(original_line.split()[1:])
+                if prompt in self.prompt_default:
+                    self.prompt = self.prompt_default[prompt]
+                else:
+                    self.prompt = prompt
+                #proto.register_account_changes(username, password)
 
 
         

@@ -146,7 +146,7 @@ def command_ranks(self, line):
 
 
 def command_send_prompt(self, line):
-    self.sendLine(self.prompt())
+    self.sendLine(self.prompt(self))
 
 
 @check_is_admin
