@@ -331,7 +331,7 @@ class Actor:
         
         
         
-        t = utils.Table(2,1)
+        t = utils.Table(4,1)
         '''
         hp =    self.stat_manager.stats[StatType.HP]
         mhp =   self.stat_manager.stats[StatType.HPMAX]
@@ -364,13 +364,21 @@ class Actor:
         # t.add_data(f'(@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal)')
         # t.add_data(StatType.name[StatType.MP])
         # t.add_data(f'(@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal)')
-        _piss = [StatType.HP, StatType.HPMAX, StatType.MP, StatType.MPMAX, StatType.PHYARMOR, StatType.PHYARMORMAX, StatType.MAGARMOR, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
+        _piss = [StatType.HP, StatType.MP, StatType.PHYARMOR, StatType.MAGARMOR, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
         for _shit in _piss:
             t.add_data(StatType.name[_shit]+':')
-            t.add_data(self.stat_manager.stats[_shit])
+            if _shit+'_max' in StatType.name:
+                t.add_data(f'{self.stat_manager.stats[_shit]}')
+                t.add_data(f'/')
+                t.add_data(f'{self.stat_manager.stats[_shit+"_max"]}')
+            else:
+                t.add_data(self.stat_manager.stats[_shit])
+                t.add_data('')
+                t.add_data('')
 
-
+        output += t.get_table()
         if type(self).__name__ == 'Player':
+            t = utils.Table(4,1)
             '''
             t.add_data(StatType.name[StatType.EXP][:3]+':')
             xp = self.stat_manager.stats[StatType.EXP]
@@ -379,19 +387,26 @@ class Actor:
             t.add_data(StatType.name[StatType.PP][:4]+':')
             t.add_data(self.stat_manager.stats[StatType.PP])
             '''
-            t.add_data('Exp (current):')
+            t.add_data('Experience:')
             t.add_data(self.stat_manager.stats[StatType.EXP])
-            t.add_data('Exp (left):')
-            if self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level() <= 0:
-                t.add_data(str(0))
-            else:
-                t.add_data(str(self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level()))
+            t.add_data('/')
+            t.add_data(self.get_exp_needed_to_level())
+            
+                
+            #    t.add_data(str(self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level()))
             t.add_data('Can level?:')
             t.add_data('@goodYES@normal' if self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level() else '@badNO@normal')
-            t.add_data('Practice Points:')
-            t.add_data(self.stat_manager.stats[StatType.PP])
+            t.add_data('')
+            t.add_data('')
 
-        output += t.get_table()[:-2]
+            t.add_data('Practices:')
+            t.add_data(self.stat_manager.stats[StatType.PP])
+            t.add_data('')
+            t.add_data('')
+
+            
+
+            output += t.get_table()
        
         
         return output

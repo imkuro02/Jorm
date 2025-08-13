@@ -146,7 +146,7 @@ class StatType:
         MIND:   'Mind',
         SOUL:   'Soul',
         PHYARMOR:  'Phy Armor',
-        MAGARMOR: 'Mag Aarmor',
+        MAGARMOR:  'Mag Armor',
         PHYARMORMAX:  'Max Phy Armor',
         MAGARMORMAX: 'Max Mag Armor',
         EXP:    'Experience',

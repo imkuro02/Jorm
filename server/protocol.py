@@ -287,6 +287,7 @@ class Protocol(protocol.Protocol):
                 self.actor.settings_manager.gmcp = actor['settings']['gmcp']
                 self.actor.settings_manager.view_room = actor['settings']['view_room']
                 self.actor.settings_manager.view_map = actor['settings']['view_map']
+                self.actor.settings_manager.prompt = actor['settings']['prompt']
 
             bonuses = actor['equipment_bonuses']
             

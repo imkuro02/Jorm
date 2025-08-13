@@ -47,8 +47,9 @@ class Settings:
         self.prompt_default = {
             '1': '[ @bred#HP#@normal/@bred#LHPMAX#@normal HP| @bred#PHYARM#@normal/@bred#LPHYARMMAX#@normal PA] [ @bcyan#MP#@normal/@bcyan#LMPMAX#@normal MP| @bcyan#MAGARM#@normal/@bcyan#LMAGARMMAX#@normal MA]',
             '2': '[ @bred#HP%#@normal% HP| @bred#PHYARM%#@normal% PA] [ @bcyan#MP%#@normal% MP| @bcyan#MAGARM%#@normal% MA]',
-            '3': '[ @good#HP#@normal/@good#LHPMAX#@normal HP| @good#PHYARM#@normal/@good#LPHYARMMAX#@normal PA] [ @bad#MP#@normal/@bad#LMPMAX#@normal MP| @bad#MAGARM#@normal/@bad#LMAGARMMAX#@normal MA]',
-            '4': '[ @good#HP%#@normal% HP| @good#PHYARM%#@normal% PA] [ @bad#MP%#@normal% MP| @bad#MAGARM%#@normal% MA]',
+            '3': '@bred#HP#@normalHP @bred#PHYARM#@normalPA @bcyan#MP#@normalMP @bcyan#MAGARM#@normalMA',
+            '4': '[ @good#HP#@normal/@good#LHPMAX#@normal HP| @good#PHYARM#@normal/@good#LPHYARMMAX#@normal PA] [ @bad#MP#@normal/@bad#LMPMAX#@normal MP| @bad#MAGARM#@normal/@bad#LMAGARMMAX#@normal MA]',
+            '5': '[ @good#HP%#@normal% HP| @good#PHYARM%#@normal% PA] [ @bad#MP%#@normal% MP| @bad#MAGARM%#@normal% MA]',
         }
         if prompt != None:
             self.prompt = prompt
@@ -168,6 +169,9 @@ class Settings:
 
             case SETTINGS.PROMPT:
                 prompt = ' '.join(original_line.split()[1:])
+                if prompt == ' ' or prompt == '':
+                    self.actor.sendLine(f'Current prompt is: {self.prompt}', color = False)
+                    return
                 if prompt in self.prompt_default:
                     self.prompt = self.prompt_default[prompt]
                 else:

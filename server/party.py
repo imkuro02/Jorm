@@ -179,7 +179,7 @@ class PartyManager:
         #t.add_data('Magicka')
         for i in self.party.participants.values():
             t.add_data(i.pretty_name())
-            t.add_data(i.prompt(self))
+            t.add_data(i.prompt(self.actor))
         output = t.get_table()
         #output = self.get_party_id() + output
         self.actor.sendLine(output)

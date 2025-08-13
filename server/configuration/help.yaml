@@ -324,8 +324,58 @@ commands:
       - say
       - shout
       - emote
+  prompt:
+    group: settings
+    syntax: 
+      - settings prompt <custom values>                                   
+    description: |
+      Create a custom prompt
+      Example: "settings prompt [#HP#/#HPMAX#]"
+      This will make your prompt look like "[100/100]"
+
+      Here are all possible values for prompts:
+      #HP#          - Health 
+      #MP#          - Magicka 
+      #PHYARM#      - Physical Armor 
+      #MAGARM#      - Magical Armor
+      #HPMAX#       - Maximum Health 
+      #MPMAX#       - Maximum Magicka 
+      #PHYARMMAX#   - Maximum Physical Armor 
+      #MAGARMMAX#   - Maximum Magical Armor
+      #HP%#         - Health percentage
+      #MP%#         - Magicka percentage
+      #PHYARM%#     - Physical Armor percentage
+      #MAGARM%#     - Magical Armor percentage
+
+      You can also add "L" right after the first # to adjust the value to the left.
+      Like so "LHP" or #LMAGARM%#
+
+      * By default the values all have a set width of 3, if the value is less than 3 characters
+        for example "10" "99" or "1", the value will be displayed like so "  1".
+        "L" will make it adjust to the left and display like so "1  ".
+
+      * Percentages will not append the "%", meaning "#HP%#" will display "100" not "100%"
+        To customize this, you can simple add another "%" character after the last #
+        Example: "#HP%#%" will now display "100%"
+
+      * You can use colors in your prompts, to do this you need to add a color_code.
+        Color codes will not work if they are inside two "#"
+        Example: "@.red#HP#" NOT "#@.redHP#"
+
+        If you wish to use colors, read more about them with help color
+
+      There are some premade prompts, that can be selected with:
+      settings prompt <1-5>
+
+      settings prompt 1 is the default prompt
+      
+      Lastly: here is an example of a prompt:
+      "---@.bred#HP#@.normal/@.bred#LHPMAX#@.normal HP--->"
+    related:
+      - settings
+      - colors
   settings:
-    group: other
+    group: settings
     syntax: 
       - settings alias                                    
       - settings alias <your alias> <a command>
@@ -334,16 +384,20 @@ commands:
       - settings logout
       - settings username <new username> (Not implemented yet)
       - settings password <new password> 
+      - settings prompt <custom prompt>
     description: |
       'settings alias' will display all aliases.
       Setting an alias without <a command> will remove it
-      gmcp      - toggle gmcp
-      debug     - toggle debug (dont)
-      viewroom  - toggle to automatically view rooms with 'look' command when moving
-      viewmap   - toggle to automatically view ascii map with 'map' command when moving
-      logout will log you out of the game and close the connection. It is OK to just close
-      the game in browser, or kill connection in desktop client.
+      gmcp        - toggle gmcp
+      debug       - toggle debug (dont)
+      viewroom    - toggle to automatically view rooms with 'look' command when moving
+      viewmap     - toggle to automatically view ascii map with 'map' command when moving
+      logout      - will log you out of the game and close the connection. 
+      autobattler - toggle to automatically use skills during combat.
+      prompt      - has its own help file "help prompt"
+
     related:
+      - prompt
       - look
       - map
 # - mexp
@@ -501,5 +555,48 @@ commands:
     related:
       - look
       - map
+  color:
+    group: other
+    syntax:
+      - '@<color_code>'
+    description: |
+      Here are all available color_codes:
+      @blackblack@normal
+      @redred@normal
+      @greengreen@normal
+      @yellowyellow@normal
+      @blueblue@normal
+      @purplepurple@normal
+      @cyancyan@normal
+      @whitewhite@normal
+      @bblackbblack@normal
+      @bredbred@normal
+      @bgreenbgreen@normal
+      @byellowbyellow@normal
+      @bbluebblue@normal
+      @bpurplebpurple@normal
+      @bcyanbcyan@normal
+      @bwhitebwhite@normal
+      @bgredbgred@normal
+      @bggreenbggreen@normal
+      @bgyellowbgyellow@normal
+      @bgbluebgblue@normal
+      @bgpurplebgpurple@normal
+      @bgcyanbgcyan@normal
+      @bgwhitebgwhite@normal
+
+      @normalnormal (normal is the prefix is the default color)
+
+      Colors can be used to enhance the "say" command.
+      Or can be used to customize your prompt with "set prompt"
+
+      To use a color, you need to prefix it with a "@" like "@.red" 
+      (remove the ".") inbetween
+
+      example: "say @.bgyellowHELLO@.normal" -> "say @bgyellowHELLO@normal"
+
+    related:
+      - settings
+      - say
 
 

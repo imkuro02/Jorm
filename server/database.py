@@ -118,6 +118,7 @@ class Database:
             gmcp BOOL NOT NULL,
             view_room BOOL NOT NULL,
             view_map BOOL NOT NULL,
+            prompt TEXT NOT NULL,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
@@ -406,11 +407,12 @@ class Database:
         my_dict['gmcp'] = actor.settings_manager.gmcp
         my_dict['view_room'] = actor.settings_manager.view_room
         my_dict['view_map'] = actor.settings_manager.view_map
+        my_dict['prompt'] = actor.settings_manager.prompt
         self.cursor.execute('''
             INSERT INTO settings (
-                actor_id, gmcp, view_room, view_map
+                actor_id, gmcp, view_room, view_map, prompt
             ) VALUES (
-                :actor_id, :gmcp, :view_room, :view_map
+                :actor_id, :gmcp, :view_room, :view_map, :prompt
             )
         ''', my_dict)
                 
@@ -577,7 +579,8 @@ class Database:
             my_dict['settings'] = {
                 'gmcp': settings[1],
                 'view_room': settings[2],
-                'view_map': settings[3]
+                'view_map': settings[3],
+                'prompt': settings[4]
             }
        
         #print(my_dict['settings_aliases'])

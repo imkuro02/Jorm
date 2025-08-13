@@ -340,7 +340,7 @@ def chunkate(input_string, max_width=80):
         line_length += word_length
     return output
 
-def add_line_breaks(input_string, max_width=800):
+def add_line_breaks(input_string, max_width=100):
     output = ''
     lines = input_string.split('\n')
     for l in lines:
