@@ -45,9 +45,9 @@ class Settings:
         #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
         #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
         self.prompt_default = {
-            '1': '[ @bred#HP#@normal/@bred#LHPMAX#@normal HP| @bred#PHYARM#@normal/@bred#LPHYARMMAX#@normal PA] [ @bcyan#MP#@normal/@bcyan#LMPMAX#@normal MP| @bcyan#MAGARM#@normal/@bcyan#LMAGARMMAX#@normal MA]',
-            '2': '[ @bred#HP%#@normal% HP| @bred#PHYARM%#@normal% PA] [ @bcyan#MP%#@normal% MP| @bcyan#MAGARM%#@normal% MA]',
-            '3': '@bred#HP#@normalHP @bred#PHYARM#@normalPA @bcyan#MP#@normalMP @bcyan#MAGARM#@normalMA',
+            '1': '@bred#HP#@normalHP@bred#PHYARM#@normalPA@bcyan#MP#@normalMP@bcyan#MAGARM#@normalMA>',
+            '2': '[ @bred#HP#@normal/@bred#LHPMAX#@normal HP| @bred#PHYARM#@normal/@bred#LPHYARMMAX#@normal PA] [ @bcyan#MP#@normal/@bcyan#LMPMAX#@normal MP| @bcyan#MAGARM#@normal/@bcyan#LMAGARMMAX#@normal MA]',
+            '3': '[ @bred#HP%#@normal% HP| @bred#PHYARM%#@normal% PA] [ @bcyan#MP%#@normal% MP| @bcyan#MAGARM%#@normal% MA]',
             '4': '[ @good#HP#@normal/@good#LHPMAX#@normal HP| @good#PHYARM#@normal/@good#LPHYARMMAX#@normal PA] [ @bad#MP#@normal/@bad#LMPMAX#@normal MP| @bad#MAGARM#@normal/@bad#LMAGARMMAX#@normal MA]',
             '5': '[ @good#HP%#@normal% HP| @good#PHYARM%#@normal% PA] [ @bad#MP%#@normal% MP| @bad#MAGARM%#@normal% MA]',
         }
