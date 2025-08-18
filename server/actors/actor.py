@@ -506,7 +506,9 @@ class Actor:
                 )
         
         if type(self).__name__ == 'Player':
-            self.gain_exp(-int(self.stat_manager.stats[StatType.EXP]*0.1))
+            lost_exp = int(self.stat_manager.stats[StatType.EXP]*0.1)
+            self.collect_lost_exp_rooms[self.room.id] = lost_exp
+            self.gain_exp(-lost_exp)
         
         if self.room.combat != None:
             if self.room.combat.current_actor == self:

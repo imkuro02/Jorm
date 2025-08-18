@@ -5,7 +5,7 @@ from trade import TradeManager
 from actors.player_only_functions.commands import one_letter_commands, commands, shortcuts_to_commands, translations
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands 
-from configuration.config import StatType, MsgType
+from configuration.config import StatType, MsgType, ActorStatusType
 import time
 from actors.player_only_functions.settings import Settings
 #from actors.enemy_ai import AIBasic
@@ -175,6 +175,7 @@ class UpdateChecker:
         self.protocol.send_gmcp(_grid,'Map')
 
     def tick(self):
+        
         #return
         if self.actor.factory.ticks_passed % 30 != 0:
             return
@@ -190,6 +191,7 @@ class Player(Actor):
         self.msg_history = {}
         self.recently_send_message_count = 0
         self.instanced_rooms = []
+        self.collect_lost_exp_rooms = {}
         
         super().__init__(name = name, room = room, _id = _id)
 
@@ -242,6 +244,12 @@ class Player(Actor):
             return
             
         super().tick()
+
+        # regain lost exp
+        if self.status != ActorStatusType.DEAD:
+            if self.room.id in self.collect_lost_exp_rooms:
+                self.gain_exp(self.collect_lost_exp_rooms[self.room.id])
+                del self.collect_lost_exp_rooms[self.room.id]
 
         if self.settings_manager.autobattler:
             self.ai.tick()

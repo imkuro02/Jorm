@@ -173,6 +173,9 @@ def command_go(self, line):
             else:
                 self.command_fight('')
 
+    
+
+
 
 
 
