@@ -281,6 +281,12 @@ class Actor:
 
         return output
 
+    def is_not_in_party_or_is_party_leader(self):
+        if self.party_manager.party != None:
+            if self.party_manager.party.actor != self:
+                return False
+        return True
+
     def get_affects(self, target):
         if len(target.affect_manager.affects) == 0:
             if target == self:

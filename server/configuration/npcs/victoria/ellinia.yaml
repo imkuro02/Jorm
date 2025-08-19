@@ -168,6 +168,31 @@ ellinia_shop_weapon:
       - line: |
           <npc> says "Here is a tip for you @tip"Lore tree branch"@back. You can do a lot more with the Lore command too!"
     
+    # tp to mushroom kingdom
+    start_2:
+      options:
+        - line: ask to be teleported to the mushroom kingdom for one blue potion
+          goto: teleported
+          check_not_in_party_or_is_party_leader: 1
+          trade:
+            give_to_npc: 
+              - item: blue potion
+                amount: 1
+          teleport_player: overworld/01fc3537-8806-496c-b8b3-9ae828cbe944
+
+        - line: ask to be teleported to the mushroom kingdom for one blue potion
+          goto: not_teleported
+          check_not_in_party_or_is_party_leader: 0
+
+    teleported:
+      dialog:
+        - line: |
+            "GRANTED" <npc> yells
+
+    not_teleported:
+      dialog:
+        - line: |
+            "Your party leader has to do that" <npc> says
 
 
 

@@ -33,7 +33,7 @@ from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin,
     command_load_item, command_load_npcs, command_export, command_help, command_ranks,
     command_send_prompt, command_reload_config, command_lore, command_quest, command_bonus,
-    command_kill, command_sethp, command_history
+    command_kill, command_sethp, command_history, command_get_time, command_set_time,
 )
 
 from actors.player_only_functions.settings import (
@@ -122,12 +122,17 @@ commands = {
     'respec':   'command_respec',
     'prompt':   'command_send_prompt',
 
+    'settings': 'command_settings',
+
+    'time':     'command_get_time',
+    '_timeset': 'command_set_time',
+
     'pray':     'command_charging_mini_game_toggle',
 
-    'teleport': 'command_teleport',  
+    '_teleport': 'command_teleport',  
     'online':   'command_online',
-    'kick':     'command_kick',
-    'admin':    'command_grant_admin',
+    '_kick':     'command_kick',
+    '_admin':    'command_grant_admin',
 
     '_dict':   'command_export',
     '_item':     'command_load_item',
@@ -135,7 +140,7 @@ commands = {
     '_mexp':     'command_gain_exp',
     '_reload':   'command_reload_config',
     '_kill':     'command_kill',
-    'settings': 'command_settings',
+    
     '_sethp':    'command_sethp'
 
     

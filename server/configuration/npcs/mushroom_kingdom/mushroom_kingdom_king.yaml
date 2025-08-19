@@ -108,7 +108,7 @@ mushroom_kingdom_king:
       - line: say "I will handle it"
         goto: mushroom_kingdom_2.accept
         quest_check:
-          - id: mushroom_kingdom_2
+          - id: mushroom_kingdom_1
             state: turned_in
           - id: mushroom_kingdom_2
             state: not_started

@@ -368,10 +368,79 @@ class Room:
             return
         del actor.room.actors[actor.id]
 
+class GameTime:
+    def __init__(self, factory, game_date_time = 0):
+        self.factory = factory
+        self.TICKS_PER_SECOND = 30
+        self.SECONDS_PER_TICK = 2  # game seconds per tick
+        self.SECONDS_PER_MINUTE = 60
+        self.MINUTES_PER_HOUR = 60
+        self.HOURS_PER_DAY = 24
+        self.DAYS_PER_WEEK = 7
+        self.WEEKS_PER_MONTH = 4
+        self.MONTHS_PER_YEAR = 12
+        self.DAYS_PER_MONTH = self.DAYS_PER_WEEK * self.WEEKS_PER_MONTH  # 28
+        self.DAYS_PER_YEAR = self.DAYS_PER_MONTH * self.MONTHS_PER_YEAR  # 336
+        
+        self.game_date_time = game_date_time
+
+        self.WEEKDAYS = ["Moonsday", "Twosday", "Wakesday", "Thornsday", "Firesday", "Starsday", "Endsday"]
+        self.MONTHS = [
+            "Suncall", "Moondrift", "Stormreach", "Frostwane",
+            "Blossomveil", "Flamehollow", "Duskwind", "Brightshade",
+            "Hollowfall", "Dawnspire", "Gloomtide", "Starcrest"
+        ]
+
+    def tick(self):
+        self.game_date_time += 1
+
+    def set_game_time(self, line):
+        try:
+            time = int(line)
+            self.game_date_time = time
+        except Exception as e:
+            self.sendLine(f'Cant set time: {e}')
+
+    def get_game_time(self, line = ''):
+        if line != '':
+            return f'{self.game_date_time}'
+
+        total_game_seconds = self.game_date_time * self.SECONDS_PER_TICK
+
+        total_minutes = total_game_seconds // 60
+        seconds = total_game_seconds % 60
+
+        total_hours = total_minutes // 60
+        minutes = total_minutes % 60
+
+        total_days = total_hours // 24
+        hours = total_hours % 24
+
+        year = total_days // self.DAYS_PER_YEAR + 1
+        day_of_year = total_days % self.DAYS_PER_YEAR
+
+        month_index = day_of_year // self.DAYS_PER_MONTH
+        day_of_month = day_of_year % self.DAYS_PER_MONTH + 1
+
+        weekday_index = total_days % self.DAYS_PER_WEEK
+
+        return {
+            "day_name": self.WEEKDAYS[weekday_index],
+            "month_name": self.MONTHS[month_index],
+            "year": year,
+            
+            "day": day_of_month,
+            "month": month_index,
+            "hour": int(hours),
+            "minute": int(minutes),
+            "second": int(seconds)
+        }
+
 class World:
     def __init__(self, factory):
         self.factory = factory
         self.rooms = {}
+        self.game_time = GameTime(self.factory)
         self.reload()
 
     def spawn_boss(self):
@@ -432,6 +501,7 @@ class World:
         pass
 
     def tick(self):
+        self.game_time.tick() 
         rooms = []
         for i in self.rooms.values():
             rooms.append(i)

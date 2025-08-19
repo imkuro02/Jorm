@@ -7,6 +7,7 @@ class Dialog:
         self.player = _player
         self.npc = _npc
         self.dialog_tree = _dialog_tree
+        
         self.current_line = 'start' 
 
     def send_output(self, output):
@@ -73,9 +74,19 @@ class Dialog:
             dic['line'] = option['line']
             dic['goto'] = option['goto']
 
+            if 'check_not_in_party_or_is_party_leader' in option:
+                if option['check_not_in_party_or_is_party_leader'] == 0:
+                    if self.player.is_not_in_party_or_is_party_leader():
+                        continue
+                else:
+                    if not self.player.is_not_in_party_or_is_party_leader():
+                        continue
 
             if 'trade' in option:
                 dic['trade'] = option['trade']
+
+            if 'teleport_player' in option:
+                dic['teleport_player'] = option['teleport_player']
 
             if 'quest_turn_in' in option:
                 quest_id =      option['quest_turn_in']['id']
@@ -157,7 +168,10 @@ class Dialog:
                 else:
                     if this_option_is_good:
                         continue
-
+                        
+            if 'check_not_in_party_or_is_party_leader' in option:
+                if not self.actor.is_not_in_party_or_is_party_leader():
+                    continue
                
 
 
@@ -280,8 +294,9 @@ class Dialog:
                 self.player.stat_manager.stats[StatType.PP] += answer['reward_practice_points']
                 self.player.sendLine(f'You got: {answer["reward_practice_points"]} Practice point'+('s' if answer['reward_practice_points'] >= 2 else ''))
 
-            
-            #return True
+
+        if 'teleport_player' in answer:
+            self.player.command_go(line = '', room_id = answer['teleport_player'])
             
 
         self.print_dialog()

@@ -52,6 +52,28 @@ def command_help(self, line):
     self.sendLine(output)
         
 
+def command_get_time(self, line):
+    if line != '':
+        self.sendLine(str(self.room.world.game_time.get_game_time(line)))
+    else:
+        game_date_time = self.room.world.game_time.get_game_time(line)
+        day_name = game_date_time['day_name']
+        month_name = game_date_time['month_name']
+        day = game_date_time['day']
+        month = game_date_time['month']
+        year = game_date_time['year']
+        hour = game_date_time['hour']
+        minute = game_date_time['minute']
+        output = f'The date is {day:02}/{month+1:02}/{year+1300:04}, its a {day_name} of {month_name}. Time is {hour:02}:{minute:02}.'
+        self.sendLine(output)
+
+
+@check_is_admin
+def command_set_time(self, line):
+    try:
+        self.room.world.game_time.set_game_time(line)
+    except Exception as e:
+        self.sendLine(f'Cant set time: {e}')
 
 '''
 def command_help(self, line):
@@ -366,7 +388,8 @@ def command_teleport(self, line):
             user = proto.actor
             break
     if user != None:
-        user.room.move_actor(self)
+        #user.room.move_actor(self)
+        self.command_go(line='', room_id = user.room.id )
         self.sendLine(f'You teleport to {user.pretty_name()}')
     else:
         self.sendLine(f'Cant find "{line}"')

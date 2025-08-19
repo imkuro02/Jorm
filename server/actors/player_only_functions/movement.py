@@ -43,85 +43,65 @@ def command_flee(self, line):
             
 
 
-@check_no_empty_line
+
 @check_not_in_combat
 @check_alive
 @check_not_in_party_or_is_party_leader
-def command_go(self, line):
-
-    #if self.room.is_an_instance():
-    #    can_move = True
-    #
-    #    if self.room.is_enemy_present():
-    #        can_move = False
-    #
-    #
-    #    if not can_move:
-    #        self.sendLine('Its not safe to go further.')
-    #        return
-        
-    if line == '':
-        self.sendLine('Go where?')
-        return
+def command_go(self, line = '', room_id = None):
+    #if room_id is not none, skip checks, this means that its probably a teleport
     world = self.protocol.factory.world
-    direction = None
-
-    exits = self.room.exits
-    for _exit in exits:
-        if ' '+line.lower() in ' '+_exit.direction.lower(): 
-            room_obj = _exit.get_room_obj()
-            if room_obj != None:
-                direction = _exit
-    '''
-    exits = {**self.room.exits, **self.room.secret_exits}
-    for _exit in exits:
-        if ' '+line.lower() in ' '+_exit.lower():
-            direction = _exit
-            break
-
-
-    if direction in self.room.blocked_exits:
-        e = self.room.is_enemy_present() # this returns the enemy or False if none
-        if e != False: 
-            self.sendLine(f'{e.pretty_name()} is blocking the path.')
+    if room_id == None:
+        if line == '':
+            self.sendLine('Go where?')
             return
-
-    '''
-    if direction == None:
-        self.simple_broadcast(
-            f'You walk into a wall',
-            f'{self.pretty_name()} walks into a wall',
-            sound = Audio.ERROR, send_to = 'room'
-            ) 
-        roll = random.randint(0,100)
-        if roll == 0:
-            aff = Affect(
-                affect_manager=self.affect_manager,
-                name='Bumpy',
-                description='You have a large stupid bump on your head', 
-                turns=100
-                )
-            self.affect_manager.set_affect_object(aff)
-        return
         
-    if direction.blocked and self.room.is_enemy_present():
-        self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path', sound=Audio.ERROR)
-        return
+        direction = None
 
-    if direction.item_required != None:
-        item = self.inventory_manager.get_item_by_premade_id(direction.item_required)
-        if item == None:
-            self.sendLine(f'You need {ITEMS[direction.item_required]["name"]}',sound=Audio.ERROR)
+        exits = self.room.exits
+        for _exit in exits:
+            if ' '+line.lower() in ' '+_exit.direction.lower(): 
+                room_obj = _exit.get_room_obj()
+                if room_obj != None:
+                    direction = _exit
+
+        if direction == None:
+            self.simple_broadcast(
+                f'You walk into a wall',
+                f'{self.pretty_name()} walks into a wall',
+                sound = Audio.ERROR, send_to = 'room'
+                ) 
+            roll = random.randint(0,100)
+            if roll == 0:
+                aff = Affect(
+                    affect_manager=self.affect_manager,
+                    name='Bumpy',
+                    description='You have a large stupid bump on your head', 
+                    turns=100
+                    )
+                self.affect_manager.set_affect_object(aff)
             return
-        else:
-            if direction.item_required_consume == True:
-                self.sendLine(f'{item.name} crumbles to dust')
-                self.inventory_manager.remove_item(item,1)
-                
-    
+            
+        if direction.blocked and self.room.is_enemy_present():
+            self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path', sound=Audio.ERROR)
+            return
 
-    old_room = self.room
-    new_room = direction.get_room_obj().id
+        if direction.item_required != None:
+            item = self.inventory_manager.get_item_by_premade_id(direction.item_required)
+            if item == None:
+                self.sendLine(f'You need {ITEMS[direction.item_required]["name"]}',sound=Audio.ERROR)
+                return
+            else:
+                if direction.item_required_consume == True:
+                    self.sendLine(f'{item.name} crumbles to dust')
+                    self.inventory_manager.remove_item(item,1)
+                    
+        
+
+        old_room = self.room
+        new_room = direction.get_room_obj().id
+    else:
+        old_room = self.room
+        new_room = room_id
 
     
     self.simple_broadcast('',f'You follow {self.pretty_name()}', send_to = 'room_party', sound = Audio.walk())

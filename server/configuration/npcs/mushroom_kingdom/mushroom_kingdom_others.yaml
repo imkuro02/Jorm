@@ -193,4 +193,15 @@ mushroom_kingdom_wizard:
             "Our kingdom is not the only place riddled with undead, it looks like a couple necromancers have taken refuge in the kerning city slums.
             Far north from here, especially search the huts, magic is a fragile art, that needs the least amount of disturbance" they let go of you.
             "Now... You know where im going with this, go do your thing, and stop bothering me."
+      options:
+        - line: ask "can you teleport me there?"
+          goto: teleported
+          check_not_in_party_or_is_party_leader: 1
+          teleport_player: overworld/ec0a9921-6d82-4174-9a3b-24543785db96
+
+    teleported:
+      dialog:
+        - line: |
+            <npc> mutters "Hmph", swings their arms, and your vision fades before returning again
+
 
