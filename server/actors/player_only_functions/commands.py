@@ -13,7 +13,7 @@ from actors.player_only_functions.charging_mini_game import (
     command_charging_mini_game_toggle
 )
 
-from actors.player_only_functions.look import command_look, command_map, new_room_look
+from actors.player_only_functions.look import command_look, command_map, new_room_look, get_nearby_rooms
 
 from actors.player_only_functions.equip import (
     command_equipment, inventory_equip, inventory_unequip

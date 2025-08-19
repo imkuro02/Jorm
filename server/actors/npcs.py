@@ -111,6 +111,8 @@ class Npc(Actor):
             
         )
 
+        # this script is responsible for setting the dialog tree aswell as appending append_to 
+        # probably should be moved sometime into dialog.py
         self.dialog_tree = dialog_tree
         if self.dialog_tree != None:
             for d in self.dialog_tree:

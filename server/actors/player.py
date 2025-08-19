@@ -100,13 +100,7 @@ class UpdateChecker:
         for r in range(0,VIEW_RANGE*1):
             for room_loc in _grid:
 
-                
-
-                
-
                 room = self.protocol.factory.world.rooms[grid[room_loc]]
-                
-
                 
                 if room.doorway:
                     continue
@@ -172,6 +166,7 @@ class UpdateChecker:
         if self.last_grid == _grid:
             return
         self.last_grid = _grid
+        #self.actor.sendLine(str(_grid))
         self.protocol.send_gmcp(_grid,'Map')
 
     def tick(self):

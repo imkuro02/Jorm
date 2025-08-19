@@ -363,6 +363,74 @@ def command_look(self, line):
                         see = see + f' @yellow(FIGHTING)@normal'
                     see = see +'\n'
 
+        nearby_actors = {}
+        nearby_rooms = self.get_nearby_rooms(view_range = 1)
+        if '0,0,0' in nearby_rooms:
+            del nearby_rooms['0,0,0']
+
+        
+
+
+        for r in nearby_rooms:
+            nearby_actors[r] = self.room.world.rooms[nearby_rooms[r]].actors.values()
+        if nearby_actors != {}:
+            see = see + 'Nearby you see:\n'
+            
+            location_translations = {
+                'x': {
+                    '-1':   'west',
+                    '1':    'east',
+                    '0': ''
+                },
+                'y': {
+                    '-1':   'north',
+                    '1':    'south',
+                    '0': ''
+                },
+                'z': {
+                    '-1':   'down',
+                    '1':    'up',
+                    '0': ''
+                }
+            }
+
+            
+            for a in nearby_actors:
+                x, y, z = a.split(',')
+                x = location_translations['x'][str(max(-1, min(1, int(x))))]
+                y = location_translations['y'][str(max(-1, min(1, int(y))))]
+                z = location_translations['z'][str(max(-1, min(1, int(z))))]
+
+                EMPTY = ''
+                if x == EMPTY and y == EMPTY and z == EMPTY: 
+                    direction_name = f'What the fuck?'
+                elif x == EMPTY and y != EMPTY and z != EMPTY:
+                    direction_name = f' - {y} and {z}'
+                elif x != EMPTY and y == EMPTY and z != EMPTY:
+                    direction_name = f' - {x} and {z}'
+                elif x != EMPTY and y != EMPTY and z == EMPTY:
+                    direction_name = f' - {y}-{x}'
+                elif x == EMPTY and y == EMPTY and z != EMPTY:
+                    direction_name = f' - {z}'
+                elif x != EMPTY and y == EMPTY and z == EMPTY:
+                    direction_name = f' - {x}'
+                elif x == EMPTY and y != EMPTY and z == EMPTY:
+                    direction_name = f' - {y}'
+                elif x != EMPTY and y != EMPTY and z != EMPTY:
+                    direction_name = f' - {y}-{x} and {z}'
+                
+                for i in nearby_actors[a]:
+                    see = see + '   '+i.pretty_name() 
+                    if i.status == ActorStatusType.DEAD:
+                        see = see + f' @yellow(DEAD)@normal' + direction_name
+                    elif i.status == ActorStatusType.FIGHTING:
+                        see = see + f' @yellow(FIGHTING)@normal' + direction_name
+                    else:
+                        see = see + direction_name
+                    see = see +'\n'
+
+
+
         exits = self.protocol.factory.world.rooms[room.id].exits
         #blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
         exit_count = 0
@@ -453,7 +521,112 @@ def command_look(self, line):
             return
         look_item(self, item)
 
+
+def get_nearby_rooms(self, view_range = 1):
+    split = ','
+    offsets = {
+        'north': [ 0  ,  -1 , 0],
+        'west':  [ -1 ,  0 , 0],
+        'south': [ 0  , 1 , 0],
+        'east':  [ 1  ,  0 , 0],
+        'up':    [0,0,1],
+        'down':  [0,0,-1]
+    }
+    room_id = self.room.id
+    VIEW_RANGE = view_range
+    START_LOC = f'{0}{split}{0}{split}{0}'
+    start_room = self.protocol.factory.world.rooms[room_id]
+    grid = {}
+    grid[START_LOC] = room_id
+
+    for _exit in start_room.exits:
+        if _exit.direction not in offsets:
+            continue
+        if _exit.secret:
+            continue
+        if _exit.item_required != None:
+            continue
+        if _exit.to_room_id in grid.values():
+            continue
+
+        x = 0
+        y = 0
+        z = 0
+        x += offsets[_exit.direction][0] #+ VIEW_RANGE
+        y += offsets[_exit.direction][1] #+ VIEW_RANGE
+        z += offsets[_exit.direction][2] 
+
+        _loc = f'{x}{split}{y}{split}{z}'
+
+        
+        
+        if _loc not in grid:
+            grid[_loc] = _exit.to_room_id
+        
+
+
+
+    _grid = {}
+    for r in grid:
+        _grid[r] = grid[r]
+        
+    for r in range(0,VIEW_RANGE*1):
+        for room_loc in _grid:
+
+            room = self.protocol.factory.world.rooms[grid[room_loc]]
+            
+            if room.doorway:
+                continue
+
+            _x = int(room_loc.split(f'{split}')[0])
+            _y = int(room_loc.split(f'{split}')[1])
+            _z = int(room_loc.split(f'{split}')[2])
+
+            for _exit in room.exits:
+                if _exit.direction not in offsets:
+                    continue
+                if _exit.secret:
+                    continue
+                
+
+                x = _x + offsets[_exit.direction][0] 
+                y = _y + offsets[_exit.direction][1] 
+                z = _z + offsets[_exit.direction][2] 
+
+                # basically, viewrange of 1 will do this
+                #
+                #         X
+                #        XXX
+                #       XXXXX
+                #        XXX
+                #         X
+                #
+                # so uh dont do that 
+
+                if abs(x) > VIEW_RANGE or abs(y) > VIEW_RANGE or abs(y) > VIEW_RANGE:
+                    continue
+
+                _loc = f'{x}{split}{y}{split}{z}'
+
+                if _exit.to_room_id in grid.values():
+                    continue
+        
+
+                if _loc not in grid:
+                    grid[_loc] = _exit.to_room_id
+
+        _grid = {}
+        for r in grid:
+            _grid[r] = grid[r]
+
+    for r in _grid:
+        room = self.room.world.rooms[_grid[r]]
+        _grid[r] = room.id
+
+    return _grid
+
 def new_room_look(self):
+    
     
     if self.settings_manager.view_room:
         self.command_look('')
