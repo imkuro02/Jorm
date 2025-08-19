@@ -170,6 +170,7 @@ ellinia_shop_weapon:
     
     # tp to mushroom kingdom
     start_2:
+      append_to: start
       options:
         - line: ask to be teleported to the mushroom kingdom for one blue potion
           goto: teleported

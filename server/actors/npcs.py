@@ -114,13 +114,19 @@ class Npc(Actor):
         self.dialog_tree = dialog_tree
         if self.dialog_tree != None:
             for d in self.dialog_tree:
-                if 'start_' in d:
+                if 'append_to' in self.dialog_tree[d]:
+                    location = self.dialog_tree[d]['append_to']
                     if 'dialog' in self.dialog_tree[d]:
+                        if 'dialog' not in self.dialog_tree[location]:
+                                self.dialog_tree[location]['dialog'] = []
                         for i in self.dialog_tree[d]['dialog']:
-                            self.dialog_tree['start']['dialog'].append(i)
+                            self.dialog_tree[location]['dialog'].append(i)
+
                     if 'options' in self.dialog_tree[d]:
+                        if 'options' not in self.dialog_tree[location]:
+                                self.dialog_tree[location]['options'] = []
                         for i in self.dialog_tree[d]['options']:
-                            self.dialog_tree['start']['options'].append(i)
+                            self.dialog_tree[location]['options'].append(i)
         self.npc_id = npc_id
         
         self.can_start_fights = can_start_fights

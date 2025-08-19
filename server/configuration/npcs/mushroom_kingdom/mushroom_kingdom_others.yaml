@@ -193,6 +193,9 @@ mushroom_kingdom_wizard:
             "Our kingdom is not the only place riddled with undead, it looks like a couple necromancers have taken refuge in the kerning city slums.
             Far north from here, especially search the huts, magic is a fragile art, that needs the least amount of disturbance" they let go of you.
             "Now... You know where im going with this, go do your thing, and stop bothering me."
+      
+    teleport_start:
+      append_to: where_is_necromancer
       options:
         - line: ask "can you teleport me there?"
           goto: teleported
