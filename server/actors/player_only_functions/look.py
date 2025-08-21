@@ -336,6 +336,75 @@ def command_map(self, line):
 
     self.sendLine('<Map Start>\n'+combined_output+'<Map End>')
 
+def command_scan(self, line):
+    see = ''
+    nearby_actors = {}
+    nearby_rooms = self.get_nearby_rooms(view_range = 1)
+    if '0,0,0' in nearby_rooms:
+        del nearby_rooms['0,0,0']
+
+    for r in nearby_rooms:
+        nearby_actors[r] = self.room.world.rooms[nearby_rooms[r]].actors.values()
+    if len(nearby_actors) >= 1:
+        
+        location_translations = {
+            'x': {
+                '-1':   'west',
+                '1':    'east',
+                '0': ''
+            },
+            'y': {
+                '-1':   'north',
+                '1':    'south',
+                '0': ''
+            },
+            'z': {
+                '-1':   'down',
+                '1':    'up',
+                '0': ''
+            }
+        }
+
+        
+        for a in nearby_actors:
+            x, y, z = a.split(',')
+            x = location_translations['x'][str(max(-1, min(1, int(x))))]
+            y = location_translations['y'][str(max(-1, min(1, int(y))))]
+            z = location_translations['z'][str(max(-1, min(1, int(z))))]
+
+            EMPTY = ''
+            if x == EMPTY and y == EMPTY and z == EMPTY: 
+                direction_name = f'What the fuck?'
+            elif x == EMPTY and y != EMPTY and z != EMPTY:
+                direction_name = f' {y} and {z}'
+            elif x != EMPTY and y == EMPTY and z != EMPTY:
+                direction_name = f' {x} and {z}'
+            elif x != EMPTY and y != EMPTY and z == EMPTY:
+                direction_name = f' {y}-{x}'
+            elif x == EMPTY and y == EMPTY and z != EMPTY:
+                direction_name = f' {z}'
+            elif x != EMPTY and y == EMPTY and z == EMPTY:
+                direction_name = f' {x}'
+            elif x == EMPTY and y != EMPTY and z == EMPTY:
+                direction_name = f' {y}'
+            elif x != EMPTY and y != EMPTY and z != EMPTY:
+                direction_name = f' {y}-{x} and {z}'
+            
+            for i in nearby_actors[a]:
+                see = see + ''+i.pretty_name() + ''
+                if i.status == ActorStatusType.DEAD:
+                    see = see + f' is dead' + direction_name + ' from here'
+                elif i.status == ActorStatusType.FIGHTING:
+                    see = see + f' is fighting' + direction_name + ' from here'
+                else:
+                    see = see + '' + direction_name + ' from here'
+                see = see +'\n'
+    if see == '':
+        self.sendLine('You scan your surroundings but see no one')
+        return
+    
+    self.sendLine(f'You scan your surroundings and see: \n{see[:-1:]}')
+
 def command_look(self, line):
     def look_room(self, room_id):
         room = self.factory.world.rooms[room_id]
@@ -348,89 +417,6 @@ def command_look(self, line):
         see = see + f'@cyan{room.get_description()}@normal\n'
 
 
-        if len(room.actors) == 1:
-            see = see + 'You are alone.\n'
-        else:
-            see = see + 'There are others here:\n'
-            for i in room.actors.values():
-                if i == self:
-                    pass
-                else:
-                    see = see + '   '+i.pretty_name() 
-                    if i.status == ActorStatusType.DEAD:
-                        see = see + f' @yellow(DEAD)@normal'
-                    if i.status == ActorStatusType.FIGHTING:
-                        see = see + f' @yellow(FIGHTING)@normal'
-                    see = see +'\n'
-
-        nearby_actors = {}
-        nearby_rooms = self.get_nearby_rooms(view_range = 1)
-        if '0,0,0' in nearby_rooms:
-            del nearby_rooms['0,0,0']
-
-        
-
-
-        for r in nearby_rooms:
-            nearby_actors[r] = self.room.world.rooms[nearby_rooms[r]].actors.values()
-        if nearby_actors != {}:
-            see = see + 'Nearby you see:\n'
-            
-            location_translations = {
-                'x': {
-                    '-1':   'west',
-                    '1':    'east',
-                    '0': ''
-                },
-                'y': {
-                    '-1':   'north',
-                    '1':    'south',
-                    '0': ''
-                },
-                'z': {
-                    '-1':   'down',
-                    '1':    'up',
-                    '0': ''
-                }
-            }
-
-            
-            for a in nearby_actors:
-                x, y, z = a.split(',')
-                x = location_translations['x'][str(max(-1, min(1, int(x))))]
-                y = location_translations['y'][str(max(-1, min(1, int(y))))]
-                z = location_translations['z'][str(max(-1, min(1, int(z))))]
-
-                EMPTY = ''
-                if x == EMPTY and y == EMPTY and z == EMPTY: 
-                    direction_name = f'What the fuck?'
-                elif x == EMPTY and y != EMPTY and z != EMPTY:
-                    direction_name = f' - {y} and {z}'
-                elif x != EMPTY and y == EMPTY and z != EMPTY:
-                    direction_name = f' - {x} and {z}'
-                elif x != EMPTY and y != EMPTY and z == EMPTY:
-                    direction_name = f' - {y}-{x}'
-                elif x == EMPTY and y == EMPTY and z != EMPTY:
-                    direction_name = f' - {z}'
-                elif x != EMPTY and y == EMPTY and z == EMPTY:
-                    direction_name = f' - {x}'
-                elif x == EMPTY and y != EMPTY and z == EMPTY:
-                    direction_name = f' - {y}'
-                elif x != EMPTY and y != EMPTY and z != EMPTY:
-                    direction_name = f' - {y}-{x} and {z}'
-                
-                for i in nearby_actors[a]:
-                    see = see + '   '+i.pretty_name() 
-                    if i.status == ActorStatusType.DEAD:
-                        see = see + f' @yellow(DEAD)@normal' + direction_name
-                    elif i.status == ActorStatusType.FIGHTING:
-                        see = see + f' @yellow(FIGHTING)@normal' + direction_name
-                    else:
-                        see = see + direction_name
-                    see = see +'\n'
-
-
-
         exits = self.protocol.factory.world.rooms[room.id].exits
         #blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
         exit_count = 0
@@ -441,18 +427,35 @@ def command_look(self, line):
                 continue
             #if _exit.blocked and self.room.is_enemy_present():
             #    continue
-            see_exits = see_exits + f'   {_exit.pretty_direction()}\n'
+            see_exits = see_exits + f'You can go {_exit.pretty_direction()}\n'
             exit_count += 1
             #else:
             #    see = see + f'@red{exit_name}@normal, '
-
+        
         if exit_count == 0:
             see = see + 'You don\'t see any exits\n'
         else:
-            see = see + 'You can go: \n' + see_exits
+            see = see + '' + see_exits
             #see = see + '\n'
 
         #see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
+        
+        for i in room.actors.values():
+            if i == self:
+                pass
+            else:
+                see = see + ''+i.pretty_name() + ' is here'
+                if i.status == ActorStatusType.DEAD:
+                    see = see + f' is dead here'
+                if i.status == ActorStatusType.FIGHTING:
+                    see = see + f' is fighting here'
+                see = see +'\n'
+
+        
+
+
+
+        
         
 
         if not room.inventory_manager.is_empty():
@@ -464,12 +467,12 @@ def command_look(self, line):
 
                 #see_items = see_items + f'   {i.pretty_name()}' + '\n'
                 if i.can_pick_up:
-                    see_items = see_items + f'   {i.pretty_name()}' + '\n'
+                    see_items = see_items + f'{i.pretty_name()} is here' + '\n'
                 #else:
                 #    see_items = see_items + f'   {i.description}' + '\n'
 
             if see_items != '':
-                see = see + 'You see:\n' + see_items
+               see = see + '' + see_items
         
         
         
