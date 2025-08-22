@@ -223,7 +223,8 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     'mag_armor_max':   int(x['mag_armor'][index]),
                     'flow':     int(x['flow'][index]),
                     'mind':     int(x['mind'][index]),
-                    'soul':     int(x['soul'][index])
+                    'soul':     int(x['soul'][index]),
+                    'inv_slots': int(x['inv_slots'][index]),
                 },
                 'requirements': {
                     'lvl':      int(x['lvl'][index]),
@@ -234,7 +235,8 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     'grit':     int(x['rgrit'][index]),
                     'flow':     int(x['rflow'][index]),
                     'mind':     int(x['rmind'][index]),
-                    'soul':     int(x['rsoul'][index])
+                    'soul':     int(x['rsoul'][index]),
+                    'inv_slots': 0,
                 },
 
                 'drop_from_random':         int(x['drop_from_random'][index]),

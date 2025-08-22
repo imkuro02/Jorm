@@ -310,7 +310,7 @@ class Protocol(protocol.Protocol):
                         new_item.manager.add_bonus(boon)
 
                 
-                self.actor.inventory_manager.add_item(new_item)
+                self.actor.inventory_manager.add_item(new_item, forced = True)
             self.compare_slots_to_items()
 
             # actor is loaded without equipment stats on

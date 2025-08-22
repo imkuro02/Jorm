@@ -83,12 +83,14 @@ class EquipmentSlotType:
     WEAPON =    'weapon'
     TRINKET =   'trinket'
     RELIC   =   'relic'
+    BAG   =   'bag'
     name = {
         HEAD: 'Head',
         BODY: 'Body',
         WEAPON: 'Weapon',
         TRINKET: 'Trinket',
-        RELIC:   'Relic'
+        RELIC:   'Relic',
+        BAG:   'Bag'
     }
     '''
     NECK =      'neck'
@@ -130,6 +132,7 @@ class StatType:
     EXP =       'exp'
     LVL =       'lvl'
     PP =        'pp'
+    INVSLOTS = 'inv_slots'
     
 
     # not saved in db
@@ -152,6 +155,8 @@ class StatType:
         EXP:    'Experience',
         LVL:    'Level',
         PP:     'Practice Points',
+
+        INVSLOTS: 'Bag Space',
 
         # not saved in db
         THREAT: 'Threat',

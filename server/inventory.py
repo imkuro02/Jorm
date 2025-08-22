@@ -102,7 +102,8 @@ class InventoryManager:
     def __init__(self, owner, limit = 20*1):
         self.owner = owner
         self.triggerable_manager = TriggerableManager(self)
-        self.limit = limit
+        self.limit = limit 
+        self.base_limit = limit
         self.items = {}
         self.can_pick_up_anything = False
 
@@ -147,7 +148,7 @@ class InventoryManager:
             return True
         return False
 
-    def add_item(self, item, stack_items = True, dont_send_objective_proposal = False):
+    def add_item(self, item, stack_items = True, dont_send_objective_proposal = False, forced = False):
         if item.can_pick_up or self.can_pick_up_anything:
             pass
         else:
@@ -187,8 +188,9 @@ class InventoryManager:
                     )
                 return True
             
-        if len(self.items) >= self.limit:
-            return False
+        if not forced:
+            if len(self.items) >= self.limit:
+                return False
         
         self.items[item.id] = item
 

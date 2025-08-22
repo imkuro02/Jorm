@@ -28,6 +28,7 @@ class ActorStatManager:
             StatType.FLOW: 10,
             StatType.MIND: 10,
             StatType.SOUL: 10,
+            StatType.INVSLOTS: 0,
             StatType.LVL: 1,
             StatType.EXP: 0,
             StatType.PP: 0,
@@ -142,7 +143,8 @@ class SlotsManager:
             EquipmentSlotType.BODY:      None,
             EquipmentSlotType.WEAPON:    None,
             EquipmentSlotType.TRINKET:   None,
-            EquipmentSlotType.RELIC:     None
+            EquipmentSlotType.RELIC:     None,
+            EquipmentSlotType.BAG:       None
         }
 
 
@@ -393,6 +395,9 @@ class Actor:
             t.add_data(StatType.name[StatType.PP][:4]+':')
             t.add_data(self.stat_manager.stats[StatType.PP])
             '''
+
+            
+
             t.add_data('Experience:')
             t.add_data(self.stat_manager.stats[StatType.EXP])
             t.add_data('/')
@@ -407,6 +412,11 @@ class Actor:
 
             t.add_data('Practices:')
             t.add_data(self.stat_manager.stats[StatType.PP])
+            t.add_data('')
+            t.add_data('')
+
+            t.add_data(StatType.name[StatType.INVSLOTS]+':')
+            t.add_data(f'+{self.stat_manager.stats[StatType.INVSLOTS]}')
             t.add_data('')
             t.add_data('')
 

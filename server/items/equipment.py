@@ -38,7 +38,8 @@ class EquipmentStatManager:
             StatType.GRIT: 0,
             StatType.FLOW: 0,
             StatType.MIND: 0,
-            StatType.SOUL: 0
+            StatType.SOUL: 0,
+            StatType.INVSLOTS: 0
             }
         
         self.reqs = {
@@ -50,7 +51,8 @@ class EquipmentStatManager:
             StatType.FLOW: 0,
             StatType.MIND: 0,
             StatType.SOUL: 0,
-            StatType.LVL: 0
+            StatType.LVL: 0,
+            StatType.INVSLOTS: 0
             }
         
 class EquipmentBonus:
@@ -111,7 +113,7 @@ class EquipmentBonusManager:
                 if bonus.key in [
                     StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
                     StatType.FLOW, StatType.MIND, StatType.SOUL, 
-                    StatType.PHYARMOR, StatType.MAGARMOR
+                    StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS
                     ]:
                     self.item.stat_manager.stats[bonus.key] += bonus.val
                     return
@@ -167,7 +169,7 @@ class Equipment(Item):
         output += f'@tipEquipment slot:@normal {EquipmentSlotType.name[self.slot]}\n'
         output += '@tipRequirements to equip:@normal\n'
         t = Table(2,3)
-        ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL]
+        ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.INVSLOTS]
         for stat in ordered_stats:
             if self.stat_manager.reqs[stat] == 0:
                 continue
@@ -178,7 +180,7 @@ class Equipment(Item):
        
         output += '\n@tipTotal stats with bonuses:@normal\n'
         t = Table(2,3)
-        ordered_stats = [StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL]
+        ordered_stats = [StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.INVSLOTS]
         for stat in ordered_stats:
             if self.stat_manager.stats[stat] == 0:
                 continue
