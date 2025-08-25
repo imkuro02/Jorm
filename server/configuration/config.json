@@ -1,5 +1,5 @@
 {
-    "SHA-256": "74bc53831e253066950f17c46d0e3d3c2518628e951ba850f62a984a47288525",
+    "SHA-256": "06f6bdcd8d9ca65919d2676c763fe09d6eee4dc597d81bb0c76989abf913ea3e",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -100,6 +100,7 @@
                 "nudge": 1
             },
             "loot": {
+                "rat_hide": 20,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -383,6 +384,7 @@
                 "swing": 1
             },
             "loot": {
+                "spider_silk": 20,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -610,6 +612,7 @@
                 "swing": 1
             },
             "loot": {
+                "slime": 25,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -659,6 +662,7 @@
                 "swing": 1
             },
             "loot": {
+                "slime": 25,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -756,6 +760,7 @@
                 "swing": 1
             },
             "loot": {
+                "evil_eye_hide": 30,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -857,6 +862,7 @@
                 "thorns": 1
             },
             "loot": {
+                "mushroom_horn": 20,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -1275,6 +1281,7 @@
                 "bite": 1
             },
             "loot": {
+                "zombie_skin": 20,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -1330,6 +1337,7 @@
                 "bite": 1
             },
             "loot": {
+                "crocodile_scales": 30,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -4483,6 +4491,167 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
+        },
+        "rat_hide": {
+            "premade_id": "rat_hide",
+            "name": "Rat Hide",
+            "description": "The tattered rough hide of a rat",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "bag_0"
+            ]
+        },
+        "spider_silk": {
+            "premade_id": "spider_silk",
+            "name": "Spider Silk",
+            "description": "The web of a spider",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "bag_1"
+            ]
+        },
+        "slime": {
+            "premade_id": "slime",
+            "name": "Slime",
+            "description": "Gooey remains of a slime",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "bag_2"
+            ]
+        },
+        "evil_eye_hide": {
+            "premade_id": "evil_eye_hide",
+            "name": "Evil Eye Hide",
+            "description": "The tough hide of an evil eye",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "bag_3"
+            ]
+        },
+        "mushroom_horn": {
+            "premade_id": "mushroom_horn",
+            "name": "Mushroom Horn",
+            "description": "What kind of mushroom has horns?",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "bag_3"
+            ]
+        },
+        "crocodile_scales": {
+            "premade_id": "crocodile_scales",
+            "name": "Crocodile Scales",
+            "description": "The scales of a crocodile",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "bag_4"
+            ]
+        },
+        "zombie_skin": {
+            "premade_id": "zombie_skin",
+            "name": "Zombie Skin",
+            "description": "This is just disgusting to hold",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "bag_4"
+            ]
         },
         "red potion": {
             "premade_id": "red potion",
@@ -11154,7 +11323,7 @@
         "wooden mallet": {
             "premade_id": "wooden mallet",
             "name": "Wooden mallet",
-            "description": "BONK!",
+            "description": "0.0",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -11199,8 +11368,8 @@
         },
         "bag_0": {
             "premade_id": "bag_0",
-            "name": "Linen Sack",
-            "description": "BONK!",
+            "name": "Rat Pouch",
+            "description": "This abomination of stitched rat fur creates a small pouch, you can even tie the tail to your belt for easy carrying.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -11217,11 +11386,11 @@
                 "mag_armor_max": 0,
                 "flow": 0,
                 "mind": 0,
-                "soul": 1,
-                "inv_slots": 2
+                "soul": 0,
+                "inv_slots": 4
             },
             "requirements": {
-                "lvl": 1,
+                "lvl": 3,
                 "hp_max": 0,
                 "mp_max": 0,
                 "phy_armor_max": 0,
@@ -11229,7 +11398,7 @@
                 "grit": 0,
                 "flow": 0,
                 "mind": 0,
-                "soul": 1,
+                "soul": 0,
                 "inv_slots": 0
             },
             "drop_from_random": 0,
@@ -11240,7 +11409,216 @@
             "drop_chance_range_under": 0,
             "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
+            "crafting_recipe_ingredients": [
+                {
+                    "rat_hide": 3
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "bag_1": {
+            "premade_id": "bag_1",
+            "name": "Spider Silk Sack",
+            "description": "The spiders of kerning are known for their sturdy webs, the web spun into silk creates a lightweight and durable sack.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "bag",
+            "bonuses": 0.0,
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 8
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "spider_silk": 5
+                }
+            ],
+            "crafting_ingredient_for": [
+                "bag_2"
+            ]
+        },
+        "bag_2": {
+            "premade_id": "bag_2",
+            "name": "Slimy Silk Sack",
+            "description": "A spider silk sack rubbed in some slime renders the silk even more durable and flexible.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "bag",
+            "bonuses": 0.0,
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 12
+            },
+            "requirements": {
+                "lvl": 9,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "bag_1": 1,
+                    "slime": 5
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "bag_3": {
+            "premade_id": "bag_3",
+            "name": "Evil Knapsack",
+            "description": "The hide of evil eyes stitched together, reinforced with the caps from horned mushrooms.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "bag",
+            "bonuses": 0.0,
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 16
+            },
+            "requirements": {
+                "lvl": 12,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "evil_eye_hide": 6,
+                    "mushroom_horn": 6
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "bag_4": {
+            "premade_id": "bag_4",
+            "name": "Undead Crocodile Backpack",
+            "description": "Hardened crocodile scales and stitched reanimated flesh, this pack pulses faintly with unholy energy.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "bag",
+            "bonuses": 0.0,
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 20
+            },
+            "requirements": {
+                "lvl": 15,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "crocodile_scales": 10,
+                    "zombie_skin": 12
+                }
+            ],
             "crafting_ingredient_for": []
         }
     }

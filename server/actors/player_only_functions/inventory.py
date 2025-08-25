@@ -79,13 +79,9 @@ def command_drop(self, line):
         self.sendLine('Drop what?', sound = Audio.ERROR)
         return
 
-    if item.keep:
-        self.sendLine('Can\'t drop kept items')
+    if not item.can_tinker_with():
+        self.sendLine('Cannot drop kept or equipped items')
         return
-    if item.item_type == ItemType.EQUIPMENT:
-        if item.equiped:
-            self.sendLine('Can\'t drop equiped items')
-            return
 
     self.room.inventory_manager.add_item(item)
     self.inventory_manager.remove_item(item)
@@ -168,15 +164,19 @@ def command_inventory(self, line):
         columns = 3
     t = utils.Table(columns)
 
+    num = 1
     for i in self.inventory_manager.items:
-        output = self.inventory_manager.items[i].pretty_name()
+        output = f'{num:2}. ' +self.inventory_manager.items[i].pretty_name()
+        num += 1
         
 
         if self.trade_manager.trade != None:
             if i in self.trade_manager.trade.offers1 or i in self.trade_manager.trade.offers2:
-                output = output + f' (@yellowT@normal)'
+                output =  output + f' (@yellowT@normal)'
 
+        
         t.add_data(output)
+        
 
     self.sendLine(
         f'You carry ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n' +
@@ -345,12 +345,14 @@ def lower_item(self, item_id):
         value = self.inventory_manager.items.pop(item_id) # remove the keyvalue pair
         self.inventory_manager.items[item_id] = value     # reconstruct with the item last
 
+@check_not_trading
 def command_craft(self, line):
 
     if self.inventory_manager.get_amount_of_free_item_slots() < 1:
         self.sendLine('You need atleast one empty inventory space to craft')
         return
         
+    line = line.replace('from',',').replace('and',',')
     line = line.split(',')
     item_to_craft = line[0]
     ingredients = line[1:]
@@ -399,6 +401,10 @@ def command_craft(self, line):
     for index in range(0,len(recipe)):
         if ingredients_to_use[index].stack < list(recipe.values())[index]: 
             self.sendLine(f'Not enough {ingredients_to_use[index].name}')
+            return
+
+        if not ingredients_to_use[index].can_tinker_with():
+            self.sendLine('Cannot craft with kept or equipped items')
             return
         
     

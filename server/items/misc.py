@@ -28,6 +28,17 @@ class Item:
         self.crafting_recipe_ingredients = []
         self.crafting_ingredient_for = []
 
+    def can_tinker_with(self):
+        if self.keep:
+            #
+            return False
+        if self.item_type == ItemType.EQUIPMENT:
+            if self.equiped:
+                #
+                return False
+
+        return True
+        
     def tick(self):
         if self.ambience == None:
             return

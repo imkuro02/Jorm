@@ -129,13 +129,9 @@ class TradeManager:
         if item == None:
             self.actor.sendLine('Offer what?')
             return
-        if item.keep:
-            self.actor.sendLine('You can\'t trade kept items')
+        if not item.can_tinker_with():
+            self.sendLine('Cannot trade kept or equipped items')
             return
-        if item.item_type == ItemType.EQUIPMENT:
-            if item.equiped:
-                self.actor.sendLine('You can\'t trade equiped items')
-                return
         self.trade.offer(item, self.actor)
         
     def trade_identify(self, line):

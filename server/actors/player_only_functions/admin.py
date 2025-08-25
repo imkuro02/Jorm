@@ -538,7 +538,7 @@ def command_lore(self, line):
         for slot in temp_slots_manager:
             t.add_data(slot)
             if temp_slots_manager[slot] == None:
-                t.add_data(temp_slots_manager[slot]['nothing'])
+                t.add_data('---')
             else:
                 t.add_data(temp_slots_manager[slot]['name'])
         self.sendLine(f'Best in slot equipment for your level:\n{t.get_table()}')
