@@ -255,6 +255,10 @@ class Dialog:
             if 'give_to_npc' in answer['trade']:
                 for i in answer['trade']['give_to_npc']:
                     removed = self.player.inventory_manager.remove_items_by_id(i['item'], i['amount'])
+                    if not removed:
+                        self.player.sendLine('Could not remove items requested')
+                        self.end_dialog()
+                        return True
                 self.player.sendLine(f'You give away the items requested')
 
         if 'quest_objective_count_proposal' in answer:
@@ -275,8 +279,13 @@ class Dialog:
                     return True
 
             #self.print_dialog()
-            self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
-            self.player.sendLine(f'@greenQuest turned in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
+            turned_in_successfully = self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
+            if turned_in_successfully:
+                self.player.sendLine(f'@greenQuest turned in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
+            else:
+                self.player.sendLine(f'@badQuest failed to turn in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
+                self.end_dialog()
+                return True
 
             if 'reward' in answer:
                 for item_id in answer['reward']:

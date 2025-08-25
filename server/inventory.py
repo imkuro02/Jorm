@@ -211,6 +211,8 @@ class InventoryManager:
     def remove_items_by_id(self, item_premade_id, stack = 0):
         stacks_to_remove = stack
         for i in self.items.values():
+            if not i.can_tinker_with():
+                continue
             if item_premade_id == i.premade_id:
                 stacks_to_remove -= i.stack
 
@@ -221,6 +223,8 @@ class InventoryManager:
         stacks_removed = 0
         to_del = []
         for i in self.items.values():
+            if not i.can_tinker_with():
+                continue
             if item_premade_id == i.premade_id:
                 
                 # if this item has more stacks than what needs to be removed

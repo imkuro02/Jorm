@@ -73,31 +73,15 @@ class QuestManager:
                 
                 stacks_to_remove = objective.goal
                 removed = self.actor.inventory_manager.remove_items_by_id(objective.requirement_id, stacks_to_remove)
+                
                 if not removed:
+                    # if failed to remove quest items, reset it again
+                    proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.TURNED_IN, OBJECTIVE_TYPES.TURNED_IN, -1)
+                    proposal_accepted = self.quests[quest_id].propose_objective_count_addition(proposal)
                     return False
                 else:
                     return True
-                '''
-                for item in items.values():
-                    if objective.requirement_id == item.premade_id:
-                        # if stack is exact, remove that item
-                        if item.stack == stacks_to_remove:
-                            self.actor.inventory_manager.remove_item(item)
-                            break
-                        # if stack is bigger than requirement, remove only x of that 
-                        if item.stack > stacks_to_remove:
-                            self.actor.inventory_manager.items[item.id].stack -= stacks_to_remove
-                            stacks_to_remove -= stacks_to_remove
-                            break
-                        # if stack is less than required, remove the item, and loop again with requirement-stack
-                        if item.stack < stacks_to_remove:
-                            stacks_to_remove -= item.stack
-                            self.actor.inventory_manager.remove_item(item)
-                            continue
-                        # if you have turned_in all items then escape
-                        if stacks_to_remove == 0:
-                            break
-                '''
+                
         
         
     def start_quest(self, quest_id, silent = False):

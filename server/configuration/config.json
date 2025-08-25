@@ -1,5 +1,5 @@
 {
-    "SHA-256": "06f6bdcd8d9ca65919d2676c763fe09d6eee4dc597d81bb0c76989abf913ea3e",
+    "SHA-256": "058b6d6934b6b7c824a48fe084c116f0d2fee9c4e6aff383d2b36c77ef813cef",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -100,7 +100,7 @@
                 "nudge": 1
             },
             "loot": {
-                "rat_hide": 20,
+                "rat_hide": 5,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -384,7 +384,7 @@
                 "swing": 1
             },
             "loot": {
-                "spider_silk": 20,
+                "spider_silk": 5,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -612,7 +612,7 @@
                 "swing": 1
             },
             "loot": {
-                "slime": 25,
+                "slime": 5,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -662,7 +662,7 @@
                 "swing": 1
             },
             "loot": {
-                "slime": 25,
+                "slime": 5,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -760,7 +760,7 @@
                 "swing": 1
             },
             "loot": {
-                "evil_eye_hide": 30,
+                "evil_eye_hide": 5,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -862,7 +862,7 @@
                 "thorns": 1
             },
             "loot": {
-                "mushroom_horn": 20,
+                "mushroom_horn": 5,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -1281,7 +1281,7 @@
                 "bite": 1
             },
             "loot": {
-                "zombie_skin": 20,
+                "zombie_skin": 5,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
@@ -1337,7 +1337,7 @@
                 "bite": 1
             },
             "loot": {
-                "crocodile_scales": 30,
+                "crocodile_scales": 5,
                 "rock": 27,
                 "red potion": 35,
                 "blue potion": 35,
