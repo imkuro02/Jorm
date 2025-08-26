@@ -125,7 +125,8 @@ class Exit:
     def is_active(self):
         if self.active_time_of_day == None:
             return True
-
+        if self.active_time_of_day not in self.room.world.game_time.TIME_OF_DAY:
+            print(self.active_time_of_day, f'not in TIME OF DAY, object: {self.__dict__}')
         return self.room.world.game_time.TIME_OF_DAY[self.active_time_of_day]
 
     #def get_room_name(self):
@@ -408,15 +409,16 @@ class GameTime:
             "Hollowfall", "Dawnspire", "Gloomtide", "Starcrest"
         ]
 
+        
         self.TIME_OF_DAY = {
             'morning' :         False,
-            'day':              False,
-            'afternoon':        False,
+            'noon':             False,
+            'evening':          False,
             'night':            False,
-            'not_morning' :         False,
-            'not_day':              False,
-            'not_afternoon':        False,
-            'not_night':            False,
+            'not_morning' :     False,
+            'not_noon':         False,
+            'not_evening':      False,
+            'not_night':        False,
             'hour_even':        False,
             'hour_uneven':      False,
 
@@ -426,25 +428,15 @@ class GameTime:
         time_dict = self.get_game_time()
 
         self.TIME_OF_DAY['morning'] =           time_dict['hour'] >= 5 and time_dict['hour'] <= 10
-        self.TIME_OF_DAY['day'] =               time_dict['hour'] >= 10 and time_dict['hour'] <= 16
-        self.TIME_OF_DAY['afternoon'] =         time_dict['hour'] >= 17 and time_dict['hour'] <= 20
+        self.TIME_OF_DAY['noon'] =               time_dict['hour'] >= 10 and time_dict['hour'] <= 16
+        self.TIME_OF_DAY['evening'] =         time_dict['hour'] >= 17 and time_dict['hour'] <= 20
         self.TIME_OF_DAY['night'] =             time_dict['hour'] >= 21 or time_dict['hour'] <= 4
         self.TIME_OF_DAY['not_morning'] =       not self.TIME_OF_DAY['morning']
-        self.TIME_OF_DAY['not_day'] =           not self.TIME_OF_DAY['day']
-        self.TIME_OF_DAY['not_afternoon'] =     not self.TIME_OF_DAY['afternoon']
+        self.TIME_OF_DAY['not_noon'] =           not self.TIME_OF_DAY['noon']
+        self.TIME_OF_DAY['not_evening'] =     not self.TIME_OF_DAY['evening']
         self.TIME_OF_DAY['not_night'] =         not self.TIME_OF_DAY['night']
         self.TIME_OF_DAY['hour_even'] =         time_dict['hour'] % 2 == 0
         self.TIME_OF_DAY['hour_uneven'] =       time_dict['hour'] % 2 != 0
-
-
-
-
-        
-
-        
-
-
-
 
 
     def tick(self):

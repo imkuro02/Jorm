@@ -68,7 +68,12 @@ def command_get_time(self, line):
         year = game_date_time['year']
         hour = game_date_time['hour']
         minute = game_date_time['minute']
-        output = f'The date is {day:02}/{month+1:02}/{year:04}, its a {day_name} of {month_name}. Time is {hour:02}:{minute:02}.'
+
+        time_of_day_label = 'wrong time error'
+        for i in 'morning noon evening night'.split():
+            if self.room.world.game_time.TIME_OF_DAY[i]:
+                time_of_day_label = i
+        output = f'The date is {day:02}/{month+1:02}/{year:04}, its a {day_name} of {month_name}. It is {time_of_day_label} {hour:02}:{minute:02}.'
         self.sendLine(output)
 
 
