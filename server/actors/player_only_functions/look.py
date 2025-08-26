@@ -63,7 +63,7 @@ def command_map(self, line):
     start_room = self.protocol.factory.world.rooms[room_id]
     grid[START_LOC] = room_id
 
-    for _exit in start_room.exits:
+    for _exit in start_room.get_active_exits():
         if _exit.direction not in offsets:
             continue
         if _exit.secret:
@@ -111,7 +111,7 @@ def command_map(self, line):
             _x = int(room_loc.split(',')[0])
             _y = int(room_loc.split(',')[1])
 
-            for _exit in room.exits:
+            for _exit in room.get_active_exits():
                 if _exit.direction not in offsets:
                     continue
                 if _exit.secret:
@@ -417,7 +417,7 @@ def command_look(self, line):
         see = see + f'@cyan{room.get_description()}@normal\n'
 
 
-        exits = self.protocol.factory.world.rooms[room.id].exits
+        exits = self.protocol.factory.world.rooms[room.id].get_active_exits()
         #blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
         exit_count = 0
         see_exits = ''
@@ -542,7 +542,7 @@ def get_nearby_rooms(self, view_range = 1):
     grid = {}
     grid[START_LOC] = room_id
 
-    for _exit in start_room.exits:
+    for _exit in start_room.get_active_exits():
         if _exit.direction not in offsets:
             continue
         if _exit.secret:
@@ -585,7 +585,7 @@ def get_nearby_rooms(self, view_range = 1):
             _y = int(room_loc.split(f'{split}')[1])
             _z = int(room_loc.split(f'{split}')[2])
 
-            for _exit in room.exits:
+            for _exit in room.get_active_exits():
                 if _exit.direction not in offsets:
                     continue
                 if _exit.secret:

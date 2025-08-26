@@ -112,7 +112,7 @@ class Spawner:
             self.respawn_all()
 
 class Exit:
-    def __init__(self, room, direction, to_room_id, blocked = False, secret = False, item_required = None, item_required_consume = False):
+    def __init__(self, room, direction, to_room_id, blocked = False, secret = False, item_required = None, item_required_consume = False, active_time_of_day = None):
         self.room = room
         self.direction = direction
         self.to_room_id = to_room_id
@@ -120,6 +120,13 @@ class Exit:
         self.secret = secret
         self.item_required = item_required
         self.item_required_consume = item_required_consume
+        self.active_time_of_day = active_time_of_day
+
+    def is_active(self):
+        if self.active_time_of_day == None:
+            return True
+
+        return self.room.world.game_time.TIME_OF_DAY[self.active_time_of_day]
 
     #def get_room_name(self):
     #    if self.to_room_id not in WORLD['world']:
@@ -166,7 +173,8 @@ class Room:
                     'blocked': _exit.blocked, 
                     'secret': _exit.secret,
                     'item_required': _exit.item_required, 
-                    'item_required_consume': _exit.item_required_consume, }
+                    'item_required_consume': _exit.item_required_consume,
+                    'active_time_of_day': _exit.active_time_of_day, }
             else:
                 _exit_dict = {
                     'direction': _exit['direction'], 
@@ -174,7 +182,8 @@ class Room:
                     'blocked': _exit['blocked'], 
                     'secret': _exit['secret'],
                     'item_required': _exit['item_required'], 
-                    'item_required_consume': _exit['item_required_consume'], }
+                    'item_required_consume': _exit['item_required_consume'], 
+                    'active_time_of_day': _exit['active_time_of_day'], }
 
             self.exits.append(
                                 Exit(
@@ -184,7 +193,8 @@ class Room:
                                     blocked = _exit_dict['blocked'],
                                     secret = _exit_dict['secret'],
                                     item_required = _exit_dict['item_required'],
-                                    item_required_consume = _exit_dict['item_required_consume']
+                                    item_required_consume = _exit_dict['item_required_consume'],
+                                    active_time_of_day = _exit_dict['active_time_of_day']
                                 )
                             )
         
@@ -196,6 +206,13 @@ class Room:
         self.combat = None                # placeholder for combat
         self.actors = {}                  # actors in room dict
         self.spawner = Spawner(self)      # spawner
+
+    def get_active_exits(self):
+        active_exits = []
+        for i in self.exits:
+            if i.is_active():
+                active_exits.append(i)
+        return active_exits
 
     def pretty_name(self):
         col = '@yellow'
@@ -391,8 +408,48 @@ class GameTime:
             "Hollowfall", "Dawnspire", "Gloomtide", "Starcrest"
         ]
 
+        self.TIME_OF_DAY = {
+            'morning' :         False,
+            'day':              False,
+            'afternoon':        False,
+            'night':            False,
+            'not_morning' :         False,
+            'not_day':              False,
+            'not_afternoon':        False,
+            'not_night':            False,
+            'hour_even':        False,
+            'hour_uneven':      False,
+
+        }
+
+    def time_of_day_trigger(self):
+        time_dict = self.get_game_time()
+
+        self.TIME_OF_DAY['morning'] =           time_dict['hour'] >= 5 and time_dict['hour'] <= 10
+        self.TIME_OF_DAY['day'] =               time_dict['hour'] >= 10 and time_dict['hour'] <= 16
+        self.TIME_OF_DAY['afternoon'] =         time_dict['hour'] >= 17 and time_dict['hour'] <= 20
+        self.TIME_OF_DAY['night'] =             time_dict['hour'] >= 21 or time_dict['hour'] <= 4
+        self.TIME_OF_DAY['not_morning'] =       not self.TIME_OF_DAY['morning']
+        self.TIME_OF_DAY['not_day'] =           not self.TIME_OF_DAY['day']
+        self.TIME_OF_DAY['not_afternoon'] =     not self.TIME_OF_DAY['afternoon']
+        self.TIME_OF_DAY['not_night'] =         not self.TIME_OF_DAY['night']
+        self.TIME_OF_DAY['hour_even'] =         time_dict['hour'] % 2 == 0
+        self.TIME_OF_DAY['hour_uneven'] =       time_dict['hour'] % 2 != 0
+
+
+
+
+        
+
+        
+
+
+
+
+
     def tick(self):
         self.game_date_time += 1
+        self.time_of_day_trigger()
 
     def set_game_time(self, line):
         try:
@@ -401,10 +458,15 @@ class GameTime:
         except Exception as e:
             self.sendLine(f'Cant set time: {e}')
 
-    def get_game_time(self, line = ''):
-        if line != '':
-            return f'{self.game_date_time}'
+    def get_game_time_compact_str(self):
+        _time = self.get_game_time()
+        time = f"{_time['second']:02}.{_time['minute']:02}.{_time['hour']:02}.{_time['day']:02}.{_time['month']:02}.{_time['year']:04}"
+        return time
+    
+    def get_game_time_int(self):
+        return self.game_date_time
 
+    def get_game_time(self):
         total_game_seconds = self.game_date_time * self.SECONDS_PER_TICK
 
         total_minutes = total_game_seconds // 60

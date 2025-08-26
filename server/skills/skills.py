@@ -319,35 +319,37 @@ class SkillThorns(Skill):
             ) 
             self.other.affect_manager.set_affect_object(thorns_affect)  
 
-
-class SkillRegenHP30(Skill):
-    def use(self):
+# Potions
+class SkillRegenPercentFromPotion(Skill):
+    def use(self, power_percent, stat_to_heal):
         super().use()
         if self.success:
-            #self.other.take_damage(self.user, int(self.user.stat_manager.stats[StatType.HPMAX]*.3), DamageType.HEALING)
-            damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stat_manager.stats[StatType.HPMAX]*.3),
-                damage_type = DamageType.HEALING
-                )
-            damage_obj.run()         
+            if 'Potion Sick' not in self.other.affect_manager.affects:
+                damage_obj = Damage(
+                    damage_taker_actor = self.other,
+                    damage_source_action = self,
+                    damage_source_actor = self.user,
+                    damage_value = int(self.user.stat_manager.stats[stat_to_heal+'_max']*power_percent),
+                    damage_type = DamageType.HEALING,
+                    damage_to_stat = stat_to_heal
+                    )
+                damage_obj.run()   
 
-class SkillRegenMP30(Skill):
+                potion_sickness = affects.Affect(
+                    affect_manager = self.other.affect_manager,
+                    name = 'Potion Sick',
+                    description = f'Immune to potion effects',
+                    turns = 3
+                ) 
+                self.other.affect_manager.set_affect_object(potion_sickness)      
+            else:
+                self.other.simple_broadcast('You are still potion sick', f'{self.other.pretty_name()} is still potion sick')  
+class SkillRegenHP30(SkillRegenPercentFromPotion):
     def use(self):
-        super().use()
-        if self.success:
-            #self.other.take_damage(self.user, int(self.user.stat_manager.stats[StatType.HPMAX]*.3), DamageType.HEALING)
-            damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stat_manager.stats[StatType.MPMAX]*.3),
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.MP
-                )
-            damage_obj.run()               
+        super().use(power_percent = .3, stat_to_heal = StatType.HP)
+class SkillRegenMP30(SkillRegenPercentFromPotion):
+    def use(self):
+        super().use(power_percent = .3, stat_to_heal = StatType.MP)            
 
 class SkillRefreshingDrink(Skill):
     def use(self):

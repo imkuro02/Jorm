@@ -71,6 +71,12 @@ edgeGroup.appendChild(edgeSecretInput);
 edgeGroup.appendChild(label('secret'));
 edgeGroup.appendChild(br());
 
+edgeGroup.appendChild(label('active_time_of_day'));
+edgeGroup.appendChild(br());
+const edgeActiveTimeOfDay = document.createElement("input");
+edgeGroup.appendChild(edgeActiveTimeOfDay);
+edgeGroup.appendChild(br());
+
 
 
 edgeFormContainer.appendChild(edgeGroup);
@@ -120,6 +126,13 @@ function guiEdgeSetSelectedEdge(edge){
         } else {
             edgeItemRequiredConsumeInput.checked = false;
         }
+
+        if (typeof data['active_time_of_day'] !== "undefined"){
+            edgeActiveTimeOfDay.value = data['active_time_of_day'];
+        } else {
+            edgeActiveTimeOfDay.value = '';
+        }
+
     }
 }
 
@@ -131,7 +144,8 @@ function edge_save_json() {
         'item_required': edgeItemRequiredInput.value,
         'item_required_consume': edgeItemRequiredConsumeInput.checked,
         'secret': edgeSecretInput.checked,
-        'blocked': edgeBlockedInput.checked
+        'blocked': edgeBlockedInput.checked,
+        'active_time_of_day': edgeActiveTimeOfDay.value
         
     };
 

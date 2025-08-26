@@ -109,7 +109,8 @@ def load_map():
                 'secret': False,
                 'blocked': False,
                 'item_required': None,
-                'item_required_consume': False
+                'item_required_consume': False,
+                'active_time_of_day': None
             }
 
 
@@ -123,6 +124,8 @@ def load_map():
                 new_exit['item_required'] = json_data['item_required']
             if 'item_required_consume' in json_data:
                 new_exit['item_required_consume'] = json_data['item_required_consume']
+            if 'active_time_of_day' in json_data:
+                new_exit['active_time_of_day'] = json_data['active_time_of_day']
 
             nodes[edge_data['source']]['exits'].append(new_exit)
 

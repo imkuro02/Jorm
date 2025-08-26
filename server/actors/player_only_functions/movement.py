@@ -57,7 +57,7 @@ def command_go(self, line = '', room_id = None):
         
         direction = None
 
-        exits = self.room.exits
+        exits = self.room.get_active_exits()
         for _exit in exits:
             if ' '+line.lower() in ' '+_exit.direction.lower(): 
                 room_obj = _exit.get_room_obj()
@@ -144,8 +144,13 @@ def command_go(self, line = '', room_id = None):
                 if highest_can_start_fights_level < actor.stat_manager.stats[StatType.LVL]:
                     highest_can_start_fights_level = actor.stat_manager.stats[StatType.LVL]
 
-    if yes_any_can_start_fights and self.stat_manager.stats[StatType.LVL] - highest_can_start_fights_level <= 0:
-        roll = random.randint(0,5)
+    if yes_any_can_start_fights:
+        roll = 0
+        if self.stat_manager.stats[StatType.LVL] - highest_can_start_fights_level <= 0:
+            roll = random.randint(0,5)
+        if self.room.world.game_time.TIME_OF_DAY['night']:
+            roll = random.randint(0,2)
+        
         if roll == 1:
             if self.party_manager.party != None:
                 if self.party_manager.party.actor == self:

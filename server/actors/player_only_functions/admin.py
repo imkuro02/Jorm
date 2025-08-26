@@ -53,10 +53,14 @@ def command_help(self, line):
         
 
 def command_get_time(self, line):
-    if line != '':
-        self.sendLine(str(self.room.world.game_time.get_game_time(line)))
+    if line == '1':
+        self.sendLine(str(self.room.world.game_time.get_game_time_int()))
+    elif line == '2':
+        self.sendLine(str(self.room.world.game_time.get_game_time_compact_str()))
+    elif line == '3':
+        self.sendLine(str(self.room.world.game_time.TIME_OF_DAY))
     else:
-        game_date_time = self.room.world.game_time.get_game_time(line)
+        game_date_time = self.room.world.game_time.get_game_time()
         day_name = game_date_time['day_name']
         month_name = game_date_time['month_name']
         day = game_date_time['day']
@@ -64,7 +68,7 @@ def command_get_time(self, line):
         year = game_date_time['year']
         hour = game_date_time['hour']
         minute = game_date_time['minute']
-        output = f'The date is {day:02}/{month+1:02}/{year+1300:04}, its a {day_name} of {month_name}. Time is {hour:02}:{minute:02}.'
+        output = f'The date is {day:02}/{month+1:02}/{year:04}, its a {day_name} of {month_name}. Time is {hour:02}:{minute:02}.'
         self.sendLine(output)
 
 
