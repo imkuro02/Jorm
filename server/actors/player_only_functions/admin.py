@@ -620,18 +620,21 @@ def command_lore(self, line):
             item_id = LORE['items'][to_find]['premade_id']
             i = load_item(item_id, max_stats = True)
             i.new = False
-            output += i.identify(self) + '\n'
-            output += '@yellowLooted from@normal: \n'
+            output += i.identify(self) 
+            
             all_dropped_from = []
             for e in LORE['enemies']:
                 if item_id in LORE['enemies'][e]['loot']:
                     all_dropped_from.append([e,f'1:{LORE["enemies"][e]["loot"][item_id]}'])
             
-        t = utils.Table(4,3)
-        for i in all_dropped_from:
-            t.add_data(f'{i[0]}: ')
-            t.add_data(i[1])
-        output = output + t.get_table()
+        if all_dropped_from != []:
+            output += '\n@yellowLooted from@normal: \n'
+            t = utils.Table(4,3)
+            for i in all_dropped_from:
+                t.add_data(f'{i[0]}: ')
+                t.add_data(i[1])
+            output = output + t.get_table()
+
         self.sendLine(output)
         return
     

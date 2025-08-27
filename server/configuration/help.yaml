@@ -165,6 +165,20 @@ commands:
       - equipment   
       - get
       - drop
+      - craft
+  craft:
+    group: items
+    syntax: 
+      - craft <item name to craft> from <ingredient 1> and <ingredient 2> ...
+      - craft <item name to craft>, <ingredient 1>, <ingredient 2> ...
+    description: |
+      Craft an item from ingredients in your inventory.
+      Ingredients cannot be kept or equipped.
+
+      The crafting recipe order matters. if an recipe says "1 rock and 2 tree branches".
+      Your "craft" command syntax has to use rock and tree branch in that order.
+    related:
+      - inventory
   sort:
     group: items
     syntax: 
