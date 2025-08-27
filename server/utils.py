@@ -10,7 +10,7 @@ logging.basicConfig(
     filename=   'logs.log',     # Log file name
     level=      logging.DEBUG,  # Log level
     format='%(asctime)s - %(levelname)s - [%(name)s] - %(message)s',
-    filemode=   'a'  # Append mode; use 'w' to overwrite
+    filemode=   'a'  # 'a' is Append mode; use 'w' to overwrite
 )
 
 
