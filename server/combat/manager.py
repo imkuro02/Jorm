@@ -17,10 +17,10 @@ class Combat:
         # reset threat
         for p in self.participants.values():
             if type(p).__name__ == 'Player':
-                p.stat_manager.stats[StatType.THREAT] = 200 
+                p.set_base_threat()
                 p.stat_manager.stats[StatType.INITIATIVE] = 0 
             else: 
-                p.stat_manager.stats[StatType.THREAT] = 0 
+                p.set_base_threat()
                 p.stat_manager.stats[StatType.INITIATIVE] = 0  
 
         for p in self.room.actors.values():

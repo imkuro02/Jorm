@@ -190,6 +190,8 @@ class Actor:
 
         if self.room != None:
             self.room.move_actor(self, silent = True)
+
+        self.set_base_threat()
    
     def add_prompt_syntax(self, prompt_syntax):
         justing = 3
@@ -205,6 +207,8 @@ class Actor:
 
             '#MAGARM#':         str(self.stat_manager.stats[StatType.MAGARMOR]).rjust(justing),
             '#MAGARMMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).rjust(justing),
+
+            '#THREAT#':         str(self.stat_manager.stats[StatType.THREAT]).rjust(justing),
 
             # int((cur_value / max_value) * 100)
             '#HP%#':             str('0' if self.stat_manager.stats[StatType.HP] == 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing),
@@ -427,6 +431,16 @@ class Actor:
         
         return output
 
+   
+
+    def get_base_threat(self):
+        s = self.stat_manager.stats
+        return int(s[StatType.LVL] + s[StatType.GRIT] + s[StatType.FLOW] + s[StatType.MIND] + s[StatType.SOUL] / 5)
+
+    def set_base_threat(self):
+        #self.stat_manager.stats[StatType.THREAT] = self.get_base_threat()
+        self.stat_manager.stats[StatType.THREAT] = 0
+
     def heal(self, heal_hp = True, heal_mp = True, value = 1, silent = True):
          
         if heal_hp:
@@ -436,6 +450,7 @@ class Actor:
                 damage_source_action = self,
                 damage_value = value,
                 damage_type = DamageType.HEALING,
+                add_threat = False,
                 silent = silent
                 )
             damage_obj.run()      
@@ -447,6 +462,7 @@ class Actor:
                 damage_value = value,
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MP,
+                add_threat = False,
                 silent = silent
                 )
             damage_obj.run()   
@@ -459,6 +475,7 @@ class Actor:
                 damage_value = value,
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.PHYARMOR,
+                add_threat = False,
                 silent = silent
                 )
             damage_obj.run()      
@@ -470,10 +487,14 @@ class Actor:
                 damage_value = value,
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MAGARMOR,
+                add_threat = False,
                 silent = silent
                 )
             damage_obj.run()   
         self.stat_manager.hp_mp_clamp_update()
+        self.set_base_threat()
+
+        
         
     def tick(self):
         if self.status == ActorStatusType.NORMAL:
@@ -627,6 +648,7 @@ class Actor:
         self.affect_manager.set_turn()
         self.cooldown_manager.set_turn()
         self.inventory_manager.set_turn()
+        #self.stat_manager.stats[StatType.THREAT] = int(self.stat_manager.stats[StatType.THREAT]*.90)
 
     def sendLine(self, line, msg_type = None):
         print(f'sendLine called in a object class Npc function? line: {line}')

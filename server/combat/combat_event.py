@@ -108,7 +108,9 @@ class CombatEvent:
         damage_obj.damage_source_actor.inventory_manager.dealt_damage(damage_obj)
 
         # add threat to the attacker
-        damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += damage_obj.damage_value
+        if damage_obj.add_threat:
+            damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += abs(damage_obj.damage_value)
+        
         self.pop_from_queue()
 
 

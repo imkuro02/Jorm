@@ -360,6 +360,7 @@ commands:
       #MP%#         - Magicka percentage
       #PHYARM%#     - Physical Armor percentage
       #MAGARM%#     - Magical Armor percentage
+      #THREAT#      - Current Threat 
 
       You can also add "L" right after the first # to adjust the value to the left.
       Like so "LHP" or #LMAGARM%#

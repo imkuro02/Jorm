@@ -10,6 +10,7 @@ class Damage:
                  damage_value, damage_type, 
                  damage_to_stat = StatType.HP,
                  silent = False,
+                 add_threat = True,
                  combat_event = None):
         self.damage_source_action = damage_source_action
         self.damage_taker_actor = damage_taker_actor
@@ -19,6 +20,7 @@ class Damage:
         self.damage_type = damage_type
         self.damage_to_stat = damage_to_stat
         self.silent = silent
+        self.add_threat = add_threat
 
         self.combat_event = combat_event
         if self.combat_event == None:

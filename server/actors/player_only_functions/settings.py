@@ -45,7 +45,7 @@ class Settings:
         #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
         #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
         self.prompt_default = {
-            '1': 'HP:@bred#HP#@normal MP:@bcyan#MP#@normal (PA:@byellow#PHYARM#@normal/MA:@bblue#MAGARM#@normal)',
+            '1': 'HP:@bred#HP#@normal MP:@bcyan#MP#@normal (PA:@byellow#PHYARM#@normal/MA:@bblue#MAGARM#@normal) TH:@red#THREAT#@normal >',
             '2': '<@bred#HP#@normalhp @bcyan#MP#@normalmp @byellow#PHYARM#@normalpa @bblue#MAGARM#@normalma>',
             '3': '[ @bred#HP#@normal/@bred#LHPMAX#@normal HP| @bred#PHYARM#@normal/@bred#LPHYARMMAX#@normal PA] [ @bcyan#MP#@normal/@bcyan#LMPMAX#@normal MP| @bcyan#MAGARM#@normal/@bcyan#LMAGARMMAX#@normal MA]',
             '4': '[ @bred#HP%#@normal% HP| @bred#PHYARM%#@normal% PA] [ @bcyan#MP%#@normal% MP| @bcyan#MAGARM%#@normal% MA]',
