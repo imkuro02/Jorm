@@ -1,8 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=21 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="2_nu7tc"]
+[ext_resource type="Texture2D" uid="uid://bpjb2x1vpyagx" path="res://images/kuro/clock.png" id="2_x7r0c"]
+[ext_resource type="Script" path="res://scripts/Clock.gd" id="3_2rld8"]
 [ext_resource type="Script" path="res://scripts/output.gd" id="3_gkcnj"]
 [ext_resource type="Texture2D" uid="uid://d3qmhola2ro6f" path="res://images/kuro/node.png" id="4_5ypyn"]
 [ext_resource type="Texture2D" uid="uid://bxkhvcsmbemv" path="res://images/kuro/node3.png" id="4_fy0g3"]
@@ -53,7 +55,23 @@ grow_vertical = 2
 custom_minimum_size = Vector2(448, 0)
 layout_mode = 2
 
-[node name="Sprite2D" type="TextureRect" parent="canvas/HBoxContainer/side_panel"]
+[node name="Clock" type="Sprite2D" parent="canvas/HBoxContainer/side_panel"]
+texture_filter = 1
+position = Vector2(224, 544)
+scale = Vector2(16.6602, 16.6602)
+texture = ExtResource("2_x7r0c")
+script = ExtResource("3_2rld8")
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="canvas/HBoxContainer/side_panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 512.0
+color = Color(0.309804, 0.309804, 0.309804, 1)
+
+[node name="Background" type="TextureRect" parent="canvas/HBoxContainer/side_panel"]
 modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 layout_mode = 0

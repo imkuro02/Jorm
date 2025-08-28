@@ -169,6 +169,10 @@ class UpdateChecker:
         #self.actor.sendLine(str(_grid))
         self.protocol.send_gmcp(_grid,'Map')
 
+    def tick_send_time(self):
+        time = self.actor.room.world.game_time.get_game_time()
+        self.actor.protocol.send_gmcp({'hour':time['hour'],'minute':time['minute']}, 'Time')
+
     def tick(self):
         
         #return
@@ -176,6 +180,7 @@ class UpdateChecker:
             return
         #self.tick_show_actors()
         self.tick_show_map()
+        self.tick_send_time()
         
 class Player(Actor):
     def __init__(self, protocol, name, room, _id = None):

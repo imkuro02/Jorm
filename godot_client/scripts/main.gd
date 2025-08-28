@@ -12,6 +12,7 @@ var socket = WebSocketPeer.new()
 @onready var ACTORS_OUTPUT = $canvas/HBoxContainer/Control/actors_output
 @onready var SFX_MAN = $sfx_manager
 @onready var MAP = $canvas/HBoxContainer/side_panel/map
+@onready var CLOCK = $canvas/HBoxContainer/side_panel/Clock
 
 
 
@@ -46,7 +47,7 @@ func _ready():
 	INPUT.text_submitted.connect(_on_input_submitted)
 
 	# Connect to WebSocket server
-	var err = socket.connect_to_url(websocket_url)
+	var err = socket.connect_to_url(websocket_url_local)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
@@ -130,6 +131,8 @@ func handle_gmcp(message: String):
 			ACTORS_OUTPUT.get_message(dict_string)
 		'Map':
 			MAP.get_message(data_dict)
+		'Time':
+			CLOCK.get_message(data_dict)
 	
 func extract_gmcp(int_data: Array[int]) -> void:
 	var start := 0                      
