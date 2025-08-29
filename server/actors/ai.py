@@ -126,9 +126,15 @@ class AI:
 
             target = self.actor
             if SKILLS[skill_to_use]['target_others_is_valid']:
+                target = random.choice(targets)
                 for t in targets:
-                    if t.stat_manager.stats[StatType.THREAT] > target.stat_manager.stats[StatType.THREAT]:
+                    if t == self.actor:
+                        continue
+                    if t.stat_manager.stats[StatType.THREAT] >= target.stat_manager.stats[StatType.THREAT]:
                         target = t
+
+
+            print(self.actor.name, 'prediction target:', target.name)
             
                 
                 

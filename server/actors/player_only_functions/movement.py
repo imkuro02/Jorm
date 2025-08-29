@@ -80,6 +80,33 @@ def command_go(self, line = '', room_id = None):
                     )
                 self.affect_manager.set_affect_object(aff)
             return
+
+        # check for combat 
+        yes_any_can_start_fights = False
+        highest_can_start_fights_level = 0
+        for actor in self.room.actors.values():
+            if type(actor).__name__ in 'Npc Enemy'.split():
+                yes_npcs = True 
+                if actor.can_start_fights:
+                    yes_any_can_start_fights = True
+                    if highest_can_start_fights_level < actor.stat_manager.stats[StatType.LVL]:
+                        highest_can_start_fights_level = actor.stat_manager.stats[StatType.LVL]
+
+        if yes_any_can_start_fights:
+            roll = 0
+            if self.stat_manager.stats[StatType.LVL] - highest_can_start_fights_level <= 0:
+                roll = random.randint(0,5)
+            if self.room.world.game_time.TIME_OF_DAY['night']:
+                roll = random.randint(0,2)
+            
+            if roll == 1:
+                if self.party_manager.party != None:
+                    if self.party_manager.party.actor == self:
+                        self.command_fight('')
+                        return
+                else:
+                    self.command_fight('')
+                    return
             
         if direction.blocked and self.room.is_enemy_present():
             self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path', sound=Audio.ERROR)
@@ -134,29 +161,7 @@ def command_go(self, line = '', room_id = None):
     else:
         self.new_room_look()
 
-    yes_any_can_start_fights = False
-    highest_can_start_fights_level = 0
-    for actor in self.room.actors.values():
-        if type(actor).__name__ in 'Npc Enemy'.split():
-            yes_npcs = True 
-            if actor.can_start_fights:
-                yes_any_can_start_fights = True
-                if highest_can_start_fights_level < actor.stat_manager.stats[StatType.LVL]:
-                    highest_can_start_fights_level = actor.stat_manager.stats[StatType.LVL]
-
-    if yes_any_can_start_fights:
-        roll = 0
-        if self.stat_manager.stats[StatType.LVL] - highest_can_start_fights_level <= 0:
-            roll = random.randint(0,5)
-        if self.room.world.game_time.TIME_OF_DAY['night']:
-            roll = random.randint(0,2)
-        
-        if roll == 1:
-            if self.party_manager.party != None:
-                if self.party_manager.party.actor == self:
-                    self.command_fight('')
-            else:
-                self.command_fight('')
+    
 
     
 

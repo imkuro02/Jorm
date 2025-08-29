@@ -501,7 +501,7 @@ class Actor:
             self.cooldown_manager.unload_all_cooldowns()
             if self.factory.ticks_passed % 30 == 0:
                 if not self.room.is_an_instance():
-                    self.heal()
+                    self.heal(value = self.stat_manager.stats[StatType.LVL])
                 
                 
 
