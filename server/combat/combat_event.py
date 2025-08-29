@@ -34,7 +34,10 @@ class CombatEvent:
                     color = '@yellow'
             if not pop.silent:
                 #print(pop)
-                percentage = int((pop.damage_value / pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'])*100)
+                if pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'] == 0:
+                    percentage = 0
+                else:
+                    percentage = int((pop.damage_value / pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'])*100)
                 
                 if pop.damage_value < 0:
                     damage_txt = f'{abs(pop.damage_value)}@back'

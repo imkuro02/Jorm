@@ -154,7 +154,9 @@ class SkillBash(SkillSwing):
             stunned_affect = affects.AffectStunned(
                 self.other.affect_manager,
                 'Stunned', 'Unable to act during combat turns',
-                turns = self.script_values['duration'][self.users_skill_level]
+                turns = self.script_values['duration'][self.users_skill_level],
+                get_prediction_string_append = 'is stunned!',
+                get_prediction_string_clear = True
             )
             if damage_dealt != 0:
                 self.other.affect_manager.set_affect_object(stunned_affect)

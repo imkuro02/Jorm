@@ -251,8 +251,8 @@ class Player(Actor):
                 self.gain_exp(self.collect_lost_exp_rooms[self.room.id])
                 del self.collect_lost_exp_rooms[self.room.id]
 
-        if self.settings_manager.autobattler:
-            self.ai.tick()
+        #if self.settings_manager.autobattler:
+        self.ai.tick()
 
         self.charging_mini_game.tick()
 

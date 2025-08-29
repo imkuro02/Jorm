@@ -1,5 +1,5 @@
 {
-    "SHA-256": "338ecd372aa3d36d0a30ea9c56fc4653dc8063a057b38466828a3dfa69e772d8",
+    "SHA-256": "e80524a60f6b93f358006cd106d954e5a93e9819d89e4a578127305feff0f8b2",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -11670,15 +11670,15 @@
                 "grit": 0,
                 "hp_max": -20,
                 "mp_max": -20,
-                "phy_armor_max": 50,
-                "mag_armor_max": 50,
+                "phy_armor_max": 120,
+                "mag_armor_max": 100,
                 "flow": 0,
                 "mind": 0,
                 "soul": 0,
-                "inv_slots": -2
+                "inv_slots": -4
             },
             "requirements": {
-                "lvl": 6,
+                "lvl": 10,
                 "hp_max": 20,
                 "mp_max": 20,
                 "phy_armor_max": 0,

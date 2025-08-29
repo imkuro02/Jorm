@@ -16,7 +16,8 @@ def command_fight(self, line):
     
 
     if self.status == ActorStatusType.FIGHTING:
-        self.ai.use_best_skill(offensive_only = True)
+        if self.ai.predict_use_best_skill(offensive_only = True) == False:
+            self.command_pass_turn(line = '')
         #self.ai.tick()
         return
     else:
@@ -29,6 +30,8 @@ def command_fight(self, line):
             self.room.join_combat(self)
         else:
             self.sendLine('You are not the party leader')
+
+    self.ai.clear_prediction()
 
     
 
@@ -49,7 +52,7 @@ def command_pass_turn(self, line):
     self.finish_turn()
 
 @check_no_empty_line
-@check_your_turn
+#@check_your_turn
 @check_alive
 #@check_not_in_combat
 def command_use(self, line):
@@ -112,15 +115,41 @@ def command_use(self, line):
         return
 
 
+    self.ai.prediction_target = None
+    self.ai.prediction_skill = None
+    self.ai.prediction_item = None
+
+    self.ai.prediction_target = _target
+
     if _action in skills_dict.values():
-        if use_skill(self, _target, name_to_id[_action.name]):
-            self.finish_turn()
+        self.ai.prediction_skill = name_to_id[_action.name]
+    if _action in self.inventory_manager.items.values():
+        self.ai.prediction_item = _action
+
+    if self.room.combat != None:
+        if self.room.combat.current_actor != self:
+            self.sendLine('> Use command queued! <')
             return
 
-    if _action in self.inventory_manager.items.values():
-        if _action.use(self, _target):
-            self.finish_turn()
-            return
+    
+    if self.room.combat == None:
+        self.ai.use_prediction()
+        self.ai.clear_prediction()
+        return
+
+    if self.room.combat.current_actor == self:
+        self.ai.use_prediction()
+        self.ai.clear_prediction()
+        return
+
+    self.ai.clear_prediction()
+
+
+
+
+
+
+        
 
 '''
 def command_recall_set(self, line):

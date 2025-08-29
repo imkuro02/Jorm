@@ -2,11 +2,15 @@ from configuration.config import DamageType, StatType
 from combat.damage_event import Damage
 
 class Affect:
-    def __init__(self, affect_manager, name, description, turns):
+    def __init__(self, affect_manager, name, description, turns, get_prediction_string_append = None, get_prediction_string_clear = False):
         self.affect_manager = affect_manager
         self.actor = self.affect_manager.actor
         self.name = name
         self.description = description
+        # get prediction string will append this text
+        self.get_prediction_string_append = get_prediction_string_append
+        # if this is true, the prediction string will be empty and only include affects
+        self.get_prediction_string_clear = get_prediction_string_clear
         self.turns = turns
 
     #def info(self):

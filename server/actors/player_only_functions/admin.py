@@ -525,9 +525,9 @@ def command_lore(self, line):
     list_of_rooms = [room for room in LORE['rooms']]
     list_of_skills = [skill for skill in LORE['skills']]
 
-    if line in 'grit flow mind soul armor marmor hp mp'.split():
+    if line in 'grit flow mind soul phy_armor mag_armor hp mp'.split():
         line = line.strip()
-        if line in 'hp mp'.strip():
+        if line in 'hp mp phy_armor mag_armor'.strip():
             line += '_max'
         temp_slots_manager = {}
         for slot in self.slots_manager.slots:

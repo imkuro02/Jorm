@@ -9,28 +9,51 @@ class AI:
         self.actor = actor
         self.prediction_target = None
         self.prediction_skill = None
+        self.prediction_item = None
 
-    def prediction_is_set(self):
-        if self.prediction_target == None or self.prediction_skill == None:
-            return False
-        return True
+    def initiative(self):
+        self.predict_use_best_skill()
 
+    def has_prediction(self):
+        if self.prediction_target != None:
+            if self.prediction_skill != None or self.prediction_item != None:
+                return True
+        return False
+    
     def get_prediction_string(self, who_checks):
-        if type(self.actor).__name__ == 'Player':
-            if self.actor.status == ActorStatusType.DEAD:
-                line = random.choice(['is cooked','wont get up anytime soon','rests in peace'])
-            else:
-                line = random.choice(['is angry','will do something maybe','will win probably','wont lose','is ready to kill'])
-            return f'{line}'
-        if not self.prediction_is_set():
-            return 'will do nothing'
-        if self.prediction_target == self.actor:
-            return f'will use {SKILLS[self.prediction_skill]["name"]}'
-        elif self.prediction_target == who_checks:
-            return f'will use {SKILLS[self.prediction_skill]["name"]} on you'
-        else:
-            return f'will use {SKILLS[self.prediction_skill]["name"]} on {self.prediction_target.pretty_name()}'
+        
 
+        aff_appends = []
+        include_prediction = True
+        for aff in self.actor.affect_manager.affects.values():
+            if aff.turns == 0:
+                continue
+            if aff.get_prediction_string_append != None:
+                aff_appends.append(aff.get_prediction_string_append)
+            if aff.get_prediction_string_clear == True:
+                include_prediction = False
+
+        prediction_string = ''
+        if include_prediction:
+            if type(self.actor).__name__ == 'Player':
+                if self.actor.status == ActorStatusType.DEAD:
+                    line = random.choice(['is cooked','wont get up anytime soon','rests in peace'])
+                else:
+                    line = random.choice(['is angry','will do something maybe','will win probably','wont lose','is ready to kill'])
+                prediction_string = line
+            else:
+                if not self.has_prediction():
+                    prediction_string = 'will do nothing'
+                if self.prediction_target == self.actor:
+                    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]}'
+                elif self.prediction_target == who_checks:
+                    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on you'
+                else:
+                    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on {self.prediction_target.pretty_name()}'
+            
+            prediction_string = prediction_string + ' '
+
+        return prediction_string + f'{" ".join(aff_appends)}'
 
     def get_targets(self):
         actors = self.actor.room.combat.participants.values()
@@ -65,17 +88,34 @@ class AI:
                 continue
             skills.append(skill_id)
         return skills
-                    
-    def use_prediction(self):
-        if use_skill(self.actor, self.prediction_target, self.prediction_skill):
-            self.predict_use_best_skill()
-            self.actor.finish_turn()
-            
-            return True
 
+   
+
+    def clear_prediction(self):
+        print(self.actor.name, 'prediction cleared')
+        self.prediction_target = None
+        self.prediction_skill = None
+        self.prediction_item = None
+
+    def use_prediction(self):
+        if self.prediction_item != None:
+            if self.prediction_item.use(self.actor, self.prediction_target):
+                self.actor.finish_turn()
+                self.predict_use_best_skill()
+                return True
+
+        if self.prediction_skill != None:
+            if use_skill(self.actor, self.prediction_target, self.prediction_skill):
+                self.actor.finish_turn()
+                self.predict_use_best_skill()
+                return True
+
+        
+        
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         self.predict_use_best_skill()
         self.actor.finish_turn()
+        return False
         
         
 
@@ -134,7 +174,7 @@ class AI:
                         target = t
 
 
-            print(self.actor.name, 'prediction target:', target.name)
+            #print(self.actor.name, 'prediction target:', target.name)
             
                 
                 
@@ -233,14 +273,20 @@ class AI:
         return True
 
 class PlayerAI(AI):
+    def initiative(self):
+        return
+
     def tick(self):
         # early return if not in combat
         if not super().tick():
            return
 
-        
-
-        self.use_best_skill(offensive_only = False)
+        if self.has_prediction():
+            self.use_prediction()
+            self.clear_prediction()
+            #print('using prediction')
+            if self.actor.settings_manager.autobattler:
+                self.predict_use_best_skill(offensive_only = True)
         
 
 class EnemyAI(AI):
@@ -298,7 +344,7 @@ class CowardAI(AI):
 
 class BossRatAI(AI):
     def __init__(self, actor):
-        self.actor = actor
+        super().__init__(actor)
         self.turn = 0
     
     def tick(self):
@@ -318,12 +364,13 @@ class BossRatAI(AI):
 
             if to_devour == []:
                 self.turn = 0
-                self.use_best_skill()
+                self.use_prediction()
                 return
 
             for par in to_devour:
                 par.die()
                 heal += 10
+
             self.actor.simple_broadcast('',f'{self.actor.pretty_name()} Devours the rats! healing for {heal}')
             self.actor.heal(value=heal, silent = True)
                 

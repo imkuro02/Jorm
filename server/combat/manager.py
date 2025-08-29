@@ -280,7 +280,8 @@ class Combat:
             #print(self.round)
             if self.round == 1:
                 #print(par)
-                par.ai.predict_use_best_skill()
+                par.ai.initiative()
+                #par.ai.predict_use_best_skill()
 
         self.round += 1
         self.next_turn()
