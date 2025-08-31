@@ -94,7 +94,7 @@ class AI:
    
 
     def clear_prediction(self):
-        print(self.actor.name, 'prediction cleared')
+        #print(self.actor.name, 'prediction cleared')
         self.prediction_target = None
         self.prediction_skill = None
         self.prediction_item = None
@@ -111,12 +111,7 @@ class AI:
                 self.actor.finish_turn()
                 self.predict_use_best_skill()
                 return True
-
-        
-        
-        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
-        self.predict_use_best_skill()
-        self.actor.finish_turn()
+            
         return False
         
         
@@ -186,7 +181,7 @@ class AI:
             self.prediction_skill = skill_to_use
             return True
         return False
-
+    '''
     def use_best_skill(self, offensive_only = False):
         if self.actor.room.combat == None:
             return
@@ -250,6 +245,7 @@ class AI:
         self.actor.simple_broadcast(f'You do nothing',f'{self.actor.pretty_name()} does nothing')
         self.actor.finish_turn()
         return False
+    '''
 
     def tick(self):
         if self.actor.factory.ticks_passed <= 3:
@@ -275,6 +271,12 @@ class AI:
         return True
 
 class PlayerAI(AI):
+    def use_prediction(self):
+        if super().use_prediction():
+            return True
+        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
+        return False
+    
     def initiative(self):
         return
 
@@ -292,6 +294,15 @@ class PlayerAI(AI):
         
 
 class EnemyAI(AI):
+
+    def use_prediction(self):
+        if super().use_prediction():
+            return True
+        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
+        self.predict_use_best_skill()
+        self.actor.finish_turn()
+        return False
+    
     def tick(self):
         if not super().tick():
             return
