@@ -13,6 +13,7 @@ var socket = WebSocketPeer.new()
 @onready var SFX_MAN = $sfx_manager
 @onready var MAP = $canvas/HBoxContainer/side_panel/map
 @onready var CLOCK = $canvas/HBoxContainer/side_panel/Clock
+@onready var BACKGROUND_COLOR = $canvas/background_color
 
 
 
@@ -47,7 +48,7 @@ func _ready():
 	INPUT.text_submitted.connect(_on_input_submitted)
 
 	# Connect to WebSocket server
-	var err = socket.connect_to_url(websocket_url_local)
+	var err = socket.connect_to_url(websocket_url)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
@@ -133,6 +134,7 @@ func handle_gmcp(message: String):
 			MAP.get_message(data_dict)
 		'Time':
 			CLOCK.get_message(data_dict)
+			BACKGROUND_COLOR.get_message(data_dict)
 	
 func extract_gmcp(int_data: Array[int]) -> void:
 	var start := 0                      

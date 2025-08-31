@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=22 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/Clock.gd" id="3_2rld8"]
 [ext_resource type="Script" path="res://scripts/output.gd" id="3_gkcnj"]
 [ext_resource type="Texture2D" uid="uid://d3qmhola2ro6f" path="res://images/kuro/node.png" id="4_5ypyn"]
+[ext_resource type="Script" path="res://scripts/background_color.gd" id="4_6wn6w"]
 [ext_resource type="Texture2D" uid="uid://bxkhvcsmbemv" path="res://images/kuro/node3.png" id="4_fy0g3"]
 [ext_resource type="Texture2D" uid="uid://crbwawxe6ou81" path="res://images/kuro/you4.png" id="4_icjjf"]
 [ext_resource type="Texture2D" uid="uid://cbfef8b7pjws1" path="res://images/kuro/door.png" id="5_kopq2"]
@@ -36,13 +37,14 @@ script = ExtResource("1_2qhxg")
 
 [node name="canvas" type="CanvasLayer" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="canvas"]
+[node name="background_color" type="ColorRect" parent="canvas"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.239216, 0.176471, 0.109804, 1)
+color = Color(0, 0, 0, 1)
+script = ExtResource("4_6wn6w")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="canvas"]
 anchors_preset = 15
@@ -56,14 +58,15 @@ custom_minimum_size = Vector2(448, 0)
 layout_mode = 2
 
 [node name="Clock" type="Sprite2D" parent="canvas/HBoxContainer/side_panel"]
+visible = false
 texture_filter = 1
-position = Vector2(224, 544)
+position = Vector2(128, 376)
 scale = Vector2(16.6602, 16.6602)
 texture = ExtResource("2_x7r0c")
 script = ExtResource("3_2rld8")
 metadata/_edit_group_ = true
 
-[node name="ColorRect" type="ColorRect" parent="canvas/HBoxContainer/side_panel"]
+[node name="background_color" type="ColorRect" parent="canvas/HBoxContainer/side_panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
