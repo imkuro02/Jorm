@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e80524a60f6b93f358006cd106d954e5a93e9819d89e4a578127305feff0f8b2",
+    "SHA-256": "c54cba2466ad773d27307346fd764c9a9ef24eafa650b5261bc28d89be717e33",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -80,7 +80,7 @@
         },
         "rat": {
             "npc_id": "rat",
-            "ai": "Vore",
+            "ai": "Enemy",
             "name": "Rat",
             "description": "A greasy brown rat. Its body is muscular, and it is the size of a small cat. Its ears are scarred. It scurries around quickly.",
             "stats": {
@@ -8807,7 +8807,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 2,
                 "hp_max": 0,

@@ -37,19 +37,22 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
         if unique_id == None:
             unique_id = new_item.id
 
-        if ITEMS[premade_id]['bonuses'] != 0:
-            for b in ITEMS[premade_id]['bonuses'].split(','):
-                _type = b.split(':')[0]
-                _key = b.split(':')[1].split('=')[0]
-                _val = int(b.split('=')[1])
-                val = _val
-                boon = EquipmentBonus(  
-                                        type = _type, 
-                                        key = _key, 
-                                        val = val,
-                                        premade_bonus = True
-                                    )
-                new_item.manager.add_bonus(boon)
+        try:
+            if ITEMS[premade_id]['bonuses'] != 0:
+                for b in ITEMS[premade_id]['bonuses'].split(','):
+                    _type = b.split(':')[0]
+                    _key = b.split(':')[1].split('=')[0]
+                    _val = int(b.split('=')[1])
+                    val = _val
+                    boon = EquipmentBonus(  
+                                            type = _type, 
+                                            key = _key, 
+                                            val = val,
+                                            premade_bonus = True
+                                        )
+                    new_item.manager.add_bonus(boon)
+        except Exception as e:
+            print(premade_id)
 
        
 
