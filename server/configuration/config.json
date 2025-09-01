@@ -1,5 +1,5 @@
 {
-    "SHA-256": "f052bfa3a856f7bd49a12471c006796a8fee5ab077d99dc04aef15deadf68973",
+    "SHA-256": "64b296f60ad9d91a36e663b31408c4c046ff3a89e86b657c1d018a71c83050ac",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4204,6 +4204,41 @@
                     1
                 ]
             }
+        },
+        "get_practice_point": {
+            "skill_id": "get_practice_point",
+            "name": "Get Practice Point",
+            "description": "Get one practice point!",
+            "script_to_run": "GetPracticePoint",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "must_be_fighting": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "script_values": {
+                "level ": [
+                    1
+                ],
+                "cooldown": [
+                    1
+                ]
+            }
         }
     },
     "items": {
@@ -4950,6 +4985,43 @@
             "drop_chance_range_under": 0,
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "soul",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "practice_cookie": {
+            "premade_id": "practice_cookie",
+            "name": "Cookie",
+            "description": "Eat this to get one practice point!",
+            "description_room": null,
+            "invisible": 0.0,
+            "skills": [
+                "get_practice_point"
+            ],
+            "use_perspectives": {
+                "use_case_name": "use_eat_cookie",
+                "you on you": "You eat the cookie! Yummy!",
+                "you on other": "You force #OTHER# to eat a cookie! Yummy!",
+                "user on user": "#USER# eats a cookie! it looked yummy...",
+                "user on you": "#USER# forces you to eat a cookie! Yummy!",
+                "user on other": "#USER# forces #OTHER# to eat a cookie! it looked yummy...",
+                "you on you fail": "None",
+                "you on other fail": "None",
+                "user on user fail": "None",
+                "user on you fail": "None",
+                "user on other fail": "None"
+            },
+            "item_type": "consumable",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },

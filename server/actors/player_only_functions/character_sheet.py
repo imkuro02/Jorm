@@ -47,7 +47,8 @@ def command_level_up(self, stat):
     
     self.stat_manager.stats[StatType.LVL] += 1
     self.stat_manager.stats[stat] += 1
-    self.stat_manager.stats[StatType.PP] += 1
+    self.gain_practice_points(1)
+    #self.stat_manager.stats[StatType.PP] += 1
 
     #hp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.GRIT] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
     #mp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.MIND] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20

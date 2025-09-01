@@ -99,3 +99,18 @@ SELECT actor_id, premade_id, item_id, item_keep, 1 from inventory_old;
 ----- bonus table
 drop table if exists equipment_bonus;
 # then let it get created by database.py __init__()
+
+
+
+
+
+
+------- give item to offline player in database
+INSERT INTO inventory (actor_id, premade_id, item_id, item_keep, item_stack)
+VALUES (
+    (SELECT actor_id FROM actors WHERE actor_name = 'kuro'),
+    'practice_cookie',
+    'CUSTOM_ID0',
+    1,
+    2
+);

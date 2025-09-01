@@ -319,6 +319,22 @@ class Player(Actor):
         else:
             self.sendLine('You got: @yellow' + str(abs(exp)) + ' experience@back')
 
+    def gain_practice_points(self, pp):
+        self.stat_manager.stats[StatType.PP] += pp
+        if self.stat_manager.stats[StatType.PP] == 0:
+            self.stat_manager.stats[StatType.PP] = 0
+
+        if pp <= 0:
+            if abs(pp) >= 2:
+                self.sendLine('You lost: @bad' + str(abs(pp)) + ' Practice points@back')
+            else:
+                self.sendLine('You lost: @bad' + str(abs(pp)) + ' Practice point@back')
+        else:
+            if abs(pp) >= 2: 
+                self.sendLine('You got: @yellow' + str(abs(pp)) + ' Practice points@back')
+            else:
+                self.sendLine('You got: @yellow' + str(abs(pp)) + ' Practice point@back')
+
     def queue_handle(self, line):
         self.queued_lines.append(line)
 

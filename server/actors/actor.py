@@ -521,7 +521,11 @@ class Actor:
         return damage_obj
     '''
     
-    
+    def gain_exp(self, exp):
+        pass
+
+    def gain_practice_points(self, pp):
+        pass
         
     def die(self):
         if self.room == None:

@@ -401,3 +401,10 @@ class SkillAlchemy(Skill):
             lvl = int(lvl * self.script_values['bonus'][self.users_skill_level])
             self.user.gain_exp(lvl)
             self.user.inventory_manager.remove_item(self.other)
+
+
+class SkillGetPracticePoint(Skill):
+     def use(self):
+        super().use()
+        if self.success:
+            self.other.gain_practice_points(1)
