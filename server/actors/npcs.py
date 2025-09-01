@@ -217,7 +217,10 @@ class Npc(Actor):
 
     def tick(self):
         super().tick()
+        #try:
         self.ai.tick()
+        #except Exception as e:
+        #    print(self.name, e)
 
     def drop_loot_on_ground(self):
         for item in self.loot: 

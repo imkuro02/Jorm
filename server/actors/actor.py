@@ -163,12 +163,14 @@ class Actor:
             self.id = str(uuid.uuid4())
         else: 
             self.id = _id
-        self.ai = actors.ai.get_ai(ai)(self)
+        
+        
         self.name = name
         self.description = description
         self.room = room
         if self.room != None:
             self.factory = self.room.world.factory
+        self.ai = actors.ai.get_ai(ai)(self)
 
         
         
@@ -525,6 +527,8 @@ class Actor:
         if self.room == None:
             print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
             return
+
+        self.ai.die()
         
         self.status = ActorStatusType.DEAD
 

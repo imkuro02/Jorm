@@ -14,6 +14,9 @@ class AI:
     def initiative(self):
         self.predict_use_best_skill()
 
+    def die(self):
+        pass
+
     def has_prediction(self):
         if self.prediction_target != None:
             if self.prediction_skill != None or self.prediction_item != None:
@@ -332,6 +335,14 @@ class SlimeAI(AI):
             self.use_prediction()
             
 
+    def use_prediction(self):
+        if super().use_prediction():
+            return True
+        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
+        self.predict_use_best_skill()
+        self.actor.finish_turn()
+        return False
+
 class CowardAI(AI):
     def tick(self):
         if not super().tick():
@@ -354,6 +365,14 @@ class CowardAI(AI):
                 return
                 
         self.use_prediction()
+
+    def use_prediction(self):
+        if super().use_prediction():
+            return True
+        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
+        self.predict_use_best_skill()
+        self.actor.finish_turn()
+        return False
 
 class BossRatAI(AI):
     def __init__(self, actor):
@@ -403,7 +422,104 @@ class BossRatAI(AI):
         
         return
 
+    def use_prediction(self):
+        if super().use_prediction():
+            return True
+        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
+        self.predict_use_best_skill()
+        self.actor.finish_turn()
+        return False
+
+class VoreAI(AI):
+    def __init__(self, actor):
+        super().__init__(actor)
+        self.rooms = self.actor.room.world.rooms 
+        self.vore_room_id = f'{self.actor.room.id}-vored-by-{self.actor.id}'
+        self.vore_room = None
+
+    def tick(self):
+        if not super().tick():
+            return
+        
+        self.use_prediction()
+
+    def use_prediction(self):
+        if super().use_prediction():
+            return True
+        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
+        self.predict_use_best_skill()
+        self.actor.finish_turn()
+        return False
+
+    def initiative(self):
+        super().initiative()
+        if self.vore_room == None:
+            self.vore_room_open()
+            self.original_room = self.actor.room
+            self.vore_room_grab_party()
+
+    # create new vore room
+    def vore_room_open(self):
+        vore_room = Room(self.actor.room.world, self.vore_room_id, 
+            'Vore room name', 
+            'Vore room description', 
+            'vore_room', 
+            [], 
+            False, 
+            False,
+            False,
+            no_spawner = True) 
+
+        self.rooms[self.vore_room_id] = vore_room
+        self.vore_room = vore_room
+
+    # close vore room, kick all player parties back into the room
+    def vore_room_close(self):
+        del self.rooms[self.vore_room_id]
+        
+    # grab a party and add it to vore room
+    def vore_room_grab_party(self):
+        print('grabbing party')
+        to_move = []
+        for i in self.original_room.actors.values():
+            if type(i).__name__ != 'Player':
+                print('not player', i.name)
+                continue
+            if i.status != ActorStatusType.FIGHTING:
+                print('not fighting', i.name)
+                continue
+            to_move.append(i)
+
+        for i in to_move:
+            i.simple_broadcast( f'{self.actor.pretty_name()} vores you!', 
+                                f'{self.actor.pretty_name()} vores {i.pretty_name()}!')
+        for i in to_move:
+            self.vore_room.move_actor(i, silent = True)
+            i.status = ActorStatusType.NORMAL
+            
+
+    def vore_room_kick_all_parties(self):
+        to_move = []
+        for i in self.vore_room.actors.values():
+            if type(i).__name__ != 'Player':
+                continue
+            to_move.append(i)
+
+        for i in to_move:
+             i.simple_broadcast( f'{self.actor.pretty_name()} spits you out!', 
+                                f'{self.actor.pretty_name()} spits out {i.pretty_name()}!')
+        for i in to_move:                     
+            self.original_room.move_actor(i, silent = True)
+            i.status = ActorStatusType.NORMAL
+
+
+    def die(self):
+        self.vore_room_kick_all_parties()
+        self.vore_room_close()
+
     
+
+
 def get_ai(ai_name):
     match ai_name:
         case 'Slime':
@@ -414,5 +530,7 @@ def get_ai(ai_name):
             return CowardAI
         case 'BossRat':
             return BossRatAI
+        case 'Vore':
+            return VoreAI
         case _:
             return EnemyAI

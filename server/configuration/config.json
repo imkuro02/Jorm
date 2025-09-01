@@ -80,7 +80,7 @@
         },
         "rat": {
             "npc_id": "rat",
-            "ai": "Enemy",
+            "ai": "Vore",
             "name": "Rat",
             "description": "A greasy brown rat. Its body is muscular, and it is the size of a small cat. Its ears are scarred. It scurries around quickly.",
             "stats": {

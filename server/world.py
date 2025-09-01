@@ -12,6 +12,8 @@ from configuration.config import WORLD, StatType, ActorStatusType, ITEMS, Audio,
 import copy
 from inventory import InventoryManager
 
+
+
 class Spawner:
     def __init__(self, room):
         self.room = room
@@ -157,7 +159,7 @@ class Exit:
 
 
 class Room:
-    def __init__(self, world, _id, name, description, from_file, exits, can_be_recall_site, doorway, instanced):
+    def __init__(self, world, _id, name, description, from_file, exits, can_be_recall_site, doorway, instanced, no_spawner = False):
         self.world = world
         self.id = _id                   # id of the room
         self.name = name                # display name
@@ -206,7 +208,10 @@ class Room:
         self.inventory_manager.can_pick_up_anything = True
         self.combat = None                # placeholder for combat
         self.actors = {}                  # actors in room dict
-        self.spawner = Spawner(self)      # spawner
+
+        self.spawner = None
+        if not no_spawner:
+            self.spawner = Spawner(self)      # spawner
 
     def get_active_exits(self):
         active_exits = []
@@ -251,7 +256,8 @@ class Room:
     def tick(self):
         actors = {}
         if not self.is_an_instance():
-            self.spawner.tick()
+            if self.spawner != None:
+                self.spawner.tick()
         
         for a in self.actors.values():
             actors[a.id] = a
@@ -263,8 +269,9 @@ class Room:
         items_to_remove = []
         for i in self.inventory_manager.items.values():
             i.tick()
-            if i in self.spawner.spawn_points.values():
-                continue
+            if self.spawner != None:
+                if i in self.spawner.spawn_points.values():
+                    continue
             i.time_on_ground += 1
             if i.time_on_ground >= 30*120:
                 items_to_remove.append(i)
@@ -561,3 +568,6 @@ class World:
             rooms.append(i)
         for i in rooms:
             i.tick()
+
+from actors import ai
+ai.Room = Room
