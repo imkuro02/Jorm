@@ -119,7 +119,7 @@ class AI:
         
         
 
-    def predict_use_best_skill(self, offensive_only = False):
+    def predict_use_best_skill(self, offensive_only = False, for_prediction = True):
         self.prediction_target = None
         self.prediction_skill = None
 
@@ -133,7 +133,7 @@ class AI:
             return False
         
         allies, enemies = self.get_targets()
-        skills = self.get_skills(for_prediction = True)
+        skills = self.get_skills(for_prediction = for_prediction)
         #print(self.actor.name,skills)
         # try to use a skill 5 times, if it fails return false
         # return true if you managed to use a skill
