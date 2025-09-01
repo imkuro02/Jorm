@@ -79,9 +79,8 @@ class QuestManager:
                     proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.TURNED_IN, OBJECTIVE_TYPES.TURNED_IN, -1)
                     proposal_accepted = self.quests[quest_id].propose_objective_count_addition(proposal)
                     return False
-                else:
-                    return True
                 
+        return True
         
         
     def start_quest(self, quest_id, silent = False):
