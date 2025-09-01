@@ -55,7 +55,7 @@ class QuestManager:
     def turn_in_quest(self, quest_id):
         if quest_id not in self.quests:
             self.actor.sendLine('You can\'t turn in a quest you dont have')
-            return
+            return False
 
         proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.TURNED_IN, OBJECTIVE_TYPES.TURNED_IN, 1)
         proposal_accepted = self.quests[quest_id].propose_objective_count_addition(proposal)
