@@ -22,6 +22,7 @@ class Combat:
             else: 
                 p.set_base_threat()
                 p.stat_manager.stats[StatType.INITIATIVE] = 0  
+                #p.ai.predict_use_best_skill()
 
         for p in self.room.actors.values():
             if type(p).__name__ == 'Player':
@@ -278,10 +279,10 @@ class Combat:
         # after that predictions get rolled after turn end
         for par in self.participants.values():
             #print(self.round)
-            if self.round == 1:
-                #print(par)
-                par.ai.initiative()
-                #par.ai.predict_use_best_skill()
+            #if self.round == 1:
+            #print(par)
+            par.ai.initiative()
+            #par.ai.predict_use_best_skill()
 
         self.round += 1
         self.next_turn()

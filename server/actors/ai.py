@@ -10,6 +10,7 @@ class AI:
         self.prediction_target = None
         self.prediction_skill = None
         self.prediction_item = None
+        self.prediction_override = ''
 
     def initiative(self):
         self.predict_use_best_skill()
@@ -18,12 +19,18 @@ class AI:
         pass
 
     def has_prediction(self):
-        if self.prediction_target != None:
-            if self.prediction_skill != None or self.prediction_item != None:
-                return True
-        return False
+        if self.prediction_target == None:
+            return False
+        if self.prediction_skill == None and self.prediction_item == None:
+            return False
+        return True
     
+    def override_prediction(self, prediction_string = ''):
+        self.prediction_override = prediction_string
+
     def get_prediction_string(self, who_checks):
+        if self.prediction_override != '':
+            return self.prediction_override
         
         aff_appends = []
         include_prediction = True
@@ -49,13 +56,14 @@ class AI:
             else:
                 if not self.has_prediction():
                     prediction_string = 'will do nothing'
-                if self.prediction_target == self.actor:
-                    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]}'
-                elif self.prediction_target == who_checks:
-                    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on you'
                 else:
-                    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on {self.prediction_target.pretty_name()}'
-            
+                    if self.prediction_target == self.actor:
+                        prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]}'
+                    elif self.prediction_target == who_checks:
+                        prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on you'
+                    else:
+                        prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on {self.prediction_target.pretty_name()}'
+                
             prediction_string = prediction_string + ' '
 
         return prediction_string + f'{" ".join(aff_appends)}'
@@ -379,11 +387,28 @@ class BossRatAI(AI):
         super().__init__(actor)
         self.turn = 0
     
+    def initiative(self):
+        print(self.turn)
+        self.predict_use_best_skill()
+        self.turn += 1
+        
+        match self.turn:
+            case 3:
+                self.override_prediction('is scheming')
+            case 6:
+                self.override_prediction('licks their snout in anticipation')
+            case _:
+                self.override_prediction()
+                
+        
+        if self.turn == 7:
+            self.turn = 0
+
     def tick(self):
         if not super().tick():
             return
         
-        self.turn += 1
+        
         
         if self.turn == 6:
 
@@ -394,10 +419,10 @@ class BossRatAI(AI):
                     if par.npc_id == 'rat':
                         to_devour.append(par)
 
-            if to_devour == []:
-                self.turn = 0
-                self.use_prediction()
-                return
+            #if to_devour == []:
+            #    self.turn = 0
+            #    self.use_prediction()
+            #    return
 
             for par in to_devour:
                 par.die()
@@ -406,7 +431,6 @@ class BossRatAI(AI):
             self.actor.simple_broadcast('',f'{self.actor.pretty_name()} Devours the rats! healing for {heal}')
             self.actor.heal(value=heal, silent = True)
                 
-            self.turn = 0
             self.actor.finish_turn()
             return
 
@@ -419,7 +443,6 @@ class BossRatAI(AI):
             return
             
         self.use_prediction()
-        
         return
 
     def use_prediction(self):

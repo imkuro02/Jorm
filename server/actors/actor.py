@@ -286,7 +286,7 @@ class Actor:
         
         #if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
-
+        #output = output + f'{self.party_manager.get_party_id()}'
         return output
 
     def is_not_in_party_or_is_party_leader(self):
