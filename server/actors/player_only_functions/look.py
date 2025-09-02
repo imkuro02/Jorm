@@ -391,11 +391,11 @@ def command_scan(self, line):
                 direction_name = f' {y}-{x} and {z}'
             
             for i in nearby_actors[a]:
-                see = see + ''+i.pretty_name() + ''
+                see = see + ''+i.pretty_name() + ' is'
                 if i.status == ActorStatusType.DEAD:
-                    see = see + f' is dead' + direction_name + ' from here'
+                    see = see + f' dead' + direction_name + ' from here'
                 elif i.status == ActorStatusType.FIGHTING:
-                    see = see + f' is fighting' + direction_name + ' from here'
+                    see = see + f' fighting' + direction_name + ' from here'
                 else:
                     see = see + '' + direction_name + ' from here'
                 see = see +'\n'
@@ -446,9 +446,9 @@ def command_look(self, line):
             else:
                 see = see + ''+i.pretty_name() + ' is here'
                 if i.status == ActorStatusType.DEAD:
-                    see = see + f' is dead here'
+                    see = see + f' and is dead'
                 if i.status == ActorStatusType.FIGHTING:
-                    see = see + f' is fighting here'
+                    see = see + f' and is fighting'
                 see = see +'\n'
 
         

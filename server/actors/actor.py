@@ -284,8 +284,8 @@ class Actor:
             case "Npc":
                 output = output + f'@yellow{self.name}@normal'
         
-        if self.status == ActorStatusType.FIGHTING:
-            output = f'{output}'
+        #if self.status == ActorStatusType.FIGHTING:
+        #    output = f'{output}'
 
         return output
 
