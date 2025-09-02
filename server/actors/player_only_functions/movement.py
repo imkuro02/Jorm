@@ -35,7 +35,7 @@ def command_flee(self, line):
             for par in self.party_manager.party.participants.values():
                 if par == self:
                     continue
-                par.status = ActorStatusType.NORMAL
+                #par.status = ActorStatusType.NORMAL
                 par.sendLine('You flee too!')
                 par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
 

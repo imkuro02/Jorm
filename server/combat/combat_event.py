@@ -75,8 +75,8 @@ class CombatEvent:
         for actor in pop.damage_source_actor.room.actors.values():
             actors.append(actor)
         for actor in actors:
-            if actor.status == ActorStatusType.DEAD:
-                continue
+            #if actor.status == ActorStatusType.DEAD:
+            #    continue
             actor.stat_manager.hp_mp_clamp_update()
         
 

@@ -69,7 +69,8 @@ class ActorStatManager:
         # death
         if self.stats[StatType.HP] <= 0:
             self.stats[StatType.HP] = 0
-            self.actor.die()
+            if self.actor.status != ActorStatusType.DEAD:
+                self.actor.die()
 
 class SkillManager:
     def __init__(self, actor):
@@ -213,10 +214,10 @@ class Actor:
             '#THREAT#':         str(self.stat_manager.stats[StatType.THREAT]).rjust(justing),
 
             # int((cur_value / max_value) * 100)
-            '#HP%#':             str('0' if self.stat_manager.stats[StatType.HP] == 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing),
-            '#MP%#':             str('0' if self.stat_manager.stats[StatType.MP] == 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).rjust(justing),
-            '#PHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMOR] == 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing),
-            '#MAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMOR] == 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing),
+            '#HP%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing),
+            '#MP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).rjust(justing),
+            '#PHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing),
+            '#MAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing),
    
             '#LHP#':             str(self.stat_manager.stats[StatType.HP]).ljust(justing),
             '#LHPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).ljust(justing),
@@ -231,10 +232,10 @@ class Actor:
             '#LMAGARMMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).ljust(justing),
 
             # int((cur_value / max_value) * 100)
-            '#LHP%#':             str('0' if self.stat_manager.stats[StatType.HP] == 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).ljust(justing),
-            '#LMP%#':             str('0' if self.stat_manager.stats[StatType.MP] == 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).ljust(justing),
-            '#LPHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMOR] == 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing),
-            '#LMAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMOR] == 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing),
+            '#LHP%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).ljust(justing),
+            '#LMP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).ljust(justing),
+            '#LPHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing),
+            '#LMAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing),
         }
 
         for trans in translations:

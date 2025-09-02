@@ -111,7 +111,7 @@ class Combat:
             return
         else:
             self.combat_active = False
-        for i in self.room.actors.values():
+        for i in self.participants.values():
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
             #    i.combat_over_prompt(self)
@@ -124,43 +124,13 @@ class Combat:
                 
                 if one_alive:
                     if i.status == ActorStatusType.DEAD:
+                        i.stat_manager.stats[StatType.HP] = 1
                         i.simple_broadcast(f'You get up again.', f'{i.pretty_name()} gets up again.')
-                    i.status = ActorStatusType.NORMAL
+                        i.status = ActorStatusType.NORMAL
             
             if i.status != ActorStatusType.DEAD:
                 i.status = ActorStatusType.NORMAL
                 
-            
-              
-            #self, skill_id, cooldown, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False
-            '''
-            hp = SkillRegenHP30('hp_regen_30',1,self,self,100,None,silent_use=True,no_cooldown=True)
-            mp = SkillRegenHP30('hp_regen_30',1,self,self,100,None,silent_use=True,no_cooldown=True)
-            hp.use()
-            mp.use()
-            '''
-            '''
-            # heal a bit after battle
-            if i.status != ActorStatusType.DEAD:
-                damage_obj = Damage(
-                    damage_taker_actor = i,
-                    damage_source_actor = i,
-                    damage_value = int(i.stat_manager.stats[StatType.HPMAX]*.25),
-                    damage_type = DamageType.HEALING,
-                    silent = True
-                    )
-                damage_obj.run()          
-                damage_obj = Damage(
-                        damage_taker_actor = i,
-                        damage_source_actor = i,
-                        damage_value = int(i.stat_manager.stats[StatType.MPMAX]*.25),
-                        damage_type = DamageType.HEALING,
-                        damage_to_stat = StatType.MP,
-                        silent = True
-                        )
-                damage_obj.run()   
-                #i.simple_broadcast('')
-            '''
 
         self.participants = {}
         self.room.combat = None

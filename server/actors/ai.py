@@ -113,14 +113,14 @@ class AI:
     def use_prediction(self):
         if self.prediction_item != None:
             if self.prediction_item.use(self.actor, self.prediction_target):
-                self.actor.finish_turn()
                 self.predict_use_best_skill()
+                self.actor.finish_turn()
                 return True
 
         if self.prediction_skill != None:
             if use_skill(self.actor, self.prediction_target, self.prediction_skill):
-                self.actor.finish_turn()
                 self.predict_use_best_skill()
+                self.actor.finish_turn()
                 return True
             
         return False
@@ -190,6 +190,7 @@ class AI:
             
             self.prediction_target = target
             self.prediction_skill = skill_to_use
+            
             return True
         return False
     '''
@@ -391,7 +392,7 @@ class BossRatAI(AI):
         print(self.turn)
         self.predict_use_best_skill()
         self.turn += 1
-        
+
         match self.turn:
             case 3:
                 self.override_prediction('is scheming')
