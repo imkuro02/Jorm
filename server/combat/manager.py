@@ -22,13 +22,13 @@ class Combat:
             else: 
                 p.set_base_threat()
                 p.stat_manager.stats[StatType.INITIATIVE] = 0  
-                #p.ai.predict_use_best_skill()
+
+            p.ai.clear_prediction()
 
         for p in self.room.actors.values():
             if type(p).__name__ == 'Player':
                 p.sendLine('@tipA fight has started!@back')
 
-        #self.initiative()
         
     def add_participant(self, participant):
         participant.status = ActorStatusType.FIGHTING
@@ -40,7 +40,8 @@ class Combat:
             f'{participant.pretty_name()} joins the combat',
         )
         # reset threat to 0 at start of combat
-        participant.stat_manager.stats[StatType.THREAT] = 0 
+        participant.set_base_threat()
+        participant.ai.clear_prediction()
 
     def tick(self):
         if self.current_actor == None:
@@ -223,18 +224,9 @@ class Combat:
                     order = order + i.pretty_name() + ' -> '
                 
             order = order + f'ROUND {self.round}'
-            par.sendLine(order)
+            par.sendLine('\n\n\n'+order)
+
         
-        """
-        for i in self.order:
-            if type(i).__name__ == "Player":
-                combat_stats = f'\n@yellowCombat overview (Round {self.round})@normal:'
-                for participant in self.order:
-                    #combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stat_manager.stats[StatType.HP]}@normal/@red{participant.stat_manager.stats[StatType.HPMAX]}@normal] {participant.party_manager.get_party_id()}'''
-                    combat_stats = combat_stats + f'''\n{participant.pretty_name()} [@red{participant.stat_manager.stats[StatType.HP]}@normal/@red{participant.stat_manager.stats[StatType.HPMAX]}@normal]'''
-                i.sendLine(combat_stats)
-                #i.sendLine(f'@yellowTurn order: {[actor.name for actor in self.order]}@normal')
-        """
         
         for i in self.order:
             if i.room != self.room:
@@ -247,12 +239,13 @@ class Combat:
 
         # only add predictions at the very first round of combat
         # after that predictions get rolled after turn end
-        for par in self.participants.values():
-            #print(self.round)
-            #if self.round == 1:
-            #print(par)
+        for par in self.participants.values():   
             par.ai.initiative()
+            
             #par.ai.predict_use_best_skill()
+
+        for par in self.participants.values():
+            par.show_prompts(self.order)
 
         self.round += 1
         self.next_turn()

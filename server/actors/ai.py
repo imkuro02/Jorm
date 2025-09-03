@@ -48,11 +48,12 @@ class AI:
         prediction_string = ''
         if include_prediction:
             if type(self.actor).__name__ == 'Player':
-                if self.actor.status == ActorStatusType.DEAD:
-                    line = random.choice(['is cooked','wont get up anytime soon','rests in peace'])
-                else:
-                    line = random.choice(['is angry','will do something maybe','will win probably','wont lose','is ready to kill'])
-                prediction_string = line
+                #if self.actor.status == ActorStatusType.DEAD:
+                #    line = random.choice(['is cooked','wont get up anytime soon','rests in peace'])
+                #else:
+                #    line = random.choice(['is angry','will do something maybe','will win probably','wont lose','is ready to kill'])
+                #prediction_string = line
+                prediction_string = ''
             else:
                 if not self.has_prediction():
                     prediction_string = 'will do nothing'
@@ -66,6 +67,7 @@ class AI:
                 
             prediction_string = prediction_string + ' '
 
+        
         return prediction_string + f'{" ".join(aff_appends)}'
 
     def get_targets(self):
@@ -113,13 +115,16 @@ class AI:
     def use_prediction(self):
         if self.prediction_item != None:
             if self.prediction_item.use(self.actor, self.prediction_target):
-                self.predict_use_best_skill()
+                self.clear_prediction()
+                #self.predict_use_best_skill()
                 self.actor.finish_turn()
                 return True
 
         if self.prediction_skill != None:
             if use_skill(self.actor, self.prediction_target, self.prediction_skill):
-                self.predict_use_best_skill()
+                self.clear_prediction()
+                #self.predict_use_best_skill()
+                
                 self.actor.finish_turn()
                 return True
             
@@ -190,7 +195,8 @@ class AI:
             
             self.prediction_target = target
             self.prediction_skill = skill_to_use
-            
+            #for i in self.actor.room.combat.participants.values():
+            #    i.sendLine(f'{self.actor.pretty_name()} {self.get_prediction_string(i)}')
             return True
         return False
     '''
@@ -290,6 +296,7 @@ class PlayerAI(AI):
         return False
     
     def initiative(self):
+        
         return
 
     def tick(self):
@@ -311,7 +318,7 @@ class EnemyAI(AI):
         if super().use_prediction():
             return True
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
-        self.predict_use_best_skill()
+        #self.predict_use_best_skill()
         self.actor.finish_turn()
         return False
     
@@ -348,7 +355,7 @@ class SlimeAI(AI):
         if super().use_prediction():
             return True
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
-        self.predict_use_best_skill()
+        #self.predict_use_best_skill()
         self.actor.finish_turn()
         return False
 
@@ -379,7 +386,7 @@ class CowardAI(AI):
         if super().use_prediction():
             return True
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
-        self.predict_use_best_skill()
+        #self.predict_use_best_skill()
         self.actor.finish_turn()
         return False
 
@@ -450,7 +457,7 @@ class BossRatAI(AI):
         if super().use_prediction():
             return True
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
-        self.predict_use_best_skill()
+        #self.predict_use_best_skill()
         self.actor.finish_turn()
         return False
 
@@ -471,7 +478,7 @@ class VoreAI(AI):
         if super().use_prediction():
             return True
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
-        self.predict_use_best_skill()
+        #self.predict_use_best_skill()
         self.actor.finish_turn()
         return False
 

@@ -627,7 +627,44 @@ class Actor:
         
         self.room.combat.next_turn()
 
+    def show_prompts(self, order = None):
+        # return if received a empty list of orders
+        if order == None:
+            return
+
+        if type(self).__name__ == "Player":
+            output = ''
+            #output = f'@yellowYour turn.@normal'
+            #self.sendLine(output)
+            par = self
+            
+            #output = par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
+            if order == None:
+                _list = self.room.combat.participants.values()
+            else:
+                _list = order
+
+            for par in _list:
+                if par.status == ActorStatusType.DEAD:
+                    continue
+                if par == self: 
+                    output += par.prompt(self)+' '+'You'+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
+                else:
+                    output += par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
+            
+            output = output[:-1] if output.endswith("\n") else output
+            self.sendLine(output)
+
     def set_turn(self):
+        if type(self).__name__ == "Player":
+            order = self.room.combat.order
+            if order == []:
+                output = f'@yellowYour turn.@normal'
+                self.sendLine(output)
+            else:
+                output = f'@yellowYour turn.@normal Turns after yours:'
+                self.sendLine(output)
+                self.show_prompts(self.room.combat.order)
         
         if self.room == None:
             return
@@ -635,22 +672,7 @@ class Actor:
             return
         
         
-        if type(self).__name__ == "Player":
-            output = f'@yellowYour turn.@normal'
-            self.sendLine(output)
-            par = self
-            
-            output = par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
-            _list = self.room.combat.participants.values()
-
-            for par in _list:
-                if par == self: 
-                    continue
-
-                output += par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
-            
-            output = output[:-1] if output.endswith("\n") else output
-            self.sendLine(output)
+        
            
             
 

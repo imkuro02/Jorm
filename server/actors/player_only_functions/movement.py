@@ -11,10 +11,10 @@ def command_flee(self, line):
     if self.room.combat == None:
         self.sendLine('You are not in combat, you don\'t need to flee')
         return
-    self.simple_broadcast(
-        None,
-        f'{self.pretty_name()} flees!'
-    )
+    #self.simple_broadcast(
+    #    None,
+    #    f'{self.pretty_name()} flees!'
+    #)
     self.protocol.factory.world.rooms[self.recall_site].move_actor(self, silent = True)
     self.status = ActorStatusType.NORMAL
     self.simple_broadcast(
@@ -35,7 +35,10 @@ def command_flee(self, line):
             for par in self.party_manager.party.participants.values():
                 if par == self:
                     continue
-                #par.status = ActorStatusType.NORMAL
+                # if dead, they get ressed afterwards so dont need to set status to normal
+                # if fighting, set to normal otherwise combat will continue even without being there
+                if par.status == ActorStatusType.FIGHTING:
+                    par.status = ActorStatusType.NORMAL
                 par.sendLine('You flee too!')
                 par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
 
