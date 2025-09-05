@@ -377,6 +377,7 @@ class Player(Actor):
             alias_text = line            
             for alias in aliases:
                 if command != alias:
+                    line.replace(alias, 'say ERROR')
                     continue
                 #line = line.replace(' '+alias+' ', ' '+aliases[alias]+' ')
                 lines = line.split()
@@ -407,6 +408,9 @@ class Player(Actor):
             if ';' in line:
                 lines = line.split(';')
                 for l in lines:
+                    if l.split()[0] in self.settings_manager.aliases:
+                        self.sendLine('An alias cannot trigger another alias')
+                        continue
                     self.queued_lines.append(l)
                     #print(l)
                     
