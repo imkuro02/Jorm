@@ -260,8 +260,11 @@ class Player(Actor):
             self.recently_send_message_count -= 1
 
         if len(self.queued_lines) >= 1:
-            self.handle(self.queued_lines[0])
+            to_handle = self.queued_lines[0]
             self.queued_lines.pop(0)
+            self.handle(to_handle)
+            
+                
 
         self.update_checker.tick()
 
@@ -371,11 +374,44 @@ class Player(Actor):
         if ' '+command+'' not in ' settings ': 
             aliases = self.settings_manager.aliases
             line = ' '+line+' '
+            alias_text = line            
             for alias in aliases:
-                line = line.replace(' '+alias+' ', ' '+aliases[alias]+' ')
-            line = line.strip()
+                if command != alias:
+                    continue
+                #line = line.replace(' '+alias+' ', ' '+aliases[alias]+' ')
+                lines = line.split()
+                length = len(lines)
+
+                alias_text = aliases[alias]
+                for i in range(0,10):
+                    to_replace = f'#{i}#'
+                    
+                    if i < length-1:
+                        
+                        alias_text = alias_text.replace(to_replace, lines[i+1]).replace(to_replace,'')
+                    else:
+                        alias_text = alias_text.replace(to_replace,'')
+
+                    
+                #lines[0] = aliases[alias]
+                #line = ' '.join(lines)
+            #line = line.strip()
+            line = alias_text.strip()
+            
+        
+        
 
         command = line.split()[0]
+
+        if command not in 'settings':
+            if ';' in line:
+                lines = line.split(';')
+                for l in lines:
+                    self.queued_lines.append(l)
+                    #print(l)
+                    
+                return
+
         full_line =  line
         line = " ".join(line.split()[1::]).strip() 
 

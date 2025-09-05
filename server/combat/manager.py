@@ -89,7 +89,7 @@ class Combat:
             if i in self.participants.values():
                 i.tick()
             else:
-                print(f'{i} is not here')
+                print(f'combat manager cannot find participant: {i} is not here')
 
         #if team1_died or team2_died:
         #    self.combat_over()

@@ -6,7 +6,7 @@ from actors.player_only_functions.talk import command_talk
 
 from actors.player_only_functions.combat import (
     command_fight, command_pass_turn, 
-    command_use, command_rest, rest_set, rest_now, rest_now_request, command_party
+    command_use, command_use_try, command_rest, rest_set, rest_now, rest_now_request, command_party
 )
 
 from actors.player_only_functions.charging_mini_game import (
@@ -114,8 +114,10 @@ commands = {
     #'remove':   'command_remove',
 
     'use':      'command_use',
+    'try':      'command_use_try',
     'flee':     'command_flee',
     'fight':    'command_fight',
+    #'target':   'command_target',
     'pass':     'command_pass_turn',
     'rest':     'command_rest',
     'party':    'command_party',

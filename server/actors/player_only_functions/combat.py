@@ -3,10 +3,34 @@ from configuration.config import DamageType, ItemType, ActorStatusType, StatType
 import utils
 from skills.manager import get_skills, use_skill
 
+'''
+def command_target(self, line):
+    list_of_actors = [actor.name for actor in self.room.actors.values()]
+    list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
+    target = utils.get_match(line, {**self.room.actors, **self.inventory_manager.items})
+    
+    if line in 'c none clear 0 stop noone'.split():
+        self.ai.target = None
+        self.sendLine('Target cleared')
+        return
+
+    if line == '':
+        if self.ai.target != None:
+            self.sendLine(f'Target is: {self.ai.target.pretty_name()}')
+        else:
+            self.sendLine(f'You have no target')
+        return
+
+    if target == None:
+        self.sendLine('Target unclear!')
+        return
+
+    self.ai.target = target
+    self.sendLine(f'Targetting: {self.ai.target.pretty_name()}')
+'''
 
 @check_your_turn
 @check_alive
-
 def command_fight(self, line):
     #error_output = self.room.new_combat()
     #if isinstance(error_output, str):
@@ -55,12 +79,17 @@ def command_pass_turn(self, line):
 #@check_your_turn
 @check_alive
 #@check_not_in_combat
-def command_use(self, line):
+def command_use_try(self, line):
+    self.command_use(line, is_trying=True)
+        
+
+
+def command_use(self, line, is_trying = False):
     _line = line
 
     if line.endswith((' on', ' at')):
         self.sendLine('Use on who?')
-        return
+        return False
 
     id_to_name, name_to_id = get_skills()
     list_of_skill_names = [skill for skill in name_to_id.keys()]
@@ -107,12 +136,12 @@ def command_use(self, line):
         _target = target
 
     if _action == None:
-        self.sendLine('Use what?')
-        return
+        self.sendLine(f'Use what?   - "{line}"')
+        return False
 
     if _target == None:
-        self.sendLine('On who?')
-        return
+        self.sendLine(f'On who?     - "{line}"')
+        return False
 
 
     self.ai.prediction_target = None
@@ -126,24 +155,31 @@ def command_use(self, line):
     if _action in self.inventory_manager.items.values():
         self.ai.prediction_item = _action
 
-    if self.room.combat != None:
-        if self.room.combat.current_actor != self:
-            self.sendLine('> Use command queued! <')
-            return
+    if not is_trying:
+        if self.room.combat != None:
+            if self.room.combat.current_actor != self:
+                self.sendLine('> Use command queued! <')
+                return True
 
-    
+    #print([i for i in self.queued_lines if not i.strip().startswith('try')])
     if self.room.combat == None:
-        self.ai.use_prediction()
+        if self.ai.use_prediction():
+            # clear all try commands
+            self.queued_lines = [i for i in self.queued_lines if not i.strip().startswith('try')]
+
         self.ai.clear_prediction()
-        return
+        return True
 
     if self.room.combat.current_actor == self:
-        self.ai.use_prediction()
+        if self.ai.use_prediction():
+            # clear all try commands
+            self.queued_lines = [i for i in self.queued_lines if not i.strip().startswith('try')]
+
         self.ai.clear_prediction()
-        return
+        return True
 
     self.ai.clear_prediction()
-
+    return True
 
 
 

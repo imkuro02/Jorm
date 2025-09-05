@@ -7,6 +7,7 @@ from configuration.config import StatType, SKILLS, MsgType
 class AI:
     def __init__(self, actor):
         self.actor = actor
+        #self.target = None
         self.prediction_target = None
         self.prediction_skill = None
         self.prediction_item = None
@@ -113,15 +114,22 @@ class AI:
         self.prediction_item = None
 
     def use_prediction(self):
+        target = self.prediction_target
+
+        #if self.prediction_target == self.actor and self.target != None and self.target in self.actor.room.actors.values():
+        #    target = self.target
+        #else:
+        #    self.target = None
+
         if self.prediction_item != None:
-            if self.prediction_item.use(self.actor, self.prediction_target):
+            if self.prediction_item.use(self.actor, target):
                 self.clear_prediction()
                 #self.predict_use_best_skill()
                 self.actor.finish_turn()
                 return True
 
         if self.prediction_skill != None:
-            if use_skill(self.actor, self.prediction_target, self.prediction_skill):
+            if use_skill(self.actor, target, self.prediction_skill):
                 self.clear_prediction()
                 #self.predict_use_best_skill()
                 
@@ -178,6 +186,7 @@ class AI:
                 continue
 
             target = self.actor
+            
             if SKILLS[skill_to_use]['target_others_is_valid']:
                 target = random.choice(targets)
                 for t in targets:
@@ -185,6 +194,7 @@ class AI:
                         continue
                     if t.stat_manager.stats[StatType.THREAT] >= target.stat_manager.stats[StatType.THREAT]:
                         target = t
+            
 
 
             #print(self.actor.name, 'prediction target:', target.name)
@@ -283,7 +293,7 @@ class AI:
         if self.actor.room.combat.current_actor != self.actor:
             return False
 
-        if self.actor.room.combat.time_since_turn_finished <= int(6):
+        if self.actor.room.combat.time_since_turn_finished <= int(10):
             return False
         
         return True
@@ -292,7 +302,7 @@ class PlayerAI(AI):
     def use_prediction(self):
         if super().use_prediction():
             return True
-        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
+        #self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         return False
     
     def initiative(self):
