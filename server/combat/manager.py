@@ -224,7 +224,7 @@ class Combat:
                     order = order + i.pretty_name() + ' -> '
                 
             order = order + f'ROUND {self.round}'
-            par.sendLine('\n\n\n'+order)
+            par.sendLine(('#'*80)+'\n'+order)
 
         
         

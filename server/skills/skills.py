@@ -1,10 +1,10 @@
-from configuration.config import DamageType, StatType, ActorStatusType
+from configuration.config import DamageType, StatType, ActorStatusType, StaticRooms
 #import affects.manager as aff_manager
 import affects.affects as affects
 from combat.damage_event import Damage
 from configuration.config import SKILLS
 import random
-
+import utils
 
 class Skill:
     def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False):
@@ -22,7 +22,7 @@ class Skill:
         if 'crit' not in self.script_values or stat_type == None:
             dmg = self.script_values['damage'][self.users_skill_level]
         else:
-            crit_min = int(self.script_values['crit'][self.users_skill_level]*80)
+            crit_min = int(self.script_values['crit'][self.users_skill_level]*0)
             crit_max = int(self.script_values['crit'][self.users_skill_level]*100)
             dmg_stat = int(self.user.stat_manager.stats[stat_type])
             dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
@@ -408,3 +408,13 @@ class SkillGetPracticePoint(Skill):
         super().use()
         if self.success:
             self.other.gain_practice_points(1)
+
+
+class SkillPortal(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            e_id = 'skill_portal'
+            e = utils.create_npc(self.user.room.world.rooms[StaticRooms.LOADING], e_id, spawn_for_lore = True)
+            e.talk_to(self.user)
+            e.die()

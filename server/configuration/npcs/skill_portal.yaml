@@ -1,0 +1,35 @@
+skill_portal:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          <npc> shimmers and glows, the multiple destinations flicker before you
+        line_room_party: |
+          <npc> shimmers and glows, the multiple destinations flicker before <player>
+        line_room_not_party: |
+          <npc> shimmers and glows, the multiple destinations flicker before <player>
+      options:
+        - line: teleport to mushroom kingdom (1 blue potion)
+          line_room_party: teleports to mushroom kingdom
+          goto: teleported
+          #check_not_in_party_or_is_party_leader: 1
+          trade:
+            give_to_npc: 
+              - item: blue potion
+                amount: 1
+          teleport_player: overworld/01fc3537-8806-496c-b8b3-9ae828cbe944
+      
+    teleported:
+      dialog:
+        - line: |
+            The flickering stops abruptly, you can see your destination, you step thru and the portal closes behind you
+          line_room_party: |
+            The flickering stops abruptly, you can see your destination, you step thru and the portal closes behind you
+          line_room_not_party: |
+            The flickering stops abruptly, they step thru the portal and it closes behind them
+
+
+
+
+
+

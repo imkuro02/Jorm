@@ -207,7 +207,8 @@ def command_skills(self, line):
         _target_self = skill["target_self_is_valid"]
         _target_others = skill["target_others_is_valid"]
         _target_items = skill["target_item_is_valid"]
-        _combat_only = skill["must_be_fighting"]
+        _can_use_in_combat = skill["can_use_in_combat"]
+        _can_use_out_of_combat = skill["can_use_out_of_combat"]
         _can_practice = skill["can_be_practiced"]
         _is_offensive = skill["is_offensive"]
         _name = skill["name"]
@@ -229,9 +230,21 @@ def command_skills(self, line):
             case [1,0,1]:
                 _target = 'can be used on yourself and items'
             
+        _combat = ''
+        _combat = [_can_use_in_combat, _can_use_out_of_combat]
+        match _combat:
+            case [0,0]:
+                _combat = 'cannot be used at all'
+            case [1,0]:
+                _combat = 'can only be used in combat'
+            case [0,1]:
+                _combat = 'can only be used out of combat'
+            case [1,1]:
+                _combat = 'can be used any time'
+
         extra_info = (
             f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.\n'
-            f'It {"can only be used in combat" if _combat_only else "can be used outside of combat"}, and '
+            f'It {_combat}, and '
             f'it {"can" if _can_practice else "cannot"} be practiced.'
         )
         extra_info = f'@cyan{extra_info}@normal'

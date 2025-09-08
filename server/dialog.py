@@ -11,6 +11,7 @@ class Dialog:
         self.current_line = 'start' 
 
     def send_output(self, output):
+        #output = output.replace('<npc>',self.npc.pretty_name().replace('<player>',self.player.pretty_name()))
         self.player.sendLine(output.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name()))
 
     def get_valid_options(self):
@@ -176,7 +177,19 @@ class Dialog:
 
 
             available_dialogs.append(option)
-        output = random.choice(available_dialogs)['line']+'@normal'
+
+        _line = random.choice(available_dialogs)
+
+        output_line =                   None
+        output_line_room_party =        None
+        output_line_room_not_party =    None
+
+        if 'line' in _line:
+            output_line =                   _line['line']+'@normal'
+        if 'line_room_party' in _line:
+            output_line_room_party =        _line['line_room_party']+'@normal'
+        if 'line_room_not_party' in _line:
+            output_line_room_not_party =    _line['line_room_not_party']+'@normal'
 
 
 
@@ -187,10 +200,26 @@ class Dialog:
 
         #if len(self.get_valid_options()) >= 2:
         for i in self.get_valid_options():
-            output += f'{i["index"]}: {i["line"]}\n'
+            output_line += f'{i["index"]}: {i["line"]}\n'
 
+        #if 'send_to' in  dialog_line:
+        #    if dialog_line['send_to'] == 'party':
+        #        self.simple_broadcast()
+        #else:
+        #    self.send_output(output)
 
-        self.send_output(output)
+        
+       
+        
+        if output_line != None:
+            output_line =                   output_line.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
+            self.player.sendLine(output_line.strip())
+        if output_line_room_party != None:
+            output_line_room_party =        output_line_room_party.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
+            self.player.simple_broadcast(None, output_line_room_party.strip(),     send_to = 'room_party')
+        if output_line_room_not_party != None:
+            output_line_room_not_party =    output_line_room_not_party.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
+            self.player.simple_broadcast(None, output_line_room_not_party.strip(), send_to = 'room_not_party')
         #self.player.sendLine(f'{output}')
 
         # if this is the end, or there is only one option
@@ -303,12 +332,16 @@ class Dialog:
                 self.player.stat_manager.stats[StatType.PP] += answer['reward_practice_points']
                 self.player.sendLine(f'You got: {answer["reward_practice_points"]} Practice point'+('s' if answer['reward_practice_points'] >= 2 else ''))
 
+        self.print_dialog()
 
         if 'teleport_player' in answer:
-            self.player.command_go(line = '', room_id = answer['teleport_player'])
+            if self.player.party_manager.party == None:
+                self.player.command_go(line = '', room_id = answer['teleport_player'])
+            else:
+                self.player.party_manager.party.actor.command_go(line = '', room_id = answer['teleport_player'])
             
 
-        self.print_dialog()
+        
         return True
 
     def end_dialog(self):

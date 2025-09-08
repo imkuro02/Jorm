@@ -6,6 +6,7 @@ import actors.ai
 import random
 from items.manager import load_item
 from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
+import utils
 
 
 def create_npc(room, npc_id, spawn_for_lore = False):
@@ -315,3 +316,4 @@ class Enemy(Npc):
 
 
 actors.ai.create_npc = create_npc
+utils.create_npc = create_npc
