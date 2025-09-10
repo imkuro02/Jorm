@@ -72,7 +72,18 @@ class Dialog:
                         continue
 
             dic['index'] = i
-            dic['line'] = option['line']
+
+            
+            if 'line' in option:
+                dic['line'] = option['line']
+            if 'line_room_party' in option:
+                dic['line_room_party'] = option['line_room_party']
+            if 'line_room_not_party' in option:
+                dic['line_room_not_party'] = option['line_room_not_party']
+
+            
+            
+
             dic['goto'] = option['goto']
 
             if 'check_not_in_party_or_is_party_leader' in option:
@@ -178,6 +189,8 @@ class Dialog:
 
             available_dialogs.append(option)
 
+
+        # ####################################################
         _line = random.choice(available_dialogs)
 
         output_line =                   None
@@ -190,26 +203,12 @@ class Dialog:
             output_line_room_party =        _line['line_room_party']+'@normal'
         if 'line_room_not_party' in _line:
             output_line_room_not_party =    _line['line_room_not_party']+'@normal'
-
-
-
-        #print('>',output)
-        
-        # if there is only one option, that option is end
-        # so dont print anything dialogue should end
+d
 
         #if len(self.get_valid_options()) >= 2:
         for i in self.get_valid_options():
             output_line += f'{i["index"]}: {i["line"]}\n'
 
-        #if 'send_to' in  dialog_line:
-        #    if dialog_line['send_to'] == 'party':
-        #        self.simple_broadcast()
-        #else:
-        #    self.send_output(output)
-
-        
-       
         
         if output_line != None:
             output_line =                   output_line.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
@@ -221,6 +220,7 @@ class Dialog:
             output_line_room_not_party =    output_line_room_not_party.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
             self.player.simple_broadcast(None, output_line_room_not_party.strip(), send_to = 'room_not_party')
         #self.player.sendLine(f'{output}')
+        # ####################################################
 
         # if this is the end, or there is only one option
         # end dialogue
@@ -253,8 +253,32 @@ class Dialog:
             self.end_dialog()
             return False
 
+        # ####################################################
+        #self.player.sendLine('You '+answer['line'])
 
-        self.player.sendLine('You '+answer['line'])
+        output_line =                   None
+        output_line_room_party =        None
+        output_line_room_not_party =    None
+
+        _line = answer
+        if 'line' in _line:
+            output_line =                   '> '+_line['line']+'@normal'
+        if 'line_room_party' in _line:
+            output_line_room_party =        '> '+_line['line_room_party']+'@normal'
+        if 'line_room_not_party' in _line:
+            output_line_room_not_party =    '> '+_line['line_room_not_party']+'@normal'
+
+        if output_line != None:
+            output_line =                   output_line.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
+            self.player.sendLine(output_line.strip())
+        if output_line_room_party != None:
+            output_line_room_party =        output_line_room_party.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
+            self.player.simple_broadcast(None, output_line_room_party.strip(),     send_to = 'room_party')
+        if output_line_room_not_party != None:
+            output_line_room_not_party =    output_line_room_not_party.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
+            self.player.simple_broadcast(None, output_line_room_not_party.strip(), send_to = 'room_not_party')
+        # ####################################################
+
         self.current_line = answer['goto']
 
         if 'trade' in answer:

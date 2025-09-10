@@ -2,31 +2,65 @@ skill_portal:
   tree:
     start:
       dialog: 
-      - line: |
-          <npc> shimmers and glows, the multiple destinations flicker before you
-        line_room_party: |
-          <npc> shimmers and glows, the multiple destinations flicker before <player>
-        line_room_not_party: |
-          <npc> shimmers and glows, the multiple destinations flicker before <player>
+      - line: <npc> shimmers and glows, the multiple destinations flicker before you 
+        line_room_party: <npc> shimmers and glows, the multiple destinations flicker before <player>
+        line_room_not_party: <npc> shimmers and glows, the multiple destinations flicker before <player>
       options:
-        - line: teleport to mushroom kingdom (1 blue potion)
+        - line: teleport to the tavern
           line_room_party: teleports to mushroom kingdom
           goto: teleported
           #check_not_in_party_or_is_party_leader: 1
-          trade:
-            give_to_npc: 
-              - item: blue potion
-                amount: 1
-          teleport_player: overworld/01fc3537-8806-496c-b8b3-9ae828cbe944
+          #trade:
+          #  give_to_npc: 
+          #    - item: blue potion
+          #      amount: 1
+          teleport_player: overworld/cf02db7e-f05b-48ba-bcee-e31dcda93df5
+
+        - line: teleport to mushroom kingdom 
+          line_room_party: teleports to mushroom kingdom
+          goto: teleported
+          #check_not_in_party_or_is_party_leader: 1
+          #trade:
+          #  give_to_npc: 
+          #    - item: blue potion
+          #      amount: 1
+          #teleport_player: overworld/88a6555e-5145-429c-a407-e851fddb2090
+
+        - line: teleport to the slums
+          line_room_party: teleports to the slums
+          goto: teleported
+          #check_not_in_party_or_is_party_leader: 1
+          #trade:
+          #  give_to_npc: 
+          #    - item: blue potion
+          #      amount: 1
+          #teleport_player: overworld/147f9d39-ca9e-490e-a88e-0e9902806dc2
+
+        - line: teleport to the jungle
+          line_room_party: teleports to the jungle
+          goto: teleported
+          #check_not_in_party_or_is_party_leader: 1
+          #trade:
+          #  give_to_npc: 
+          #    - item: blue potion
+          #      amount: 1
+          teleport_player: overworld/6c4f5497-f9e0-4763-bf86-12838d57862
+
+        - line: teleport to the temple
+          line_room_party: teleports to the temple
+          goto: teleported
+          #check_not_in_party_or_is_party_leader: 1
+          #trade:
+          #  give_to_npc: 
+          #    - item: blue potion
+          #      amount: 1
+          teleport_player: overworld/5f652b8f-83d9-45d1-b530-600ffcefc63f
       
     teleported:
       dialog:
-        - line: |
-            The flickering stops abruptly, you can see your destination, you step thru and the portal closes behind you
-          line_room_party: |
-            The flickering stops abruptly, you can see your destination, you step thru and the portal closes behind you
-          line_room_not_party: |
-            The flickering stops abruptly, they step thru the portal and it closes behind them
+        - line: The flickering stops abruptly, you can see your destination, you step thru and the portal closes behind you
+          line_room_party: The flickering stops abruptly, you can see your destination, you step thru and the portal closes behind you
+          line_room_not_party: The flickering stops abruptly, they step thru the portal and it closes behind them
 
 
 
