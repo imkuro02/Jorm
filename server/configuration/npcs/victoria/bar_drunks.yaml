@@ -52,7 +52,8 @@ bar_drunk_1:
         - line: |
             "Only if you bring me a sweet sweet RED POTION!" they yell in your face
       options:
-      - line: say "Fine, here!"
+      - line: |
+          say "Fine, here!"
         goto: first_equipment_set_completed
         quest_check:
           - id: first_equipment_set
@@ -121,7 +122,8 @@ bar_drunk_0:
               objective_count: 1
               
       options:
-        - line: snap back "Quiet!"
+        - line: |
+            snap back "Quiet!"
           goto: first_equipment_set_how_to
           quest_check:
             - id: first_equipment_set
@@ -137,7 +139,8 @@ bar_drunk_0:
         - line: |
             "Only if you bring me a sweet sweet BLUE POTION!" they yell in your face
       options:
-      - line: say "Fine, here!"
+      - line: |
+          say "Fine, here!"
         goto: first_equipment_set_completed
         quest_check:
           - id: first_equipment_set

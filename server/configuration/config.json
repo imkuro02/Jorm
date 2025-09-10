@@ -1,5 +1,5 @@
 {
-    "SHA-256": "17945d4c4aca9b8453e1e79c9a7c8a0a3958987541386aadbfd58fb1cd27ee9a",
+    "SHA-256": "5ac135b8e7711c417b943aff2ae550a69aa4fcfa6774e0155d2b06d879f213e7",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -25,6 +25,7 @@
             "loot": {
                 "tutorial_quest_item_1": 1,
                 "rock": 27,
+                "summoning_rock": 27,
                 "flow body 1": 60,
                 "flow body 3": 100,
                 "flow head 1": 60,
@@ -62,6 +63,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "soul body 1": 40,
@@ -102,6 +104,7 @@
             "loot": {
                 "rat_hide": 5,
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 40,
@@ -139,6 +142,7 @@
             "skills": {},
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "grit body 1": 40,
@@ -179,6 +183,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "mind body 1": 40,
@@ -219,6 +224,7 @@
             "loot": {
                 "tree_branch": 10,
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "grit body 1": 40,
@@ -259,6 +265,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 40,
@@ -298,6 +305,7 @@
             },
             "loot": {
                 "rock": 24,
+                "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
                 "grit body 1": 50,
@@ -342,6 +350,7 @@
             },
             "loot": {
                 "rock": 24,
+                "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
                 "mind body 1": 50,
@@ -386,6 +395,7 @@
             "loot": {
                 "spider_silk": 5,
                 "rock": 24,
+                "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 50,
@@ -429,6 +439,7 @@
             },
             "loot": {
                 "rock": 24,
+                "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 50,
@@ -472,6 +483,7 @@
             },
             "loot": {
                 "rock": 24,
+                "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
                 "grit body 1": 50,
@@ -516,6 +528,7 @@
             },
             "loot": {
                 "rock": 21,
+                "summoning_rock": 21,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_soul": 60,
@@ -564,6 +577,7 @@
             },
             "loot": {
                 "rock": 21,
+                "summoning_rock": 21,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -614,6 +628,7 @@
             "loot": {
                 "slime": 5,
                 "rock": 21,
+                "summoning_rock": 21,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -664,6 +679,7 @@
             "loot": {
                 "slime": 5,
                 "rock": 21,
+                "summoning_rock": 21,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -713,6 +729,7 @@
             },
             "loot": {
                 "rock": 21,
+                "summoning_rock": 21,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_flow": 60,
@@ -762,6 +779,7 @@
             "loot": {
                 "evil_eye_hide": 5,
                 "rock": 18,
+                "summoning_rock": 18,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_soul": 60,
@@ -812,6 +830,7 @@
             },
             "loot": {
                 "rock": 18,
+                "summoning_rock": 18,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_flow": 60,
@@ -864,6 +883,7 @@
             "loot": {
                 "mushroom_horn": 5,
                 "rock": 18,
+                "summoning_rock": 18,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -916,6 +936,7 @@
             },
             "loot": {
                 "rock": 18,
+                "summoning_rock": 18,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -968,6 +989,7 @@
             },
             "loot": {
                 "rock": 18,
+                "summoning_rock": 18,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -1019,6 +1041,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -1074,6 +1097,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_flow": 60,
@@ -1124,6 +1148,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -1177,6 +1202,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_soul": 60,
@@ -1227,6 +1253,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -1283,6 +1310,7 @@
             "loot": {
                 "zombie_skin": 5,
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -1339,6 +1367,7 @@
             "loot": {
                 "crocodile_scales": 5,
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -1394,6 +1423,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_flow": 60,
@@ -1445,6 +1475,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -1497,6 +1528,7 @@
             },
             "loot": {
                 "rock": 24,
+                "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
                 "grit body 1": 50,
@@ -1543,6 +1575,7 @@
                 "tree_root": 10,
                 "tree_branch": 10,
                 "rock": 20,
+                "summoning_rock": 20,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -1592,6 +1625,7 @@
             },
             "loot": {
                 "rock": 21,
+                "summoning_rock": 21,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -1642,6 +1676,7 @@
             "loot": {
                 "key_tavern_cellar": 10,
                 "rock": 24,
+                "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 50,
@@ -1686,6 +1721,7 @@
             "loot": {
                 "key_tavern_cellar": 10,
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 40,
@@ -1726,6 +1762,7 @@
             "loot": {
                 "key_tavern_cellar": 10,
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 40,
@@ -1763,6 +1800,7 @@
             "skills": {},
             "loot": {
                 "rock": 27,
+                "summoning_rock": 27,
                 "grit body 1": 60,
                 "grit body 3": 100,
                 "grit head 1": 60,
@@ -1801,6 +1839,7 @@
             },
             "loot": {
                 "rock": 17,
+                "summoning_rock": 17,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_flow": 60,
@@ -1851,6 +1890,7 @@
             },
             "loot": {
                 "rock": 21,
+                "summoning_rock": 21,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -1900,6 +1940,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "grit body 1": 40,
@@ -1940,6 +1981,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 40,
@@ -1979,6 +2021,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -2030,6 +2073,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -2085,6 +2129,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -2140,6 +2185,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_soul": 60,
@@ -2190,6 +2236,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "grit body 1": 40,
@@ -2230,6 +2277,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 40,
@@ -2269,6 +2317,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "flow body 1": 40,
@@ -2308,6 +2357,7 @@
             },
             "loot": {
                 "rock": 26,
+                "summoning_rock": 26,
                 "red potion": 35,
                 "blue potion": 35,
                 "grit body 1": 40,
@@ -2348,6 +2398,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -2397,6 +2448,7 @@
             "skills": {},
             "loot": {
                 "rock": 27,
+                "summoning_rock": 27,
                 "grit body 1": 60,
                 "grit body 3": 100,
                 "grit head 1": 60,
@@ -2436,6 +2488,7 @@
             },
             "loot": {
                 "rock": 15,
+                "summoning_rock": 15,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -2489,6 +2542,7 @@
             },
             "loot": {
                 "rock": 7,
+                "summoning_rock": 7,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -2525,6 +2579,7 @@
             },
             "loot": {
                 "rock": 12,
+                "summoning_rock": 12,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_flow": 60,
@@ -2572,6 +2627,7 @@
             },
             "loot": {
                 "rock": 12,
+                "summoning_rock": 12,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60,
@@ -2625,6 +2681,7 @@
             },
             "loot": {
                 "rock": 12,
+                "summoning_rock": 12,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_soul": 60,
@@ -2671,6 +2728,7 @@
             },
             "loot": {
                 "rock": 12,
+                "summoning_rock": 12,
                 "red potion": 35,
                 "blue potion": 35,
                 "translucent scroll": 100,
@@ -2719,6 +2777,7 @@
             },
             "loot": {
                 "rock": 12,
+                "summoning_rock": 12,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_flow": 60,
@@ -2766,6 +2825,7 @@
             },
             "loot": {
                 "rock": 12,
+                "summoning_rock": 12,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_flow": 60,
@@ -2814,6 +2874,7 @@
             "loot": {
                 "mushroom_zombie_behemoth_shield": 20,
                 "rock": 1,
+                "summoning_rock": 1,
                 "red potion": 35,
                 "blue potion": 35,
                 "blessing_of_grit": 60
@@ -2843,6 +2904,7 @@
             "skills": {},
             "loot": {
                 "rock": 27,
+                "summoning_rock": 27,
                 "grit body 1": 60,
                 "grit body 3": 100,
                 "grit head 1": 60,
@@ -4828,6 +4890,27 @@
             "crafting_ingredient_for": [
                 "bag_4"
             ]
+        },
+        "summoning_rock": {
+            "premade_id": "summoning_rock",
+            "name": "Summoning Rock",
+            "description": "Used for powerful spells",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "drop_from_random": 1,
+            "drop_chance_base": 27,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
         },
         "red potion": {
             "premade_id": "red potion",

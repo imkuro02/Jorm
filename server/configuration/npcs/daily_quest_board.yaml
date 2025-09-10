@@ -5,7 +5,8 @@ daily_quest_board:
       - line: |
           To your surprise, the creaking wood twists and turns as if to look up at you
       options:
-        - line: grab a quest leaflet from the board
+        - line: |
+            grab a quest leaflet from the board
           goto: daily_quest_new
           quest_check:
           - id: daily_quest
@@ -13,7 +14,8 @@ daily_quest_board:
           quest_start:
             id: daily_quest
 
-        - line: grab a quest leaflet from the board
+        - line: |
+            grab a quest leaflet from the board
           goto: daily_quest_new
           quest_check:
           - id: daily_quest
@@ -21,7 +23,8 @@ daily_quest_board:
           quest_start:
             id: daily_quest
 
-        - line: grab a quest leaflet from the board
+        - line: |
+            grab a quest leaflet from the board
           goto: daily_quest_redo_new
           quest_check:
           - id: daily_quest
@@ -29,7 +32,8 @@ daily_quest_board:
           quest_start:
             id: daily_quest
 
-        - line: say "I would like to turn in my quest"
+        - line: |
+            say "I would like to turn in my quest"
           goto: daily_quest_completed
           quest_check:
             - id: daily_quest

@@ -7,31 +7,36 @@ tutorial_1:
         - line: | 
             <npc> says "Greetings"
       options:
-        - line: ask "Where am I?"
+        - line: |
+            ask "Where am I?"
           goto: where_am_i
           quest_check:
             - id: tutorial_1
               state: not_started
 
-        - line: ask "How do I get out?"
+        - line: |
+            ask "How do I get out?"
           goto: tutorial_1_in_progress_help
           quest_check:
             - id: tutorial_1
               state: in_progress
 
-        - line: ask "How do I get out?"
+        - line: |
+            ask "How do I get out?"
           goto: quest_already_turned_in
           quest_check:
             - id: tutorial_1
               state: turned_in
 
-        - line: say "I got your corpse"
+        - line: |
+            say "I got your corpse"
           goto: quest_turn_in_failed
           quest_check:
             - id: tutorial_1
               state: in_progress
 
-        - line: say "I got your corpse"
+        - line: |
+            say "I got your corpse"
           goto: quest_turn_in_success
           quest_check:
             - id: tutorial_1
@@ -40,7 +45,8 @@ tutorial_1:
             id: tutorial_1
             reward_exp: 4
 
-        - line: ask "What can you teach me?"
+        - line: |
+            ask "What can you teach me?"
           goto: help_me
           quest_check:
             - id: tutorial_1
@@ -60,7 +66,8 @@ tutorial_1:
 
             simple right?"
       options: 
-        - line: What else?
+        - line: |
+            ask "What else?"
           goto: help_me
 
     help_practice:
@@ -74,7 +81,8 @@ tutorial_1:
             Then to actually practice;
             You need to type "practice [skill name]"
       options: 
-        - line: ask "What else?"
+        - line: |
+            ask "What else?"
           goto: help_me
 
     help_help:
@@ -85,7 +93,8 @@ tutorial_1:
           "use the "help" command to quickly find whatever it is 
           you are curious about"
       options: 
-        - line: ask "What else?"
+        - line: |
+            ask "What else?"
           goto: help_me
 
     help_me:
@@ -93,13 +102,17 @@ tutorial_1:
       - line: |
           says "I can teach you a bunch of stuff!"
       options:
-        - line: ask "How do I level up?"
+        - line: |
+            ask "How do I level up?"
           goto: help_level
-        - line: ask "How do I practice skills?"
+        - line: |
+            ask "How do I practice skills?"
           goto: help_practice
-        - line: ask "What else?"
+        - line: | 
+            ask "What else?"
           goto: help_help
-        - line: say "I just want to leave"
+        - line: |
+            say "I just want to leave"
           goto: quest_already_turned_in
       
       
@@ -120,9 +133,11 @@ tutorial_1:
           <npc> says "Ah! perfect, this will make a fine snack"
           They smile "but before you go, You should level up first"
       options: 
-        - line: ask "Level up?"
+        - line: |
+            ask "Level up?"
           goto: help_level
-        - line: say "I just want to leave"
+        - line: |
+            say "I just want to leave"
           goto: quest_already_turned_in
     tutorial_1_in_progress_help:
       dialog:
@@ -130,9 +145,11 @@ tutorial_1:
           <npc> says "As I already told you, go to the Northern wall, and go into the hole.
           There you will find an enemy, kill it, and bring me the corpse"
       options:
-        - line: ask "How do I kill it?"
+        - line: |
+            ask "How do I kill it?"
           goto: how_to_fight
-        - line: ask "Why?"
+        - line: |
+            ask "Why?"
           goto: why_fight
     start_tutorial_1:
       dialog: 
@@ -140,9 +157,11 @@ tutorial_1:
           <npc> says "Simple, go to the Northern wall, crawl into the hole.
           kill whatever is there, and bring me the corpse"
       options:
-        - line: How do I kill it?
+        - line: |
+            How do I kill it?
           goto: how_to_fight
-        - line: Why?
+        - line: |
+            Why?
           goto: why_fight
     how_to_fight:
       dialog:
@@ -159,14 +178,16 @@ tutorial_1:
       - line: |
           <npc> says "Just do it" 
       options:
-        - line: ask "How do I kill it?"
+        - line: |
+            ask "How do I kill it?"
           goto: how_to_fight
     where_am_i:
       dialog: 
       - line: |
           <npc> answers "A sanctuary of sorts"
       options:
-        - line: ask "How do I get out?"
+        - line: |
+            ask "How do I get out?"
           goto: start_tutorial_1
           quest_check:
             - id: tutorial_1

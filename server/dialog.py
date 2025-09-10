@@ -198,16 +198,16 @@ class Dialog:
         output_line_room_not_party =    None
 
         if 'line' in _line:
-            output_line =                   _line['line']+'@normal'
+            output_line =                   _line['line'].strip('\n')
         if 'line_room_party' in _line:
-            output_line_room_party =        _line['line_room_party']+'@normal'
+            output_line_room_party =        _line['line_room_party'].strip('\n')
         if 'line_room_not_party' in _line:
-            output_line_room_not_party =    _line['line_room_not_party']+'@normal'
-d
+            output_line_room_not_party =    _line['line_room_not_party'].strip('\n')
 
-        #if len(self.get_valid_options()) >= 2:
+        if len(self.get_valid_options()) >= 2:
+            output_line += '\n'
         for i in self.get_valid_options():
-            output_line += f'{i["index"]}: {i["line"]}\n'
+            output_line += f'@normal{i["index"]}: {i["line"]}'
 
         
         if output_line != None:
@@ -218,7 +218,7 @@ d
             self.player.simple_broadcast(None, output_line_room_party.strip(),     send_to = 'room_party')
         if output_line_room_not_party != None:
             output_line_room_not_party =    output_line_room_not_party.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
-            self.player.simple_broadcast(None, output_line_room_not_party.strip(), send_to = 'room_not_party')
+            self.player.simple_broadcast(None, output_line_room_not_party.strip().strip(), send_to = 'room_not_party')
         #self.player.sendLine(f'{output}')
         # ####################################################
 
@@ -262,11 +262,11 @@ d
 
         _line = answer
         if 'line' in _line:
-            output_line =                   '> '+_line['line']+'@normal'
+            output_line =                   '> '+_line['line'].strip('\n')+'@normal'
         if 'line_room_party' in _line:
-            output_line_room_party =        '> '+_line['line_room_party']+'@normal'
+            output_line_room_party =        '> '+_line['line_room_party'].strip('\n')+'@normal'
         if 'line_room_not_party' in _line:
-            output_line_room_not_party =    '> '+_line['line_room_not_party']+'@normal'
+            output_line_room_not_party =    '> '+_line['line_room_not_party'].strip('\n')+'@normal'
 
         if output_line != None:
             output_line =                   output_line.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())

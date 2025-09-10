@@ -5,7 +5,8 @@ tavern_cellar_bank_robber:
         - line: |
             <npc> says "My hero!"
       options:
-        - line: ask "Who are you?""
+        - line: |
+            ask "Who are you?""
           goto: a
 
     a:
@@ -13,7 +14,8 @@ tavern_cellar_bank_robber:
         - line: |
             <npc> says "Nobody..."
       options:
-        - line: ask "What are you doing here?""
+        - line: |
+            ask "What are you doing here?""
           goto: b
 
     b:
@@ -21,7 +23,8 @@ tavern_cellar_bank_robber:
         - line: |
             <npc> says "Nothing..."
       options:
-        - line: threaten them with violence for more information
+        - line: |
+            threaten them with violence for more information
           goto: c
     
     c:
@@ -31,7 +34,8 @@ tavern_cellar_bank_robber:
             but I mined into a rat infested cave instead... My mineshaft is hidden.
             Its north from the storage room..."
       options:
-        - line: say "Is that all?""
+        - line: |
+            say "Is that all?""
           goto: d
 
     d:
@@ -39,9 +43,11 @@ tavern_cellar_bank_robber:
         - line: |
             <npc> says "Well, yea... So what now?"
       options:
-        - line: say "What now? now you die!""
+        - line: |
+            say "What now? now you die!""
           goto: die
-        - line: say "Nothing, thanks for the information."
+        - line: |
+            say "Nothing, thanks for the information."
           goto: ok
 
     die:

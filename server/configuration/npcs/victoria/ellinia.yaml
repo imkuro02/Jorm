@@ -6,17 +6,20 @@ ellinia_shop_weapon:
           <npc> says "Hello there, how may I help you today?"
       options:
         # quest 1
-        - line: say "I need a wand."
+        - line: |
+            say "I need a wand."
           goto: ellinia_shop_weapon_quest_1_start     
           quest_check:
             - id: ellinia_shop_weapon_quest_1
               state: not_started
-        - line: Where should I look for the branches?
+        - line: |
+            ask "Where should I look for the branches?"
           goto: how_to_lore_branch         
           quest_check:
             - id: ellinia_shop_weapon_quest_1
               state: in_progress
-        - line: say "I got the branches!"
+        - line: |
+            say "I got the branches!"
           goto: ellinia_shop_weapon_quest_any_completed        
           quest_check:
             - id: ellinia_shop_weapon_quest_1
@@ -27,19 +30,22 @@ ellinia_shop_weapon:
             reward: 
               - ellinia_shop_weapon_quest_1
         # quest 2
-        - line: say "I need a wand.."
+        - line: |
+            say "I need a wand.."
           goto: ellinia_shop_weapon_quest_2_start       
           quest_check:
             - id: ellinia_shop_weapon_quest_2
               state: not_started
             - id: ellinia_shop_weapon_quest_1
               state: turned_in
-        - line: Where should I look for the branches?
+        - line: |
+            ask "Where should I look for the branches?"
           goto: how_to_lore_branch         
           quest_check:
             - id: ellinia_shop_weapon_quest_2
               state: in_progress
-        - line: say "I got the branches!"
+        - line: |
+            say "I got the branches!"
           goto: ellinia_shop_weapon_quest_any_completed        
           quest_check:
             - id: ellinia_shop_weapon_quest_2
@@ -50,7 +56,8 @@ ellinia_shop_weapon:
             reward: 
               - ellinia_shop_weapon_quest_2
         # quest 3
-        - line: say "I need a wand..."
+        - line: |
+            say "I need a wand..."
           goto: ellinia_shop_weapon_quest_3_start    
           quest_check:
             - id: ellinia_shop_weapon_quest_3
@@ -59,12 +66,14 @@ ellinia_shop_weapon:
               state: turned_in
             - id: ellinia_shop_weapon_quest_1
               state: turned_in
-        - line: ask "Where should I look for the roots?"
+        - line: |
+            ask "Where should I look for the roots?"
           goto: how_to_lore_root         
           quest_check:
             - id: ellinia_shop_weapon_quest_3
               state: in_progress
-        - line: say "I got the roots!"
+        - line: |
+            say "I got the roots!"
           goto: ellinia_shop_weapon_quest_any_completed        
           quest_check:
             - id: ellinia_shop_weapon_quest_3
@@ -93,14 +102,16 @@ ellinia_shop_weapon:
           <npc> says "Sorry, I don't have any for sale right now, 
           but maybe you could bring me the ingredients and I could make you one?"
       options:
-        - line: accept
+        - line: |
+            accept
           goto: ellinia_shop_weapon_quest_1_accepted
           quest_check:
             - id: ellinia_shop_weapon_quest_1
               state: not_started
           quest_start:
               id: ellinia_shop_weapon_quest_1
-        - line: decline
+        - line: |
+            decline
           goto: x
 
     ellinia_shop_weapon_quest_2_start:
@@ -109,7 +120,8 @@ ellinia_shop_weapon:
           <npc> says "Sorry, I don't have any for sale right now, 
           but maybe you could bring me the ingredients and I could make you one?"
       options:
-        - line: accept
+        - line: |
+            accept
           goto: ellinia_shop_weapon_quest_2_accepted
           quest_check:
             - id: ellinia_shop_weapon_quest_1
@@ -118,7 +130,8 @@ ellinia_shop_weapon:
               state: not_started
           quest_start:
               id: ellinia_shop_weapon_quest_2
-        - line: decline
+        - line: |
+            decline
           goto: x
 
     ellinia_shop_weapon_quest_3_start:
@@ -127,7 +140,8 @@ ellinia_shop_weapon:
           <npc> says "Sorry, I don't have any for sale right now, 
           but maybe you could bring me the ingredients and I could make you one?"
       options:
-        - line: accept
+        - line: |
+            accept
           goto: ellinia_shop_weapon_quest_3_accepted
           quest_check:
             - id: ellinia_shop_weapon_quest_1
@@ -172,7 +186,8 @@ ellinia_shop_weapon:
     start_2:
       append_to: start
       options:
-        - line: ask to be teleported to the mushroom kingdom for one blue potion
+        - line: |
+            ask to be teleported to the mushroom kingdom for one blue potion
           goto: teleported
           check_not_in_party_or_is_party_leader: 1
           trade:
@@ -181,7 +196,8 @@ ellinia_shop_weapon:
                 amount: 1
           teleport_player: overworld/01fc3537-8806-496c-b8b3-9ae828cbe944
 
-        - line: ask to be teleported to the mushroom kingdom for one blue potion
+        - line: |
+            ask to be teleported to the mushroom kingdom for one blue potion
           goto: not_teleported
           check_not_in_party_or_is_party_leader: 0
 

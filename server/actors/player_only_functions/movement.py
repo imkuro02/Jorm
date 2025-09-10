@@ -134,7 +134,7 @@ def command_go(self, line = '', room_id = None):
         new_room = room_id
 
     
-    self.simple_broadcast('',f'You follow {self.pretty_name()}', send_to = 'room_party', sound = Audio.walk())
+    self.simple_broadcast(None,f'You follow {self.pretty_name()}', send_to = 'room_party', sound = Audio.walk())
     
     world.rooms[new_room].move_actor(self)
     #self.sendSound(Audio.walk())
