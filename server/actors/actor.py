@@ -657,6 +657,9 @@ class Actor:
 
     def set_turn(self):
         if type(self).__name__ == "Player":
+            output = f'@yellowYour turn.@normal'
+            self.sendLine(output)
+            '''
             order = self.room.combat.order
             if order == []:
                 output = f'@yellowYour turn.@normal'
@@ -665,7 +668,8 @@ class Actor:
                 output = f'@yellowYour turn.@normal Turns after yours:'
                 self.sendLine(output)
                 self.show_prompts(self.room.combat.order)
-        
+            '''
+            
         if self.room == None:
             return
         if self.room.combat == None:
