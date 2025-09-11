@@ -1,4 +1,4 @@
-from configuration.config import DamageType, StatType
+from configuration.config import DamageType, StatType, ActorStatusType
 from combat.damage_event import Damage
 
 class Affect:
@@ -87,7 +87,7 @@ class Leech(Affect):
         
         return damage_obj
     
-class Thorns(Affect):
+class AffectThorns(Affect):
     def __init__(self, affect_manager, name, description, turns, damage_reflected_power):
         super().__init__(affect_manager, name, description, turns)
         self.damage_reflected_power = damage_reflected_power # how much in % to reflect
@@ -224,5 +224,34 @@ class AffectBoostStat(Affect):
 
     def on_finished(self, silent=False):
         self.actor.stat_manager.stats[self.stat] -= self.new_stat
+        self.actor.stat_manager.hp_mp_clamp_update()
+        return super().on_finished(silent)
+
+class AffectStealth(Affect):
+    def __init__(self, affect_manager, name, description, turns, bonus):
+        super().__init__(affect_manager, name, description, turns)
+        self.bonus = bonus
+        self.new_stat = 0
+
+    def on_applied(self):
+        super().on_applied()
+        self.new_stat = int( self.actor.stat_manager.stats[StatType.FLOW] * 1)
+        self.actor.stat_manager.stats[StatType.FLOW] += self.new_stat
+
+    def deal_damage(self, damage_obj: 'Damage'):
+        self.on_finished(silent = False)
+        if damage_obj.damage_type != DamageType.PHYSICAL:
+            return damage_obj
+
+        damage_obj.damage_value = int(damage_obj.damage_value * self.bonus)
+        return damage_obj
+
+    def take_damage_before_calc(self, damage_obj: 'Damage'):
+        if damage_obj.damage_type != DamageType.HEALING:
+            self.on_finished(silent = False)
+        return damage_obj
+
+    def on_finished(self, silent=False):
+        self.actor.stat_manager.stats[StatType.FLOW] -= self.new_stat
         self.actor.stat_manager.hp_mp_clamp_update()
         return super().on_finished(silent)

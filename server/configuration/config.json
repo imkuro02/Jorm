@@ -1,5 +1,5 @@
 {
-    "SHA-256": "5ac135b8e7711c417b943aff2ae550a69aa4fcfa6774e0155d2b06d879f213e7",
+    "SHA-256": "ec91025609713894633b82af02017450193144716ce1a27714542118c81a005c",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4294,7 +4294,7 @@
             "target_others_is_valid": true,
             "target_item_is_valid": false,
             "target_self_is_valid": true,
-            "can_use_in_combat": false,
+            "can_use_in_combat": true,
             "can_use_out_of_combat": true,
             "can_be_practiced": false,
             "practice_cost": 5,
@@ -4404,6 +4404,56 @@
                     1,
                     1,
                     1,
+                    1,
+                    1,
+                    1
+                ]
+            }
+        },
+        "stealth": {
+            "skill_id": "stealth",
+            "name": "Stealth",
+            "description": "Your next physical attack will be multiplied by BONUS%, but this effect gets cancelled should you take any damage to either health or armor\nFlow gets doubled until no longer stealthed\n",
+            "script_to_run": "Stealth",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "script_values": {
+                "levels": [
+                    1,
+                    2,
+                    3
+                ],
+                "bonus": [
+                    2.0,
+                    3.0,
+                    4.0
+                ],
+                "duration": [
+                    10,
+                    10,
+                    10
+                ],
+                "cooldown": [
                     1,
                     1,
                     1

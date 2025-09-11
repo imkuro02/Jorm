@@ -454,7 +454,8 @@ class Actor:
                 damage_value = value,
                 damage_type = DamageType.HEALING,
                 add_threat = False,
-                silent = silent
+                silent = silent,
+                dont_proc = True
                 )
             damage_obj.run()      
         if heal_mp:    
@@ -466,7 +467,8 @@ class Actor:
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MP,
                 add_threat = False,
-                silent = silent
+                silent = silent,
+                dont_proc = True
                 )
             damage_obj.run()   
 
@@ -479,7 +481,8 @@ class Actor:
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.PHYARMOR,
                 add_threat = False,
-                silent = silent
+                silent = silent,
+                dont_proc = True
                 )
             damage_obj.run()      
         if heal_mp:    
@@ -491,7 +494,8 @@ class Actor:
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MAGARMOR,
                 add_threat = False,
-                silent = silent
+                silent = silent,
+                dont_proc = True
                 )
             damage_obj.run()   
         self.stat_manager.hp_mp_clamp_update()

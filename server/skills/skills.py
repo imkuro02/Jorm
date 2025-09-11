@@ -312,7 +312,7 @@ class SkillThorns(Skill):
         super().use()
         if self.success:
             damage_reflected_power = self.script_values['bonus'][self.users_skill_level]
-            thorns_affect = affects.Thorns(
+            thorns_affect = affects.AffectThorns(
                 affect_manager = self.other.affect_manager,
                 name = 'Thorny',
                 description = f'Reflect {int(damage_reflected_power*100)}% of physical damage back. ',
@@ -320,6 +320,20 @@ class SkillThorns(Skill):
                 damage_reflected_power = damage_reflected_power
             ) 
             self.other.affect_manager.set_affect_object(thorns_affect)  
+
+class SkillStealth(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            damage_bonus = self.script_values['bonus'][self.users_skill_level]
+            stealthed_affect = affects.AffectStealth(
+                affect_manager = self.other.affect_manager,
+                name = 'Stealthed',
+                description = f'Multiply your next attack by {int(damage_bonus*100)}%',
+                turns = int(self.script_values['duration'][self.users_skill_level]),
+                bonus = damage_bonus
+            ) 
+            self.other.affect_manager.set_affect_object(stealthed_affect)  
 
 # Potions
 class SkillRegenPercentFromPotion(Skill):

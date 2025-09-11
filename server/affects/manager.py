@@ -3,10 +3,17 @@ class AffectsManager:
         self.actor = actor
         self.affects = {}
 
+    def get_all_afflictions(self):
+        affs = {}
+        for i in self.affects.values():
+            affs[i.name] = i
+        #print(i)
+        return affs
+
     def unload_all_affects(self, silent = False):
         # REMOVE ALL AFFECTS VERY IMPORTANT
         aff_to_delete = []
-        for aff in self.affects.values():
+        for aff in self.get_all_afflictions():
             aff_to_delete.append(aff)
         for aff in aff_to_delete:
             aff.on_finished(silent)
@@ -17,8 +24,8 @@ class AffectsManager:
             #print('overriding')
         #    self.affects[affect.id].on_finished(silent = True)
         #self.affects[affect.id] = affect
-
-        if affect.name in self.affects:
+        affs = self.affects
+        if affect.name in affs:
             self.affects[affect.name].on_finished()
 
         self.affects[affect.name] = affect
@@ -35,7 +42,7 @@ class AffectsManager:
     def set_turn(self):
         # pop affects that are expired
         affs_to_pop = []
-        for aff in self.affects.values():
+        for aff in self.get_all_afflictions().values():
             aff.finish_turn()
             if aff.turns <= 0:
                 affs_to_pop.append(aff)
@@ -44,7 +51,7 @@ class AffectsManager:
 
         # run all affects
         aff_to_set_turn = []
-        for aff in self.affects.values():
+        for aff in self.get_all_afflictions().values():
             aff_to_set_turn.append(aff)
         for aff in aff_to_set_turn:
             aff.set_turn()
@@ -55,22 +62,22 @@ class AffectsManager:
 
     # called whenever hp updates in any way
     def take_damage_before_calc(self, damage_obj: 'Damage'):
-        for aff in self.affects.values():
+        for aff in self.get_all_afflictions().values():
             damage_obj = aff.take_damage_before_calc(damage_obj)
         return damage_obj
 
     def take_damage_after_calc(self, damage_obj: 'Damage'):
-        for aff in self.affects.values():
+        for aff in self.get_all_afflictions().values():
             damage_obj = aff.take_damage_after_calc(damage_obj)
         return damage_obj
     
     def deal_damage(self, damage_obj: 'Damage'):
-        for aff in self.affects.values():
+        for aff in self.get_all_afflictions().values():
             damage_obj = aff.deal_damage(damage_obj)
         return damage_obj
     
     def dealt_damage(self, damage_obj: 'Damage'):
-        for aff in self.affects.values():
+        for aff in self.get_all_afflictions().values():
             damage_obj = aff.dealt_damage(damage_obj)
         return damage_obj
         

@@ -11,7 +11,9 @@ class Damage:
                  damage_to_stat = StatType.HP,
                  silent = False,
                  add_threat = True,
-                 combat_event = None):
+                 combat_event = None,
+                 dont_proc = False          # do not proc afflictions or item bonuses
+                 ):
         self.damage_source_action = damage_source_action
         self.damage_taker_actor = damage_taker_actor
         self.damage_source_actor = damage_source_actor
@@ -21,6 +23,7 @@ class Damage:
         self.damage_to_stat = damage_to_stat
         self.silent = silent
         self.add_threat = add_threat
+        self.dont_proc = dont_proc
 
         self.combat_event = combat_event
         if self.combat_event == None:
