@@ -83,6 +83,18 @@ commands:
       - items
       - inventory
       - look
+  try:
+    group: combat
+    syntax:
+      - try <skill|item>
+      - try <skill|item> on <character|item>
+    description: |
+      Works just like the use command, except will not queue the action when triggered outside of your turn.
+      Useful for aliases, where you wish to attempt one of several actions, but dont want them to queue.
+    related:
+      - settings
+      - alias
+      - use
   rest:
     group: combat
     syntax:
@@ -410,11 +422,30 @@ commands:
       logout      - will log you out of the game and close the connection. 
       autobattler - toggle to automatically use skills during combat.
       prompt      - has its own help file "help prompt"
-
     related:
       - prompt
       - look
       - map
+      - alias
+  alias:
+    group: settings
+    syntax: 
+      - settings alias                                    
+      - settings alias <your alias> <a command>
+    description: |
+      Aliases are macros that get set with "settings alias <your alias> <a command>".
+      Running only "settings alias" will display you current aliases.
+
+      @goodArguments@normal
+      Arguements are what follows after your alias command
+
+      Example alias: "settings alias boom try bash on #0#; try swing on #0#"
+      * when using aliases, it is preferable to use "try" instead of "use"
+
+      #number# will be replaced with the words after your alias
+      typing "boom kuro" will replace all "#0#" with "kuro"
+    related:
+      - settings
 # - mexp
 # - teleport
   online:
