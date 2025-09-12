@@ -17,8 +17,11 @@ class Damage:
         self.damage_source_action = damage_source_action
         self.damage_taker_actor = damage_taker_actor
         self.damage_source_actor = damage_source_actor
-        self.damage_value = damage_value
-        self.damage_blocked_value = 0 # the amount that is blocked by armor and marmor
+
+        # a negative value means the damage has been blocked by armor
+        # a positive value means the damage went through armor
+        self.damage_value = damage_value 
+        
         self.damage_type = damage_type
         self.damage_to_stat = damage_to_stat
         self.silent = silent

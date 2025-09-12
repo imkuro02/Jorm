@@ -13,6 +13,9 @@ class Affect:
         self.get_prediction_string_clear = get_prediction_string_clear
         self.turns = turns
 
+    def merge_request(self, affect_to_merge):
+        return False
+
     #def info(self):
     #    return f'{self.name:<15} {self.turns:<3} {self.description}\n'
 
@@ -255,3 +258,27 @@ class AffectStealth(Affect):
         self.actor.stat_manager.stats[StatType.FLOW] -= self.new_stat
         self.actor.stat_manager.hp_mp_clamp_update()
         return super().on_finished(silent)
+
+class AffectBleed(Affect):
+    def __init__(self, affect_manager, name, description, turns, get_prediction_string_append, damage):
+        super().__init__(affect_manager, name, description, turns, get_prediction_string_append = get_prediction_string_append)
+        self.damage = damage
+
+    def merge_request(self, affect_to_merge):
+        if affect_to_merge.turns > self.turns:
+            self.turns = affect_to_merge.turns
+        if affect_to_merge.damage < self.damage:
+            return False
+        return True
+
+    def set_turn(self):
+        super().set_turn()
+        damage_obj = Damage(
+            damage_source_actor = self.actor,
+            damage_taker_actor = self.actor,
+            damage_source_action = self,
+            damage_value = self.damage,
+            damage_type = DamageType.PURE,
+        )
+
+        damage_obj.run()

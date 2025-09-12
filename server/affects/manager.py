@@ -13,27 +13,31 @@ class AffectsManager:
     def unload_all_affects(self, silent = False):
         # REMOVE ALL AFFECTS VERY IMPORTANT
         aff_to_delete = []
-        for aff in self.get_all_afflictions():
+        for aff in self.get_all_afflictions().values():
             aff_to_delete.append(aff)
         for aff in aff_to_delete:
             aff.on_finished(silent)
 
     def set_affect_object(self, affect):
 
-        #if affect.id in self.affects:
-            #print('overriding')
-        #    self.affects[affect.id].on_finished(silent = True)
-        #self.affects[affect.id] = affect
+        # send a request to merge, if it fails that means 
+        # the new affect will override current
+        # merging logic of turns and whatnot happens in merge_request
+        merged = False
+
         affs = self.affects
         if affect.name in affs:
-            self.affects[affect.name].on_finished()
+            merged = self.affects[affect.name].merge_request(affect)
+            if not merged:
+                self.affects[affect.name].on_finished()
 
-        self.affects[affect.name] = affect
-        affect.on_applied()
+        if not merged:
+            self.affects[affect.name] = affect
+            affect.on_applied()
 
-    def set_affect(self, affect_id, turns_override = None):
-        aff = self.load_affect(affect_id, turns_override)
-        self.set_affect_object(aff)
+    #def set_affect(self, affect_id, turns_override = None):
+    #    aff = self.load_affect(affect_id, turns_override)
+    #    self.set_affect_object(aff)
 
     def pop_affect(self, affect):
         del self.affects[affect.name]
