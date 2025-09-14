@@ -595,7 +595,7 @@ class Actor:
         self.inventory_manager.triggerable_manager.actor = None
         self.inventory_manager.triggerable_manager.inventory = None
         self.inventory_manager.triggerable_manager = None
-
+        
         for i in self.__dict__:
             try:
                 self.__dict__[i].owner = None

@@ -234,6 +234,12 @@ class Player(Actor):
 
         self.loaded = False
         #super().unload()
+
+        try:
+            del self.room.combat.participants[self.id]
+        except Exception as e:
+            print(e)
+            
         del self.room.actors[self.id]
         self.room = None
         
@@ -245,6 +251,7 @@ class Player(Actor):
         self.inventory_manager.triggerable_manager.inventory = None
         self.inventory_manager.triggerable_manager = None
 
+       
         for i in self.__dict__:
             try:
                 self.__dict__[i].owner = None
