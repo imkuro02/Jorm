@@ -264,8 +264,8 @@ class Player(Actor):
         
 
         refs = gc.get_referrers(self)
-        if refs != []:
-            print(f'could not unload {self}:    {gc.get_referrers(self)}')
+        #if refs != []:
+        #    print(f'could not unload {self}:    {gc.get_referrers(self)}')
 
     def check_if_admin(self):
         if self.protocol == None:

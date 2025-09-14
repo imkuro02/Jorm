@@ -614,8 +614,8 @@ class Actor:
             
         
         refs = gc.get_referrers(self)
-        if refs != []:
-            print(f'could not unload {self}:    {refs}')
+        #if refs != []:
+        #    print(f'could not unload {self}:    {refs}')
 
 
     def simple_broadcast(self, line_self, line_others, send_to = 'room', sound = None, msg_type = None):
