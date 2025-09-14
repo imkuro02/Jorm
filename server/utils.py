@@ -5,6 +5,34 @@ import time
 import re
 from configuration.config import IndentType
 import math
+import weakref
+
+class RefTracker:
+    def __init__(self):
+        self.refs = []
+
+    def add_ref(self, obj):
+        self.refs.append(weakref.ref(obj))
+
+    def show_ref_all(self):
+        refs = {}
+        for ref in self.refs:
+            obj = ref()  # dereference
+            if obj is not None:
+                t = type(obj).__name__  # get class name as string
+                #print(t)
+                # count per type
+                refs[t] = refs.get(t, 0) + 1
+            else:
+                pass
+                #print("<collected>")
+
+        print("Ref sum:", refs)
+            
+
+REFTRACKER = RefTracker()
+
+
 
 logging.basicConfig(
     filename=   'logs.log',     # Log file name

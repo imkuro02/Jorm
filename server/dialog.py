@@ -204,7 +204,7 @@ class Dialog:
         if 'line_room_not_party' in _line:
             output_line_room_not_party =    _line['line_room_not_party'].strip('\n')
 
-        if len(self.get_valid_options()) >= 2:
+        if len(self.get_valid_options()) >= 1:
             output_line += '\n'
         for i in self.get_valid_options():
             output_line += f'@normal{i["index"]}: {i["line"]}'

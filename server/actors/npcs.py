@@ -219,7 +219,8 @@ class Npc(Actor):
     def tick(self):
         super().tick()
         #try:
-        self.ai.tick()
+        if self.ai != None:
+            self.ai.tick()
         #except Exception as e:
         #    print(self.name, e)
 
@@ -268,7 +269,7 @@ class Npc(Actor):
         room = self.room
 
         participants = room.combat.participants.values()
-        super().die()
+        super().die(unload = False)
 
         
         for actor in participants:
@@ -281,7 +282,9 @@ class Npc(Actor):
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
                 actor.quest_manager.propose_objective_count_addition(proposal)
 
+        self.unload()
 
+        
     def set_turn(self):
         super().set_turn()
 

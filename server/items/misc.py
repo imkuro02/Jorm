@@ -2,6 +2,7 @@ import uuid
 from configuration.config import ItemType, ITEMS
 import random
 from utils import get_object_parent
+from utils import REFTRACKER
 class Item:
     def __init__(self):
         self.id = str(uuid.uuid4())
@@ -27,6 +28,9 @@ class Item:
         # crafting
         self.crafting_recipe_ingredients = []
         self.crafting_ingredient_for = []
+
+        
+        REFTRACKER.add_ref(self)
 
     def can_tinker_with(self):
         if self.keep:

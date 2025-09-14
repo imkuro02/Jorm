@@ -11,7 +11,8 @@ from party import PartyManager
 from quest import QuestManager
 import actors.ai
 from dialog import Dialog
-
+import gc
+from utils import REFTRACKER
 class ActorStatManager:
     def __init__(self, actor):
         self.actor = actor
@@ -195,7 +196,10 @@ class Actor:
             self.room.move_actor(self, silent = True)
 
         self.set_base_threat()
-   
+
+        REFTRACKER.add_ref(self)
+
+
     def add_prompt_syntax(self, prompt_syntax):
         justing = 3
         translations = {
@@ -532,7 +536,7 @@ class Actor:
     def gain_practice_points(self, pp):
         pass
         
-    def die(self):
+    def die(self, unload = True):
         if self.room == None:
             print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
             return
@@ -569,10 +573,50 @@ class Actor:
             if self.room.combat != None:
                 if self.id in self.room.combat.participants:
                     del self.room.combat.participants[self.id]
-            self.room = None
+            #self.room = None
 
+        if unload:
+            self.unload()
         
+    def unload(self):
+        try:        
+            del self.room.actors[self.id]
+        except Exception as e:
+            pass #print(e)
+        try:     
+            self.room = None
+        except Exception as e:
+            pass #print(e)
         
+        items = self.inventory_manager.items.values()
+        for i in items:
+            i.owner = None
+
+        self.inventory_manager.triggerable_manager.actor = None
+        self.inventory_manager.triggerable_manager.inventory = None
+        self.inventory_manager.triggerable_manager = None
+
+        for i in self.__dict__:
+            try:
+                self.__dict__[i].owner = None
+            except Exception as e:
+                pass #print(e)
+
+            try:
+                self.__dict__[i].actor = None
+            except Exception as e:
+                pass #print(e)
+
+            try:
+                self.__dict__[i] = None
+            except Exception as e:
+                pass #print(e)
+            
+        
+        refs = gc.get_referrers(self)
+        if refs != []:
+            print(f'could not unload {self}:    {refs}')
+
 
     def simple_broadcast(self, line_self, line_others, send_to = 'room', sound = None, msg_type = None):
         if self.room == None:

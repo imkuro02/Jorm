@@ -6,6 +6,10 @@ import yaml
 import os
 import utils
 from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms, HELPFILES
+from utils import REFTRACKER
+
+def command_show_ref_all(self, line):
+    REFTRACKER.show_ref_all()
 
 def command_help(self, line):
     help = HELPFILES

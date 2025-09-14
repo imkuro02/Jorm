@@ -12,6 +12,7 @@ from configuration.config import WORLD, StatType, ActorStatusType, ITEMS, Audio,
 import copy
 from inventory import InventoryManager
 
+from utils import REFTRACKER
 
 
 class Spawner:
@@ -33,6 +34,7 @@ class Spawner:
 
         #print(self.spawn_points_items)
         self.respawn_all()
+        REFTRACKER.add_ref(self)
 
     def get_room_dict(self):
         room_id = self.room.id
@@ -62,9 +64,15 @@ class Spawner:
             if self.spawn_points[i] in self.room.actors.values() or self.spawn_points[i] in self.room.inventory_manager.items.values():
                 continue
             else:
-                self.spawn_points[i] = None
+                try:
+                    s = self.spawn_points[i]
+                    self.spawn_points[i] = None
+                    s.unload()
+                    #self.spawn_points[i] = None
+                except Exception as e:
+                    pass #print(e)
 
- 
+        #return
         if 'spawner' in self.room_dict:
             for i, _list in enumerate(self.room_dict['spawner']):
                 #print(self.spawn_points[i])
@@ -72,6 +80,7 @@ class Spawner:
                     continue
                     
                 _selected = random.choice(_list)
+                
                 #print(ENEMIES)
                 #print(NPCS[_selected])
                 if _selected in ITEMS:
@@ -79,35 +88,21 @@ class Spawner:
                     self.room.inventory_manager.add_item(item)
                     self.spawn_points[i] = item
                     continue
+                
                 if _selected in ENEMIES:
                     #_selected = random.choice(_list)
                     npc = create_npc(self.room,_selected)
                     self.spawn_points[i] = npc
                     continue
+
                 if _selected in NPCS:
                     #_selected = random.choice(_list)
                     npc = create_npc(self.room,_selected)
                     self.spawn_points[i] = npc
                     continue
                 
-        '''
-        if 'items' in self.room_dict:
-            for i, _list in enumerate(self.room_dict['items']):
-                if self.spawn_points_items[i] != None:
-                    continue
-                _selected = random.choice(_list)
-                item = load_item(_selected)
-                self.room.inventory_manager.add_item(item)
-                self.spawn_points_items[i] = item
-                
-        if 'npcs' in self.room_dict:
-            for i, _list in enumerate(self.room_dict['npcs']):
-                if self.spawn_points_npcs[i] != None:
-                    continue
-                _selected = random.choice(_list)
-                npc = create_npc(self.room,_selected)
-                self.spawn_points_npcs[i] = npc
-        '''
+      
+
 
     def tick(self):
         if self.room.world.factory.ticks_passed % (30*120) == 0:
@@ -212,6 +207,8 @@ class Room:
         self.spawner = None
         if not no_spawner:
             self.spawner = Spawner(self)      # spawner
+
+        REFTRACKER.add_ref(self)
 
     def get_active_exits(self):
         active_exits = []
@@ -370,15 +367,17 @@ class Room:
                             del self.world.rooms[i]
                     actor.instanced_rooms = []
         else:
-            instanced_room_id = self.id+'#'+actor.name
-            if instanced_room_id not in self.world.rooms:
-                self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.from_file, self.exits, self.can_be_recall_site, self.doorway, instanced=False)
-                if type(actor).__name__ == 'Player':
-                    actor.instanced_rooms.append(instanced_room_id)
-            instanced_room = self.world.rooms[instanced_room_id]
-            instanced_room.actors[actor.id] = actor
-            instanced_room = self.world.rooms[instanced_room_id]
-            actor.room = instanced_room
+            
+            if type(actor).__name__ == 'Player':
+                instanced_room_id = self.id+'#'+actor.name
+                if instanced_room_id not in self.world.rooms:
+                    self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.from_file, self.exits, self.can_be_recall_site, self.doorway, instanced=False)
+                    if type(actor).__name__ == 'Player':
+                        actor.instanced_rooms.append(instanced_room_id)
+                instanced_room = self.world.rooms[instanced_room_id]
+                instanced_room.actors[actor.id] = actor
+                instanced_room = self.world.rooms[instanced_room_id]
+                actor.room = instanced_room
 
         if not silent:
             if actor.party_manager.party == None:

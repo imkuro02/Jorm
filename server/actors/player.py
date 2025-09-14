@@ -12,6 +12,9 @@ from actors.player_only_functions.settings import Settings
 from actors.ai import PlayerAI
 from actors.player_only_functions.charging_mini_game import ChargingMiniGame
         
+import gc
+
+
 class UpdateChecker:
     def __init__(self,actor):
         self.actor = actor
@@ -219,6 +222,51 @@ class Player(Actor):
         self.update_checker = UpdateChecker(self)
         self.loaded = True
         
+
+
+    def unload(self):
+
+
+        self.affect_manager.unload_all_affects(silent = True)
+        self.trade_manager.trade_stop()
+        self.party_manager.party_leave()
+
+
+        self.loaded = False
+        #super().unload()
+        del self.room.actors[self.id]
+        self.room = None
+        
+        items = self.inventory_manager.items.values()
+        for i in items:
+            i.owner = None
+
+        self.inventory_manager.triggerable_manager.actor = None
+        self.inventory_manager.triggerable_manager.inventory = None
+        self.inventory_manager.triggerable_manager = None
+
+        for i in self.__dict__:
+            try:
+                self.__dict__[i].owner = None
+            except Exception as e:
+                pass #print(e)
+
+            try:
+                self.__dict__[i].actor = None
+            except Exception as e:
+                pass #print(e)
+
+            try:
+                self.__dict__[i] = None
+            except Exception as e:
+                pass #print(e)
+            
+        
+
+        refs = gc.get_referrers(self)
+        if refs != []:
+            print(f'could not unload {self}:    {gc.get_referrers(self)}')
+
     def check_if_admin(self):
         if self.protocol == None:
             return
@@ -252,9 +300,11 @@ class Player(Actor):
                 del self.collect_lost_exp_rooms[self.room.id]
 
         #if self.settings_manager.autobattler:
-        self.ai.tick()
+        if self.ai != None:
+            self.ai.tick()
 
-        self.charging_mini_game.tick()
+        if self.charging_mini_game != None:
+            self.charging_mini_game.tick()
 
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
@@ -265,9 +315,9 @@ class Player(Actor):
             self.handle(to_handle)
             
                 
-
-        self.update_checker.tick()
-
+        if self.update_checker != None:
+            self.update_checker.tick()
+    
     
     def sendSound(self, sfx):
         self.protocol.send_gmcp({'name':sfx}, 'Client.Media.Play')

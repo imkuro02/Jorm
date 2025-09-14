@@ -352,6 +352,10 @@ class Protocol(protocol.Protocol):
             
         
     def save_actor(self):
+        if self.actor == None:
+            print('no actor')
+            return
+        
         self.factory.db.write_actor(self.actor)
         a = self.factory.db.read_actor(self.id)
 
@@ -359,18 +363,20 @@ class Protocol(protocol.Protocol):
         self.transport.abortConnection()
 
     def unload_actor(self):
-        self.actor.simple_broadcast(None, f'{self.actor.pretty_name()} Disconnected.')
-        self.actor.affect_manager.unload_all_affects(silent = True)
-        self.actor.trade_manager.trade_stop()
-        self.actor.party_manager.party_leave()
-        self.actor.status = ActorStatusType.NORMAL
+        
         self.save_actor()
         
         # teleport player to loading to remove them safely
-        self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
+        #self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
         # remove player from combat
-        del self.actor.room.actors[self.actor.id]
-        self.actor = None
+        #del self.actor.room.actors[self.actor.id]
+        #self.actor.room = None
+        
+
+        self.actor.unload()
+        #self.actor = None
+        
+        
 
     # override
     def connectionLost(self, reason):

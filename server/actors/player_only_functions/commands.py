@@ -30,7 +30,7 @@ from actors.player_only_functions.character_sheet import (
 )
 
 from actors.player_only_functions.admin import (
-    command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin,
+    command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin, command_show_ref_all,
     command_load_item, command_load_npcs, command_export, command_help, command_ranks,
     command_send_prompt, command_reload_config, command_lore, command_quest, command_bonus,
     command_kill, command_sethp, command_history, command_get_time, command_set_time,
@@ -136,8 +136,9 @@ commands = {
     'online':   'command_online',
     '_kick':     'command_kick',
     '_admin':    'command_grant_admin',
+    '_refs':    'command_show_ref_all',
 
-    '_dict':   'command_export',
+    '_dict':        'command_export',
     '_item':     'command_load_item',
     '_npcs':     'command_load_npcs',
     '_mexp':     'command_gain_exp',
