@@ -235,11 +235,13 @@ class Player(Actor):
         self.loaded = False
         #super().unload()
 
+
+        # without this, players can battle log to crash game
         try:
             del self.room.combat.participants[self.id]
         except Exception as e:
             print(e)
-            
+
         del self.room.actors[self.id]
         self.room = None
         
