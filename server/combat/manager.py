@@ -2,10 +2,10 @@ from configuration.config import ActorStatusType, StatType, DamageType
 from combat.combat_event import CombatEvent
 from combat.damage_event import Damage
 import random
+from utils import unload
 
 class Combat:
     def __init__(self, room, participants):
-        self.combat_active = True
         self.room = room
         self.participants = participants
         self.order = []
@@ -13,6 +13,7 @@ class Combat:
         self.time_since_turn_finished = 0
         self.round = 1
         self.turn = 0
+        self.combat_active = True
 
         # reset threat
         for p in self.participants.values():
@@ -29,7 +30,13 @@ class Combat:
             if type(p).__name__ == 'Player':
                 p.sendLine('@tipA fight has started!@back')
 
-        
+    def unload(self):
+        for p in self.participants.values():
+            p.ai.clear_prediction()
+        self.room.combat = None
+        unload(self)
+
+
     def add_participant(self, participant):
         participant.status = ActorStatusType.FIGHTING
         if participant.id in self.participants:
@@ -84,7 +91,10 @@ class Combat:
         '''
         participants = []
         for i in self.participants.values():
+            if i.room != self.room:
+                continue
             participants.append(i)
+
         for i in participants:
             if i in self.participants.values():
                 i.tick()
@@ -95,6 +105,12 @@ class Combat:
         #    self.combat_over()
 
         #if self.current_actor.room != self.room:
+
+        if self.current_actor not in self.participants.values():
+            print(self.current_actor, 'not here')
+            self.next_turn()
+            return
+
         if self.current_actor.status == ActorStatusType.NORMAL:
             print(self.current_actor.name, 'removed from combat')
             if self.current_actor.id in self.participants: 
@@ -108,10 +124,13 @@ class Combat:
             return      
 
     def combat_over(self):
-        if not self.combat_active:
-            return
+        if self.combat_active:
+            self.combat_active = False
         else:
             self.combat_active = False
+            return
+        
+        
         for i in self.participants.values():
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
@@ -133,9 +152,11 @@ class Combat:
                 i.status = ActorStatusType.NORMAL
                 
 
-        self.participants = {}
+        
         self.room.combat = None
         print('combat over')
+        #self.unload()
+        
 
     def next_turn(self):
         #print('next turn', self.turn)
@@ -162,31 +183,6 @@ class Combat:
            self.combat_over()
            return
 
-
-        
-        '''
-        for i in self.participants.values():
-
-            if i not in self.room.actors.values():
-                continue
-            if i.status != ActorStatusType.FIGHTING:
-                continue
-            if self.current_actor == None:
-                self.current_actor = i
-            if i.stat_manager.stats[StatType.INITIATIVE] > self.current_actor.stat_manager.stats[StatType.INITIATIVE]:
-                self.current_actor = i
-
-        self.current_actor.stat_manager.stats[StatType.INITIATIVE] = 0 #int(self.current_actor.stat_manager.stats[StatType.INITIATIVE] *.25)
-        self.current_actor.set_turn()
-        #self.current_actor.simple_broadcast(self.current_actor.stat_manager.stats[StatType.INITIATIVE],self.current_actor.stat_manager.stats[StatType.INITIATIVE] )
-        self.time_since_turn_finished = 0
-
-        for i in self.participants.values():
-            i.stat_manager.stats[StatType.INITIATIVE] += i.stat_manager.stats[StatType.FLOW]
-
-        self.turn += 1
-        '''
-
         
         self.time_since_turn_finished = 0
         if len(self.order) == 0:
@@ -200,8 +196,11 @@ class Combat:
 
         self.current_actor = self.order[0]
         self.order.pop(0)
+
         if self.current_actor.room != self.room:
+            self.next_turn()
             return
+        
         self.current_actor.set_turn()
         self.turn += 1
         

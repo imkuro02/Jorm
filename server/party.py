@@ -54,6 +54,12 @@ class Party:
         del self.participants[participant.id]
         participant.party_manager.party = None
 
+        if participant.room.is_an_instance():
+            if participant.recall_site not in participant.protocol.factory.world.rooms:
+                sparticipant.recall_site = 'tutorial'
+            participant.protocol.factory.world.rooms[participant.recall_site].move_actor(participant)
+            participant.sendLine('You were in an instance and have been kicked out')
+
 class PartyManager:
     def __init__(self, actor):
         self.actor = actor
@@ -149,6 +155,7 @@ class PartyManager:
             return
         par = utils.get_match(line, self.party.participants)
         if par in self.party.participants.values():
+            par.simple_broadcast('You have been kicked from the party', f'{par.pretty_name()} has been kicked from the party')
             self.party.remove_participant(par)
 
 
@@ -159,6 +166,8 @@ class PartyManager:
         self.party.remove_participant(self.actor)
         #self.actor.sendLine('You left the party')
         self.clear_invites()
+
+        
 
     def party_leader(self, line):
         if self.party == None:

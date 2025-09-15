@@ -13,7 +13,7 @@ from actors.ai import PlayerAI
 from actors.player_only_functions.charging_mini_game import ChargingMiniGame
         
 import gc
-
+from utils import unload
 
 class UpdateChecker:
     def __init__(self,actor):
@@ -222,59 +222,25 @@ class Player(Actor):
         self.update_checker = UpdateChecker(self)
         self.loaded = True
         
-
+    def die(self, unload = False):
+        super().die(unload = False)
+        lost_exp = int(self.stat_manager.stats[StatType.EXP]*0.1)
+        self.collect_lost_exp_rooms[self.room.id] = lost_exp
+        self.gain_exp(-lost_exp)
+        
+        
 
     def unload(self):
-
-
+        self.loaded = False
+        self.status = ActorStatusType.NORMAL
         self.affect_manager.unload_all_affects(silent = True)
         self.trade_manager.trade_stop()
         self.party_manager.party_leave()
-
-
-        self.loaded = False
-        #super().unload()
-
-
-        # without this, players can battle log to crash game
-        try:
-            del self.room.combat.participants[self.id]
-        except Exception as e:
-            print(e)
-
-        del self.room.actors[self.id]
-        self.room = None
         
-        items = self.inventory_manager.items.values()
-        for i in items:
-            i.owner = None
-
-        self.inventory_manager.triggerable_manager.actor = None
-        self.inventory_manager.triggerable_manager.inventory = None
-        self.inventory_manager.triggerable_manager = None
-
        
-        for i in self.__dict__:
-            try:
-                self.__dict__[i].owner = None
-            except Exception as e:
-                pass #print(e)
-
-            try:
-                self.__dict__[i].actor = None
-            except Exception as e:
-                pass #print(e)
-
-            try:
-                self.__dict__[i] = None
-            except Exception as e:
-                pass #print(e)
-            
+        super().unload()
         
 
-        refs = gc.get_referrers(self)
-        #if refs != []:
-        #    print(f'could not unload {self}:    {gc.get_referrers(self)}')
 
     def check_if_admin(self):
         if self.protocol == None:

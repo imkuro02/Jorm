@@ -365,15 +365,17 @@ class Protocol(protocol.Protocol):
     def unload_actor(self):
         
         self.save_actor()
-        
+        self.actor.simple_broadcast('Logging off', f'{self.actor.pretty_name()} logging off')
         # teleport player to loading to remove them safely
-        #self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
+        self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
         # remove player from combat
         #del self.actor.room.actors[self.actor.id]
         #self.actor.room = None
-        
+
 
         self.actor.unload()
+        self.actor.protocol = None
+        self.actor = None
         #self.actor = None
         
         

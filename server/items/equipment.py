@@ -78,6 +78,7 @@ class EquipmentBonusManager:
         self.item = item
         self.bonuses = {}
 
+
     def check_if_valid(self, bonus):
         if bonus.type != BonusTypes.SKILL_LEVEL or bonus.type != BonusTypes.STAT:
             return False
@@ -150,6 +151,9 @@ class Equipment(Item):
         boon = EquipmentBonus(type = 'stat', key = 'armor', val = 1)
         self.manager.add_bonus(boon)
         '''
+        
+
+
 
     def to_dict(self):
         my_dict = {

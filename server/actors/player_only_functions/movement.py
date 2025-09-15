@@ -4,6 +4,7 @@ from affects.affects import Affect
 import random
 @check_not_in_party_or_is_party_leader
 @check_your_turn
+@check_alive
 def command_flee(self, line):
     #self.sendLine('@redFleeing is temporarely disabled in game sorry...@normal')
     #return

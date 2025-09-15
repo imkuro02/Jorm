@@ -106,7 +106,7 @@ class InventoryManager:
         self.base_limit = limit
         self.items = {}
         self.can_pick_up_anything = False
-
+            
     # forward to triggerable manager
     def set_turn(self):
         return self.triggerable_manager.set_turn()

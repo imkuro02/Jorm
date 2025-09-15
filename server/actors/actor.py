@@ -13,6 +13,8 @@ import actors.ai
 from dialog import Dialog
 import gc
 from utils import REFTRACKER
+from utils import unload
+
 class ActorStatManager:
     def __init__(self, actor):
         self.actor = actor
@@ -541,6 +543,9 @@ class Actor:
             print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
             return
 
+        self.affect_manager.unload_all_affects()
+        self.cooldown_manager.unload_all_cooldowns()
+
         self.ai.die()
         
         self.status = ActorStatusType.DEAD
@@ -559,61 +564,49 @@ class Actor:
                 sound = sound
                 )
         
-        if type(self).__name__ == 'Player':
-            lost_exp = int(self.stat_manager.stats[StatType.EXP]*0.1)
-            self.collect_lost_exp_rooms[self.room.id] = lost_exp
-            self.gain_exp(-lost_exp)
-        
+
         if self.room.combat != None:
             if self.room.combat.current_actor == self:
                 self.room.combat.next_turn()
 
         if type(self).__name__ != "Player":
-            del self.room.actors[self.id]
-            if self.room.combat != None:
-                if self.id in self.room.combat.participants:
-                    del self.room.combat.participants[self.id]
-            #self.room = None
-
-        if unload:
-            self.unload()
+            if unload:
+                self.unload()
         
     def unload(self):
+        
+        try:        
+            del self.room.combat.participants[self.id]
+        except Exception as e:
+            pass #print(e)
+
         try:        
             del self.room.actors[self.id]
         except Exception as e:
             pass #print(e)
+            
         try:     
             self.room = None
         except Exception as e:
             pass #print(e)
-        
-        items = self.inventory_manager.items.values()
-        for i in items:
-            i.owner = None
 
-        self.inventory_manager.triggerable_manager.actor = None
-        self.inventory_manager.triggerable_manager.inventory = None
-        self.inventory_manager.triggerable_manager = None
+        for i in self.inventory_manager.items.values():
+            unload(i)
+        for i in self.affect_manager.affects.values():
+            unload(i)
+
+        unload(self.inventory_manager.triggerable_manager)
+        unload(self.quest_manager)
         
+        to_unload = []
         for i in self.__dict__:
-            try:
-                self.__dict__[i].owner = None
-            except Exception as e:
-                pass #print(e)
-
-            try:
-                self.__dict__[i].actor = None
-            except Exception as e:
-                pass #print(e)
-
-            try:
-                self.__dict__[i] = None
-            except Exception as e:
-                pass #print(e)
+            to_unload.append(i)
+        for i in to_unload:
+            unload(i)
             
+        unload(self)
         
-        refs = gc.get_referrers(self)
+        #refs = gc.get_referrers(self)
         #if refs != []:
         #    print(f'could not unload {self}:    {refs}')
 

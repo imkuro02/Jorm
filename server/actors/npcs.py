@@ -264,14 +264,14 @@ class Npc(Actor):
         if self not in self.room.combat.participants.values():
             super().die()
             return
-        
+
+       
        
         room = self.room
-
         participants = room.combat.participants.values()
+        
         super().die(unload = False)
 
-        
         for actor in participants:
             if type(actor).__name__ == "Player":
                 if actor.status == ActorStatusType.DEAD:
@@ -281,8 +281,13 @@ class Npc(Actor):
                 #self.drop_loot_on_ground()
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
                 actor.quest_manager.propose_objective_count_addition(proposal)
+        
+        del self.room.actors[self.id]
+        if self.room.combat != None:
+            if self.id in self.room.combat.participants:
+                del self.room.combat.participants[self.id]
 
-        self.unload()
+        super().unload()
 
         
     def set_turn(self):

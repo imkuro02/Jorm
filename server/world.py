@@ -13,7 +13,8 @@ import copy
 from inventory import InventoryManager
 
 from utils import REFTRACKER
-
+from utils import unload
+import utils
 
 class Spawner:
     def __init__(self, room):
@@ -342,7 +343,9 @@ class Room:
             self.combat = Combat(self, participants)
         
     def move_actor(self, actor, silent = False):
+        
         self.remove_actor(actor)
+
         if not silent and actor.room != self:
             if actor.party_manager.party == None:
                 actor.simple_broadcast('',f'{actor.pretty_name()} leaves', send_to = 'room_not_party', sound = Audio.walk())
@@ -353,19 +356,13 @@ class Room:
         if not self.instanced:
             actor.room = self
             self.actors[actor.id] = actor
-            all_instaneced_rooms_empty = True
             if type(actor).__name__ == 'Player':
                 for i in actor.instanced_rooms:
-                    if i in self.world.rooms:
-                        if self.world.rooms[i].is_player_present():
-                            all_instaneced_rooms_empty = False
-                            break
-                if all_instaneced_rooms_empty:
-                    for i in actor.instanced_rooms:
-                        if i in actor.room.world.rooms:
-                            actor.sendLine(f'instanced room: {i} deleted', msg_type = [MsgType.DEBUG])
-                            del self.world.rooms[i]
-                    actor.instanced_rooms = []
+                    if i in actor.room.world.rooms:
+                        actor.sendLine(f'instanced room: {i} deleted', msg_type = [MsgType.DEBUG])
+                        self.world.rooms_to_unload.append(i)
+
+                actor.instanced_rooms = []
         else:
             
             if type(actor).__name__ == 'Player':
@@ -390,6 +387,9 @@ class Room:
             return
         if actor.id not in actor.room.actors:
             return
+        if actor.room.combat != None:
+            if actor in actor.room.combat.participants.values():
+                del actor.room.combat.participants[actor.id]
         del actor.room.actors[actor.id]
 
 class GameTime:
@@ -500,6 +500,7 @@ class World:
     def __init__(self, factory):
         self.factory = factory
         self.rooms = {}
+        self.rooms_to_unload = []
         self.game_time = GameTime(self.factory)
         self.reload()
 
@@ -562,11 +563,42 @@ class World:
 
     def tick(self):
         self.game_time.tick() 
+        for i in self.rooms_to_unload:
+            to_kick_from_instance = [] 
+            for x in self.rooms[i].actors.values():
+                to_kick_from_instance.append(x)
+            for x in to_kick_from_instance:
+                if type(x).__name__ == 'Player':
+                    x.party_manager.party_leave()
+                    
+
+            for x in self.rooms[i].inventory_manager.items.values():
+                unload(x)
+            unload(self.rooms[i].inventory_manager.triggerable_manager)
+
+            to_unload = []
+            for x in self.rooms[i].actors.values():
+                to_unload.append(x)
+            for x in to_unload:
+                x.unload()
+
+            to_unload = []
+            for x in self.rooms[i].__dict__:
+                to_unload.append(x)
+            for x in to_unload:
+                unload(x)
+                
+            unload(self.rooms[i])
+            del self.rooms[i]
+        self.rooms_to_unload = []
+
         rooms = []
         for i in self.rooms.values():
             rooms.append(i)
         for i in rooms:
             i.tick()
+
+        utils.unload_fr()
 
 from actors import ai
 ai.Room = Room
