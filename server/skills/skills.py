@@ -189,7 +189,7 @@ class SkillDamageByFlow(SkillDamage):
     def use(self):
         damage_obj = super().use(StatType.FLOW, DamageType.PHYSICAL)
         was_blocked = damage_obj.damage_value <= -1
-        roll = 1 #random.randint(0,100)
+        roll = random.randint(0,100)
         #if not was_blocked:
         if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
             bleed_damage = self.user.stat_manager.stats[StatType.LVL]
