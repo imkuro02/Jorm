@@ -14,6 +14,7 @@ from dialog import Dialog
 import gc
 from utils import REFTRACKER
 from utils import unload
+import random
 
 class ActorStatManager:
     def __init__(self, actor):
@@ -557,10 +558,20 @@ class Actor:
         else:
             sound = Audio.ENEMY_DEATH
             
+        die_lines = [
+            'has become a chalk outline on the ground',
+            'ragdolls across the room',
+            'falls over dramatically',
+            'explodes',
+            'crumples like paper',
+            'folds like a lawn chair',
+            'turns into experience points'
+        ]
 
+        die_line = random.choice(die_lines)
         self.simple_broadcast(
                 f'@redYou died@normal "help rest"',
-                f'{self.pretty_name()} has died',
+                f'{self.pretty_name()} {die_line}',
                 sound = sound
                 )
         
