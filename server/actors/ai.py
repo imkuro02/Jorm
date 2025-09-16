@@ -171,7 +171,7 @@ class AI:
                 if not SKILLS[skill_to_use]['is_offensive']:
                     continue
 
-            if 'swing' == skill_to_use and i<15:
+            if 'swing' == skill_to_use and i<5:
                 continue
 
             if i>15:
@@ -202,7 +202,7 @@ class AI:
                 
                 
             
-            
+            #print(target, skill_to_use)
             self.prediction_target = target
             self.prediction_skill = skill_to_use
             #for i in self.actor.room.combat.participants.values():
@@ -318,8 +318,8 @@ class PlayerAI(AI):
             self.use_prediction()
             self.clear_prediction()
             #print('using prediction')
-            if self.actor.settings_manager.autobattler:
-                self.predict_use_best_skill(offensive_only = True)
+            #if self.actor.settings_manager.autobattler:
+            #    self.predict_use_best_skill(offensive_only = True)
         
 
 class EnemyAI(AI):

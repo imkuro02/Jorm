@@ -32,15 +32,8 @@ def command_target(self, line):
 @check_your_turn
 @check_alive
 def command_fight(self, line):
-    #error_output = self.room.new_combat()
-    #if isinstance(error_output, str):
-    #    self.sendLine(error_output)
-
-    
-    
-
     if self.status == ActorStatusType.FIGHTING:
-        if self.ai.predict_use_best_skill(offensive_only = True, for_prediction = False) == False:
+        if self.ai.predict_use_best_skill(offensive_only = True, for_prediction = True) == False:
             self.command_pass_turn(line = '')
         #self.ai.tick()
         return
