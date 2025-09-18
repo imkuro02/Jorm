@@ -5,7 +5,7 @@ import configuration.config as config
 import yaml
 import os
 import utils
-from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms, HELPFILES
+from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms, HELPFILES, Color
 from utils import REFTRACKER
 
 def command_show_ref_all(self, line):
@@ -32,7 +32,7 @@ def command_help(self, line):
     else:
         best_match = utils.match_word(line, help['commands'].keys())
         if best_match in help['commands']:
-            output = f'<@yellowHelpfile@normal for @yellow{best_match}@normal>\n'
+            output = f'<{Color.IMPORTANT}Helpfile{Color.NORMAL} for {Color.IMPORTANT}{best_match}{Color.NORMAL}l>\n'
 
             if 'syntax' in help['commands'][best_match]:
                 output += '\n'
@@ -48,7 +48,7 @@ def command_help(self, line):
 
             if 'related' in help['commands'][best_match]:
                 output += '\n'
-                output = output + '@yellowAlso check out@normal: '
+                output = output + f'{Color.IMPORTANT}Also check out{Color.NORMAL}: '
                 related      = (help['commands'][best_match]['related']) 
                 for i in related:
                     output = output + '' + i + ' '
@@ -605,11 +605,11 @@ def command_lore(self, line):
 
         # THIS IS AN ISSUE WIT DA GUUUUH WID DA GUUUH
         # WIT DA utils.Table CODE
-        output = '@yellowYou are pondering@normal: '
+        output = f'{Color.IMPORTANT}You are pondering{Color.NORMAL}: '
         output += e.get_character_sheet()+'\n'
-        output += '@yellowRoaming area@normal:\n'
+        output += f'{Color.IMPORTANT}Roaming area{Color.NORMAL}:\n'
         output += output_room_spawns+'\n'+'\n'
-        output += '@yellowPotential drops@normal:\n'
+        output += f'{Color.IMPORTANT}Potential drops{Color.NORMAL}:\n'
         output += output_loot_drops+'\n'+'\n'
 
         self.sendLine(output)
@@ -619,7 +619,7 @@ def command_lore(self, line):
     
     if to_find in list_of_items:
         #print(LORE['items'][to_find])
-        output = '@yellowYou are pondering@normal: '
+        output = f'{Color.IMPORTANT}You are pondering{Color.NORMAL}: '
         if to_find in LORE['items']:
             item_id = LORE['items'][to_find]['premade_id']
             i = load_item(item_id, max_stats = True)
@@ -632,7 +632,7 @@ def command_lore(self, line):
                     all_dropped_from.append([e,f'1:{LORE["enemies"][e]["loot"][item_id]}'])
             
         if all_dropped_from != []:
-            output += '\n@yellowLooted from@normal: \n'
+            output += f'\n{Color.IMPORTANT}Looted from{Color.NORMAL}: \n'
             t = utils.Table(4,3)
             for i in all_dropped_from:
                 t.add_data(f'{i[0]}: ')
@@ -648,7 +648,7 @@ def command_lore(self, line):
     
     if to_find in list_of_skills:
         self.command_skills(to_find)
-        output = '@tipItems with this skill@back:\n'
+        output = f'{Color.IMPORTANT}Items with this skill{Color.NORMAL}:\n'
         t = utils.Table(6,1)
         t.add_data('Lvl')
         t.add_data('Name')

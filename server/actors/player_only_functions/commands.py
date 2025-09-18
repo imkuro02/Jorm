@@ -24,7 +24,6 @@ from actors.player_only_functions.inventory import (
 )
 
 from actors.player_only_functions.character_sheet import (
-    command_name_change,
     command_level_up, command_practice, command_skills, command_stats, 
     command_respec, command_affects, get_exp_needed_to_level
 )

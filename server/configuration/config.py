@@ -8,13 +8,16 @@ import configuration.read_from_excel as rfe
 import random
 
 class Color:
+    NORMAL =        '@normal'
+    BACK =          '@back'
+
     GOOD =          '@bgreen'
     BAD =           '@bpurple'
     
-    IMPORTANT =     '@byellow'
-    TOOLTIP =       '@yellow'
+    IMPORTANT =     '@yellow'
+    TOOLTIP =       '@byellow'
     DESCRIPTION =   '@cyan'
-    
+
     NAME_ADMIN =    '@yellow'
     NAME_PLAYER =   '@bcyan'
     NAME_ENEMY =    '@bpurple'
@@ -27,14 +30,12 @@ class Color:
     NAME_QUEST =            '@good'
     DESC_QUEST =            '@cyan'
 
-    WALL =          '@wall'
-    PATH =          '@yellow'
-    ROOM =          '@yellow'
-
-    NORMAL =        '@normal'
-    BACK =          '@back'
-
-
+    MAP_PLAYER =    NAME_PLAYER
+    MAP_IMPORTANT = NORMAL
+    MAP_NORMAL =    NORMAL
+    MAP_WALL = '@wall'
+    MAP_ROOM = '@yellow'
+    MAP_PATH = '@yellow'
     
 class MsgType:
     SAY = 'say'

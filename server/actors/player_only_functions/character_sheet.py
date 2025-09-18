@@ -1,15 +1,17 @@
 from actors.player_only_functions.checks import check_not_in_combat, check_alive
-from configuration.config import StatType, SKILLS, SkillScriptValuesToNames, Audio
+from configuration.config import StatType, SKILLS, SkillScriptValuesToNames, Audio, Color
 from skills.manager import get_skills, get_user_skill_level_as_index
 import utils
 
+'''
 @check_not_in_combat
 def command_name_change(self, line):
     if len(line) < 3:
-        self.sendLine('@redName is too short@normal')
+        self.sendLine(f'{Color.NORMAL}Name is too short{Color.NORMAL}')
         return
     self.sendLine(f'Name changed from "{self.name}" to "{line}"')
     self.name = line
+'''
 
 @check_not_in_combat
 def command_level_up(self, stat):
@@ -61,7 +63,7 @@ def command_level_up(self, stat):
     #self.stat_manager.stats['armor'] += round(self.stat_manager.stats['dex']*.4)
     #self.stat_manager.stats['marmor'] += round(self.stat_manager.stats['dex']*.4)
     
-    self.sendLine(f'@green{stat} {self.stat_manager.stats[stat]-1} -> {self.stat_manager.stats[stat]}. @normal')
+    self.sendLine(f'{Color.GOOD}{stat} {self.stat_manager.stats[stat]-1} -> {self.stat_manager.stats[stat]}. {Color.NORMAL}')
 
 @check_alive
 @check_not_in_combat
@@ -83,21 +85,21 @@ def command_practice(self, line):
             # name
             t.add_data(SKILLS[skill_id]["name"])
             # add cost
-            col = '@red'
+            col = Color.BAD
             cost = SKILLS[skill_id]['practice_cost']
             if cost <= self.stat_manager.stats[StatType.PP]:
-                col = '@yellow'
+                col = Color.NORMAL
             t.add_data(f'{cost} PP', col)
             lvl = 0
-            col = '@yellow'
+            col = Color.NORMAL
             if skill_id in self.skill_manager.skills.keys():
                 lvl = self.skill_manager.skills[skill_id]
                 if lvl >= 1:
-                    col = '@good'
+                    col = Color.GOOD
                 elif lvl == 0:
-                    col = '@yellow'
+                    col = Color.NORMAL
                 else:
-                    col = '@bad'
+                    col = Color.BAD
 
             if lvl == 0:
                 lvl = '-'
@@ -135,15 +137,15 @@ def command_practice(self, line):
         pp_to_spend = SKILLS[skill_id]['practice_cost']
 
         if skill_id not in SKILLS.keys():
-            self.sendLine('This skill does not exist')
+            self.sendLine(f'{Color.BAD}This skill does not exist{Color.NORMAL}')
             return
 
         if not SKILLS[skill_id]['can_be_practiced']:
-            self.sendLine(f'@red{skill_name} cannot be practiced@normal')
+            self.sendLine(f'{Color.BAD}{skill_name} cannot be practiced{Color.NORMAL}')
             return
 
         if self.stat_manager.stats[StatType.LVL] < SKILLS[skill_id]['level_req']:
-            self.sendLine(f'@redYou are not high enough level to practice {skill_name}@normal')
+            self.sendLine(f'{Color.BAD}You are not high enough level to practice {skill_name}{Color.NORMAL}')
             return
         
         #print(SKILLS[skill_id])
@@ -165,7 +167,7 @@ def command_practice(self, line):
             new_prac_level = 1 
         
         if pp_to_spend <= 0:
-            self.sendLine('@redYou can\'t spend negative amount of Practice Points@normal')
+            self.sendLine(f'{Color.BAD}You can\'t spend negative amount of Practice Points{Color.NORMAL}')
             return
         
         #if pp_to_spend < minimum_practice_req and current_prac_level == 0:
@@ -177,15 +179,15 @@ def command_practice(self, line):
         #    return
 
         if pp_to_spend > self.stat_manager.stats[StatType.PP]:
-            self.sendLine('@redYou don\'t have enough Practice Points@normal')
+            self.sendLine(f'{Color.BAD}You don\'t have enough Practice Points{Color.NORMAL}')
             return
 
         
         self.stat_manager.stats[StatType.PP] -= pp_to_spend
         if pp_to_spend == 1:
-            self.sendLine(f'@greenYou spend {pp_to_spend} Practice Point on "{skill_name}"@normal')
+            self.sendLine(f'{Color.GOOD}You spend {pp_to_spend} Practice Point on "{skill_name}"{Color.NORMAL}')
         else:
-            self.sendLine(f'@greenYou spend {pp_to_spend} Practice Points on "{skill_name}"@normal')
+            self.sendLine(f'{Color.GOOD}You spend {pp_to_spend} Practice Points on "{skill_name}"{Color.NORMAL}')
         self.skill_manager.skills[skill_id] = new_prac_level
        
 def command_skills(self, line):
@@ -195,8 +197,8 @@ def command_skills(self, line):
         skill_id = name_to_id[skill_name]
         skill = SKILLS[skill_id]
         output = ''
-        output += f'@yellow{skill["name"]}\n@normal'
-        output += f'@cyan{skill["description"]}@normal'
+        output += f'{Color.IMPORTANT}{skill["name"]}\n{Color.NORMAL}'
+        output += f'{Color.DESCRIPTION}{skill["description"]}{Color.NORMAL}'
 
         skill_learned = skill_id in self.skill_manager.skills
         if skill_learned:
@@ -247,7 +249,7 @@ def command_skills(self, line):
             f'It {_combat}, and '
             f'it {"can" if _can_practice else "cannot"} be practiced.'
         )
-        extra_info = f'@cyan{extra_info}@normal'
+        extra_info = f'{Color.DESCRIPTION}{extra_info}{Color.NORMAL}'
 
         t = utils.Table(2,1)
         #t.add_data(':')
@@ -301,7 +303,7 @@ def command_skills(self, line):
                             val = str(val)+'%'
 
                         if index == users_skill_level and skill_learned:
-                            t.add_data(val, col = '@green') 
+                            t.add_data(val, col = Color.GOOD) 
                         else:
                             t.add_data(val) 
                         index += 1
@@ -328,9 +330,9 @@ def command_skills(self, line):
                 
             t.add_data(id_to_name[skill_id])
             if skill_id not in self.cooldown_manager.cooldowns:
-                t.add_data('Y','@green')
+                t.add_data('Y',Color.GOOD)
             else: 
-                t.add_data(f'{self.cooldown_manager.cooldowns[skill_id]}', '@red')
+                t.add_data(f'{self.cooldown_manager.cooldowns[skill_id]}', Color.BAD)
 
         
         self.sendLine(t.get_table())
@@ -345,7 +347,7 @@ def command_respec(self, line):
     #        return
 
     if not self.room.can_be_recall_site:
-        self.sendLine('@redIt is not safe to respec here.@back')
+        self.sendLine(f'{Color.BAD}It is not safe to respec here{Color.BACK}')
         self.sendSound(Audio.ERROR)
         return
     
@@ -364,7 +366,7 @@ def command_respec(self, line):
 
 
     self.stat_manager.stats[StatType.EXP] = exp
-    self.sendLine('@greenYou have reset your stats, experience is kept.@normal')
+    self.sendLine(f'{Color.GOOD}You have reset your stats, experience is kept{Color.NORMAL}')
 
     for i in list_of_requips:
         self.inventory_equip(self.inventory_manager.items[i], forced = True)

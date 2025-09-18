@@ -1,5 +1,5 @@
 
-from configuration.config import ActorStatusType
+from configuration.config import ActorStatusType, Color
 import utils
 
 def command_map(self, line):
@@ -10,26 +10,26 @@ def command_map(self, line):
 
     class Art:
         # all
-        GROUND =         '@yellow#'
-        NS =         '@yellow:'
-        EW =         '@yellow---'
-        EMPTY = ' '
-        EMPTYWALL =         '@wall   '
-        WALL = '@wall###'
-        DOOR ='@yellow/'
+        GROUND =                    f'{Color.MAP_ROOM}#'
+        NS =                        f'{Color.MAP_PATH}:'
+        EW =                        f'{Color.MAP_PATH}---'
+        EMPTY =                     f' '
+        EMPTYWALL =                 f'{Color.MAP_WALL}   '
+        WALL =                      f'{Color.MAP_WALL}###'
+        DOOR =                      f'{Color.MAP_ROOM}/'
+        QUEST =                     f'{Color.MAP_IMPORTANT}?'
 
         # middle
-        RECALL_SITE =   '@green+'
-        PLAYER_HERE =   '@cyan@'
-        SPECIAL_EXIT =  '@normal?'
-        SPECIAL_EXIT_AND_PLAYER = '@cyan?'
-        RECALL_SITE_AND_PLAYER = '@cyan+'
+        RECALL_SITE =               f'{Color.GOOD}+'
+        PLAYER_HERE =               f'{Color.MAP_PLAYER}@'
+        SPECIAL_EXIT =              f'{Color.MAP_NORMAL}?'
+        SPECIAL_EXIT_AND_PLAYER =   f'{Color.MAP_NORMAL}?'
+        RECALL_SITE_AND_PLAYER =    f'{Color.MAP_PLAYER}+'
         
         # right
-        STAIRS_DOWN =   '@normal>'
-
+        STAIRS_DOWN =   f'{Color.MAP_NORMAL}>'
         # left
-        STAIRS_UP =     '@normal<'
+        STAIRS_UP =     f'{Color.MAP_NORMAL}<'
         
     offsets = {
         'north': [ 0  ,  -2 ],
@@ -298,7 +298,7 @@ def command_map(self, line):
             #elif len([ x for x in room.exits if x.direction not in offsets ]) != 0:
             #    cell += Art.SPECIAL_EXIT
             elif quest_not_started or quest_turn_in:
-                cell += '?'
+                cell += Art.QUEST # '?'
             else:
                 cell += Art.GROUND
 
@@ -423,11 +423,11 @@ def command_look(self, line):
         room = self.factory.world.rooms[room_id]
 
         if room_id == self.room.id:
-            see = f'You are in @yellow{room.pretty_name()}@normal\n'
+            see = f'You are in {room.pretty_name()}\n'
         else:
-            see = f'You look at @yellow{room.pretty_name()}@normal\n'
+            see = f'You look at {room.pretty_name()}\n'
         #see += draw_local_area(self, room_id)
-        see = see + f'@cyan{room.get_description()}@normal\n'
+        see = see + f'{Color.DESCRIPTION}{room.get_description()}{Color.NORMAL}\n'
 
 
         exits = self.protocol.factory.world.rooms[room.id].get_active_exits()
@@ -499,9 +499,9 @@ def command_look(self, line):
     def look_actor(actor):
         sheet = actor.get_character_sheet()
 
-        important_dialog = actor.get_important_dialog(actor_to_compare = self)
-        if important_dialog != False:
-            sheet = sheet + f'@yellow{important_dialog}@normal'
+        #important_dialog = actor.get_important_dialog(actor_to_compare = self)
+        #if important_dialog != False:
+        #    sheet = sheet + f'@yellow{important_dialog}@normal'
 
         self.sendLine(f'You are looking at {sheet}')
         return 
