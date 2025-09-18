@@ -2,7 +2,7 @@ from twisted.internet import protocol
 from actors.player import Player
 from items.manager import load_item, save_item
 import utils
-from configuration.config import StatType, ItemType, SPLASH_SCREENS, ActorStatusType, StaticRooms
+from configuration.config import StatType, ItemType, SPLASH_SCREENS, ActorStatusType, StaticRooms, Color
 import uuid
 import copy
 import random
@@ -71,10 +71,10 @@ class Protocol(protocol.Protocol):
 
     def splash_screen(self):
         splash = random.choice(SPLASH_SCREENS['screens'])
-        splash = 'Art source: https://www.asciiart.eu/plants/mushroom\n' + splash
-        splash = splash.replace('#DISCORD#','https://discord.gg/AZ98axtXc6')
-        splash = splash.replace('#ONLINE#',f'{len(self.factory.protocols)}')
-        splash = f'@bwhite{splash}@normal'
+        splash = f'Art source: {Color.IMPORTANT}https://www.asciiart.eu/plants/mushroom\n{Color.BACK}' + splash
+        splash = splash.replace(f'#DISCORD#',f'{Color.IMPORTANT}https://discord.gg/AZ98axtXc6{Color.BACK}')
+        splash = splash.replace(f'#ONLINE#',f'{Color.IMPORTANT}{len(self.factory.protocols)}{Color.BACK}')
+        splash = f'{Color.NORMAL}{splash}{Color.NORMAL}'
         self.sendLine(splash)
         
 
@@ -88,24 +88,24 @@ class Protocol(protocol.Protocol):
                 self.account = None
                 self.username = None
                 self.password = None
-                self.sendLine('type @bgreennew@normal to register, type @bgreenlogin@normal to log in.')
+                self.sendLine(f'type {Color.GOOD}new{Color.BACK} to register, type {Color.GOOD}login{Color.BACK} to log in.')
 
             case self.LOGIN_USERNAME:
-                self.sendLine('Your @bgreenusername@normal:')
+                self.sendLine(f'Your {Color.GOOD}username{Color.BACK}:')
 
             case self.LOGIN_PASSWORD:
-                self.sendLine('Your @bgreenpassword@normal:')
+                self.sendLine(f'Your {Color.GOOD}password{Color.BACK}:')
 
             case self.REGISTER_USERNAME:
                 self.sendLine('Please use a unique username, not linking your Jorm account to anything private.')
                 self.sendLine('Please use a unique password, only for Jorm. Never share it.')
-                self.sendLine('Creating new account. enter your @bgreenusername@normal:')
+                self.sendLine(f'Creating new account. enter your {Color.GOOD}username{Color.BACK}:')
 
             case self.REGISTER_PASSWORD1:
-                self.sendLine('Enter your @bgreenpassword@normal:')
+                self.sendLine(f'Enter your {Color.GOOD}password{Color.BACK}:')
 
             case self.REGISTER_PASSWORD2:
-                self.sendLine('Enter @bgreenpassword@normal again:')
+                self.sendLine(f'Enter {Color.GOOD}password{Color.BACK} again:')
 
            
 
@@ -226,7 +226,8 @@ class Protocol(protocol.Protocol):
         if self.actor != None:
             self.actor.name = self.username
         self.factory.db.create_new_account(self.id, username, password)
-        self.sendLine(f'@greenAccount information updated\n@red[@yellow!@red]@normal   your login username is: "@yellow{self.username}@normal"   @red[@yellow!@red]@normal')
+        _alert = f'{Color.BAD}[{Color.IMPORTANT}!{Color.BAD}]{Color.BACK}'
+        self.sendLine(f'{Color.GOOD}Account information updated\n{_alert}   your login username is: "{Color.IMPORTANT}{self.username}{Color.BACK}"  {_alert}{Color.NORMAL}')
 
     # override
     def connectionMade(self):
@@ -417,7 +418,7 @@ class Protocol(protocol.Protocol):
 
         #if line:  # skip empty lines
         if '@' in line:
-            line = line + '@normal'
+            line = line + {Color.NORMAL}
         self.state(line)
         return
 

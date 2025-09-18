@@ -160,7 +160,7 @@ class Dialog:
 
             self.print_dialog()
             self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
-            self.player.sendLine(f'@greenQuest turned in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
+            self.player.sendLine(f'@goodQuest turned in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
 
             if 'reward' in answer:
                 for item_id in answer['reward']:

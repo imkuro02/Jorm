@@ -1,6 +1,6 @@
 
 
-from configuration.config import QUESTS, ENEMIES, ITEMS, NPCS, StatType
+from configuration.config import QUESTS, ENEMIES, ITEMS, NPCS, StatType, Color
 import utils
 from items.manager import load_item
 import random
@@ -98,7 +98,7 @@ class QuestManager:
 
         quest = create_quest(quest_id, self.actor)
         if quest == None:
-            self.actor.sendLine(f'@redError starting quest@normal: "{quest_id}"')
+            self.actor.sendLine(f'{Color.BAD}Error starting quest{Color.NORMAL}: "{quest_id}"')
             return False
         
         quest.quest_manager = self
@@ -107,7 +107,7 @@ class QuestManager:
 
         self.quests[quest_id] = quest
         if silent == False:
-            self.actor.sendLine(f'@greenNew quest@normal: {quest.name}')
+            self.actor.sendLine(f'{Color.GOOD}nNew quest{Color.NORMAL}: {quest.name}')
             self.view(quest.name)
         self.actor.inventory_manager.count_quest_items()
 
@@ -156,13 +156,13 @@ class Quest:
 
     def view(self):
         output = ''
-        output += '@yellow' + self.name + '@normal' + '\n'
-        output += '@cyan' + self.description['in_progress'] + '@normal\n'
+        output += f'{Color.IMPORTANT}' + self.name + f'{Color.NORMAL}' + '\n'
+        output += f'{Color.DESC_QUEST}' + self.description['in_progress'] + f'{Color.NORMAL}\n'
         if self.is_completed() and not self.is_turned_in():
-            output += '@cyan' + self.description['completed'] + '@normal\n'
+            output += f'{Color.DESC_QUEST}' + self.description['completed'] + f'{Color.NORMAL}\n'
         if self.is_turned_in():
-            output += '@cyan' + self.description['completed'] + '@normal\n'
-            output += '@cyan' + self.description['turned_in'] + '@normal\n'
+            output += f'{Color.DESC_QUEST}' + self.description['completed'] + f'{Color.NORMAL}\n'
+            output += f'{Color.DESC_QUEST}' + self.description['turned_in'] + f'{Color.NORMAL}\n'
 
         for objective in self.objectives.values():
             #print(objective.__dict__)
@@ -173,23 +173,23 @@ class Quest:
                 match objective.type:
                     case OBJECTIVE_TYPES.KILL_X:
                         enemy_name = ENEMIES[objective.requirement_id]['name']
-                        output += f'Kill @red{enemy_name}@normal: {objective.count}/{objective.goal}' + '\n'
+                        output += f'Kill {Color.IMPORTANT}{enemy_name}{Color.NORMAL}: {objective.count}/{objective.goal}' + '\n'
                     case OBJECTIVE_TYPES.COLLECT_X:
                         enemy_name = ITEMS[objective.requirement_id]['name']
-                        output += f'Collect @white{enemy_name}@normal: {objective.count}/{objective.goal}' + '\n'
+                        output += f'Collect {Color.IMPORTANT}{enemy_name}{Color.NORMAL}: {objective.count}/{objective.goal}' + '\n'
                     case OBJECTIVE_TYPES.CONVERSATION:
                         #npc = NPCS[objective.requirement_id]['name']
-                        output += f'{objective.name}: {"Done" if objective.count >= objective.goal else "In progress"}' + '\n'
+                        output += f'{objective.name}: {f"{Color.GOOD}Done{Color.NORMAL}" if objective.count >= objective.goal else f"{Color.IMPORTANT}In progress{Color.NORMAL}"}' + '\n'
         output += self.get_state(as_string = True) + '\n'
         return output
 
     def get_state(self, as_string = False):
         if as_string:
             if self.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
-                return '@greenTurned in@normal'
+                return f'{Color.GOOD}Turned in{Color.NORMAL}'
             if self.is_completed():
-                return '@greenCompleted@normal'
-            return '@yellowIn Progress@normal'
+                return f'{Color.GOOD}Completed{Color.NORMAL}'
+            return f'{Color.IMPORTANT}In Progress{Color.NORMAL}'
         else:     
             if self.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
                 return QUEST_STATE_TYPES.TURNED_IN
@@ -235,7 +235,7 @@ class Quest:
             if completed == False and objective.is_completed() and objective.type != OBJECTIVE_TYPES.TURNED_IN:
                 # this is buggy cuz it displays quest completed BEFORE stuff actually happnes
                 # like before loot is displayed as picked up for example
-                self.quest_manager.actor.sendLine(f'@green{QUESTS[objective.quest_id]["name"]}@back: {objective.name} completed@normal')
+                self.quest_manager.actor.sendLine(f'{Color.GOOD}{QUESTS[objective.quest_id]["name"]}{Color.BACK}: {objective.name} completed{Color.NORMAL}')
             if proposal_accepted:
                 continue
 

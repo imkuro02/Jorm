@@ -3,7 +3,7 @@ import uuid
 from combat.damage_event import Damage
 from items.manager import Item
 from affects.manager import AffectsManager
-from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType, Audio
+from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType, Audio, Color
 from skills.manager import use_skill
 from inventory import InventoryManager
 import utils
@@ -283,14 +283,14 @@ class Actor:
         
         match type(self).__name__:
             case "Enemy":
-                output = output + f'@purple{self.name}@normal'
+                output = output + f'{Color.NAME_ENEMY}{self.name}{Color.NORMAL}'
             case "Player":
                 if self.admin:
-                    output = output + f'@byellow{self.name}@normal'
+                    output = output + f'{Color.NAME_ADMIN}{self.name}{Color.NORMAL}'
                 else:
-                    output = output + f'@cyan{self.name}@normal'
+                    output = output + f'{Color.NAME_PLAYER}{self.name}{Color.NORMAL}'
             case "Npc":
-                output = output + f'@yellow{self.name}@normal'
+                output = output + f'{Color.NAME_NPC}{self.name}{Color.NORMAL}'
         
         #if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
@@ -347,7 +347,7 @@ class Actor:
         output = f'{self.pretty_name()} ({self.status})\n'
         # if no description then ignore
         if self.description != None: 
-            output += f'@cyan{self.description}@normal\n'
+            output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
 
         output += self.get_character_equipment()
         
@@ -420,7 +420,7 @@ class Actor:
                 
             #    t.add_data(str(self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level()))
             t.add_data('Can level?:')
-            t.add_data('@goodYES@normal' if self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level() else '@badNO@normal')
+            t.add_data(f'{Color.GOOD}YES{Color.NORMAL}' if self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level() else f'{Color.BAD}NO{Color.NORMAL}')
             t.add_data('')
             t.add_data('')
 
@@ -570,8 +570,8 @@ class Actor:
 
         die_line = random.choice(die_lines)
         self.simple_broadcast(
-                f'@redYou died@normal "help rest"',
-                f'{self.pretty_name()} {die_line}',
+                f'{Color.BAD}You died{Color.NORMAL} "help rest"',
+                f'{self.pretty_name()} {Color.BAD}{die_line}{Color.NORMAL}',
                 sound = sound
                 )
         
@@ -709,7 +709,7 @@ class Actor:
 
     def set_turn(self):
         if type(self).__name__ == "Player":
-            output = f'@yellowYour turn.@normal'
+            output = f'{Color.IMPORTANT}Your turn{Color.NORMAL}'
             self.sendLine(output)
             '''
             order = self.room.combat.order

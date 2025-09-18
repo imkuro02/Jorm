@@ -262,7 +262,18 @@ def command_map(self, line):
                 continue
 
             room = self.protocol.factory.world.rooms[grid[loc]]
-           
+            quest_not_started = False
+            quest_turn_in = False
+
+            for actor in room.actors.values():
+                important_dialog_dict = actor.get_important_dialog(actor_to_compare = self, return_dict = True)
+                if important_dialog_dict == False:
+                    continue
+                if important_dialog_dict['quest_not_started']:
+                    quest_not_started = True
+                if important_dialog_dict['quest_turn_in']:
+                    quest_turn_in = True
+            
             #print(room)
             # left
             if 'up' in [ x.direction for x in room.exits ]:
@@ -286,6 +297,8 @@ def command_map(self, line):
                 cell += Art.RECALL_SITE
             #elif len([ x for x in room.exits if x.direction not in offsets ]) != 0:
             #    cell += Art.SPECIAL_EXIT
+            elif quest_not_started or quest_turn_in:
+                cell += '?'
             else:
                 cell += Art.GROUND
 

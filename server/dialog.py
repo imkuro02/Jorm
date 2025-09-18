@@ -1,7 +1,8 @@
 from quest import QUEST_STATE_TYPES, ObjectiveCountProposal
 from items.manager import load_item
-from configuration.config import StatType
+from configuration.config import StatType, Color
 import random
+
 class Dialog:
     def __init__(self, _player, _npc, _dialog_tree):
         self.player = _player
@@ -207,7 +208,7 @@ class Dialog:
         if len(self.get_valid_options()) >= 1:
             output_line += '\n'
         for i in self.get_valid_options():
-            output_line += f'@normal{i["index"]}: {i["line"]}'
+            output_line += f'{Color.NORMAL}{i["index"]}: {i["line"]}'
 
         
         if output_line != None:
@@ -262,11 +263,11 @@ class Dialog:
 
         _line = answer
         if 'line' in _line:
-            output_line =                   '> '+_line['line'].strip('\n')+'@normal'
+            output_line =                   '> '+_line['line'].strip('\n')+Color.NORMAL
         if 'line_room_party' in _line:
-            output_line_room_party =        '> '+_line['line_room_party'].strip('\n')+'@normal'
+            output_line_room_party =        '> '+_line['line_room_party'].strip('\n')+Color.NORMAL
         if 'line_room_not_party' in _line:
-            output_line_room_not_party =    '> '+_line['line_room_not_party'].strip('\n')+'@normal'
+            output_line_room_not_party =    '> '+_line['line_room_not_party'].strip('\n')+Color.NORMAL
 
         if output_line != None:
             output_line =                   output_line.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
@@ -334,9 +335,9 @@ class Dialog:
             #self.print_dialog()
             turned_in_successfully = self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
             if turned_in_successfully:
-                self.player.sendLine(f'@greenQuest turned in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
+                self.player.sendLine(f'{Color.GOOD}Quest turned in{Color.NORMAL}: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
             else:
-                self.player.sendLine(f'@badQuest failed to turn in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
+                self.player.sendLine(f'{Color.BAD}Quest failed to turn in{Color.NORMAL}: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
                 self.end_dialog()
                 return True
 

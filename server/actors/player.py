@@ -5,13 +5,14 @@ from trade import TradeManager
 from actors.player_only_functions.commands import one_letter_commands, commands, shortcuts_to_commands, translations
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands 
-from configuration.config import StatType, MsgType, ActorStatusType
+from configuration.config import StatType, MsgType, ActorStatusType, Color
 import time
 from actors.player_only_functions.settings import Settings
 #from actors.enemy_ai import AIBasic
 from actors.ai import PlayerAI
 from actors.player_only_functions.charging_mini_game import ChargingMiniGame
-        
+
+
 import gc
 from utils import unload
 
@@ -343,9 +344,9 @@ class Player(Actor):
         if self.stat_manager.stats[StatType.EXP] == 0:
             self.stat_manager.stats[StatType.EXP] = 0
         if exp <= 0:
-            self.sendLine('You lost: @bad' + str(abs(exp)) + ' experience@back')
+            self.sendLine(f'You lost: {Color.BAD}' + str(abs(exp)) + f' experience{Color.BACK}')
         else:
-            self.sendLine('You got: @yellow' + str(abs(exp)) + ' experience@back')
+            self.sendLine(f'You got: {Color.GOOD}' + str(abs(exp)) + f' experience{Color.BACK}')
 
     def gain_practice_points(self, pp):
         self.stat_manager.stats[StatType.PP] += pp
@@ -354,14 +355,14 @@ class Player(Actor):
 
         if pp <= 0:
             if abs(pp) >= 2:
-                self.sendLine('You lost: @bad' + str(abs(pp)) + ' Practice points@back')
+                self.sendLine(f'You lost: {Color.BAD}' + str(abs(pp)) + f' Practice points{Color.BACK}')
             else:
-                self.sendLine('You lost: @bad' + str(abs(pp)) + ' Practice point@back')
+                self.sendLine(f'You lost: {Color.BAD}' + str(abs(pp)) + f' Practice point{Color.BACK}')
         else:
             if abs(pp) >= 2: 
-                self.sendLine('You got: @yellow' + str(abs(pp)) + ' Practice points@back')
+                self.sendLine(f'You got: {Color.GOOD}' + str(abs(pp)) + f' Practice points{Color.BACK}')
             else:
-                self.sendLine('You got: @yellow' + str(abs(pp)) + ' Practice point@back')
+                self.sendLine(f'You got: {Color.GOOD}' + str(abs(pp)) + f' Practice point{Color.BACK}')
 
     def queue_handle(self, line):
         self.queued_lines.append(line)

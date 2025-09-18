@@ -7,6 +7,35 @@ import os
 import configuration.read_from_excel as rfe
 import random
 
+class Color:
+    GOOD =          '@bgreen'
+    BAD =           '@bpurple'
+    
+    IMPORTANT =     '@byellow'
+    TOOLTIP =       '@yellow'
+    DESCRIPTION =   '@cyan'
+    
+    NAME_ADMIN =    '@yellow'
+    NAME_PLAYER =   '@bcyan'
+    NAME_ENEMY =    '@bpurple'
+    NAME_NPC =      '@byellow'
+    NAME_ROOM_NORMAL =      '@bwhite'
+    NAME_ROOM_SAFE =        '@bgreen'
+    NAME_ROOM_INSTANCE =    '@bred'
+    DESC_ROOM =             '@cyan'
+
+    NAME_QUEST =            '@good'
+    DESC_QUEST =            '@cyan'
+
+    WALL =          '@wall'
+    PATH =          '@yellow'
+    ROOM =          '@yellow'
+
+    NORMAL =        '@normal'
+    BACK =          '@back'
+
+
+    
 class MsgType:
     SAY = 'say'
     SHOUT = 'shout'

@@ -70,6 +70,9 @@ logging.error("This is an error message.")
 logging.critical("This is a critical message.")
 '''
 
+
+
+
 colors = {
     '@black':   '\x1b[0;30m', 
     '@red':     '\x1b[0;31m', 
@@ -80,6 +83,7 @@ colors = {
     #'@purple':  '\x1b[38;2;255;0;200m',
     '@cyan':    '\x1b[0;36m', 
     '@white':   '\x1b[0;37m', 
+
     '@bblack':  '\x1b[1;30m', 
     '@bred':    '\x1b[1;31m', 
     '@bgreen':  '\x1b[1;32m', 
@@ -98,18 +102,26 @@ colors = {
     '@bgwhite':   '\x1b[0;47m', 
 
 
-    '@good':    '\x1b[0;32m',
-    '@bad':     '\x1b[0;35m',
 
-    '@normal':  '\x1b[0m', 
-    '@back':    '\x1b[0;00x',
-    '@tip':     '\x1b[1;33m',
-    
-    '@color':   '\x1b[0;00y',
-    #'@skill':   '\x1b[0;35m',
+
+    '@important':     '\x1b[1;33m',
+    '@name_player':   '\x1b[0;46m',
+    '@name_enemy':    '\x1b[0;47m',
+    '@name_npc':      '\x1b[0;47m',
+    '@name_quest':    '\x1b[0;47m',
+
+    '@good':          '\x1b[0;32m',
+    '@bad':           '\x1b[0;35m',
+
+    '@normal':        '\x1b[0m', 
+    '@back':          '\x1b[0;00x',
+    '@tip':       '\x1b[1;33m',
+
     '@stat':    '\x1b[0;35m',
-    #'@wall':    '\x1b[41;30m'
-    '@wall':    '\x1b[100;30m'
+    '@wall':    '\x1b[100;30m',
+    
+    '@color':         '\x1b[0;00y',
+    
     
 }
 
@@ -195,6 +207,7 @@ def print_colors():
     return line
 
 def add_color(line):
+    #return line
     #for color_code in colors:
     #    line = line.replace(color_code, colors[color_code])
     #return line
