@@ -15,7 +15,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
     premade_id = item_premade_id
     if premade_id not in ITEMS:
         new_item = ErrorItem()
-        new_item.name = '@yellowERROR@normal'
+        new_item.name = 'ERROR'
         new_item.description = 'id: '+str(premade_id)
         new_item.description_room = None
         new_item.premade_id = premade_id

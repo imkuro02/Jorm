@@ -1,5 +1,5 @@
 import uuid
-from configuration.config import ItemType, ITEMS
+from configuration.config import ItemType, ITEMS, Color
 import random
 from utils import get_object_parent
 from utils import REFTRACKER
@@ -74,30 +74,29 @@ class Item:
                 return ''
             return "a"
 
-        #output = f'@white{get_article(self.name)} {self.name}@normal'
         output = f'@white{self.name}@normal'
-        if rank_only:
-            if self.item_type == ItemType.EQUIPMENT:  
-                if self.rank != 0: 
-                    if self.rank > 0:
-                        output = output + f' (@green+{self.rank}@normal)'
-                    else:
-                        output = output + f' (@red{self.rank}@normal)'
-                return output
+        #if rank_only:
+        #    if self.item_type == ItemType.EQUIPMENT:  
+        #        if self.rank != 0: 
+        #            if self.rank > 0:
+        #                output = output + f' (@green+{self.rank}@normal)'
+        #            else:
+        #                output = output + f' (@red{self.rank}@normal)'
+        #        return output
                 
         if self.item_type == ItemType.EQUIPMENT:     
-            if self.rank != 0: 
-                if self.rank > 0:
-                    output = output + f' (@green+{self.rank}@normal)'
-                else:
-                    output = output + f' (@red{self.rank}@normal)'
-            if self.equiped:   output = output + f' (@greenE@normal)'
-            if self.keep:      output = output + f' (@redK@normal)'
-            if self.new:       output = output + f' (@yellowN@normal)'
+            #if self.rank != 0: 
+            #    if self.rank > 0:
+            #        output = output + f' (@green+{self.rank}@normal)'
+            #    else:
+            #        output = output + f' (@red{self.rank}@normal)'
+            if self.equiped:   output = output + f' ({Color.ITEM_EQUIPPED}E{Color.NORMAL})'
+            if self.keep:      output = output + f' ({Color.ITEM_KEEP}K{Color.NORMAL})'
+            if self.new:       output = output + f' ({Color.ITEM_NEW}N{Color.NORMAL})'
         else:
             if self.stack != 1: output = output + f' x{self.stack}'
-            if self.keep:      output = output + f' (@redK@normal)'
-            if self.new:       output = output + f' (@yellowN@normal)'
+            if self.keep:      output = output + f' ({Color.ITEM_KEEP}K{Color.NORMAL})'
+            if self.new:       output = output + f' ({Color.ITEM_NEW}N{Color.NORMAL})'
 
         return output
        
@@ -126,7 +125,7 @@ class Item:
 
     def identify(self, identifier = None):
         output = f'{self.pretty_name()}\n'
-        output += f'@cyan{self.description}@normal\n'
+        output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
         
         
         if self.crafting_ingredient_for != []:

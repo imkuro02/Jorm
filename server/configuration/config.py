@@ -8,20 +8,21 @@ import configuration.read_from_excel as rfe
 import random
 
 class Color:
-    NORMAL =        '@normal'
-    BACK =          '@back'
+    NORMAL =                '@normal'
+    BACK =                  '@back' 
+    ERROR =                 '@bgred'  
 
-    GOOD =          '@bgreen'
-    BAD =           '@bpurple'
+    GOOD =                  '@bgreen'
+    BAD =                   '@bpurple'
     
-    IMPORTANT =     '@yellow'
-    TOOLTIP =       '@byellow'
-    DESCRIPTION =   '@cyan'
+    IMPORTANT =             '@yellow'
+    TOOLTIP =               '@tip'
+    DESCRIPTION =           '@cyan'
 
-    NAME_ADMIN =    '@yellow'
-    NAME_PLAYER =   '@bcyan'
-    NAME_ENEMY =    '@bpurple'
-    NAME_NPC =      '@byellow'
+    NAME_ADMIN =            '@yellow'
+    NAME_PLAYER =           '@bcyan'
+    NAME_ENEMY =            '@bpurple'
+    NAME_NPC =              '@byellow'
     NAME_ROOM_NORMAL =      '@bwhite'
     NAME_ROOM_SAFE =        '@bgreen'
     NAME_ROOM_INSTANCE =    '@bred'
@@ -30,12 +31,23 @@ class Color:
     NAME_QUEST =            '@good'
     DESC_QUEST =            '@cyan'
 
-    MAP_PLAYER =    NAME_PLAYER
-    MAP_IMPORTANT = NORMAL
-    MAP_NORMAL =    NORMAL
-    MAP_WALL = '@wall'
-    MAP_ROOM = '@yellow'
-    MAP_PATH = '@yellow'
+    MAP_PLAYER =            NAME_PLAYER
+    MAP_IMPORTANT =         NORMAL
+    MAP_NORMAL =            NORMAL
+    MAP_WALL =              '@wall'
+    MAP_ROOM =              '@yellow'
+    MAP_PATH =              '@yellow'
+
+    ITEM_KEEP =             '@red'
+    ITEM_EQUIPPED =         '@green'
+    ITEM_TRADING =          '@yellow'
+    ITEM_NEW    =           '@yellow'
+
+    DAMAGE_PURE =           '@byellow'
+    DAMAGE_PHY =            '@bred'
+    DAMAGE_MAG =            '@bcyan'
+    DAMAGE_HEAL =           '@bgreen'
+
     
 class MsgType:
     SAY = 'say'

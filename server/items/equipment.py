@@ -1,5 +1,5 @@
 
-from configuration.config import ItemType, EquipmentSlotType, StatType, SKILLS
+from configuration.config import ItemType, EquipmentSlotType, StatType, SKILLS, Color
 from items.misc import Item
 from utils import Table
 
@@ -170,19 +170,19 @@ class Equipment(Item):
 
     def identify(self, identifier = None):
         output = super().identify()
-        output += f'@tipEquipment slot:@normal {EquipmentSlotType.name[self.slot]}\n'
-        output += '@tipRequirements to equip:@normal\n'
+        output += f'{Color.TOOLTIP}Equipment slot:{Color.NORMAL} {EquipmentSlotType.name[self.slot]}\n'
+        output += f'{Color.TOOLTIP}Requirements to equip:{Color.NORMAL}\n'
         t = Table(2,3)
         ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.INVSLOTS]
         for stat in ordered_stats:
             if self.stat_manager.reqs[stat] == 0:
                 continue
-            col = '@good' if self.stat_manager.reqs[stat] <= identifier.stat_manager.stats[stat] else '@bad'
+            col = f'{Color.GOOD}' if self.stat_manager.reqs[stat] <= identifier.stat_manager.stats[stat] else f'{Color.BAD}'
             t.add_data(StatType.name[stat])
             t.add_data(self.stat_manager.reqs[stat], col = col)
         output += t.get_table()
        
-        output += '\n@tipTotal stats with bonuses:@normal\n'
+        output += f'\n{Color.TOOLTIP}Total stats with bonuses:{Color.NORMAL}\n'
         t = Table(2,3)
         ordered_stats = [StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.INVSLOTS]
         for stat in ordered_stats:
@@ -191,25 +191,25 @@ class Equipment(Item):
             t.add_data(StatType.name[stat])
             #t.add_data(self.stat_manager.stats[stat])
             if self.stat_manager.stats[stat] < 0:
-                t.add_data(f'{self.stat_manager.stats[stat]}','@bad')
+                t.add_data(f'{self.stat_manager.stats[stat]}', Color.BAD)
             else:
-                t.add_data(f'+{self.stat_manager.stats[stat]}','@good')
+                t.add_data(f'+{self.stat_manager.stats[stat]}', Color.GOOD)
             #t.add_data(f'({new})')
         output += t.get_table()
 
         if len(self.manager.bonuses.values()) >= 1:
-            output += '\n@tipSpecial bonus:@normal\n'
+            output += f'\n{Color.TOOLTIP}Special bonus:{Color.NORMAL}\n'
             for bonus in self.manager.bonuses.values():
-                col = '@good+' if bonus.val >= 1 else '@bad'
+                col = f'{Color.GOOD}+' if bonus.val >= 1 else f'{Color.BAD}'
                 match bonus.type:
                     case 'skill_level':
                         
-                        output += f'Affect {SKILLS[bonus.key]["name"]} by {col}{bonus.val}@back\n'
+                        output += f'Affect {SKILLS[bonus.key]["name"]} by {col}{bonus.val}{Color.BACK}\n'
                     case 'stat':
-                        output += f'Affect {StatType.name[bonus.key]} by {col}{bonus.val}@back\n'
+                        output += f'Affect {StatType.name[bonus.key]} by {col}{bonus.val}{Color.BACK}\n'
 
         if self.equiped == False:
-            output += '\n@tipOn equip changes:@normal\n'
+            output += f'\n{Color.TOOLTIP}On equip changes:{Color.NORMAL}\n'
             eq = None
             if identifier.slots_manager.slots[self.slot] != None and identifier.slots_manager.slots[self.slot] != self.id:
                 eq = identifier.inventory_manager.items[identifier.slots_manager.slots[self.slot]]
@@ -229,12 +229,12 @@ class Equipment(Item):
                 elif new_stat < identifier.stat_manager.stats[stat]:
                     no_changes = False
                     t.add_data(f'{StatType.name[stat]}')
-                    t.add_data(difference, col='@bad')
+                    t.add_data(difference, col=f'{Color.BAD}')
                     t.add_data(f'({new_stat})')
                 elif new_stat > identifier.stat_manager.stats[stat]:
                     no_changes = False
                     t.add_data(f'{StatType.name[stat]}')
-                    t.add_data(f'+{difference}', col='@good')
+                    t.add_data(f'+{difference}', col=f'{Color.GOOD}')
                     t.add_data(f'({new_stat})')
             
             if no_changes:
@@ -283,9 +283,9 @@ class Equipment(Item):
 
                 t.add_data(f"{SKILLS[bonus['key']]['name']}")
                 if new < curr:
-                    t.add_data(f'{val}','@bad')
+                    t.add_data(f'{val}',    f'{Color.BAD}')
                 else:
-                    t.add_data(f'+{val}','@good')
+                    t.add_data(f'+{val}',   f'{Color.GOOD}')
                 t.add_data(f'({new})')
                 
                 

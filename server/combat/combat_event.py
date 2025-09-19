@@ -1,4 +1,4 @@
-from configuration.config import ActorStatusType, StatType, DamageType, Audio, MsgType
+from configuration.config import ActorStatusType, StatType, DamageType, Audio, MsgType, Color
 
 class CombatEvent:
     def __init__(self):
@@ -22,16 +22,16 @@ class CombatEvent:
         
 
         for pop in self.popped:
-            color = '@purple'
+            color = Color.ERROR
             match pop.damage_type:
                 case DamageType.HEALING:
-                    color = '@green'
+                    color = Color.DAMAGE_HEAL
                 case DamageType.PHYSICAL:
-                    color = '@red'
+                    color = Color.DAMAGE_PHY
                 case DamageType.MAGICAL:
-                    color = '@cyan'
+                    color = Color.DAMAGE_MAG
                 case DamageType.PURE:
-                    color = '@yellow'
+                    color = Color.DAMAGE_PURE
             if not pop.silent:
                 #print(pop)
                 if pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'] == 0:

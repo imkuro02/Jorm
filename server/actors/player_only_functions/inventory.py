@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_no_combat_in_room, check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
-from configuration.config import ItemType, StatType, Audio, LORE
+from configuration.config import ItemType, StatType, Audio, LORE, Color
 import utils
 import items.manager as items
 
@@ -172,7 +172,7 @@ def command_inventory(self, line):
 
         if self.trade_manager.trade != None:
             if i in self.trade_manager.trade.offers1 or i in self.trade_manager.trade.offers2:
-                output =  output + f' (@yellowT@normal)'
+                output =  output + f' ({Color.ITEM_TRADING}T{Color.NORMAL})'
 
         
         t.add_data(output)
