@@ -187,21 +187,24 @@ class SkillDamageByGrit(SkillDamage):
         return super().use(StatType.GRIT, DamageType.PHYSICAL)
 class SkillDamageByFlow(SkillDamage):
     def use(self):
+        return super().use(StatType.FLOW, DamageType.PHYSICAL)
+        ''' 
         damage_obj = super().use(StatType.FLOW, DamageType.PHYSICAL)
         was_blocked = damage_obj.damage_value <= -1
         roll = random.randint(0,100)
-        #if not was_blocked:
-        if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
-            bleed_damage = self.user.stat_manager.stats[StatType.LVL]
-            stunned_affect = affects.AffectBleed(
-                self.other.affect_manager,
-                'Bleeding', f'Attackers Level as Pure damage per turn',
-                turns = 3,
-                damage = bleed_damage,
-                get_prediction_string_append = 'is bleeding'
-            )
-            self.other.affect_manager.set_affect_object(stunned_affect)
+        if not was_blocked:
+            if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
+                bleed_damage = self.user.stat_manager.stats[StatType.LVL]
+                stunned_affect = affects.AffectBleed(
+                    self.other.affect_manager,
+                    'Bleeding', f'Attackers Level as Pure damage per turn',
+                    turns = 3,
+                    damage = bleed_damage,
+                    get_prediction_string_append = 'is bleeding'
+                )
+                self.other.affect_manager.set_affect_object(stunned_affect)
         return damage_obj
+        '''
 
 class SkillDamageByGritFlow(SkillDamage):
     def use(self):
@@ -231,6 +234,14 @@ class SkillBash(SkillDamageByGrit):
                     get_prediction_string_clear = True
                 )
                 self.other.affect_manager.set_affect_object(stunned_affect)
+
+class SkillDoubleWhack(SkillDamageByGritFlow):
+    def use(self):
+        if self.success:
+            d = super().use()
+            if self.other.status != ActorStatusType.DEAD:
+                d = super().use()
+            return d
 
 class SkillBoostStat(Skill):
     def use(self, name_of_boost = 'boosted', stat = StatType.GRIT):
