@@ -257,6 +257,7 @@ class Protocol(protocol.Protocol):
             self.actor.recall_site = actor['actor_recall_site'] 
             self.actor.date_of_creation = actor['meta_data']['date_of_creation']
             self.actor.time_in_game = actor['meta_data']['time_in_game']
+            self.actor.date_of_last_login_previous = actor['meta_data']['date_of_last_login']
 
             # add quests
             for quest in actor['quests']:
@@ -343,8 +344,11 @@ class Protocol(protocol.Protocol):
         # disable / enable ascii map depending on gmcp settings
         self.actor.settings_manager.view_map = not self.enabled_gmcp
         self.sendLine('You are now in JORM! ascii map has been turned ' + ('on' if self.actor.settings_manager.view_map else 'off' )+ ' due to current gmcp settings (help settings)')
-
+        
+        
+        self.actor.get_any_new_patches()
         self.actor.new_room_look()
+        
         
         
 

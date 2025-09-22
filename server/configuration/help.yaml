@@ -470,6 +470,16 @@ commands:
       Alternatively if someone is online, try shouting :)
     related:
       - shout
+  news:
+    group: other
+    syntax:
+      - news
+      - news <patch id>
+    description: |
+      Display all recent patches in order of newest to oldest.
+      Patches that have been added since your last login will be displayed as "new"
+    related:
+      - help
   rank:
     group: other
     syntax:

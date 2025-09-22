@@ -32,7 +32,8 @@ from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin, command_show_ref_all,
     command_load_item, command_load_npcs, command_export, command_help, command_ranks,
     command_send_prompt, command_reload_config, command_lore, command_quest, command_bonus,
-    command_kill, command_sethp, command_history, command_get_time, command_set_time,
+    command_kill, command_sethp, command_history, command_get_time, command_set_time, 
+    command_patch_notes, get_any_new_patches,
 )
 
 from actors.player_only_functions.settings import (
@@ -131,6 +132,7 @@ commands = {
 
     'pray':     'command_charging_mini_game_toggle',
 
+    'news':     'command_patch_notes',
     '_teleport': 'command_teleport',  
     'online':   'command_online',
     '_kick':     'command_kick',

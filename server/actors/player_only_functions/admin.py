@@ -5,8 +5,67 @@ import configuration.config as config
 import yaml
 import os
 import utils
-from configuration.config import ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms, HELPFILES, Color
+from configuration.config import PATCH_NOTES, ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms, HELPFILES, Color
 from utils import REFTRACKER
+
+def get_any_new_patches(self):
+    patches = PATCH_NOTES
+    for i in patches['versions']:
+        i = patches['versions'][i]
+        unix_version = int(i['unixtime'])
+        unix_last_login = int(self.date_of_last_login_previous)
+        is_new = unix_version > unix_last_login
+        if is_new:
+            self.sendLine(f'{Color.IMPORTANT}You have unread news! type "news" to view what you have missed, "help news" to see more!{Color.NORMAL}')
+            return True
+        else:
+            return False
+
+def command_patch_notes(self, line):
+
+
+    patches = PATCH_NOTES
+
+
+    if line in patches['versions']:
+        v = patches['versions'][line]
+        _id = v['id']
+        _title = v['title']
+        _features = v['features']
+
+        output = ''
+        output += f'Reading "{_title}", patch id: {_id}\nFeatures:\n'
+        for i in v['features']:
+            output += f'- {i}\n'
+        self.sendLine(output)
+        return
+
+    
+
+    t = utils.Table(3,3)
+    t.add_data('Status')
+    t.add_data('Patch')
+    t.add_data('Title')
+
+    for i in patches['versions']:
+        i = patches['versions'][i]
+        
+        unix_version = int(i['unixtime'])
+        unix_last_login = int(self.date_of_last_login_previous)
+        is_new = unix_version > unix_last_login
+
+        col = Color.IMPORTANT if is_new else Color.NORMAL
+
+        if is_new:
+            t.add_data('New', col)
+        else:
+            t.add_data('Old', col)
+        t.add_data(i['id'], col)
+        t.add_data(i['title'], col)
+
+    self.sendLine(t.get_table())
+
+        
 
 def command_show_ref_all(self, line):
     REFTRACKER.show_ref_all()
@@ -32,7 +91,7 @@ def command_help(self, line):
     else:
         best_match = utils.match_word(line, help['commands'].keys())
         if best_match in help['commands']:
-            output = f'<{Color.IMPORTANT}Helpfile{Color.NORMAL} for {Color.IMPORTANT}{best_match}{Color.NORMAL}l>\n'
+            output = f'<{Color.IMPORTANT}Helpfile{Color.NORMAL} for {Color.IMPORTANT}{best_match}{Color.NORMAL}>\n'
 
             if 'syntax' in help['commands'][best_match]:
                 output += '\n'

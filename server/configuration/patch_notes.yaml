@@ -1,0 +1,15 @@
+versions:
+  '220925.1':
+    id: '220925.1'
+    title: News test!
+    unixtime: 1758543545
+    features:
+    - removed a trailing 'l' from the end of help command, the l would appear at the end of all helpfiles
+  '220925':
+    id: '220925'
+    title: News!
+    unixtime: 1758540482
+    features:
+    - Added "news" command, displaying all recent patches
+    - Added a help page for news ("help news")
+    - Added "news alert" when not logged in for a while

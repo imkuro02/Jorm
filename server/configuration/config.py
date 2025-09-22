@@ -205,6 +205,11 @@ class StatType:
         INITIATIVE: 'Initiative'
     }
 
+PATCH_NOTES = {}
+PATCH_NOTES_PATH = 'configuration/patch_notes.yaml'
+with open(PATCH_NOTES_PATH, 'r') as file:
+    PATCH_NOTES = yaml.safe_load(file)
+    
 #data = rfe.load()
 ITEMS = {}
 ENEMIES = {}
