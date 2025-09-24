@@ -23,6 +23,7 @@ class Color:
     NAME_PLAYER =           '@bcyan'
     NAME_ENEMY =            '@bpurple'
     NAME_NPC =              '@byellow'
+
     NAME_ROOM_NORMAL =      '@bwhite'
     NAME_ROOM_SAFE =        '@bgreen'
     NAME_ROOM_INSTANCE =    '@bred'
@@ -47,6 +48,18 @@ class Color:
     DAMAGE_PHY =            '@bred'
     DAMAGE_MAG =            '@bcyan'
     DAMAGE_HEAL =           '@bgreen'
+
+    #STAT_HP =               '@bred'
+    #STAT_MP =               '@bcyan'
+    #STAT_PHY_ARM =          '@red'
+    #STAT_MAG_ARM =          '@bblue'
+    #STAT_GRIT =             NORMAL
+    #STAT_FLOW =             NORMAL
+    #STAT_MIND =             NORMAL
+    #STAT_SOUL =             NORMAL
+    #STAT_EXPERIENCE =       NORMAL
+    #STAT_PRACTICE_POINTS =  NORMAL
+    #STAT_BAG_SPACE =        NORMAL
 
     
 class MsgType:
