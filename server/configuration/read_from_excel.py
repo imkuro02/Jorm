@@ -322,6 +322,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                 'combat_loop': {},  # EMPTY DICT TO STORE COMBAT LOOP
                 'can_start_fights': bool(x['can_start_fights'][index]),
                 'dont_join_fights':  bool(x['dont_join_fights'][index]),  
+                'no_random_loot':   bool(x['no_random_loot'][index]),
             }
 
     end = time.time()
@@ -350,6 +351,8 @@ def configure_ENEMIES(SHEET, ITEMS):
         ENEMIES[loot_table]['loot'] = LOOT[loot_table]
 
     for e in ENEMIES:
+        if ENEMIES[e]['no_random_loot']:
+            continue 
         loot = {}
         for i in ITEMS:
             if 'drop_from_random' in ITEMS[i]:

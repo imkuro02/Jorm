@@ -585,6 +585,7 @@ class Actor:
                 self.unload()
         
     def unload(self):
+        self.ai.die()
         
         try:        
             del self.room.combat.participants[self.id]
@@ -615,6 +616,7 @@ class Actor:
         for i in to_unload:
             unload(i)
             
+        
         unload(self)
         
         #refs = gc.get_referrers(self)

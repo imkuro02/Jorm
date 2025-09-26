@@ -1,5 +1,5 @@
 {
-    "SHA-256": "9a9e283c5d9dfa934d279ff9567f4aa69e9253445712e472e417713e25b72ce5",
+    "SHA-256": "fb971cd081175ae985c1537cc66683564a03531b229735b2b9b91daca0b5bc47",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -38,7 +38,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "shroom": {
             "npc_id": "shroom",
@@ -79,7 +80,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "rat": {
             "npc_id": "rat",
@@ -122,7 +124,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "big_rat": {
             "npc_id": "big_rat",
@@ -161,7 +164,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "spore": {
             "npc_id": "spore",
@@ -202,7 +206,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "wood_stump": {
             "npc_id": "wood_stump",
@@ -245,7 +250,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "snail": {
             "npc_id": "snail",
@@ -285,7 +291,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "orange_mushroom": {
             "npc_id": "orange_mushroom",
@@ -331,7 +338,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "green_slime": {
             "npc_id": "green_slime",
@@ -377,7 +385,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "spider": {
             "npc_id": "spider",
@@ -424,7 +433,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "wandering_rock": {
             "npc_id": "wandering_rock",
@@ -469,7 +479,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "pig": {
             "npc_id": "pig",
@@ -514,7 +525,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "blue_mushroom": {
             "npc_id": "blue_mushroom",
@@ -564,7 +576,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "octopus": {
             "npc_id": "octopus",
@@ -614,7 +627,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "blue_slime": {
             "npc_id": "blue_slime",
@@ -666,7 +680,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "red_slime": {
             "npc_id": "red_slime",
@@ -718,7 +733,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "red_cap": {
             "npc_id": "red_cap",
@@ -767,7 +783,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "evil_eye": {
             "npc_id": "evil_eye",
@@ -820,7 +837,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "thief": {
             "npc_id": "thief",
@@ -871,7 +889,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "horned_mushroom": {
             "npc_id": "horned_mushroom",
@@ -926,7 +945,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "skeleton_1": {
             "npc_id": "skeleton_1",
@@ -979,7 +999,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "skeleton_mage": {
             "npc_id": "skeleton_mage",
@@ -1031,7 +1052,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_soldier": {
             "npc_id": "mushroom_soldier",
@@ -1087,7 +1109,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_thief": {
             "npc_id": "mushroom_thief",
@@ -1138,7 +1161,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_mage": {
             "npc_id": "mushroom_mage",
@@ -1190,7 +1214,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_cleric": {
             "npc_id": "mushroom_cleric",
@@ -1243,7 +1268,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_zombie": {
             "npc_id": "mushroom_zombie",
@@ -1299,7 +1325,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "zombie": {
             "npc_id": "zombie",
@@ -1356,7 +1383,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "crocodile": {
             "npc_id": "crocodile",
@@ -1413,7 +1441,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "skeleton_soldier": {
             "npc_id": "skeleton_soldier",
@@ -1464,7 +1493,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "fairy": {
             "npc_id": "fairy",
@@ -1517,7 +1547,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "fairy_drunk": {
             "npc_id": "fairy_drunk",
@@ -1563,7 +1594,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "wood_stump_large": {
             "npc_id": "wood_stump_large",
@@ -1615,7 +1647,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "kerning_trainer": {
             "npc_id": "kerning_trainer",
@@ -1665,7 +1698,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "bartender": {
             "npc_id": "bartender",
@@ -1710,7 +1744,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "bar_drunk_0": {
             "npc_id": "bar_drunk_0",
@@ -1751,7 +1786,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "bar_drunk_1": {
             "npc_id": "bar_drunk_1",
@@ -1792,7 +1828,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "tutorial_1": {
             "npc_id": "tutorial_1",
@@ -1813,23 +1850,11 @@
             },
             "include_in_daily_quests": false,
             "skills": {},
-            "loot": {
-                "rock": 27,
-                "summoning_rock": 27,
-                "grit body 1": 60,
-                "grit body 3": 100,
-                "grit head 1": 60,
-                "grit head 3": 100,
-                "grit relic 1": 60,
-                "grit trinket 1": 60,
-                "grit trinket 3": 100,
-                "grit weapon 1": 60,
-                "grit weapon 3": 100,
-                "grit weapon alt 3": 100
-            },
+            "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": true
+            "dont_join_fights": true,
+            "no_random_loot": true
         },
         "boss_rat": {
             "npc_id": "boss_rat",
@@ -1880,7 +1905,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "guard_coward": {
             "npc_id": "guard_coward",
@@ -1930,7 +1956,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "citizen": {
             "npc_id": "citizen",
@@ -1971,7 +1998,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "tavern_cellar_bank_robber": {
             "npc_id": "tavern_cellar_bank_robber",
@@ -2011,7 +2039,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_kingdom_king": {
             "npc_id": "mushroom_kingdom_king",
@@ -2034,36 +2063,11 @@
             "skills": {
                 "swing": 1
             },
-            "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
-                "translucent scroll": 100,
-                "blessing_of_mind": 60,
-                "mind body 12": 40,
-                "mind body 15": 100,
-                "mind body 6": 70,
-                "mind body 9": 55,
-                "mind body 9 bone": 40,
-                "mind head 12": 40,
-                "mind head 15": 100,
-                "mind head 6": 70,
-                "mind head 9": 55,
-                "mind head 9 bone": 40,
-                "mind trinket 12": 40,
-                "mind trinket 15": 100,
-                "mind trinket 6": 70,
-                "mind trinket 9": 55,
-                "mind weapon 12": 40,
-                "mind weapon 15": 100,
-                "mind weapon 6": 70,
-                "mind weapon 9": 55,
-                "mind weapon 9 bone": 40
-            },
+            "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": true
+            "dont_join_fights": true,
+            "no_random_loot": true
         },
         "mushroom_kingdom_entrance_guard": {
             "npc_id": "mushroom_kingdom_entrance_guard",
@@ -2119,7 +2123,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_kingdom_guard": {
             "npc_id": "mushroom_kingdom_guard",
@@ -2175,7 +2180,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_kingdom_queen": {
             "npc_id": "mushroom_kingdom_queen",
@@ -2198,35 +2204,11 @@
             "skills": {
                 "nudge": 1
             },
-            "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
-                "blessing_of_soul": 60,
-                "soul body 12": 40,
-                "soul body 15": 100,
-                "soul body 6": 70,
-                "soul body 9": 55,
-                "soul body 9 bone": 40,
-                "soul head 12": 40,
-                "soul head 15": 100,
-                "soul head 6": 70,
-                "soul head 9": 55,
-                "soul head 9 bone": 40,
-                "soul trinket 12": 40,
-                "soul trinket 15": 100,
-                "soul trinket 6": 70,
-                "soul trinket 9": 55,
-                "soul weapon 12": 40,
-                "soul weapon 15": 100,
-                "soul weapon 6": 70,
-                "soul weapon 9": 55,
-                "soul wepaon 9 bone": 40
-            },
+            "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": true
+            "dont_join_fights": true,
+            "no_random_loot": true
         },
         "mushroom_kingdom_chef": {
             "npc_id": "mushroom_kingdom_chef",
@@ -2267,7 +2249,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_kingdom_cook": {
             "npc_id": "mushroom_kingdom_cook",
@@ -2307,7 +2290,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_kingdom_jester": {
             "npc_id": "mushroom_kingdom_jester",
@@ -2347,7 +2331,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_kingdom_citizen": {
             "npc_id": "mushroom_kingdom_citizen",
@@ -2388,7 +2373,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_kingdom_wizard": {
             "npc_id": "mushroom_kingdom_wizard",
@@ -2440,7 +2426,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "daily_quest_board": {
             "npc_id": "daily_quest_board",
@@ -2461,23 +2448,11 @@
             },
             "include_in_daily_quests": false,
             "skills": {},
-            "loot": {
-                "rock": 27,
-                "summoning_rock": 27,
-                "grit body 1": 60,
-                "grit body 3": 100,
-                "grit head 1": 60,
-                "grit head 3": 100,
-                "grit relic 1": 60,
-                "grit trinket 1": 60,
-                "grit trinket 3": 100,
-                "grit weapon 1": 60,
-                "grit weapon 3": 100,
-                "grit weapon alt 3": 100
-            },
+            "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": true
+            "dont_join_fights": true,
+            "no_random_loot": true
         },
         "ellinia_shop_weapon": {
             "npc_id": "ellinia_shop_weapon",
@@ -2501,36 +2476,11 @@
                 "cure_light_wounds": 1,
                 "magic_missile": 1
             },
-            "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
-                "translucent scroll": 100,
-                "blessing_of_mind": 60,
-                "mind body 12": 40,
-                "mind body 15": 100,
-                "mind body 6": 70,
-                "mind body 9": 55,
-                "mind body 9 bone": 40,
-                "mind head 12": 40,
-                "mind head 15": 100,
-                "mind head 6": 70,
-                "mind head 9": 55,
-                "mind head 9 bone": 40,
-                "mind trinket 12": 40,
-                "mind trinket 15": 100,
-                "mind trinket 6": 70,
-                "mind trinket 9": 55,
-                "mind weapon 12": 40,
-                "mind weapon 15": 100,
-                "mind weapon 6": 70,
-                "mind weapon 9": 55,
-                "mind weapon 9 bone": 40
-            },
+            "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": true
+            "dont_join_fights": true,
+            "no_random_loot": true
         },
         "mushroom_kingdom_necromancer": {
             "npc_id": "mushroom_kingdom_necromancer",
@@ -2569,7 +2519,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "ant_scout": {
             "npc_id": "ant_scout",
@@ -2616,7 +2567,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "ant_soldier": {
             "npc_id": "ant_soldier",
@@ -2669,7 +2621,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "ant_queen": {
             "npc_id": "ant_queen",
@@ -2718,7 +2671,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "bee_worker": {
             "npc_id": "bee_worker",
@@ -2766,7 +2720,8 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "bee_soldier": {
             "npc_id": "bee_soldier",
@@ -2814,7 +2769,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "bee_queen": {
             "npc_id": "bee_queen",
@@ -2862,7 +2818,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "mushroom_zombie_behemoth": {
             "npc_id": "mushroom_zombie_behemoth",
@@ -2896,7 +2853,8 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false
+            "dont_join_fights": false,
+            "no_random_loot": false
         },
         "skill_portal": {
             "npc_id": "skill_portal",
@@ -2917,23 +2875,119 @@
             },
             "include_in_daily_quests": false,
             "skills": {},
-            "loot": {
-                "rock": 27,
-                "summoning_rock": 27,
-                "grit body 1": 60,
-                "grit body 3": 100,
-                "grit head 1": 60,
-                "grit head 3": 100,
-                "grit relic 1": 60,
-                "grit trinket 1": 60,
-                "grit trinket 3": 100,
-                "grit weapon 1": 60,
-                "grit weapon 3": 100,
-                "grit weapon alt 3": 100
-            },
+            "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": true
+            "dont_join_fights": true,
+            "no_random_loot": true
+        },
+        "dragon_0": {
+            "npc_id": "dragon_0",
+            "ai": "VoreDragonLesser",
+            "name": "Lesser Dragon",
+            "description": null,
+            "stats": {
+                "grit": 20,
+                "hp": 100,
+                "mp": 100,
+                "phy_armor": 80,
+                "mag_armor": 40,
+                "flow": 15,
+                "mind": 10,
+                "soul": 10,
+                "exp": 9,
+                "lvl": 9
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "bite": 1
+            },
+            "loot": {
+                "rock": 18,
+                "summoning_rock": 18,
+                "red potion": 35,
+                "blue potion": 35,
+                "blessing_of_grit": 60,
+                "grit body 12": 100,
+                "grit body 3": 70,
+                "grit body 6": 55,
+                "grit body 9": 40,
+                "grit body 9 bone": 100,
+                "grit head 12": 100,
+                "grit head 3": 70,
+                "grit head 6": 55,
+                "grit head 9": 40,
+                "grit head 9 bone": 100,
+                "grit trinket 12 shield ": 100,
+                "grit trinket 12 sword": 100,
+                "grit trinket 3": 70,
+                "grit trinket 6": 55,
+                "grit trinket 9": 40,
+                "grit weapon 12": 100,
+                "grit weapon 3": 70,
+                "grit weapon 6": 55,
+                "grit weapon 9": 40,
+                "grit weapon 9 bone": 100,
+                "grit weapon alt 3": 70
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false
+        },
+        "dragon_tooth_0": {
+            "npc_id": "dragon_tooth_0",
+            "ai": "Enemy",
+            "name": "Lesser Dragons Tooth",
+            "description": null,
+            "stats": {
+                "grit": 10,
+                "hp": 50,
+                "mp": 20,
+                "phy_armor": 20,
+                "mag_armor": 20,
+                "flow": 10,
+                "mind": 15,
+                "soul": 10,
+                "exp": 3,
+                "lvl": 3
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "bite": 1
+            },
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": true
+        },
+        "dragon_tongue_0": {
+            "npc_id": "dragon_tongue_0",
+            "ai": "Enemy",
+            "name": "Lesser Dragons Tongue",
+            "description": null,
+            "stats": {
+                "grit": 10,
+                "hp": 50,
+                "mp": 200,
+                "phy_armor": 20,
+                "mag_armor": 20,
+                "flow": 10,
+                "mind": 15,
+                "soul": 40,
+                "exp": 3,
+                "lvl": 3
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "cure_light_wounds": 1
+            },
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": true
         }
     },
     "skills": {

@@ -406,10 +406,8 @@ class BossRatAI(AI):
         self.turn = 0
     
     def initiative(self):
-        print(self.turn)
         self.predict_use_best_skill()
         self.turn += 1
-
         match self.turn:
             case 3:
                 self.override_prediction('is scheming')
@@ -477,46 +475,72 @@ class VoreAI(AI):
         self.rooms = self.actor.room.world.rooms 
         self.vore_room_id = f'{self.actor.room.id}-vored-by-{self.actor.id}'
         self.vore_room = None
+        self.original_room = self.actor.room
+        self.turn = 0
+        #self.vore_room_open()
+
+        self.vore_room_name = 'Vore room name'
+        self.vore_room_description = 'Vore room description'
+        self.vore_room_spawns = ''
+
+
+        self.turn_max = 7
+        self.turn_vore = 6
+        self.turn_vore_text = 'Looks hungry'
+
+
+    def initiative(self):
+        self.predict_use_best_skill()
+        self.turn += 1
+        match self.turn:
+            case self.turn_vore:
+                self.override_prediction(self.turn_vore_text)
+            case _:
+                self.override_prediction()
+        if self.turn == self.turn_max:
+            self.turn = 0
 
     def tick(self):
         if not super().tick():
             return
         
-        self.use_prediction()
-
-    def use_prediction(self):
-        if super().use_prediction():
-            return True
-        self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
-        #self.predict_use_best_skill()
-        self.actor.finish_turn()
-        return False
-
-    def initiative(self):
-        super().initiative()
-        if self.vore_room == None:
-            self.vore_room_open()
-            self.original_room = self.actor.room
+        if self.turn == self.turn_vore:
+            if self.vore_room == None:
+                self.vore_room_open()
             self.vore_room_grab_party()
+            self.actor.finish_turn()
+            return
+            
+        self.use_prediction()
+        return
 
-    # create new vore room
+    def create_vore_room_from_template(self):
+        return Room(self.actor.room.world, self.vore_room_id, 
+            name =          self.vore_room_name, # 'Vore room name', 
+            description =   self.vore_room_description, # 'Vore room description', 
+            from_file =    'vore_room', 
+            exits = [], can_be_recall_site = False, doorway = False, instanced = False, no_spawner = True) 
+
+     # create new vore room
     def vore_room_open(self):
-        vore_room = Room(self.actor.room.world, self.vore_room_id, 
-            'Vore room name', 
-            'Vore room description', 
-            'vore_room', 
-            [], 
-            False, 
-            False,
-            False,
-            no_spawner = True) 
-
+        vore_room = self.create_vore_room_from_template()
         self.rooms[self.vore_room_id] = vore_room
         self.vore_room = vore_room
+        vore_room_exit = Exit(self.vore_room, 'out', self.original_room.id, blocked = True)
+        self.vore_room.exits.append(vore_room_exit)
+
+        for line in self.vore_room_spawns.split('\n'):
+            for val in line.split(','):
+                to_spawn = create_npc(self.vore_room, val)
+                #to_spawn.room.join_combat(val)
 
     # close vore room, kick all player parties back into the room
     def vore_room_close(self):
-        del self.rooms[self.vore_room_id]
+        if self.vore_room == None:
+            return
+        #print(self.vore_room.__dict__)
+        self.actor.room.world.rooms_to_unload.append(self.vore_room.id)
+        #del self.rooms[self.vore_room_id]
         
     # grab a party and add it to vore room
     def vore_room_grab_party(self):
@@ -535,11 +559,17 @@ class VoreAI(AI):
             i.simple_broadcast( f'{self.actor.pretty_name()} vores you!', 
                                 f'{self.actor.pretty_name()} vores {i.pretty_name()}!')
         for i in to_move:
-            self.vore_room.move_actor(i, silent = True)
+            self.vore_room.move_actor(i, silent = True, dont_unload_instanced = True)
             i.status = ActorStatusType.NORMAL
+
+        #for i in to_move:
+        #    i.command_look('')
             
 
     def vore_room_kick_all_parties(self):
+        if self.vore_room == None:
+            return
+
         to_move = []
         for i in self.vore_room.actors.values():
             if type(i).__name__ != 'Player':
@@ -550,7 +580,7 @@ class VoreAI(AI):
              i.simple_broadcast( f'{self.actor.pretty_name()} spits you out!', 
                                 f'{self.actor.pretty_name()} spits out {i.pretty_name()}!')
         for i in to_move:                     
-            self.original_room.move_actor(i, silent = True)
+            self.original_room.move_actor(i, silent = True, dont_unload_instanced = True)
             i.status = ActorStatusType.NORMAL
 
 
@@ -558,8 +588,17 @@ class VoreAI(AI):
         self.vore_room_kick_all_parties()
         self.vore_room_close()
 
-    
+class VoreDragonLesserAI(VoreAI):
+    def __init__(self, actor):
+        super().__init__(actor)
+        self.turn_max = 7
+        self.turn_vore = 2
 
+        self.turn_vore_text =           'Looks hungry'
+        self.vore_room_name =           'Mouth of the dragon'
+        self.vore_room_description =    'The smell of charcoal mixed with burnt flesh overwhelms you\nIt is hot, wet, and dark here.'
+        self.vore_room_spawns =         'dragon_tongue_0\ndragon_tooth_0\ndragon_tooth_0\ndragon_tooth_0\ndragon_tooth_0'
+                                        
 
 def get_ai(ai_name):
     match ai_name:
@@ -573,5 +612,7 @@ def get_ai(ai_name):
             return BossRatAI
         case 'Vore':
             return VoreAI
+        case 'VoreDragonLesser':
+            return VoreDragonLesserAI
         case _:
             return EnemyAI

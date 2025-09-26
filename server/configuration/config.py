@@ -29,7 +29,7 @@ class Color:
     NAME_ROOM_INSTANCE =    '@bred'
     DESC_ROOM =             '@cyan'
 
-    NAME_QUEST =            '@good'
+    NAME_QUEST =            '@bgreen'
     DESC_QUEST =            '@cyan'
 
     MAP_PLAYER =            NAME_PLAYER

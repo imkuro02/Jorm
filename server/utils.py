@@ -80,7 +80,6 @@ colors = {
     '@yellow':  '\x1b[0;33m', 
     '@blue':    '\x1b[0;34m', 
     '@purple':  '\x1b[0;35m', 
-    #'@purple':  '\x1b[38;2;255;0;200m',
     '@cyan':    '\x1b[0;36m', 
     '@white':   '\x1b[0;37m', 
 

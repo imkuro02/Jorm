@@ -342,7 +342,7 @@ class Room:
         if players_here and npcs_here:
             self.combat = Combat(self, participants)
         
-    def move_actor(self, actor, silent = False):
+    def move_actor(self, actor, silent = False, dont_unload_instanced = False):
         
         self.remove_actor(actor)
 
@@ -353,16 +353,18 @@ class Room:
                 actor.simple_broadcast('',f'{actor.pretty_name()} and their party leaves', send_to = 'room_not_party', sound = Audio.walk())
 
 
-        if not self.instanced:
-            actor.room = self
-            self.actors[actor.id] = actor
-            if type(actor).__name__ == 'Player':
-                for i in actor.instanced_rooms:
-                    if i in actor.room.world.rooms:
-                        actor.sendLine(f'instanced room: {i} deleted', msg_type = [MsgType.DEBUG])
-                        self.world.rooms_to_unload.append(i)
+        actor.room = self
+        self.actors[actor.id] = actor
 
-                actor.instanced_rooms = []
+        if not self.instanced:
+            if not dont_unload_instanced and not self.is_an_instance():
+                if type(actor).__name__ == 'Player':
+                    for i in actor.instanced_rooms:
+                        if i in actor.room.world.rooms:
+                            actor.sendLine(f'instanced room: {i} deleted', msg_type = [MsgType.DEBUG])
+                            self.world.rooms_to_unload.append(i)
+
+                    actor.instanced_rooms = []
         else:
             
             if type(actor).__name__ == 'Player':
@@ -602,3 +604,4 @@ class World:
 
 from actors import ai
 ai.Room = Room
+ai.Exit = Exit
