@@ -20,9 +20,9 @@
 [ext_resource type="Texture2D" uid="uid://bpj1614sj6bm1" path="res://images/kuro/quest_not_started.png" id="11_lm5rf"]
 [ext_resource type="Texture2D" uid="uid://cu7xomnl37t4g" path="res://images/kuro/enemy.png" id="12_5afyf"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4171q"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_723ol"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4171q"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -67,6 +67,7 @@ script = ExtResource("3_2rld8")
 metadata/_edit_group_ = true
 
 [node name="background_color" type="ColorRect" parent="canvas/HBoxContainer/side_panel"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -75,6 +76,7 @@ offset_top = 512.0
 color = Color(0.309804, 0.309804, 0.309804, 1)
 
 [node name="Background" type="TextureRect" parent="canvas/HBoxContainer/side_panel"]
+visible = false
 modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 layout_mode = 0
@@ -86,6 +88,7 @@ texture = ExtResource("9_2qqwb")
 stretch_mode = 1
 
 [node name="map" type="Panel" parent="canvas/HBoxContainer/side_panel"]
+visible = false
 custom_minimum_size = Vector2(448, 448)
 layout_mode = 0
 offset_top = 512.0
@@ -161,6 +164,19 @@ scale = Vector2(4, 4)
 texture = ExtResource("12_5afyf")
 
 [node name="map" type="Node" parent="canvas/HBoxContainer/side_panel/map"]
+
+[node name="ascii_map" type="RichTextLabel" parent="canvas/HBoxContainer/side_panel"]
+layout_mode = 2
+offset_top = 584.0
+offset_right = 448.0
+offset_bottom = 960.0
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_ckiy7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+selection_enabled = true
+script = ExtResource("3_gkcnj")
 
 [node name="Panel2" type="Panel" parent="canvas/HBoxContainer"]
 visible = false

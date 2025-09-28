@@ -26,7 +26,7 @@ def create_npc(room, npc_id, spawn_for_lore = False):
     
 
     if npc_id in ENEMIES:
-        names = 'Niymiae Tanni Rahji Rahj Rahjii Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan'
+        names = 'Auxy Niymiae Tanni Rahji Rahj Rahjii Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan'
         old_name_not_used = 'Arr\'zTh-The\'RchEndrough'
         name = random.choice(names.split())
         name = name + ' The ' + ENEMIES[npc_id]['name']

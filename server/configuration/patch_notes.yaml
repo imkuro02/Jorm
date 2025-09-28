@@ -1,14 +1,19 @@
 versions:
-  '260925':
-    id: '260925'
+  '280925':
+    id: '280925'
     title: Vore
-    unixtime: 1758886953
+    unixtime: 1759026240
     features:
     - Added "Lesser Dragon" enemy. 
       Lesser Dragon can devour players in combat.
       Being devoured puts you in a custom "dragon mouth room".
       Lesser Dragon spawns in perion, sharing octopus spawn.
     - Added Dragon tooth enemy and Dragon Tongue enemy.
+    - GUI map has been replaced with ascii map.
+    - Fixed footsteps not playing when moving.
+    - New room look and map command auto runs when resting.
+    - Teleports now make footstep sound effect.
+
   '220925':
     id: '220925'
     title: News!

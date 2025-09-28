@@ -12,6 +12,7 @@ var socket = WebSocketPeer.new()
 @onready var ACTORS_OUTPUT = $canvas/HBoxContainer/Control/actors_output
 @onready var SFX_MAN = $sfx_manager
 @onready var MAP = $canvas/HBoxContainer/side_panel/map
+@onready var ASCIIMAP = $canvas/HBoxContainer/side_panel/ascii_map
 @onready var CLOCK = $canvas/HBoxContainer/side_panel/Clock
 @onready var BACKGROUND_COLOR = $canvas/background_color
 
@@ -48,7 +49,7 @@ func _ready():
 	INPUT.text_submitted.connect(_on_input_submitted)
 
 	# Connect to WebSocket server
-	var err = socket.connect_to_url(websocket_url)
+	var err = socket.connect_to_url(websocket_url_local)
 	if err != OK:
 		print("Unable to connect")
 		set_process(false)
@@ -130,8 +131,11 @@ func handle_gmcp(message: String):
 			ACTORS_OUTPUT.set_text("")
 			ACTORS_OUTPUT.clear()
 			ACTORS_OUTPUT.get_message(dict_string)
-		'Map':
-			MAP.get_message(data_dict)
+		'MMAAPP':
+			ASCIIMAP.clear()
+			ASCIIMAP.get_message(dict_string)
+			#OUTPUT.get_message(data_dict)
+			pass #MAP.get_message(data_dict)
 		'Time':
 			CLOCK.get_message(data_dict)
 			BACKGROUND_COLOR.get_message(data_dict)
@@ -207,7 +211,9 @@ func _process(_delta):
 				extract_gmcp(int_subnegotiation)
 
 			var message = _message.get_string_from_utf8()
+			#message = remove_map_sections(message)
 			OUTPUT.get_message(message)
+			#print(".....")
 			#print(message)
 			#print(_message)
 			
@@ -222,6 +228,35 @@ func _process(_delta):
 		print("WebSocket closed. Code: %d. Clean: %s" % [code, code != -1])
 		set_process(false)
 
+func remove_map_sections(text: String) -> String:
+	var start_tag = "<Map Start>"
+	var end_tag = "<Map End>"
+	
+	var result = text
+	
+	while true:
+		var start_index = result.find(start_tag)
+		if start_index == -1:
+			break
+		
+		var end_index = result.find(end_tag, start_index)
+		if end_index == -1:
+			break
+		
+		# Include the end tag length so it removes everything between (and including) both tags
+		end_index += end_tag.length()
+		
+		# Slice out the unwanted section
+		var map_data = result.substr(start_index, end_index - start_index).strip_edges()
+		ASCIIMAP.clear()
+		ASCIIMAP.get_message(map_data)
+		
+		result = result.substr(0, start_index) + result.substr(end_index, result.length() - end_index)
+		
+		
+	
+	return result
+	
 func _on_input_submitted(text: String) -> void:
 	# and text.strip_edges() != ""
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:

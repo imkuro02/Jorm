@@ -272,6 +272,7 @@ def rest_now(self, line):
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects()
+    self.new_room_look()
 
 @check_not_in_combat
 def command_rest(self, line):

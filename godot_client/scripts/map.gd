@@ -39,6 +39,7 @@ func _process(delta):
 	pass
 
 func get_message(data):
+	
 	var size = 64
 	
 	var to_delete = []

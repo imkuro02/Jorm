@@ -180,10 +180,13 @@ class UpdateChecker:
     def tick(self):
         
         #return
-        if self.actor.factory.ticks_passed % 30 != 0:
-            return
+        #if self.actor.factory.ticks_passed % 30 != 0:
+        #    return
         #self.tick_show_actors()
-        self.tick_show_map()
+        _map = self.actor.command_map('', return_gmcp = True)
+
+        self.actor.protocol.send_gmcp(utils.add_color(_map), 'MMAAPP')
+        #self.tick_show_map()
         self.tick_send_time()
         
 class Player(Actor):
@@ -293,7 +296,8 @@ class Player(Actor):
             
                 
         if self.update_checker != None:
-            self.update_checker.tick()
+            if self.factory.ticks_passed % 30 != 0:
+                self.update_checker.tick()
     
     
     def sendSound(self, sfx):

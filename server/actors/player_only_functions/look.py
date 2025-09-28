@@ -2,7 +2,7 @@
 from configuration.config import ActorStatusType, Color
 import utils
 
-def command_map(self, line):
+def command_map(self, line, return_gmcp = False):
     setting_render_walls = False
     room_id = self.room.id
     VIEW_RANGE = 7
@@ -346,8 +346,10 @@ def command_map(self, line):
     '''
     combined_output = t.get_table()
 
-
-    self.sendLine('<Map Start>\n'+combined_output+'<Map End>')
+    if not return_gmcp:
+        self.sendLine('<Map Start>\n'+combined_output+'<Map End>')
+    else:
+        return combined_output
 
 def command_scan(self, line):
     see = ''
@@ -648,5 +650,7 @@ def new_room_look(self):
         self.command_look('')
     if self.settings_manager.view_map:
         self.command_map('')
+        self.update_checker.tick()
     if self.protocol.enabled_gmcp:
-        self.update_checker.tick_show_map()
+
+        self.update_checker.tick()
