@@ -228,35 +228,6 @@ func _process(_delta):
 		print("WebSocket closed. Code: %d. Clean: %s" % [code, code != -1])
 		set_process(false)
 
-func remove_map_sections(text: String) -> String:
-	var start_tag = "<Map Start>"
-	var end_tag = "<Map End>"
-	
-	var result = text
-	
-	while true:
-		var start_index = result.find(start_tag)
-		if start_index == -1:
-			break
-		
-		var end_index = result.find(end_tag, start_index)
-		if end_index == -1:
-			break
-		
-		# Include the end tag length so it removes everything between (and including) both tags
-		end_index += end_tag.length()
-		
-		# Slice out the unwanted section
-		var map_data = result.substr(start_index, end_index - start_index).strip_edges()
-		ASCIIMAP.clear()
-		ASCIIMAP.get_message(map_data)
-		
-		result = result.substr(0, start_index) + result.substr(end_index, result.length() - end_index)
-		
-		
-	
-	return result
-	
 func _on_input_submitted(text: String) -> void:
 	# and text.strip_edges() != ""
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
