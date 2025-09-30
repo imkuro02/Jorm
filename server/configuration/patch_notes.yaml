@@ -4,7 +4,7 @@ versions:
     title: UI changes
     unixtime: 1759230956
     features:
-    - Inventory now always has 3 columns, might rework.
+    - Inventory now always has 2 columns, might rework.
     - More prompt arguments including LVL, GRIT, etc.
     - disabled text chunkation (wider screen means wider text).
   '280925':

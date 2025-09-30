@@ -162,7 +162,7 @@ def command_inventory(self, line):
         columns = 2
     if self.inventory_manager.limit >= 41:
         columns = 3
-    columns = 3
+    columns = 2
     t = utils.Table(columns)
     
 
