@@ -240,7 +240,21 @@ def command_ranks(self, line):
 
 
 def command_send_prompt(self, line):
-    self.sendLine(self.prompt(self))
+    if line == '':
+        self.sendLine(self.prompt(self))
+    else:
+        actor = None
+        list_of_actors = [actor.name for actor in self.room.actors.values()]
+        look_at = utils.match_word(line, list_of_actors)
+
+        if look_at in list_of_actors:
+            actor = self.get_actor(line)
+
+        if actor == None:
+            self.sendLine('Pormpt who?')
+            return
+        
+        self.sendLine(f'Prompt for {actor.pretty_name()}:\n{actor.prompt(self)}')
 
 
 @check_is_admin

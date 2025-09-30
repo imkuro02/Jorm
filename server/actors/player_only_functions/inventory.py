@@ -158,11 +158,13 @@ def command_inventory(self, line):
 
     columns = 1
     items = self.inventory_manager.item_count()
-    if items >= 21:
+    if self.inventory_manager.limit >= 21:
         columns = 2
-    if items >= 41:
+    if self.inventory_manager.limit >= 41:
         columns = 3
+    columns = 3
     t = utils.Table(columns)
+    
 
     num = 1
     for i in self.inventory_manager.items:
@@ -176,7 +178,15 @@ def command_inventory(self, line):
 
         
         t.add_data(output)
-        
+    
+    '''
+    free_slot_amount = self.inventory_manager.limit - len(self.inventory_manager.items)
+    if free_slot_amount > 0:
+        for i in range(0, free_slot_amount):
+            t.add_data(f'{num:2}. ---')
+            num+=1
+    '''
+
 
     self.sendLine(
         f'You carry ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n' +

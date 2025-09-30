@@ -1,5 +1,6 @@
 mushroom_kingdom_1:
   name: Mushroom Zombie Problem
+  area_code: mushroom_kingdom 
   description: 
     in_progress: |
       The mushroom king has tasked me to kill no less than 20 mushroom zombies.

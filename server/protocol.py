@@ -422,7 +422,7 @@ class Protocol(protocol.Protocol):
 
         #if line:  # skip empty lines
         if '@' in line:
-            line = line + {Color.NORMAL}
+            line = str(line) + Color.NORMAL
         self.state(line)
         return
 

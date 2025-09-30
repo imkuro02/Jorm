@@ -334,7 +334,10 @@ def seconds_to_dhms(seconds, return_as_dict = False):
 
 import re
 
-def chunkate(input_string, max_width=80):
+
+
+#  usually use 80
+def chunkate(input_string, max_width=800):
     # Regex to match a color code (e.g., @red, @green, etc.) or a word
     color_code_regex = r'@[\w]+'
 

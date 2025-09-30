@@ -373,6 +373,11 @@ commands:
       #PHYARM%#     - Physical Armor percentage
       #MAGARM%#     - Magical Armor percentage
       #THREAT#      - Current Threat 
+      #GRIT#        - Value of GRIT
+      #FLOW#        - Value of FLOW
+      #MIND#        - Value of MIND
+      #SOUL#        - Value of SOUL
+      #LVL#         - Current Level
 
       You can also add "L" right after the first # to adjust the value to the left.
       Like so "LHP" or #LMAGARM%#
@@ -392,9 +397,9 @@ commands:
         If you wish to use colors, read more about them with help color
 
       There are some premade prompts, that can be selected with:
-      settings prompt <1-5>
+      settings prompt <0-5>
 
-      settings prompt 1 is the default prompt
+      settings prompt 0 is the default prompt
       
       Lastly: here is an example of a prompt:
       "---@.bred#HP#@.normal/@.bred#LHPMAX#@.normal HP--->"
