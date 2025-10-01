@@ -114,8 +114,13 @@ func handle_gmcp(message: String):
 	# Convert string to actual Dictionary using JSON
 	# First, replace single quotes with double quotes for JSON compatibility
 	#dict_string = dict_string.replace("'", '"')
+	var data_dict = null
 
-	var data_dict = JSON.parse_string(dict_string.replace("'",'"')) #string_to_dict(dict_string)
+	if "{" not in dict_string:
+		data_dict = null
+	else:
+		data_dict = JSON.parse_string(dict_string.replace("'",'"')) #string_to_dict(dict_string)
+	
 	
 	#print(prefix,data_dict)
 	#print(dict_string)     
