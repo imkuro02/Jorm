@@ -368,7 +368,7 @@ class Protocol(protocol.Protocol):
         self.transport.abortConnection()
 
     def unload_actor(self):
-        
+        self.actor.affect_manager.unload_all_affects(silent = False)
         self.save_actor()
         self.actor.simple_broadcast('Logging off', f'{self.actor.pretty_name()} logging off')
         # teleport player to loading to remove them safely

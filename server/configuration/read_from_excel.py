@@ -263,6 +263,10 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
 
             ingredients = {}
             premade_id = x['premade_id'][index]
+
+            if premade_id not in ITEMS:
+                print(f'excel loader skipping premade_id "{premade_id}" because this item doesnt exist (shadow error)')
+                continue
             
             for i in range(0,4):
                 i += 1

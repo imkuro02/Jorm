@@ -177,22 +177,33 @@ class AffectEnrage(Affect):
         self.bonus = bonus
 
         self.bonus_grit = 0 #int(stats[StatType.GRIT] * bonus)
-        self.bonus_armor = 0 #extra_armor
+        #self.bonus_armor = 0 #extra_armor
+
+
+    def take_damage_before_calc(self, damage_obj: Damage):
+        if damage_obj.damage_type != DamageType.CANCELLED:
+            print(self.bonus)
+            if damage_obj.damage_type == DamageType.HEALING:
+                damage_obj.damage_value = damage_obj.damage_value-(damage_obj.damage_value*self.bonus)
+            else:
+                damage_obj.damage_value = damage_obj.damage_value+(damage_obj.damage_value*self.bonus)
+            damage_obj.damage_value = int(damage_obj.damage_value)
+        return damage_obj
 
 
     def on_applied(self):
         super().on_applied()
         self.bonus_grit = int(self._stats[StatType.GRIT] * self.bonus)
-        self.bonus_armor = -int(self._stats[StatType.PHYARMOR] * self.bonus)
-        self.bonus_marmor = -int(self._stats[StatType.MAGARMOR] * self.bonus)
+        #self.bonus_armor = -int(self._stats[StatType.PHYARMOR] * self.bonus)
+        #self.bonus_marmor = -int(self._stats[StatType.MAGARMOR] * self.bonus)
         self.actor.stat_manager.stats[StatType.GRIT] += self.bonus_grit
-        self.actor.stat_manager.stats[StatType.PHYARMOR] += self.bonus_armor
-        self.actor.stat_manager.stats[StatType.MAGARMOR] += self.bonus_marmor
+        #self.actor.stat_manager.stats[StatType.PHYARMOR] += self.bonus_armor
+        #self.actor.stat_manager.stats[StatType.MAGARMOR] += self.bonus_marmor
 
     def on_finished(self, silent=False):
         self.actor.stat_manager.stats[StatType.GRIT] -= self.bonus_grit
-        self.actor.stat_manager.stats[StatType.PHYARMOR] -= self.bonus_armor
-        self.actor.stat_manager.stats[StatType.MAGARMOR] -= self.bonus_marmor
+        #self.actor.stat_manager.stats[StatType.PHYARMOR] -= self.bonus_armor
+        #self.actor.stat_manager.stats[StatType.MAGARMOR] -= self.bonus_marmor
         return super().on_finished(silent)
     
 class AffectAdrenaline(Affect):

@@ -223,7 +223,8 @@ class Combat:
                     order = order + i.pretty_name() + ' -> '
                 
             order = order + f'ROUND {self.round}'
-            par.sendLine(('#'*80)+'\n'+order)
+            #par.sendLine(('#'*80)+'\n'+order)
+            par.sendLine(order)
 
         
         
@@ -244,7 +245,7 @@ class Combat:
             #par.ai.predict_use_best_skill()
 
         for par in self.participants.values():
-            par.show_prompts(self.order)
+            par.show_prompts(self.participants.values())
 
         self.round += 1
         self.next_turn()

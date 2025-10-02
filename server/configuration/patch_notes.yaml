@@ -1,4 +1,12 @@
 versions:
+  '1':
+    id: '1'
+    title: Enrage and Items
+    unixtime: 1759230956
+    features:
+    - Some unfinished items have been removed from the drop tables.
+    - Enrage has been reworked.
+    - Fixed bug where some stat boosting skills could boost your stats permanently
   '300925':
     id: '300925'
     title: UI changes
