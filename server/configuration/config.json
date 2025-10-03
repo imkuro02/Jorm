@@ -1,5 +1,5 @@
 {
-    "SHA-256": "9587199f654e61a2188507b57f152715a02dad33c7370d4be6717f7f5caf6d58",
+    "SHA-256": "7b2eb2dc5361bc4ce2ac91922f71892b3ac51e4f2a0797358681d15f3ab49beb",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -249,7 +249,7 @@
                 "grit weapon alt 3": 80
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false
         },
@@ -300,14 +300,14 @@
             "name": "Orange Mushroom",
             "description": "A large, orange-capped mushroom, the size of a big dog. Its stem is the color of an eggshell. It has no arms or legs—its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops when it moves, its body making a loud thud with each short jump.",
             "stats": {
-                "grit": 15,
+                "grit": 10,
                 "hp": 50,
                 "mp": 20,
                 "phy_armor": 20,
                 "mag_armor": 20,
                 "flow": 10,
                 "mind": 10,
-                "soul": 10,
+                "soul": 15,
                 "exp": 3,
                 "lvl": 3
             },
@@ -321,20 +321,19 @@
                 "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
-                "grit body 1": 50,
-                "grit body 3": 40,
-                "grit body 6": 100,
-                "grit head 1": 50,
-                "grit head 3": 40,
-                "grit head 6": 100,
-                "grit relic 1": 50,
-                "grit trinket 1": 50,
-                "grit trinket 3": 40,
-                "grit trinket 6": 100,
-                "grit weapon 1": 50,
-                "grit weapon 3": 40,
-                "grit weapon 6": 100,
-                "grit weapon alt 3": 40
+                "soul body 1": 50,
+                "soul body 3": 40,
+                "soul body 6": 100,
+                "soul head 1": 50,
+                "soul head 3": 40,
+                "soul head 6": 100,
+                "soul relic 1": 50,
+                "soul trinket 1": 50,
+                "soul trinket 3": 40,
+                "soul trinket 6": 100,
+                "soul weapon 1": 50,
+                "soul weapon 3": 40,
+                "soul weapon 6": 100
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -442,12 +441,12 @@
             "name": "Wandering Rock",
             "description": "An ordinary boulder, covered in moss on one side, with the other side freshly scraped. The rock has been dragging itself forward.",
             "stats": {
-                "grit": 12,
+                "grit": 15,
                 "hp": 50,
                 "mp": 20,
                 "phy_armor": 20,
                 "mag_armor": 20,
-                "flow": 15,
+                "flow": 10,
                 "mind": 10,
                 "soul": 10,
                 "exp": 3,
@@ -463,19 +462,20 @@
                 "summoning_rock": 24,
                 "red potion": 35,
                 "blue potion": 35,
-                "flow body 1": 50,
-                "flow body 3": 40,
-                "flow body 6": 100,
-                "flow head 1": 50,
-                "flow head 3": 40,
-                "flow head 6": 100,
-                "flow relic 1": 50,
-                "flow trinket 1": 50,
-                "flow trinket 3": 40,
-                "flow trinket 6": 100,
-                "flow weapon 1": 50,
-                "flow weapon 3": 40,
-                "flow weapon 6": 100
+                "grit body 1": 50,
+                "grit body 3": 40,
+                "grit body 6": 100,
+                "grit head 1": 50,
+                "grit head 3": 40,
+                "grit head 6": 100,
+                "grit relic 1": 50,
+                "grit trinket 1": 50,
+                "grit trinket 3": 40,
+                "grit trinket 6": 100,
+                "grit weapon 1": 50,
+                "grit weapon 3": 40,
+                "grit weapon 6": 100,
+                "grit weapon alt 3": 40
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -504,6 +504,8 @@
                 "swing": 1
             },
             "loot": {
+                "pig_hide": 10,
+                "pig_head": 25,
                 "rock": 24,
                 "summoning_rock": 24,
                 "red potion": 35,
@@ -525,6 +527,163 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false
+        },
+        "red_slime": {
+            "npc_id": "red_slime",
+            "ai": "Slime",
+            "name": "Red Slime",
+            "description": "A mass of red ooze, sticky yet bouncy, moves with no purpose, leaving a faint, ominous trail as it shifts aimlessly.",
+            "stats": {
+                "grit": 20,
+                "hp": 80,
+                "mp": 40,
+                "phy_armor": 20,
+                "mag_armor": 20,
+                "flow": 15,
+                "mind": 10,
+                "soul": 10,
+                "exp": 6,
+                "lvl": 6
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "red_sludge": 10,
+                "red_slime_core": 25,
+                "rock": 21,
+                "summoning_rock": 21,
+                "red potion": 35,
+                "blue potion": 35,
+                "blessing_of_grit": 60,
+                "grit body 1": 65,
+                "grit body 3": 55,
+                "grit body 6": 40,
+                "grit body 9": 100,
+                "grit head 1": 65,
+                "grit head 3": 55,
+                "grit head 6": 40,
+                "grit head 9": 100,
+                "grit relic 1": 65,
+                "grit trinket 1": 65,
+                "grit trinket 3": 55,
+                "grit trinket 6": 40,
+                "grit trinket 9": 100,
+                "grit weapon 1": 65,
+                "grit weapon 3": 55,
+                "grit weapon 6": 40,
+                "grit weapon 9": 100,
+                "grit weapon alt 3": 55
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false
+        },
+        "red_cap": {
+            "npc_id": "red_cap",
+            "ai": "Enemy",
+            "name": "Red Cap",
+            "description": "A large red-capped mushroom with grayish spots. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs; its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump",
+            "stats": {
+                "grit": 15,
+                "hp": 80,
+                "mp": 40,
+                "phy_armor": 20,
+                "mag_armor": 20,
+                "flow": 20,
+                "mind": 10,
+                "soul": 10,
+                "exp": 6,
+                "lvl": 6
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "red_mushroom_cap": 10,
+                "rock": 21,
+                "summoning_rock": 21,
+                "red potion": 35,
+                "blue potion": 35,
+                "blessing_of_flow": 60,
+                "flow body 1": 65,
+                "flow body 3": 55,
+                "flow body 6": 40,
+                "flow body 9": 100,
+                "flow head 1": 65,
+                "flow head 3": 55,
+                "flow head 6": 40,
+                "flow head 9": 100,
+                "flow relic 1": 65,
+                "flow trinket 1": 65,
+                "flow trinket 3": 55,
+                "flow trinket 6": 40,
+                "flow trinket 9": 100,
+                "flow weapon 1": 65,
+                "flow weapon 3": 55,
+                "flow weapon 6": 40,
+                "flow weapon 9": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false
+        },
+        "blue_slime": {
+            "npc_id": "blue_slime",
+            "ai": "Slime",
+            "name": "Blue Slime",
+            "description": "A mass of blue ooze, sticky yet bouncy, moves aimlessly with a strange, unsettling fluidity.",
+            "stats": {
+                "grit": 10,
+                "hp": 80,
+                "mp": 40,
+                "phy_armor": 20,
+                "mag_armor": 20,
+                "flow": 15,
+                "mind": 20,
+                "soul": 10,
+                "exp": 6,
+                "lvl": 6
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "blue_sludge": 10,
+                "blue_slime_core": 25,
+                "rock": 21,
+                "summoning_rock": 21,
+                "red potion": 35,
+                "blue potion": 35,
+                "translucent scroll": 100,
+                "blessing_of_mind": 60,
+                "mind body 1": 65,
+                "mind body 3": 55,
+                "mind body 6": 40,
+                "mind body 9": 100,
+                "mind head 1": 65,
+                "mind head 3": 55,
+                "mind head 6": 40,
+                "mind head 9": 100,
+                "mind relic 1": 65,
+                "mind trinket 1": 65,
+                "mind trinket 3": 55,
+                "mind trinket 6": 40,
+                "mind trinket 9": 100,
+                "mind weapon 1": 65,
+                "mind weapon 3": 55,
+                "mind weapon 6": 40,
+                "mind weapon 9": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false
         },
@@ -601,6 +760,7 @@
                 "smite": 1
             },
             "loot": {
+                "tentacle": 10,
                 "rock": 21,
                 "summoning_rock": 21,
                 "red potion": 35,
@@ -624,162 +784,6 @@
                 "grit weapon 6": 40,
                 "grit weapon 9": 100,
                 "grit weapon alt 3": 55
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false
-        },
-        "blue_slime": {
-            "npc_id": "blue_slime",
-            "ai": "Slime",
-            "name": "Blue Slime",
-            "description": "A mass of blue ooze, sticky yet bouncy, moves aimlessly with a strange, unsettling fluidity.",
-            "stats": {
-                "grit": 10,
-                "hp": 80,
-                "mp": 40,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 15,
-                "mind": 20,
-                "soul": 10,
-                "exp": 6,
-                "lvl": 6
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "blue_sludge": 10,
-                "slime": 10,
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
-                "translucent scroll": 100,
-                "blessing_of_mind": 60,
-                "mind body 1": 65,
-                "mind body 3": 55,
-                "mind body 6": 40,
-                "mind body 9": 100,
-                "mind head 1": 65,
-                "mind head 3": 55,
-                "mind head 6": 40,
-                "mind head 9": 100,
-                "mind relic 1": 65,
-                "mind trinket 1": 65,
-                "mind trinket 3": 55,
-                "mind trinket 6": 40,
-                "mind trinket 9": 100,
-                "mind weapon 1": 65,
-                "mind weapon 3": 55,
-                "mind weapon 6": 40,
-                "mind weapon 9": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false
-        },
-        "red_slime": {
-            "npc_id": "red_slime",
-            "ai": "Slime",
-            "name": "Red Slime",
-            "description": "A mass of red ooze, sticky yet bouncy, moves with no purpose, leaving a faint, ominous trail as it shifts aimlessly.",
-            "stats": {
-                "grit": 20,
-                "hp": 80,
-                "mp": 40,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 15,
-                "mind": 10,
-                "soul": 10,
-                "exp": 6,
-                "lvl": 6
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "red_sludge": 10,
-                "slime": 10,
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
-                "blessing_of_grit": 60,
-                "grit body 1": 65,
-                "grit body 3": 55,
-                "grit body 6": 40,
-                "grit body 9": 100,
-                "grit head 1": 65,
-                "grit head 3": 55,
-                "grit head 6": 40,
-                "grit head 9": 100,
-                "grit relic 1": 65,
-                "grit trinket 1": 65,
-                "grit trinket 3": 55,
-                "grit trinket 6": 40,
-                "grit trinket 9": 100,
-                "grit weapon 1": 65,
-                "grit weapon 3": 55,
-                "grit weapon 6": 40,
-                "grit weapon 9": 100,
-                "grit weapon alt 3": 55
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false
-        },
-        "red_cap": {
-            "npc_id": "red_cap",
-            "ai": "Enemy",
-            "name": "Red Cap",
-            "description": "A large red-capped mushroom with grayish spots. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs; its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump",
-            "stats": {
-                "grit": 15,
-                "hp": 80,
-                "mp": 40,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 20,
-                "mind": 10,
-                "soul": 10,
-                "exp": 6,
-                "lvl": 6
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
-                "blessing_of_flow": 60,
-                "flow body 1": 65,
-                "flow body 3": 55,
-                "flow body 6": 40,
-                "flow body 9": 100,
-                "flow head 1": 65,
-                "flow head 3": 55,
-                "flow head 6": 40,
-                "flow head 9": 100,
-                "flow relic 1": 65,
-                "flow trinket 1": 65,
-                "flow trinket 3": 55,
-                "flow trinket 6": 40,
-                "flow trinket 9": 100,
-                "flow weapon 1": 65,
-                "flow weapon 3": 55,
-                "flow weapon 6": 40,
-                "flow weapon 9": 100
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -848,7 +852,7 @@
                 "hp": 100,
                 "mp": 50,
                 "phy_armor": 60,
-                "mag_armor": 60,
+                "mag_armor": 40,
                 "flow": 25,
                 "mind": 10,
                 "soul": 10,
@@ -911,6 +915,7 @@
                 "thorns": 1
             },
             "loot": {
+                "spiky_mushroom_cap": 10,
                 "mushroom_horn": 10,
                 "rock": 18,
                 "summoning_rock": 18,
@@ -994,7 +999,7 @@
                 "grit weapon alt 3": 70
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false
         },
@@ -3753,12 +3758,12 @@
             "is_offensive": 0.0,
             "script_values": {
                 "bonus": [
-                    0.5,
-                    0.6,
-                    0.6999999999999998,
-                    0.7999999999999997,
-                    0.8999999999999996,
-                    0.9999999999999994
+                    0.2,
+                    0.21,
+                    0.22,
+                    0.23,
+                    0.24,
+                    0.25
                 ],
                 "hp_cost": [
                     2,
@@ -3769,12 +3774,12 @@
                     2
                 ],
                 "duration": [
-                    99,
-                    99,
-                    99,
-                    99,
-                    99,
-                    99
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5
                 ],
                 "cooldown": [
                     7,
@@ -3786,11 +3791,11 @@
                 ],
                 "levels": [
                     1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
                 ]
             }
         },
@@ -3877,12 +3882,12 @@
             "is_offensive": 0.0,
             "script_values": {
                 "bonus": [
-                    0.1,
-                    0.11,
-                    0.12,
-                    0.13,
-                    0.14,
-                    0.15
+                    0.2,
+                    0.21,
+                    0.22,
+                    0.23,
+                    0.24,
+                    0.25
                 ],
                 "duration": [
                     99,
@@ -4835,7 +4840,8 @@
                 "mind weapon 1",
                 "grit weapon c3",
                 "grit weapon c3_1",
-                "grit weapon c3_2"
+                "grit weapon c3_2",
+                "grit weapon c6"
             ]
         },
         "tree_root": {
@@ -4926,13 +4932,14 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
                 "bag_1",
-                "grit body c3",
-                "grit head c3",
                 "grit trinket c3_1",
                 "flow weapon c3",
                 "flow body c3",
                 "soul body c3",
-                "soul head c3"
+                "soul head c3",
+                "grit weapon c6",
+                "soul body c6",
+                "soul head c6"
             ]
         },
         "slime": {
@@ -5354,7 +5361,8 @@
                 "grit head c1",
                 "soul weapon c1",
                 "soul weapon c1_2",
-                "grit weapon c3_2"
+                "grit weapon c3_2",
+                "pig_leather"
             ]
         },
         "simple_wood": {
@@ -5983,6 +5991,29 @@
                 "flow head c3"
             ]
         },
+        "pig_head": {
+            "premade_id": "pig_head",
+            "name": "Pig head",
+            "description": "The head of a pig.",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "grit trinket c3"
+            ]
+        },
         "pig_tail": {
             "premade_id": "pig_tail",
             "name": "Pig tail",
@@ -6004,6 +6035,29 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
+        "pig_hide": {
+            "premade_id": "pig_hide",
+            "name": "Pig hide",
+            "description": "The un-processed hide of a pig",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "pig_leather"
+            ]
+        },
         "pig_leather": {
             "premade_id": "pig_leather",
             "name": "Pig leather",
@@ -6022,8 +6076,16 @@
             "drop_chance_range_under": 0,
             "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
+            "crafting_recipe_ingredients": [
+                {
+                    "pig_hide": 1,
+                    "simple_bark": 1
+                }
+            ],
+            "crafting_ingredient_for": [
+                "grit body c3",
+                "grit head c3"
+            ]
         },
         "strange_eye": {
             "premade_id": "strange_eye",
@@ -6130,7 +6192,13 @@
             "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "mind weapon c6",
+                "mind weapon c6_1",
+                "mind body c6",
+                "mind head c6",
+                "mind trinket c6"
+            ]
         },
         "blue_slime_core": {
             "premade_id": "blue_slime_core",
@@ -6151,7 +6219,13 @@
             "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "mind weapon c6",
+                "mind body c6",
+                "mind head c6",
+                "mind trinket c6",
+                "soul weapon c6"
+            ]
         },
         "red_sludge": {
             "premade_id": "red_sludge",
@@ -6173,7 +6247,14 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
-                "grit trinket c3"
+                "grit trinket c3",
+                "grit weapon c6",
+                "grit weapon c6_1",
+                "grit weapon c6_2",
+                "grit weapon c6_3",
+                "grit body c6",
+                "grit head c6",
+                "grit trinket c6"
             ]
         },
         "red_slime_core": {
@@ -6195,7 +6276,11 @@
             "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "grit weapon c6",
+                "grit weapon c6_1",
+                "grit trinket c6_1"
+            ]
         },
         "fairy_wings": {
             "premade_id": "fairy_wings",
@@ -6287,10 +6372,10 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
-                "grit body c3",
-                "grit head c3",
-                "grit trinket c3",
-                "flow weapon c3_1"
+                "flow weapon c3_1",
+                "soul body c3",
+                "soul head c3",
+                "soul trinket c3"
             ]
         },
         "red_mushroom_cap": {
@@ -6312,7 +6397,12 @@
             "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "flow weapon c6",
+                "flow body c6",
+                "flow head c6",
+                "flow trinket c6"
+            ]
         },
         "blue_mushroom_cap": {
             "premade_id": "blue_mushroom_cap",
@@ -6335,9 +6425,10 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
                 "mind weapon c3_2",
-                "soul body c3",
-                "soul head c3",
-                "soul trinket c3"
+                "soul weapon c6",
+                "soul body c6",
+                "soul head c6",
+                "soul trinket c6"
             ]
         },
         "spiky_mushroom_cap": {
@@ -6496,6 +6587,27 @@
             "ambience": null,
             "ambience_sfx": null,
             "can_pick_up": true,
+            "item_type": "misc",
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "tentacle": {
+            "premade_id": "tentacle",
+            "name": "Tentacle",
+            "description": "A red octopus tentacle.",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": false,
             "item_type": "misc",
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -7119,7 +7231,7 @@
         "bronze chainmail": {
             "premade_id": "bronze chainmail",
             "name": "Bronze chainmail",
-            "description": "A robust chainmail offering solid defense against attacks",
+            "description": "A robust chainmail offering solid defense against attacks.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7165,7 +7277,7 @@
         "brown wizard robe": {
             "premade_id": "brown wizard robe",
             "name": "Brown robe",
-            "description": "A flowing robe, perfect for those seeking to channel magical energy",
+            "description": "A flowing robe, perfect for those seeking to channel magical energy.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7395,7 +7507,7 @@
         "flow body 3": {
             "premade_id": "flow body 3",
             "name": "Cloth tunic",
-            "description": "A simple shirt dark shirt",
+            "description": "A simple shirt dark shirt.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7441,7 +7553,7 @@
         "flow body 6": {
             "premade_id": "flow body 6",
             "name": "Fine cloth cloak",
-            "description": "A long black cloak of excellent quality",
+            "description": "A long black cloak of excellent quality.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7487,7 +7599,7 @@
         "flow body 9": {
             "premade_id": "flow body 9",
             "name": "Rogue uniform",
-            "description": "An iconic piece of cloth specialized for ease of movement utilizing leather straps and buckles",
+            "description": "An iconic piece of cloth specialized for ease of movement utilizing leather straps and buckles.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7717,7 +7829,7 @@
         "grit body 3": {
             "premade_id": "grit body 3",
             "name": "Hard leather vest",
-            "description": "A thick tunic with fastened straps",
+            "description": "A thick tunic with fastened straps.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7763,7 +7875,7 @@
         "grit body 6": {
             "premade_id": "grit body 6",
             "name": "Iron chainmail",
-            "description": "A long shirt made of small iron rings",
+            "description": "A long shirt made of small iron rings.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7809,7 +7921,7 @@
         "grit body 9": {
             "premade_id": "grit body 9",
             "name": "Steel chestplate",
-            "description": "A solid steel chestplate, glad it fits so well",
+            "description": "A solid steel chestplate, glad it fits so well.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -7900,8 +8012,8 @@
         },
         "mind body 1": {
             "premade_id": "mind body 1",
-            "name": "Robe",
-            "description": "A long thin dark gray robe.",
+            "name": "Coat",
+            "description": "A long thin dark gray coat.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -8038,8 +8150,8 @@
         },
         "mind body 3": {
             "premade_id": "mind body 3",
-            "name": "Fine robe",
-            "description": "A light blue tinted robe",
+            "name": "Fine coat",
+            "description": "A light blue tinted coat.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -8084,8 +8196,8 @@
         },
         "mind body 6": {
             "premade_id": "mind body 6",
-            "name": "Apprentice robe",
-            "description": "A blue robe with golden threads",
+            "name": "Apprentice coat",
+            "description": "A blue coat with golden threads",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -8130,7 +8242,7 @@
         },
         "mind body 9": {
             "premade_id": "mind body 9",
-            "name": "Mage robe",
+            "name": "Mage coat",
             "description": "A deep blue robe with gold engraved patterns having jewels neatly embellished ",
             "description_room": null,
             "invisible": 0.0,
@@ -9924,7 +10036,7 @@
         },
         "soul head 3": {
             "premade_id": "soul head 3",
-            "name": "Fine silk hood",
+            "name": "Fine silk cap",
             "description": "A hood made of the finest silk",
             "description_room": null,
             "invisible": 0.0,
@@ -12977,7 +13089,8 @@
             "drop_chance_stat_filter": "mind",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
-                "mind weapon c3_2"
+                "mind weapon c3_2",
+                "mind weapon c6_1"
             ]
         },
         "mind weapon 6": {
@@ -14141,8 +14254,8 @@
         },
         "mind head c1": {
             "premade_id": "mind head c1",
-            "name": "Fluff cap",
-            "description": "A fluffy cap.",
+            "name": "Fluff hat",
+            "description": "A fluffy hat.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -14610,7 +14723,7 @@
             "slot": "weapon",
             "bonuses": "skill_level:swing=2,skill_level:bash=1",
             "stats": {
-                "grit": 3,
+                "grit": 4,
                 "hp_max": 5,
                 "mp_max": 0,
                 "phy_armor_max": 10,
@@ -14646,7 +14759,9 @@
                     "tree_branch": 2
                 }
             ],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "grit weapon c6_1"
+            ]
         },
         "grit weapon c3_1": {
             "premade_id": "grit weapon c3_1",
@@ -14661,7 +14776,7 @@
             "slot": "weapon",
             "bonuses": "skill_level:stab=1,skill_level:swing=1",
             "stats": {
-                "grit": 3,
+                "grit": 4,
                 "hp_max": 0,
                 "mp_max": 0,
                 "phy_armor_max": 0,
@@ -14697,11 +14812,13 @@
                     "stone": 4
                 }
             ],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "grit weapon c6_2"
+            ]
         },
         "grit weapon c3_2": {
             "premade_id": "grit weapon c3_2",
-            "name": "Stone Sword",
+            "name": "Stone sword",
             "description": "A long rock on a stick",
             "description_room": null,
             "invisible": 0.0,
@@ -14749,25 +14866,28 @@
                     "simple_bark": 2
                 }
             ],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "grit weapon c6_3",
+                "flow weapon c6"
+            ]
         },
         "grit body c3": {
             "premade_id": "grit body c3",
-            "name": "Orange mushroom vest",
-            "description": "A orange vest made from crudely stitching some mushroom caps together.",
+            "name": "Leather vest",
+            "description": "A leather vest made from cured pig hide.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
             "ambience": null,
             "ambience_sfx": null,
-            "can_pick_up": true,
+            "can_pick_up": false,
             "slot": "body",
             "bonuses": null,
             "stats": {
                 "grit": 1,
-                "hp_max": 20,
+                "hp_max": 30,
                 "mp_max": 0,
-                "phy_armor_max": 40,
+                "phy_armor_max": 30,
                 "mag_armor_max": 0,
                 "flow": 0,
                 "mind": 0,
@@ -14796,29 +14916,28 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "orange_mushroom_cap": 5,
-                    "spider_silk": 2
+                    "pig_leather": 5
                 }
             ],
             "crafting_ingredient_for": []
         },
         "grit head c3": {
             "premade_id": "grit head c3",
-            "name": "Orange mushroom hat",
-            "description": "A orange mushroom cap hollowed out to fit your head and a string to keep it on.",
+            "name": "Leather helm",
+            "description": "A leather helm made from cured pig hide.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
             "ambience": null,
             "ambience_sfx": null,
-            "can_pick_up": true,
+            "can_pick_up": false,
             "slot": "head",
             "bonuses": null,
             "stats": {
                 "grit": 1,
-                "hp_max": 20,
+                "hp_max": 30,
                 "mp_max": 0,
-                "phy_armor_max": 40,
+                "phy_armor_max": 30,
                 "mag_armor_max": 0,
                 "flow": 0,
                 "mind": 0,
@@ -14847,8 +14966,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "orange_mushroom_cap": 3,
-                    "spider_silk": 1
+                    "pig_leather": 3
                 }
             ],
             "crafting_ingredient_for": []
@@ -14899,7 +15017,7 @@
             "crafting_recipe_ingredients": [
                 {
                     "grit trinket c1": 1,
-                    "orange_mushroom_cap": 2,
+                    "pig_head": 2,
                     "red_sludge": 1
                 }
             ],
@@ -14954,7 +15072,10 @@
                     "spider_silk": 2
                 }
             ],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "grit trinket c6",
+                "grit trinket c6_1"
+            ]
         },
         "flow weapon c3": {
             "premade_id": "flow weapon c3",
@@ -15212,8 +15333,8 @@
         },
         "mind weapon c3": {
             "premade_id": "mind weapon c3",
-            "name": "Slime ball",
-            "description": "A green ball of slime with a rock in the center.",
+            "name": "Green slime sphere",
+            "description": "A green sphere of slime with a rock in the center.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -15259,7 +15380,9 @@
                     "stone": 1
                 }
             ],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "mind weapon c6"
+            ]
         },
         "mind weapon c3_2": {
             "premade_id": "mind weapon c3_2",
@@ -15314,7 +15437,7 @@
         },
         "mind body c3": {
             "premade_id": "mind body c3",
-            "name": "Slime coat",
+            "name": "Green slime coat",
             "description": "A green coat made of green jell. Not as sticky as it looks.",
             "description_room": null,
             "invisible": 0.0,
@@ -15364,7 +15487,7 @@
         },
         "mind head c3": {
             "premade_id": "mind head c3",
-            "name": "Slime antena",
+            "name": "Green slime antena",
             "description": "A green slime antena. Could it be a reference?",
             "description_room": null,
             "invisible": 0.0,
@@ -15414,7 +15537,7 @@
         },
         "mind trinket c3": {
             "premade_id": "mind trinket c3",
-            "name": "Slime gloves",
+            "name": "Green slime gloves",
             "description": "A pair of green gloves made of green jell. Not as sticky as it looks.",
             "description_room": null,
             "invisible": 0.0,
@@ -15515,8 +15638,8 @@
         },
         "soul body c3": {
             "premade_id": "soul body c3",
-            "name": "Blue silk robe",
-            "description": "A silk robe dyed blue.",
+            "name": "Orange mushroom robe",
+            "description": "A orange vest made from crudely stitching some mushroom caps together.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -15527,10 +15650,10 @@
             "bonuses": null,
             "stats": {
                 "grit": 0,
-                "hp_max": 20,
-                "mp_max": 25,
+                "hp_max": 15,
+                "mp_max": 10,
                 "phy_armor_max": 20,
-                "mag_armor_max": 25,
+                "mag_armor_max": 0,
                 "flow": 0,
                 "mind": 0,
                 "soul": 2,
@@ -15558,7 +15681,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "blue_mushroom_cap": 4,
+                    "orange_mushroom_cap": 3,
                     "spider_silk": 2
                 }
             ],
@@ -15566,8 +15689,8 @@
         },
         "soul head c3": {
             "premade_id": "soul head c3",
-            "name": "Blue silk hood",
-            "description": "A silk hood dyed blue.",
+            "name": "Orange mushroom cap",
+            "description": "A orange mushroom cap hollowed out to fit your head and a string to keep it on.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -15578,13 +15701,13 @@
             "bonuses": null,
             "stats": {
                 "grit": 0,
-                "hp_max": 20,
-                "mp_max": 25,
+                "hp_max": 15,
+                "mp_max": 10,
                 "phy_armor_max": 20,
-                "mag_armor_max": 25,
+                "mag_armor_max": 0,
                 "flow": 0,
                 "mind": 0,
-                "soul": 3,
+                "soul": 2,
                 "inv_slots": 0
             },
             "requirements": {
@@ -15609,7 +15732,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "blue_mushroom_cap": 2,
+                    "orange_mushroom_cap": 2,
                     "spider_silk": 1
                 }
             ],
@@ -15617,6 +15740,1075 @@
         },
         "soul trinket c3": {
             "premade_id": "soul trinket c3",
+            "name": "Orange mushroom cross",
+            "description": "A cross made out of a orange mushroom cap.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "trinket",
+            "bonuses": "skill_level:cure_light_wounds=1",
+            "stats": {
+                "grit": 0,
+                "hp_max": 5,
+                "mp_max": 5,
+                "phy_armor_max": 0,
+                "mag_armor_max": 10,
+                "flow": 0,
+                "mind": 0,
+                "soul": 2,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 3,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 11,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "orange_mushroom_cap": 2
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "grit weapon c6": {
+            "premade_id": "grit weapon c6",
+            "name": "Red slime core flaile",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:swing=2,skill_level:bash=2",
+            "stats": {
+                "grit": 8,
+                "hp_max": 10,
+                "mp_max": 0,
+                "phy_armor_max": 5,
+                "mag_armor_max": 5,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 12,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_sludge": 2,
+                    "red_slime_core": 1,
+                    "spider_silk": 2,
+                    "tree_branch": 2
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "grit weapon c6_1": {
+            "premade_id": "grit weapon c6_1",
+            "name": "Red slime core club",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:swing=3,skill_level:bash=1",
+            "stats": {
+                "grit": 6,
+                "hp_max": 10,
+                "mp_max": 0,
+                "phy_armor_max": 5,
+                "mag_armor_max": 5,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 12,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_sludge": 1,
+                    "grit weapon c3": 1,
+                    "red_slime_core": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "grit weapon c6_2": {
+            "premade_id": "grit weapon c6_2",
+            "name": "Red slime spear",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:swing=1,skill_level:stab=2",
+            "stats": {
+                "grit": 7,
+                "hp_max": 10,
+                "mp_max": 0,
+                "phy_armor_max": 5,
+                "mag_armor_max": 5,
+                "flow": 3,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 12,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_sludge": 2,
+                    "grit weapon c3_1": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "grit weapon c6_3": {
+            "premade_id": "grit weapon c6_3",
+            "name": "Red slime sword",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:swing=2,skill_level:slash=2",
+            "stats": {
+                "grit": 7,
+                "hp_max": 10,
+                "mp_max": 0,
+                "phy_armor_max": 5,
+                "mag_armor_max": 5,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 12,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_sludge": 2,
+                    "grit weapon c3_2": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "grit body c6": {
+            "premade_id": "grit body c6",
+            "name": "Red sludge vest",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "body",
+            "bonuses": null,
+            "stats": {
+                "grit": 2,
+                "hp_max": 60,
+                "mp_max": 0,
+                "phy_armor_max": 25,
+                "mag_armor_max": 5,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 12,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_sludge": 5
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "grit head c6": {
+            "premade_id": "grit head c6",
+            "name": "Red sludge helm",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "head",
+            "bonuses": null,
+            "stats": {
+                "grit": 2,
+                "hp_max": 60,
+                "mp_max": 0,
+                "phy_armor_max": 25,
+                "mag_armor_max": 5,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 12,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_sludge": 3
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "grit trinket c6": {
+            "premade_id": "grit trinket c6",
+            "name": "Red slime shield",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "trinket",
+            "bonuses": null,
+            "stats": {
+                "grit": 3,
+                "hp_max": 30,
+                "mp_max": 0,
+                "phy_armor_max": 30,
+                "mag_armor_max": 20,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 12,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_sludge": 2,
+                    "grit trinket c3_1": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "grit trinket c6_1": {
+            "premade_id": "grit trinket c6_1",
+            "name": "Slime slayer emblem",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "trinket",
+            "bonuses": null,
+            "stats": {
+                "grit": 4,
+                "hp_max": 15,
+                "mp_max": 0,
+                "phy_armor_max": 15,
+                "mag_armor_max": 5,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 12,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "grit trinket c3_1": 1,
+                    "red_slime_core": 2
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "flow weapon c6": {
+            "premade_id": "flow weapon c6",
+            "name": "Red caped stone short sword",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:stab=2,skill_level:bash=1",
+            "stats": {
+                "grit": 0,
+                "hp_max": 10,
+                "mp_max": 0,
+                "phy_armor_max": 20,
+                "mag_armor_max": 10,
+                "flow": 6,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 12,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "grit weapon c3_2": 1,
+                    "red_mushroom_cap": 3
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "flow body c6": {
+            "premade_id": "flow body c6",
+            "name": "Red cap tunic",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "body",
+            "bonuses": null,
+            "stats": {
+                "grit": 0,
+                "hp_max": 30,
+                "mp_max": 15,
+                "phy_armor_max": 25,
+                "mag_armor_max": 15,
+                "flow": 2,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 12,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_mushroom_cap": 5
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "flow head c6": {
+            "premade_id": "flow head c6",
+            "name": "Red cap hat",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "head",
+            "bonuses": null,
+            "stats": {
+                "grit": 0,
+                "hp_max": 30,
+                "mp_max": 15,
+                "phy_armor_max": 20,
+                "mag_armor_max": 10,
+                "flow": 2,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 12,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_mushroom_cap": 3
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "flow trinket c6": {
+            "premade_id": "flow trinket c6",
+            "name": "Red cap buckler",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "trinket",
+            "bonuses": "skill_level:bash=1",
+            "stats": {
+                "grit": 0,
+                "hp_max": 20,
+                "mp_max": 0,
+                "phy_armor_max": 25,
+                "mag_armor_max": 20,
+                "flow": 2,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 12,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "red_mushroom_cap": 2
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "mind weapon c6": {
+            "premade_id": "mind weapon c6",
+            "name": "Blue slime core sphere ",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:magic_missile=1,skill_level:mana_bolt=2",
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 30,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "flow": 0,
+                "mind": 7,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 12,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "mind weapon c3": 1,
+                    "blue_slime_core": 1,
+                    "blue_sludge": 2
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "mind weapon c6_1": {
+            "premade_id": "mind weapon c6_1",
+            "name": "Blue slime wand",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": null,
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "mp_max": 20,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "flow": 0,
+                "mind": 7,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 12,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "mind weapon 3": 1,
+                    "blue_sludge": 2
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "mind body c6": {
+            "premade_id": "mind body c6",
+            "name": "Blue slime core coat",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "body",
+            "bonuses": null,
+            "stats": {
+                "grit": 0,
+                "hp_max": 10,
+                "mp_max": 45,
+                "phy_armor_max": 10,
+                "mag_armor_max": 40,
+                "flow": 0,
+                "mind": 3,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 12,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "blue_sludge": 3,
+                    "blue_slime_core": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "mind head c6": {
+            "premade_id": "mind head c6",
+            "name": "Blue slime core hat",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "head",
+            "bonuses": null,
+            "stats": {
+                "grit": 0,
+                "hp_max": 10,
+                "mp_max": 45,
+                "phy_armor_max": 10,
+                "mag_armor_max": 40,
+                "flow": 0,
+                "mind": 3,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 12,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "blue_sludge": 2,
+                    "blue_slime_core": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "mind trinket c6": {
+            "premade_id": "mind trinket c6",
+            "name": "Blue slime gloves",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "trinket",
+            "bonuses": null,
+            "stats": {
+                "grit": 0,
+                "hp_max": 5,
+                "mp_max": 20,
+                "phy_armor_max": 10,
+                "mag_armor_max": 20,
+                "flow": 0,
+                "mind": 4,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 12,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "blue_sludge": 2,
+                    "blue_slime_core": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "soul weapon c6": {
+            "premade_id": "soul weapon c6",
+            "name": "Blue core mace",
+            "description": "None",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "skill_level:smite=2,skill_level:swing=2,skill_level:cure_light_wounds=1",
+            "stats": {
+                "grit": 0,
+                "hp_max": 10,
+                "mp_max": 10,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 7,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 12,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "blue_mushroom_cap": 2,
+                    "blue_slime_core": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "soul body c6": {
+            "premade_id": "soul body c6",
+            "name": "Blue silk robe",
+            "description": "A silk robe dyed blue.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "body",
+            "bonuses": null,
+            "stats": {
+                "grit": 0,
+                "hp_max": 20,
+                "mp_max": 25,
+                "phy_armor_max": 20,
+                "mag_armor_max": 25,
+                "flow": 0,
+                "mind": 0,
+                "soul": 2,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 12,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "blue_mushroom_cap": 4,
+                    "spider_silk": 2
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "soul head c6": {
+            "premade_id": "soul head c6",
+            "name": "Blue silk cap",
+            "description": "A silk hood dyed blue.",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "head",
+            "bonuses": null,
+            "stats": {
+                "grit": 0,
+                "hp_max": 20,
+                "mp_max": 25,
+                "phy_armor_max": 20,
+                "mag_armor_max": 25,
+                "flow": 0,
+                "mind": 0,
+                "soul": 2,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 6,
+                "hp_max": 0,
+                "mp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 12,
+                "inv_slots": 0
+            },
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "blue_mushroom_cap": 2,
+                    "spider_silk": 1
+                }
+            ],
+            "crafting_ingredient_for": []
+        },
+        "soul trinket c6": {
+            "premade_id": "soul trinket c6",
             "name": "Blue mushroom corss",
             "description": "A cross made out of a blue mushroom cap.",
             "description_room": null,
@@ -15635,11 +16827,11 @@
                 "mag_armor_max": 15,
                 "flow": 0,
                 "mind": 0,
-                "soul": 3,
+                "soul": 2,
                 "inv_slots": 0
             },
             "requirements": {
-                "lvl": 3,
+                "lvl": 6,
                 "hp_max": 0,
                 "mp_max": 0,
                 "phy_armor_max": 0,
@@ -15647,7 +16839,7 @@
                 "grit": 0,
                 "flow": 0,
                 "mind": 0,
-                "soul": 11,
+                "soul": 12,
                 "inv_slots": 0
             },
             "drop_from_random": 0,

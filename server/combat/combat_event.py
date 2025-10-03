@@ -72,7 +72,7 @@ class CombatEvent:
         
         
         actors = []
-        for actor in pop.damage_source_actor.room.actors.values():
+        for actor in pop.damage_taker_actor.room.actors.values():
             actors.append(actor)
         for actor in actors:
             #if actor.status == ActorStatusType.DEAD:
@@ -94,28 +94,37 @@ class CombatEvent:
 
         if not damage_obj.dont_proc:
             # before calc on damage_source_actor 
-            damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(damage_obj)
-            damage_obj = damage_obj.damage_source_actor.inventory_manager.deal_damage(damage_obj)
+            if damage_obj.damage_source_actor.affect_manager != None:
+                damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(damage_obj)
+            if damage_obj.damage_source_actor.inventory_manager != None:
+                damage_obj = damage_obj.damage_source_actor.inventory_manager.deal_damage(damage_obj)
 
             # before calc on damage_taker_actor
-            damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_before_calc(damage_obj)
-            damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_before_calc(damage_obj)
+            if damage_obj.damage_taker_actor.affect_manager != None:
+                damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_before_calc(damage_obj)
+            if damage_obj.damage_taker_actor.inventory_manager != None:
+                damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_before_calc(damage_obj)
        
         # +/- armor calculation and hp removal
         damage_obj.calculate()
 
         if not damage_obj.dont_proc:
             # after calc on damage_taker_actor
-            damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_after_calc(damage_obj)
-            damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_after_calc(damage_obj)
+            if damage_obj.damage_taker_actor.affect_manager != None:
+                damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_after_calc(damage_obj)
+            if damage_obj.damage_taker_actor.inventory_manager != None:
+                damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_after_calc(damage_obj)
 
             # after calc on damage_source_actor 
-            damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
-            damage_obj.damage_source_actor.inventory_manager.dealt_damage(damage_obj)
+            if damage_obj.damage_source_actor.affect_manager != None:
+                damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
+            if damage_obj.damage_source_actor.inventory_manager != None:
+                damage_obj.damage_source_actor.inventory_manager.dealt_damage(damage_obj)
 
         # add threat to the attacker
         if damage_obj.add_threat:
-            damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += abs(damage_obj.damage_value)
+            if damage_obj.damage_source_actor.stat_manager != None:
+                damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += abs(damage_obj.damage_value)
         
         self.pop_from_queue()
 

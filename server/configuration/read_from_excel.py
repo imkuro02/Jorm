@@ -204,6 +204,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
     for row in SHEET['items_equipment']:
         x = SHEET['items_equipment']
         for index in range(0, len(x[row])):
+            #print(x['premade_id'][index])
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':   x['premade_id'][index],
                 'name':         x['name'][index],
