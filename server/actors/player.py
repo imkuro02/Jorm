@@ -296,7 +296,7 @@ class Player(Actor):
             
                 
         if self.update_checker != None:
-            if self.factory.ticks_passed % 30 != 0:
+            if self.factory.ticks_passed % 30 == 0:
                 self.update_checker.tick()
     
     

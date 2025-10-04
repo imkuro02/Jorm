@@ -235,7 +235,7 @@ func _process(_delta):
 
 func _on_input_submitted(text: String) -> void:
 	# and text.strip_edges() != ""
-	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
+	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN and text.strip_edges() != "":
 		socket.send_text(text.strip_edges())
 		#OUTPUT.append_text('>'+text+'\n')
 		if text.split(" ")[0] in ['say','shout']:
