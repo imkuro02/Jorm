@@ -180,8 +180,8 @@ class UpdateChecker:
     def tick(self):
         
         #return
-        if self.actor.factory.ticks_passed % 30 != 0:
-            return
+        #if self.actor.factory.ticks_passed % 30 != 0:
+        #    return
         #self.tick_show_actors()
         _map = self.actor.command_map('', return_gmcp = True)
 
