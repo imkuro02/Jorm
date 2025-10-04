@@ -187,24 +187,25 @@ class SkillDamageByGrit(SkillDamage):
         return super().use(StatType.GRIT, DamageType.PHYSICAL)
 class SkillDamageByFlow(SkillDamage):
     def use(self):
-        return super().use(StatType.FLOW, DamageType.PHYSICAL)
-        ''' 
+        #return super().use(StatType.FLOW, DamageType.PHYSICAL)
+         
         damage_obj = super().use(StatType.FLOW, DamageType.PHYSICAL)
-        was_blocked = damage_obj.damage_value <= -1
-        roll = random.randint(0,100)
+        was_blocked = False #damage_obj.damage_value <= -1
+        roll = random.randint(0,1)
         if not was_blocked:
             if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
                 bleed_damage = self.user.stat_manager.stats[StatType.LVL]
                 stunned_affect = affects.AffectBleed(
-                    self.other.affect_manager,
-                    'Bleeding', f'Attackers Level as Pure damage per turn',
+                    affect_source_actor = self.user,
+                    affect_target_actor = self.other,
+                    name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
                     turns = 3,
                     damage = bleed_damage,
-                    get_prediction_string_append = 'is bleeding'
+                    #get_prediction_string_append = 'is bleeding'
                 )
                 self.other.affect_manager.set_affect_object(stunned_affect)
         return damage_obj
-        '''
+        
 
 class SkillDamageByGritFlow(SkillDamage):
     def use(self):
@@ -227,8 +228,9 @@ class SkillBash(SkillDamageByGrit):
             was_blocked = damage_obj.damage_value <= -1
             if not was_blocked:
                 stunned_affect = affects.AffectStunned(
-                    self.other.affect_manager,
-                    'Stunned', 'Unable to act during combat turns',
+                    affect_source_actor = self.user,
+                    affect_target_actor = self.other,
+                    name = 'Stunned', description = 'Unable to act during combat turns',
                     turns = self.script_values['duration'][self.users_skill_level],
                     get_prediction_string_append = 'is stunned!',
                     get_prediction_string_clear = True
@@ -250,7 +252,8 @@ class SkillBoostStat(Skill):
             turns =         int(self.script_values['duration'][self.users_skill_level])
             bonus =         self.script_values['bonus'][self.users_skill_level]
             aff   = affects.AffectBoostStat(
-                    affect_manager = self.other.affect_manager, 
+                    affect_source_actor = self.user,
+                    affect_target_actor = self.other,
                     name = name_of_boost, description = f'Temporary boost {StatType.name[stat].lower()} by {int(bonus*100)}% (+{int(self.other.stat_manager.stats[stat]*bonus)})', 
                     turns = turns, bonus = bonus, stat=stat)
             self.other.affect_manager.set_affect_object(aff)        
@@ -285,9 +288,10 @@ class SkillBecomeEthereal(Skill):
             turns = int(self.script_values['duration'][self.users_skill_level])
             dmg_amp = self.script_values['bonus'][self.users_skill_level]
             ethereal_affect = affects.AffectEthereal(
-                self.other.affect_manager, 
-                'Ethereal', f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
-                turns, dmg_amp)
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
+                name = 'Ethereal', description = f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage', 
+                turns = turns, dmg_amp = dmg_amp)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
 
 class SkillMageArmor(Skill):
@@ -297,7 +301,8 @@ class SkillMageArmor(Skill):
             turns = int(self.script_values['duration'][self.users_skill_level])
             reduction = self.script_values['bonus'][self.users_skill_level]
             ethereal_affect = affects.AffectMageArmor(
-                affect_manager = self.other.affect_manager, 
+                affect_source_actor = self.user,
+                affect_target_actor = self.other, 
                 name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
                 turns = turns, reduction = reduction)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
@@ -309,7 +314,8 @@ class SkillEnrage(Skill):
             turns =         int(self.script_values['duration'][self.users_skill_level])
             bonus =      self.script_values['bonus'][self.users_skill_level]
             enrage_affect = affects.AffectEnrage(
-                affect_manager = self.other.affect_manager, 
+                affect_source_actor = self.user,
+                affect_target_actor = self.other, 
                 name = 'Enraged', description = f'Grit increased, and all armor decreased by {int(bonus*100)}%', 
                 turns = turns, bonus = bonus)
             self.user.affect_manager.set_affect_object(enrage_affect)  
@@ -321,7 +327,8 @@ class SkillAdrenaline(Skill):
             turns =         int(self.script_values['duration'][self.users_skill_level])
             extra_hp =      self.script_values['bonus'][self.users_skill_level]
             enrage_affect = affects.AffectAdrenaline(
-                affect_manager = self.other.affect_manager, 
+                affect_source_actor = self.user,
+                affect_target_actor = self.other, 
                 name = 'Surging', description = f'Temporary {int(extra_hp*100)}% Health', 
                 turns = turns, extra_hp = extra_hp)
             self.user.affect_manager.set_affect_object(enrage_affect)  
@@ -333,7 +340,8 @@ class SkillLeech(Skill):
             leech_power = self.script_values['bonus'][self.users_skill_level]
             #affect_manager, name, description, turns
             leech_affect = affects.Leech(
-                affect_manager = self.other.affect_manager,
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
                 name = 'Leeching',
                 description = f'Convert {int(leech_power*100)}% of physical damage dealt to healing.',
                 turns = int(self.script_values['duration'][self.users_skill_level]),
@@ -348,7 +356,8 @@ class SkillThorns(Skill):
         if self.success:
             damage_reflected_power = self.script_values['bonus'][self.users_skill_level]
             thorns_affect = affects.AffectThorns(
-                affect_manager = self.other.affect_manager,
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
                 name = 'Thorny',
                 description = f'Reflect {int(damage_reflected_power*100)}% of physical damage back. ',
                 turns = int(self.script_values['duration'][self.users_skill_level]),
@@ -362,7 +371,8 @@ class SkillStealth(Skill):
         if self.success:
             damage_bonus = self.script_values['bonus'][self.users_skill_level]
             stealthed_affect = affects.AffectStealth(
-                affect_manager = self.other.affect_manager,
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
                 name = 'Stealthed',
                 description = f'Multiply your next attack by {int(damage_bonus*100)}%',
                 turns = int(self.script_values['duration'][self.users_skill_level]),
@@ -387,7 +397,8 @@ class SkillRegenPercentFromPotion(Skill):
                 damage_obj.run()   
 
                 potion_sickness = affects.Affect(
-                    affect_manager = self.other.affect_manager,
+                    affect_source_actor = self.user,
+                    affect_target_actor = self.other,
                     name = 'Potion Sick',
                     description = f'Immune to potion effects',
                     turns = 3

@@ -204,6 +204,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
     for row in SHEET['items_equipment']:
         x = SHEET['items_equipment']
         for index in range(0, len(x[row])):
+            #print(x['premade_id'][index])
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':   x['premade_id'][index],
                 'name':         x['name'][index],
@@ -263,6 +264,10 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
 
             ingredients = {}
             premade_id = x['premade_id'][index]
+
+            if premade_id not in ITEMS:
+                print(f'excel loader skipping premade_id "{premade_id}" because this item doesnt exist (shadow error)')
+                continue
             
             for i in range(0,4):
                 i += 1

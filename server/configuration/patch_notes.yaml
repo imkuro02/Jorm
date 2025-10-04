@@ -1,4 +1,28 @@
 versions:
+  '031025':
+    id: '031025'
+    title: Affects and Items
+    unixtime: 1759480978
+    features:
+    - Some unfinished items have been removed from the drop tables.
+    - More items have been added along with recipes.
+
+    - Enrage no longer boosts max hp, instead it makes you deal BONUS damage, receive BONUS damage, and receive negative BONUS health from healing.
+
+    - All damage dealt with FLOW as primary stat now has a LVL in 100 chance to cause bleed.
+    - Applying bleed cannot be blocked by armor, and causes PURE damage.
+    - Bleed damage is halved each proc.
+    - Bleed damage cannot exceed the last bleed appliers LVL.
+
+    - Mage armor now displays damage blocked with magically protected affect.
+    - Mage armor only procs if damage is less than current magicka.
+    - Mage armor magicka damage no longer procs further damage.
+    - Magically proteted affects all damage types except for HEALING damage.
+
+    - Fixed bug where some stat boosting skills could boost your stats permanently.
+    - Fixed bug where bleed could crash game under specific conditions; Bleed source actor dies and Bleed target actor is afflicted, then passes turn.
+
+    - Afflictions now have a source and target actor, meaning afflictions can proc eachother, aswell as increase threat generation.
   '300925':
     id: '300925'
     title: UI changes
