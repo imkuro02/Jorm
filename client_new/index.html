@@ -59,18 +59,19 @@
     <div class="content">
       <div class="text-section">
         <h2>Jorm web client</h2>
-        <p>Jorm is a multi user dungeon (MUD) focused on grinding monsters in turn based combat, 
-            exploiting the flee mechanics to your advantage, and intiger overflowing your EXP.
-            <br><br>
-            The game currently has over 200 items, over 40 enemies, and a few minor quests, including one 
-            dungeon with a boss and unique item as a reward.
-            <br><br>
-            Feel free to contact me on discord about any questions, or joining our discord server to contribute
-            with ideas, bugs you found, or in general to hand out.
-            <br><br>
-            Fullscreen client: <a href="https://jorm.kurowski.xyz/play">https://jorm.kurowski.xyz/play</a>
-            <br><br>
-            Discord server: <a href="https://discord.gg/AZ98axtXc6">https://discord.gg/AZ98axtXc6</a>
+        <p>
+          Jorm is a multi user dungeon (MUD) focused on grinding monsters in turn based combat,
+          exploiting the flee mechanics to your advantage, and integer overflowing your EXP.
+          <br><br>
+          The game currently has over 200 items, over 40 enemies, and a few minor quests, including one
+          dungeon with a boss and unique item as a reward.
+          <br><br>
+          Feel free to contact me on Discord about any questions, or join our Discord server to contribute
+          ideas, report bugs, or hang out.
+          <br><br>
+          Fullscreen client: <a href="https://jorm.kurowski.xyz/play">https://jorm.kurowski.xyz/play</a>
+          <br><br>
+          Discord server: <a href="https://discord.gg/AZ98axtXc6">https://discord.gg/AZ98axtXc6</a>
         </p>
       </div>
 
@@ -80,5 +81,14 @@
       </div>
     </div>
   </div>
+
+  <!-- Prevent Firefox from unfocusing on Backspace -->
+  <script>
+    window.addEventListener("keydown", function(e) {
+      if (e.key === "Backspace") {
+        e.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
