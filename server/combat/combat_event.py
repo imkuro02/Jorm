@@ -79,9 +79,10 @@ class CombatEvent:
             #    continue
 
             # do not clamp if actor is unloaded
-            if actor.stat_manager == None:
-                print(f'{actor} was unloaded but somehow took damage (probably a heal tick)')
-                continue
+            #if actor.stat_manager == None:
+            #    print(f'{actor} was unloaded but somehow took damage (probably a heal tick)')
+            #    print(f'{actor.name} was unloaded but somehow took damage (probably a heal tick)')
+            #    continue
             actor.stat_manager.hp_mp_clamp_update()
         
 

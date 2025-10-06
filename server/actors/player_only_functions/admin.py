@@ -116,7 +116,9 @@ def command_help(self, line):
         
 
 def command_get_time(self, line):
-    if line == '1':
+    if line == '0':
+        self.sendLine('Unix time is: '+str(utils.get_unix_timestamp()))
+    elif line == '1':
         self.sendLine(str(self.room.world.game_time.get_game_time_int()))
     elif line == '2':
         self.sendLine(str(self.room.world.game_time.get_game_time_compact_str()))

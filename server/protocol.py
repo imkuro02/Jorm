@@ -373,6 +373,7 @@ class Protocol(protocol.Protocol):
         self.actor.simple_broadcast('Logging off', f'{self.actor.pretty_name()} logging off')
         # teleport player to loading to remove them safely
         self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
+        #del self.factory.world.rooms[StaticRooms.LOADING].actors[self.actor.id]
         # remove player from combat
         #del self.actor.room.actors[self.actor.id]
         #self.actor.room = None

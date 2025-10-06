@@ -602,19 +602,24 @@ class Actor:
         self.ai.die()
 
         try:        
-            del self.room.combat.participants[self.id]
+            if self.room.combat != None:
+                if self in self.room.combat.participants.values():
+                    del self.room.combat.participants[self.id]
         except Exception as e:
-            pass #print(e)
+            print(self, 'could not remove from room combat participants while unloading')
+            print(e)
 
         try:        
             del self.room.actors[self.id]
         except Exception as e:
-            pass #print(e)
+            print(self, 'could not remove from room actors while unloading')
+            print(e)
             
         try:     
             self.room = None
         except Exception as e:
-            pass #print(e)
+            print(self, 'could not set room to none while unloading')
+            print(e)
 
         for i in self.inventory_manager.items.values():
             unload(i)
