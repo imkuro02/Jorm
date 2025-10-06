@@ -55,7 +55,7 @@ skill_portal:
             give_to_npc: 
               - item: summoning_rock
                 amount: 1
-          teleport_player: overworld/6c4f5497-f9e0-4763-bf86-12838d57862
+          teleport_player: overworld/6c4f5497-f9e0-4763-bf86-12838d578621
 
         - line: |
             teleport to the temple

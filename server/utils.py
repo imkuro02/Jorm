@@ -32,14 +32,15 @@ class RefTracker:
 
 REFTRACKER = RefTracker()
 
-TOUNLOAD = []
+TOUNLOAD = {}
 
 def unload(obj_to_unload):
-    TOUNLOAD.append(obj_to_unload)
+    TOUNLOAD[obj_to_unload] = 0
 
 def unload_fr():
     global TOUNLOAD  # <-- This is important
-    #print(TOUNLOAD)
+
+    _unloaded = []
     for obj_to_unload in TOUNLOAD:
         try:
             if type(obj_to_unload) == str:
@@ -52,7 +53,13 @@ def unload_fr():
                     print(e)
         except Exception as e:
             print(e)
-    TOUNLOAD = []  # This now clears the actual global list
+        _unloaded.append(obj_to_unload)
+
+    for i in _unloaded:
+        del TOUNLOAD[i]
+       
+
+    
 
 logging.basicConfig(
     filename=   'logs.log',     # Log file name
