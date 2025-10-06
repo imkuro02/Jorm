@@ -42,14 +42,16 @@ def unload_fr():
     #print(TOUNLOAD)
     for obj_to_unload in TOUNLOAD:
         try:
+            if type(obj_to_unload) == str:
+                continue
             obj_dict = obj_to_unload.__dict__
             for key in obj_dict:
                 try:
                     obj_dict[key] = None
                 except Exception as e:
-                    pass  # print(e)
+                    print(e)
         except Exception as e:
-            pass  # print(e)
+            print(e)
     TOUNLOAD = []  # This now clears the actual global list
 
 logging.basicConfig(
