@@ -77,7 +77,8 @@ def command_go(self, line = '', room_id = None):
             roll = random.randint(0,100)
             if roll == 0:
                 aff = Affect(
-                    affect_manager=self.affect_manager,
+                    affect_source_actor = self,
+                    affect_target_actor = self,
                     name='Bumpy',
                     description='You have a large stupid bump on your head', 
                     turns=100
