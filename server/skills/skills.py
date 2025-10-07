@@ -162,14 +162,12 @@ class SkillManaFeed(Skill):
                 damage_to_stat = StatType.MP
                 )
             damage_obj.run()
-            
-
-
 
 class SkillDamage(Skill):
      def use(self, my_dmg_scaling = StatType.GRIT, my_dmg_type = DamageType.PHYSICAL):
         super().use()
         if self.success:
+
             dmg = self.get_dmg_value(my_dmg_scaling)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
@@ -385,8 +383,7 @@ class SkillRegenPercentFromPotion(Skill):
     def use(self, power_percent, stat_to_heal):
         super().use()
         if self.success:
-            if 'Potion Sick' not in self.other.affect_manager.affects:
-                damage_obj = Damage(
+            damage_obj = Damage(
                     damage_taker_actor = self.other,
                     damage_source_action = self,
                     damage_source_actor = self.user,
@@ -394,25 +391,50 @@ class SkillRegenPercentFromPotion(Skill):
                     damage_type = DamageType.HEALING,
                     damage_to_stat = stat_to_heal
                     )
-                damage_obj.run()   
+            damage_obj.run()   
 
-                potion_sickness = affects.Affect(
-                    affect_source_actor = self.user,
-                    affect_target_actor = self.other,
-                    name = 'Potion Sick',
-                    description = f'Immune to potion effects',
-                    turns = 3
-                ) 
-                self.other.affect_manager.set_affect_object(potion_sickness)      
-            else:
-                self.other.simple_broadcast('You are still potion sick', f'{self.other.pretty_name()} is still potion sick')  
+class SkillApplyDOT(Skill):
+    def use(self, name = 'DOT', description = 'Damage over time', damage_value = 0, damage_type = DamageType.PURE, damage_to_stat = StatType.HP, turns = 10000):
+        super().use()
+        if self.success:
+            DOT = affects.AffectDOT(
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
+                name = name,
+                description = description,
+                turns = turns,
+                damage_value = damage_value,
+                damage_type = damage_type,
+                damage_to_stat = damage_to_stat
+            ) 
+            self.other.affect_manager.set_affect_object(DOT)      
+
 class SkillRegenHP30(SkillRegenPercentFromPotion):
     def use(self):
         super().use(power_percent = .3, stat_to_heal = StatType.HP)
 class SkillRegenMP30(SkillRegenPercentFromPotion):
     def use(self):
         super().use(power_percent = .3, stat_to_heal = StatType.MP)            
+class SkillRenewHP30(SkillApplyDOT):
+    def use(self):
+        power_percent = .3
+        turns = 3
+        damage_value = int(self.other.stat_manager.stats[StatType.MPMAX]*(power_percent/turns))
+        super().use(
+                name = 'Renewed', 
+                description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns',
+                damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.HP, turns = turns)
 
+class SkillRenewMP30(SkillApplyDOT):
+    def use(self):
+        power_percent = .3
+        turns = 3
+        damage_value = int(self.other.stat_manager.stats[StatType.MPMAX]*(power_percent/turns))
+        super().use(
+                name = 'Renewed', 
+                description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.MPMAX]} over {turns} turns',
+                damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.MP, turns = turns)
+                
 class SkillRefreshingDrink(Skill):
     def use(self):
         super().use()

@@ -163,6 +163,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'can_pick_up':  bool(x['can_pick_up'][index]),
                 'item_type':        'misc',
 
+                'drop_tags':         str(x['drop_tags'][index]).split(),
                 'drop_from_random':         int(x['drop_from_random'][index]),
                 'drop_chance_base':         int(x['drop_chance_base'][index]),
                 'drop_chance_level':        int(x['drop_chance_level'][index]),
@@ -190,6 +191,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
                 'can_pick_up':  bool(x['can_pick_up'][index]),
                 
+                'drop_tags':         str(x['drop_tags'][index]).split(),
                 'drop_from_random':         int(x['drop_from_random'][index]),
                 'drop_chance_base':         int(x['drop_chance_base'][index]),
                 'drop_chance_level':        int(x['drop_chance_level'][index]),
@@ -241,6 +243,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     'inv_slots': 0,
                 },
 
+                'drop_tags':         str(x['drop_tags'][index]).split(),
                 'drop_from_random':         int(x['drop_from_random'][index]),
                 'drop_chance_base':         int(x['drop_chance_base'][index]),
                 'drop_chance_level':        int(x['drop_chance_level'][index]),
@@ -328,6 +331,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                 'can_start_fights': bool(x['can_start_fights'][index]),
                 'dont_join_fights':  bool(x['dont_join_fights'][index]),  
                 'no_random_loot':   bool(x['no_random_loot'][index]),
+                'drop_tags':         str(x['drop_tags'][index]).split(), # drop tags for items
             }
 
     end = time.time()
@@ -361,6 +365,20 @@ def configure_ENEMIES(SHEET, ITEMS):
         loot = {}
         for i in ITEMS:
             if 'drop_from_random' in ITEMS[i]:
+                
+                similar_tags = False
+                for item_tag in ITEMS[i]['drop_tags']:
+                    for enem_tag in ENEMIES[e]['drop_tags']:
+                        if item_tag == enem_tag:
+                            similar_tags = True
+                            break
+                
+                if not similar_tags:
+                    continue
+            
+
+
+
                 # if its 0 then will not drop from mobs normally
                 if ITEMS[i]['drop_from_random'] == 0:
                     continue

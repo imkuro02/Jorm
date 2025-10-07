@@ -324,3 +324,24 @@ class AffectBleed(Affect):
         self.damage = int(self.damage*0.5)
 
         damage_obj.run()
+
+class AffectDOT(Affect):
+    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, damage_value, damage_type, damage_to_stat):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns )
+        self.damage_value = damage_value
+        self.damage_type = damage_type
+        self.damage_to_stat = damage_to_stat
+
+
+    def set_turn(self):
+        super().set_turn()
+        damage_obj = Damage(
+            damage_source_actor = self.affect_source_actor,
+            damage_taker_actor = self.affect_target_actor,
+            damage_source_action = self,
+            damage_value = self.damage_value,
+            damage_type = self.damage_type,
+            damage_to_stat = self.damage_to_stat
+        )
+
+        damage_obj.run()
