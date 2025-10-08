@@ -15,6 +15,8 @@ class AI:
 
     def initiative(self):
         self.predict_use_best_skill()
+        #debug = f'{self.actor.name}, {self.prediction_skill}, {self.prediction_target}'
+        #self.actor.simple_broadcast(debug,debug)
 
     def die(self):
         pass
@@ -136,6 +138,8 @@ class AI:
                 self.actor.finish_turn()
                 return True
             
+        #debug = f'skill {self.prediction_skill}, target {self.prediction_target}'
+        #self.actor.simple_broadcast(debug,debug)
         return False
         
         
@@ -314,12 +318,22 @@ class PlayerAI(AI):
         if not super().tick():
            return
 
-        if self.has_prediction():
+        if self.actor.settings_manager.autobattler:
+            if self.actor.stat_manager.stats[StatType.HP] <= self.actor.stat_manager.stats[StatType.HPMAX]*0.1:
+                self.actor.sendLine(f'Turning off Autobattler; Your HP is below 10%!') 
+                self.actor.settings_manager.autobattler = False
+
+        if self.actor.settings_manager.autobattler:
+            self.predict_use_best_skill(for_prediction = False)
             self.use_prediction()
             self.clear_prediction()
-            #print('using prediction')
-            #if self.actor.settings_manager.autobattler:
-            #    self.predict_use_best_skill(offensive_only = True)
+        else:
+            if self.has_prediction():
+                self.use_prediction()
+                self.clear_prediction()
+                #print('using prediction')
+                #if self.actor.settings_manager.autobattler:
+                #    self.predict_use_best_skill(offensive_only = True)
         
 
 class EnemyAI(AI):
@@ -327,6 +341,7 @@ class EnemyAI(AI):
     def use_prediction(self):
         if super().use_prediction():
             return True
+
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         #self.predict_use_best_skill()
         self.actor.finish_turn()

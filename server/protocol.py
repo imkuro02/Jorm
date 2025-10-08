@@ -378,7 +378,7 @@ class Protocol(protocol.Protocol):
         #del self.actor.room.actors[self.actor.id]
         #self.actor.room = None
 
-
+        
         self.actor.unload()
         self.actor.protocol = None
         self.actor = None

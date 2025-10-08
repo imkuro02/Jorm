@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e94b4ffe98cf693a81c626d1e014ac03f23fa48b52bfaa2adf60d228a0be75c9",
+    "SHA-256": "117eb7a2285e1c79a9843f14f2a35ec1df7a9f53883643a2e4c3247fcaaadad5",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -2649,7 +2649,7 @@
             "npc_id": "ant_scout",
             "ai": "Enemy",
             "name": "Ant Scout",
-            "description": "A dog sized ant, nimble with sharp mandables.",
+            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
             "stats": {
                 "grit": 15,
                 "hp": 250,
@@ -2662,7 +2662,7 @@
                 "exp": 15,
                 "lvl": 15
             },
-            "include_in_daily_quests": false,
+            "include_in_daily_quests": true,
             "skills": {
                 "bite": 3
             },
@@ -2683,7 +2683,7 @@
             "npc_id": "ant_soldier",
             "ai": "Enemy",
             "name": "Ant Soldier",
-            "description": "A hound sized ant with a fierce attitude.",
+            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
             "stats": {
                 "grit": 30,
                 "hp": 400,
@@ -2696,7 +2696,7 @@
                 "exp": 15,
                 "lvl": 15
             },
-            "include_in_daily_quests": false,
+            "include_in_daily_quests": true,
             "skills": {
                 "bite": 4,
                 "thorns": 3
@@ -2722,7 +2722,7 @@
             "npc_id": "ant_queen",
             "ai": "Enemy",
             "name": "Ant Queen",
-            "description": "A horse sized ant with long anteni and a mind for tactics.",
+            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
             "stats": {
                 "grit": 15,
                 "hp": 600,
@@ -2746,7 +2746,7 @@
                 "ant_resin": 10
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
@@ -2758,7 +2758,7 @@
             "npc_id": "ant_larva",
             "ai": "Enemy",
             "name": "Ant Larva",
-            "description": null,
+            "description": "A baby sized clear skinned larva.",
             "stats": {
                 "grit": 20,
                 "hp": 100,
@@ -2810,7 +2810,7 @@
             "npc_id": "ant_nurse",
             "ai": "Enemy",
             "name": "Ant Nurse",
-            "description": null,
+            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
             "stats": {
                 "grit": 10,
                 "hp": 150,
@@ -2842,7 +2842,7 @@
             "npc_id": "ant_alchemist",
             "ai": "Enemy",
             "name": "Ant Alchemist",
-            "description": null,
+            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
             "stats": {
                 "grit": 10,
                 "hp": 100,
@@ -2862,7 +2862,7 @@
                 "ant_resin": 10
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
@@ -7266,7 +7266,7 @@
             ],
             "use_perspectives": {
                 "use_case_name": "use_potion",
-                "you on you": "You drink the vile liquid",
+                "you on you": "You splash the vile liquid on yourself",
                 "you on other": "You splash the vile liquid on #OTHER#",
                 "user on user": "#USER# drinks the vile liquid",
                 "user on you": "#USER# splashes the vile liquid on you",
@@ -7315,7 +7315,7 @@
             ],
             "use_perspectives": {
                 "use_case_name": "use_potion",
-                "you on you": "You drink the vile liquid",
+                "you on you": "You splash the vile liquid on yourself",
                 "you on other": "You splash the vile liquid on #OTHER#",
                 "user on user": "#USER# drinks the vile liquid",
                 "user on you": "#USER# splashes the vile liquid on you",
@@ -7601,7 +7601,7 @@
             ],
             "use_perspectives": {
                 "use_case_name": "use_potion",
-                "you on you": "You drink the vile liquid",
+                "you on you": "You splash the vile liquid on yourself",
                 "you on other": "You splash the vile liquid on #OTHER#",
                 "user on user": "#USER# drinks the vile liquid",
                 "user on you": "#USER# splashes the vile liquid on you",
@@ -7646,7 +7646,7 @@
             ],
             "use_perspectives": {
                 "use_case_name": "use_potion",
-                "you on you": "You drink the vile liquid",
+                "you on you": "You splash the vile liquid on yourself",
                 "you on other": "You splash the vile liquid on #OTHER#",
                 "user on user": "#USER# drinks the vile liquid",
                 "user on you": "#USER# splashes the vile liquid on you",
@@ -8574,7 +8574,6 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all,",
                 "ant"
             ],
             "drop_from_random": 1,
@@ -10143,7 +10142,6 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all,",
                 "ant"
             ],
             "drop_from_random": 1,
@@ -11957,7 +11955,6 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all,",
                 "ant"
             ],
             "drop_from_random": 1,
@@ -13732,7 +13729,6 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all,",
                 "ant"
             ],
             "drop_from_random": 1,

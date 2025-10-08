@@ -1,6 +1,15 @@
 versions:
   '031025':
     id: '031025'
+    title: Debugs and more Bugs
+    unixtime: 1759480978
+    features:
+    - Ant hill area is finished, located in perion (WIP)
+    - More ant related items that do not drop from anything but ants, including; pheromones, and chitin armor (WIP)
+    - Autobattler setting has made a comeback, now without BUGS, use "set auto on" to enable autobattler, autobattler gets disabled if below 10% hp
+    - Potions no longer cause potion sickness, this is kind of WIP and will return later
+  '031025':
+    id: '031025'
     title: Affects and Items
     unixtime: 1759480978
     features:

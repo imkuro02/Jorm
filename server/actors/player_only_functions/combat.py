@@ -48,7 +48,7 @@ def command_fight(self, line):
         else:
             self.sendLine('You are not the party leader')
 
-    self.ai.clear_prediction()
+    #self.ai.clear_prediction()
 
     
 

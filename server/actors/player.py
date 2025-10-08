@@ -9,7 +9,7 @@ from configuration.config import StatType, MsgType, ActorStatusType, Color
 import time
 from actors.player_only_functions.settings import Settings
 #from actors.enemy_ai import AIBasic
-from actors.ai import PlayerAI
+from actors.ai import PlayerAI, EnemyAI
 from actors.player_only_functions.charging_mini_game import ChargingMiniGame
 
 

@@ -22,7 +22,7 @@ class Skill:
         if 'crit' not in self.script_values or stat_type == None:
             dmg = self.script_values['damage'][self.users_skill_level]
         else:
-            crit_min = int(self.script_values['crit'][self.users_skill_level]*0)
+            crit_min = int(self.script_values['crit'][self.users_skill_level]*80)
             crit_max = int(self.script_values['crit'][self.users_skill_level]*100)
             dmg_stat = int(self.user.stat_manager.stats[stat_type])
             dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
@@ -117,11 +117,56 @@ class SkillSwing(Skill):
                 self.other.affect_manager.set_affect_object(stunned_affect)
 '''
 
+class SkillDamage(Skill):
+     def use(   self, 
+                dmg_flat = 0,
+                dmg_stat_scale = StatType.GRIT, 
+                dmg_type = DamageType.PHYSICAL,
+                dmg_to_stat = StatType.HP):
 
-class SkillCureLightWounds(Skill):
-    def use(self):
         super().use()
         if self.success:
+
+            if dmg_stat_scale == None:
+                dmg = dmg_flat
+            else:
+                dmg = self.get_dmg_value(dmg_stat_scale) +dmg_flat
+
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_actor = self.user,
+                damage_source_action = self,
+                damage_value = dmg,
+                damage_type = dmg_type,
+                damage_to_stat = dmg_to_stat
+                )
+
+            damage_obj.run()
+
+            match dmg_stat_scale:
+                case StatType.FLOW:
+                    was_blocked = False 
+                    roll = random.randint(0,1)
+                    if not was_blocked:
+                        if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
+                            bleed_damage = self.user.stat_manager.stats[StatType.LVL]
+                            stunned_affect = affects.AffectBleed(
+                                affect_source_actor = self.user,
+                                affect_target_actor = self.other,
+                                name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
+                                turns = 3,
+                                damage = bleed_damage,
+                                #get_prediction_string_append = 'is bleeding'
+                            )
+                            self.other.affect_manager.set_affect_object(stunned_affect)
+
+
+            return damage_obj
+
+class SkillCureLightWounds(SkillDamage):
+    def use(self):
+        super().use(dmg_stat_scale = StatType.SOUL, dmg_type = DamageType.HEALING)
+        '''if self.success:
             dmg = self.get_dmg_value(StatType.SOUL)
             damage_obj = Damage(
                 damage_taker_actor = self.other,
@@ -131,7 +176,7 @@ class SkillCureLightWounds(Skill):
                 damage_type = DamageType.HEALING,
                 #damage_to_stat = StatType.PHYARMOR
                 )
-            damage_obj.run()
+            damage_obj.run()'''
 
 class SkillManaFeed(Skill):
     def use(self):
@@ -163,61 +208,28 @@ class SkillManaFeed(Skill):
                 )
             damage_obj.run()
 
-class SkillDamage(Skill):
-     def use(self, my_dmg_scaling = StatType.GRIT, my_dmg_type = DamageType.PHYSICAL):
-        super().use()
-        if self.success:
-
-            dmg = self.get_dmg_value(my_dmg_scaling)
-            damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_actor = self.user,
-                damage_source_action = self,
-                damage_value = dmg,
-                damage_type = my_dmg_type
-                )
-            damage_obj.run()
-            return damage_obj
 
 
 class SkillDamageByGrit(SkillDamage):
     def use(self):
-        return super().use(StatType.GRIT, DamageType.PHYSICAL)
+        return super().use(dmg_stat_scale = StatType.GRIT, dmg_type = DamageType.PHYSICAL)
 class SkillDamageByFlow(SkillDamage):
     def use(self):
-        #return super().use(StatType.FLOW, DamageType.PHYSICAL)
-         
-        damage_obj = super().use(StatType.FLOW, DamageType.PHYSICAL)
-        was_blocked = False #damage_obj.damage_value <= -1
-        roll = random.randint(0,1)
-        if not was_blocked:
-            if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
-                bleed_damage = self.user.stat_manager.stats[StatType.LVL]
-                stunned_affect = affects.AffectBleed(
-                    affect_source_actor = self.user,
-                    affect_target_actor = self.other,
-                    name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
-                    turns = 3,
-                    damage = bleed_damage,
-                    #get_prediction_string_append = 'is bleeding'
-                )
-                self.other.affect_manager.set_affect_object(stunned_affect)
-        return damage_obj
-        
+        return super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
 
 class SkillDamageByGritFlow(SkillDamage):
     def use(self):
         if self.user.stat_manager.stats[StatType.GRIT] > self.user.stat_manager.stats[StatType.FLOW]:
-            return super().use(StatType.GRIT, DamageType.PHYSICAL)
+            return super().use(dmg_stat_scale = StatType.GRIT, dmg_type = DamageType.PHYSICAL)
         else:
-            return super().use(StatType.FLOW, DamageType.PHYSICAL)
+            return super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
 
 class SkillDamageByMind(SkillDamage):
     def use(self):
-        return super().use(StatType.MIND, DamageType.MAGICAL)
+        return super().use(dmg_stat_scale = StatType.MIND, dmg_type = DamageType.MAGICAL)
 class SkillDamageBySoul(SkillDamage):
     def use(self):
-        return super().use(StatType.SOUL, DamageType.PURE)
+        return super().use(dmg_stat_scale = StatType.SOUL, dmg_type = DamageType.PURE)
 
 class SkillBash(SkillDamageByGrit):
     def use(self):
@@ -419,7 +431,7 @@ class SkillRenewHP30(SkillApplyDOT):
     def use(self):
         power_percent = .3
         turns = 3
-        damage_value = int(self.other.stat_manager.stats[StatType.MPMAX]*(power_percent/turns))
+        damage_value = int(self.other.stat_manager.stats[StatType.HPMAX]*(power_percent/turns))
         super().use(
                 name = 'Renewed', 
                 description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns',

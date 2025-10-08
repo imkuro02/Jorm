@@ -375,6 +375,7 @@ class Room:
                         actor.instanced_rooms.append(instanced_room_id)
                 instanced_room = self.world.rooms[instanced_room_id]
                 instanced_room.actors[actor.id] = actor
+                del self.actors[actor.id]
                 instanced_room = self.world.rooms[instanced_room_id]
                 actor.room = instanced_room
 
@@ -582,7 +583,16 @@ class World:
             for x in self.rooms[i].actors.values():
                 to_unload.append(x)
             for x in to_unload:
+                #x.die()
                 x.unload()
+
+            #self.rooms[i].actors = {}
+
+            to_unload = []
+            for x in self.rooms[i].exits:
+                to_unload.append(x)
+            for x in to_unload:
+                unload(x)
 
             to_unload = []
             for x in self.rooms[i].__dict__:
@@ -590,15 +600,23 @@ class World:
             for x in to_unload:
                 unload(x)
                 
+            #print(self.rooms[i])
             unload(self.rooms[i])
+            #print(self.rooms[i])
             del self.rooms[i]
+            
         self.rooms_to_unload = []
 
         rooms = []
-        for i in self.rooms.values():
-            rooms.append(i)
+        for i in self.rooms:
+            rooms.append(self.rooms[i])
         for i in rooms:
+            ##if i.name.lower() == 'South-west corner'.lower():
+            #    print(i.id)
+            #    for x in i.actors.values():
+            #        print('>', x.name)
             i.tick()
+            
 
         utils.unload_fr()
 
