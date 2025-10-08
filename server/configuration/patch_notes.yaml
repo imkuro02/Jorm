@@ -1,13 +1,16 @@
 versions:
-  '031025':
-    id: '031025'
+  '081025':
+    id: '081025'
     title: Debugs and more Bugs
-    unixtime: 1759480978
+    unixtime: 1759921982
     features:
-    - Ant hill area is finished, located in perion (WIP)
-    - More ant related items that do not drop from anything but ants, including; pheromones, and chitin armor (WIP)
-    - Autobattler setting has made a comeback, now without BUGS, use "set auto on" to enable autobattler, autobattler gets disabled if below 10% hp
-    - Potions no longer cause potion sickness, this is kind of WIP and will return later
+    - Ant hill area coming soon
+    - More ant related items that do not drop from anything but ants, including; pheromones, and chitin armor (WIP).
+    - Autobattler setting has made a comeback, now without BUGS, use "set auto on" to enable autobattler, autobattler gets disabled if below 10% HP.
+    - Potions no longer cause potion sickness, this is kind of WIP and will return later.
+    - Instanced rooms no longer crash the game upon logging out after being in one (instanced room bug).
+    - Items with room SFX no longer play SFX after exiting the room they were in (instanced room bug).
+    - Logging out as party leader while in an instanced room with followers kicks followers out of party and teleports them to their rest site.
   '031025':
     id: '031025'
     title: Affects and Items
