@@ -666,7 +666,9 @@ def command_lore(self, line):
 
         all_loot_they_drop = {}
         for loot in e.loot:
-            all_loot_they_drop[LORE['items_name_to_id'][loot]] = f'1:{e.loot[loot]}'
+            i = load_item(loot, max_stats = True)
+            i.new = False
+            all_loot_they_drop[i.pretty_name()] = f'1:{e.loot[loot]}'
 
         
         t = utils.Table(4,3)

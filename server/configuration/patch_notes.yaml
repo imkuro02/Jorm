@@ -1,6 +1,16 @@
 versions:
   '081025':
     id: '081025'
+    title: fdsafdsafdsafsda
+    unixtime: 1759921982
+    features:
+    - Autobattler will only attempt to use skills that can be used in combat
+    - Ingredient items have (M) affix
+    - Item types have different colors
+    - Drop tables have been altered a lot
+
+  '081025':
+    id: '081025'
     title: Debugs and more Bugs
     unixtime: 1759921982
     features:

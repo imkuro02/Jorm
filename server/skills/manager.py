@@ -17,6 +17,12 @@ def get_skills():
 
 def error(user, err):
     if type(user).__name__ == "Player":
+        # return if in combat and autobattling
+        # because then its likely that the error is caused by 
+        # autobattler using wrong skill
+        #if user.settings_manager.autobattler:
+        #    if user.status == ActorStatusType.FIGHTING:
+        #        return
         user.sendLine(err)
         user.sendSound(Audio.ERROR)
     else:

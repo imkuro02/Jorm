@@ -1,5 +1,5 @@
 {
-    "SHA-256": "117eb7a2285e1c79a9843f14f2a35ec1df7a9f53883643a2e4c3247fcaaadad5",
+    "SHA-256": "d6cfa68e62ea233cf0ee91c8864dcda6517a33d40dde8bac2f8e148fb2e455e4",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -24,8 +24,8 @@
             },
             "loot": {
                 "tutorial_quest_item_1": 1,
-                "rock": 27,
-                "summoning_rock": 27,
+                "rock": 40,
+                "summoning_rock": 40,
                 "flow body 1": 60,
                 "flow body 3": 100,
                 "flow head 1": 60,
@@ -67,10 +67,10 @@
             },
             "loot": {
                 "shroom_cap": 20,
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "soul body 1": 40,
                 "soul body 3": 80,
                 "soul head 1": 40,
@@ -114,10 +114,11 @@
                 "rat_hide": 10,
                 "rat_tooth": 20,
                 "rat_tail": 10,
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "white_rat_hide": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 40,
                 "flow body 3": 80,
                 "flow head 1": 40,
@@ -133,7 +134,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "rat"
             ]
         },
         "big_rat": {
@@ -156,10 +158,14 @@
             "include_in_daily_quests": false,
             "skills": {},
             "loot": {
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "rat_hide": 39,
+                "summoning_rock": 39,
+                "rat_tail": 39,
+                "rat_tooth": 39,
+                "white_rat_hide": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "grit body 1": 40,
                 "grit body 3": 80,
                 "grit head 1": 40,
@@ -176,7 +182,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "rat"
             ]
         },
         "spore": {
@@ -202,10 +209,11 @@
             },
             "loot": {
                 "spore_fluff": 10,
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "mind body 1": 40,
                 "mind body 3": 80,
                 "mind head 1": 40,
@@ -221,7 +229,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "spore"
             ]
         },
         "wood_stump": {
@@ -248,10 +257,10 @@
             "loot": {
                 "simple_bark": 5,
                 "tree_branch": 10,
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "grit body 1": 40,
                 "grit body 3": 80,
                 "grit head 1": 40,
@@ -268,7 +277,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "wood"
             ]
         },
         "snail": {
@@ -293,10 +303,10 @@
                 "nudge": 1
             },
             "loot": {
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 40,
                 "flow body 3": 80,
                 "flow head 1": 40,
@@ -312,7 +322,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "snail"
             ]
         },
         "orange_mushroom": {
@@ -338,10 +349,19 @@
             },
             "loot": {
                 "orange_mushroom_cap": 10,
-                "rock": 24,
-                "summoning_rock": 24,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 37,
+                "mushroom_horn": 37,
+                "summoning_rock": 37,
+                "shroom_cap": 37,
+                "red_mushroom_cap": 37,
+                "blue_mushroom_cap": 37,
+                "spiky_mushroom_cap": 37,
+                "hard_mushroom_cap": 37,
+                "grey_mushroom_cap": 37,
+                "purple_mushroom_cap": 37,
+                "yellow_mushroom_cap": 37,
+                "red potion": 100,
+                "blue potion": 100,
                 "soul body 1": 50,
                 "soul body 3": 40,
                 "soul body 6": 100,
@@ -361,7 +381,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "green_slime": {
@@ -388,10 +409,12 @@
             },
             "loot": {
                 "green_sludge": 10,
-                "rock": 24,
-                "summoning_rock": 24,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 37,
+                "summoning_rock": 37,
+                "green_jelly": 37,
+                "green_slime_core": 37,
+                "red potion": 100,
+                "blue potion": 100,
                 "mind body 1": 50,
                 "mind body 3": 40,
                 "mind body 6": 100,
@@ -411,7 +434,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "green_slime"
             ]
         },
         "spider": {
@@ -439,10 +463,11 @@
                 "spider_silk": 10,
                 "spider_leg": 20,
                 "spider_eye": 25,
-                "rock": 24,
-                "summoning_rock": 24,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 37,
+                "summoning_rock": 37,
+                "spider_thread": 37,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 50,
                 "flow body 3": 40,
                 "flow body 6": 100,
@@ -462,7 +487,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "spider"
             ]
         },
         "wandering_rock": {
@@ -488,10 +514,10 @@
             },
             "loot": {
                 "stone": 10,
-                "rock": 24,
-                "summoning_rock": 24,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 37,
+                "summoning_rock": 37,
+                "red potion": 100,
+                "blue potion": 100,
                 "grit body 1": 50,
                 "grit body 3": 40,
                 "grit body 6": 100,
@@ -512,7 +538,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "rock"
             ]
         },
         "pig": {
@@ -539,10 +566,12 @@
             "loot": {
                 "pig_hide": 10,
                 "pig_head": 25,
-                "rock": 24,
-                "summoning_rock": 24,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 37,
+                "summoning_rock": 37,
+                "pig_tail": 37,
+                "pig_leather": 37,
+                "red potion": 100,
+                "blue potion": 100,
                 "grit body 1": 50,
                 "grit body 3": 40,
                 "grit body 6": 100,
@@ -563,7 +592,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "pig"
             ]
         },
         "red_slime": {
@@ -590,10 +620,10 @@
             "loot": {
                 "red_sludge": 10,
                 "red_slime_core": 25,
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 34,
+                "summoning_rock": 34,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 1": 65,
                 "grit body 3": 55,
@@ -619,7 +649,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "red_slime"
             ]
         },
         "red_cap": {
@@ -645,10 +676,19 @@
             },
             "loot": {
                 "red_mushroom_cap": 10,
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 34,
+                "mushroom_horn": 34,
+                "summoning_rock": 34,
+                "shroom_cap": 34,
+                "orange_mushroom_cap": 34,
+                "blue_mushroom_cap": 34,
+                "spiky_mushroom_cap": 34,
+                "hard_mushroom_cap": 34,
+                "grey_mushroom_cap": 34,
+                "purple_mushroom_cap": 34,
+                "yellow_mushroom_cap": 34,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_flow": 60,
                 "flow body 1": 65,
                 "flow body 3": 55,
@@ -673,7 +713,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "blue_slime": {
@@ -700,10 +741,10 @@
             "loot": {
                 "blue_sludge": 10,
                 "blue_slime_core": 25,
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 34,
+                "summoning_rock": 34,
+                "red potion": 100,
+                "blue potion": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 1": 65,
@@ -729,7 +770,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "blue_slime"
             ]
         },
         "blue_mushroom": {
@@ -755,10 +797,19 @@
             },
             "loot": {
                 "blue_mushroom_cap": 10,
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 34,
+                "mushroom_horn": 34,
+                "summoning_rock": 34,
+                "shroom_cap": 34,
+                "orange_mushroom_cap": 34,
+                "red_mushroom_cap": 34,
+                "spiky_mushroom_cap": 34,
+                "hard_mushroom_cap": 34,
+                "grey_mushroom_cap": 34,
+                "purple_mushroom_cap": 34,
+                "yellow_mushroom_cap": 34,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_soul": 60,
                 "soul body 1": 65,
                 "soul body 3": 55,
@@ -783,7 +834,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "octopus": {
@@ -809,10 +861,10 @@
             },
             "loot": {
                 "tentacle": 10,
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 34,
+                "summoning_rock": 34,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 1": 65,
                 "grit body 3": 55,
@@ -838,7 +890,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "octopus"
             ]
         },
         "evil_eye": {
@@ -865,10 +918,12 @@
             },
             "loot": {
                 "evil_eye_hide": 10,
-                "rock": 18,
-                "summoning_rock": 18,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 31,
+                "summoning_rock": 31,
+                "strange_eye": 31,
+                "strange_tail": 31,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_soul": 60,
                 "soul body 12": 100,
                 "soul body 3": 70,
@@ -885,15 +940,15 @@
                 "soul weapon 12": 100,
                 "soul weapon 3": 70,
                 "soul weapon 6": 55,
-                "soul weapon 9": 40,
-                "soul wepaon 9 bone": 100
+                "soul weapon 9": 40
             },
             "combat_loop": {},
             "can_start_fights": true,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "evil_eye"
             ]
         },
         "thief": {
@@ -918,10 +973,12 @@
                 "stab": 1
             },
             "loot": {
-                "rock": 18,
-                "summoning_rock": 18,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 31,
+                "summoning_rock": 31,
+                "tattered_cloth": 31,
+                "simple_cloth": 31,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_flow": 60,
                 "flow body 12": 100,
                 "flow body 3": 70,
@@ -931,12 +988,10 @@
                 "flow head 3": 70,
                 "flow head 6": 55,
                 "flow head 9": 40,
-                "flow trinket 12": 100,
                 "flow trinket 3": 70,
                 "flow trinket 6": 55,
                 "flow trinket 9": 40,
                 "flow weapon 12": 100,
-                "flow weapon 12 bone": 100,
                 "flow weapon 3": 70,
                 "flow weapon 6": 55,
                 "flow weapon 9": 40
@@ -946,7 +1001,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "humanoid"
             ]
         },
         "horned_mushroom": {
@@ -974,21 +1030,27 @@
             "loot": {
                 "spiky_mushroom_cap": 10,
                 "mushroom_horn": 10,
-                "rock": 18,
-                "summoning_rock": 18,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 31,
+                "summoning_rock": 31,
+                "shroom_cap": 31,
+                "orange_mushroom_cap": 31,
+                "red_mushroom_cap": 31,
+                "blue_mushroom_cap": 31,
+                "hard_mushroom_cap": 31,
+                "grey_mushroom_cap": 31,
+                "purple_mushroom_cap": 31,
+                "yellow_mushroom_cap": 31,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 100,
                 "grit body 3": 70,
                 "grit body 6": 55,
                 "grit body 9": 40,
-                "grit body 9 bone": 100,
                 "grit head 12": 100,
                 "grit head 3": 70,
                 "grit head 6": 55,
                 "grit head 9": 40,
-                "grit head 9 bone": 100,
                 "grit trinket 12 shield ": 100,
                 "grit trinket 12 sword": 100,
                 "grit trinket 3": 70,
@@ -998,7 +1060,6 @@
                 "grit weapon 3": 70,
                 "grit weapon 6": 55,
                 "grit weapon 9": 40,
-                "grit weapon 9 bone": 100,
                 "grit weapon alt 3": 70
             },
             "combat_loop": {},
@@ -1006,7 +1067,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "skeleton_1": {
@@ -1031,10 +1093,15 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 18,
-                "summoning_rock": 18,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 31,
+                "summoning_rock": 31,
+                "simple_bone": 31,
+                "small_skull": 31,
+                "skull": 31,
+                "bone": 31,
+                "hard_bone": 31,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 100,
                 "grit body 3": 70,
@@ -1063,7 +1130,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "skeleton"
             ]
         },
         "skeleton_mage": {
@@ -1088,10 +1156,15 @@
                 "magic_missile": 1
             },
             "loot": {
-                "rock": 18,
-                "summoning_rock": 18,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 31,
+                "summoning_rock": 31,
+                "simple_bone": 31,
+                "small_skull": 31,
+                "skull": 31,
+                "bone": 31,
+                "hard_bone": 31,
+                "red potion": 100,
+                "blue potion": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 12": 100,
@@ -1117,7 +1190,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "skeleton"
             ]
         },
         "mushroom_soldier": {
@@ -1142,21 +1216,29 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 40,
                 "grit body 15 golem": 100,
                 "grit body 6": 70,
                 "grit body 9": 55,
-                "grit body 9 bone": 40,
                 "grit head 12": 40,
                 "grit head 15 golem": 100,
                 "grit head 6": 70,
                 "grit head 9": 55,
-                "grit head 9 bone": 40,
                 "grit trinket 12 shield ": 40,
                 "grit trinket 12 sword": 40,
                 "grit trinket 15 golem": 100,
@@ -1165,15 +1247,15 @@
                 "grit weapon 12": 40,
                 "grit weapon 15 golem": 100,
                 "grit weapon 6": 70,
-                "grit weapon 9": 55,
-                "grit weapon 9 bone": 40
+                "grit weapon 9": 55
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_thief": {
@@ -1198,26 +1280,31 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_flow": 60,
                 "flow body 12": 40,
-                "flow body 15": 100,
                 "flow body 6": 70,
                 "flow body 9": 55,
                 "flow head 12": 40,
-                "flow head 15": 100,
                 "flow head 6": 70,
                 "flow head 9": 55,
-                "flow trinket 12": 40,
                 "flow trinket 15": 100,
                 "flow trinket 6": 70,
                 "flow trinket 9": 55,
                 "flow weapon 12": 40,
-                "flow weapon 12 bone": 40,
-                "flow weapon 15": 100,
                 "flow weapon 6": 70,
                 "flow weapon 9": 55
             },
@@ -1226,7 +1313,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_mage": {
@@ -1251,10 +1339,20 @@
                 "magic_missile": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 12": 40,
@@ -1265,7 +1363,6 @@
                 "mind head 15": 100,
                 "mind head 6": 70,
                 "mind head 9": 55,
-                "mind head 9 bone": 40,
                 "mind trinket 12": 40,
                 "mind trinket 15": 100,
                 "mind trinket 6": 70,
@@ -1280,7 +1377,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_cleric": {
@@ -1307,10 +1405,20 @@
                 "mage_armor": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_soul": 60,
                 "soul body 12": 40,
                 "soul body 15": 100,
@@ -1327,15 +1435,15 @@
                 "soul weapon 12": 40,
                 "soul weapon 15": 100,
                 "soul weapon 6": 70,
-                "soul weapon 9": 55,
-                "soul wepaon 9 bone": 40
+                "soul weapon 9": 55
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_zombie": {
@@ -1360,21 +1468,30 @@
                 "bite": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "mushroom_horn": 28,
+                "zombie_skin": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 40,
                 "grit body 15 golem": 100,
                 "grit body 6": 70,
                 "grit body 9": 55,
-                "grit body 9 bone": 40,
                 "grit head 12": 40,
                 "grit head 15 golem": 100,
                 "grit head 6": 70,
                 "grit head 9": 55,
-                "grit head 9 bone": 40,
                 "grit trinket 12 shield ": 40,
                 "grit trinket 12 sword": 40,
                 "grit trinket 15 golem": 100,
@@ -1383,15 +1500,16 @@
                 "grit weapon 12": 40,
                 "grit weapon 15 golem": 100,
                 "grit weapon 6": 70,
-                "grit weapon 9": 55,
-                "grit weapon 9 bone": 40
+                "grit weapon 9": 55
             },
             "combat_loop": {},
             "can_start_fights": true,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom",
+                "zombie"
             ]
         },
         "zombie": {
@@ -1417,21 +1535,21 @@
             },
             "loot": {
                 "zombie_skin": 20,
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "summoning_rock": 28,
+                "tattered_cloth": 28,
+                "simple_cloth": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 40,
                 "grit body 15 golem": 100,
                 "grit body 6": 70,
                 "grit body 9": 55,
-                "grit body 9 bone": 40,
                 "grit head 12": 40,
                 "grit head 15 golem": 100,
                 "grit head 6": 70,
                 "grit head 9": 55,
-                "grit head 9 bone": 40,
                 "grit trinket 12 shield ": 40,
                 "grit trinket 12 sword": 40,
                 "grit trinket 15 golem": 100,
@@ -1440,15 +1558,16 @@
                 "grit weapon 12": 40,
                 "grit weapon 15 golem": 100,
                 "grit weapon 6": 70,
-                "grit weapon 9": 55,
-                "grit weapon 9 bone": 40
+                "grit weapon 9": 55
             },
             "combat_loop": {},
             "can_start_fights": true,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "zombie",
+                "humanoid"
             ]
         },
         "crocodile": {
@@ -1474,21 +1593,19 @@
             },
             "loot": {
                 "crocodile_scales": 20,
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "summoning_rock": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 40,
                 "grit body 15 golem": 100,
                 "grit body 6": 70,
                 "grit body 9": 55,
-                "grit body 9 bone": 40,
                 "grit head 12": 40,
                 "grit head 15 golem": 100,
                 "grit head 6": 70,
                 "grit head 9": 55,
-                "grit head 9 bone": 40,
                 "grit trinket 12 shield ": 40,
                 "grit trinket 12 sword": 40,
                 "grit trinket 15 golem": 100,
@@ -1497,15 +1614,15 @@
                 "grit weapon 12": 40,
                 "grit weapon 15 golem": 100,
                 "grit weapon 6": 70,
-                "grit weapon 9": 55,
-                "grit weapon 9 bone": 40
+                "grit weapon 9": 55
             },
             "combat_loop": {},
             "can_start_fights": true,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "crocodile"
             ]
         },
         "skeleton_soldier": {
@@ -1530,26 +1647,27 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "summoning_rock": 28,
+                "simple_bone": 28,
+                "small_skull": 28,
+                "skull": 28,
+                "bone": 28,
+                "hard_bone": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_flow": 60,
                 "flow body 12": 40,
-                "flow body 15": 100,
                 "flow body 6": 70,
                 "flow body 9": 55,
                 "flow head 12": 40,
-                "flow head 15": 100,
                 "flow head 6": 70,
                 "flow head 9": 55,
-                "flow trinket 12": 40,
                 "flow trinket 15": 100,
                 "flow trinket 6": 70,
                 "flow trinket 9": 55,
                 "flow weapon 12": 40,
                 "flow weapon 12 bone": 40,
-                "flow weapon 15": 100,
                 "flow weapon 6": 70,
                 "flow weapon 9": 55
             },
@@ -1558,7 +1676,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "skeleton"
             ]
         },
         "fairy": {
@@ -1584,10 +1703,12 @@
                 "magic_missile": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "summoning_rock": 28,
+                "fairy_wings": 28,
+                "fairy_dust": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 12": 40,
@@ -1598,7 +1719,6 @@
                 "mind head 15": 100,
                 "mind head 6": 70,
                 "mind head 9": 55,
-                "mind head 9 bone": 40,
                 "mind trinket 12": 40,
                 "mind trinket 15": 100,
                 "mind trinket 6": 70,
@@ -1613,7 +1733,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "fairy"
             ]
         },
         "fairy_drunk": {
@@ -1639,10 +1760,12 @@
                 "nudge": 1
             },
             "loot": {
-                "rock": 24,
-                "summoning_rock": 24,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 37,
+                "summoning_rock": 37,
+                "fairy_wings": 37,
+                "fairy_dust": 37,
+                "red potion": 100,
+                "blue potion": 100,
                 "grit body 1": 50,
                 "grit body 3": 40,
                 "grit body 6": 100,
@@ -1663,7 +1786,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "fairy"
             ]
         },
         "wood_stump_large": {
@@ -1690,10 +1814,10 @@
             "loot": {
                 "tree_root": 10,
                 "tree_branch": 10,
-                "rock": 20,
-                "summoning_rock": 20,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 33,
+                "summoning_rock": 33,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 1": 70,
                 "grit body 3": 60,
@@ -1719,7 +1843,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "wood"
             ]
         },
         "kerning_trainer": {
@@ -1744,10 +1869,10 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 34,
+                "summoning_rock": 34,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 1": 65,
                 "grit body 3": 55,
@@ -1799,10 +1924,12 @@
             },
             "loot": {
                 "key_tavern_cellar": 10,
-                "rock": 24,
-                "summoning_rock": 24,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 37,
+                "summoning_rock": 37,
+                "tattered_cloth": 37,
+                "simple_cloth": 37,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 50,
                 "flow body 3": 40,
                 "flow body 6": 100,
@@ -1822,7 +1949,9 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "humanoid",
+                "tavern"
             ]
         },
         "bar_drunk_0": {
@@ -1848,10 +1977,12 @@
             },
             "loot": {
                 "key_tavern_cellar": 10,
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "tattered_cloth": 39,
+                "simple_cloth": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 40,
                 "flow body 3": 80,
                 "flow head 1": 40,
@@ -1867,7 +1998,9 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "humanoid",
+                "tavern"
             ]
         },
         "bar_drunk_1": {
@@ -1893,10 +2026,12 @@
             },
             "loot": {
                 "key_tavern_cellar": 20,
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "tattered_cloth": 39,
+                "simple_cloth": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 40,
                 "flow body 3": 80,
                 "flow head 1": 40,
@@ -1912,7 +2047,9 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "humanoid",
+                "tavern"
             ]
         },
         "tutorial_1": {
@@ -1965,10 +2102,14 @@
                 "bite": 1
             },
             "loot": {
-                "rock": 17,
-                "summoning_rock": 17,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 30,
+                "rat_hide": 30,
+                "summoning_rock": 30,
+                "rat_tail": 30,
+                "rat_tooth": 30,
+                "white_rat_hide": 30,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_flow": 60,
                 "flow body 12": 80,
                 "flow body 3": 75,
@@ -1978,12 +2119,10 @@
                 "flow head 3": 75,
                 "flow head 6": 60,
                 "flow head 9": 45,
-                "flow trinket 12": 80,
                 "flow trinket 3": 75,
                 "flow trinket 6": 60,
                 "flow trinket 9": 45,
                 "flow weapon 12": 80,
-                "flow weapon 12 bone": 80,
                 "flow weapon 3": 75,
                 "flow weapon 6": 60,
                 "flow weapon 9": 45
@@ -1993,7 +2132,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "rat"
             ]
         },
         "guard_coward": {
@@ -2018,10 +2158,12 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 34,
+                "summoning_rock": 34,
+                "tattered_cloth": 34,
+                "simple_cloth": 34,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 1": 65,
                 "grit body 3": 55,
@@ -2047,7 +2189,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "humanoid"
             ]
         },
         "citizen": {
@@ -2072,10 +2215,12 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "tattered_cloth": 39,
+                "simple_cloth": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "grit body 1": 40,
                 "grit body 3": 80,
                 "grit head 1": 40,
@@ -2092,7 +2237,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "humanoid"
             ]
         },
         "tavern_cellar_bank_robber": {
@@ -2117,10 +2263,12 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "summoning_rock": 39,
+                "tattered_cloth": 39,
+                "simple_cloth": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 40,
                 "flow body 3": 80,
                 "flow head 1": 40,
@@ -2136,7 +2284,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "humanoid"
             ]
         },
         "mushroom_kingdom_king": {
@@ -2160,13 +2309,47 @@
             "skills": {
                 "swing": 1
             },
-            "loot": {},
+            "loot": {
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
+                "translucent scroll": 100,
+                "blessing_of_mind": 60,
+                "mind body 12": 40,
+                "mind body 15": 100,
+                "mind body 6": 70,
+                "mind body 9": 55,
+                "mind head 12": 40,
+                "mind head 15": 100,
+                "mind head 6": 70,
+                "mind head 9": 55,
+                "mind trinket 12": 40,
+                "mind trinket 15": 100,
+                "mind trinket 6": 70,
+                "mind trinket 9": 55,
+                "mind weapon 12": 40,
+                "mind weapon 15": 100,
+                "mind weapon 6": 70,
+                "mind weapon 9": 55
+            },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": true,
-            "no_random_loot": true,
+            "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_kingdom_entrance_guard": {
@@ -2191,21 +2374,29 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 40,
                 "grit body 15 golem": 100,
                 "grit body 6": 70,
                 "grit body 9": 55,
-                "grit body 9 bone": 40,
                 "grit head 12": 40,
                 "grit head 15 golem": 100,
                 "grit head 6": 70,
                 "grit head 9": 55,
-                "grit head 9 bone": 40,
                 "grit trinket 12 shield ": 40,
                 "grit trinket 12 sword": 40,
                 "grit trinket 15 golem": 100,
@@ -2214,15 +2405,15 @@
                 "grit weapon 12": 40,
                 "grit weapon 15 golem": 100,
                 "grit weapon 6": 70,
-                "grit weapon 9": 55,
-                "grit weapon 9 bone": 40
+                "grit weapon 9": 55
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_kingdom_guard": {
@@ -2247,21 +2438,29 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 40,
                 "grit body 15 golem": 100,
                 "grit body 6": 70,
                 "grit body 9": 55,
-                "grit body 9 bone": 40,
                 "grit head 12": 40,
                 "grit head 15 golem": 100,
                 "grit head 6": 70,
                 "grit head 9": 55,
-                "grit head 9 bone": 40,
                 "grit trinket 12 shield ": 40,
                 "grit trinket 12 sword": 40,
                 "grit trinket 15 golem": 100,
@@ -2270,15 +2469,15 @@
                 "grit weapon 12": 40,
                 "grit weapon 15 golem": 100,
                 "grit weapon 6": 70,
-                "grit weapon 9": 55,
-                "grit weapon 9 bone": 40
+                "grit weapon 9": 55
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_kingdom_queen": {
@@ -2302,13 +2501,46 @@
             "skills": {
                 "nudge": 1
             },
-            "loot": {},
+            "loot": {
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
+                "blessing_of_soul": 60,
+                "soul body 12": 40,
+                "soul body 15": 100,
+                "soul body 6": 70,
+                "soul body 9": 55,
+                "soul head 12": 40,
+                "soul head 15": 100,
+                "soul head 6": 70,
+                "soul head 9": 55,
+                "soul trinket 12": 40,
+                "soul trinket 15": 100,
+                "soul trinket 6": 70,
+                "soul trinket 9": 55,
+                "soul weapon 12": 40,
+                "soul weapon 15": 100,
+                "soul weapon 6": 70,
+                "soul weapon 9": 55
+            },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": true,
-            "no_random_loot": true,
+            "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_kingdom_chef": {
@@ -2333,10 +2565,20 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "mushroom_horn": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "orange_mushroom_cap": 39,
+                "red_mushroom_cap": 39,
+                "blue_mushroom_cap": 39,
+                "spiky_mushroom_cap": 39,
+                "hard_mushroom_cap": 39,
+                "grey_mushroom_cap": 39,
+                "purple_mushroom_cap": 39,
+                "yellow_mushroom_cap": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "grit body 1": 40,
                 "grit body 3": 80,
                 "grit head 1": 40,
@@ -2353,7 +2595,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_kingdom_cook": {
@@ -2378,10 +2621,20 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "mushroom_horn": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "orange_mushroom_cap": 39,
+                "red_mushroom_cap": 39,
+                "blue_mushroom_cap": 39,
+                "spiky_mushroom_cap": 39,
+                "hard_mushroom_cap": 39,
+                "grey_mushroom_cap": 39,
+                "purple_mushroom_cap": 39,
+                "yellow_mushroom_cap": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 40,
                 "flow body 3": 80,
                 "flow head 1": 40,
@@ -2397,7 +2650,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_kingdom_jester": {
@@ -2422,10 +2676,20 @@
                 "swing": 1
             },
             "loot": {
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "mushroom_horn": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "orange_mushroom_cap": 39,
+                "red_mushroom_cap": 39,
+                "blue_mushroom_cap": 39,
+                "spiky_mushroom_cap": 39,
+                "hard_mushroom_cap": 39,
+                "grey_mushroom_cap": 39,
+                "purple_mushroom_cap": 39,
+                "yellow_mushroom_cap": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "flow body 1": 40,
                 "flow body 3": 80,
                 "flow head 1": 40,
@@ -2441,7 +2705,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_kingdom_citizen": {
@@ -2466,10 +2731,20 @@
                 "nudge": 1
             },
             "loot": {
-                "rock": 26,
-                "summoning_rock": 26,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 39,
+                "mushroom_horn": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "orange_mushroom_cap": 39,
+                "red_mushroom_cap": 39,
+                "blue_mushroom_cap": 39,
+                "spiky_mushroom_cap": 39,
+                "hard_mushroom_cap": 39,
+                "grey_mushroom_cap": 39,
+                "purple_mushroom_cap": 39,
+                "yellow_mushroom_cap": 39,
+                "red potion": 100,
+                "blue potion": 100,
                 "grit body 1": 40,
                 "grit body 3": 80,
                 "grit head 1": 40,
@@ -2486,7 +2761,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "mushroom_kingdom_wizard": {
@@ -2511,10 +2787,20 @@
                 "magic_missile": 1
             },
             "loot": {
-                "rock": 15,
-                "summoning_rock": 15,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 28,
+                "mushroom_horn": 28,
+                "summoning_rock": 28,
+                "shroom_cap": 28,
+                "orange_mushroom_cap": 28,
+                "red_mushroom_cap": 28,
+                "blue_mushroom_cap": 28,
+                "spiky_mushroom_cap": 28,
+                "hard_mushroom_cap": 28,
+                "grey_mushroom_cap": 28,
+                "purple_mushroom_cap": 28,
+                "yellow_mushroom_cap": 28,
+                "red potion": 100,
+                "blue potion": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 12": 40,
@@ -2525,7 +2811,6 @@
                 "mind head 15": 100,
                 "mind head 6": 70,
                 "mind head 9": 55,
-                "mind head 9 bone": 40,
                 "mind trinket 12": 40,
                 "mind trinket 15": 100,
                 "mind trinket 6": 70,
@@ -2540,7 +2825,8 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "mushroom"
             ]
         },
         "daily_quest_board": {
@@ -2599,7 +2885,8 @@
             "dont_join_fights": true,
             "no_random_loot": true,
             "drop_tags": [
-                "all"
+                "all",
+                "fairy"
             ]
         },
         "mushroom_kingdom_necromancer": {
@@ -2626,10 +2913,13 @@
                 "thorns": 2
             },
             "loot": {
-                "rock": 7,
-                "summoning_rock": 7,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 20,
+                "zombie_skin": 20,
+                "summoning_rock": 20,
+                "tattered_cloth": 20,
+                "simple_cloth": 20,
+                "red potion": 100,
+                "blue potion": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 15": 65,
@@ -2642,7 +2932,9 @@
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "all",
+                "zombie",
+                "humanoid"
             ]
         },
         "ant_scout": {
@@ -2668,15 +2960,27 @@
             },
             "loot": {
                 "ant_pheromone": 20,
-                "ant_resin": 10
+                "rock": 25,
+                "summoning_rock": 25,
+                "red potion": 100,
+                "blue potion": 100,
+                "blessing_of_flow": 60,
+                "flow body 12": 55,
+                "flow body 9": 70,
+                "flow head 12": 55,
+                "flow head 9": 70,
+                "flow trinket 15": 40,
+                "flow trinket 9": 70,
+                "flow weapon 12": 55,
+                "flow weapon 9": 70
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all,",
-                "ant"
+                "all",
+                " ant"
             ]
         },
         "ant_soldier": {
@@ -2702,20 +3006,32 @@
                 "thorns": 3
             },
             "loot": {
-                "ant_pheromone": 10,
-                "ant_resin": 10,
-                "grit body 15 ant": 40,
-                "grit head 15 ant": 40,
-                "grit trinket 15 ant": 40,
-                "grit weapon 15 ant": 40
+                "rock": 25,
+                "summoning_rock": 25,
+                "red potion": 100,
+                "blue potion": 100,
+                "blessing_of_grit": 60,
+                "grit body 12": 55,
+                "grit body 15 golem": 40,
+                "grit body 9": 70,
+                "grit head 12": 55,
+                "grit head 15 golem": 40,
+                "grit head 9": 70,
+                "grit trinket 12 shield ": 55,
+                "grit trinket 12 sword": 55,
+                "grit trinket 15 golem": 40,
+                "grit trinket 9": 70,
+                "grit weapon 12": 55,
+                "grit weapon 15 golem": 40,
+                "grit weapon 9": 70
             },
             "combat_loop": {},
             "can_start_fights": true,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all,",
-                "ant"
+                "all",
+                " ant"
             ]
         },
         "ant_queen": {
@@ -2742,16 +3058,31 @@
                 "smite": 4
             },
             "loot": {
-                "ant_pheromone": 10,
-                "ant_resin": 10
+                "rock": 25,
+                "summoning_rock": 25,
+                "red potion": 100,
+                "blue potion": 100,
+                "blessing_of_soul": 60,
+                "soul body 12": 55,
+                "soul body 15": 40,
+                "soul body 9": 70,
+                "soul head 12": 55,
+                "soul head 15": 40,
+                "soul head 9": 70,
+                "soul trinket 12": 55,
+                "soul trinket 15": 40,
+                "soul trinket 9": 70,
+                "soul weapon 12": 55,
+                "soul weapon 15": 40,
+                "soul weapon 9": 70
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all,",
-                "ant"
+                "all",
+                " ant"
             ]
         },
         "ant_larva": {
@@ -2774,10 +3105,10 @@
             "include_in_daily_quests": true,
             "skills": {},
             "loot": {
-                "rock": 21,
-                "summoning_rock": 21,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 34,
+                "summoning_rock": 34,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 1": 65,
                 "grit body 3": 55,
@@ -2826,16 +3157,35 @@
             "include_in_daily_quests": true,
             "skills": {},
             "loot": {
-                "ant_pheromone": 10,
-                "ant_resin": 10
+                "rock": 28,
+                "summoning_rock": 28,
+                "red potion": 100,
+                "blue potion": 100,
+                "blessing_of_soul": 60,
+                "soul body 12": 40,
+                "soul body 15": 100,
+                "soul body 6": 70,
+                "soul body 9": 55,
+                "soul head 12": 40,
+                "soul head 15": 100,
+                "soul head 6": 70,
+                "soul head 9": 55,
+                "soul trinket 12": 40,
+                "soul trinket 15": 100,
+                "soul trinket 6": 70,
+                "soul trinket 9": 55,
+                "soul weapon 12": 40,
+                "soul weapon 15": 100,
+                "soul weapon 6": 70,
+                "soul weapon 9": 55
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all,",
-                "ant"
+                "all",
+                " ant"
             ]
         },
         "ant_alchemist": {
@@ -2859,15 +3209,35 @@
             "skills": {},
             "loot": {
                 "ant_pheromone": 20,
-                "ant_resin": 10
+                "rock": 31,
+                "summoning_rock": 31,
+                "red potion": 100,
+                "blue potion": 100,
+                "blessing_of_soul": 60,
+                "soul body 12": 100,
+                "soul body 3": 70,
+                "soul body 6": 55,
+                "soul body 9": 40,
+                "soul head 12": 100,
+                "soul head 3": 70,
+                "soul head 6": 55,
+                "soul head 9": 40,
+                "soul trinket 12": 100,
+                "soul trinket 3": 70,
+                "soul trinket 6": 55,
+                "soul trinket 9": 40,
+                "soul weapon 12": 100,
+                "soul weapon 3": 70,
+                "soul weapon 6": 55,
+                "soul weapon 9": 40
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all,",
-                "ant"
+                "all",
+                " ant"
             ]
         },
         "bee_worker": {
@@ -2892,10 +3262,10 @@
                 "stab": 3
             },
             "loot": {
-                "rock": 12,
-                "summoning_rock": 12,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 25,
+                "summoning_rock": 25,
+                "red potion": 100,
+                "blue potion": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 12": 55,
@@ -2904,7 +3274,6 @@
                 "mind head 12": 55,
                 "mind head 15": 40,
                 "mind head 9": 70,
-                "mind head 9 bone": 55,
                 "mind trinket 12": 55,
                 "mind trinket 15": 40,
                 "mind trinket 9": 70,
@@ -2943,23 +3312,18 @@
                 "leech": 1
             },
             "loot": {
-                "rock": 12,
-                "summoning_rock": 12,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 25,
+                "summoning_rock": 25,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_flow": 60,
                 "flow body 12": 55,
-                "flow body 15": 40,
                 "flow body 9": 70,
                 "flow head 12": 55,
-                "flow head 15": 40,
                 "flow head 9": 70,
-                "flow trinket 12": 55,
                 "flow trinket 15": 40,
                 "flow trinket 9": 70,
                 "flow weapon 12": 55,
-                "flow weapon 12 bone": 55,
-                "flow weapon 15": 40,
                 "flow weapon 9": 70
             },
             "combat_loop": {},
@@ -2993,23 +3357,18 @@
                 "leech": 6
             },
             "loot": {
-                "rock": 12,
-                "summoning_rock": 12,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 25,
+                "summoning_rock": 25,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_flow": 60,
                 "flow body 12": 55,
-                "flow body 15": 40,
                 "flow body 9": 70,
                 "flow head 12": 55,
-                "flow head 15": 40,
                 "flow head 9": 70,
-                "flow trinket 12": 55,
                 "flow trinket 15": 40,
                 "flow trinket 9": 70,
                 "flow weapon 12": 55,
-                "flow weapon 12 bone": 55,
-                "flow weapon 15": 40,
                 "flow weapon 9": 70
             },
             "combat_loop": {},
@@ -3046,8 +3405,8 @@
                 "mushroom_zombie_behemoth_shield": 20,
                 "rock": 1,
                 "summoning_rock": 1,
-                "red potion": 35,
-                "blue potion": 35,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60
             },
             "combat_loop": {},
@@ -3108,21 +3467,19 @@
                 "bite": 1
             },
             "loot": {
-                "rock": 18,
-                "summoning_rock": 18,
-                "red potion": 35,
-                "blue potion": 35,
+                "rock": 31,
+                "summoning_rock": 31,
+                "red potion": 100,
+                "blue potion": 100,
                 "blessing_of_grit": 60,
                 "grit body 12": 100,
                 "grit body 3": 70,
                 "grit body 6": 55,
                 "grit body 9": 40,
-                "grit body 9 bone": 100,
                 "grit head 12": 100,
                 "grit head 3": 70,
                 "grit head 6": 55,
                 "grit head 9": 40,
-                "grit head 9 bone": 100,
                 "grit trinket 12 shield ": 100,
                 "grit trinket 12 sword": 100,
                 "grit trinket 3": 70,
@@ -3132,7 +3489,6 @@
                 "grit weapon 3": 70,
                 "grit weapon 6": 55,
                 "grit weapon 9": 40,
-                "grit weapon 9 bone": 100,
                 "grit weapon alt 3": 70
             },
             "combat_loop": {},
@@ -4884,18 +5240,15 @@
                 "all"
             ],
             "drop_from_random": 1,
-            "drop_chance_base": 27,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
+            "drop_chance_under_bonus": 20,
             "drop_chance_over_bonus": -1,
-            "drop_chance_range_under": 0,
+            "drop_chance_range_under": 1,
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": [
-                "red potion",
-                "blue potion"
-            ]
+            "crafting_ingredient_for": []
         },
         "tutorial_paper_1": {
             "premade_id": "tutorial_paper_1",
@@ -4908,14 +5261,14 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
@@ -4932,15 +5285,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 3,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -4956,15 +5309,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 3,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -4980,15 +5333,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "tavern"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 3,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5004,15 +5357,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 3,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5028,15 +5381,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
-            "drop_chance_level": 1,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 3,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5052,15 +5405,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5076,15 +5429,15 @@
             "can_pick_up": false,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5100,15 +5453,15 @@
             "can_pick_up": false,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5124,15 +5477,15 @@
             "can_pick_up": false,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5148,15 +5501,15 @@
             "can_pick_up": false,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5172,15 +5525,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5205,15 +5558,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5229,15 +5582,15 @@
             "can_pick_up": false,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5253,15 +5606,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "rat"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5281,15 +5634,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "spider"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5315,15 +5668,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "slime"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5341,15 +5694,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "evil_eye"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5367,15 +5720,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5393,15 +5746,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "crocodile"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5419,15 +5772,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "zombie"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5448,11 +5801,11 @@
                 "all"
             ],
             "drop_from_random": 1,
-            "drop_chance_base": 27,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
+            "drop_chance_under_bonus": 20,
             "drop_chance_over_bonus": -1,
-            "drop_chance_range_under": 0,
+            "drop_chance_range_under": 1,
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
@@ -5469,15 +5822,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5499,15 +5852,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5523,15 +5876,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5547,15 +5900,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5571,15 +5924,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5595,15 +5948,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5619,15 +5972,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5643,15 +5996,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5667,15 +6020,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5691,15 +6044,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5715,15 +6068,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5739,15 +6092,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5763,15 +6116,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -5795,15 +6148,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5819,15 +6172,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5843,15 +6196,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5867,15 +6220,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5891,15 +6244,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5915,15 +6268,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5939,15 +6292,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5963,15 +6316,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -5987,15 +6340,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6011,15 +6364,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6035,15 +6388,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6059,15 +6412,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6083,15 +6436,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6107,15 +6460,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6131,15 +6484,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6155,15 +6508,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6179,15 +6532,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6203,15 +6556,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6227,15 +6580,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6251,15 +6604,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6275,15 +6628,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "rat"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6302,15 +6655,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "rat"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6330,15 +6683,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "rat"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
@@ -6362,15 +6715,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "spore"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6378,12 +6731,12 @@
                 "mind head c1",
                 "mind trinket c1",
                 "white_rat_hide",
-                "green_jell"
+                "green_jelly"
             ]
         },
-        "green_jell": {
-            "premade_id": "green_jell",
-            "name": "Green jell",
+        "green_jelly": {
+            "premade_id": "green_jelly",
+            "name": "Green jelly",
             "description": "The green jell a good mana conductor but not for eating. Made with green slime and spore fluff to become more clay like.",
             "description_room": null,
             "invisible": 0.0,
@@ -6392,15 +6745,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "green_slime"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
@@ -6426,15 +6779,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "spider"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6450,15 +6803,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "spider"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6479,15 +6832,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "spider"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6505,15 +6858,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "pig"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6531,15 +6884,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "pig"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6555,15 +6908,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "pig"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6581,15 +6934,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "pig"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
@@ -6613,15 +6966,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "evil_eye"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6637,15 +6990,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "evil_eye"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6661,19 +7014,19 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "green_slime"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
-                "green_jell"
+                "green_jelly"
             ]
         },
         "green_slime_core": {
@@ -6687,15 +7040,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "green_slime"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6711,15 +7064,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "blue_slime"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6741,15 +7094,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "blue_slime"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6771,15 +7124,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "red_slime"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6804,15 +7157,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "red_slime"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6832,15 +7185,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "fairy"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6856,15 +7209,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "fairy"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -6880,18 +7233,20 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom",
+                "spore"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
+                "blue potion",
                 "red potion",
                 "flow head c1",
                 "mind weapon c1",
@@ -6911,15 +7266,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6940,15 +7295,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6969,15 +7324,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
@@ -6999,15 +7354,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7023,15 +7378,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7047,15 +7402,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7071,15 +7426,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7095,15 +7450,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7119,15 +7474,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "mushroom_zombie"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7143,15 +7498,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "humanoid"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7167,15 +7522,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "humanoid"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7191,15 +7546,15 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "all"
+                "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -7218,11 +7573,11 @@
                 "ant"
             ],
             "drop_from_random": 1,
-            "drop_chance_base": 10,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
@@ -7245,11 +7600,11 @@
                 "ant"
             ],
             "drop_from_random": 1,
-            "drop_chance_base": 10,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
@@ -7285,7 +7640,7 @@
                 "all"
             ],
             "drop_from_random": 1,
-            "drop_chance_base": 35,
+            "drop_chance_base": 100,
             "drop_chance_level": 1,
             "drop_chance_under_bonus": 0,
             "drop_chance_over_bonus": 0,
@@ -7293,9 +7648,6 @@
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
-                {
-                    "rock": 10
-                },
                 {
                     "shroom_cap": 3
                 }
@@ -7334,7 +7686,7 @@
                 "all"
             ],
             "drop_from_random": 1,
-            "drop_chance_base": 35,
+            "drop_chance_base": 100,
             "drop_chance_level": 1,
             "drop_chance_under_bonus": 0,
             "drop_chance_over_bonus": 0,
@@ -7343,7 +7695,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "rock": 10
+                    "shroom_cap": 3
                 }
             ],
             "crafting_ingredient_for": [
@@ -8231,7 +8583,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -8280,7 +8632,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "bee"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -8819,7 +9171,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -9162,7 +9514,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -9554,7 +9906,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -9799,7 +10151,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -9848,7 +10200,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "bee"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -10387,7 +10739,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -10730,7 +11082,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -11171,7 +11523,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -11563,7 +11915,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "bee"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -13380,7 +13732,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -13429,7 +13781,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "bee"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -13976,7 +14328,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -14379,7 +14731,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -14773,7 +15125,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "skeleton"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -16666,7 +17018,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "green_jell": 2,
+                    "green_jelly": 2,
                     "stone": 1
                 }
             ],
@@ -16776,7 +17128,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "green_jell": 5
+                    "green_jelly": 5
                 }
             ],
             "crafting_ingredient_for": []
@@ -16829,7 +17181,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "green_jell": 1
+                    "green_jelly": 1
                 }
             ],
             "crafting_ingredient_for": []
@@ -16882,7 +17234,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [
                 {
-                    "green_jell": 2
+                    "green_jelly": 2
                 }
             ],
             "crafting_ingredient_for": []

@@ -163,7 +163,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'can_pick_up':  bool(x['can_pick_up'][index]),
                 'item_type':        'misc',
 
-                'drop_tags':         str(x['drop_tags'][index]).split(),
+                'drop_tags':         str(x['drop_tags'][index]).split(','),
                 'drop_from_random':         int(x['drop_from_random'][index]),
                 'drop_chance_base':         int(x['drop_chance_base'][index]),
                 'drop_chance_level':        int(x['drop_chance_level'][index]),
@@ -191,7 +191,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
                 'can_pick_up':  bool(x['can_pick_up'][index]),
                 
-                'drop_tags':         str(x['drop_tags'][index]).split(),
+                'drop_tags':         str(x['drop_tags'][index]).split(','),
                 'drop_from_random':         int(x['drop_from_random'][index]),
                 'drop_chance_base':         int(x['drop_chance_base'][index]),
                 'drop_chance_level':        int(x['drop_chance_level'][index]),
@@ -243,7 +243,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     'inv_slots': 0,
                 },
 
-                'drop_tags':         str(x['drop_tags'][index]).split(),
+                'drop_tags':         str(x['drop_tags'][index]).split(','),
                 'drop_from_random':         int(x['drop_from_random'][index]),
                 'drop_chance_base':         int(x['drop_chance_base'][index]),
                 'drop_chance_level':        int(x['drop_chance_level'][index]),
@@ -331,7 +331,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                 'can_start_fights': bool(x['can_start_fights'][index]),
                 'dont_join_fights':  bool(x['dont_join_fights'][index]),  
                 'no_random_loot':   bool(x['no_random_loot'][index]),
-                'drop_tags':         str(x['drop_tags'][index]).split(), # drop tags for items
+                'drop_tags':         str(x['drop_tags'][index]).split(','), # drop tags for items
             }
 
     end = time.time()

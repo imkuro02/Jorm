@@ -74,7 +74,22 @@ class Item:
                 return ''
             return "a"
 
-        output = f'@white{self.name}@normal'
+        col = '@white'
+        match self.item_type:
+            case 'misc':
+                if self.crafting_ingredient_for == []:
+                    col = '@white'
+                else:
+                    col = '@white'
+
+            case 'equipment':
+                col = '@byellow'
+
+            case 'consumable':
+                col = '@yellow'
+            
+
+        output = f'{col}{self.name}@normal'
         #if rank_only:
         #    if self.item_type == ItemType.EQUIPMENT:  
         #        if self.rank != 0: 
@@ -93,10 +108,12 @@ class Item:
             if self.equiped:   output = output + f' ({Color.ITEM_EQUIPPED}E{Color.NORMAL})'
             if self.keep:      output = output + f' ({Color.ITEM_KEEP}K{Color.NORMAL})'
             if self.new:       output = output + f' ({Color.ITEM_NEW}N{Color.NORMAL})'
+            if self.crafting_ingredient_for != []: output = output + f' ({Color.ITEM_MATERIAL}M{Color.NORMAL})'
         else:
             if self.stack != 1: output = output + f' x{self.stack}'
             if self.keep:      output = output + f' ({Color.ITEM_KEEP}K{Color.NORMAL})'
             if self.new:       output = output + f' ({Color.ITEM_NEW}N{Color.NORMAL})'
+            if self.crafting_ingredient_for != []: output = output + f' ({Color.ITEM_MATERIAL}M{Color.NORMAL})'
 
         return output
        

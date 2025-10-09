@@ -84,16 +84,13 @@ class AI:
                     and actor.status == ActorStatusType.FIGHTING    ]
         return allies, enemies
 
-    def get_skills(self, for_prediction = False):
+    def get_skills(self, for_prediction = False, combat_only_skills = True):
         
-        #s['script_values']['cooldown'][level]
-        #skills = [  skill_id for skill_id in self.actor.skill_manager.skills
-        #            skill_id not in self.actor.cooldown_manager.cooldowns
-        #            and self.actor.skill_manager.skills[skill_id] >= 1]
-
         skills = []
         # if for prediction is true, be able to pick skills that are available NEXT TURN
         for skill_id in self.actor.skill_manager.skills:
+            if combat_only_skills and not SKILLS[skill_id]['can_use_in_combat']: 
+                continue
             if skill_id in self.actor.cooldown_manager.cooldowns:
                 if for_prediction and self.actor.cooldown_manager.cooldowns[skill_id] > 1:
                     #print('WHAT,,',self.actor.cooldown_manager.cooldowns[skill_id])
@@ -158,7 +155,7 @@ class AI:
             return False
         
         allies, enemies = self.get_targets()
-        skills = self.get_skills(for_prediction = for_prediction)
+        skills = self.get_skills(for_prediction = for_prediction, combat_only_skills = True)
         #print(self.actor.name,skills)
         # try to use a skill 5 times, if it fails return false
         # return true if you managed to use a skill

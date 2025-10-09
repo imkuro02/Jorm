@@ -43,6 +43,7 @@ class Color:
     ITEM_EQUIPPED =         '@green'
     ITEM_TRADING =          '@yellow'
     ITEM_NEW    =           '@yellow'
+    ITEM_MATERIAL    =      '@byellow'
 
     DAMAGE_PURE =           '@byellow'
     DAMAGE_PHY =            '@bred'
