@@ -148,6 +148,7 @@ def command_go(self, line = '', room_id = None):
     self.finish_turn(force_cooldown = True)
 
 
+    # move party members
     if self.party_manager.party != None:
         if self.party_manager.party.actor == self:
             for par in self.party_manager.party.participants.values():
@@ -160,11 +161,34 @@ def command_go(self, line = '', room_id = None):
                 #par.sendLine(f'You follow {self.pretty_name()}', sound = Audio.walk())
                 par.finish_turn(force_cooldown = True)
                 par.sendSound(Audio.walk())
-        for par in self.party_manager.party.participants.values():
-            if par == self:
-                par.new_room_look()
+
+
+    # move followers (currently moves EVERYTHING)
+    '''
+    potential_followers = old_room.actors.copy()
+
+    for par in potential_followers.values():
+        if par == self:
+            continue
+        if par.room != old_room:
+            continue
+        self.room.move_actor(par, silent = True)
+        par.finish_turn(force_cooldown = True)
+        par.sendSound(Audio.walk())
+        print(par)
+    '''
+
+    # show participants and or yourself the room    
+    if self.party_manager.party != None:
+        if self.party_manager.party.actor == self:
+            for par in self.party_manager.party.participants.values():
+                if par == self:
+                    par.new_room_look()
     else:
         self.new_room_look()
+    
+
+
 
     
 

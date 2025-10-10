@@ -1,6 +1,7 @@
 
 from configuration.config import ActorStatusType, Color
 import utils
+import random
 
 def command_map(self, line, return_gmcp = False):
     setting_render_walls = False
@@ -14,7 +15,7 @@ def command_map(self, line, return_gmcp = False):
         NS =                        f'{Color.MAP_PATH}:'
         EW =                        f'{Color.MAP_PATH}---'
         EMPTY =                     f' '
-        EMPTYWALL =                 f'{Color.MAP_WALL}   '
+        EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
         WALL =                      f'{Color.MAP_WALL}###'
         DOOR =                      f'{Color.MAP_ROOM}/'
         QUEST =                     f'{Color.MAP_IMPORTANT}?'
@@ -204,22 +205,39 @@ def command_map(self, line, return_gmcp = False):
                         #if d['n'] not in grid and d['w'] not in grid and d['e'] not in grid and d['s'] not in grid     and d['sw'] not in grid and d['se'] not in grid and d['nw'] not in grid and d['ne'] not in grid:
                         if all(d not in grid for d in directions.values()):
                             #cell = Art.EMPTYWALL * 1
-                            cell = Art.EMPTY * 3
-                            t.add_data(cell)
+                            random.seed(self.room.id + loc)
+                            a = random.choice((',#.#\'#"#^#`#;#:'+str('# '*100)).split('#'))
+                            b = random.choice((',#.#\'#"#^#`#;#:'+str('# '*100)).split('#'))
+                            c = random.choice((',#.#\'#"#^#`#;#:'+str('# '*100)).split('#'))
+                            cell = a+b+c
+                            t.add_data('@bblack'+cell)
                             walled = True
                             continue
+
+                    indoors = True#False
+                    #for d in directions.values():
+                    #    if d in grid:
+                    #        if grid[d] in self.room.world.rooms:
+                    #            
+                    #            indoors = 'Lavoratory'.lower() in self.room.world.rooms[grid[d]].name.lower() or 'tavern' in self.room.world.rooms[grid[d]].name.lower() #and grid[d] != 'overworld/d60632d8-22bd-43c2-aafa-e98e0f62b106'
+                    #            if indoors:
+                    #                break
+
+                    cell = Art.WALL
+                    #if not indoors:
+                    #    cell = Art.EMPTY
                             
                     if not walled:
                         if directions['w'] not in grid or directions['e'] not in grid:
-                            cell = Art.WALL #Art.EMPTY*3
+                            #cell = Art.WALL #Art.EMPTY*3
                             t.add_data(cell)  
                             walled = True
                             continue
 
                     if not walled:
                         if directions['n'] not in grid or directions['s'] not in grid:
-                            cell = Art.WALL #Art.EMPTY*3
-                            t.add_data(cell)  
+                            #cell = Art.WALL #Art.EMPTY*3
+                            t.add_data(cell) 
                             walled = True
                             continue
                 
