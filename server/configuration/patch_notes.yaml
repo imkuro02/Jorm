@@ -1,8 +1,8 @@
 versions:
-  '081025':
-    id: '081025'
-    title: fdsafdsafdsafsda
-    unixtime: 1759921982
+  '131025':
+    id: '131025'
+    title: Autobattler, items, map and more
+    unixtime: 139.162.165.60
     features:
     - Autobattler will only attempt to use skills that can be used in combat
     - Ingredient items have (M) affix
