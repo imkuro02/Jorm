@@ -11,7 +11,7 @@ def command_map(self, line, return_gmcp = False):
 
     class Art:
         # all
-        GROUND =                    f'{Color.MAP_ROOM}#'
+        GROUND =                    f'{Color.MAP_ROOM}x'
         NS =                        f'{Color.MAP_PATH}:'
         EW =                        f'{Color.MAP_PATH}---'
         EMPTY =                     f' '

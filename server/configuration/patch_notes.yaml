@@ -8,7 +8,8 @@ versions:
     - Ingredient items have (M) affix
     - Item types have different colors
     - Drop tables have been altered a lot
-
+    - Map renderer noise of randomized characters
+    - Most buff skills have been rebalanced to have shorter duration and longer cooldown (usually cooldown is 2 more than duration)
   '081025':
     id: '081025'
     title: Debugs and more Bugs
