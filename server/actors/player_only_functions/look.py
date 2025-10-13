@@ -16,7 +16,7 @@ def command_map(self, line, return_gmcp = False):
         EW =                        f'{Color.MAP_PATH}---'
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
-        WALL =                      f'{Color.MAP_WALL}###'
+        WALL =                      f'{Color.MAP_WALL}   '
         DOOR =                      f'{Color.MAP_ROOM}/'
         QUEST =                     f'{Color.MAP_IMPORTANT}?'
 
@@ -206,15 +206,17 @@ def command_map(self, line, return_gmcp = False):
                         if all(d not in grid for d in directions.values()):
                             #cell = Art.EMPTYWALL * 1
                             random.seed(self.room.id + loc)
-                            a = random.choice((',#.#\'#"#^#`#;#:'+str('# '*100)).split('#'))
-                            b = random.choice((',#.#\'#"#^#`#;#:'+str('# '*100)).split('#'))
-                            c = random.choice((',#.#\'#"#^#`#;#:'+str('# '*100)).split('#'))
+                            _string = ',.;:-_¨\'"^~`+%&#'+(' '*100)
+
+                            a = _string[random.randint(0,len(_string)-1)]
+                            b = _string[random.randint(0,len(_string)-1)]
+                            c = _string[random.randint(0,len(_string)-1)]
                             cell = a+b+c
                             t.add_data('@bblack'+cell)
                             walled = True
                             continue
 
-                    indoors = True#False
+                    #indoors = True#False
                     #for d in directions.values():
                     #    if d in grid:
                     #        if grid[d] in self.room.world.rooms:
