@@ -16,7 +16,7 @@ def command_map(self, line, return_gmcp = False):
         EW =                        f'{Color.MAP_PATH}---'
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
-        WALL =                      f'{Color.MAP_WALL}   '
+        WALL =                      f'{Color.MAP_WALL}###'
         DOOR =                      f'{Color.MAP_ROOM}/'
         QUEST =                     f'{Color.MAP_IMPORTANT}?'
 
@@ -212,7 +212,7 @@ def command_map(self, line, return_gmcp = False):
                             b = _string[random.randint(0,len(_string)-1)]
                             c = _string[random.randint(0,len(_string)-1)]
                             cell = a+b+c
-                            t.add_data('@bblack'+cell)
+                            t.add_data('@normal'+cell)
                             walled = True
                             continue
 
