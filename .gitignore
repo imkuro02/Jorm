@@ -1,5 +1,6 @@
 server/server.crt
 server/server.key
+server/gametime.txt
 godot_client/export
 notestoself
 */database.db

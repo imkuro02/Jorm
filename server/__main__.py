@@ -74,3 +74,6 @@ if __name__ == '__main__':
     reactor.listenTCP(4001, factory)
     print("Server started on port 4000 with SSL and 4001 non SSL")
     reactor.run()
+
+    factory.world.game_time.save_game_time()
+    print('Exiting...')

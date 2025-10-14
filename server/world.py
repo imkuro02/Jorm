@@ -15,6 +15,7 @@ from inventory import InventoryManager
 from utils import REFTRACKER
 from utils import unload
 import utils
+import os
 
 class Spawner:
     def __init__(self, room):
@@ -432,6 +433,27 @@ class GameTime:
             'hour_uneven':      False,
 
         }
+
+        self.load_game_time()
+
+    def load_game_time(self):
+        filename = "gametime.txt"
+        if not os.path.exists(filename):
+            # File doesn't exist — create it and write 420
+            with open(filename, "w") as f:
+                f.write(f"{self.game_date_time}")
+            value = self.game_date_time
+        else:
+            # File exists — read the integer inside
+            with open(filename, "r") as f:
+                self.game_date_time = int(f.read().strip())
+
+        print("Game Time:", self.game_date_time)
+
+    def save_game_time(self):
+        filename = "gametime.txt"
+        with open(filename, "w") as f:
+            f.write(f"{self.game_date_time}")
 
     def time_of_day_trigger(self):
         time_dict = self.get_game_time()
