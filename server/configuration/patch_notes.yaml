@@ -2,7 +2,7 @@ versions:
   '141025':
     id: '141025'
     title: Skills
-    unixtime: 1760354089
+    unixtime: 1760429687
     features:
     - Skill critical damage is no longer between 80-100%, its 0-100%.
     - Most combat skills are no longer practicable, and only obtained through gear.
