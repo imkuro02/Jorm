@@ -1,15 +1,23 @@
 versions:
+  '141025':
+    id: '141025'
+    title: Skills
+    unixtime: 1760354089
+    features:
+    - Skill critical damage is no longer between 80-100%, its 0-100%.
+    - Most combat skills are no longer practicable, and only obtained through gear.
+    - Magical feed has been reworked; You can now deal damage with magical feed when mana recovered on target exceeds their maximum mana.
   '131025':
     id: '131025'
     title: Autobattler, items, map and more
     unixtime: 1760354089
     features:
-    - Autobattler will only attempt to use skills that can be used in combat
-    - Ingredient items have (M) affix
-    - Item types have different colors
-    - Drop tables have been altered a lot
-    - Map renderer noise of randomized characters
-    - Most buff skills have been rebalanced to have shorter duration and longer cooldown (usually cooldown is 2 more than duration)
+    - Autobattler will only attempt to use skills that can be used in combat.
+    - Ingredient items have (M) affix.
+    - Item types have different colors.
+    - Drop tables have been altered a lot.
+    - Map renderer noise of randomized characters.
+    - Most buff skills have been rebalanced to have shorter duration and longer cooldown (usually cooldown is 2 more than duration).
   '081025':
     id: '081025'
     title: Debugs and more Bugs

@@ -70,17 +70,19 @@ def command_level_up(self, stat):
 def command_practice(self, line):
     if len(line) <= 1:
         output = f'You have {self.stat_manager.stats[StatType.PP]} practice points left.\n'
-        t = utils.Table(3,2)
+        t = utils.Table(4,2)
         t.add_data('Skill')
         t.add_data('Cost')
         t.add_data('LvL')
+        t.add_data('Req')
 
         #t.add_data('Req')
-        for skill_id in SKILLS.keys():
+        sorted_data = sorted(SKILLS, key=lambda x: (SKILLS[x]["level_req"], SKILLS[x]["practice_cost"]))
+        for skill_id in sorted_data:
             if SKILLS[skill_id]['can_be_practiced'] == False:
                 continue
-            if SKILLS[skill_id]['level_req'] > self.stat_manager.stats[StatType.LVL]:
-                continue
+            #if SKILLS[skill_id]['level_req'] > self.stat_manager.stats[StatType.LVL]:
+            #    continue
 
             # name
             t.add_data(SKILLS[skill_id]["name"])
@@ -90,6 +92,7 @@ def command_practice(self, line):
             if cost <= self.stat_manager.stats[StatType.PP]:
                 col = Color.NORMAL
             t.add_data(f'{cost} PP', col)
+
             lvl = 0
             col = Color.NORMAL
             if skill_id in self.skill_manager.skills.keys():
@@ -100,10 +103,18 @@ def command_practice(self, line):
                     col = Color.NORMAL
                 else:
                     col = Color.BAD
-
+            
             if lvl == 0:
                 lvl = '-'
             t.add_data(lvl, col)
+
+            lvl_req = int(SKILLS[skill_id]['level_req'])
+            col = Color.NORMAL
+            if lvl_req <= self.stat_manager.stats[StatType.LVL]:
+                col = Color.GOOD
+            else:
+                col = Color.BAD
+            t.add_data(lvl_req, col)
 
             '''
             # level

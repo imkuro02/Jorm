@@ -22,7 +22,7 @@ class Skill:
         if 'crit' not in self.script_values or stat_type == None:
             dmg = self.script_values['damage'][self.users_skill_level]
         else:
-            crit_min = int(self.script_values['crit'][self.users_skill_level]*80)
+            crit_min = int(self.script_values['crit'][self.users_skill_level]*0)
             crit_max = int(self.script_values['crit'][self.users_skill_level]*100)
             dmg_stat = int(self.user.stat_manager.stats[stat_type])
             dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
@@ -72,6 +72,8 @@ class Skill:
 
     def use(self):
         cool = self.script_values['cooldown'][self.users_skill_level]
+        #if cool <= 1: 
+        #    cool = 2
         self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
 
         if self.silent_use:
@@ -207,6 +209,24 @@ class SkillManaFeed(Skill):
                 damage_to_stat = StatType.MP
                 )
             damage_obj.run()
+
+            # Cause overfeed damage if both actors are in the same combat
+            if self.user.room.combat != None:
+                if self.user in self.user.room.combat.participants.values() and self.other in self.user.room.combat.participants.values():
+                    over_feed_dmg = self.other.stat_manager.stats[StatType.MP] - self.other.stat_manager.stats[StatType.MPMAX] + dmg
+                    if dmg > 0:
+                        dmg = int(dmg * 0.5)
+
+                    damage_obj = Damage(
+                        damage_taker_actor = self.other,
+                        damage_source_actor = self.user,
+                        damage_source_action = self,
+                        damage_value = dmg,
+                        damage_type = DamageType.MAGICAL,
+                        damage_to_stat = StatType.HP
+                        )
+                    damage_obj.run()
+
 
 
 
