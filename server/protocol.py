@@ -28,6 +28,8 @@ class Protocol(protocol.Protocol):
 
         self.enabled_gmcp = False
 
+        self.guest = False
+
         self.actor = None
 
         self.account = None
@@ -88,7 +90,7 @@ class Protocol(protocol.Protocol):
                 self.account = None
                 self.username = None
                 self.password = None
-                self.sendLine(f'type {Color.GOOD}new{Color.BACK} to register, type {Color.GOOD}login{Color.BACK} to log in.')
+                self.sendLine(f'Type {Color.GOOD} new   {Color.BACK} to register.\nType {Color.GOOD} login {Color.BACK} to log in.\nType {Color.GOOD} guest {Color.NORMAL} to enter as guest.')
 
             case self.LOGIN_USERNAME:
                 self.sendLine(f'Your {Color.GOOD}username{Color.BACK}:')
@@ -118,6 +120,14 @@ class Protocol(protocol.Protocol):
                     if self.id == online_account.id and self != online_account:
                         online_account.disconnect()
                 self.load_actor()
+
+            case self.PLAY_AS_GUEST:
+                self.guest = True
+                self.id = self.account[0]
+                self.username = self.account[1]
+                self.password = self.account[2]
+                state = self.PLAY
+                self.load_actor()
                 
 
         self.state = state
@@ -127,6 +137,9 @@ class Protocol(protocol.Protocol):
         self.actor.queue_handle(line)
         return
             
+    def PLAY_AS_GUEST(self,line):
+        return
+
     def REGISTER_USERNAME(self, line):
         self.account = self.factory.db.find_account_from_username(line)
         if self.account != None:
@@ -196,6 +209,16 @@ class Protocol(protocol.Protocol):
         if line.lower() == 'new'.lower():
             self.change_state(self.REGISTER_USERNAME)
             return
+        if line.lower() == 'guest'.lower():
+            _id  = str(uuid.uuid4())
+            _usr = utils.generate_name()
+            _pwd = str(uuid.uuid4())
+            self.account = [_id,_usr,_pwd]
+            
+           
+            self.change_state(self.PLAY_AS_GUEST)
+             
+            return
         self.change_state(self.LOGIN_OR_REGISTER)
         return
 
@@ -203,23 +226,31 @@ class Protocol(protocol.Protocol):
     def register_account_changes(self, username, password):
         if len(password) < 6:
             self.sendLine('Your password must be a minimum of 6 character')
+            return False
+
+        if password.startswith(' ') or password.endswith(' '):
+            self.sendLine('Your password cannot start or end with a whitespace')
             return
+
+        if '  ' in password:
+            self.sendLine('Yes this is a stupid rule but: Your password cannot include multiple whitespaces in a row... "  " not good')
+            return False
 
         account = self.factory.db.find_account_from_username(username)
         #print(self.account)
         if account != None and account[0] != self.id:
             self.sendLine('This username is already taken')
-            return
+            return False
 
         self.account = account
         
         if len(username) >= 21 or len(username) <= 3:
             self.sendLine('Username must be between 4 and 20 characters long')
-            return
+            return False
 
         if not username.isalnum():
             self.sendLine('Username can only contain letters and numbers')
-            return
+            return False
 
         self.username = username
         self.password = password
@@ -227,8 +258,9 @@ class Protocol(protocol.Protocol):
             self.actor.name = self.username
         self.factory.db.create_new_account(self.id, username, password)
         _alert = f'{Color.BAD}[{Color.IMPORTANT}!{Color.BAD}]{Color.BACK}'
-        self.sendLine(f'{Color.GOOD}Account information updated\n{_alert}   your login username is: "{Color.IMPORTANT}{self.username}{Color.BACK}"  {_alert}{Color.NORMAL}')
-
+        self.sendLine(f'{Color.GOOD}Account information updated\n{_alert}   Your login username is: "{Color.IMPORTANT}{self.username}{Color.BACK}"   {_alert}{Color.NORMAL}')
+        # Your password is: "{Color.IMPORTANT}{'*'*len(self.password)}{Color.BACK}"
+        return True
     # override
     def connectionMade(self):
         #utils.logging.debug(self.id + 'Connection made')
@@ -357,6 +389,10 @@ class Protocol(protocol.Protocol):
             
         
     def save_actor(self):
+        if self.guest:
+            print('Not saving guest lol xd')
+            return
+
         if self.actor == None:
             print('no actor')
             return

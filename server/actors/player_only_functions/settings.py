@@ -1,6 +1,6 @@
 from utils import match_word
 from actors.player_only_functions.checks import check_no_empty_line
-
+from configuration.config import Color
 BANNED_ALIASES = ['settings','help','alias','reset'] # this gets set in actors.player_only_functions.commands
 
 class SETTINGS:
@@ -153,13 +153,22 @@ class Settings:
                 proto = self.actor.protocol
                 password = proto.password
                 username = ' '.join(original_line.split()[1:])
-                proto.register_account_changes(username, password)
+                succ = proto.register_account_changes(username, password)
+                if succ and proto.guest:
+                    proto.guest = False
+                    proto.actor.sendLine(f'{Color.GOOD}This account is no longer a guest account\n{Color.IMPORTANT}REMEMBER: You should set a password with "settings password <new password>"{Color.NORMAL}')
         
             case SETTINGS.PWD:
                 proto = self.actor.protocol
+                if proto.guest:
+                    proto.actor.sendLine(f'{Color.BAD}You are currently a guest, you need to set a new username before changing your password{Color.NORMAL}')
+                    return
+                
                 password = ' '.join(original_line.split()[1:])
                 username = proto.username
+                #proto.guest = False
                 proto.register_account_changes(username, password)
+                
 
             case SETTINGS.AUTO_BATTLER:
                 if len(line) == 1:

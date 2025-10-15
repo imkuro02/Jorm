@@ -6,6 +6,7 @@ import re
 from configuration.config import IndentType
 import math
 import weakref
+import random
 
 class RefTracker:
     def __init__(self):
@@ -59,7 +60,17 @@ def unload_fr():
         del TOUNLOAD[i]
        
 
+def generate_name():
+    names = [
+        "Auxy", "Niymiae", "Tanni", "Rahji", "Rahj", "Rahjii",
+        "Redpot", "Kuro", "Christine", "Adne", "Ken",
+        "Thomas", "Sandra", "Erling", "Viktor", "Wiktor",
+        "Sam", "Dan", 'Xsefe'
+    ]
+    titles = ['Goon', 'Gamer', 'Gold Farmer', 'Noob', 'Pro', 'Mudder', 'Smelly']
     
+    return random.choice(names) + ' The ' + random.choice(titles)
+
 
 logging.basicConfig(
     filename=   'logs.log',     # Log file name

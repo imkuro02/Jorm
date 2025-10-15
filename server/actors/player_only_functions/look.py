@@ -106,8 +106,8 @@ def command_map(self, line, return_gmcp = False):
 
             room = self.protocol.factory.world.rooms[grid[room_loc]]
             
-            if room.doorway:
-                continue
+            #if room.doorway:
+            #    continue
 
             _x = int(room_loc.split(',')[0])
             _y = int(room_loc.split(',')[1])
@@ -132,12 +132,14 @@ def command_map(self, line, return_gmcp = False):
                 #if _loc not in grid:
                 #    continue
 
-                #print(_exit.to_room_id, grid.values())
-                if _exit.to_room_id not in grid.values():
-                    if _loc in grid:
-                        continue
-                    
-                    grid[_loc] = _exit.to_room_id 
+                if not room.doorway:
+                
+                    #print(_exit.to_room_id, grid.values())
+                    if _exit.to_room_id not in grid.values():
+                        if _loc in grid:
+                            continue
+                        
+                        grid[_loc] = _exit.to_room_id 
                                   
                 
                 x += -offsets_path[_exit.direction][1]
