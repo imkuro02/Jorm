@@ -6,6 +6,7 @@ versions:
     features:
     - Guest accounts now exist, on login screen type "guest" to create a temporary account
     - Guest accounts can be converted to regular accounts, see more with "help guest"
+    - Doorways now render the path to the next room but not room info past doorway
   '141025':
     id: '141025'
     title: Skills
