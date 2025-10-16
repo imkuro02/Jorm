@@ -80,7 +80,8 @@ class SkillManager:
     def __init__(self, actor):
         self.actor = actor
         self.skills = {
-            'swing': 1
+            'swing': 1,
+            'guard': 1
         }
 
     def delete_skills_at_0(self):
@@ -465,7 +466,7 @@ class Actor:
         #self.stat_manager.stats[StatType.THREAT] = self.get_base_threat()
         self.stat_manager.stats[StatType.THREAT] = 0
 
-    def heal(self, heal_hp = True, heal_mp = True, value = 1, silent = True):
+    def heal(self, heal_hp = True, heal_mp = True, heal_armor = True, heal_marmor = True, value = 1, silent = True):
          
         if heal_hp:
             damage_obj = Damage(
@@ -479,6 +480,7 @@ class Actor:
                 dont_proc = True
                 )
             damage_obj.run()      
+
         if heal_mp:    
             damage_obj = Damage(
                 damage_taker_actor = self,
@@ -493,7 +495,7 @@ class Actor:
                 )
             damage_obj.run()   
 
-        if heal_hp:
+        if heal_armor:
             damage_obj = Damage(
                 damage_taker_actor = self,
                 damage_source_actor = self,
@@ -505,8 +507,9 @@ class Actor:
                 silent = silent,
                 dont_proc = True
                 )
-            damage_obj.run()      
-        if heal_mp:    
+            damage_obj.run() 
+
+        if heal_marmor:    
             damage_obj = Damage(
                 damage_taker_actor = self,
                 damage_source_actor = self,

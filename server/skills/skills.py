@@ -145,6 +145,7 @@ class SkillDamage(Skill):
 
             damage_obj.run()
 
+            '''
             match dmg_stat_scale:
                 case StatType.FLOW:
                     was_blocked = False 
@@ -161,7 +162,7 @@ class SkillDamage(Skill):
                                 #get_prediction_string_append = 'is bleeding'
                             )
                             self.other.affect_manager.set_affect_object(stunned_affect)
-
+            '''
 
             return damage_obj
 
@@ -179,6 +180,24 @@ class SkillCureLightWounds(SkillDamage):
                 #damage_to_stat = StatType.PHYARMOR
                 )
             damage_obj.run()'''
+
+class SkillDamageByFlowApplyBleed(SkillDamage):
+    def use(self):
+        super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
+        was_blocked = False 
+        roll = random.randint(0,1)
+        if not was_blocked:
+            if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
+                bleed_damage = self.user.stat_manager.stats[StatType.LVL]
+                stunned_affect = affects.AffectBleed(
+                    affect_source_actor = self.user,
+                    affect_target_actor = self.other,
+                    name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
+                    turns = 3,
+                    damage = bleed_damage,
+                    #get_prediction_string_append = 'is bleeding'
+                )
+                self.other.affect_manager.set_affect_object(stunned_affect)
 
 class SkillManaFeed(Skill):
     def use(self):
@@ -532,3 +551,27 @@ class SkillPortal(Skill):
             e = utils.create_npc(self.user.room.world.rooms[StaticRooms.LOADING], e_id, spawn_for_lore = True)
             e.talk_to(self.user)
             e.die()
+
+class SkillGuard(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            power = self.script_values['bonus'][self.users_skill_level]
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stat_manager.stats[StatType.PHYARMORMAX]*power),
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.PHYARMOR
+                )
+            damage_obj.run()        
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stat_manager.stats[StatType.MAGARMORMAX]*power),
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MAGARMOR
+                )
+            damage_obj.run()          

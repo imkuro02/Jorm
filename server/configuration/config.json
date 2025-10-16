@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e69e86039950149781879a5adaa64fe6fdae100457de365c9e060e652da32824",
+    "SHA-256": "1dd481888aec7d6cb5a1511ac5b4f25eacc6cbca3a8d80cf8147e538cd6f19ad",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3623,6 +3623,45 @@
                 ]
             }
         },
+        "guard": {
+            "skill_id": "guard",
+            "name": "Guard",
+            "description": "Guard up, recovering BONUS% of both Physical\nAnd Magical armor.\n",
+            "script_to_run": "Guard",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "cooldown": [
+                    69
+                ],
+                "bonus": [
+                    0.25
+                ]
+            }
+        },
         "bash": {
             "skill_id": "bash",
             "name": "Bash",
@@ -3940,8 +3979,8 @@
         "stab": {
             "skill_id": "stab",
             "name": "Stab",
-            "description": "Lunge and stab your target.\nDealing DAMAGE + 0%-CRIT% FLOW physical damage.\n",
-            "script_to_run": "DamageByFlow",
+            "description": "Lunge and stab your target.\nDealing DAMAGE + 0%-CRIT% FLOW physical damage.\nMay cause target to bleed, dealing LVL Pure damage per turn for 3 turns.\n",
+            "script_to_run": "DamageByFlowApplyBleed",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
             "target_self_is_valid": false,

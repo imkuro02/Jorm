@@ -211,7 +211,8 @@ class Protocol(protocol.Protocol):
             return
         if line.lower() == 'guest'.lower():
             _id  = str(uuid.uuid4())
-            _usr = utils.generate_name()
+            titles = ['Goon', 'Gamer', 'Gold Farmer', 'Noob', 'Pro', 'Mudder', 'Smelly']
+            _usr = utils.generate_name() + ' The ' + random.choice(titles)
             _pwd = str(uuid.uuid4())
             self.account = [_id,_usr,_pwd]
             

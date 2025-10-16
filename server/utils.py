@@ -67,9 +67,9 @@ def generate_name():
         "Thomas", "Sandra", "Erling", "Viktor", "Wiktor",
         "Sam", "Dan", 'Xsefe'
     ]
-    titles = ['Goon', 'Gamer', 'Gold Farmer', 'Noob', 'Pro', 'Mudder', 'Smelly']
     
-    return random.choice(names) + ' The ' + random.choice(titles)
+    
+    return random.choice(names) 
 
 
 logging.basicConfig(

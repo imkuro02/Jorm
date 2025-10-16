@@ -150,7 +150,10 @@ class Combat:
             
             if i.status != ActorStatusType.DEAD:
                 i.status = ActorStatusType.NORMAL
-                
+                threat = i.stat_manager.stats[StatType.THREAT]
+                threat = int(threat/2)
+                i.heal(value = threat, silent = True)
+                i.heal(heal_hp = False, heal_mp = False, value = 10000, silent = True)
 
         
         self.room.combat = None
