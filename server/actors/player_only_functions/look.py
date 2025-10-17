@@ -11,20 +11,22 @@ def command_map(self, line, return_gmcp = False):
 
     class Art:
         # all
-        GROUND =                    f'{Color.MAP_ROOM}x'
+        GROUND =                    f'{Color.MAP_ROOM}X'
         NS =                        f'{Color.MAP_PATH}:'
         EW =                        f'{Color.MAP_PATH}---'
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
         WALL =                      f'{Color.MAP_WALL}###'
-        DOOR =                      f'{Color.MAP_ROOM}/'
+        DOOR_M =                      f'{Color.MAP_ROOM}^'
+        DOOR_L =                      f'{Color.MAP_ROOM}|'
+        DOOR_R =                      f'{Color.MAP_ROOM}|'
         QUEST =                     f'{Color.MAP_IMPORTANT}?'
 
         # middle
         RECALL_SITE =               f'{Color.GOOD}+'
         PLAYER_HERE =               f'{Color.MAP_PLAYER}@'
-        SPECIAL_EXIT =              f'{Color.MAP_NORMAL}?'
-        SPECIAL_EXIT_AND_PLAYER =   f'{Color.MAP_NORMAL}?'
+        #SPECIAL_EXIT =              f'{Color.MAP_NORMAL}?'
+        #SPECIAL_EXIT_AND_PLAYER =   f'{Color.MAP_NORMAL}?'
         RECALL_SITE_AND_PLAYER =    f'{Color.MAP_PLAYER}+'
         
         # right
@@ -265,7 +267,7 @@ def command_map(self, line, return_gmcp = False):
                 north = f'{__x},{__y+1}'
                 south = f'{__x},{__y-1}'
                 cell = ' '+Art.GROUND+' '
-                _left = left in grid
+                _left =  left in grid
                 _right = right in grid
                 _north = north in grid
                 _south = south in grid
@@ -274,11 +276,7 @@ def command_map(self, line, return_gmcp = False):
                     cell = ' '+Art.NS+' '
                 if _north or _south:
                     cell = ''+Art.EW+''
-                cross = 0
-                for i in [_left,_right,_south,_north]:
-                    cross += i
-                if cross >= 3:
-                    cell = ' + '
+                
 
                 t.add_data(cell)
                 continue
@@ -298,7 +296,10 @@ def command_map(self, line, return_gmcp = False):
             
             #print(room)
             # left
-            if 'up' in [ x.direction for x in room.exits ]:
+            cell = ''
+            if room.doorway:
+                cell += Art.DOOR_L
+            elif 'up' in [ x.direction for x in room.exits ]:
                 cell += Art.STAIRS_UP
             else:
                 cell += Art.EMPTY
@@ -314,7 +315,7 @@ def command_map(self, line, return_gmcp = False):
             elif loc == START_LOC:
                 cell += Art.PLAYER_HERE
             elif room.doorway:
-                cell += Art.DOOR
+                cell += Art.DOOR_M
             elif room.can_be_recall_site:
                 cell += Art.RECALL_SITE
             #elif len([ x for x in room.exits if x.direction not in offsets ]) != 0:
@@ -325,7 +326,9 @@ def command_map(self, line, return_gmcp = False):
                 cell += Art.GROUND
 
             # right
-            if 'down' in [ x.direction for x in room.exits ]:
+            if room.doorway:
+                cell += Art.DOOR_R
+            elif 'down' in [ x.direction for x in room.exits ]:
                 cell += Art.STAIRS_DOWN
             else:
                 cell += Art.EMPTY
