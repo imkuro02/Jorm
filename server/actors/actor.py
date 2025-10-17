@@ -201,6 +201,9 @@ class Actor:
 
         self.set_base_threat()
 
+        # for npc char sheet
+        self.dont_join_fights = False
+
         REFTRACKER.add_ref(self)
 
 
@@ -367,53 +370,23 @@ class Actor:
         output += self.get_character_equipment()
         
         
+        if not self.dont_join_fights:
+            t = utils.Table(4,1)
+            _piss = [StatType.HP, StatType.MP, StatType.PHYARMOR, StatType.MAGARMOR, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
+            for _shit in _piss:
+                t.add_data(StatType.name[_shit]+':')
+                if _shit+'_max' in StatType.name:
+                    t.add_data(f'{self.stat_manager.stats[_shit]}')
+                    t.add_data(f'/')
+                    t.add_data(f'{self.stat_manager.stats[_shit+"_max"]}')
+                else:
+                    t.add_data(self.stat_manager.stats[_shit])
+                    t.add_data('')
+                    t.add_data('')
+
         
-        t = utils.Table(4,1)
-        '''
-        hp =    self.stat_manager.stats[StatType.HP]
-        mhp =   self.stat_manager.stats[StatType.HPMAX]
-        mp =    self.stat_manager.stats[StatType.MP]
-        mmp =   self.stat_manager.stats[StatType.MPMAX]
+            output += t.get_table()
 
-        ahp =    self.stat_manager.stats[StatType.PHYARMOR]
-        amhp =   self.stat_manager.stats[StatType.PHYARMORMAX]
-        amp =    self.stat_manager.stats[StatType.MAGARMOR]
-        ammp =   self.stat_manager.stats[StatType.MAGARMORMAX]
-
-        t.add_data('Health:')
-        x = utils.progress_bar(20,hp,mhp,"@red",style=1)
-        t.add_data(x)
-        t.add_data('PhyArmor:')
-        x = utils.progress_bar(20,ahp,amhp,"@red",style=1)
-        t.add_data(x)
-
-
-        t.add_data('Magicka:')
-        x = utils.progress_bar(20,mp,mmp,"@blue",style=1)
-        t.add_data(x)
-        t.add_data('MagArmor:')
-        x = utils.progress_bar(20,amp,ammp,"@blue",style=1)
-        t.add_data(x)
-        '''
-        
-        
-        # t.add_data(StatType.name[StatType.HP])
-        # t.add_data(f'(@red{self.stat_manager.stats[StatType.HP]}@normal/@red{self.stat_manager.stats[StatType.HPMAX]}@normal)')
-        # t.add_data(StatType.name[StatType.MP])
-        # t.add_data(f'(@cyan{self.stat_manager.stats[StatType.MP]}@normal/@cyan{self.stat_manager.stats[StatType.MPMAX]}@normal)')
-        _piss = [StatType.HP, StatType.MP, StatType.PHYARMOR, StatType.MAGARMOR, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
-        for _shit in _piss:
-            t.add_data(StatType.name[_shit]+':')
-            if _shit+'_max' in StatType.name:
-                t.add_data(f'{self.stat_manager.stats[_shit]}')
-                t.add_data(f'/')
-                t.add_data(f'{self.stat_manager.stats[_shit+"_max"]}')
-            else:
-                t.add_data(self.stat_manager.stats[_shit])
-                t.add_data('')
-                t.add_data('')
-
-        output += t.get_table()
         if type(self).__name__ == 'Player':
             t = utils.Table(4,1)
             '''

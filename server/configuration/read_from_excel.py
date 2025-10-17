@@ -334,6 +334,10 @@ def configure_ENEMIES(SHEET, ITEMS):
                 'drop_tags':         str(x['drop_tags'][index]).split(','), # drop tags for items
             }
 
+        
+            
+
+
     end = time.time()
     print(end - start,'ENEMIES')
 

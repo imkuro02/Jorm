@@ -1,4 +1,11 @@
 versions:
+  '171025':
+    id: '171025'
+    title: UI cleanup
+    unixtime: 1760612522
+    features:
+    - Lore command no longer shows unecessary info, like item drops for enemies that dont drop anything
+    - Looking at / Loring an npc that cannot be in combat will no longer display their stats (they often er just 1) 
   '161025':
     id: '161025'
     title: Guest accounts

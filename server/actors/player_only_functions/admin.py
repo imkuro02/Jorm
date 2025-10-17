@@ -684,12 +684,14 @@ def command_lore(self, line):
         # WIT DA utils.Table CODE
         output = f'{Color.IMPORTANT}You are pondering{Color.NORMAL}: '
         output += e.get_character_sheet()+'\n'
-        output += f'{Color.IMPORTANT}Roaming area{Color.NORMAL}:\n'
-        output += output_room_spawns+'\n'+'\n'
-        output += f'{Color.IMPORTANT}Potential drops{Color.NORMAL}:\n'
-        output += output_loot_drops+'\n'+'\n'
+        if output_room_spawns != '':
+            output += f'{Color.IMPORTANT}Roaming area{Color.NORMAL}:\n'
+            output += output_room_spawns.strip()+'\n'+'\n'
+        if output_loot_drops != '':
+            output += f'{Color.IMPORTANT}Potential drops{Color.NORMAL}:\n'
+            output += output_loot_drops+'\n'+'\n'
 
-        self.sendLine(output)
+        self.sendLine(output.strip())
 
         e.die()
         return
