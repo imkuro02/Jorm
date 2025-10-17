@@ -73,8 +73,8 @@ def command_practice(self, line):
         t = utils.Table(4,2)
         t.add_data('Skill')
         t.add_data('Cost')
-        t.add_data('LvL')
         t.add_data('Req')
+        t.add_data('LvL')
 
         #t.add_data('Req')
         sorted_data = sorted(SKILLS, key=lambda x: (SKILLS[x]["level_req"], SKILLS[x]["practice_cost"]))
@@ -93,6 +93,8 @@ def command_practice(self, line):
                 col = Color.NORMAL
             t.add_data(f'{cost} PP', col)
 
+            
+            
             lvl = 0
             col = Color.NORMAL
             if skill_id in self.skill_manager.skills.keys():
@@ -106,15 +108,19 @@ def command_practice(self, line):
             
             if lvl == 0:
                 lvl = '-'
-            t.add_data(lvl, col)
+            
 
             lvl_req = int(SKILLS[skill_id]['level_req'])
-            col = Color.NORMAL
+            lvl_req_col = Color.NORMAL
             if lvl_req <= self.stat_manager.stats[StatType.LVL]:
-                col = Color.GOOD
+                lvl_req_col = Color.GOOD
             else:
-                col = Color.BAD
-            t.add_data(lvl_req, col)
+                lvl_req_col = Color.BAD
+
+
+            t.add_data(lvl_req, lvl_req_col)
+            t.add_data(lvl, col)
+            
 
             '''
             # level
@@ -203,7 +209,7 @@ def command_practice(self, line):
        
 def command_skills(self, line):
     id_to_name, name_to_id = get_skills()
-    if len(line) > 0:
+    if len(line) > 0:   
         skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
         skill_id = name_to_id[skill_name]
         skill = SKILLS[skill_id]
@@ -330,10 +336,10 @@ def command_skills(self, line):
             self.sendLine('You do not know any skills...')
             return
 
-        t = utils.Table(2, spaces = 2)
+        t = utils.Table(3, spaces = 2)
         t.add_data('Skill')
         t.add_data('R')
-        #t.add_data('Lvl')
+        t.add_data('Lvl')
 
         for skill_id in SKILLS:
             if skill_id not in self.skill_manager.skills:
@@ -347,7 +353,7 @@ def command_skills(self, line):
             else: 
                 t.add_data(f'{self.cooldown_manager.cooldowns[skill_id]}', Color.BAD)
 
-        
+            t.add_data(self.skill_manager.skills[skill_id],Color.GOOD)
         self.sendLine(t.get_table())
 
 @check_not_in_combat
