@@ -17,9 +17,11 @@ def command_map(self, line, return_gmcp = False):
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
         WALL =                      f'{Color.MAP_WALL}###'
+
         DOOR_M =                      f'{Color.MAP_ROOM}^'
         DOOR_L =                      f'{Color.MAP_ROOM}|'
         DOOR_R =                      f'{Color.MAP_ROOM}|'
+
         QUEST =                     f'{Color.MAP_IMPORTANT}?'
 
         # middle
@@ -229,7 +231,9 @@ def command_map(self, line, return_gmcp = False):
                     #            if indoors:
                     #                break
 
+
                     cell = Art.WALL
+                    
                     #if not indoors:
                     #    cell = Art.EMPTY
                             

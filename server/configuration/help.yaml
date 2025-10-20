@@ -493,6 +493,25 @@ commands:
       Alternatively if someone is online, try shouting :)
     related:
       - shout
+  gossip:
+    group: talking
+    syntax:
+      - gossip <your message>
+    description: |
+      Gossip is very similar to the shout command, but it will only broadcast to players you are friends with.
+    related:
+      - friends
+  friends:
+    group: friends
+    syntax:
+      - befriend <name>
+      - unfriend <name>
+    description: |
+      You can add other players to your friend list.
+      You can add as many as you would like, but you are not friends until the player friends you back.
+      You cannot see the state of someone elses friends, and players do not get notified when you befriend or unfriend them.
+    related:
+      - gossip
   news:
     group: other
     syntax:

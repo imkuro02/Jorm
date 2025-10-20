@@ -34,6 +34,7 @@ from actors.player_only_functions.admin import (
     command_send_prompt, command_reload_config, command_lore, command_quest, command_bonus,
     command_kill, command_sethp, command_history, command_get_time, command_set_time, 
     command_patch_notes, get_any_new_patches,
+    command_friend_add, command_friend_remove, command_friend_list, command_friend_broadcast,
 )
 
 from actors.player_only_functions.settings import (
@@ -80,6 +81,10 @@ commands = {
     'shout':    'command_shout',
     'roll':     'command_roll',
     
+    'befriend': 'command_friend_add',
+    'unfriend': 'command_friend_remove',
+    'friend':   'command_friend_list',
+    'gossip':   'command_friend_broadcast',
     
     'go':       'command_go',
     #'setcall':  'command_recall_set',

@@ -36,6 +36,7 @@ class Color:
     MAP_IMPORTANT =         NORMAL
     MAP_NORMAL =            NORMAL
     MAP_WALL =              '@wall'
+    MAP_WALL_INSTANCED =    '@bgpurple'
     MAP_ROOM =              '@yellow'
     MAP_PATH =              '@yellow'
 
@@ -70,6 +71,7 @@ class MsgType:
     CHAT = 'chat'
     ALL = 'all'
     DEBUG = 'debug'
+    GOSSIP = 'gossip'
     
 class Audio:
     PLAYER_DEATH = 'die1.wav'

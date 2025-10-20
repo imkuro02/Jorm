@@ -195,10 +195,11 @@ def command_history(self, line):
     
 
 def command_ranks(self, line):
-    limit = 200
-    if limit >= 500: limit = 500
-    if limit <= 1: limit = 1
-    t = utils.Table(7, 3)
+    
+    #limit = 200
+    #if limit >= 200: limit = 200
+    #if limit <= 1: limit = 1
+    t = utils.Table(8, 3)
     ranks = self.factory.ranks
     #ranks = ranks[::-1]
     
@@ -210,19 +211,23 @@ def command_ranks(self, line):
     #t.add_data('Created')
     t.add_data('Logged In')
     t.add_data('Game Time')
+    t.add_data('Status')
     
     
-    length = len(ranks)
-    if length >= limit:
-        length = limit
-    rank = 1
-    for i in range(0,length):
-        if ranks[i]['time_in_game'] == 0:
-            continue
-        if ranks[i]['quests_turned_in'] == 0:
-            continue
+    #length = len(ranks)
+    #if length >= limit:
+    #    length = limit
+    rank = 0
+    for i in range(0,len(ranks)):
+        rank += 1
+        #if ranks[i]['time_in_game'] == 0:
+        #    continue
+        #if ranks[i]['quests_turned_in'] == 0:
+        #    continue
         #t.add_data(f'{len(ranks)-i}. ')
-        
+        if line != '':
+            if line != ranks[i]['name']:
+                continue
         t.add_data(f'{rank}. ')
         t.add_data(ranks[i]['lvl'])
         t.add_data(ranks[i]['name'])
@@ -231,7 +236,22 @@ def command_ranks(self, line):
         #t.add_data(utils.get_datetime_from_unix(ranks[i]['date_of_creation']))
         t.add_data(utils.get_datetime_ago_from_unix(ranks[i]['date_of_last_login']))
         t.add_data(utils.seconds_to_dhms(ranks[i]['time_in_game']))
-        rank += 1
+
+        online = False
+        for prot in self.room.world.factory.protocols:
+            if prot.actor == None:
+                continue
+            if prot.actor.name == ranks[i]['name']:
+                online = True
+        col = Color.BAD
+        if online:
+            col = Color.GOOD
+        if online:
+            online = 'Online'
+        else:
+            online = 'Offline'
+        t.add_data(f'{online}',col)
+        
         
         
     
@@ -774,3 +794,17 @@ def command_lore(self, line):
     if action in list_of_skill_names:
         _action = name_to_id[action]
     
+@check_no_empty_line
+def command_friend_add(self, line):
+    self.friend_manager.friend_add(friend_to_add_username = line)
+
+@check_no_empty_line
+def command_friend_remove(self, line):
+    self.friend_manager.friend_remove(friend_to_remove_username = line)
+
+def command_friend_list(self, line):
+    self.friend_manager.friend_list()
+
+@check_no_empty_line
+def command_friend_broadcast(self, line):
+    self.friend_manager.friend_broadcast(line)

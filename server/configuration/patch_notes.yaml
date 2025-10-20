@@ -1,8 +1,19 @@
 versions:
-  '171025':
-    id: '171025'
-    title: UI cleanup
-    unixtime: 1760612522
+  '201025.1':
+    id: '201025.1'
+    title: Friends!
+    unixtime: 1760948614
+    features:
+    - Command 'befriend' for adding friends
+    - Command 'unfriend' for unfriending friends
+    - Command 'friends' for viewing friends
+    - Rank command now shows online status and all characters are now eligable
+    - Rank command can be used with 'rank <player name>' to view a specific players rank status
+    - Gossip command 'gossip <your message>', a friend only shout alternative
+  '201025':
+    id: '201025'
+    title: UI cleanup and map changes
+    unixtime: 1760948614
     features:
     - Lore command no longer shows unecessary info, like item drops for enemies that dont drop anything
     - Looking at / Loring an npc that cannot be in combat will no longer display their stats (they often er just 1) 

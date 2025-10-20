@@ -361,7 +361,21 @@ class Protocol(protocol.Protocol):
                 item = self.actor.inventory_manager.items[item_id]
                 self.actor.inventory_equip(item, forced = True)
 
+            #print(actor['friends'])
+            if actor['friends'] != []:
+                for i in actor['friends']:
+                    # skip if somehow you friended yourself
+                    if i[1] == self.actor.id:
+                        continue
+                    # skip if actor id does not return anything
+                    if self.actor.friend_manager.find_actor_name_from_actor_id(i[1]) == None:
+                        continue
+                    self.actor.friend_manager.friends.append(i[1])
+
         self.actor.inventory_manager.all_items_set_new(False)
+
+            
+
         self.state = self.PLAY
 
         if actor == None:
@@ -381,6 +395,7 @@ class Protocol(protocol.Protocol):
         
         self.actor.get_any_new_patches()
         self.actor.new_room_look()
+        self.actor.friend_manager.friend_broadcast_login()
         
         
         
@@ -408,6 +423,7 @@ class Protocol(protocol.Protocol):
         self.actor.affect_manager.unload_all_affects(silent = False)
         self.save_actor()
         self.actor.simple_broadcast('Logging off', f'{self.actor.pretty_name()} logging off')
+        self.actor.friend_manager.friend_broadcast_logout()
         # teleport player to loading to remove them safely
         self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
         #del self.factory.world.rooms[StaticRooms.LOADING].actors[self.actor.id]

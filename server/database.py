@@ -122,6 +122,13 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
+        self.cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS friend (
+            actor_id TEXT NOT NULL,
+            friend_id TEXT NOT NULL,
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        )''')
+
         # Commit changes
         self.conn.commit()
 
@@ -136,6 +143,26 @@ class Database:
         
         
         return account
+
+    def find_actor_name_from_actor_id(self, _id):
+        self.cursor.execute(
+            '''
+                SELECT actor_id, actor_name 
+                FROM actors WHERE actor_id = ?
+            ''', (_id,))
+
+        to_return = self.cursor.fetchone()
+        return to_return
+
+    def find_actor_id_from_actor_name(self, _username):
+        self.cursor.execute(
+            '''
+                SELECT actor_id, actor_name 
+                FROM actors WHERE actor_name = ?
+            ''', (_username,))
+
+        to_return = self.cursor.fetchone()
+        return to_return
 
     def find_all_accounts(self):
         self.cursor.execute(
@@ -415,6 +442,31 @@ class Database:
                 :actor_id, :gmcp, :view_room, :view_map, :prompt
             )
         ''', my_dict)
+
+        #self.cursor.execute(''' 
+        #CREATE TABLE IF NOT EXISTS friend (
+        #    actor_id TEXT NOT NULL,
+        #    friend_id TEXT NOT NULL,
+        #    FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        #)''')
+
+        my_dict = {}
+        my_dict['actor_id'] = actor_id
+        self.cursor.execute('''
+            DELETE FROM friend WHERE actor_id = ?
+        ''', (actor_id,))
+
+        for key in actor.friend_manager.friends:
+            my_dict['actor_id'] = actor_id
+            my_dict['friend_id'] = key
+            #print(f'{actor_id} adds {key}')
+            self.cursor.execute('''
+                INSERT INTO friend (
+                    actor_id, friend_id
+                ) VALUES (
+                    :actor_id, :friend_id
+                )
+            ''', my_dict)
                 
         self.write_admins(actor)
         self.conn.commit()
@@ -492,6 +544,12 @@ class Database:
         ''', (actor_id,))
 
         settings = self.cursor.fetchone()
+
+        self.cursor.execute('''
+            SELECT * FROM friend WHERE actor_id = ?
+        ''', (actor_id,))
+
+        friends = self.cursor.fetchall()
 
 
         my_dict = {}
@@ -584,6 +642,26 @@ class Database:
             }
        
         #print(my_dict['settings_aliases'])
+
+        my_dict['settings'] = {}
+        #print(settings)
+        if settings != None:
+            my_dict['settings'] = {
+                'gmcp': settings[1],
+                'view_room': settings[2],
+                'view_map': settings[3],
+                'prompt': settings[4]
+            }
+       
+        #print(my_dict['settings_aliases'])
+        my_dict['friends'] = []
+        if friends != None:
+            for friend in friends:
+                #print('loading friend,',friend)
+                my_dict['friends'].append(friend)
+        #print(my_dict['friends'])
+        
+        
         return my_dict
     
     # write down admin on save

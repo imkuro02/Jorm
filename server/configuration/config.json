@@ -1,5 +1,5 @@
 {
-    "SHA-256": "1dd481888aec7d6cb5a1511ac5b4f25eacc6cbca3a8d80cf8147e538cd6f19ad",
+    "SHA-256": "23abe4609c231229921e59d305a8827bfeb5ef5bad975d94ef665ff7dbb5a4d4",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3103,38 +3103,19 @@
                 "lvl": 6
             },
             "include_in_daily_quests": true,
-            "skills": {},
+            "skills": {
+                "nudge": 1
+            },
             "loot": {
-                "rock": 34,
-                "summoning_rock": 34,
-                "red potion": 100,
-                "blue potion": 100,
-                "blessing_of_grit": 60,
-                "grit body 1": 65,
-                "grit body 3": 55,
-                "grit body 6": 40,
-                "grit body 9": 100,
-                "grit head 1": 65,
-                "grit head 3": 55,
-                "grit head 6": 40,
-                "grit head 9": 100,
-                "grit relic 1": 65,
-                "grit trinket 1": 65,
-                "grit trinket 3": 55,
-                "grit trinket 6": 40,
-                "grit trinket 9": 100,
-                "grit weapon 1": 65,
-                "grit weapon 3": 55,
-                "grit weapon 6": 40,
-                "grit weapon 9": 100,
-                "grit weapon alt 3": 55
+                "ant_pheromone": 34,
+                "ant_resin": 34
             },
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
-                "all"
+                "ant"
             ]
         },
         "ant_nurse": {
@@ -3155,7 +3136,10 @@
                 "lvl": 12
             },
             "include_in_daily_quests": true,
-            "skills": {},
+            "skills": {
+                "nudge": 1,
+                "cure_light_wounds": 1
+            },
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -3206,7 +3190,10 @@
                 "lvl": 9
             },
             "include_in_daily_quests": true,
-            "skills": {},
+            "skills": {
+                "cure_light_wounds": 1,
+                "magic_missile": 1
+            },
             "loot": {
                 "ant_pheromone": 20,
                 "rock": 31,
@@ -3777,12 +3764,12 @@
                     0.65
                 ],
                 "mp_cost": [
-                    2,
-                    2,
-                    3,
-                    3,
-                    4,
-                    5
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
                 ],
                 "cooldown": [
                     1,
@@ -3847,12 +3834,12 @@
                     0.65
                 ],
                 "mp_cost": [
-                    5,
-                    5,
-                    6,
-                    6,
-                    7,
-                    7
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
                 ],
                 "cooldown": [
                     1,

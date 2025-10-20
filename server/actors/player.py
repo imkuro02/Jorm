@@ -16,6 +16,110 @@ from actors.player_only_functions.charging_mini_game import ChargingMiniGame
 import gc
 from utils import unload
 
+class FriendManager:
+    def __init__(self, owner):
+        self.owner = owner
+        self.friends = []
+
+    def find_actor_id_from_actor_name(self, username):
+        return self.owner.room.world.factory.db.find_actor_id_from_actor_name(username)
+
+    def find_actor_name_from_actor_id(self, _id):
+        return self.owner.room.world.factory.db.find_actor_name_from_actor_id(_id)
+        
+    def friend_add(self, friend_to_add_username, silent = False):
+        found = self.find_actor_id_from_actor_name(friend_to_add_username)
+        if found == None:
+            self.owner.sendLine('Cannot add friend, they do not exist')
+            return
+        if found[0] in self.friends:
+            self.owner.sendLine('Cannot add friend, already befriended')
+            return
+        if found[0] == self.owner.id:
+            self.owner.sendLine('Cannot add friend, kinda sad you tried')
+            return
+        self.owner.sendLine(f'{str(found[1])} added as your friend!')
+        self.friends.append(found[0])
+
+    def friend_remove(self, friend_to_remove_username, silent = False):
+        found = self.find_actor_id_from_actor_name(friend_to_remove_username) 
+        if found != None:
+            if found[0] in self.friends:
+                self.friends.remove(found[0])
+                self.owner.sendLine('removed 1 friend')
+            else:
+                self.owner.sendLine('Cannot remove friend, either they are not your friend or do not exist')
+
+    def friend_list(self):
+        self.owner.sendLine('Friend list:')
+        accs = []
+        t = utils.Table(2,3)
+        t.add_data('Name')
+        t.add_data('Status')
+        online = False
+        is_friend = True
+        for i in self.friends:
+            name = str(self.find_actor_name_from_actor_id(i)[1])
+            
+            online = False
+            for prot in self.owner.room.world.factory.protocols:
+                if prot.actor == None:
+                    continue
+                if prot.actor.id == i:
+                    online = True
+                    name = prot.actor.name
+                    if self.owner.id not in prot.actor.friend_manager.friends:
+                        is_friend = False
+                    
+
+            col = Color.BAD
+            status = 'Unknown'
+            if online:
+                col = Color.GOOD
+            if online:
+                status = 'Online'
+            else:
+                status = 'Offline'
+
+            if is_friend == False:
+                status = 'Not Friend'
+                col = Color.BAD
+
+            t.add_data(name)
+            t.add_data(f'{status}',col)
+
+        output = t.get_table()
+        self.owner.sendLine(output)
+
+
+            
+            
+
+    def friend_broadcast_login(self):
+        for prot in self.owner.room.world.factory.protocols:
+            if prot.actor == None:
+                continue
+            if prot.actor.id in self.friends:
+                if self.owner.id in prot.actor.friend_manager.friends:
+                    prot.actor.sendLine(f'Your friend {self.owner.pretty_name()} has logged in', msg_type = [MsgType.GOSSIP])
+
+    def friend_broadcast_logout(self):
+        for prot in self.owner.room.world.factory.protocols:
+            if prot.actor == None:
+                continue
+            if prot.actor.id in self.friends:
+                if self.owner.id in prot.actor.friend_manager.friends:
+                    prot.actor.sendLine(f'Your friend {self.owner.pretty_name()} has logged out', msg_type = [MsgType.GOSSIP])
+
+    def friend_broadcast(self, line):
+        self.owner.sendLine(f'You gossip "@important{line}@normal"', msg_type = [MsgType.CHAT, MsgType.GOSSIP])
+        for prot in self.owner.room.world.factory.protocols:
+            if prot.actor == None:
+                continue
+            if prot.actor.id in self.friends:
+                if self.owner.id in prot.actor.friend_manager.friends:
+                    prot.actor.sendLine(f'{self.owner.pretty_name()} gossips "@important{line}@normal"', msg_type = [MsgType.CHAT, MsgType.GOSSIP])
+
 class UpdateChecker:
     def __init__(self,actor):
         self.actor = actor
@@ -225,6 +329,7 @@ class Player(Actor):
         self.charging_mini_game = ChargingMiniGame(self)
 
         self.update_checker = UpdateChecker(self)
+        self.friend_manager = FriendManager(self)
         self.loaded = True
         
     def die(self, unload = False):
