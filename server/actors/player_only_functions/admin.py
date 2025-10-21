@@ -808,3 +808,45 @@ def command_friend_list(self, line):
 @check_no_empty_line
 def command_friend_broadcast(self, line):
     self.friend_manager.friend_broadcast(line)
+
+
+def command_calculator(self, line):
+    allowed_chars_nums = "1234567890"
+    allowed_chars_math = "+-*/. "
+    allowed_chars_special = "()"
+    allowed_chars = allowed_chars_nums + allowed_chars_special + allowed_chars_math
+
+    if line == '':
+        self.sendLine(f'Only these characters are allowed: "{allowed_chars}"')
+        return
+    
+    for i in line:
+        if i not in allowed_chars:
+            self.sendLine(f'Only these characters are allowed: "{allowed_chars}"')
+            return
+    
+    try:
+        answer = float(eval(line))
+        if answer.is_integer():
+            answer = int(answer)
+    except Exception as e:
+        answer = f'ERROR {e}'
+
+    last_color = Color.NORMAL
+    _line = ''
+    for l in line:
+        color = None
+        if l in allowed_chars_nums:
+            color = Color.GOOD
+        if l in allowed_chars_special:
+            color = Color.BAD
+        if l in allowed_chars_math:
+            color = Color.IMPORTANT
+        if color == last_color:
+            _line = _line + l
+        else:
+            _line = _line + color + l
+
+            
+
+    self.sendLine(f'{_line}  {Color.NORMAL}=  {answer}')

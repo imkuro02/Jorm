@@ -230,6 +230,7 @@ def command_skills(self, line):
         _can_use_out_of_combat = skill["can_use_out_of_combat"]
         _can_practice = skill["can_be_practiced"]
         _is_offensive = skill["is_offensive"]
+        _ends_turn = skill["end_turn"]
         _name = skill["name"]
         _target = ''
         _targets = [_target_self, _target_others, _target_items]
@@ -264,7 +265,8 @@ def command_skills(self, line):
         extra_info = (
             f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.\n'
             f'It {_combat}, and '
-            f'it {"can" if _can_practice else "cannot"} be practiced.'
+            f'it {"can" if _can_practice else "cannot"} be practiced. '
+            f'{"Does" if _ends_turn else "Does not"} End your turn.'
         )
         extra_info = f'{Color.DESCRIPTION}{extra_info}{Color.NORMAL}'
 

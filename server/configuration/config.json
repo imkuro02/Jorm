@@ -1,5 +1,5 @@
 {
-    "SHA-256": "23abe4609c231229921e59d305a8827bfeb5ef5bad975d94ef665ff7dbb5a4d4",
+    "SHA-256": "a01e671ff671bdcb5fcaa70726b2774be329cecc9b56c802df70b8ea2e677d19",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3575,6 +3575,7 @@
                 "user on other fail": "#USER# loses their footing while swinging at #OTHER#"
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     5,
@@ -3637,6 +3638,7 @@
                 "user on other fail": "#USER# fails to concentrate on #OTHER#."
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1
@@ -3676,6 +3678,7 @@
                 "user on other fail": "#USER# fails to bash #OTHER#"
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     8,
@@ -3746,6 +3749,7 @@
                 "user on other fail": "#USER# fails to smites #OTHER#"
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     7,
@@ -3816,6 +3820,7 @@
                 "user on other fail": "#USER# loses their concentration while attempting to fire a magical missile at #OTHER#"
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     10,
@@ -3886,6 +3891,7 @@
                 "user on other fail": "#USER# fails to nudge #OTHER#"
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     1
@@ -3928,6 +3934,7 @@
                 "user on other fail": "#USER# fails to bite #OTHER#."
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     1,
@@ -3990,6 +3997,7 @@
                 "user on other fail": "None"
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     7,
@@ -4052,6 +4060,7 @@
                 "user on other fail": "None"
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     10,
@@ -4114,6 +4123,7 @@
                 "user on other fail": "#USER# loses their footing while whacking at #OTHER#"
             },
             "is_offensive": 1.0,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     3,
@@ -4167,6 +4177,7 @@
                 "user on other fail": "#USER# loses their focus on #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": false,
             "script_values": {
                 "bonus": [
                     0.4,
@@ -4237,6 +4248,7 @@
                 "user on other fail": "#USER# loses their focus on #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": false,
             "script_values": {
                 "bonus": [
                     1.5,
@@ -4307,6 +4319,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": false,
             "script_values": {
                 "damage": [
                     4,
@@ -4377,6 +4390,7 @@
                 "user on other fail": "#USER# loses their focus on #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": false,
             "script_values": {
                 "bonus": [
                     0.2,
@@ -4447,6 +4461,7 @@
                 "user on other fail": "None"
             },
             "is_offensive": 0.0,
+            "end_turn": false,
             "script_values": {
                 "bonus": [
                     0.2,
@@ -4501,6 +4516,7 @@
                 "user on other fail": "#USER# fails to concentrate on #OTHER#."
             },
             "is_offensive": 0.0,
+            "end_turn": false,
             "script_values": {
                 "bonus": [
                     1.0,
@@ -4563,6 +4579,7 @@
                 "user on other fail": "#USER# fails to concentrate on #OTHER#."
             },
             "is_offensive": 0.0,
+            "end_turn": false,
             "script_values": {
                 "bonus": [
                     0.5,
@@ -4625,6 +4642,7 @@
                 "user on other fail": "#USER# fails to concentrate on #OTHER#."
             },
             "is_offensive": 0.0,
+            "end_turn": false,
             "script_values": {
                 "bonus": [
                     0.2,
@@ -4687,6 +4705,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "cooldown": [
                     1
@@ -4723,6 +4742,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "cooldown": [
                     1
@@ -4759,6 +4779,7 @@
                 "user on other fail": "None"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "bonus": [
                     0.2
@@ -4798,6 +4819,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "cooldown": [
                     1
@@ -4834,6 +4856,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "cooldown": [
                     1
@@ -4870,6 +4893,7 @@
                 "user on other fail": "alchemy error check config use_perspectives 10"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "bonus": [
                     1.0,
@@ -4932,6 +4956,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1
@@ -4977,6 +5002,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1
@@ -5019,6 +5045,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1
@@ -5061,6 +5088,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1
@@ -5103,6 +5131,7 @@
                 "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1
@@ -5145,6 +5174,7 @@
                 "user on other fail": "#USER# fails to concentrate on #OTHER#."
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "level ": [
                     1
@@ -5181,6 +5211,7 @@
                 "user on other fail": "#USER# fails to concentrate on #OTHER#."
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1,
@@ -5227,6 +5258,7 @@
                 "user on other fail": "#USER# fails to concentrate on #OTHER#."
             },
             "is_offensive": 0.0,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1,

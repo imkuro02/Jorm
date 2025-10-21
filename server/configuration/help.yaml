@@ -706,6 +706,7 @@ commands:
       - settings
       - say
     color:
+  roll:
     group: other
     syntax:
       - roll
@@ -716,5 +717,15 @@ commands:
     related:
       - settings
       - say
+  calculator:
+    group: other
+    syntax:
+      - calculator <Math equation>
+    description: |
+      Do a very simple calculation.
+      for example, if you know something deals 30% of 255 as damage:
+      Use "calculator 255*0.3" to quickly get the value in return
+    related:
+      - nothing
 
 

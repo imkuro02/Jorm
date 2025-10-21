@@ -35,6 +35,7 @@ from actors.player_only_functions.admin import (
     command_kill, command_sethp, command_history, command_get_time, command_set_time, 
     command_patch_notes, get_any_new_patches,
     command_friend_add, command_friend_remove, command_friend_list, command_friend_broadcast,
+    command_calculator,
 )
 
 from actors.player_only_functions.settings import (
@@ -151,7 +152,8 @@ commands = {
     '_reload':   'command_reload_config',
     '_kill':     'command_kill',
     
-    '_sethp':    'command_sethp'
+    '_sethp':    'command_sethp',
+    'calculator':'command_calculator'
 
     
 }

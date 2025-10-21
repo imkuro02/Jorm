@@ -137,7 +137,8 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
                 #'weight_high_hp_ally':      x['weight_high_hp_ally'][index],
                 #'weight_low_hp_enemy':      x['weight_low_hp_enemy'][index],
                 #'weight_high_hp_enemy':     x['weight_high_hp_enemy'][index],
-                'is_offensive':             x['is_offensive'][index]
+                'is_offensive':             x['is_offensive'][index],
+                'end_turn':             bool(x['end_turn'][index])
             }
 
     for skill in SKILLS:

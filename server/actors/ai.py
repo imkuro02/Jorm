@@ -13,6 +13,12 @@ class AI:
         self.prediction_item = None
         self.prediction_override = ''
 
+        # some skills can be used without ending your turn, for example most buffs
+        # if this value is true, then you are allowed to use multiple skills per turn
+        # if its false then your turn ends regardless
+        self.can_use_skills_without_ending_turn = False
+        # all AI is set to false, except player AI
+
     def initiative(self):
         self.predict_use_best_skill()
         #debug = f'{self.actor.name}, {self.prediction_skill}, {self.prediction_target}'
@@ -129,10 +135,15 @@ class AI:
 
         if self.prediction_skill != None:
             if use_skill(self.actor, target, self.prediction_skill):
+                used_skill = self.prediction_skill
                 self.clear_prediction()
                 #self.predict_use_best_skill()
-                
-                self.actor.finish_turn()
+                if self.can_use_skills_without_ending_turn:
+                    if SKILLS[used_skill]['end_turn']:
+                        self.actor.finish_turn()
+                    self.predict_use_best_skill()
+                else:
+                    self.actor.finish_turn()
                 return True
             
         #debug = f'skill {self.prediction_skill}, target {self.prediction_target}'
@@ -300,6 +311,10 @@ class AI:
         return True
 
 class PlayerAI(AI):
+    def __init__(self, actor):
+        super().__init__(actor)
+        self.can_use_skills_without_ending_turn = True
+        
     def use_prediction(self):
         if super().use_prediction():
             return True
