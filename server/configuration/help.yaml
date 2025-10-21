@@ -702,7 +702,17 @@ commands:
       (remove the ".") inbetween
 
       example: "say @.bgyellowHELLO@.normal" -> "say @bgyellowHELLO@normal"
-
+    related:
+      - settings
+      - say
+    color:
+    group: other
+    syntax:
+      - roll
+      - roll <1-100,000>
+    description: |
+      Roll a number between 1 - 100 by default, can be extended up to 100,000
+      Rolling will be announced in the room you roll in
     related:
       - settings
       - say

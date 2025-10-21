@@ -2,6 +2,7 @@
 from configuration.config import ActorStatusType, Color
 import utils
 import random
+random = random.Random()
 
 def command_map(self, line, return_gmcp = False):
     setting_render_walls = False

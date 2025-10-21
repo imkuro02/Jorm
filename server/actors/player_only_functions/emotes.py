@@ -73,11 +73,10 @@ def command_emote(self, line):
     return
 
 
-@check_no_empty_line
 @check_not_spamming
 def command_roll(self, line):
     rmin = 0
-    rmax = 100
+    rmax = 100_000
 
     if line != '':
         try:
@@ -86,6 +85,8 @@ def command_roll(self, line):
         except Exception as e:
             self.sendLine('The roll argument must be an intiger')
             return
+    else:
+        rmax = 100
 
     if rmax <= 0:
         self.sendLine('The roll argument must be 1 or higher')
