@@ -1,4 +1,12 @@
 versions:
+  '221025':
+    id: '221025'
+    title: Map art
+    unixtime: 1760948614
+    features:
+    - Different wall art for different rooms
+    - Wall art has width of 2 now
+    - Unexplored rooms have a yellow ? 
   '211025':
     id: '211025'
     title: Skills and calc
