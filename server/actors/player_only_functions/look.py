@@ -19,19 +19,20 @@ def command_map(self, line, return_gmcp = False):
         # all
         GROUND =                    f'{Color.MAP_ROOM} '
         GROUND_UNEXPLORED =         f'{Color.MAP_ROOM}?'
-        NS =                        f'{Color.MAP_PATH}|'
-        EW =                        f'{Color.MAP_PATH}-'
+        NS =                        ' '#f'{Color.MAP_PATH}|'
+        EW =                        ' '#f'{Color.MAP_PATH}-'
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
 
         WALLS = {
             'default':  {'art':'@normal#',             'priority':1000},
             'inside':   {'art':f'{Color.MAP_WALL}#',   'priority':1},
-            'fence':    {'art':f'@purple%',            'priority':2},
+            'fence':    {'art':f'@byellow#',            'priority':2},
             'mushroom': {'art':f'@redΩ',               'priority':3},
             'forest':   {'art':f'@green^',             'priority':4},
-            'jungle':   {'art':f'@bgreen$$',           'priority':5},
-            'mountain': {'art':f'@normal^',            'priority':6},
+            'plains':   {'art':f'@greenn',             'priority':5},
+            'jungle':   {'art':f'@bgreenn',            'priority':7},
+            'mountain': {'art':f'@normal^',            'priority':8},
         }
      
         DOOR_M =                      f'{Color.MAP_ROOM}^'
@@ -253,7 +254,7 @@ def command_map(self, line, return_gmcp = False):
                         if d in grid:
                             if grid[d] in self.room.world.rooms:
                                 if 'plains'.lower() in self.room.world.rooms[grid[d]].name.lower():
-                                    new_cell = 'forest'
+                                    new_cell = 'plains'
                                     if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
                                         cell = new_cell
 
@@ -263,7 +264,7 @@ def command_map(self, line, return_gmcp = False):
                                         cell = new_cell
 
                                 if 'jungle'.lower() in self.room.world.rooms[grid[d]].name.lower():
-                                    new_cell = 'forest'
+                                    new_cell = 'jungle'
                                     if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
                                         cell = new_cell
 
@@ -444,7 +445,7 @@ def command_map(self, line, return_gmcp = False):
        
         return '\n'.join(lines)
     
-    combined_output = pad_lines_to_be_map_width(t.get_table())
+    combined_output = t.get_table()#pad_lines_to_be_map_width(t.get_table())
    
     if not return_gmcp:
         self.sendLine('<Map Start>\n'+combined_output+'<Map End>')
