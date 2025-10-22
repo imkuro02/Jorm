@@ -36,14 +36,15 @@ def command_get(self, line):
     if item == None:
         self.sendLine('Get what?', sound = Audio.ERROR)
         return
+    item_pretty_name_before_pickup = item.pretty_name()
     if self.inventory_manager.add_item(item):
         self.room.inventory_manager.remove_item(item)
         self.simple_broadcast(
-            f'You get {item.name}',
-            f'{self.pretty_name()} gets {item.name}'
+            f'You get {item_pretty_name_before_pickup}',
+            f'{self.pretty_name()} gets {item_pretty_name_before_pickup}'
             )
     else:
-        self.sendLine(f'You can\'t pick up {item.name}', sound = Audio.ERROR)
+        self.sendLine(f'You can\'t pick up {item.pretty_name()}', sound = Audio.ERROR)
     
 @check_not_trading
 @check_no_empty_line
@@ -83,12 +84,14 @@ def command_drop(self, line):
         self.sendLine('Cannot drop kept or equipped items')
         return
 
+    
+    self.simple_broadcast(
+        f'You drop {item.pretty_name()}',
+        f'{self.pretty_name()} drops {item.pretty_name()}'
+        )
+
     self.room.inventory_manager.add_item(item)
     self.inventory_manager.remove_item(item)
-    self.simple_broadcast(
-        f'You drop {item.name}',
-        f'{self.pretty_name()} drops {item.name}'
-        )
 
 @check_not_trading
 def command_split(self, line):

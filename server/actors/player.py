@@ -304,6 +304,7 @@ class Player(Actor):
         self.instanced_rooms = []
         self.collect_lost_exp_rooms = {}
         
+        
         super().__init__(name = name, room = room, _id = _id)
 
         self.last_line_sent = None
