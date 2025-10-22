@@ -212,6 +212,13 @@ class Room:
 
         REFTRACKER.add_ref(self)
 
+    def get_real_id(self):
+        #print(self.id)
+        if '#' in self.id:
+            #print(self.id.split('#')[0])
+            return self.id.split('#')[0] 
+        return self.id
+
     def get_active_exits(self):
         active_exits = []
         for i in self.exits:

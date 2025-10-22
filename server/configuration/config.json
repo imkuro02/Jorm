@@ -1,5 +1,5 @@
 {
-    "SHA-256": "a01e671ff671bdcb5fcaa70726b2774be329cecc9b56c802df70b8ea2e677d19",
+    "SHA-256": "1afc412ae4ec2cc9ff237b5446f1e0631cda43ed6a22c2317e6e3ad21fee64c1",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -7,14 +7,14 @@
             "name": "Tiny mouse",
             "description": "A tiny, round creature the size of a palm. Its fur is white. It has a short, slightly upturned snout. Its ears are round and twitch at every sound.",
             "stats": {
-                "grit": 0,
-                "hp": 30,
-                "mp": 10,
+                "grit": 1,
+                "hp": 15,
+                "mp": 0,
                 "phy_armor": 0,
                 "mag_armor": 0,
-                "flow": 5,
-                "mind": 0,
-                "soul": 0,
+                "flow": 1,
+                "mind": 1,
+                "soul": 1,
                 "exp": 0,
                 "lvl": 0
             },
@@ -26,15 +26,16 @@
                 "tutorial_quest_item_1": 1,
                 "rock": 40,
                 "summoning_rock": 40,
-                "flow body 1": 60,
-                "flow body 3": 100,
-                "flow head 1": 60,
-                "flow head 3": 100,
-                "flow relic 1": 60,
-                "flow trinket 1": 60,
-                "flow trinket 3": 100,
-                "flow weapon 1": 60,
-                "flow weapon 3": 100
+                "grit body 1": 60,
+                "grit body 3": 100,
+                "grit head 1": 60,
+                "grit head 3": 100,
+                "grit relic 1": 60,
+                "grit trinket 1": 60,
+                "grit trinket 3": 100,
+                "grit weapon 1": 60,
+                "grit weapon 3": 100,
+                "grit weapon alt 3": 100
             },
             "combat_loop": {},
             "can_start_fights": false,

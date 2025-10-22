@@ -8,17 +8,32 @@ def command_map(self, line, return_gmcp = False):
     setting_render_walls = False
     room_id = self.room.id
     VIEW_RANGE = 7
+    ROOM_AMOUNT = VIEW_RANGE
+    PATH_AMOUNT = VIEW_RANGE
+    ROOM_WIDTH = 3
+    PATH_WIDTH = 2
+    MAP_WIDTH = ROOM_WIDTH*VIEW_RANGE + (PATH_WIDTH*(VIEW_RANGE+1)) + 0
     START_LOC = f'{VIEW_RANGE},{VIEW_RANGE}'
 
     class Art:
         # all
-        GROUND =                    f'{Color.MAP_ROOM}X'
-        NS =                        f'{Color.MAP_PATH}:'
-        EW =                        f'{Color.MAP_PATH}---'
+        GROUND =                    f'{Color.MAP_ROOM} '
+        GROUND_UNEXPLORED =         f'{Color.MAP_ROOM}?'
+        NS =                        f'{Color.MAP_PATH}|'
+        EW =                        f'{Color.MAP_PATH}-'
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
-        WALL =                      f'{Color.MAP_WALL}###'
 
+        WALLS = {
+            'default':  {'art':'@normal#',             'priority':1000},
+            'inside':   {'art':f'{Color.MAP_WALL}#',   'priority':1},
+            'fence':    {'art':f'@purple%',            'priority':2},
+            'mushroom': {'art':f'@redΩ',               'priority':3},
+            'forest':   {'art':f'@green^',             'priority':4},
+            'jungle':   {'art':f'@bgreen$$',           'priority':5},
+            'mountain': {'art':f'@normal^',            'priority':6},
+        }
+     
         DOOR_M =                      f'{Color.MAP_ROOM}^'
         DOOR_L =                      f'{Color.MAP_ROOM}|'
         DOOR_R =                      f'{Color.MAP_ROOM}|'
@@ -87,7 +102,6 @@ def command_map(self, line, return_gmcp = False):
         _loc = f'{x},{y}'
 
         
-        
         if _loc not in grid:
             grid[_loc] = _exit.to_room_id
         
@@ -111,6 +125,7 @@ def command_map(self, line, return_gmcp = False):
 
             room = self.protocol.factory.world.rooms[grid[room_loc]]
             
+            
             #if room.doorway:
             #    continue
 
@@ -122,6 +137,8 @@ def command_map(self, line, return_gmcp = False):
                     continue
                 if _exit.secret:
                     continue
+                #if room.get_real_id() not in self.explored_rooms:
+                #    continue
                 #if _exit.item_required != None:
                 #    continue
                 
@@ -137,7 +154,8 @@ def command_map(self, line, return_gmcp = False):
                 #if _loc not in grid:
                 #    continue
 
-                if not room.doorway:
+                if not room.doorway: #and room.get_real_id() in self.explored_rooms:
+             
                 
                     #print(_exit.to_room_id, grid.values())
                     if _exit.to_room_id not in grid.values():
@@ -150,6 +168,8 @@ def command_map(self, line, return_gmcp = False):
                 x += -offsets_path[_exit.direction][1]
                 y += -offsets_path[_exit.direction][0]
                 _loc = f'{x},{y}'
+
+                #if not room.doorway:
                 if _loc not in grid:
                     grid[_loc] = 'PATH'
 
@@ -183,6 +203,7 @@ def command_map(self, line, return_gmcp = False):
 
 
             if loc not in grid:
+                
                 __x, __y, = map(int, loc.split(','))
                 
                 directions = {
@@ -210,51 +231,82 @@ def command_map(self, line, return_gmcp = False):
                 if not setting_render_walls:
                     if not walled:
                         #if d['n'] not in grid and d['w'] not in grid and d['e'] not in grid and d['s'] not in grid     and d['sw'] not in grid and d['se'] not in grid and d['nw'] not in grid and d['ne'] not in grid:
-                        if all(d not in grid for d in directions.values()):
-                            #cell = Art.EMPTYWALL * 1
-                            random.seed(self.room.id + loc)
-                            _string = ',.;:-_¨\'"^~`+%&#'+(' '*100)
+                        if all(
+                                d not in grid or grid[d] == 'PATH'
+                                for d in directions.values()
+                            ):
+                            cell = Art.EMPTYWALL * PATH_WIDTH
+                            #random.seed(self.room.id + loc)
+                            #_string = ',.;:-_¨\'"^~`+%&#'+(' '*100)
 
-                            a = _string[random.randint(0,len(_string)-1)]
-                            b = _string[random.randint(0,len(_string)-1)]
-                            c = _string[random.randint(0,len(_string)-1)]
-                            cell = a+b+c
+                            #a = _string[random.randint(0,len(_string)-1)]
+                            #b = _string[random.randint(0,len(_string)-1)]
+                            #c = _string[random.randint(0,len(_string)-1)]
+                            #cell = a+b+c
                             t.add_data('@normal'+cell)
                             walled = True
                             continue
 
-                    #indoors = True#False
-                    #for d in directions.values():
-                    #    if d in grid:
-                    #        if grid[d] in self.room.world.rooms:
-                    #            
-                    #            indoors = 'Lavoratory'.lower() in self.room.world.rooms[grid[d]].name.lower() or 'tavern' in self.room.world.rooms[grid[d]].name.lower() #and grid[d] != 'overworld/d60632d8-22bd-43c2-aafa-e98e0f62b106'
-                    #            if indoors:
-                    #                break
+                   
+                    cell = 'default'
+                    for d in directions.values():
+                        if d in grid:
+                            if grid[d] in self.room.world.rooms:
+                                if 'plains'.lower() in self.room.world.rooms[grid[d]].name.lower():
+                                    new_cell = 'forest'
+                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
+                                        cell = new_cell
 
+                                if 'forest'.lower() in self.room.world.rooms[grid[d]].name.lower():
+                                    new_cell = 'forest'
+                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
+                                        cell = new_cell
 
-                    cell = Art.WALL
-                    
-                    #if not indoors:
-                    #    cell = Art.EMPTY
+                                if 'jungle'.lower() in self.room.world.rooms[grid[d]].name.lower():
+                                    new_cell = 'forest'
+                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
+                                        cell = new_cell
+
+                                if 'mountain'.lower() in self.room.world.rooms[grid[d]].name.lower():
+                                    new_cell = 'mountain'
+                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
+                                        cell = new_cell
+
+                                if 'Mushroom'.lower() in self.room.world.rooms[grid[d]].name.lower():
+                                    new_cell = 'mushroom'
+                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
+                                        cell = new_cell
+                                    
+                                if 'Town'.lower() in self.room.world.rooms[grid[d]].name.lower():
+                                    new_cell = 'fence'
+                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
+                                        cell = new_cell
+
+                                if 'Lavoratory'.lower() in self.room.world.rooms[grid[d]].name.lower() or 'tavern' in self.room.world.rooms[grid[d]].name.lower(): 
+                                    new_cell = 'inside'
+                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
+                                        cell = new_cell
+
+                    cell = Art.WALLS[cell]['art']                
+                                
                             
+                    if _y % 2 != 0:
+                        cell = cell*ROOM_WIDTH
+                    else:
+                        cell = cell*PATH_WIDTH
+                    
                     if not walled:
-                        if directions['w'] not in grid or directions['e'] not in grid:
-                            #cell = Art.WALL #Art.EMPTY*3
-                            t.add_data(cell)  
-                            walled = True
-                            continue
-
-                    if not walled:
-                        if directions['n'] not in grid or directions['s'] not in grid:
-                            #cell = Art.WALL #Art.EMPTY*3
-                            t.add_data(cell) 
-                            walled = True
-                            continue
+                        for _dir in directions:
+                            if directions[_dir] not in grid:
+                                t.add_data(cell)
+                                walled = True
+                                break
+                       
                 
                 if not walled:
-                    cell = Art.EMPTY*3
-                    t.add_data(cell) 
+                    cell = ' '*PATH_WIDTH
+                    t.add_data(cell)
+                    walled = True 
                 continue
             
             #if grid[loc] == 'PATH':
@@ -271,7 +323,7 @@ def command_map(self, line, return_gmcp = False):
                 right = f'{__x+1},{__y}'
                 north = f'{__x},{__y+1}'
                 south = f'{__x},{__y-1}'
-                cell = ' '+Art.GROUND+' '
+                #cell = ' '+Art.GROUND+' '
                 _left =  left in grid
                 _right = right in grid
                 _north = north in grid
@@ -280,7 +332,7 @@ def command_map(self, line, return_gmcp = False):
                 if _left or _right:
                     cell = ' '+Art.NS+' '
                 if _north or _south:
-                    cell = ''+Art.EW+''
+                    cell = ''+(Art.EW*PATH_WIDTH)+''
                 
 
                 t.add_data(cell)
@@ -319,6 +371,8 @@ def command_map(self, line, return_gmcp = False):
             #    cell += Art.SPECIAL_EXIT_AND_PLAYER
             elif loc == START_LOC:
                 cell += Art.PLAYER_HERE
+            elif room.get_real_id() not in self.explored_rooms:
+                cell += Art.GROUND_UNEXPLORED
             elif room.doorway:
                 cell += Art.DOOR_M
             elif room.can_be_recall_site:
@@ -329,6 +383,7 @@ def command_map(self, line, return_gmcp = False):
                 cell += Art.QUEST # '?'
             else:
                 cell += Art.GROUND
+                
 
             # right
             if room.doorway:
@@ -341,6 +396,7 @@ def command_map(self, line, return_gmcp = False):
             
 
             t.add_data(cell)
+            #self.sendLine(t.get_table()+'\n\n\n-----------\n\n\n')
 
             
             
@@ -374,8 +430,22 @@ def command_map(self, line, return_gmcp = False):
             combined_output = combined_output + i[left_strip_len:] + '\n'
     ##############################################################################
     '''
-    combined_output = t.get_table()
+    def pad_lines_to_be_map_width(combined_output):
+        lines = combined_output.split('\n')
+        first_line_length = len(utils.remove_color(lines[0]))
+        #print(first_line_length, f'"{(utils.remove_color(lines[0]))}"')
 
+        if first_line_length < MAP_WIDTH:
+            padding_needed = (MAP_WIDTH - first_line_length) 
+            # Add one space per missing character to **each** line
+            import math
+            lines = [(f' ' * math.ceil(padding_needed/2)) + line + (f' ' * math.floor(padding_needed/2)) for line in lines] 
+            #lines += str((math.ceil(padding_needed/2))) + ',.' + str((math.floor(padding_needed/2)))
+       
+        return '\n'.join(lines)
+    
+    combined_output = pad_lines_to_be_map_width(t.get_table())
+   
     if not return_gmcp:
         self.sendLine('<Map Start>\n'+combined_output+'<Map End>')
     else:
@@ -674,7 +744,9 @@ def get_nearby_rooms(self, view_range = 1):
     return _grid
 
 def new_room_look(self):
-    
+    if self.room.get_real_id() not in self.explored_rooms:
+        self.explored_rooms.append(self.room.get_real_id())
+        print('explorng', self.room.get_real_id())
     
     if self.settings_manager.view_room:
         self.command_look('')

@@ -322,6 +322,7 @@ class Player(Actor):
         self.date_of_last_login_previous = utils.get_unix_timestamp()
         self.date_of_last_login = utils.get_unix_timestamp()
         self.time_in_game = 0
+        self.explored_rooms = []
         
         
         self.settings_manager = Settings(self)
