@@ -67,13 +67,11 @@ script = ExtResource("3_2rld8")
 metadata/_edit_group_ = true
 
 [node name="background_color" type="ColorRect" parent="canvas/HBoxContainer/side_panel"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 512.0
-color = Color(0.309804, 0.309804, 0.309804, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="Background" type="TextureRect" parent="canvas/HBoxContainer/side_panel"]
 visible = false

@@ -1,8 +1,8 @@
 versions:
   '221025':
     id: '221025'
-    title: Map art
-    unixtime: 1760948614
+    title: Friends, map art, settings, and more
+    unixtime: 1761218271
     features:
     - Afk loggout timer increased from 15 min to 30 min
     - Different wall art for different rooms
