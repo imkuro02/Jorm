@@ -4,37 +4,28 @@ versions:
     title: Map art
     unixtime: 1760948614
     features:
+    - Afk loggout timer increased from 15 min to 30 min
     - Different wall art for different rooms
     - Wall art has width of 2 now
     - Unexplored rooms have a yellow ? 
     - Logging explored rooms, count of all rooms explored appears in rank
     - Rank command tab 'Cred' has been renamed to 'Quests'
-  '211025':
-    id: '211025'
-    title: Skills and calc
-    unixtime: 1760948614
-    features:
+    - Rank command now shows online status and all characters are now eligable
+    - Rank command can be used with 'rank <player name>' to view a specific players rank status
+    - ---
     - Some skills can now be used without ending turn, notibly skills that are buffs and or have long cooldowns do not end turn.
     - Calculator command for simple math equations like "2+2", "256*0.36" "((256-50)*(3*2))*1.2".
     - Fixed item dropping / getting names for misc not displaying quantity correctly.
-  '201025.1':
-    id: '201025.1'
-    title: Friends!
-    unixtime: 1760948614
-    features:
+    - ---
     - Command 'befriend' for adding friends
     - Command 'unfriend' for unfriending friends
     - Command 'friends' for viewing friends
-    - Rank command now shows online status and all characters are now eligable
-    - Rank command can be used with 'rank <player name>' to view a specific players rank status
     - Gossip command 'gossip <your message>', a friend only shout alternative
-  '201025':
-    id: '201025'
-    title: UI cleanup and map changes
-    unixtime: 1760948614
-    features:
+    - ---
     - Lore command no longer shows unecessary info, like item drops for enemies that dont drop anything
     - Looking at / Loring an npc that cannot be in combat will no longer display their stats (they often er just 1) 
+    - ---
+    - Ant hill area is now explorable in the jungle
   '161025':
     id: '161025'
     title: Guest accounts
