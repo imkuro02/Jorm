@@ -372,6 +372,11 @@ class Protocol(protocol.Protocol):
                         continue
                     self.actor.friend_manager.friends.append(i[1])
 
+            #print(actor['explored_rooms'])
+            if actor['explored_rooms'] != []:
+                for i in actor['explored_rooms']:
+                    self.actor.explored_rooms.append(i[1])
+
         self.actor.inventory_manager.all_items_set_new(False)
 
             

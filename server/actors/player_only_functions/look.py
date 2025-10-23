@@ -704,9 +704,7 @@ def get_nearby_rooms(self, view_range = 1):
     return _grid
 
 def new_room_look(self):
-    if self.room.get_real_id() not in self.explored_rooms:
-        self.explored_rooms.append(self.room.get_real_id())
-        print('explorng', self.room.get_real_id())
+    
     
     if self.settings_manager.view_room:
         self.command_look('')

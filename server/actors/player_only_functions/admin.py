@@ -199,7 +199,7 @@ def command_ranks(self, line):
     #limit = 200
     #if limit >= 200: limit = 200
     #if limit <= 1: limit = 1
-    t = utils.Table(8, 3)
+    t = utils.Table(9, 3)
     ranks = self.factory.ranks
     #ranks = ranks[::-1]
     
@@ -208,6 +208,7 @@ def command_ranks(self, line):
     t.add_data('Name')
     t.add_data('EXP')
     t.add_data('Cred')
+    t.add_data('Rooms')
     #t.add_data('Created')
     t.add_data('Logged In')
     t.add_data('Game Time')
@@ -233,6 +234,7 @@ def command_ranks(self, line):
         t.add_data(ranks[i]['name'])
         t.add_data(ranks[i]['exp'])
         t.add_data(ranks[i]['quests_turned_in'])
+        t.add_data(ranks[i]['explored_rooms'])
         #t.add_data(utils.get_datetime_from_unix(ranks[i]['date_of_creation']))
         t.add_data(utils.get_datetime_ago_from_unix(ranks[i]['date_of_last_login']))
         t.add_data(utils.seconds_to_dhms(ranks[i]['time_in_game']))

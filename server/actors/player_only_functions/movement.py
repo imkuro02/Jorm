@@ -184,8 +184,13 @@ def command_go(self, line = '', room_id = None):
             for par in self.party_manager.party.participants.values():
                 if par == self:
                     par.new_room_look()
+                if par.room.get_real_id() not in par.explored_rooms:
+                    par.explored_rooms.append(self.room.get_real_id())
+
     else:
         self.new_room_look()
+        if self.room.get_real_id() not in self.explored_rooms:
+            self.explored_rooms.append(self.room.get_real_id())
     
 
 

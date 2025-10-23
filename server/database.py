@@ -129,6 +129,14 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
+        self.cursor.execute(''' 
+        CREATE TABLE IF NOT EXISTS explored_rooms (
+            actor_id TEXT NOT NULL,
+            room_id TEXT NOT NULL,
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        )''')
+
+
         # Commit changes
         self.conn.commit()
 
@@ -192,7 +200,8 @@ class Database:
                 'date_of_last_login': actor['meta_data']['date_of_last_login'],
                 'time_in_game': actor['meta_data']['time_in_game'], 
                 #'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in'] == 1])
-                'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in']['count'] == 1 and q != 'daily_quest'] )  
+                'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in']['count'] == 1 and q != 'daily_quest'] ),
+                'explored_rooms': len([q for q in actor['explored_rooms']])  
             }
             #print(actor['quests'], actor['quests'].values())
             actor_objs.append(actor_obj)
@@ -467,6 +476,24 @@ class Database:
                     :actor_id, :friend_id
                 )
             ''', my_dict)
+
+        my_dict = {}
+        my_dict['actor_id'] = actor_id
+        self.cursor.execute('''
+            DELETE FROM explored_rooms WHERE actor_id = ?
+        ''', (actor_id,))
+
+        for key in actor.explored_rooms:
+            my_dict['actor_id'] = actor_id
+            my_dict['room_id'] = key
+            #print(f'{actor_id} adds {key}')
+            self.cursor.execute('''
+                INSERT INTO explored_rooms (
+                    actor_id, room_id
+                ) VALUES (
+                    :actor_id, :room_id
+                )
+            ''', my_dict)
                 
         self.write_admins(actor)
         self.conn.commit()
@@ -550,6 +577,12 @@ class Database:
         ''', (actor_id,))
 
         friends = self.cursor.fetchall()
+
+        self.cursor.execute('''
+            SELECT * FROM explored_rooms WHERE actor_id = ?
+        ''', (actor_id,))
+
+        explored_rooms = self.cursor.fetchall()
 
 
         my_dict = {}
@@ -659,6 +692,14 @@ class Database:
             for friend in friends:
                 #print('loading friend,',friend)
                 my_dict['friends'].append(friend)
+        #print(my_dict['friends'])
+
+        #print(my_dict['settings_aliases'])
+        my_dict['explored_rooms'] = []
+        if explored_rooms != None:
+            for explored_room in explored_rooms:
+                #print('loading friend,',friend)
+                my_dict['explored_rooms'].append(explored_room)
         #print(my_dict['friends'])
         
         
