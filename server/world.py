@@ -212,6 +212,12 @@ class Room:
 
         REFTRACKER.add_ref(self)
 
+    def get_wall_data(self):
+        wall_data = WORLD['world'][self.get_real_id()]['wall_data'].split(':')
+        #wall_data_col =  wall_data[0]
+        #wall_data_char = wall_data[1]
+        #wall_data_prio = wall_data[2]
+        return wall_data
     def get_real_id(self):
         #print(self.id)
         if '#' in self.id:

@@ -163,6 +163,19 @@ nodeGroup.appendChild(br());
 
 
 
+nodeGroup.appendChild(label('Wall data "{color_code}:{one_char}:{priority_int}"'));
+nodeGroup.appendChild(br());
+const nodeWallDataInput = document.createElement("input");
+nodeGroup.appendChild(nodeWallDataInput);
+nodeGroup.appendChild(br());
+
+const nodeSaveWallDataInput = document.createElement("input");
+nodeSaveWallDataInput.type = 'checkbox';
+nodeGroup.appendChild(nodeSaveWallDataInput);
+nodeGroup.appendChild(label('save_wall_data'));
+nodeGroup.appendChild(br());
+
+
 
 nodeFormContainer.appendChild(nodeGroup);
 
@@ -223,6 +236,12 @@ function guiNodeSetSelectedNode(node){
         } else {
             nodeSpawnGroupInput.value = '';
         }
+
+         if (typeof data['wall_data'] !== "undefined"){
+            nodeWallDataInput.value = data['wall_data'];
+        } else {
+            nodeWallDataInput.value = '';
+        }
     }
 }
   
@@ -236,7 +255,8 @@ function save_json() {
         'can_be_recall_site': nodeCanBeRecallSiteInput.checked,
         'instanced': nodeInstancedInput.checked,
         'doorway': nodeDoorwayInput.checked,
-        'spawner': nodeSpawnGroupInput.value
+        'spawner': nodeSpawnGroupInput.value,
+        'wall_data': nodeWallDataInput.value
 
     };
 
@@ -245,10 +265,11 @@ function save_json() {
     if (!nodeSaveColorInput.checked){delete data['color'];}
     if (!nodeSaveNameInput.checked){delete data['name'];}
     if (!nodeSaveDescInput.checked){delete data['description'];}
-    if (!nodeSaveSafeInput.checked){delete data['safe'];}
+    if (!nodeSaveSafeInput.checked){delete data['can_be_recall_site'];}
     if (!nodeSaveInstancedInput.checked){delete data['instanced'];}
     if (!nodeSaveDoorwayInput.checked){delete data['doorway'];}
     if (!nodeSaveSpawnGroupInput.checked){delete data['spawner'];}
+    if (!nodeSaveWallDataInput.checked){delete data['wall_data'];}
 
 
     /*

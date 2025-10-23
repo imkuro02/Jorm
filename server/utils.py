@@ -112,7 +112,7 @@ colors = {
     '@bcyan':   '\x1b[1;36m', 
     '@bwhite':  '\x1b[1;37m', 
 
-    '@bgred':   '\x1b[0;41m',
+    '@bgred':      '\x1b[0;41m',
     '@bggreen':   '\x1b[0;42m', 
     '@bgyellow':  '\x1b[0;43m', 
     '@bgblue':    '\x1b[0;44m', 

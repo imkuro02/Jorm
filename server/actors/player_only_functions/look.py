@@ -23,17 +23,6 @@ def command_map(self, line, return_gmcp = False):
         EW =                        ' '#f'{Color.MAP_PATH}-'
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
-
-        WALLS = {
-            'default':  {'art':'@normal#',             'priority':1000},
-            'inside':   {'art':f'{Color.MAP_WALL}#',   'priority':1},
-            'fence':    {'art':f'@byellow#',            'priority':2},
-            'mushroom': {'art':f'@redΩ',               'priority':3},
-            'forest':   {'art':f'@green^',             'priority':4},
-            'plains':   {'art':f'@greenn',             'priority':5},
-            'jungle':   {'art':f'@bgreenn',            'priority':7},
-            'mountain': {'art':f'@normal^',            'priority':8},
-        }
      
         DOOR_M =                      f'{Color.MAP_ROOM}^'
         DOOR_L =                      f'{Color.MAP_ROOM}|'
@@ -249,46 +238,16 @@ def command_map(self, line, return_gmcp = False):
                             continue
 
                    
-                    cell = 'default'
+                    cell = ['@red','X','999999999']
                     for d in directions.values():
                         if d in grid:
                             if grid[d] in self.room.world.rooms:
-                                if 'plains'.lower() in self.room.world.rooms[grid[d]].name.lower():
-                                    new_cell = 'plains'
-                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
-                                        cell = new_cell
+                                w_col, w_char, w_prio = self.room.world.rooms[grid[d]].get_wall_data()
+                                if int(cell[2]) >= int(w_prio):
+                                    cell = [w_col, w_char, w_prio]
 
-                                if 'forest'.lower() in self.room.world.rooms[grid[d]].name.lower():
-                                    new_cell = 'forest'
-                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
-                                        cell = new_cell
 
-                                if 'jungle'.lower() in self.room.world.rooms[grid[d]].name.lower():
-                                    new_cell = 'jungle'
-                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
-                                        cell = new_cell
-
-                                if 'mountain'.lower() in self.room.world.rooms[grid[d]].name.lower():
-                                    new_cell = 'mountain'
-                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
-                                        cell = new_cell
-
-                                if 'Mushroom'.lower() in self.room.world.rooms[grid[d]].name.lower():
-                                    new_cell = 'mushroom'
-                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
-                                        cell = new_cell
-                                    
-                                if 'Town'.lower() in self.room.world.rooms[grid[d]].name.lower():
-                                    new_cell = 'fence'
-                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
-                                        cell = new_cell
-
-                                if 'Lavoratory'.lower() in self.room.world.rooms[grid[d]].name.lower() or 'tavern' in self.room.world.rooms[grid[d]].name.lower(): 
-                                    new_cell = 'inside'
-                                    if Art.WALLS[cell]['priority'] > Art.WALLS[new_cell]['priority']:
-                                        cell = new_cell
-
-                    cell = Art.WALLS[cell]['art']                
+                    cell = f'{cell[0]}{cell[1]}'              
                                 
                             
                     if _y % 2 != 0:

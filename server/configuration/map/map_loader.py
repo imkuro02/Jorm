@@ -30,6 +30,7 @@ def load_map():
         room_doorway = False
         room_spawner = []
         room_from_file = data['from_file']
+        room_wall_data = '@normal:H:1001'
         
 
         skip_loading = False
@@ -78,6 +79,10 @@ def load_map():
                 for x in i:
                     room_spawner.append(x.split(', '))
 
+    
+        if 'wall_data' in json_data:
+            room_wall_data = json_data['wall_data']
+
         #print(room_spawner)
         nodes[room_id] = {
             'id': room_id,
@@ -88,7 +93,8 @@ def load_map():
             'instanced': room_instanced,
             'doorway': room_doorway,
             'spawner': room_spawner,
-            'from_file': room_from_file
+            'from_file': room_from_file,
+            'wall_data': room_wall_data
             #'items': room_items
         }
 
