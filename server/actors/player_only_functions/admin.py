@@ -207,7 +207,7 @@ def command_ranks(self, line):
     t.add_data('LVL')
     t.add_data('Name')
     t.add_data('EXP')
-    t.add_data('Cred')
+    t.add_data('Quests')
     t.add_data('Rooms')
     #t.add_data('Created')
     t.add_data('Logged In')

@@ -526,9 +526,11 @@ commands:
     group: other
     syntax:
       - rank
+      - rank <player name>
     description: |
       Display a table of all ranked players. Ranked players are players with more than 1exp,
-      and atleast one quest completed. (Not counting daily quests)
+      and atleast one quest completed. (Not counting daily quests).
+      You can use 'rank <player name>' to view one specific players rank.
     related:
       - online
   lore:

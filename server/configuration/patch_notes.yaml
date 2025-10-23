@@ -7,6 +7,8 @@ versions:
     - Different wall art for different rooms
     - Wall art has width of 2 now
     - Unexplored rooms have a yellow ? 
+    - Logging explored rooms, count of all rooms explored appears in rank
+    - Rank command tab 'Cred' has been renamed to 'Quests'
   '211025':
     id: '211025'
     title: Skills and calc
