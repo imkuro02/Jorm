@@ -54,7 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="side_panel" type="Panel" parent="canvas/HBoxContainer"]
-custom_minimum_size = Vector2(448, 0)
+custom_minimum_size = Vector2(384, 0)
 layout_mode = 2
 
 [node name="Clock" type="Sprite2D" parent="canvas/HBoxContainer/side_panel"]
@@ -71,7 +71,6 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -16.0
 color = Color(0, 0, 0, 1)
 
 [node name="Background" type="TextureRect" parent="canvas/HBoxContainer/side_panel"]
@@ -166,9 +165,10 @@ texture = ExtResource("12_5afyf")
 
 [node name="ascii_map" type="RichTextLabel" parent="canvas/HBoxContainer/side_panel"]
 layout_mode = 2
-offset_top = 584.0
-offset_right = 448.0
-offset_bottom = 960.0
+offset_left = 8.0
+offset_top = 616.0
+offset_right = 376.0
+offset_bottom = 952.0
 size_flags_horizontal = 3
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("2_ckiy7")
