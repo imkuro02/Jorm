@@ -6,7 +6,7 @@ extends Control
 var socket = WebSocketPeer.new()
 
 # References to UI nodes
-@onready var INPUT = $canvas/HBoxContainer/input_output/input
+@onready var INPUT = $canvas/HBoxContainer/input_output/input/input
 @onready var OUTPUT = $canvas/HBoxContainer/input_output/HBoxContainer/output
 @onready var DEBUG = $canvas/HBoxContainer/input_output/HBoxContainer/debug
 @onready var ACTORS_OUTPUT = $canvas/HBoxContainer/Control/actors_output

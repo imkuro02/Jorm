@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=23 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
@@ -22,7 +22,9 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_723ol"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4171q"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujqkk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bwqeb"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -207,19 +209,59 @@ custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="input" type="LineEdit" parent="canvas/HBoxContainer/input_output"]
+[node name="input" type="Control" parent="canvas/HBoxContainer/input_output"]
 layout_mode = 1
-anchors_preset = 12
+anchor_left = 0.004
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.991
 anchor_bottom = 1.0
-offset_left = 8.0
+offset_left = 0.432
 offset_top = -40.0
-offset_right = -8.0
-offset_bottom = -9.0
+offset_right = 0.0279541
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="canvas/HBoxContainer/input_output/input"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.25
+anchor_right = 1.0
+anchor_bottom = 1.25
+offset_left = -8.0
+offset_top = -40.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.775063, 0.775063, 0.775063, 1)
+
+[node name="input" type="LineEdit" parent="canvas/HBoxContainer/input_output/input"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.25
+anchor_right = 1.0
+anchor_bottom = 1.25
+offset_left = 56.0
+offset_top = -40.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_4171q")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_ujqkk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bwqeb")
+flat = true
+
+[node name="Label" type="Label" parent="canvas/HBoxContainer/input_output/input"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.25
+anchor_right = 1.009
+anchor_bottom = 1.25
+offset_top = -32.0
+offset_right = -826.92
+text = "INPUT:
+"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="canvas/HBoxContainer/input_output"]
 layout_mode = 1
