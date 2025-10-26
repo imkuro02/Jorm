@@ -165,7 +165,7 @@ func handle_gmcp(message: String):
 			ASCIIMAP.get_message(dict_string)
 		'Time':
 			CLOCK.get_message(data_dict)
-			BACKGROUND_COLOR.get_message(data_dict)
+			#BACKGROUND_COLOR.get_message(data_dict)
 
 
 func extract_gmcp(int_data: Array[int]) -> void:
