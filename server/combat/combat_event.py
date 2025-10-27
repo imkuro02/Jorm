@@ -50,18 +50,18 @@ class CombatEvent:
                     output_other = f'{pop.damage_taker_actor.pretty_name()} cancels {pop.damage_source_action.name}. '
                     sound = Audio.ERROR
                 elif pop.damage_type == DamageType.HEALING:
-                    output_self = f'You heal {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} heals {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
+                    output_self = f'You heal {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]}@normal from {pop.damage_source_action.name}.'
+                    output_other = f'{pop.damage_taker_actor.pretty_name()} heals {color}{damage_txt}@normal {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
                     sound = Audio.BUFF
                 
-                if pop.damage_type == DamageType.PHYSICAL or pop.damage_type == DamageType.MAGICAL or pop.damage_type == DamageType.PURE:
+                elif pop.damage_type == DamageType.PHYSICAL or pop.damage_type == DamageType.MAGICAL or pop.damage_type == DamageType.PURE:
                     if pop.damage_value <= 0:
                         output_self = f'You block {color}{damage_txt} from {pop.damage_source_action.name}. '
-                        output_other = f'{pop.damage_taker_actor.pretty_name()} blocks {color}{damage_txt} from {pop.damage_source_action.name}. '
+                        output_other = f'{pop.damage_taker_actor.pretty_name()} blocks {color}{damage_txt}@normal from {pop.damage_source_action.name}. '
                         sound = Audio.ERROR
                     else:
-                        output_self = f'You lose {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
-                        output_other = f'{pop.damage_taker_actor.pretty_name()} loses {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
+                        output_self = f'You lose {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]}@normal from {pop.damage_source_action.name}. '
+                        output_other = f'{pop.damage_taker_actor.pretty_name()} loses {color}{damage_txt}@normal {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
                         sound = Audio.HURT
 
                 pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])

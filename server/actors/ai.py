@@ -1,7 +1,7 @@
 import random
 from skills.manager import use_skill, get_user_skill_level_as_index
 from configuration.config import ActorStatusType
-from configuration.config import StatType, SKILLS, MsgType
+from configuration.config import StatType, SKILLS, MsgType, StaticRooms
 
 
 class AI:
@@ -404,16 +404,18 @@ class CowardAI(AI):
         if len(self.actor.room.exits) >= 1:
             stats = self.actor.stat_manager.stats
             roll = (100 - (stats[StatType.HP] / stats[StatType.HPMAX] * 100)) / 5 
-            #print(roll)
+            print(roll)
             if roll > random.randint(1,100):
-                random_dir = random.choice(self.actor.room.exits)
-                self.actor.simple_broadcast('',f'{self.actor.pretty_name()} flees {random_dir.direction}!')
-                new_room = random_dir.get_room_obj().id
+                #random_dir = random.choice(self.actor.room.exits)
+                self.actor.simple_broadcast('',f'{self.actor.pretty_name()} flees!')
+                #new_room = random_dir.get_room_obj().id
 
                 
                 world = self.actor.room.world
                 self.actor.status = ActorStatusType.NORMAL
-                world.rooms[new_room].move_actor(self.actor, silent = True)
+
+                world.rooms[StaticRooms.LOADING].move_actor(self.actor, silent = True)
+                self.die()
                 self.actor.finish_turn()
                 return
                 

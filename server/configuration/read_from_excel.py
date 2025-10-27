@@ -74,7 +74,7 @@ def configure_skill_script_values(SHEET):
 
                 if isnan(i):
                     continue
-                if x['value_name'][index] in ['crit','bonus']:
+                if x['value_name'][index] in ['crit','bonus','bounce_bonus']:
                     i = float(i)
                 else:
                     i = int(i)
@@ -124,6 +124,8 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
                 'name':                     x['name'][index],
                 'description':              str_with_newlines(x['description'][index]),
                 'script_to_run':            x['script_to_run'][index],
+                #'aoe':                      bool(x['aoe'][index]),
+                #'bounce':                   int(x['bounce'][index]),
                 'target_others_is_valid':   bool(x['target_others_is_valid'][index]),
                 'target_item_is_valid':     bool(x['target_item_is_valid'][index]),
                 'target_self_is_valid':     bool(x['target_self_is_valid'][index]),

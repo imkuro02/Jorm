@@ -318,7 +318,7 @@ class AffectBleed(Affect):
             damage_taker_actor = self.affect_target_actor,
             damage_source_action = self,
             damage_value = self.damage,
-            damage_type = DamageType.PURE,
+            damage_type = DamageType.PHYSICAL,
         )
 
         self.damage = int(self.damage*0.5)

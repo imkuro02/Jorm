@@ -7,7 +7,7 @@ import random
 import utils
 
 class Skill:
-    def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False):
+    def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, bounce = 0):
         self.skill_id = skill_id
         self.name = SKILLS[skill_id]['name']
         self.script_values = script_values
@@ -18,16 +18,25 @@ class Skill:
         self.success = success
         self.silent_use = silent_use
 
+        #self.aoe = aoe # area of effect
+        self.bounce = bounce # the amount of times it bounces
+        self.get_dmg_value_override = None
+
     def get_dmg_value(self, stat_type = None):
-        if 'crit' not in self.script_values or stat_type == None:
-            dmg = self.script_values['damage'][self.users_skill_level]
+        if self.get_dmg_value_override == None:
+            if 'crit' not in self.script_values or stat_type == None:
+                dmg = self.script_values['damage'][self.users_skill_level]
+            else:
+                crit_min = int(self.script_values['crit'][self.users_skill_level]*80)
+                crit_max = int(self.script_values['crit'][self.users_skill_level]*100)
+                dmg_stat = int(self.user.stat_manager.stats[stat_type])
+                dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
+                dmg = int(dmg)
+
+            self.get_dmg_value_override = dmg
+            return self.get_dmg_value_override
         else:
-            crit_min = int(self.script_values['crit'][self.users_skill_level]*0)
-            crit_max = int(self.script_values['crit'][self.users_skill_level]*100)
-            dmg_stat = int(self.user.stat_manager.stats[stat_type])
-            dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
-            dmg = int(dmg)
-        return dmg
+            return self.get_dmg_value_override
     
     def use_broadcast(self):
         perspectives = {
@@ -71,6 +80,7 @@ class Skill:
                 continue
 
     def use(self):
+        #print('aoe:',self.aoe)
         cool = self.script_values['cooldown'][self.users_skill_level]
         #if cool <= 1: 
         #    cool = 2
@@ -80,6 +90,114 @@ class Skill:
             return
         self.use_broadcast()
 
+    def pre_use_get_targets(self):
+        skill = SKILLS[self.skill_id]
+        targets = [] # make this the first target
+        for i in self.user.room.actors.values():
+            if self.user.status != i.status:
+                continue
+            if self.other == i:
+                continue
+            if not skill['is_offensive']:
+                if i.party_manager.get_party_id() == self.user.party_manager.get_party_id():
+                    targets.append(i)
+            else:
+                if i.party_manager.get_party_id() != self.user.party_manager.get_party_id():
+                    targets.append(i)
+
+        
+        random.shuffle(targets)
+        targets.append(self.other)
+        targets = targets[::-1]
+        return targets
+
+    def pre_use(self):
+        skill = SKILLS[self.skill_id]
+        skill_obj = self.__class__
+        _skill_objects = []
+
+        targets = self.pre_use_get_targets()
+        
+        if 'aoe' in skill['script_values']:
+            current_aoe = 0
+            for target in targets:
+
+                _skill_obj = skill_obj(
+                    skill_id = self.skill_id, 
+                    script_values = skill['script_values'], 
+                    user = self.user, 
+                    other = target, 
+                    users_skill_level = self.users_skill_level, 
+                    use_perspectives = self.use_perspectives, 
+                    success = self.success, 
+                    silent_use = self.silent_use ,  
+                    #aoe = False,
+                    bounce = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
+                )
+                _skill_objects.append(_skill_obj)
+                if current_aoe > skill['script_values']['aoe'][self.users_skill_level]:
+                    break
+                current_aoe += 1
+                #_skill_obj.use()
+                #del _skill_obj
+
+        else:
+            _skill_obj = skill_obj(
+                skill_id = self.skill_id, 
+                script_values = skill['script_values'], 
+                user = self.user, 
+                other = self.other, 
+                users_skill_level = self.users_skill_level, 
+                use_perspectives = self.use_perspectives, 
+                success = self.success, 
+                silent_use = self.silent_use, 
+                #aoe = False,
+                bounce = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
+            )
+            _skill_objects.append(_skill_obj)
+            #_skill_obj.use()
+            #del _skill_obj
+
+        first_object = True
+        for _skill_object in _skill_objects:
+            #_skill_object.get_dmg_value()
+            #damage = #_skill_object.get_dmg_value_override
+            
+            #_skill_object.get_dmg_value_override = int(_skill_object.get_dmg_value_override/self.bounce)
+
+            _skill_object.silent_use = self.silent_use
+            _skill_object.use()
+
+            self.silent_use = True
+
+            #first_object = False
+            
+            damage =  0
+            bounce_loss = 0
+
+            if _skill_object.get_dmg_value_override != None:
+                damage =  _skill_object.get_dmg_value_override
+                bounce_loss = int(damage/(_skill_object.bounce+1))
+            
+
+            while _skill_object.bounce >= 1:
+                _skill_object.silent_use = self.silent_use
+                _skill_object.bounce -= 1
+                damage = damage + int(damage *  skill['script_values']['bounce_bonus'][self.users_skill_level])
+                _skill_object.get_dmg_value_override = damage
+                
+                targets = self.pre_use_get_targets()
+                if _skill_object.other in targets:
+                    targets.remove(_skill_object.other)
+                if targets == []:
+                    to_broadcast = 'no valid bounce targets'
+                    #self.user.simple_broadcast(to_broadcast, to_broadcast)
+                    return
+                _skill_object.other = random.choice(targets)
+                #self.user.simple_broadcast(_skill_object.bounce,'fjdsbfkdsaf')
+                #to_broadcast = 
+                #self.simple_broadcast('')
+                _skill_object.use()
 '''
 class SkillSwing(Skill):
     def use(self):
@@ -181,6 +299,16 @@ class SkillCureLightWounds(SkillDamage):
                 )
             damage_obj.run()'''
 
+class SkillRefresh(SkillDamage):
+    def use(self):
+        self.get_dmg_value_override = self.get_dmg_value(stat_type = StatType.SOUL)
+        for i in self.user.room.actors.values():
+            self.other = i
+            print(i.party_manager.get_party_id(), i.pretty_name())
+            if i.party_manager.get_party_id() == self.user.party_manager.get_party_id():
+                super().use(dmg_stat_scale = StatType.SOUL, dmg_type = DamageType.HEALING)
+                self.silent_use = True
+
 class SkillDamageByFlowApplyBleed(SkillDamage):
     def use(self):
         super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
@@ -188,7 +316,7 @@ class SkillDamageByFlowApplyBleed(SkillDamage):
         roll = random.randint(0,1)
         if not was_blocked:
             if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
-                bleed_damage = self.user.stat_manager.stats[StatType.LVL]
+                bleed_damage = int(self.user.stat_manager.stats[StatType.LVL]/2)
                 stunned_affect = affects.AffectBleed(
                     affect_source_actor = self.user,
                     affect_target_actor = self.other,

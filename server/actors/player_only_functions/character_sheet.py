@@ -230,6 +230,9 @@ def command_skills(self, line):
         _can_use_out_of_combat = skill["can_use_out_of_combat"]
         _can_practice = skill["can_be_practiced"]
         _is_offensive = skill["is_offensive"]
+        _is_aoe = 0 if not 'aoe' in skill["script_values"] else 1
+        _bounces = 0 if not 'bounce_amount' in skill["script_values"] else 1
+        _bounce_bonus = 0 if not 'bounce_bonus' in skill["script_values"] else 1
         _ends_turn = skill["end_turn"]
         _name = skill["name"]
         _target = ''
@@ -265,9 +268,14 @@ def command_skills(self, line):
         extra_info = (
             f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.\n'
             f'It {_combat}, and '
-            f'it {"can" if _can_practice else "cannot"} be practiced. '
-            f'{"Does" if _ends_turn else "Does not"} End your turn.'
+            f'it {"can" if _can_practice else "cannot"} be practiced. \n'
+            f'{f"{_name} can bounce up to BOUNCES times.\n" if _bounces >= 1 else ""  }{f"The strength of {_name} will be amplified by BOUNCE BONUS each bounce.\n" if _bounce_bonus > 0 else ""}'
+            f'{f"{_name} will target up to AOE targets, the character you use it on will always be targeted first.\n" if _is_aoe else ""  }'
+            f'{_name} {"does" if _ends_turn else "does not"} end your turn after use.'
         )
+
+        
+
         extra_info = f'{Color.DESCRIPTION}{extra_info}{Color.NORMAL}'
 
         t = utils.Table(2,1)

@@ -411,6 +411,8 @@ class Player(Actor):
         self.protocol.send_gmcp({'name':sfx}, 'Client.Media.Play')
 
     def sendLine(self, line, color = True, sound = None, msg_type = None):
+
+       
         #if self.last_line_received == line:
         #   return
         

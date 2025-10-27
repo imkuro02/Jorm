@@ -1,5 +1,5 @@
 {
-    "SHA-256": "0e689a46f4c1156a3855d505484eac115f316b044755df0a203dacadd0e9c265",
+    "SHA-256": "5cec37af3e0885e3c28fde8e91655bb76a209ac39817d9c54fa3a3825869b5d7",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3645,10 +3645,10 @@
                     1
                 ],
                 "cooldown": [
-                    69
+                    10
                 ],
                 "bonus": [
-                    0.25
+                    0.5
                 ]
             }
         },
@@ -3753,28 +3753,36 @@
             "end_turn": true,
             "script_values": {
                 "damage": [
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
                 ],
                 "crit": [
-                    0.6,
-                    0.61,
-                    0.62,
-                    0.63,
-                    0.64,
-                    0.65
+                    0.5,
+                    0.52,
+                    0.54,
+                    0.56,
+                    0.58,
+                    0.6
                 ],
                 "mp_cost": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
+                    10,
+                    10,
+                    10,
+                    10,
+                    10,
                     1
+                ],
+                "aoe": [
+                    5,
+                    5,
+                    5,
+                    5,
+                    5,
+                    5
                 ],
                 "cooldown": [
                     1,
@@ -4088,9 +4096,17 @@
                     6
                 ],
                 "cooldown": [
-                    2,
-                    2,
-                    2,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                "aoe": [
+                    1,
+                    1,
+                    1,
                     1,
                     1,
                     1
@@ -4144,10 +4160,7 @@
                 "levels": [
                     1,
                     2,
-                    3,
-                    4,
-                    5,
-                    6
+                    3
                 ]
             }
         },
@@ -4323,12 +4336,12 @@
             "end_turn": false,
             "script_values": {
                 "damage": [
-                    4,
-                    6,
-                    8,
                     10,
                     12,
-                    14
+                    14,
+                    16,
+                    18,
+                    20
                 ],
                 "crit": [
                     2.0,
@@ -4973,6 +4986,9 @@
                 ],
                 "mp_cost": [
                     50
+                ],
+                "aoe": [
+                    4
                 ]
             }
         },
@@ -5280,6 +5296,172 @@
                     1,
                     1,
                     1
+                ]
+            }
+        },
+        "refresh": {
+            "skill_id": "refresh",
+            "name": "Refresh",
+            "description": "Heal all party members for DAMAGE + 0%-CRIT% SOUL health.\n",
+            "script_to_run": "CureLightWounds",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 1.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    4,
+                    6,
+                    8,
+                    10,
+                    12,
+                    14
+                ],
+                "crit": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "mp_cost": [
+                    20,
+                    22,
+                    24,
+                    26,
+                    28,
+                    30
+                ],
+                "cooldown": [
+                    6,
+                    6,
+                    6,
+                    5,
+                    5,
+                    4
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "aoe": [
+                    2,
+                    2,
+                    2,
+                    2,
+                    2,
+                    2
+                ]
+            }
+        },
+        "chain_heal": {
+            "skill_id": "chain_heal",
+            "name": "Chain Heal",
+            "description": "Heal all party members for DAMAGE + 0%-CRIT% SOUL health.\n",
+            "script_to_run": "CureLightWounds",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 1.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    4,
+                    6,
+                    8,
+                    10,
+                    12,
+                    14
+                ],
+                "crit": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "mp_cost": [
+                    20,
+                    22,
+                    24,
+                    26,
+                    28,
+                    30
+                ],
+                "cooldown": [
+                    6,
+                    6,
+                    6,
+                    5,
+                    5,
+                    4
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "bounce_amount": [
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4
+                ],
+                "bounce_bonus": [
+                    -0.2,
+                    -0.18,
+                    -0.16,
+                    -0.14,
+                    -0.12,
+                    -0.1
                 ]
             }
         }
@@ -7803,7 +7985,7 @@
         },
         "blessing_of_grit": {
             "premade_id": "blessing_of_grit",
-            "name": "Blessing of Grit",
+            "name": "Scroll of Grit",
             "description": "A physical blessing, how queer",
             "description_room": null,
             "invisible": 0.0,
@@ -7843,7 +8025,7 @@
         },
         "blessing_of_flow": {
             "premade_id": "blessing_of_flow",
-            "name": "Blessing of Flow",
+            "name": "Scroll of Flow",
             "description": "A physical blessing, how queer",
             "description_room": null,
             "invisible": 0.0,
@@ -7883,7 +8065,7 @@
         },
         "blessing_of_mind": {
             "premade_id": "blessing_of_mind",
-            "name": "Blessing of Mind",
+            "name": "Scroll of Mind",
             "description": "A physical blessing, how queer",
             "description_room": null,
             "invisible": 0.0,
@@ -7923,7 +8105,7 @@
         },
         "blessing_of_soul": {
             "premade_id": "blessing_of_soul",
-            "name": "Blessing of Soul",
+            "name": "Scroll of Soul",
             "description": "A physical blessing, how queer",
             "description_room": null,
             "invisible": 0.0,
