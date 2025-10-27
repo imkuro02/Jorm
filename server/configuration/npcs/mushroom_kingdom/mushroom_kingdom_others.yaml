@@ -42,6 +42,12 @@ mushroom_kingdom_queen:
           - id: mushroom_kingdom_2
             state: completed
 
+      - line: | 
+          <npc> says "WAHOOOOOO"
+        quest_check:
+          - id: mushroom_kingdom_2
+            state: turned_in
+
       options:
           - line: Do you have any quests?
             goto: do_you_have_any_quests
