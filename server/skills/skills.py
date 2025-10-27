@@ -179,8 +179,20 @@ class Skill:
                 damage =  _skill_object.get_dmg_value_override
                 bounce_loss = int(damage/(_skill_object.bounce+1))
             
-
-            while _skill_object.bounce >= 1:
+            while _skill_object.bounce >= 1:    
+                _skill_object = skill_obj(
+                    skill_id = self.skill_id, 
+                    script_values = skill['script_values'], 
+                    user = self.user, 
+                    other = self.other, 
+                    users_skill_level = self.users_skill_level, 
+                    use_perspectives = self.use_perspectives, 
+                    success = self.success, 
+                    silent_use = self.silent_use, 
+                    #aoe = False,
+                    bounce = _skill_object.bounce
+                )
+                
                 _skill_object.silent_use = self.silent_use
                 _skill_object.bounce -= 1
                 damage = damage + int(damage *  skill['script_values']['bounce_bonus'][self.users_skill_level])
@@ -197,7 +209,8 @@ class Skill:
                 #self.user.simple_broadcast(_skill_object.bounce,'fjdsbfkdsaf')
                 #to_broadcast = 
                 #self.simple_broadcast('')
-                _skill_object.use()
+                self.user.room.combat.skill_use_queue_add(_skill_object)#.use()
+                #_skill_object.use()
 '''
 class SkillSwing(Skill):
     def use(self):
