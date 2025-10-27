@@ -1,5 +1,5 @@
 {
-    "SHA-256": "1afc412ae4ec2cc9ff237b5446f1e0631cda43ed6a22c2317e6e3ad21fee64c1",
+    "SHA-256": "0e689a46f4c1156a3855d505484eac115f316b044755df0a203dacadd0e9c265",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -8127,11 +8127,11 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
-            "drop_chance_level": 0,
+            "drop_chance_level": 6,
             "drop_chance_under_bonus": 0,
             "drop_chance_over_bonus": 0,
             "drop_chance_range_under": 0,
@@ -8180,7 +8180,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -8235,7 +8235,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -8289,7 +8289,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -8343,7 +8343,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -8397,7 +8397,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -8446,7 +8446,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -8495,7 +8495,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -8887,7 +8887,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -8940,7 +8940,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -8994,7 +8994,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -9439,7 +9439,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -9492,7 +9492,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -9545,7 +9545,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -9941,7 +9941,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -9994,7 +9994,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -10047,7 +10047,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -10101,7 +10101,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -10493,7 +10493,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -10546,7 +10546,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -10600,7 +10600,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -10654,7 +10654,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -10703,7 +10703,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -11095,7 +11095,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -11148,7 +11148,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -11202,7 +11202,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -11647,7 +11647,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -11700,7 +11700,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -11753,7 +11753,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -12751,7 +12751,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -12804,7 +12804,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -12858,7 +12858,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -12912,7 +12912,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -13500,7 +13500,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -13553,7 +13553,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -13606,7 +13606,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14051,7 +14051,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14107,7 +14107,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14162,7 +14162,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14219,7 +14219,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14273,7 +14273,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14621,7 +14621,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14675,7 +14675,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14728,7 +14728,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14782,7 +14782,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -14831,7 +14831,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -14880,7 +14880,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -14929,7 +14929,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -14978,7 +14978,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -15323,7 +15323,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -15376,7 +15376,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -15429,7 +15429,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -15482,7 +15482,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -15535,7 +15535,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -15588,7 +15588,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -15637,7 +15637,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -15686,7 +15686,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -15735,7 +15735,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -15784,7 +15784,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -15833,7 +15833,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -16227,7 +16227,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -16281,7 +16281,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -16335,7 +16335,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -16389,7 +16389,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -17691,7 +17691,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -17745,7 +17745,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -17799,7 +17799,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -17855,7 +17855,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -17909,7 +17909,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -17964,7 +17964,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -18018,7 +18018,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 40,
@@ -18363,7 +18363,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -18419,7 +18419,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -18475,7 +18475,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,
@@ -18529,7 +18529,7 @@
                 "inv_slots": 0
             },
             "drop_tags": [
-                "all"
+                "none"
             ],
             "drop_from_random": 0,
             "drop_chance_base": 0,

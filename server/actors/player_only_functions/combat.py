@@ -33,7 +33,7 @@ def command_target(self, line):
 @check_alive
 def command_fight(self, line):
     if self.status == ActorStatusType.FIGHTING:
-        if self.ai.predict_use_best_skill(offensive_only = True, for_prediction = True) == False:
+        if self.ai.predict_use_best_skill(offensive_only = True, for_prediction = False) == False:
             self.command_pass_turn(line = '')
         #self.ai.tick()
         return
