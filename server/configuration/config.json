@@ -1402,7 +1402,7 @@
             "include_in_daily_quests": true,
             "skills": {
                 "smite": 1,
-                "chain_heal": 3,
+                "cure_light_wounds": 3,
                 "mage_armor": 1
             },
             "loot": {

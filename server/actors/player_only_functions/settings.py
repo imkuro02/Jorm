@@ -1,4 +1,4 @@
-from utils import match_word, remove_color
+from utils import match_word
 from actors.player_only_functions.checks import check_no_empty_line
 from configuration.config import Color
 BANNED_ALIASES = ['settings','help','alias','reset'] # this gets set in actors.player_only_functions.commands
@@ -45,8 +45,8 @@ class Settings:
         #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
         #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
         self.prompt_default = {
-            '0': '<@red#HP#@bredhp @yellow#PHYARM#@byellowpa @cyan#MAGARM#@bcyanma @blue#MP#@bbluemp @red#THREAT#@bredth@normal>',
-            '1': '<@red#HP%#@bredhp% @yellow#PHYARM%#@byellowpa% @cyan#MAGARM%#@bcyanma% @blue#MP%#@bbluemp% @red#THREAT#@bredth@normal>',
+            '0': '<@red#HP#@bredhp @yellow#PHYARM#@byellowpa @blue#MAGARM#@bbluema @cyan#MP#@bcyanmp @red#THREAT#@bredth@normal>',
+            '1': 'HP:@bred#HP#@normal MP:@bcyan#MP#@normal (PA:@byellow#PHYARM#@normal/MA:@bblue#MAGARM#@normal) TH:@red#THREAT#@normal >',
             '2': '<@bred#HP#@normalhp @bcyan#MP#@normalmp @byellow#PHYARM#@normalpa @bblue#MAGARM#@normalma>',
             '3': '[ @bred#HP#@normal/@bred#LHPMAX#@normal HP| @bred#PHYARM#@normal/@bred#LPHYARMMAX#@normal PA] [ @bcyan#MP#@normal/@bcyan#LMPMAX#@normal MP| @bcyan#MAGARM#@normal/@bcyan#LMAGARMMAX#@normal MA]',
             '4': '[ @bred#HP%#@normal% HP| @bred#PHYARM%#@normal% PA] [ @bcyan#MP%#@normal% MP| @bcyan#MAGARM%#@normal% MA]',
@@ -75,11 +75,8 @@ class Settings:
         #self.actor.sendLine(f'{line}, {command}')
         match command:
             case SETTINGS.RESET:
-                if line[0] == SETTINGS.RESET:
-                    self.actor.sendLine('All settings reset to default')
-                    self.actor.settings_manager = Settings(self.actor)
-                else:
-                    self.actor.sendLine('If you want to reset settings to default, type "settings reset"')
+                self.actor.sendLine('All settings reset to default')
+                self.actor.settings_manager = Settings(self.actor)
                 return
             case SETTINGS.ALIAS:
                 if len(line) == 1: # view aliases
@@ -184,7 +181,7 @@ class Settings:
             case SETTINGS.PROMPT:
                 prompt = ' '.join(original_line.split()[1:])
                 if prompt == ' ' or prompt == '':
-                    self.actor.sendLine(f'Current prompt is: "{self.prompt}"', color = False)
+                    self.actor.sendLine(f'Current prompt is: {self.prompt}', color = False)
                     return
                 if prompt in self.prompt_default:
                     self.prompt = self.prompt_default[prompt]
@@ -194,19 +191,6 @@ class Settings:
 
 
         
+@check_no_empty_line
 def command_settings(self, line):
-    if line == '':
-        #self, actor, aliases = None, gmcp = True, view_room = True, view_map = False, pvp = False, debug = False, prompt = None
-        output = ''
-        s = self.settings_manager
-        output += 'Here are your current settings:\n'
-        output += f'aliases:            {len(s.aliases)}\n'
-        output += f'gmcp enabled:       {s.gmcp}\n'
-        output += f'viewroom enabled:   {s.view_room}\n'
-        output += f'viewmap enabled:    {s.view_map}\n'
-        output += f'debug enabled:      {s.debug}\n'
-        output += f'prompt is:          "{s.prompt}"\n'
-        output += f'Check out "help settings" for more information'
-        self.sendLine(output, color = False)
-    else:
-        self.settings_manager.command_settings(line)
+    self.settings_manager.command_settings(line)

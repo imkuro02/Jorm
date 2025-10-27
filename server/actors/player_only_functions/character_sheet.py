@@ -266,11 +266,11 @@ def command_skills(self, line):
                 _combat = 'can be used any time'
 
         extra_info = (
-            f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.'
+            f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.\n'
             f'It {_combat}, and '
-            f'it {"can" if _can_practice else "cannot"} be practiced. '
-            f'{f"{_name} can bounce up to BOUNCES times." if _bounces >= 1 else ""  }{f"The strength of {_name} will be amplified by BOUNCE BONUS each bounce." if _bounce_bonus > 0 else ""}'
-            f'{f"{_name} will target up to AOE targets, the character you use it on will always be targeted first." if _is_aoe else ""  }'
+            f'it {"can" if _can_practice else "cannot"} be practiced. \n'
+            f'{f"{_name} can bounce up to BOUNCES times.\n" if _bounces >= 1 else ""  }{f"The strength of {_name} will be amplified by BOUNCE BONUS each bounce.\n" if _bounce_bonus > 0 else ""}'
+            f'{f"{_name} will target up to AOE targets, the character you use it on will always be targeted first.\n" if _is_aoe else ""  }'
             f'{_name} {"does" if _ends_turn else "does not"} end your turn after use.'
         )
 

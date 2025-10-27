@@ -308,9 +308,6 @@ class AI:
         if self.actor.room.combat.time_since_turn_finished <= int(10):
             return False
         
-        if self.actor.room.combat.can_go_to_next_turn == True:
-            return False
-        
         return True
 
 class PlayerAI(AI):

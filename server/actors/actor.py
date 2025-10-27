@@ -208,8 +208,8 @@ class Actor:
 
 
     def add_prompt_syntax(self, prompt_syntax):
-        justing = 4
-        just_space = '_'
+        justing = 3
+        just_space = ' '
         translations = {
             '#HP#':             str(self.stat_manager.stats[StatType.HP]).rjust(justing, just_space),
             '#HPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).rjust(justing, just_space),
@@ -265,7 +265,6 @@ class Actor:
 
         for trans in translations:
             prompt_syntax = prompt_syntax.replace(trans, str(translations[trans]))
-            prompt_syntax = prompt_syntax.replace('___0','____')
 
         return prompt_syntax
 
@@ -675,7 +674,7 @@ class Actor:
             #print('not my turn')
             return
         
-        self.room.combat.next_turn_request()
+        self.room.combat.next_turn()
 
     def show_prompts(self, order = None):
         # return if received a empty list of orders

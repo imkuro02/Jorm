@@ -14,8 +14,6 @@ class Combat:
         self.round = 1
         self.turn = 0
         self.combat_active = True
-        self.skill_use_queue = []
-        self.can_go_to_next_turn = False
 
         # reset threat
         for p in self.participants.values():
@@ -52,46 +50,11 @@ class Combat:
         participant.set_base_threat()
         participant.ai.clear_prediction()
 
-
-    def skill_use_queue_add(self, skill_obj):
-        self.skill_use_queue.append(skill_obj)
-
-    # return true if done
-    def skill_use_queue_run(self):
-        if len(self.skill_use_queue) == 0:
-            return True
-        
-        #print(self.room.world.factory.ticks_passed % 15 == 0, self.room.world.factory.ticks_passed)
-        if self.room.world.factory.ticks_passed % int(30/3) == 0:
-            self.time_since_turn_finished = 0
-            
-            sk = self.skill_use_queue[0]
-            #print(self.skill_use_queue)
-            #print(type(self.skill_use_queue[0]))
-            #print(dir(self.skill_use_queue[0]))
-
-            #print(type(sk))
-            sk.use()
-            self.skill_use_queue.pop(0)
-
-        return False
-
     def tick(self):
-        #while not self.skill_use_queue_run():
-        #    pass
-
-       
-
         if self.current_actor == None:
             return
 
         self.time_since_turn_finished += 1
-
-        if not self.skill_use_queue_run():
-            return
-        
-        if self.can_go_to_next_turn:
-            self.next_turn()
 
         #if len(self.participants) == 0:
         #    self.combat_over()
@@ -197,11 +160,8 @@ class Combat:
         print('combat over')
         #self.unload()
         
-    def next_turn_request(self):
-        self.can_go_to_next_turn = True
 
     def next_turn(self):
-        self.can_go_to_next_turn = False
         #print('next turn', self.turn)
         actors = []
         for actor in self.participants.values():
