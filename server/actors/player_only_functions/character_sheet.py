@@ -49,9 +49,15 @@ def command_level_up(self, stat):
     
     self.stat_manager.stats[StatType.LVL] += 1
     self.stat_manager.stats[stat] += 1
+    #if self.stat_manager.stats[StatType.LVL]
     self.gain_practice_points(1)
     #self.stat_manager.stats[StatType.PP] += 1
 
+    
+    
+    
+
+    #self.actor.inventory_equip(item, forced = True)
     #hp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.GRIT] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
     #mp_bonus = 0 + 0 + round(self.stat_manager.stats[StatType.MIND] * 2) + round(self.stat_manager.stats[StatType.SOUL]*1) + round(self.stat_manager.stats[StatType.FLOW]*1) - 20
     self.stat_manager.stats[StatType.HPMAX]  += hp_bonus
@@ -88,7 +94,25 @@ def command_practice(self, line):
             t.add_data(SKILLS[skill_id]["name"])
             # add cost
             col = Color.BAD
-            cost = SKILLS[skill_id]['practice_cost']
+
+
+            equips = []
+            for item in self.slots_manager.slots.values():
+                if item == None:
+                    continue
+                equips.append(self.inventory_manager.items[item])
+
+            for item in equips:
+                self.inventory_unequip(item, silent = True)
+            #print(self.skill_manager.skills)
+            ##
+            cost = SKILLS[skill_id]['practice_cost'] + (sum(self.skill_manager.skills.values())) - (self.skill_manager.skills[skill_id] if skill_id in self.skill_manager.skills else 0) -2 # -2 since you start with two skills
+            if cost <= 0:
+                cost = 1
+            ##
+            for item in equips:
+                self.inventory_equip(item, forced = True)
+
             if cost <= self.stat_manager.stats[StatType.PP]:
                 col = Color.NORMAL
             t.add_data(f'{cost} PP', col)
@@ -151,7 +175,28 @@ def command_practice(self, line):
         skill_name = utils.match_word(line, [name for name in name_to_id.keys()])
         skill_id = name_to_id[skill_name]
 
-        pp_to_spend = SKILLS[skill_id]['practice_cost']
+        equips = []
+        for item in self.slots_manager.slots.values():
+            if item == None:
+                continue
+            equips.append(self.inventory_manager.items[item])
+
+        for item in equips:
+            self.inventory_unequip(item, silent = True)
+
+        if skill_id in self.skill_manager.skills:
+            if self.skill_manager.skills[skill_id] >= SKILLS[skill_id]['script_values']['levels'][-1]:
+                self.sendLine(f'{skill_name} is already max level')
+                return
+
+        #print(self.skill_manager.skills)
+        ##
+        pp_to_spend = SKILLS[skill_id]['practice_cost'] + (sum(self.skill_manager.skills.values())) - (self.skill_manager.skills[skill_id] if skill_id in self.skill_manager.skills else 0) -2 # -2 since you start with two skills
+        if pp_to_spend <= 0:
+            pp_to_spend = 1
+        ##
+        for item in equips:
+            self.inventory_equip(item, forced = True)
 
         if skill_id not in SKILLS.keys():
             self.sendLine(f'{Color.BAD}This skill does not exist{Color.NORMAL}')

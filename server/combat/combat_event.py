@@ -75,8 +75,8 @@ class CombatEvent:
         for actor in pop.damage_taker_actor.room.actors.values():
             actors.append(actor)
         for actor in actors:
-            #if actor.status == ActorStatusType.DEAD:
-            #    continue
+            if actor.status == ActorStatusType.DEAD:
+                continue
 
             # do not clamp if actor is unloaded
             #if actor.stat_manager == None:
@@ -97,6 +97,7 @@ class CombatEvent:
         # get damage_obj first in queue
         damage_obj = self.queue[0]
 
+        
         if not damage_obj.dont_proc:
             # before calc on damage_source_actor 
             if damage_obj.damage_source_actor.affect_manager != None:

@@ -530,16 +530,18 @@ class Actor:
         pass
         
     def die(self, unload = True):
+        self.status = ActorStatusType.DEAD
+
         if self.room == None:
             print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
             return
 
-        self.affect_manager.unload_all_affects()
+        self.affect_manager.unload_all_affects(silent = True)
         self.cooldown_manager.unload_all_cooldowns()
 
         self.ai.die()
         
-        self.status = ActorStatusType.DEAD
+        
 
         sound = Audio.ENEMY_DEATH
 

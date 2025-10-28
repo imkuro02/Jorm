@@ -588,6 +588,18 @@ class SkillDisorient(Skill):
                 turns = turns)
             self.other.affect_manager.set_affect_object(_effect) 
 
+class SkillDeflectMagic(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            turns = int(self.script_values['duration'][self.users_skill_level])
+            _effect = affects.AffectDeflectMagic(
+                affect_source_actor = self.user,
+                affect_target_actor = self.other, 
+                name = 'Deflecting magic', description = f'All magical damage is deflected onto the original caster', 
+                turns = turns)
+            self.other.affect_manager.set_affect_object(_effect) 
+
 class SkillEnrage(Skill):
     def use(self):
         super().use()

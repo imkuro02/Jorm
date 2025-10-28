@@ -130,10 +130,11 @@ class AffectArmorReduceToZero(Affect):
     def on_applied(self):
         super().on_applied()
         self.armor = self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR]
-        #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = 0
+        self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = 0
         self.marmor = self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR]
-        #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = 0
+        self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = 0
 
+        
         damage_obj = Damage(
             damage_source_actor = self.affect_source_actor,
             damage_taker_actor = self.affect_target_actor,
@@ -161,8 +162,11 @@ class AffectArmorReduceToZero(Affect):
         
 
     def on_finished(self, silent=False):
-        #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] += self.armor
-        #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] += self.marmor
+        if self.affect_target_actor.status == ActorStatusType.DEAD:
+            return super().on_finished(silent)
+
+        self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] += self.armor
+        self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] += self.marmor
         damage_obj = Damage(
             damage_source_actor = self.affect_source_actor,
             damage_taker_actor = self.affect_target_actor,
@@ -188,6 +192,17 @@ class AffectArmorReduceToZero(Affect):
         damage_obj.run()
         return super().on_finished(silent)
         
+class AffectDeflectMagic(Affect):
+    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+    
+    def take_damage_before_calc(self, damage_obj: Damage):
+        if damage_obj.damage_type == DamageType.MAGICAL:
+            damage_obj.damage_taker_actor = damage_obj.damage_source_actor
+            damage_obj.damage_source_action = self
+            damage_obj.damage_type = DamageType.PURE
+        return damage_obj
+
 class AffectEthereal(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, dmg_amp):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)

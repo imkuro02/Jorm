@@ -1,5 +1,5 @@
 {
-    "SHA-256": "a96a1652c2d1ad3c7d4f77130836343542a16722916870a930bbbd32a1842e12",
+    "SHA-256": "d4b5ae5c09735a9b1e5a6406d64379ef45bf690ce7216d785dedebf8e0830ce6",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3664,7 +3664,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 0.0,
+            "level_req": 2.0,
             "use_perspectives": {
                 "use_case_name": "use_bash",
                 "you on you": "You bash yourself",
@@ -3735,7 +3735,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 0.0,
+            "level_req": 2.0,
             "use_perspectives": {
                 "use_case_name": "use_smite",
                 "you on you": "You smite yourself!",
@@ -3814,7 +3814,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 0.0,
+            "level_req": 2.0,
             "use_perspectives": {
                 "use_case_name": "use_magic_missile",
                 "you on you": "You point at yourself and fire a magical missile straight to your forehead!",
@@ -3873,112 +3873,6 @@
                 ]
             }
         },
-        "nudge": {
-            "skill_id": "nudge",
-            "name": "Nudge",
-            "description": "The monster variant of a swing.\n",
-            "script_to_run": "DamageByGritFlow",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": false,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "use_perspectives": {
-                "use_case_name": "use_nudge",
-                "you on you": "You nudge yourself!",
-                "you on other": "You nudge #OTHER#",
-                "user on user": "#USER# nudges themselves!",
-                "user on you": "#USER# nudges you!",
-                "user on other": "#USER# nudges #OTHER#",
-                "you on you fail": "You fails to nudge yourself!",
-                "you on other fail": "You fails to nudge #OTHER#",
-                "user on user fail": "#USER# fails to nudge themselves",
-                "user on you fail": "#USER# fails to nudge you!",
-                "user on other fail": "#USER# fails to nudge #OTHER#"
-            },
-            "is_offensive": 1.0,
-            "end_turn": true,
-            "script_values": {
-                "damage": [
-                    1
-                ],
-                "crit": [
-                    0.65
-                ],
-                "cooldown": [
-                    1
-                ],
-                "levels": [
-                    1
-                ]
-            }
-        },
-        "bite": {
-            "skill_id": "bite",
-            "name": "Bite",
-            "description": "Bite your target.\nDealing DAMAGE + 0%-CRIT% of the highest stat between GRIT and FLOW physical damage.\n",
-            "script_to_run": "DamageByGritFlow",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": false,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "use_perspectives": {
-                "use_case_name": "use_bite",
-                "you on you": "You bite yourself.",
-                "you on other": "You bite #OTHER#.",
-                "user on user": "#USER# bites themselves.",
-                "user on you": "#USER# bites you.",
-                "user on other": "#USER# bites #OTHER#.",
-                "you on you fail": "You fail to bite yourself.",
-                "you on other fail": "You fail to bite #OTHER#.",
-                "user on user fail": "#USER# fails to bite #USER#.",
-                "user on you fail": "#USER# fails to bite you.",
-                "user on other fail": "#USER# fails to bite #OTHER#."
-            },
-            "is_offensive": 1.0,
-            "end_turn": true,
-            "script_values": {
-                "damage": [
-                    1,
-                    3,
-                    5,
-                    7,
-                    9,
-                    11
-                ],
-                "crit": [
-                    0.65,
-                    0.7,
-                    0.75,
-                    0.8,
-                    0.85,
-                    0.9
-                ],
-                "cooldown": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
-                ]
-            }
-        },
         "stab": {
             "skill_id": "stab",
             "name": "Stab",
@@ -3991,7 +3885,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 0.0,
+            "level_req": 2.0,
             "use_perspectives": {
                 "use_case_name": "use_stab",
                 "you on you": "You stab yourself.",
@@ -4054,7 +3948,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 0.0,
+            "level_req": 2.0,
             "use_perspectives": {
                 "use_case_name": "use_slash",
                 "you on you": "You slash at yourself!",
@@ -4125,7 +4019,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 0.0,
+            "level_req": 4.0,
             "use_perspectives": {
                 "use_case_name": "use_cleave",
                 "you on you": "You cleave yourself!",
@@ -4188,7 +4082,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 0.0,
+            "level_req": 4.0,
             "use_perspectives": {
                 "use_case_name": "use_double_whack",
                 "you on you": "You whack and hit yourself!",
@@ -4239,7 +4133,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 6.0,
             "use_perspectives": {
                 "use_case_name": "use_mage_armor",
                 "you on you": "You focus a layer of magicka surrounds you",
@@ -4310,7 +4204,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 3.0,
+            "level_req": 6.0,
             "use_perspectives": {
                 "use_case_name": "use_ethereal",
                 "you on you": "You focus, and begin to fade",
@@ -4381,7 +4275,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 4.0,
             "use_perspectives": {
                 "use_case_name": "use_cure_light_wounds",
                 "you on you": "You pray for yourself",
@@ -4452,7 +4346,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 3.0,
+            "level_req": 6.0,
             "use_perspectives": {
                 "use_case_name": "use_ethereal",
                 "you on you": "You focus, and begin to fade",
@@ -4523,7 +4417,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 2.0,
+            "level_req": 6.0,
             "use_perspectives": {
                 "use_case_name": "use_mana_feed",
                 "you on you": "You chant and begin to glow softly for a moment.",
@@ -5276,7 +5170,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 10.0,
+            "level_req": 3.0,
             "use_perspectives": {
                 "use_case_name": "use_generic",
                 "you on you": "You concentrate.",
@@ -5323,7 +5217,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 9.0,
             "use_perspectives": {
                 "use_case_name": "use_generic",
                 "you on you": "You concentrate.",
@@ -5374,7 +5268,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 6.0,
             "use_perspectives": {
                 "use_case_name": "use_generic",
                 "you on you": "You concentrate.",
@@ -5453,7 +5347,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 9.0,
             "use_perspectives": {
                 "use_case_name": "use_generic",
                 "you on you": "You concentrate.",
@@ -5540,19 +5434,19 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 6.0,
             "use_perspectives": {
-                "use_case_name": "use_generic",
-                "you on you": "You concentrate.",
-                "you on other": "You concentrate on #OTHER#.",
-                "user on user": "#USER# concentrates.",
-                "user on you": "#USER# concentrates on you.",
-                "user on other": "#USER# concentrates on #OTHER#.",
-                "you on you fail": "You fail to concentrate.",
-                "you on other fail": "You fail to concentrate on #OTHER#.",
-                "user on user fail": "#USER# fails to concentrate.",
-                "user on you fail": "#USER# fails to concentrate on you.",
-                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+                "use_case_name": "use_disorient",
+                "you on you": "You throw some dirt in your eyes",
+                "you on other": "You throw dirt in the eyes of #OTHER#",
+                "user on user": "#USER# throws dirt in their eyes",
+                "user on you": "#USER# throws dirt in your eyes",
+                "user on other": "#USER# throws dirt in the eyes of #OTHER#",
+                "you on you fail": "None",
+                "you on other fail": "None",
+                "user on user fail": "None",
+                "user on you fail": "None",
+                "user on other fail": "None"
             },
             "is_offensive": 0.0,
             "end_turn": false,
@@ -5580,6 +5474,155 @@
                     7,
                     6,
                     5
+                ]
+            }
+        },
+        "nudge": {
+            "skill_id": "nudge",
+            "name": "Nudge",
+            "description": "The monster variant of a swing.\n",
+            "script_to_run": "DamageByGritFlow",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_nudge",
+                "you on you": "You nudge yourself!",
+                "you on other": "You nudge #OTHER#",
+                "user on user": "#USER# nudges themselves!",
+                "user on you": "#USER# nudges you!",
+                "user on other": "#USER# nudges #OTHER#",
+                "you on you fail": "You fails to nudge yourself!",
+                "you on other fail": "You fails to nudge #OTHER#",
+                "user on user fail": "#USER# fails to nudge themselves",
+                "user on you fail": "#USER# fails to nudge you!",
+                "user on other fail": "#USER# fails to nudge #OTHER#"
+            },
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    1
+                ],
+                "crit": [
+                    0.65
+                ],
+                "cooldown": [
+                    1
+                ],
+                "levels": [
+                    1
+                ]
+            }
+        },
+        "bite": {
+            "skill_id": "bite",
+            "name": "Bite",
+            "description": "Bite your target.\nDealing DAMAGE + 0%-CRIT% of the highest stat between GRIT and FLOW physical damage.\n",
+            "script_to_run": "DamageByGritFlow",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_bite",
+                "you on you": "You bite yourself.",
+                "you on other": "You bite #OTHER#.",
+                "user on user": "#USER# bites themselves.",
+                "user on you": "#USER# bites you.",
+                "user on other": "#USER# bites #OTHER#.",
+                "you on you fail": "You fail to bite yourself.",
+                "you on other fail": "You fail to bite #OTHER#.",
+                "user on user fail": "#USER# fails to bite #USER#.",
+                "user on you fail": "#USER# fails to bite you.",
+                "user on other fail": "#USER# fails to bite #OTHER#."
+            },
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    1,
+                    3,
+                    5,
+                    7,
+                    9,
+                    11
+                ],
+                "crit": [
+                    0.65,
+                    0.7,
+                    0.75,
+                    0.8,
+                    0.85,
+                    0.9
+                ],
+                "cooldown": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ]
+            }
+        },
+        "deflect_magic": {
+            "skill_id": "deflect_magic",
+            "name": "Deflect Magic",
+            "description": "For DURATION of turns, all magic damage is deflected onto the caster.\n",
+            "script_to_run": "DeflectMagic",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 6.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "duration": [
+                    1
+                ],
+                "mp_cost": [
+                    100
+                ],
+                "cooldown": [
+                    1
                 ]
             }
         }
