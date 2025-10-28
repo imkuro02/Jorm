@@ -1,5 +1,6 @@
 from configuration.config import DamageType, StatType, ActorStatusType
 from combat.damage_event import Damage
+import utils 
 
 class Affect:
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, get_prediction_string_append = None, get_prediction_string_clear = False):
@@ -120,6 +121,73 @@ class AffectThorns(Affect):
         
         return damage_obj
 
+class AffectArmorReduceToZero(Affect):
+    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+        self.armor = 0
+        self.marmor = 0
+
+    def on_applied(self):
+        super().on_applied()
+        self.armor = self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR]
+        #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = 0
+        self.marmor = self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR]
+        #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = 0
+
+        damage_obj = Damage(
+            damage_source_actor = self.affect_source_actor,
+            damage_taker_actor = self.affect_target_actor,
+            damage_source_action = self,
+            damage_value = self.armor,
+            damage_type = DamageType.PURE,
+            damage_to_stat = StatType.PHYARMOR,
+            dont_proc = True
+        )
+
+        damage_obj.run()
+
+        damage_obj = Damage(
+            damage_source_actor = self.affect_source_actor,
+            damage_taker_actor = self.affect_target_actor,
+            damage_source_action = self,
+            damage_value = self.marmor,
+            damage_type = DamageType.PURE,
+            damage_to_stat = StatType.MAGARMOR,
+            dont_proc = True
+        )
+
+        damage_obj.run()
+        
+        
+
+    def on_finished(self, silent=False):
+        #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] += self.armor
+        #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] += self.marmor
+        damage_obj = Damage(
+            damage_source_actor = self.affect_source_actor,
+            damage_taker_actor = self.affect_target_actor,
+            damage_source_action = self,
+            damage_value = self.armor,
+            damage_type = DamageType.HEALING,
+            damage_to_stat = StatType.PHYARMOR,
+            dont_proc = True
+        )
+
+        damage_obj.run()
+
+        damage_obj = Damage(
+            damage_source_actor = self.affect_source_actor,
+            damage_taker_actor = self.affect_target_actor,
+            damage_source_action = self,
+            damage_value = self.marmor,
+            damage_type = DamageType.HEALING,
+            damage_to_stat = StatType.MAGARMOR,
+            dont_proc = True
+        )
+
+        damage_obj.run()
+        return super().on_finished(silent)
+        
 class AffectEthereal(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, dmg_amp):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
@@ -283,6 +351,14 @@ class AffectStealth(Affect):
         if damage_obj.damage_type != DamageType.PHYSICAL:
             return damage_obj
 
+        #print(utils.get_object_parent(damage_obj.damage_source_action))
+        #return damage_obj
+        if utils.get_object_parent(damage_obj.damage_source_action) != 'Skill':
+            return damage_obj
+        
+        if damage_obj.damage_source_action.skill_id != 'stab':
+            return damage_obj
+        
         damage_obj.damage_value = int(damage_obj.damage_value * self.bonus)
         return damage_obj
 

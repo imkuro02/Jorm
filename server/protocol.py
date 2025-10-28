@@ -2,7 +2,7 @@ from twisted.internet import protocol
 from actors.player import Player
 from items.manager import load_item, save_item
 import utils
-from configuration.config import StatType, ItemType, SPLASH_SCREENS, ActorStatusType, StaticRooms, Color
+from configuration.config import StatType, ItemType, SPLASH_SCREENS, ActorStatusType, StaticRooms, Color, SKILLS
 import uuid
 import copy
 import random
@@ -313,6 +313,11 @@ class Protocol(protocol.Protocol):
             
             self.actor.stat_manager.stats.update(actor['stats'])
             self.actor.skill_manager.skills = actor['skills']
+            # remove removed skills
+            tmp = self.actor.skill_manager.skills
+            for skill in tmp:
+                if skill not in SKILLS:
+                    del self.actor.skill_manager.skills[skill]
 
             for alias in actor['settings_aliases']:
                 self.actor.settings_manager.aliases[alias] = actor['settings_aliases'][alias]

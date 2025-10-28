@@ -265,14 +265,30 @@ def command_skills(self, line):
             case [1,1]:
                 _combat = 'can be used any time'
 
-        extra_info = (
-            f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.\n'
+        extra_info = ''
+        if not _ends_turn:
+            extra_info += f'{_name} does not end your turn in combat.' + '\n'
+        if _is_aoe:
+            others = 'enemies' if _is_offensive else 'allies'
+            extra_info += f'{_name} affects your chosen target, but also AOE amount of {others}.' + '\n'
+        if _bounces >= 1:
+            others = 'enemies' if _is_offensive else 'allies'
+            extra_info += f'{_name} affects your chosen target first,' + '\n'
+            extra_info += f' but then bounces BOUNCES times to {others},' + '\n'
+            extra_info += f' the power is amplified by BOUNCE BONUS each bounce,' + '\n'
+            extra_info += f' * if there are no valid targets, the bounce stops.' + '\n'
+        extra_info += f'{_name} {_combat}.' + '\n'
+        if not _can_practice:
+            extra_info += f'{_name} CANNOT be learned via practices.' + '\n'
+
+        '''(
+            f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.'
             f'It {_combat}, and '
-            f'it {"can" if _can_practice else "cannot"} be practiced. \n'
-            f'{f"{_name} can bounce up to BOUNCES times.\n" if _bounces >= 1 else ""  }{f"The strength of {_name} will be amplified by BOUNCE BONUS each bounce.\n" if _bounce_bonus > 0 else ""}'
-            f'{f"{_name} will target up to AOE targets, the character you use it on will always be targeted first.\n" if _is_aoe else ""  }'
+            f'it {"can" if _can_practice else "cannot"} be practiced. '
+            f'{f"{_name} can bounce up to BOUNCES times." if _bounces >= 1 else ""  }{f"The strength of {_name} will be amplified by BOUNCE BONUS each bounce." if _bounce_bonus > 0 else ""}'
+            f'{f"{_name} will target up to AOE targets, the character you use it on will always be targeted first." if _is_aoe else ""  }'
             f'{_name} {"does" if _ends_turn else "does not"} end your turn after use.'
-        )
+        )'''
 
         
 

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "5cec37af3e0885e3c28fde8e91655bb76a209ac39817d9c54fa3a3825869b5d7",
+    "SHA-256": "a96a1652c2d1ad3c7d4f77130836343542a16722916870a930bbbd32a1842e12",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3559,8 +3559,8 @@
             "target_self_is_valid": false,
             "can_use_in_combat": true,
             "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
                 "use_case_name": "use_swing",
@@ -3622,8 +3622,8 @@
             "target_self_is_valid": true,
             "can_use_in_combat": true,
             "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
                 "use_case_name": "use_generic",
@@ -3662,8 +3662,8 @@
             "target_self_is_valid": false,
             "can_use_in_combat": true,
             "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
                 "use_case_name": "use_bash",
@@ -3733,8 +3733,8 @@
             "target_self_is_valid": false,
             "can_use_in_combat": true,
             "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
                 "use_case_name": "use_smite",
@@ -3812,8 +3812,8 @@
             "target_self_is_valid": false,
             "can_use_in_combat": true,
             "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
                 "use_case_name": "use_magic_missile",
@@ -3989,8 +3989,8 @@
             "target_self_is_valid": false,
             "can_use_in_combat": true,
             "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
                 "use_case_name": "use_stab",
@@ -4052,8 +4052,8 @@
             "target_self_is_valid": false,
             "can_use_in_combat": true,
             "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
                 "use_case_name": "use_slash",
@@ -4113,6 +4113,69 @@
                 ]
             }
         },
+        "cleave": {
+            "skill_id": "cleave",
+            "name": "Cleave",
+            "description": "Cleave your target.\nDealing DAMAGE +0%-CRIT% GRIT physical damage.\nIf target dies, it is still your turn.\n",
+            "script_to_run": "Cleave",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 0.0,
+            "use_perspectives": {
+                "use_case_name": "use_cleave",
+                "you on you": "You cleave yourself!",
+                "you on other": "You cleave #OTHER#, cutting them.",
+                "user on user": "#USER# cleaves and cuts themselves!",
+                "user on you": "#USER# cleaves and cuts you!",
+                "user on other": "#USER# cleaves and cuts #OTHER#!",
+                "you on you fail": "None",
+                "you on other fail": "None",
+                "user on user fail": "None",
+                "user on you fail": "None",
+                "user on other fail": "None"
+            },
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    10,
+                    15,
+                    20,
+                    25,
+                    30,
+                    35
+                ],
+                "crit": [
+                    0.6,
+                    0.61,
+                    0.62,
+                    0.63,
+                    0.64,
+                    0.65
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "cooldown": [
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                ]
+            }
+        },
         "double_whack": {
             "skill_id": "double_whack",
             "name": "Double Whack",
@@ -4123,8 +4186,8 @@
             "target_self_is_valid": false,
             "can_use_in_combat": true,
             "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 0.0,
             "use_perspectives": {
                 "use_case_name": "use_double_whack",
@@ -5251,7 +5314,7 @@
         "stealth": {
             "skill_id": "stealth",
             "name": "Stealth",
-            "description": "Your next physical attack will be multiplied by BONUS%, but this effect gets cancelled should you take any damage to either health or armor\nFlow gets doubled until no longer stealthed\n",
+            "description": "Your next stab attack will be multiplied by BONUS%, but this effect gets cancelled should you take any damage to either health or armor\nFlow gets doubled until no longer stealthed\n",
             "script_to_run": "Stealth",
             "target_others_is_valid": false,
             "target_item_is_valid": false,
@@ -5383,7 +5446,7 @@
             "name": "Chain Heal",
             "description": "Heal all party members for DAMAGE + 0%-CRIT% SOUL health.\n",
             "script_to_run": "CureLightWounds",
-            "target_others_is_valid": false,
+            "target_others_is_valid": true,
             "target_item_is_valid": false,
             "target_self_is_valid": true,
             "can_use_in_combat": true,
@@ -5462,6 +5525,61 @@
                     -0.14,
                     -0.12,
                     -0.1
+                ]
+            }
+        },
+        "disorient": {
+            "skill_id": "disorient",
+            "name": "Dirt Throw",
+            "description": "Disorient your target. Reducing all armor to 0 for DURATION turns.\n",
+            "script_to_run": "Disorient",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 1.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "end_turn": false,
+            "script_values": {
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "duration": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "cooldown": [
+                    10,
+                    9,
+                    8,
+                    7,
+                    6,
+                    5
                 ]
             }
         }

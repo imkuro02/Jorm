@@ -1,4 +1,24 @@
 versions:
+  '281025':
+    id: '281025'
+    title: More skills!
+    unixtime: 1761218271
+    features:
+    - A couple new skills, aswell as reworks
+    - ---
+    - Skill view has been reworked to be nicer to look at
+    - Default prompt changed (again)
+    - ---
+    - Slash is now an AOE skill, affecting one primary target and a secondary one
+    - Smite is now an AOE skill affecting up to 5 targets
+    - Stealth double damage only procs on stab
+    - Bless is now an AOE
+    - ---- NEW SKILLS ---
+    - Cleave; deal moderate damage, but if the hit kills, its your turn again
+    - Chain Heal; a healing spell that bounces between targets, the first heal is the most powerful and loses power over bounces
+    - Refresh; an AOE heal for quickly healing whole party
+    - Dirt Throw; remove all armor from target for a few turns
+    
   '221025':
     id: '221025'
     title: Friends, map art, settings, and more

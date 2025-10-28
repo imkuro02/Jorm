@@ -5,195 +5,7 @@ from combat.damage_event import Damage
 from configuration.config import SKILLS
 import random
 import utils
-
-
-class Skill:
-    def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, bounce = 0):
-        self.skill_id = skill_id
-        self.name = SKILLS[skill_id]['name']
-        self.script_values = script_values
-        self.user = user
-        self.other = other
-        self.users_skill_level = users_skill_level
-        self.use_perspectives = use_perspectives
-        self.success = success
-        self.silent_use = silent_use
-
-        #self.aoe = aoe # area of effect
-        self.bounce = bounce # the amount of times it bounces
-        self.get_dmg_value_override = None
-
-    def get_dmg_value(self, stat_type = None):
-        if self.get_dmg_value_override == None:
-            if 'crit' not in self.script_values or stat_type == None:
-                dmg = self.script_values['damage'][self.users_skill_level]
-            else:
-                crit_min = int(self.script_values['crit'][self.users_skill_level]*80)
-                crit_max = int(self.script_values['crit'][self.users_skill_level]*100)
-                dmg_stat = int(self.user.stat_manager.stats[stat_type])
-                dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
-                dmg = int(dmg)
-
-            self.get_dmg_value_override = dmg
-            return self.get_dmg_value_override
-        else:
-            return self.get_dmg_value_override
-    
-    def use_broadcast(self):
-        perspectives = {
-            'you on you':       self.use_perspectives['you on you fail'],
-            'you on other':     self.use_perspectives['you on other fail'],
-            'user on user':     self.use_perspectives['user on user fail'],
-            'user on you':      self.use_perspectives['user on you fail'],
-            'user on other':    self.use_perspectives['user on other fail']
-        }
-        if self.success:
-            perspectives = {
-                'you on you':       self.use_perspectives['you on you'],
-                'you on other':     self.use_perspectives['you on other'],
-                'user on user':     self.use_perspectives['user on user'],
-                'user on you':      self.use_perspectives['user on you'],
-                'user on other':    self.use_perspectives['user on other']
-            }
-
-        for perspective in perspectives:
-            perspectives[perspective] = perspectives[perspective].replace('#USER#', self.user.pretty_name())
-            perspectives[perspective] = perspectives[perspective].replace('#OTHER#', self.other.pretty_name())
-
-        for receiver in self.user.room.actors.values():
-            if type(receiver).__name__ != "Player":
-                continue
-
-            if receiver == self.user and receiver == self.other:
-                receiver.sendLine(perspectives['you on you'])
-                continue
-            if receiver == self.user and receiver != self.other:
-                receiver.sendLine(perspectives['you on other'])
-                continue
-            if receiver != self.user and receiver != self.other and self.user == self.other:
-                receiver.sendLine(perspectives['user on user'])
-                continue
-            if receiver != self.user and receiver == self.other:
-                receiver.sendLine(perspectives['user on you'])
-                continue
-            if receiver != self.user and receiver != self.other:
-                receiver.sendLine(perspectives['user on other'])
-                continue
-
-    def use(self):
-        #print('aoe:',self.aoe)
-        
-        cool = self.script_values['cooldown'][self.users_skill_level]
-        #if cool <= 1: 
-        #    cool = 2
-        self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
-
-        if self.silent_use:
-            return
-        self.use_broadcast()
-
-    def pre_use_get_targets(self):
-        skill = SKILLS[self.skill_id]
-        targets = [] # make this the first target
-        for i in self.user.room.actors.values():
-            if self.user.status != i.status:
-                continue
-            if self.other == i:
-                continue
-            if not skill['is_offensive']:
-                if i.party_manager.get_party_id() == self.user.party_manager.get_party_id():
-                    targets.append(i)
-            else:
-                if i.party_manager.get_party_id() != self.user.party_manager.get_party_id():
-                    targets.append(i)
-
-        
-        random.shuffle(targets)
-        targets.append(self.other)
-        targets = targets[::-1]
-        return targets
-
-    def pre_use(self):
-        skill = SKILLS[self.skill_id]
-        skill_obj = self.__class__
-        _skill_objects = []
-
-        targets = self.pre_use_get_targets()
-        
-        if 'aoe' in skill['script_values']:
-            current_aoe = 0
-            for target in targets:
-
-                _skill_obj = skill_obj(
-                    skill_id = self.skill_id, 
-                    script_values = skill['script_values'], 
-                    user = self.user, 
-                    other = target, 
-                    users_skill_level = self.users_skill_level, 
-                    use_perspectives = self.use_perspectives, 
-                    success = self.success, 
-                    silent_use = self.silent_use ,  
-                    #aoe = False,
-                    bounce = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
-                )
-                _skill_objects.append(_skill_obj)
-                if current_aoe > skill['script_values']['aoe'][self.users_skill_level]:
-                    break
-                current_aoe += 1
-
-        else:
-            _skill_obj = skill_obj(
-                skill_id = self.skill_id, 
-                script_values = skill['script_values'], 
-                user = self.user, 
-                other = self.other, 
-                users_skill_level = self.users_skill_level, 
-                use_perspectives = self.use_perspectives, 
-                success = self.success, 
-                silent_use = self.silent_use, 
-                #aoe = False,
-                bounce = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
-            )
-            _skill_objects.append(_skill_obj)
-
-
-        # loop for each aoe spawned skill
-        for _skill_object in _skill_objects:
-
-            _skill_object.silent_use = self.silent_use
-            _skill_object.use()
-
-            self.silent_use = True
-
-            #first_object = False
-            
-            damage =  0
-            bounce_loss = 0
-
-            if _skill_object.get_dmg_value_override != None:
-                damage =  _skill_object.get_dmg_value_override
-                bounce_loss = int(damage/(_skill_object.bounce+1))
-            
-            # if there are bounces, do that
-            while _skill_object.bounce >= 1:
-                _skill_object.silent_use = self.silent_use
-                _skill_object.bounce -= 1
-                damage = damage + int(damage *  skill['script_values']['bounce_bonus'][self.users_skill_level])
-                _skill_object.get_dmg_value_override = damage
-                
-                targets = self.pre_use_get_targets()
-                if _skill_object.other in targets:
-                    targets.remove(_skill_object.other)
-                if targets == []:
-                    to_broadcast = 'no valid bounce targets'
-                    #self.user.simple_broadcast(to_broadcast, to_broadcast)
-                    return
-                _skill_object.other = random.choice(targets)
-                #self.user.simple_broadcast(_skill_object.bounce,'fjdsbfkdsaf')
-                #to_broadcast = 
-                #self.simple_broadcast('')
-                _skill_object.use()
-
+#from skills.skills import Skill
 
 class SkillDamage(Skill):
      def use(   self, 
@@ -220,8 +32,8 @@ class SkillDamage(Skill):
                 )
 
             damage_obj.run()
-            # easy way of checking if a skill killed someone
-            #print(f'{damage_obj.damage_taker_actor.name} {damage_obj.damage_taker_actor.status}')
+
+
             return damage_obj
 
 # XD parent damage skills
@@ -251,14 +63,6 @@ class SkillCureLightWounds(SkillDamage):
     def use(self):
         return super().use(dmg_stat_scale = StatType.SOUL, dmg_type = DamageType.HEALING)
 
-class SkillCleave(SkillDamage):
-    def use(self):
-        damage_obj = super().use(dmg_stat_scale = StatType.GRIT, dmg_type = DamageType.PHYSICAL)
-        if damage_obj.damage_taker_actor.status == ActorStatusType.DEAD:
-            damage_obj.damage_source_actor.room.combat.order.insert(0, damage_obj.damage_source_actor)
-            damage_obj.damage_source_actor.room.combat.current_actor = damage_obj.damage_source_actor
-            del damage_obj.damage_source_actor.cooldown_manager.cooldowns[self.skill_id]
-    
 class SkillRefresh(SkillDamage):
     def use(self):
         self.get_dmg_value_override = self.get_dmg_value(stat_type = StatType.SOUL)
@@ -268,107 +72,7 @@ class SkillRefresh(SkillDamage):
                 super().use(dmg_stat_scale = StatType.SOUL, dmg_type = DamageType.HEALING)
                 self.silent_use = True
 
-class SkillGuard(Skill):
-    def use(self):
-        super().use()
-        if self.success:
-            power = self.script_values['bonus'][self.users_skill_level]
-            damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stat_manager.stats[StatType.PHYARMORMAX]*power),
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.PHYARMOR
-                )
-            damage_obj.run()        
-            damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stat_manager.stats[StatType.MAGARMORMAX]*power),
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.MAGARMOR
-                )
-            damage_obj.run()      
-
 # XD children of damage skills / damage skills that deal afflictions / interesting damage skills
-'''
-class SkillWildMagic(Skill):
-    def pre_use_get_targets(self):
-        skill = SKILLS[self.skill_id]
-        targets = [] # make this the first target
-        for i in self.user.room.actors.values():
-            if self.user.status != i.status:
-                continue
-            if self.other == i:
-                continue
-            targets.append(i)
-
-        
-        random.shuffle(targets)
-        targets.append(self.other)
-        targets = targets[::-1]
-        return targets
-    
-    def pre_use(self):
-        skill = SKILLS[self.skill_id]
-        skill_obj = self.__class__
-        _skill_obj = skill_obj(
-                skill_id = self.skill_id, 
-                script_values = skill['script_values'], 
-                user = self.user, 
-                other = self.other, 
-                users_skill_level = self.users_skill_level, 
-                use_perspectives = self.use_perspectives, 
-                success = self.success, 
-                silent_use = self.silent_use, 
-                #aoe = False,
-                bounce = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
-            )
-        _skill_obj.use()
-
-        self.silent_use = True
-
-        #first_object = False
-        
-        damage =  0
-        bounce_loss = 0
-
-        if _skill_obj.get_dmg_value_override != None:
-            damage =  _skill_obj.get_dmg_value_override
-            bounce_loss = int(damage/(_skill_obj.bounce+1))
-        
-        # if there are bounces, do that
-        while _skill_obj.bounce >= 1:
-            _skill_obj.silent_use = self.silent_use
-            _skill_obj.bounce -= 1
-            damage = damage + int(damage *  skill['script_values']['bounce_bonus'][self.users_skill_level])
-            _skill_obj.get_dmg_value_override = damage
-            
-            targets = self.pre_use_get_targets()
-            if _skill_obj.other in targets:
-                targets.remove(_skill_obj.other)
-            if targets == []:
-                to_broadcast = 'no valid bounce targets'
-                #self.user.simple_broadcast(to_broadcast, to_broadcast)
-                return
-            _skill_obj.other = random.choice(targets)
-            _skill_obj.use()
-
-    def use(self):
-        damage_obj = Damage(
-            damage_taker_actor = self.other,
-            damage_source_actor = self.user,
-            damage_source_action = self,
-            damage_value = self.get_dmg_value(stat_type = StatType.MIND),
-            damage_type = random.choice([DamageType.HEALING, DamageType.PHYSICAL, DamageType.MAGICAL, DamageType.PURE]),
-            damage_to_stat = StatType.HP
-            )
-
-        damage_obj.run()
-        return damage_obj
-'''
 
 class SkillDamageByFlowApplyBleed(SkillDamage):
     def use(self):
@@ -545,7 +249,33 @@ class SkillRefreshingDrink(Skill):
             damage_obj.run()          
 
 
-    
+
+
+
+
+class SkillGuard(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            power = self.script_values['bonus'][self.users_skill_level]
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stat_manager.stats[StatType.PHYARMORMAX]*power),
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.PHYARMOR
+                )
+            damage_obj.run()        
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self,
+                damage_source_actor = self.user,
+                damage_value = int(self.user.stat_manager.stats[StatType.MAGARMORMAX]*power),
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MAGARMOR
+                )
+            damage_obj.run()          
 
 # XD affliction only skills
 
@@ -574,19 +304,6 @@ class SkillMageArmor(Skill):
                 name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
                 turns = turns, reduction = reduction)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
-
-class SkillDisorient(Skill):
-    def use(self):
-        super().use()
-        if self.success:
-            turns = int(self.script_values['duration'][self.users_skill_level])
-            #reduction = self.script_values['bonus'][self.users_skill_level]
-            _effect = affects.AffectArmorReduceToZero(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other, 
-                name = 'Disoriented', description = f'All armor is reduced to 0 momentarily', 
-                turns = turns)
-            self.other.affect_manager.set_affect_object(_effect) 
 
 class SkillEnrage(Skill):
     def use(self):
@@ -655,7 +372,7 @@ class SkillStealth(Skill):
                 affect_source_actor = self.user,
                 affect_target_actor = self.other,
                 name = 'Stealthed',
-                description = f'Multiply your next stab by {int(damage_bonus*100)}%',
+                description = f'Multiply your next attack by {int(damage_bonus*100)}%',
                 turns = int(self.script_values['duration'][self.users_skill_level]),
                 bonus = damage_bonus
             ) 
