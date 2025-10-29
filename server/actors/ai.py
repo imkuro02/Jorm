@@ -639,9 +639,10 @@ def get_ai(ai_name):
             return CowardAI
         case 'BossRat':
             return BossRatAI
-        case 'Vore':
-            return VoreAI
-        case 'VoreDragonLesser':
-            return VoreDragonLesserAI
+        # vore ai is broken again
+        #case 'Vore':
+        #    return VoreAI
+        #case 'VoreDragonLesser':
+        #    return VoreDragonLesserAI
         case _:
             return EnemyAI
