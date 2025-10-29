@@ -457,9 +457,9 @@ class Player(Actor):
         self.stat_manager.stats[StatType.EXP] += exp
         if self.stat_manager.stats[StatType.EXP] == 0:
             self.stat_manager.stats[StatType.EXP] = 0
-        if exp <= 0:
+        if exp < 0:
             self.sendLine(f'You lost: {Color.BAD}' + str(abs(exp)) + f' experience{Color.BACK}')
-        else:
+        if exp > 0:
             self.sendLine(f'You got: {Color.GOOD}' + str(abs(exp)) + f' experience{Color.BACK}')
 
     def gain_practice_points(self, pp):
@@ -467,12 +467,12 @@ class Player(Actor):
         if self.stat_manager.stats[StatType.PP] == 0:
             self.stat_manager.stats[StatType.PP] = 0
 
-        if pp <= 0:
+        if pp < 0:
             if abs(pp) >= 2:
                 self.sendLine(f'You lost: {Color.BAD}' + str(abs(pp)) + f' Practice points{Color.BACK}')
             else:
                 self.sendLine(f'You lost: {Color.BAD}' + str(abs(pp)) + f' Practice point{Color.BACK}')
-        else:
+        if pp > 0:
             if abs(pp) >= 2: 
                 self.sendLine(f'You got: {Color.GOOD}' + str(abs(pp)) + f' Practice points{Color.BACK}')
             else:
@@ -588,8 +588,8 @@ class Player(Actor):
     def finish_turn(self, force_cooldown = False):
         self.trade_manager.trade_stop(silent=True)
         self.charging_mini_game.stop()
-        self.sendLine(self.prompt(self))
         super().finish_turn(force_cooldown=force_cooldown)
+        self.sendLine(self.prompt(self))
         
         
 

@@ -438,18 +438,25 @@ class SkillManaFeed(Skill):
 class SkillBash(SkillDamageByGrit):
     def use(self):
         if self.success:
+            all_armors = {}
+            for i in self.user.room.actors.values():
+                all_armors[i] = i.stat_manager.stats[StatType.PHYARMOR]
+
             damage_obj = super().use()
-            was_blocked = damage_obj.damage_value <= -1
-            if not was_blocked:
-                stunned_affect = affects.AffectStunned(
-                    affect_source_actor = self.user,
-                    affect_target_actor = self.other,
-                    name = 'Stunned', description = 'Unable to act during combat turns',
-                    turns = self.script_values['duration'][self.users_skill_level],
-                    get_prediction_string_append = 'is stunned!',
-                    get_prediction_string_clear = True
-                )
-                self.other.affect_manager.set_affect_object(stunned_affect)
+            
+            print(damage_obj)
+            if all_armors[damage_obj.damage_taker_actor] > 0:
+                was_blocked = damage_obj.damage_value <= -1
+                if not was_blocked:
+                    stunned_affect = affects.AffectStunned(
+                        affect_source_actor = self.user,
+                        affect_target_actor = self.other,
+                        name = 'Stunned', description = 'Unable to act during combat turns',
+                        turns = self.script_values['duration'][self.users_skill_level],
+                        get_prediction_string_append = 'is stunned!',
+                        get_prediction_string_clear = True
+                    )
+                    self.other.affect_manager.set_affect_object(stunned_affect)
 
 class SkillDoubleWhack(SkillDamageByGritFlow):
     def use(self):
@@ -668,6 +675,21 @@ class SkillStealth(Skill):
                 affect_target_actor = self.other,
                 name = 'Stealthed',
                 description = f'Multiply your next stab by {int(damage_bonus*100)}%',
+                turns = int(self.script_values['duration'][self.users_skill_level]),
+                bonus = damage_bonus
+            ) 
+            self.other.affect_manager.set_affect_object(stealthed_affect)  
+
+class SkillOvercharge(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            damage_bonus = self.script_values['bonus'][self.users_skill_level]
+            stealthed_affect = affects.AffectOvercharge(
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
+                name = 'Overcharged',
+                description = f'Take damage equal to {int(damage_bonus*100)}% magicka spent.',
                 turns = int(self.script_values['duration'][self.users_skill_level]),
                 bonus = damage_bonus
             ) 

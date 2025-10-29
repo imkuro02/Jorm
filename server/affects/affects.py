@@ -192,6 +192,37 @@ class AffectArmorReduceToZero(Affect):
         damage_obj.run()
         return super().on_finished(silent)
         
+
+class AffectOvercharge(Affect):
+    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, bonus = 1):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+        self.mp_percentage_lost_damage = bonus
+        self.mp_start = 0
+        self.mp_end = 0
+
+    def on_applied(self):
+        super().on_applied()
+        self.mp_start = self.affect_source_actor.stat_manager.stats[StatType.MPMAX]
+        self.affect_source_actor.stat_manager.stats[StatType.MP] = self.affect_source_actor.stat_manager.stats[StatType.MPMAX]
+
+    def on_finished(self, silent=False):
+        if self.affect_target_actor.status == ActorStatusType.DEAD:
+            return super().on_finished(silent)
+
+        self.mp_end = self.affect_source_actor.stat_manager.stats[StatType.MP]
+
+        dmg = int((self.mp_start - self.mp_end) * self.mp_percentage_lost_damage)
+        damage_obj = Damage(
+            damage_source_actor = self.affect_source_actor,
+            damage_taker_actor = self.affect_target_actor,
+            damage_source_action = self,
+            damage_value = dmg,
+            damage_type = DamageType.MAGICAL
+        )
+
+        damage_obj.run()
+        return super().on_finished(silent)
+
 class AffectDeflectMagic(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)

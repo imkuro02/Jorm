@@ -3,7 +3,7 @@ import uuid
 from combat.damage_event import Damage
 from items.manager import Item
 from affects.manager import AffectsManager
-from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType, Audio, Color
+from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType, Audio, Color, SKILLS
 from skills.manager import use_skill
 from inventory import InventoryManager
 import utils
@@ -113,14 +113,20 @@ class SkillManager:
 class CooldownManager:
     def __init__ (self, actor):
         self.actor = actor
+        self.long_cooldowns = {}
         self.cooldowns = {}
 
     def add_cooldown(self, cooldown, turns):
         self.cooldowns[cooldown] = turns
+        if turns >= 2:
+            self.long_cooldowns[cooldown] = turns
 
     def remove_cooldown(self, cooldown):
         if cooldown in self.cooldowns:
             del self.cooldowns[cooldown]
+            if cooldown in self.long_cooldowns:
+                del self.long_cooldowns[cooldown]
+                self.actor.sendLine(f'{Color.GOOD}{SKILLS[cooldown]["name"]} is ready{Color.NORMAL}')
 
     def unload_all_cooldowns(self, silent = False):
         cool_to_delete = []

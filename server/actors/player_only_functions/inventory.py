@@ -14,7 +14,36 @@ def command_trade(self, line):
 @check_no_combat_in_room
 @check_alive
 def command_get(self, line):
+    items_to_get = []
+    
+    for item in self.room.inventory_manager.items.values():
+        items_to_get.append(item)
+
+    item_found = self.get_item(line, search_mode = 'room')
+    if line != 'all':
+        
+        if item_found == None:
+            self.sendLine('Get what?', sound = Audio.ERROR)
+            return
+
+        items_to_get = [item_found]
+
+    for item in items_to_get:
+        item_pretty_name_before_pickup = item.pretty_name()
+        if self.inventory_manager.add_item(item):
+            self.room.inventory_manager.remove_item(item)
+            self.simple_broadcast(
+                f'You get {item_pretty_name_before_pickup}',
+                f'{self.pretty_name()} gets {item_pretty_name_before_pickup}'
+                )
+        else:
+            self.sendLine(f'You can\'t pick up {item.pretty_name()}', sound = Audio.ERROR)
+
+
     '''
+
+
+
     if line.lower() == 'all':
         items_to_get = []
         for item in self.room.inventory_manager.items.values():
@@ -30,7 +59,7 @@ def command_get(self, line):
             else:
                 self.sendLine('Your Inventory is full') 
         return
-    '''
+    
 
     item = self.get_item(line, search_mode = 'room')
     if item == None:
@@ -45,12 +74,40 @@ def command_get(self, line):
             )
     else:
         self.sendLine(f'You can\'t pick up {item.pretty_name()}', sound = Audio.ERROR)
+
+    '''
     
 @check_not_trading
 @check_no_empty_line
 @check_not_in_combat
 @check_alive
 def command_drop(self, line):
+    items_to_get = []
+    
+    for item in self.inventory_manager.items.values():
+        items_to_get.append(item)
+
+    item_found = self.get_item(line)
+    if line != 'all':
+        
+        if item_found == None:
+            self.sendLine('Get what?', sound = Audio.ERROR)
+            return
+
+        items_to_get = [item_found]
+
+    for item in items_to_get:
+        item_pretty_name_before_pickup = item.pretty_name()
+        if not item.can_tinker_with():
+            self.sendLine(f'Cannot drop {item.pretty_name()} since its kept or equipped')
+            continue
+        self.room.inventory_manager.add_item(item)
+        self.inventory_manager.remove_item(item)
+        self.simple_broadcast(
+            f'You drop {item_pretty_name_before_pickup}',
+            f'{self.pretty_name()} drops {item_pretty_name_before_pickup}'
+            )
+
     '''
     if line.lower() == 'all':
         items_to_drop = []
@@ -73,7 +130,7 @@ def command_drop(self, line):
                 f'{self.pretty_name()} drops {item.name}'
                 )
         return
-    '''
+    
 
     item = self.get_item(line)
     if item == None:
@@ -92,6 +149,7 @@ def command_drop(self, line):
 
     self.room.inventory_manager.add_item(item)
     self.inventory_manager.remove_item(item)
+    '''
 
 @check_not_trading
 def command_split(self, line):

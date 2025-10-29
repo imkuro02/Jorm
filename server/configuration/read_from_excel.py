@@ -78,6 +78,7 @@ def configure_skill_script_values(SHEET):
                     i = float(i)
                 else:
                     i = int(i)
+                    
                 d_vals[x['value_name'][index]].append(i)
 
             if x['skill_id'][index] in SKILL_SCRIPT_VALUES:

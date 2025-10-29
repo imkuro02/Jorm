@@ -208,6 +208,7 @@ def rest_here(self, line):
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects()
+    self.cooldown_manager.unload_all_cooldowns()
     self.simple_broadcast(
         f'You have a quick rest',
         f'{self.pretty_name()} has a quick rest'
@@ -282,6 +283,7 @@ def rest_home(self, line):
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects()
+    self.cooldown_manager.unload_all_cooldowns()
     self.new_room_look()
     self.finish_turn()
 

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "d4b5ae5c09735a9b1e5a6406d64379ef45bf690ce7216d785dedebf8e0830ce6",
+    "SHA-256": "ee81fc5d11b00b8ee6798b24e1a3679422dd5123033347aa0d95d28f175341ab",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -117,7 +117,6 @@
                 "rat_tail": 10,
                 "rock": 39,
                 "summoning_rock": 39,
-                "white_rat_hide": 39,
                 "red potion": 100,
                 "blue potion": 100,
                 "flow body 1": 40,
@@ -160,11 +159,10 @@
             "skills": {},
             "loot": {
                 "rock": 39,
-                "rat_hide": 39,
                 "summoning_rock": 39,
                 "rat_tail": 39,
                 "rat_tooth": 39,
-                "white_rat_hide": 39,
+                "rat_hide": 39,
                 "red potion": 100,
                 "blue potion": 100,
                 "grit body 1": 40,
@@ -351,16 +349,8 @@
             "loot": {
                 "orange_mushroom_cap": 10,
                 "rock": 37,
-                "mushroom_horn": 37,
                 "summoning_rock": 37,
                 "shroom_cap": 37,
-                "red_mushroom_cap": 37,
-                "blue_mushroom_cap": 37,
-                "spiky_mushroom_cap": 37,
-                "hard_mushroom_cap": 37,
-                "grey_mushroom_cap": 37,
-                "purple_mushroom_cap": 37,
-                "yellow_mushroom_cap": 37,
                 "red potion": 100,
                 "blue potion": 100,
                 "soul body 1": 50,
@@ -412,7 +402,6 @@
                 "green_sludge": 10,
                 "rock": 37,
                 "summoning_rock": 37,
-                "green_jelly": 37,
                 "green_slime_core": 37,
                 "red potion": 100,
                 "blue potion": 100,
@@ -466,7 +455,6 @@
                 "spider_eye": 25,
                 "rock": 37,
                 "summoning_rock": 37,
-                "spider_thread": 37,
                 "red potion": 100,
                 "blue potion": 100,
                 "flow body 1": 50,
@@ -678,16 +666,8 @@
             "loot": {
                 "red_mushroom_cap": 10,
                 "rock": 34,
-                "mushroom_horn": 34,
                 "summoning_rock": 34,
                 "shroom_cap": 34,
-                "orange_mushroom_cap": 34,
-                "blue_mushroom_cap": 34,
-                "spiky_mushroom_cap": 34,
-                "hard_mushroom_cap": 34,
-                "grey_mushroom_cap": 34,
-                "purple_mushroom_cap": 34,
-                "yellow_mushroom_cap": 34,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_flow": 60,
@@ -799,16 +779,8 @@
             "loot": {
                 "blue_mushroom_cap": 10,
                 "rock": 34,
-                "mushroom_horn": 34,
                 "summoning_rock": 34,
                 "shroom_cap": 34,
-                "orange_mushroom_cap": 34,
-                "red_mushroom_cap": 34,
-                "spiky_mushroom_cap": 34,
-                "hard_mushroom_cap": 34,
-                "grey_mushroom_cap": 34,
-                "purple_mushroom_cap": 34,
-                "yellow_mushroom_cap": 34,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_soul": 60,
@@ -1034,13 +1006,6 @@
                 "rock": 31,
                 "summoning_rock": 31,
                 "shroom_cap": 31,
-                "orange_mushroom_cap": 31,
-                "red_mushroom_cap": 31,
-                "blue_mushroom_cap": 31,
-                "hard_mushroom_cap": 31,
-                "grey_mushroom_cap": 31,
-                "purple_mushroom_cap": 31,
-                "yellow_mushroom_cap": 31,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_grit": 60,
@@ -1096,11 +1061,6 @@
             "loot": {
                 "rock": 31,
                 "summoning_rock": 31,
-                "simple_bone": 31,
-                "small_skull": 31,
-                "skull": 31,
-                "bone": 31,
-                "hard_bone": 31,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_grit": 60,
@@ -1159,11 +1119,6 @@
             "loot": {
                 "rock": 31,
                 "summoning_rock": 31,
-                "simple_bone": 31,
-                "small_skull": 31,
-                "skull": 31,
-                "bone": 31,
-                "hard_bone": 31,
                 "red potion": 100,
                 "blue potion": 100,
                 "translucent scroll": 100,
@@ -1218,17 +1173,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_grit": 60,
@@ -1282,17 +1228,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_flow": 60,
@@ -1341,17 +1278,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "translucent scroll": 100,
@@ -1407,17 +1335,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_soul": 60,
@@ -1470,18 +1389,9 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "zombie_skin": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_grit": 60,
@@ -1650,11 +1560,6 @@
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
-                "simple_bone": 28,
-                "small_skull": 28,
-                "skull": 28,
-                "bone": 28,
-                "hard_bone": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_flow": 60,
@@ -2104,11 +2009,10 @@
             },
             "loot": {
                 "rock": 30,
-                "rat_hide": 30,
                 "summoning_rock": 30,
                 "rat_tail": 30,
                 "rat_tooth": 30,
-                "white_rat_hide": 30,
+                "rat_hide": 30,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_flow": 60,
@@ -2312,17 +2216,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "translucent scroll": 100,
@@ -2376,17 +2271,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_grit": 60,
@@ -2440,17 +2326,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_grit": 60,
@@ -2504,17 +2381,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "blessing_of_soul": 60,
@@ -2567,17 +2435,8 @@
             },
             "loot": {
                 "rock": 39,
-                "mushroom_horn": 39,
                 "summoning_rock": 39,
                 "shroom_cap": 39,
-                "orange_mushroom_cap": 39,
-                "red_mushroom_cap": 39,
-                "blue_mushroom_cap": 39,
-                "spiky_mushroom_cap": 39,
-                "hard_mushroom_cap": 39,
-                "grey_mushroom_cap": 39,
-                "purple_mushroom_cap": 39,
-                "yellow_mushroom_cap": 39,
                 "red potion": 100,
                 "blue potion": 100,
                 "grit body 1": 40,
@@ -2623,17 +2482,8 @@
             },
             "loot": {
                 "rock": 39,
-                "mushroom_horn": 39,
                 "summoning_rock": 39,
                 "shroom_cap": 39,
-                "orange_mushroom_cap": 39,
-                "red_mushroom_cap": 39,
-                "blue_mushroom_cap": 39,
-                "spiky_mushroom_cap": 39,
-                "hard_mushroom_cap": 39,
-                "grey_mushroom_cap": 39,
-                "purple_mushroom_cap": 39,
-                "yellow_mushroom_cap": 39,
                 "red potion": 100,
                 "blue potion": 100,
                 "flow body 1": 40,
@@ -2678,17 +2528,8 @@
             },
             "loot": {
                 "rock": 39,
-                "mushroom_horn": 39,
                 "summoning_rock": 39,
                 "shroom_cap": 39,
-                "orange_mushroom_cap": 39,
-                "red_mushroom_cap": 39,
-                "blue_mushroom_cap": 39,
-                "spiky_mushroom_cap": 39,
-                "hard_mushroom_cap": 39,
-                "grey_mushroom_cap": 39,
-                "purple_mushroom_cap": 39,
-                "yellow_mushroom_cap": 39,
                 "red potion": 100,
                 "blue potion": 100,
                 "flow body 1": 40,
@@ -2733,17 +2574,8 @@
             },
             "loot": {
                 "rock": 39,
-                "mushroom_horn": 39,
                 "summoning_rock": 39,
                 "shroom_cap": 39,
-                "orange_mushroom_cap": 39,
-                "red_mushroom_cap": 39,
-                "blue_mushroom_cap": 39,
-                "spiky_mushroom_cap": 39,
-                "hard_mushroom_cap": 39,
-                "grey_mushroom_cap": 39,
-                "purple_mushroom_cap": 39,
-                "yellow_mushroom_cap": 39,
                 "red potion": 100,
                 "blue potion": 100,
                 "grit body 1": 40,
@@ -2789,17 +2621,8 @@
             },
             "loot": {
                 "rock": 28,
-                "mushroom_horn": 28,
                 "summoning_rock": 28,
                 "shroom_cap": 28,
-                "orange_mushroom_cap": 28,
-                "red_mushroom_cap": 28,
-                "blue_mushroom_cap": 28,
-                "spiky_mushroom_cap": 28,
-                "hard_mushroom_cap": 28,
-                "grey_mushroom_cap": 28,
-                "purple_mushroom_cap": 28,
-                "yellow_mushroom_cap": 28,
                 "red potion": 100,
                 "blue potion": 100,
                 "translucent scroll": 100,
@@ -5586,7 +5409,7 @@
         "deflect_magic": {
             "skill_id": "deflect_magic",
             "name": "Deflect Magic",
-            "description": "For DURATION of turns, all magic damage is deflected onto the caster.\n",
+            "description": "For DURATION of turns, all magic damage is deflected onto the original caster as PURE damage.\n",
             "script_to_run": "DeflectMagic",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -5623,6 +5446,61 @@
                 ],
                 "cooldown": [
                     1
+                ]
+            }
+        },
+        "overcharge": {
+            "skill_id": "overcharge",
+            "name": "Overcharge",
+            "description": "Set your current magicka to your maximum magicka for DURATION turns.\nAt the end of the spell, take damage equal to BONUS of magicka spent as magic damage\n",
+            "script_to_run": "Overcharge",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 3.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "end_turn": false,
+            "script_values": {
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "duration": [
+                    3,
+                    3,
+                    3,
+                    3
+                ],
+                "bonus": [
+                    1.0,
+                    0.8,
+                    0.6,
+                    0.5
+                ],
+                "cooldown": [
+                    5,
+                    5,
+                    5,
+                    5
                 ]
             }
         }
@@ -5997,68 +5875,6 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
-        "rat_hide": {
-            "premade_id": "rat_hide",
-            "name": "Rat hide",
-            "description": "The fur of a rat, kinda soft.",
-            "description_room": null,
-            "invisible": 0.0,
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "item_type": "misc",
-            "drop_tags": [
-                "rat"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 40,
-            "drop_chance_level": 0,
-            "drop_chance_under_bonus": 20,
-            "drop_chance_over_bonus": -1,
-            "drop_chance_range_under": 1,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": [
-                "bag_0",
-                "flow body c1",
-                "white_rat_hide"
-            ]
-        },
-        "spider_silk": {
-            "premade_id": "spider_silk",
-            "name": "Spider Silk",
-            "description": "The web of a spider",
-            "description_room": null,
-            "invisible": 0.0,
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "item_type": "misc",
-            "drop_tags": [
-                "spider"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 40,
-            "drop_chance_level": 0,
-            "drop_chance_under_bonus": 20,
-            "drop_chance_over_bonus": -1,
-            "drop_chance_range_under": 1,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": [
-                "bag_1",
-                "grit trinket c3_1",
-                "flow weapon c3",
-                "flow body c3",
-                "soul body c3",
-                "soul head c3",
-                "grit weapon c6",
-                "soul body c6",
-                "soul head c6"
-            ]
-        },
         "slime": {
             "premade_id": "slime",
             "name": "Slime",
@@ -6070,7 +5886,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "slime"
+                "none"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6122,7 +5938,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "horned_mushroom"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6886,7 +6702,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "skeleton"
+                "skeleton_1"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6910,7 +6726,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "skeleton"
+                "skeleton_1"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6934,7 +6750,8 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "skeleton"
+                "skeleton_soldier",
+                "skeleton_mage"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6958,7 +6775,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "skeleton"
+                "skeleton_soldier"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6982,7 +6799,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "skeleton"
+                "none"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7074,6 +6891,34 @@
                 "flow weapon c3_1"
             ]
         },
+        "rat_hide": {
+            "premade_id": "rat_hide",
+            "name": "Rat Hide",
+            "description": "The tattered rough hide of a rat",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "drop_tags": [
+                "rat"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "bag_0",
+                "flow body c1",
+                "white_rat_hide"
+            ]
+        },
         "white_rat_hide": {
             "premade_id": "white_rat_hide",
             "name": "White rat hide",
@@ -7085,7 +6930,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "rat"
+                "none"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7136,44 +6981,10 @@
                 "green_jelly"
             ]
         },
-        "green_jelly": {
-            "premade_id": "green_jelly",
-            "name": "Green jelly",
-            "description": "The green jell a good mana conductor but not for eating. Made with green slime and spore fluff to become more clay like.",
-            "description_room": null,
-            "invisible": 0.0,
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "item_type": "misc",
-            "drop_tags": [
-                "green_slime"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 40,
-            "drop_chance_level": 0,
-            "drop_chance_under_bonus": 20,
-            "drop_chance_over_bonus": -1,
-            "drop_chance_range_under": 1,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [
-                {
-                    "green_sludge": 1,
-                    "spore_fluff": 1
-                }
-            ],
-            "crafting_ingredient_for": [
-                "mind weapon c3",
-                "mind body c3",
-                "mind head c3",
-                "mind trinket c3"
-            ]
-        },
-        "spider_thread": {
-            "premade_id": "spider_thread",
-            "name": "Spider thread",
-            "description": "Spider thread, some say its stronger then steel.",
+        "spider_silk": {
+            "premade_id": "spider_silk",
+            "name": "Spider Silk",
+            "description": "The web of a spider",
             "description_room": null,
             "invisible": 0.0,
             "ambience": null,
@@ -7192,7 +7003,17 @@
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
+            "crafting_ingredient_for": [
+                "bag_1",
+                "grit trinket c3_1",
+                "flow weapon c3",
+                "flow body c3",
+                "soul body c3",
+                "soul head c3",
+                "grit weapon c6",
+                "soul body c6",
+                "soul head c6"
+            ]
         },
         "spider_leg": {
             "premade_id": "spider_leg",
@@ -7404,6 +7225,40 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
+        },
+        "green_jelly": {
+            "premade_id": "green_jelly",
+            "name": "Green jelly",
+            "description": "The green jell a good mana conductor but not for eating. Made with green slime and spore fluff to become more clay like.",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "drop_tags": [
+                "none"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [
+                {
+                    "green_sludge": 1,
+                    "spore_fluff": 1
+                }
+            ],
+            "crafting_ingredient_for": [
+                "mind weapon c3",
+                "mind body c3",
+                "mind head c3",
+                "mind trinket c3"
+            ]
         },
         "green_sludge": {
             "premade_id": "green_sludge",
@@ -7668,7 +7523,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "orange_mushroom"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7697,7 +7552,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "red_cap"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7726,7 +7581,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "blue_mushroom"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7756,7 +7611,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "horned_mushroom"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7780,7 +7635,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "mushroom_soldier"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7804,7 +7659,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "mushroom_thief"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7828,7 +7683,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "mushroom_mage"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -7852,7 +7707,7 @@
             "can_pick_up": true,
             "item_type": "misc",
             "drop_tags": [
-                "mushroom"
+                "mushroom_cleric"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -8911,7 +8766,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 30,
@@ -9009,7 +8864,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 50,
@@ -9107,7 +8962,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 25,
@@ -9156,7 +9011,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 30,
@@ -9258,7 +9113,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -9312,7 +9167,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 30,
@@ -9610,7 +9465,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:adrenaline=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 2,
                 "hp_max": 45,
@@ -9659,7 +9514,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:thorns=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 3,
                 "hp_max": 55,
@@ -9708,7 +9563,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 4,
                 "hp_max": 55,
@@ -9810,7 +9665,7 @@
             "ambience_sfx": null,
             "can_pick_up": false,
             "slot": "body",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 1,
                 "hp_max": 30,
@@ -9863,7 +9718,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 2,
                 "hp_max": 60,
@@ -10112,7 +9967,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:mage_armor=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 15,
@@ -10161,7 +10016,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": "skill_level:mage_armor=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 20,
@@ -10312,7 +10167,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -10365,7 +10220,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -10864,7 +10719,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 15,
@@ -10918,7 +10773,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "body",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 20,
@@ -11217,7 +11072,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 45,
@@ -11315,7 +11170,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": "skill_level:leech=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 25,
@@ -11364,7 +11219,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": "skill_level:leech=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 30,
@@ -11466,7 +11321,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -11520,7 +11375,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 30,
@@ -12018,7 +11873,7 @@
             "ambience_sfx": null,
             "can_pick_up": false,
             "slot": "head",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 1,
                 "hp_max": 30,
@@ -12071,7 +11926,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 2,
                 "hp_max": 60,
@@ -12320,7 +12175,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": "skill_level:mana_feed=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 15,
@@ -12369,7 +12224,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": "skill_level:mana_feed=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 20,
@@ -12521,7 +12376,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -12574,7 +12429,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -12922,7 +12777,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 25,
@@ -12971,7 +12826,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 30,
@@ -13122,7 +12977,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 15,
@@ -13176,7 +13031,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "head",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 20,
@@ -13475,7 +13330,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:beer_stein_chug=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -13573,7 +13428,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -13622,7 +13477,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -13671,7 +13526,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -13720,7 +13575,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -13769,7 +13624,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -13871,7 +13726,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -13924,7 +13779,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 20,
@@ -14075,7 +13930,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 5,
                 "hp_max": 0,
@@ -14222,7 +14077,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 2,
                 "hp_max": 10,
@@ -14271,7 +14126,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 3,
                 "hp_max": 20,
@@ -14320,7 +14175,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 4,
                 "hp_max": 30,
@@ -14416,7 +14271,7 @@
         },
         "grit trinket c3": {
             "premade_id": "grit trinket c3",
-            "name": "Orange mushroom slayer pin",
+            "name": "Pig slayer pin",
             "description": "A decorative pin, it depicts a rat atop an orange mushroom.",
             "description_room": null,
             "invisible": 0.0,
@@ -14425,7 +14280,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 3,
                 "hp_max": 10,
@@ -14480,7 +14335,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 2,
                 "hp_max": 0,
@@ -14537,7 +14392,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 3,
                 "hp_max": 30,
@@ -14591,7 +14446,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 4,
                 "hp_max": 15,
@@ -14645,7 +14500,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:mana_feed=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -14792,7 +14647,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:mana_feed=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -14841,7 +14696,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -14890,7 +14745,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -14993,7 +14848,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -15046,7 +14901,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": null,
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -15345,7 +15200,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -15494,7 +15349,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 15,
@@ -15543,7 +15398,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -15592,7 +15447,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 50,
@@ -15641,7 +15496,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -15694,7 +15549,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -15747,7 +15602,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -15800,7 +15655,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -15853,7 +15708,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 5,
@@ -16004,7 +15859,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1,skill_level:alchemy=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16053,7 +15908,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=2,skill_level:alchemy=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16102,7 +15957,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=3,skill_level:alchemy=3",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16200,7 +16055,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16251,7 +16106,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16300,7 +16155,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16349,7 +16204,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16398,7 +16253,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16447,7 +16302,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16496,7 +16351,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16545,7 +16400,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16599,7 +16454,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -16653,7 +16508,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:double_whack=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 2,
                 "hp_max": 10,
@@ -16707,7 +16562,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=2,skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -16761,7 +16616,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1,skill_level:swing=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 2,
                 "hp_max": 0,
@@ -16816,7 +16671,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1,skill_level:swing=3,skill_level:stab=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 10,
                 "hp_max": 0,
@@ -16865,7 +16720,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:swing=3,skill_level:slash=3",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 13,
                 "hp_max": 0,
@@ -16914,7 +16769,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:swing=4,skill_level:bash=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 11,
                 "hp_max": 20,
@@ -16963,7 +16818,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1,skill_level:slash=1,skill_level:swing=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 4,
                 "hp_max": 0,
@@ -17014,7 +16869,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=2,skill_level:swing=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 6,
                 "hp_max": 0,
@@ -17063,7 +16918,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=2,skill_level:swing=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 8,
                 "hp_max": 0,
@@ -17112,7 +16967,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:bash=1,skill_level:swing=3",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 8,
                 "hp_max": 0,
@@ -17161,7 +17016,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 4,
                 "hp_max": 0,
@@ -17210,7 +17065,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1,skill_level:swing=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 3,
                 "hp_max": 0,
@@ -17266,7 +17121,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:swing=2,skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 4,
                 "hp_max": 5,
@@ -17322,7 +17177,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:stab=1,skill_level:swing=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 4,
                 "hp_max": 0,
@@ -17378,7 +17233,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1,skill_level:swing=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 4,
                 "hp_max": 0,
@@ -17436,7 +17291,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:swing=2,skill_level:bash=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 8,
                 "hp_max": 10,
@@ -17492,7 +17347,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:swing=3,skill_level:bash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 6,
                 "hp_max": 10,
@@ -17547,7 +17402,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:swing=1,skill_level:stab=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 7,
                 "hp_max": 10,
@@ -17601,7 +17456,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:swing=2,skill_level:slash=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 7,
                 "hp_max": 10,
@@ -17655,7 +17510,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -17712,7 +17567,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -17761,7 +17616,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -17810,7 +17665,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -17862,7 +17717,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -17911,7 +17766,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -17960,7 +17815,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=2",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18009,7 +17864,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18063,7 +17918,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18117,7 +17972,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1,skill_level:alchemy=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18173,7 +18028,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1,skill_level:mana_feed=1,skill_level:alchemy=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18227,7 +18082,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18282,7 +18137,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:magic_missile=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18336,7 +18191,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:slash=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 6,
                 "hp_max": 0,
@@ -18385,7 +18240,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:smite=1,skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18436,7 +18291,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:bash=1,skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18485,7 +18340,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:smite=1,skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18534,7 +18389,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:smite=1,skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18583,7 +18438,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:bash=1,skill_level:smite=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -18632,7 +18487,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:smite=2,skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18681,7 +18536,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:smite=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18737,7 +18592,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:smite=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18793,7 +18648,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:smite=1,skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -18847,7 +18702,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:smite=2,skill_level:swing=2,skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 10,
@@ -18901,7 +18756,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "weapon",
-            "bonuses": "skill_level:bash=3,skill_level:cure_light_wounds=1",
+            "bonuses": 0.0,
             "stats": {
                 "grit": 0,
                 "hp_max": 0,

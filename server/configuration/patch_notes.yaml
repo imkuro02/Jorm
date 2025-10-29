@@ -9,19 +9,25 @@ versions:
     - Smite is now an AOE skill affecting up to 5 targets
     - Stealth double damage only procs on stab
     - Bless is now an AOE
+    - Bash only stuns if targets physical armor goes under 0 during that attack (so targets without armor, or with already broken armor cannot be stunned)
     - ---- NEW SKILLS ---
     - Cleave; deal moderate damage, but if the hit kills, its your turn again
     - Chain Heal; a healing spell that bounces between targets, the first heal is the most powerful and loses power over bounces
     - Refresh; an AOE heal for quickly healing whole party
     - Dirt Throw; remove all armor from target for a few turns
     - Deflect Magic; all magical damage is reflected to the original targets as pure damage
-    - ---
+    - Overcharge; heal full mp, but at end of duration take damage based on how much mp you spent while overcharged
+    - --- Minor changes
     - Skill view has been reworked to be nicer to look at
     - Practicing a skill will increase all other skill practice cost by 1
     - Default prompt changed (again)
     - Prompt now is sent after evey "turn end", this means both in and out of combat
     - Rest has been reworked, with rest now / home and set (read more in help rest)
     - Winning a combat enounter now heals you to full, regardless, same for enemies, but enemies also reset cooldowns and afflictions
+    - VoreAI has been temporarely disabled
+    - When a kill doesnt grant exp its no longer displayed as "lost 0 exp"
+    - Re-introduced get all and drop all commands
+    - Skills with a cooldown of 2 or more turns will now notify you when they are off cooldown
 
   '221025':
     id: '221025'
