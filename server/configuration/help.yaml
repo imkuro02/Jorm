@@ -100,22 +100,26 @@ commands:
     syntax:
       - rest
       - rest set
-      - rest now
+      - rest home
+      - rest now/here
     description: |
       Resting is a way of quickly recovering aswell as fast travel.
       
       Using the rest command without 
-      arguments displays your spawn point.
+      arguments displays your rest spot.
 
-      The set argument will set a spawn point, 
-      while the now argument will make you rest.
+      The "set" argument will set a rest spot, 
+      The "now" or "here" argument will make you rest.
+      The "home" argument will make you return to your resting point and rest
 
       Resting;
         - ressurects 
         - resets cooldowns 
         - resets afflictions 
         - heals you to full
-        - teleports you to your rest site. 
+
+      IMPORTANT:
+      If you are dead while in a party, you will get up again after combat is over
     related:
       - stats
       - room

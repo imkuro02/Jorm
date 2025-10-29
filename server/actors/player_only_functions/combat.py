@@ -201,19 +201,29 @@ def rest_set(self, line):
     self.recall_site = self.room.id
     self.sendLine(f'@green{self.room.name} is now your rest spot.@normal')
 
+@check_alive
+def rest_here(self, line):
+    self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
+    self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
+    self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
+    self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
+    self.affect_manager.unload_all_affects()
+    self.simple_broadcast(
+        f'You have a quick rest',
+        f'{self.pretty_name()} has a quick rest'
+        )
+
 @check_not_in_party_or_is_party_leader
-def rest_now_request(self, line):
+def rest_home_request(self, line):
     if self.party_manager.party != None:
         for par in self.party_manager.party.participants.values():
             if par == self:
                 continue
-            par.rest_now(line)
-    self.rest_now(line)
+            par.rest_home(line)
+    self.rest_home(line)
 
-def rest_now(self, line):
+def rest_home(self, line):
     self.sendSound(Audio.BUFF)
-    self.finish_turn()
-    
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL
 
@@ -273,6 +283,7 @@ def rest_now(self, line):
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects()
     self.new_room_look()
+    self.finish_turn()
 
 @check_not_in_combat
 def command_rest(self, line):
@@ -287,9 +298,15 @@ def command_rest(self, line):
         self.rest_set(line)
         return
 
-    if line.lower() in 'now':
-        self.rest_now_request(line)
+    if line.lower() in 'now' or line.lower() in 'here':
+        self.rest_here(line)
         return
+
+    if line.lower() in 'home':
+        self.rest_home_request(line)
+        return
+
+    
 
 def command_party(self, line):
     self.party_manager.handle_party_message(line)

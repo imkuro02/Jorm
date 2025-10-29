@@ -134,7 +134,12 @@ class Combat:
         for i in self.participants.values():
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
-            #    i.combat_over_prompt(self)
+                i.heal(value = 99999)
+            else:
+                if i.status != ActorStatusType.DEAD:
+                    i.cooldown_manager.unload_all_cooldowns()
+                    i.affect_manager.unload_all_affects()
+                    i.heal(value = 99999)
 
             if i.party_manager.party != None:
                 one_alive = False
@@ -150,10 +155,10 @@ class Combat:
             
             if i.status != ActorStatusType.DEAD:
                 i.status = ActorStatusType.NORMAL
-                threat = i.stat_manager.stats[StatType.THREAT]
-                threat = int(threat/2)
-                i.heal(value = threat, silent = True)
-                i.heal(heal_hp = False, heal_mp = False, value = 10000, silent = True)
+                #threat = i.stat_manager.stats[StatType.THREAT]
+                #threat = int(threat/2)
+                #i.heal(value = threat, silent = True)
+                #i.heal(heal_hp = False, heal_mp = False, value = 10000, silent = True)
 
         
         self.room.combat = None

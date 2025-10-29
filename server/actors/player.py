@@ -581,10 +581,16 @@ class Player(Actor):
         self.sendLine('Command found: '+str(commands[best_match]), msg_type = [MsgType.DEBUG])
         script(line)
 
+    def set_turn(self):
+        super().set_turn()
+        self.sendLine(self.prompt(self))
+
     def finish_turn(self, force_cooldown = False):
         self.trade_manager.trade_stop(silent=True)
         self.charging_mini_game.stop()
+        self.sendLine(self.prompt(self))
         super().finish_turn(force_cooldown=force_cooldown)
+        
         
 
 

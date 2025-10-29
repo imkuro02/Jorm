@@ -16,24 +16,24 @@ def command_flee(self, line):
     #    None,
     #    f'{self.pretty_name()} flees!'
     #)
-    self.protocol.factory.world.rooms[self.recall_site].move_actor(self, silent = True)
+    #self.protocol.factory.world.rooms[self.recall_site].move_actor(self, silent = True)
     self.status = ActorStatusType.NORMAL
-    self.simple_broadcast(
-        f'You have fled back to {self.room.pretty_name()}',
-        f'{self.pretty_name()} comes running in a panic!',
-        sound = Audio.BUFF
-    )
+    #self.simple_broadcast(
+    #    f'You have fled back to {self.room.pretty_name()}',
+    #    f'{self.pretty_name()} comes running in a panic!',
+    #    sound = Audio.BUFF
+    #)
     
     #if self.status != ActorStatusType.FIGHTING:
     #    self.sendLine('You must be fighting to flee!')
     #    return
 
-    self.simple_broadcast('You flee!', f'{self.pretty_name()} flees!')
-
+    self.simple_broadcast('You flee!', f'{self.pretty_name()} flees!', sound = Audio.BUFF)
     self.status = ActorStatusType.NORMAL
     if self.party_manager.party != None:
         if self.party_manager.party.actor == self:
             for par in self.party_manager.party.participants.values():
+                
                 if par == self:
                     continue
                 # if dead, they get ressed afterwards so dont need to set status to normal
@@ -41,7 +41,7 @@ def command_flee(self, line):
                 if par.status == ActorStatusType.FIGHTING:
                     par.status = ActorStatusType.NORMAL
                 par.sendLine('You flee too!')
-                par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
+                #par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
 
     
             
@@ -145,7 +145,7 @@ def command_go(self, line = '', room_id = None):
     if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
         self.command_rest('set')
 
-    self.finish_turn(force_cooldown = True)
+    
 
 
     # move party members
@@ -159,7 +159,7 @@ def command_go(self, line = '', room_id = None):
                 #par.command_go(line)
                 self.room.move_actor(par, silent = True)
                 #par.sendLine(f'You follow {self.pretty_name()}', sound = Audio.walk())
-                par.finish_turn(force_cooldown = True)
+                #par.finish_turn(force_cooldown = True)
                 par.sendSound(Audio.walk())
 
 
@@ -191,9 +191,17 @@ def command_go(self, line = '', room_id = None):
         self.new_room_look()
         if self.room.get_real_id() not in self.explored_rooms:
             self.explored_rooms.append(self.room.get_real_id())
-    
 
-
+    # finish turns
+    self.finish_turn(force_cooldown = True)
+    if self.party_manager.party != None:
+        if self.party_manager.party.actor == self:
+            for par in self.party_manager.party.participants.values():
+                if par == self:
+                    continue
+                #if par.room != old_room:
+                #    continue
+                par.finish_turn(force_cooldown = True)
 
     
 
