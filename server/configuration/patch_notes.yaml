@@ -28,6 +28,7 @@ versions:
     - When a kill doesnt grant exp its no longer displayed as "lost 0 exp"
     - Re-introduced get all and drop all commands
     - Skills with a cooldown of 2 or more turns will now notify you when they are off cooldown
+    - You can now craft items without specifying ingredients, this will automatically attempt to craft with whatever is available
 
   '221025':
     id: '221025'

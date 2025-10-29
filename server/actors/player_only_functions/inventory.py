@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_no_combat_in_room, check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
-from configuration.config import ItemType, StatType, Audio, LORE, Color
+from configuration.config import ItemType, StatType, Audio, LORE, Color, ITEMS
 import utils
 import items.manager as items
 
@@ -423,7 +423,9 @@ def command_craft(self, line):
         self.sendLine('You need atleast one empty inventory space to craft')
         return
         
-    line = line.replace('from',',').replace('and',',')
+    line = line.replace('from',',').replace('and',',').replace('with',',')
+
+    
     line = line.split(',')
     item_to_craft = line[0]
     ingredients = line[1:]
@@ -434,12 +436,30 @@ def command_craft(self, line):
     if to_find not in list_of_items:
         self.sendLine('Can\'t craft that')
         return
+    
+    
 
     item_id = LORE['items'][to_find]['premade_id']
     item_crafting_recipes = LORE['items'][to_find]['crafting_recipe_ingredients']
+
+    if len(item_crafting_recipes) == 0:
+        self.sendLine('Can\'t craft that')
+        return
         
     recipe_to_use = None
     ingredients_to_use = []
+    
+
+    if ingredients == []:
+        #print('if statement')
+        #print(item_crafting_recipes)
+        recipe_to_use = item_crafting_recipes[0]
+        #print('recipe', to_find)
+        for ingredient_id in recipe_to_use:
+            ingredients_to_use.append(self.get_item(ITEMS[ingredient_id]['name']))
+        
+        
+    #print(ingredients_to_use)
     for item in range(0,len(ingredients)):
         ingredients_to_use.append(self.get_item(ingredients[item]))
 
@@ -447,30 +467,31 @@ def command_craft(self, line):
         self.sendLine('You are lacking some materials')
         return
 
-    for recipe in item_crafting_recipes:
-        recipe_failed = False
+    if ingredients != []:
+        for recipe in item_crafting_recipes:
+            recipe_failed = False
 
-        if len(ingredients_to_use) != len(recipe):
-            continue
+            if len(ingredients_to_use) != len(recipe):
+                continue
 
-        #print(ingredients_to_use, len(ingredients_to_use))
-        #print(recipe, len(recipe))
-        for index in range(0,len(recipe)):
-            if ingredients_to_use[index].premade_id != list(recipe)[index]:
-                recipe_failed = True
+            #print(ingredients_to_use, len(ingredients_to_use))
+            #print(recipe, len(recipe))
+            for index in range(0,len(recipe)):
+                if ingredients_to_use[index].premade_id != list(recipe)[index]:
+                    recipe_failed = True
 
-        if recipe_failed:
-            continue
+            if recipe_failed:
+                continue
 
-        recipe_to_use = recipe
+            recipe_to_use = recipe
 
 
     if recipe_to_use == None:
         self.sendLine('Recipe not found, maybe ingredients were in the wrong order?')
         return
     
-    for index in range(0,len(recipe)):
-        if ingredients_to_use[index].stack < list(recipe.values())[index]: 
+    for index in range(0,len(recipe_to_use)):
+        if ingredients_to_use[index].stack < list(recipe_to_use.values())[index]: 
             self.sendLine(f'Not enough {ingredients_to_use[index].name}')
             return
 
@@ -490,8 +511,9 @@ def command_craft(self, line):
         
 
     item = items.load_item(item_id)
+    #print(item.premade_id)
+    #print(self.inventory_manager.add_item(item))
     self.inventory_manager.add_item(item)
-
     output = f'You craft {item.name} using: ' + output[:-2]
     self.sendLine(output)
 
