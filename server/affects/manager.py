@@ -40,6 +40,8 @@ class AffectsManager:
     #    self.set_affect_object(aff)
 
     def pop_affect(self, affect):
+        if affect.name not in self.affects:
+            return
         del self.affects[affect.name]
 
     # called at start of turn

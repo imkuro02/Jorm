@@ -42,7 +42,8 @@ class CombatEvent:
                 if pop.damage_value < 0:
                     damage_txt = f'{abs(pop.damage_value)}@back'
                 else:
-                    damage_txt = f'{abs(pop.damage_value)} @normal(@back {percentage}% @normal)@back'
+                    damage_txt = f'{abs(pop.damage_value)}@back'
+                    #damage_txt = f'{abs(pop.damage_value)} @normal(@back {percentage}% @normal)@back'
 
                 
                 if pop.damage_type == DamageType.CANCELLED:
@@ -53,7 +54,6 @@ class CombatEvent:
                     output_self = f'You heal {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]}@normal from {pop.damage_source_action.name}.'
                     output_other = f'{pop.damage_taker_actor.pretty_name()} heals {color}{damage_txt}@normal {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}.'
                     sound = Audio.BUFF
-                
                 elif pop.damage_type == DamageType.PHYSICAL or pop.damage_type == DamageType.MAGICAL or pop.damage_type == DamageType.PURE:
                     if pop.damage_value <= 0:
                         output_self = f'You block {color}{damage_txt} from {pop.damage_source_action.name}. '
@@ -63,7 +63,7 @@ class CombatEvent:
                         output_self = f'You lose {color}{damage_txt}@back {StatType.name[pop.damage_to_stat]}@normal from {pop.damage_source_action.name}. '
                         output_other = f'{pop.damage_taker_actor.pretty_name()} loses {color}{damage_txt}@normal {StatType.name[pop.damage_to_stat]} from {pop.damage_source_action.name}. '
                         sound = Audio.HURT
-
+                
                 pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
 
 
@@ -72,8 +72,10 @@ class CombatEvent:
         
         
         actors = []
-        for actor in pop.damage_taker_actor.room.actors.values():
-            actors.append(actor)
+        actors = [pop.damage_taker_actor]
+        #if pop.damage_taker_actor.room != None:
+        #for actor in pop.damage_taker_actor.room.actors.values():
+        #    actors.append(actor)
         for actor in actors:
             if actor.status == ActorStatusType.DEAD:
                 continue

@@ -10,6 +10,7 @@ versions:
     - Stealth double damage only procs on stab
     - Bless is now an AOE
     - Bash only stuns if targets physical armor goes under 0 during that attack (so targets without armor, or with already broken armor cannot be stunned)
+    - Mage armor also recovers some magick armor
     - ---- NEW SKILLS ---
     - Cleave; deal moderate damage, but if the hit kills, its your turn again
     - Chain Heal; a healing spell that bounces between targets, the first heal is the most powerful and loses power over bounces
@@ -17,6 +18,7 @@ versions:
     - Dirt Throw; remove all armor from target for a few turns
     - Deflect Magic; all magical damage is reflected to the original targets as pure damage
     - Overcharge; heal full mp, but at end of duration take damage based on how much mp you spent while overcharged
+    - Finisher; deal low damage but bounce between targets for the amount of skills on cooldown
     - --- Minor changes
     - Skill view has been reworked to be nicer to look at
     - Practicing a skill will increase all other skill practice cost by 1

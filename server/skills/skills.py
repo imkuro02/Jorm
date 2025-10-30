@@ -113,13 +113,18 @@ class Skill:
         targets = targets[::-1]
         return targets
 
-    def pre_use(self):
+    def pre_use(self, override_bounce_amount = None):
         skill = SKILLS[self.skill_id]
         skill_obj = self.__class__
         _skill_objects = []
 
         targets = self.pre_use_get_targets()
         
+        if override_bounce_amount == None:
+            bounce_amount = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
+        else:
+            bounce_amount = override_bounce_amount
+
         if 'aoe' in skill['script_values']:
             current_aoe = 0
             for target in targets:
@@ -134,7 +139,7 @@ class Skill:
                     success = self.success, 
                     silent_use = self.silent_use ,  
                     #aoe = False,
-                    bounce = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
+                    bounce = bounce_amount
                 )
                 _skill_objects.append(_skill_obj)
                 if current_aoe > skill['script_values']['aoe'][self.users_skill_level]:
@@ -152,7 +157,7 @@ class Skill:
                 success = self.success, 
                 silent_use = self.silent_use, 
                 #aoe = False,
-                bounce = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
+                bounce = bounce_amount
             )
             _skill_objects.append(_skill_obj)
 
@@ -178,7 +183,8 @@ class Skill:
             while _skill_object.bounce >= 1:
                 _skill_object.silent_use = self.silent_use
                 _skill_object.bounce -= 1
-                damage = damage + int(damage *  skill['script_values']['bounce_bonus'][self.users_skill_level])
+                if 'bounce_bonus' in skill['script_values']:
+                    damage = damage + int(damage *  skill['script_values']['bounce_bonus'][self.users_skill_level])
                 _skill_object.get_dmg_value_override = damage
                 
                 targets = self.pre_use_get_targets()
@@ -291,6 +297,13 @@ class SkillGuard(Skill):
                 damage_to_stat = StatType.MAGARMOR
                 )
             damage_obj.run()      
+
+class SkillFinisher(SkillDamageByGritFlow):
+    def pre_use(self, override_bounce_amount = None):
+        super().pre_use(override_bounce_amount = len(self.user.cooldown_manager.cooldowns.values()))
+
+    def use(self):
+        return super().use()
 
 # XD children of damage skills / damage skills that deal afflictions / interesting damage skills
 '''
@@ -573,6 +586,15 @@ class SkillMageArmor(Skill):
     def use(self):
         super().use()
         if self.success:
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self,
+                damage_source_actor = self.user,
+                damage_value = int(self.get_dmg_value(stat_type = StatType.MIND)),
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MAGARMOR
+                )
+            damage_obj.run()     
             turns = int(self.script_values['duration'][self.users_skill_level])
             reduction = self.script_values['bonus'][self.users_skill_level]
             ethereal_affect = affects.AffectMageArmor(

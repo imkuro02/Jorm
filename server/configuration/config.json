@@ -1,5 +1,5 @@
 {
-    "SHA-256": "ee81fc5d11b00b8ee6798b24e1a3679422dd5123033347aa0d95d28f175341ab",
+    "SHA-256": "4a5bfdf1308157245bff92ea38e6717f93d0dd0ad25782fb0b16a65864ae8867",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3478,7 +3478,7 @@
         "bash": {
             "skill_id": "bash",
             "name": "Bash",
-            "description": "Bash your target.\nDealing DAMAGE + 0%-CRIT% of GRIT physical damage.\nIf you deal any damage, stun the target for DURATION turns.\n",
+            "description": "Bash your target.\nDealing DAMAGE + 0%-CRIT% of GRIT physical damage.\nIf your targets armor goes below 0 on hit, stun target for DURATION of turns.\n",
             "script_to_run": "Bash",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -3947,7 +3947,7 @@
         "mage_armor": {
             "skill_id": "mage_armor",
             "name": "Mage Armor",
-            "description": "Magically protect your target.\nProtected targets convert BONUS% of damage received to magicka drain for DURATION turns.\nIf damage exceeds current magicka, damage is taken as normal.\n",
+            "description": "Magically protect your target.\nProtected targets convert BONUS% of damage received to magicka drain for DURATION turns.\nIf damage exceeds current magicka, damage is taken as normal.\nAswell as heal magicka equal to DAMAGE + 0%-CRIT% of MIND.\n",
             "script_to_run": "MageArmor",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -4012,6 +4012,22 @@
                     4,
                     5,
                     6
+                ],
+                "damage": [
+                    20,
+                    25,
+                    30,
+                    35,
+                    40,
+                    45
+                ],
+                "crit": [
+                    0.5,
+                    0.6,
+                    0.7,
+                    0.8,
+                    0.9,
+                    1.0
                 ]
             }
         },
@@ -5503,6 +5519,85 @@
                     5
                 ]
             }
+        },
+        "finisher": {
+            "skill_id": "finisher",
+            "name": "Finisher",
+            "description": "Swing at your target.\nDealing DAMAGE + 0%-CRIT% of the highest stat between GRIT and FLOW physical damage.\nBOUNCE AMOUNT is equal to how many skills currently are on cooldown.\n",
+            "script_to_run": "Finisher",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 6.0,
+            "use_perspectives": {
+                "use_case_name": "use_swing",
+                "you on you": "You swing and hit yourself!",
+                "you on other": "You swing and hit #OTHER#",
+                "user on user": "#USER# swings and hits themselves!",
+                "user on you": "#USER# swings and hits you!",
+                "user on other": "#USER# swings and hits #OTHER#",
+                "you on you fail": "You lose your footing while swinging at yourself!",
+                "you on other fail": "You lose your footing while swinging at #OTHER#",
+                "user on user fail": "#USER# loses their footing while swinging at themselves",
+                "user on you fail": "#USER# loses their footing while swinging at you!",
+                "user on other fail": "#USER# loses their footing while swinging at #OTHER#"
+            },
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "crit": [
+                    0.4,
+                    0.45,
+                    0.5,
+                    0.55,
+                    0.6,
+                    0.65
+                ],
+                "cooldown": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "bounce_amount": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "bounce_bonus": [
+                    0.33,
+                    0.33,
+                    0.33,
+                    0.33,
+                    0.33,
+                    0.33
+                ]
+            }
         }
     },
     "items": {
@@ -5526,6 +5621,30 @@
             "drop_chance_over_bonus": -1,
             "drop_chance_range_under": 1,
             "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "currency_0": {
+            "premade_id": "currency_0",
+            "name": "Scrap",
+            "description": "Pieces of scrap",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "drop_tags": [
+                "none"
+            ],
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
