@@ -82,6 +82,7 @@ def command_practice(self, line):
         t.add_data('Req')
         t.add_data('LvL')
 
+        last_lvl_req = 0
         #t.add_data('Req')
         sorted_data = sorted(SKILLS, key=lambda x: (SKILLS[x]["level_req"], SKILLS[x]["practice_cost"]))
         for skill_id in sorted_data:
@@ -89,6 +90,13 @@ def command_practice(self, line):
                 continue
             #if SKILLS[skill_id]['level_req'] > self.stat_manager.stats[StatType.LVL]:
             #    continue
+
+            lvl_req = int(SKILLS[skill_id]['level_req'])
+            if lvl_req > last_lvl_req:
+                last_lvl_req = lvl_req
+                for i in range(0,4):
+                    t.add_data('')
+
 
             # name
             t.add_data(SKILLS[skill_id]["name"])
@@ -135,6 +143,7 @@ def command_practice(self, line):
             
 
             lvl_req = int(SKILLS[skill_id]['level_req'])
+
             lvl_req_col = Color.NORMAL
             if lvl_req <= self.stat_manager.stats[StatType.LVL]:
                 lvl_req_col = Color.GOOD
