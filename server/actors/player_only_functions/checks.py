@@ -65,7 +65,7 @@ def check_alive(func):
     def wrapper(*args, **kwargs):
         self = args[0] if args else kwargs.get('self')
         if self.status == ActorStatusType.DEAD:
-            self.sendLine(f'@redYou are dead, use "rest" command to respawn.@normal')
+            self.sendLine(f'@redYou are dead, use "rest home" command to respawn.@normal')
             return 
         return func(*args, **kwargs)
     return wrapper

@@ -583,13 +583,13 @@ class Player(Actor):
 
     def set_turn(self):
         super().set_turn()
-        self.sendLine(self.prompt(self))
+        #self.sendLine(self.prompt(self))
 
     def finish_turn(self, force_cooldown = False):
         self.trade_manager.trade_stop(silent=True)
         self.charging_mini_game.stop()
         super().finish_turn(force_cooldown=force_cooldown)
-        self.sendLine(self.prompt(self))
+        #self.sendLine(self.prompt(self))
         
         
 
