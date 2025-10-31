@@ -3,7 +3,7 @@ server/server.key
 server/gametime.txt
 godot_client/export
 notestoself
-*/database.db
+*.db
 server/logs.log
 
 # Byte-compiled / optimized / DLL files
