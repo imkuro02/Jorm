@@ -219,6 +219,10 @@ class Combat:
             if i.status != ActorStatusType.DEAD:
                 self.order.append(i)
         self.order.sort(key=lambda x: random.randint(0,x.stat_manager.stats[StatType.FLOW]), reverse=True)
+        
+        if self.order == []:
+            self.combat_over()
+            return
 
         for par in self.participants.values():
             if type(par).__name__ != 'Player':

@@ -75,35 +75,33 @@ def command_level_up(self, stat):
 @check_not_in_combat
 def command_practice(self, line):
     if len(line) <= 1:
-        output = f'You have {self.stat_manager.stats[StatType.PP]} practice points left.\n'
-        t = utils.Table(4,2)
-        t.add_data('Skill')
-        t.add_data('Cost')
-        t.add_data('Req')
-        t.add_data('LvL')
+        #output = f'You have {self.stat_manager.stats[StatType.PP]} practice points left.\n'
+        t = utils.Table(4,1)
+        #t.add_data('C')
+        #t.add_data('R')
+        #t.add_data('L')
+        #t.add_data('Skill')
 
-        last_lvl_req = 0
+        last_lvl_req = -1
         #t.add_data('Req')
         sorted_data = sorted(SKILLS, key=lambda x: (SKILLS[x]["level_req"], SKILLS[x]["practice_cost"]))
         for skill_id in sorted_data:
             if SKILLS[skill_id]['can_be_practiced'] == False:
                 continue
-            #if SKILLS[skill_id]['level_req'] > self.stat_manager.stats[StatType.LVL]:
-            #    continue
+            
+            override_color = None
+            if SKILLS[skill_id]['level_req'] > self.stat_manager.stats[StatType.LVL]:
+                override_color = '@bblack'
 
             lvl_req = int(SKILLS[skill_id]['level_req'])
             if lvl_req > last_lvl_req:
                 last_lvl_req = lvl_req
-                for i in range(0,4):
-                    t.add_data('')
+                t.add_data(f'Requires Level {last_lvl_req}:',filler=' ')
+                for i in range(0,3):
+                    t.add_data('___',filler='_')
+                
 
-
-            # name
-            t.add_data(SKILLS[skill_id]["name"])
-            # add cost
-            col = Color.BAD
-
-
+        
             equips = []
             for item in self.slots_manager.slots.values():
                 if item == None:
@@ -114,71 +112,40 @@ def command_practice(self, line):
                 self.inventory_unequip(item, silent = True)
             #print(self.skill_manager.skills)
             ##
-            cost = SKILLS[skill_id]['practice_cost'] + (sum(self.skill_manager.skills.values())) - (self.skill_manager.skills[skill_id] if skill_id in self.skill_manager.skills else 0) -2 # -2 since you start with two skills
-            if cost <= 0:
-                cost = 1
+            skill_cost = SKILLS[skill_id]['practice_cost'] + (sum(self.skill_manager.skills.values())) - (self.skill_manager.skills[skill_id] if skill_id in self.skill_manager.skills else 0) -2 # -2 since you start with two skills
+            if skill_cost <= 0:
+                skill_cost = 1
             ##
             for item in equips:
                 self.inventory_equip(item, forced = True)
 
-            if cost <= self.stat_manager.stats[StatType.PP]:
-                col = Color.NORMAL
-            t.add_data(f'{cost} PP', col)
+            skill_level = 0
+            if skill_id in self.skill_manager.skills:
+                skill_level =  self.skill_manager.skills[skill_id]
 
-            
-            
-            lvl = 0
+            skill_name = SKILLS[skill_id]['name']
+
+            skill_level_req = int(SKILLS[skill_id]["level_req"])
+
+            can_afford = skill_cost <= self.stat_manager.stats[StatType.PP]
+            meets_lvl_req = skill_level_req <= self.stat_manager.stats[StatType.LVL]
+
             col = Color.NORMAL
-            if skill_id in self.skill_manager.skills.keys():
-                lvl = self.skill_manager.skills[skill_id]
-                if lvl >= 1:
-                    col = Color.GOOD
-                elif lvl == 0:
-                    col = Color.NORMAL
-                else:
-                    col = Color.BAD
-            
-            if lvl == 0:
-                lvl = '-'
-            
+            if override_color != None:
+                col = override_color
+            t.add_data(f'{"" if skill_level <= 0 else f"{Color.GOOD}Cur Prac Level{Color.NORMAL} {Color.IMPORTANT}{skill_level}{Color.NORMAL}:"}', col = col)
+            t.add_data(f'{skill_name}', col = col, filler='.')
+            t.add_data(f' Costs {skill_cost} PP', col = col)
+            t.add_data(f'(can practice)' if (can_afford and meets_lvl_req) else f'', col = col)
+            #t.add_data(f'Requires Level {skill_level_req}.')
 
-            lvl_req = int(SKILLS[skill_id]['level_req'])
-
-            lvl_req_col = Color.NORMAL
-            if lvl_req <= self.stat_manager.stats[StatType.LVL]:
-                lvl_req_col = Color.GOOD
-            else:
-                lvl_req_col = Color.BAD
-
-
-            t.add_data(lvl_req, lvl_req_col)
-            t.add_data(lvl, col)
-            
-
-            '''
-            # level
-
-            t.add_data(SKILLS[skill_id]["name"])
-
-            if skill_id not in self.skill_manager.skills.keys():
-                learned = f'{int(cost)} PP'
-                if cost <= self.stat_manager.stats[StatType.PP]:
-                    col = '@yellow'
-            else:
-                if self.skill_manager.skills[skill_id] >= 1:
-                    learned = f'Practiced ({self.skill_manager.skills[skill_id]})'
-                    col = '@good'
-                else:
-                    learned = f'Forgotten ({self.skill_manager.skills[skill_id]})'
-                    col = '@bad'
-            
-
-
-            t.add_data(SKILLS[skill_id]["name"])
-            t.add_data(learned, col)
-            '''
-
+        output = ''
+        output += f'*All skills go up in cost by 1 PP, except the skill you practice.\n'
+        output += f'You are Level {Color.IMPORTANT}{self.stat_manager.stats[StatType.LVL]}{Color.NORMAL}.\n'
+        output += f'You have {Color.IMPORTANT}{self.stat_manager.stats[StatType.PP]}{Color.NORMAL} practice points left.\n'
+        
         self.sendLine(t.get_table() + output)
+        
     else:
         id_to_name, name_to_id = get_skills()
         skill_name = utils.match_word(line, [name for name in name_to_id.keys()])

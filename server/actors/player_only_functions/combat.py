@@ -293,7 +293,11 @@ def command_rest(self, line):
         if self.recall_site not in self.room.world.rooms:
             self.recall_site = 'home'
 
-        self.sendLine(f'Your resting spot is {self.room.world.rooms[self.recall_site].name}')
+        output = ''
+        output += f'Your resting spot is {self.room.world.rooms[self.recall_site].pretty_name()}'
+        if self.status == ActorStatusType.DEAD:
+            output += f'\nYou need to use "rest home" to ressurect'
+        self.sendLine(output)
         return
 
     if line.lower() in 'set':

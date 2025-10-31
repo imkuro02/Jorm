@@ -260,8 +260,8 @@ class Table:
         self.data = []
         self.SPACE = spaces
 
-    def add_data(self, val, col='@normal'):
-        data = {'val': str(val), 'col': str(col)}
+    def add_data(self, val, col='@normal', filler = ' '):
+        data = {'val': str(val), 'col': str(col), 'fil':filler}
         self.data.append(data)
 
     def get_table(self):
@@ -295,6 +295,7 @@ class Table:
             tmp_output = f'{remove_color(elem["val"]):<{widths[i]}}'
             tmp_output = tmp_output.replace(remove_color(elem['val']),elem['col']+elem['val']+f'@normal')
             #output += add_color(tmp_output)
+            tmp_output = tmp_output.rstrip().ljust(len(tmp_output), elem['fil'])
             
             output += tmp_output
             i += 1

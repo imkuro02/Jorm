@@ -1,8 +1,8 @@
 versions:
-  '281025':
-    id: '281025'
+  '311025':
+    id: '311025'
     title: More skills!
-    unixtime: 1761218271
+    unixtime: 1761899677
     features:
     - --- SKILL CHANGES ---
     - Slash is now an AOE skill, affecting one primary target and a secondary one
@@ -22,6 +22,7 @@ versions:
     - --- Minor changes
     - Skill view has been reworked to be nicer to look at
     - Practicing a skill will increase all other skill practice cost by 1
+    - Practice view has new ui
     - Default prompt changed (again)
     - Prompt now is sent after evey "turn end", this means both in and out of combat
     - Rest has been reworked, with rest now / home and set (read more in help rest)
@@ -31,7 +32,7 @@ versions:
     - Re-introduced get all and drop all commands
     - Skills with a cooldown of 2 or more turns will now notify you when they are off cooldown
     - You can now craft items without specifying ingredients, this will automatically attempt to craft with whatever is available
-
+    - Fixed a bug where if for some reason your health is 0 and you are not tagged as dead, then enter combat without any enemies game would crash
   '221025':
     id: '221025'
     title: Friends, map art, settings, and more
