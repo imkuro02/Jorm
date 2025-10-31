@@ -203,6 +203,9 @@ def rest_set(self, line):
 
 @check_alive
 def rest_here(self, line):
+    if self.room.is_an_instance():
+        self.sendLine('You cant do a quick rest in instanced areas, you can "rest home" but that will bring you ouf of the instance')
+        return
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
     self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])

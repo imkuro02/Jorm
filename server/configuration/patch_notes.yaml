@@ -24,7 +24,6 @@ versions:
     - Practicing a skill will increase all other skill practice cost by 1
     - Practice view has new ui
     - Default prompt changed (again)
-    - Prompt now is sent after evey "turn end", this means both in and out of combat
     - Rest has been reworked, with rest now / home and set (read more in help rest)
     - Winning a combat enounter now heals you to full, regardless, same for enemies, but enemies also reset cooldowns and afflictions
     - VoreAI has been temporarely disabled

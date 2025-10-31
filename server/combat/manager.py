@@ -134,7 +134,7 @@ class Combat:
         for i in self.participants.values():
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
-                i.heal(value = 99999)
+                #i.heal(value = 99999)
             else:
                 if i.status != ActorStatusType.DEAD:
                     i.cooldown_manager.unload_all_cooldowns()
