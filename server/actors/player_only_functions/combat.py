@@ -203,19 +203,22 @@ def rest_set(self, line):
 
 @check_alive
 def rest_here(self, line):
-    if self.room.is_an_instance():
-        self.sendLine('You cant do a quick rest in instanced areas, you can "rest home" but that will bring you ouf of the instance')
-        return
+    self.sendSound(Audio.BUFF)
+
+    self.simple_broadcast(
+        f'You rest',
+        f'{self.pretty_name()} rests'
+        )
+
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
     self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects()
     self.cooldown_manager.unload_all_cooldowns()
-    self.simple_broadcast(
-        f'You have a quick rest',
-        f'{self.pretty_name()} has a quick rest'
-        )
+    #self.new_room_look()
+    self.finish_turn()
+
 
 @check_not_in_party_or_is_party_leader
 def rest_home_request(self, line):
@@ -225,6 +228,16 @@ def rest_home_request(self, line):
                 continue
             par.rest_home(line)
     self.rest_home(line)
+
+
+@check_not_in_party_or_is_party_leader
+def rest_here_request(self, line):
+    if self.party_manager.party != None:
+        for par in self.party_manager.party.participants.values():
+            if par == self:
+                continue
+            par.rest_here(line)
+    self.rest_here(line)
 
 def rest_home(self, line):
     self.sendSound(Audio.BUFF)
@@ -308,7 +321,7 @@ def command_rest(self, line):
         return
 
     if line.lower() in 'now' or line.lower() in 'here':
-        self.rest_here(line)
+        self.rest_here_request(line)
         return
 
     if line.lower() in 'home':
