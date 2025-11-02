@@ -46,18 +46,20 @@ class CombatEvent:
                     #damage_txt = f'{abs(pop.damage_value)} @normal(@back {percentage}% @normal)@back'
 
                 
-                action_text = f'{color}{damage_txt}@normal {color}{StatType.name[pop.damage_to_stat]}@normal Damage from {pop.damage_source_action.name}'
+                action_text = f'{color}{damage_txt}@normal {color}{DamageType.name[pop.damage_type]}@normal from {pop.damage_source_action.name}'
+                if pop.damage_to_stat != StatType.HP:
+                    action_text = f'{color}{damage_txt}@normal {color}{DamageType.name[pop.damage_type]}@normal to {color}{StatType.name[pop.damage_to_stat]}@normal from {pop.damage_source_action.name}'
                 if pop.damage_type == DamageType.CANCELLED:
                     output_self =  f'You cancel {action_text}. '
                     output_other = f'{pop.damage_taker_actor.pretty_name()} cancels {action_text}'
                     sound = Audio.ERROR
                 elif pop.damage_type == DamageType.HEALING:
-                    output_self = f'You heal {action_text}.'
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} heals {action_text}'
+                    output_self = f'You receive {action_text}.'
+                    output_other = f'{pop.damage_taker_actor.pretty_name()} receives {action_text}'
                     sound = Audio.BUFF
                 elif pop.damage_type == DamageType.PHYSICAL or pop.damage_type == DamageType.MAGICAL or pop.damage_type == DamageType.PURE:
-                    output_self = f'You take {action_text}. '
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} takes {action_text}'
+                    output_self = f'You receive {action_text}. '
+                    output_other = f'{pop.damage_taker_actor.pretty_name()} receives {action_text}'
                     sound = Audio.HURT
                     #if pop.damage_value <= 0:
                     #    output_self = f'You block {action_text}. '

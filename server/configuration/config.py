@@ -132,6 +132,13 @@ class DamageType:
     HEALING = 'healing'
     PURE = 'pure'
     CANCELLED = 'cancelled' # Cancels all damage
+    name = {
+        PHYSICAL:   'physical damage',
+        MAGICAL:    'magical damage',
+        HEALING:    'healing',
+        PURE:       'pure damage',
+        CANCELLED:  'cancelled????'
+    }
 
 class ActorStatusType:
     NORMAL = 'Normal'
