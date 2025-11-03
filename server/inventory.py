@@ -9,7 +9,14 @@ class TriggerableManager:
         self.triggered = []
 
     def items(self):
-        return [item for item in self.inventory.items.values()]
+        unsorted_items = [item for item in self.inventory.items.values()]
+        sorted_equipment_ids = [item_id for item_id in self.actor.slots_manager.slots.values() if item_id != None]
+        sorted_items = []
+        for item_id in sorted_equipment_ids:
+            sorted_items.append(self.inventory.items[item_id])
+
+        #print(sorted_items)
+        return sorted_items#[item for item in self.inventory.items.values()]
     
     def reset_triggered(self):
         self.triggered = []
