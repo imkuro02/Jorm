@@ -1,6 +1,6 @@
 versions:
-  '011125':
-    id: '011125'
+  '031125':
+    id: '031125'
     title: Inventory management, skills and damage
     unixtime: 1761899677
     features:
@@ -8,6 +8,7 @@ versions:
     - New skill; Nightmare, sleep a target for 3 turns, if target awakes from damage, their turn begins instantly
     - Now, each time someones turn begins it is announced 
     - Damage received is displayed in a more informative way
+    - Fixed trading with npcs for quests, where you view the dialog of completion even if you didnt hand in item succesfully
   '311025':
     id: '311025'
     title: More skills!

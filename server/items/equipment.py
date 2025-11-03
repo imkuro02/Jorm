@@ -1,7 +1,10 @@
 
-from configuration.config import ItemType, EquipmentSlotType, StatType, SKILLS, Color
+from configuration.config import ItemType, EquipmentSlotType, StatType, SKILLS, Color, DamageType, BonusTypes, EQUIPMENT_REFORGES, ActorStatusType
 from items.misc import Item
 from utils import Table
+import skills.skills 
+import random
+
 
 class EquipSkillManager:
     def __init__(self, item):
@@ -57,20 +60,19 @@ class EquipmentStatManager:
         
 class EquipmentBonus:
     def __init__(   self, 
+                    id = 0,
                     type = 'stat',
                     key = 'marmor',
                     val = 69,
                     premade_bonus = False
     ):
+        self.id = id
         self.premade_bonus = premade_bonus
         self.type =   type
         self.key =    key
         self.val =    val
         
 
-class BonusTypes:
-    SKILL_LEVEL = 'skill_level'
-    STAT  = 'stat'
 
 
 class EquipmentBonusManager:
@@ -101,8 +103,16 @@ class EquipmentBonusManager:
             self.bonuses[id].val += bonus.val
         else:
             self.bonuses[id] = bonus
+            bonus.id = id
 
         match bonus.type:
+            case 'reforge':
+                return
+            #    match bonus.key:
+            #        case REFORGE.SOFT:
+            #            self.item.stat_manager.stats[StatType.HPMAX] += 10
+            #            self.item.stat_manager.stats[StatType.HPMAX] += 10
+            #            return
             case 'skill_level':
                 if bonus.key in SKILLS:
                     self.item.skill_manager.learn(bonus.key, bonus.val)
@@ -123,7 +133,6 @@ class EquipmentBonusManager:
         print(f'cant add enchant for some reason {bonus.__dict__}')
 
     def remove_bonus(self, bonus):
-        
         return
 
             
@@ -202,9 +211,13 @@ class Equipment(Item):
             for bonus in self.manager.bonuses.values():
                 col = f'{Color.GOOD}+' if bonus.val >= 1 else f'{Color.BAD}'
                 match bonus.type:
+                    case 'reforge':
+                        output += f'Reforged: {col.replace("+","")}{bonus.key}{Color.BACK}\n'
+                        output += f'-> {EQUIPMENT_REFORGES[bonus.key]["description"]}\n'
+
                     case 'skill_level':
-                        
                         output += f'Affect {SKILLS[bonus.key]["name"]} by {col}{bonus.val}{Color.BACK}\n'
+
                     case 'stat':
                         output += f'Affect {StatType.name[bonus.key]} by {col}{bonus.val}{Color.BACK}\n'
 
@@ -294,8 +307,102 @@ class Equipment(Item):
      
 
 
+    #    SOFT:   'Deal 10% less physical damage',
+    #    DUMB:   'Deal 10% less magical and healing damage',
+
+    #    HARD:   'Deal 10% more physical damage',
+    #    SMART:  'Deal 10% more magical and healing damage',
+
+    # called at start of turn
+
+    def use_skill(self, skill_id, triggered_by_damage_obj = None):
+        skill_id = skill_id
+        skill = SKILLS[skill_id]
+        try:
+            skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
+        except AttributeError:
+            user.simple_broadcast(
+                f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal',
+                f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
+            return False
+        
+        use_perspectives = skill['use_perspectives']
+        success = True #random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
+        silent_use = False
+        no_cooldown = True
 
 
+        _skill_obj = skill_obj(
+            skill_id = skill_id, 
+            script_values = skill['script_values'], 
+            user = self.inventory_manager.owner, 
+            other = self.inventory_manager.owner, 
+            users_skill_level = 1, 
+            use_perspectives = use_perspectives, 
+            success = success, 
+            silent_use = silent_use,
+            no_cooldown = no_cooldown,
+            combat_event = triggered_by_damage_obj.combat_event
+        )
+
+        print('aaa',triggered_by_damage_obj.combat_event == _skill_obj.combat_event)
+
+        _skill_obj.pre_use()
+        del _skill_obj
+
+    def set_turn(self):
+        pass
+
+    # called at end of turn
+    def finish_turn(self):
+        pass
+
+    # called whenever hp updates in any way
+    def take_damage_before_calc(self, damage_obj):
+        return damage_obj
+
+    def take_damage_after_calc(self, damage_obj):
+        if self.inventory_manager.owner.status == ActorStatusType.DEAD:
+            return damage_obj
+
+        if self.equiped:
+            for i in self.manager.bonuses.values():
+                if i.type == BonusTypes.REFORGE:
+                    match i.key:
+                        case 'warding':
+                            if damage_obj.damage_type == DamageType.PHYSICAL or damage_obj.damage_type == DamageType.MAGICAL:
+                                roll = 1#random.randint(0,10)
+                                if roll == 1:
+                                    self.use_skill('refresh', triggered_by_damage_obj = damage_obj)
+        return damage_obj
+    
+    def deal_damage(self, damage_obj):
+        if self.equiped:
+            for i in self.manager.bonuses.values():
+                if i.type == BonusTypes.REFORGE:
+                    match i.key:
+                        case 'soft':
+                            if damage_obj.damage_type == DamageType.PHYSICAL:
+                                damage_obj.damage_value = int(damage_obj.damage_value*.9)
+                        case 'dumb':
+                            if damage_obj.damage_type == DamageType.PHYSICAL or damage_obj.damage_type == DamageType.HEALING:
+                                damage_obj.damage_value = int(damage_obj.damage_value*.9)
+                        case 'hard':
+                            if damage_obj.damage_type == DamageType.PHYSICAL:
+                                damage_obj.damage_value = int(damage_obj.damage_value*1.1) 
+                        case 'smart':
+                            if damage_obj.damage_type == DamageType.PHYSICAL or damage_obj.damage_type == DamageType.HEALING:
+                                damage_obj.damage_value = int(damage_obj.damage_value*1.1)
+        return damage_obj
+    
+    def dealt_damage(self, damage_obj):
+        #if self.stack >= 10:
+        #    self.inventory_manager.owner.simple_broadcast(f'You are carrying so much of {self.name} it deals extra damage!','')
+        return damage_obj
+    
+    # called when exp is gained
+    def gain_exp(self, exp):
+        return exp
 
         
         

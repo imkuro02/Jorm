@@ -8,7 +8,7 @@ import utils
 
 
 class Skill:
-    def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, bounce = 0):
+    def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False, bounce = 0, combat_event = None):
         self.skill_id = skill_id
         self.name = SKILLS[skill_id]['name']
         self.script_values = script_values
@@ -18,10 +18,11 @@ class Skill:
         self.use_perspectives = use_perspectives
         self.success = success
         self.silent_use = silent_use
-
+        self.no_cooldown = no_cooldown
         #self.aoe = aoe # area of effect
         self.bounce = bounce # the amount of times it bounces
         self.get_dmg_value_override = None
+        self.combat_event = combat_event
 
     def get_dmg_value(self, stat_type = None):
         if self.get_dmg_value_override == None:
@@ -82,11 +83,11 @@ class Skill:
 
     def use(self):
         #print('aoe:',self.aoe)
-        
-        cool = self.script_values['cooldown'][self.users_skill_level]
-        #if cool <= 1: 
-        #    cool = 2
-        self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
+        if not self.no_cooldown:
+            cool = self.script_values['cooldown'][self.users_skill_level]
+            #if cool <= 1: 
+            #    cool = 2
+            self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
 
         if self.silent_use:
             return
@@ -139,6 +140,7 @@ class Skill:
                     success = self.success, 
                     silent_use = self.silent_use ,  
                     #aoe = False,
+                    no_cooldown = self.no_cooldown,
                     bounce = bounce_amount
                 )
                 _skill_objects.append(_skill_obj)
@@ -156,6 +158,7 @@ class Skill:
                 use_perspectives = self.use_perspectives, 
                 success = self.success, 
                 silent_use = self.silent_use, 
+                no_cooldown = self.no_cooldown,
                 #aoe = False,
                 bounce = bounce_amount
             )
@@ -219,7 +222,7 @@ class SkillDamage(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_source_action = self,
+                damage_source_action = self, combat_event = self.combat_event,
                 damage_value = dmg,
                 damage_type = dmg_type,
                 damage_to_stat = dmg_to_stat
@@ -282,7 +285,7 @@ class SkillGuard(Skill):
             power = self.script_values['bonus'][self.users_skill_level]
             damage_obj = Damage(
                 damage_taker_actor = self.other,
-                damage_source_action = self,
+                damage_source_action = self, combat_event = self.combat_event,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stat_manager.stats[StatType.PHYARMORMAX]*power),
                 damage_type = DamageType.HEALING,
@@ -291,7 +294,7 @@ class SkillGuard(Skill):
             damage_obj.run()        
             damage_obj = Damage(
                 damage_taker_actor = self.other,
-                damage_source_action = self,
+                damage_source_action = self, combat_event = self.combat_event,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stat_manager.stats[StatType.MAGARMORMAX]*power),
                 damage_type = DamageType.HEALING,
@@ -374,7 +377,7 @@ class SkillWildMagic(Skill):
         damage_obj = Damage(
             damage_taker_actor = self.other,
             damage_source_actor = self.user,
-            damage_source_action = self,
+            damage_source_action = self, combat_event = self.combat_event,
             damage_value = self.get_dmg_value(stat_type = StatType.MIND),
             damage_type = random.choice([DamageType.HEALING, DamageType.PHYSICAL, DamageType.MAGICAL, DamageType.PURE]),
             damage_to_stat = StatType.HP
@@ -410,7 +413,7 @@ class SkillManaFeed(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.user,
                 damage_source_actor = self.user,
-                damage_source_action = self,
+                damage_source_action = self, combat_event = self.combat_event,
                 damage_value = dmg,
                 damage_type = DamageType.PURE,
                 damage_to_stat = StatType.MP
@@ -425,7 +428,7 @@ class SkillManaFeed(Skill):
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_actor = self.user,
-                damage_source_action = self,
+                damage_source_action = self, combat_event = self.combat_event,
                 damage_value = dmg,
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MP
@@ -442,7 +445,7 @@ class SkillManaFeed(Skill):
                     damage_obj = Damage(
                         damage_taker_actor = self.other,
                         damage_source_actor = self.user,
-                        damage_source_action = self,
+                        damage_source_action = self, combat_event = self.combat_event,
                         damage_value = dmg,
                         damage_type = DamageType.MAGICAL,
                         damage_to_stat = StatType.HP
@@ -492,7 +495,7 @@ class SkillRegenPercentFromPotion(Skill):
         if self.success:
             damage_obj = Damage(
                     damage_taker_actor = self.other,
-                    damage_source_action = self,
+                    damage_source_action = self, combat_event = self.combat_event,
                     damage_source_actor = self.user,
                     damage_value = int(self.user.stat_manager.stats[stat_to_heal+'_max']*power_percent),
                     damage_type = DamageType.HEALING,
@@ -549,7 +552,7 @@ class SkillRefreshingDrink(Skill):
             power = self.script_values['bonus'][self.users_skill_level]
             damage_obj = Damage(
                 damage_taker_actor = self.other,
-                damage_source_action = self,
+                damage_source_action = self, combat_event = self.combat_event,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stat_manager.stats[StatType.HPMAX]*power),
                 damage_type = DamageType.HEALING
@@ -557,7 +560,7 @@ class SkillRefreshingDrink(Skill):
             damage_obj.run()        
             damage_obj = Damage(
                 damage_taker_actor = self.other,
-                damage_source_action = self,
+                damage_source_action = self, combat_event = self.combat_event,
                 damage_source_actor = self.user,
                 damage_value = int(self.user.stat_manager.stats[StatType.MPMAX]*power),
                 damage_type = DamageType.HEALING,
@@ -603,7 +606,7 @@ class SkillMageArmor(Skill):
         if self.success:
             damage_obj = Damage(
                 damage_taker_actor = self.other,
-                damage_source_action = self,
+                damage_source_action = self, combat_event = self.combat_event,
                 damage_source_actor = self.user,
                 damage_value = int(self.get_dmg_value(stat_type = StatType.MIND)),
                 damage_type = DamageType.HEALING,

@@ -297,6 +297,15 @@ class Dialog:
                 self.end_dialog()
                 return True
 
+            if 'give_to_npc' in answer['trade']:
+                for i in answer['trade']['give_to_npc']:
+                    removed = self.player.inventory_manager.remove_items_by_id(i['item'], i['amount'])
+                    if not removed:
+                        self.player.sendLine('Could not remove items requested')
+                        self.end_dialog()
+                        return True
+                self.player.sendLine(f'You give away the items requested')
+                
             if 'give_to_player' in answer['trade']:
                 for i in answer['trade']['give_to_player']:
                     item = load_item(i['item'])
@@ -306,14 +315,7 @@ class Dialog:
                     self.player.inventory_manager.add_item(item)
                     self.player.sendLine(f'You got: {item.pretty_name()}')
 
-            if 'give_to_npc' in answer['trade']:
-                for i in answer['trade']['give_to_npc']:
-                    removed = self.player.inventory_manager.remove_items_by_id(i['item'], i['amount'])
-                    if not removed:
-                        self.player.sendLine('Could not remove items requested')
-                        self.end_dialog()
-                        return True
-                self.player.sendLine(f'You give away the items requested')
+            
 
         if 'quest_objective_count_proposal' in answer:
             #self.print_dialog()

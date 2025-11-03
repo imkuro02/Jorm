@@ -352,7 +352,8 @@ class Protocol(protocol.Protocol):
 
                 if item['item_id'] in bonuses:
                     for bonus in bonuses[item['item_id']]:
-                        boon = EquipmentBonus(bonus['type'],bonus['key'],bonus['val'])
+                        #print(bonus)
+                        boon = EquipmentBonus(type = bonus['type'], key = bonus['key'], val = bonus['val'])
                         new_item.manager.add_bonus(boon)
 
                 

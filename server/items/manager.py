@@ -8,8 +8,9 @@ from items.misc import Item
 from items.consumable import Consumable
 from items.equipment import Equipment, EquipmentBonus
 from items.error import ErrorItem
-
 import random
+random = random.Random()
+
 def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id is used for equipment seeds
 
     premade_id = item_premade_id
@@ -36,6 +37,8 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
         
         if unique_id == None:
             unique_id = new_item.id
+        else:
+            new_item.id = unique_id
 
         try:
             if ITEMS[premade_id]['bonuses'] != 0:
@@ -54,7 +57,22 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
         except Exception as e:
             print(premade_id)
 
-       
+        #if not max_stats:
+        #    random.seed(new_item.id)
+        #    for stat in new_item.stat_manager.stats:
+        #        if new_item.stat_manager.stats[stat] <= 0:
+        #            continue
+        #        new_val = -random.randrange(0,new_item.stat_manager.stats[stat])
+        #        if new_val >= 0:
+        #            continue
+
+       #         boon = EquipmentBonus(  
+       #                                 type = 'stat', 
+       #                                 key = stat, 
+       #                                 val = new_val,
+       #                                 premade_bonus = True
+       #                             )
+       #         new_item.manager.add_bonus(boon)
 
         new_item.new = False
         new_item.slot = ITEMS[premade_id]['slot']
@@ -84,6 +102,8 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
     new_item.ambience = ITEMS[premade_id]['ambience']
     new_item.ambience_sfx = ITEMS[premade_id]['ambience_sfx']
     new_item.can_pick_up = ITEMS[premade_id]['can_pick_up']
+    if 'stack_max_amount' in ITEMS[premade_id]:
+        new_item.stack_max = ITEMS[premade_id]['stack_max_amount']
 
     new_item.premade_id = ITEMS[premade_id]['premade_id']
     

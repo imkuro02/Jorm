@@ -10,6 +10,7 @@ class CombatEvent:
 
     def pop_from_queue(self):
         self.popped.append(self.queue[0])
+        print(self.queue[0].damage_source_action)
         self.queue.pop(0)
         
 

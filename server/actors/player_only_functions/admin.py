@@ -321,7 +321,7 @@ def command_bonus(self, line):
         return
 
     from items.equipment import EquipmentBonus
-    boon = EquipmentBonus(_type, key, val)
+    boon = EquipmentBonus(type = _type, key = key, val = val)
     item.manager.add_bonus(boon)
 
 @check_is_admin

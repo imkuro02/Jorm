@@ -1,7 +1,9 @@
 from actors.player_only_functions.checks import check_no_combat_in_room, check_no_empty_line, check_not_in_combat, check_alive, check_not_trading
-from configuration.config import ItemType, StatType, Audio, LORE, Color, ITEMS
+from configuration.config import ItemType, StatType, Audio, LORE, Color, ITEMS, EQUIPMENT_REFORGES
 import utils
 import items.manager as items
+from items.equipment import EquipmentBonus, BonusTypes
+import random
 
 @check_no_empty_line
 @check_not_in_combat
@@ -43,42 +45,6 @@ def command_get(self, line):
         f'You get {", ".join(items_pretty_name_before_pickup)}',
         f'{self.pretty_name()} gets {", ".join(items_pretty_name_before_pickup)}'
         )
-    '''
-
-
-
-    if line.lower() == 'all':
-        items_to_get = []
-        for item in self.room.inventory_manager.items.values():
-            items_to_get.append(item)
-
-        for item in items_to_get:
-            if self.inventory_manager.add_item(item):
-                self.room.inventory_manager.remove_item(item)
-                self.simple_broadcast(
-                    f'You get {item.name}',
-                    f'{self.pretty_name()} gets {item.name}'
-                    )
-            else:
-                self.sendLine('Your Inventory is full') 
-        return
-    
-
-    item = self.get_item(line, search_mode = 'room')
-    if item == None:
-        self.sendLine('Get what?', sound = Audio.ERROR)
-        return
-    item_pretty_name_before_pickup = item.pretty_name()
-    if self.inventory_manager.add_item(item):
-        self.room.inventory_manager.remove_item(item)
-        self.simple_broadcast(
-            f'You get {item_pretty_name_before_pickup}',
-            f'{self.pretty_name()} gets {item_pretty_name_before_pickup}'
-            )
-    else:
-        self.sendLine(f'You can\'t pick up {item.pretty_name()}', sound = Audio.ERROR)
-
-    '''
     
 @check_not_trading
 @check_no_empty_line
@@ -94,7 +60,7 @@ def command_drop(self, line):
     if line != 'all':
         
         if item_found == None:
-            self.sendLine('Get what?', sound = Audio.ERROR)
+            self.sendLine('Drop what?', sound = Audio.ERROR)
             return
 
         items_to_get = [item_found]
@@ -114,48 +80,110 @@ def command_drop(self, line):
         f'{self.pretty_name()} drops {", ".join(items_pretty_name_before_pickup)}'
         )
 
-    '''
-    if line.lower() == 'all':
-        items_to_drop = []
-        for item in self.inventory_manager.items.values(): 
-            if item.keep:
-                #self.sendLine('Can\'t drop kept items')
-                continue
-            if item.item_type == ItemType.EQUIPMENT:
-                if item.equiped:
-                    #self.sendLine('Can\'t drop equiped items')
-                    continue
-            items_to_drop.append(item)
-
-        for item in items_to_drop:
-            self.room.inventory_manager.add_item(item)
-            self.inventory_manager.remove_item(item)
-
-            self.simple_broadcast(
-                f'You drop {item.name}',
-                f'{self.pretty_name()} drops {item.name}'
-                )
-        return
+@check_not_trading
+@check_no_empty_line
+@check_not_in_combat
+@check_alive
+def command_scrap(self, line):
+    items_to_get = []
     
+    for item in self.inventory_manager.items.values():
+        items_to_get.append(item)
 
-    item = self.get_item(line)
-    if item == None:
-        self.sendLine('Drop what?', sound = Audio.ERROR)
-        return
+    item_found = self.get_item(line)
+    if line != 'all':
+        
+        if item_found == None:
+            self.sendLine('Scrap what?', sound = Audio.ERROR)
+            return
 
-    if not item.can_tinker_with():
-        self.sendLine('Cannot drop kept or equipped items')
-        return
+        items_to_get = [item_found]
 
-    
+    items_pretty_name_before_pickup = []
+    for item in items_to_get:
+        item_pretty_name_before_pickup = item.pretty_name()
+        
+        if not item.can_tinker_with():
+            self.sendLine(f'Cannot scrap {item.pretty_name()} since its kept or equipped')
+            continue
+
+        items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
+        self.inventory_manager.remove_item(item)
+        scrap = items.load_item('currency_0')
+        scrap.stack = item.stack 
+        if item.item_type == ItemType.EQUIPMENT:
+            scrap.stack = item.stack * item.stat_manager.reqs[StatType.LVL]
+        self.inventory_manager.add_item(scrap)
+        
     self.simple_broadcast(
-        f'You drop {item.pretty_name()}',
-        f'{self.pretty_name()} drops {item.pretty_name()}'
+        f'You scrap {", ".join(items_pretty_name_before_pickup)}',
+        f'{self.pretty_name()} scraps {", ".join(items_pretty_name_before_pickup)}'
         )
 
-    self.room.inventory_manager.add_item(item)
-    self.inventory_manager.remove_item(item)
-    '''
+@check_not_trading
+@check_no_empty_line
+@check_not_in_combat
+@check_alive
+def command_reforge(self, line):
+    if line == 'all':
+        self.sendLine('WHAT AN AWFUL IDEA!! NO!')
+        return
+
+    items_to_get = []
+    
+    for item in self.inventory_manager.items.values():
+        items_to_get.append(item)
+
+    item_found = self.get_item(line)
+    if line != 'all':
+        
+        if item_found == None:
+            self.sendLine('Reforge what?', sound = Audio.ERROR)
+            return
+
+        items_to_get = [item_found]
+
+    items_pretty_name_before_reforge = []
+    items_pretty_name_after_reforge = []
+    for item in items_to_get:
+        item_pretty_name_before_reforge = item.pretty_name()
+        
+        if not item.can_tinker_with():
+            self.sendLine(f'Cannot reforge {item.pretty_name()} since its kept or equipped')
+            continue
+
+        items_pretty_name_before_reforge.append(item_pretty_name_before_reforge)
+        #self.inventory_manager.remove_item(item)
+        #scrap = items.load_item('currency_0')
+        #scrap.stack = item.stack 
+        #if item.item_type == ItemType.EQUIPMENT:
+        #    scrap.stack = item.stack * item.stat_manager.reqs[StatType.LVL]
+        #self.inventory_manager.add_item(scrap)
+        
+        to_del = []
+        for bon in item.manager.bonuses.values():
+            if bon.type == BonusTypes.REFORGE:
+                to_del.append(bon.id)
+
+        for bon_id in to_del:
+            del item.manager.bonuses[bon_id]
+
+        reforge_choices = []
+        for i in EQUIPMENT_REFORGES:
+            reforge_choices.append(i)
+
+        new_bonus = EquipmentBonus(type = BonusTypes.REFORGE, key = random.choice(reforge_choices), val = 1, premade_bonus = False)
+        item.manager.add_bonus(new_bonus)
+
+        items_pretty_name_after_reforge.append(item.pretty_name())
+
+    if items_pretty_name_before_reforge == []:
+        return
+
+    self.simple_broadcast(
+        f'You reforge {", ".join(items_pretty_name_before_reforge)} into {", ".join(items_pretty_name_after_reforge)}',
+        f'{self.pretty_name()} reforge {", ".join(items_pretty_name_before_reforge)} into {", ".join(items_pretty_name_after_reforge)}'
+        )
 
 @check_not_trading
 def command_split(self, line):

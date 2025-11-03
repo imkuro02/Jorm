@@ -1,5 +1,5 @@
 import uuid
-from configuration.config import ItemType, ITEMS, Color
+from configuration.config import ItemType, ITEMS, Color, BonusTypes, EQUIPMENT_REFORGES
 import random
 from utils import get_object_parent
 from utils import REFTRACKER
@@ -88,8 +88,16 @@ class Item:
             case 'consumable':
                 col = '@yellow'
             
-
         output = f'{col}{self.name}@normal'
+
+        if self.item_type == ItemType.EQUIPMENT:
+            reforge = None
+            for bon in self.manager.bonuses.values():
+                if bon.type == BonusTypes.REFORGE:
+                    reforge = EQUIPMENT_REFORGES[bon.key]['name']
+            if reforge != None:
+                output = f'{col}{reforge} {self.name}@normal'
+        
         #if rank_only:
         #    if self.item_type == ItemType.EQUIPMENT:  
         #        if self.rank != 0: 
@@ -105,6 +113,7 @@ class Item:
             #        output = output + f' (@green+{self.rank}@normal)'
             #    else:
             #        output = output + f' (@red{self.rank}@normal)'
+            
             if self.equiped:   output = output + f' ({Color.ITEM_EQUIPPED}E{Color.NORMAL})'
             if self.keep:      output = output + f' ({Color.ITEM_KEEP}K{Color.NORMAL})'
             if self.new:       output = output + f' ({Color.ITEM_NEW}N{Color.NORMAL})'

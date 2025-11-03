@@ -211,6 +211,90 @@ ellinia_shop_weapon:
         - line: |
             "Your party leader has to do that" <npc> says
 
-
-
+  
+    start_shopping:
+      append_to: start
+      options:
+        - line: |
+            ask about wares
+          goto: shopping
+      
+    #mind weapon 15	Pixie wand
+    #mind weapon 3	Simple wand
+    #mind weapon 6	Wand
+    #mind weapon 9	Mage wand
+    shopping:
+      dialog: 
+          - line: |
+              <npc> says "I got plenty to sell!"
+          - line: |
+              <npc> says "What can I get ya?"
+          - line: |
+              <npc> says "Need anything?"
+      options:
+        - line: |
+            purchase 1 Summoning Rock for 60 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: summoning_rock
+                amount: 1
+            give_to_npc: 
+              - item: currency_0
+                amount: 60
+        - line: |
+            purchase 1 Simple wand for 250 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: mind weapon 3
+                amount: 1
+            give_to_npc: 
+              - item: currency_0
+                amount: 250
+        - line: |
+            purchase 1 Refined wand for 600 Scrap
+          goto: shopping
+          quest_check:
+            - id: ellinia_shop_weapon_quest_1
+              state: turned_in
+          trade:
+            give_to_player:
+              - item: mind weapon 6
+                amount: 1
+            give_to_npc: 
+              - item: currency_0
+                amount: 600
+        - line: |
+            purchase 1 Mage wand for 1200 Scrap
+          goto: shopping
+          quest_check:
+            - id: ellinia_shop_weapon_quest_1
+              state: turned_in
+            - id: ellinia_shop_weapon_quest_2
+              state: turned_in
+          trade:
+            give_to_player:
+              - item: mind weapon 9
+                amount: 1
+            give_to_npc: 
+              - item: currency_0
+                amount: 1200
+        - line: |
+            purchase 1 Pixie wand for 2000 Scrap
+          goto: shopping
+          quest_check:
+            - id: ellinia_shop_weapon_quest_1
+              state: turned_in
+            - id: ellinia_shop_weapon_quest_2
+              state: turned_in
+            - id: ellinia_shop_weapon_quest_3
+              state: turned_in
+          trade:
+            give_to_player:
+              - item: mind weapon 15
+                amount: 1
+            give_to_npc: 
+              - item: currency_0
+                amount: 2000
 

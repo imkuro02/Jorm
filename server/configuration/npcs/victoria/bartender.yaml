@@ -172,5 +172,42 @@ bartender:
       dialog:
         - line: |
             <npc> says "Good job! here take this"
-   
+
+    start_shopping:
+      append_to: start
+      options:
+        - line: |
+            ask about wares
+          goto: shopping
       
+    shopping:
+      dialog: 
+          - line: |
+              <npc> says "I got plenty to sell!"
+          - line: |
+              <npc> says "What can I get ya?"
+          - line: |
+              <npc> says "Need anything?"
+      options:
+        - line: |
+            purchase 1 Red Potion for 60 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: red potion
+                amount: 1
+            give_to_npc: 
+              - item: currency_0
+                amount: 60
+        - line: |
+            purchase 1 Blue Potion for 60 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: blue potion
+                amount: 1
+            give_to_npc: 
+              - item: currency_0
+                amount: 60
+      
+        

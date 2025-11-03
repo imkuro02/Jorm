@@ -7,6 +7,11 @@ import os
 import configuration.read_from_excel as rfe
 import random
 
+class BonusTypes:
+    REFORGE = 'reforge'
+    SKILL_LEVEL = 'skill_level'
+    STAT  = 'stat'
+
 class Color:
     NORMAL =                '@normal'
     BACK =                  '@back' 
@@ -240,6 +245,7 @@ with open(PATCH_NOTES_PATH, 'r') as file:
 ITEMS = {}
 ENEMIES = {}
 SKILLS = {}
+EQUIPMENT_REFORGES = {}
 NPCS = {}
 WORLD = {}
 SPLASH_SCREENS = {}
@@ -275,6 +281,7 @@ def load():
     global ITEMS
     global ENEMIES
     global SKILLS  # Declare the global variables here
+    global EQUIPMENT_REFORGES
     global HELPFILES
 
     data = rfe.load()
@@ -284,6 +291,8 @@ def load():
         ENEMIES[k] = data['enemies'][k]
     for k in data['skills']:
         SKILLS[k] = data['skills'][k]
+    for k in data['equipment_reforges']:
+        EQUIPMENT_REFORGES[k] = data['equipment_reforges'][k]
 
     with open('configuration/help.yaml', 'r') as file:
         ALL_HELP = yaml.safe_load(file)
@@ -326,5 +335,6 @@ def load():
     print('reloaded')
 
 
-           
+
+
 

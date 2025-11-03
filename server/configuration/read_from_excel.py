@@ -27,6 +27,7 @@ def read_from_ods_file():
     SHEET['skill_script_values'] = pd.read_excel(file_path, sheet_name = 'skill_script_values').to_dict(orient='dict')
     SHEET['skills'] =              read_ods(file_path, 'skills')
     SHEET['items_equipment'] =     read_ods(file_path, 'items_equipment')
+    SHEET['equipment_reforges'] =  read_ods(file_path, 'equipment_reforges')
     SHEET['items_misc'] =          read_ods(file_path, 'items_misc')
     SHEET['enemy_skills'] =        read_ods(file_path, 'enemy_skills')
     SHEET['loot'] =                read_ods(file_path, 'loot')
@@ -36,6 +37,26 @@ def read_from_ods_file():
     print(end - start,'LOADING OF CONFIG.ODS')
 
     return SHEET
+
+def configure_equipment_reforges(SHEET):
+    start = time.time()
+    EQUIPMENT_REFORGES = {}
+    
+    for row in SHEET['equipment_reforges']:
+        x = SHEET['equipment_reforges']
+        for index in range(0, len(x[row])):
+
+            EQUIPMENT_REFORGES[x['reforge_id'][index]] = {
+                'reforge_id':                   x['reforge_id'][index],
+                'name':                         x['name'][index],
+                'slot':                         x['slot'][index],
+                'roll':                         int(x['roll'][index]),
+                'description':                  x['description'][index],
+            }
+
+    end = time.time()
+    print(end - start,'EQUIPMENT_REFORGES')
+    return EQUIPMENT_REFORGES
 
 def configure_skill_script_values(SHEET):
     start = time.time()
@@ -166,6 +187,8 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
                 'can_pick_up':  bool(x['can_pick_up'][index]),
                 'item_type':        'misc',
+
+                'stack_max_amount': int(x['stack_max_amount'][index]),
 
                 'drop_tags':         str(x['drop_tags'][index]).split(','),
                 'drop_from_random':         int(x['drop_from_random'][index]),
@@ -507,12 +530,14 @@ def load_from_excel():
     SKILLS =                  configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES)
     ITEMS =                   configure_ITEMS(SHEET, USE_PERSPECTIVES)
     ENEMIES =                 configure_ENEMIES(SHEET, ITEMS)
+    EQUIPMENT_REFORGES =      configure_equipment_reforges(SHEET)
     
     # PACK IT ALL UP
     whole_dict = {
         'enemies': ENEMIES,
         'skills': SKILLS,
         'items': ITEMS,
+        'equipment_reforges': EQUIPMENT_REFORGES
     }
 
     return whole_dict
@@ -558,7 +583,8 @@ def load():
             'SHA-256': excel_checksum,
             'enemies': whole_dict['enemies'],
             'skills': whole_dict['skills'],
-            'items': whole_dict['items']
+            'items': whole_dict['items'],
+            'equipment_reforges': whole_dict['equipment_reforges']
         }
         with open(file_json, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
