@@ -141,7 +141,8 @@ class Skill:
                     silent_use = self.silent_use ,  
                     #aoe = False,
                     no_cooldown = self.no_cooldown,
-                    bounce = bounce_amount
+                    bounce = bounce_amount,
+                    combat_event = self.combat_event
                 )
                 _skill_objects.append(_skill_obj)
                 if current_aoe > skill['script_values']['aoe'][self.users_skill_level]:
@@ -160,7 +161,8 @@ class Skill:
                 silent_use = self.silent_use, 
                 no_cooldown = self.no_cooldown,
                 #aoe = False,
-                bounce = bounce_amount
+                bounce = bounce_amount,
+                combat_event = self.combat_event
             )
             _skill_objects.append(_skill_obj)
 
@@ -228,7 +230,8 @@ class SkillDamage(Skill):
                 damage_to_stat = dmg_to_stat
                 )
 
-            damage_obj.run()
+            if self.combat_event == None:
+                damage_obj.run()
             # easy way of checking if a skill killed someone
             #print(f'{damage_obj.damage_taker_actor.name} {damage_obj.damage_taker_actor.status}')
             return damage_obj
@@ -291,7 +294,8 @@ class SkillGuard(Skill):
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.PHYARMOR
                 )
-            damage_obj.run()        
+            if self.combat_event == None:
+                damage_obj.run()        
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_action = self, combat_event = self.combat_event,
@@ -300,7 +304,9 @@ class SkillGuard(Skill):
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MAGARMOR
                 )
-            damage_obj.run()      
+            if self.combat_event == None:
+                damage_obj.run()   
+    
 
 class SkillFinisher(SkillDamageByGritFlow):
     def pre_use(self, override_bounce_amount = None):
@@ -433,7 +439,8 @@ class SkillManaFeed(Skill):
                 damage_type = DamageType.HEALING,
                 damage_to_stat = StatType.MP
                 )
-            damage_obj.run()
+            if self.combat_event == None:
+                damage_obj.run()   
 
             # Cause overfeed damage if both actors are in the same combat
             if self.user.room.combat != None:
@@ -450,7 +457,8 @@ class SkillManaFeed(Skill):
                         damage_type = DamageType.MAGICAL,
                         damage_to_stat = StatType.HP
                         )
-                    damage_obj.run()
+                    if self.combat_event == None:
+                        damage_obj.run()   
 
 class SkillBash(SkillDamageByGrit):
     def use(self):
@@ -459,7 +467,8 @@ class SkillBash(SkillDamageByGrit):
             for i in self.user.room.actors.values():
                 all_armors[i] = i.stat_manager.stats[StatType.PHYARMOR]
 
-            damage_obj = super().use()
+            if self.combat_event == None:  
+                damage_obj = super().use()
             
             print(damage_obj)
             if all_armors[damage_obj.damage_taker_actor] > 0:
@@ -478,9 +487,11 @@ class SkillBash(SkillDamageByGrit):
 class SkillDoubleWhack(SkillDamageByGritFlow):
     def use(self):
         if self.success:
-            d = super().use()
-            if self.other.status != ActorStatusType.DEAD:
+            if self.combat_event == None: 
                 d = super().use()
+            if self.other.status != ActorStatusType.DEAD:
+                if self.combat_event == None: 
+                    d = super().use()
             return d
 
 

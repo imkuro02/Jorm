@@ -295,6 +295,8 @@ class AffectMageArmor(Affect):
                 return damage_obj
             case DamageType.HEALING:
                 return damage_obj
+            case DamageType.PURE:
+                return damage_obj
             case _:
             
                 if damage_obj.damage_value < 0:
@@ -320,11 +322,12 @@ class AffectMageArmor(Affect):
                     damage_taker_actor = self.affect_target_actor,
                     damage_source_action = self,
                     damage_value = mp_dmg,
-                    damage_type = DamageType.MAGICAL,
+                    damage_type = DamageType.PURE,
                     damage_to_stat = StatType.MP,
                     dont_proc = True,
+                    combat_event=damage_obj.combat_event
                 )
-                damage_obj2.run()
+                #damage_obj2.run()
 
 
 

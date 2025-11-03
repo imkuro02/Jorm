@@ -321,14 +321,14 @@ class Equipment(Item):
         try:
             skill_obj = getattr(skills.skills, f'Skill{skill["script_to_run"]}')
         except AttributeError:
-            user.simple_broadcast(
+            self.inventory_manager.simple_broadcast(
                 f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal',
                 f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
         
         use_perspectives = skill['use_perspectives']
         success = True #random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
-        silent_use = False
+        silent_use = True
         no_cooldown = True
 
 
@@ -337,7 +337,7 @@ class Equipment(Item):
             script_values = skill['script_values'], 
             user = self.inventory_manager.owner, 
             other = self.inventory_manager.owner, 
-            users_skill_level = 1, 
+            users_skill_level = 0, 
             use_perspectives = use_perspectives, 
             success = success, 
             silent_use = silent_use,
@@ -345,7 +345,7 @@ class Equipment(Item):
             combat_event = triggered_by_damage_obj.combat_event
         )
 
-        print('aaa',triggered_by_damage_obj.combat_event == _skill_obj.combat_event)
+        #print('aaa',triggered_by_damage_obj.combat_event == _skill_obj.combat_event)
 
         _skill_obj.pre_use()
         del _skill_obj
@@ -370,8 +370,8 @@ class Equipment(Item):
                 if i.type == BonusTypes.REFORGE:
                     match i.key:
                         case 'warding':
-                            if damage_obj.damage_type == DamageType.PHYSICAL or damage_obj.damage_type == DamageType.MAGICAL:
-                                roll = 1#random.randint(0,10)
+                            if (damage_obj.damage_type == DamageType.PHYSICAL or damage_obj.damage_type == DamageType.MAGICAL) and damage_obj.damage_to_stat == StatType.HP:
+                                roll = random.randint(0,10)
                                 if roll == 1:
                                     self.use_skill('refresh', triggered_by_damage_obj = damage_obj)
         return damage_obj
