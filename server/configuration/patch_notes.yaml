@@ -1,10 +1,13 @@
 versions:
   '011125':
     id: '011125'
-    title: Inventory management
+    title: Inventory management, skills and damage
     unixtime: 1761899677
     features:
     - drop all and get all now displays items interacted with in one line
+    - New skill; Nightmare, sleep a target for 3 turns, if target awakes from damage, their turn begins instantly
+    - Now, each time someones turn begins it is announced 
+    - Damage received is displayed in a more informative way
   '311025':
     id: '311025'
     title: More skills!

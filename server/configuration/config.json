@@ -1,5 +1,5 @@
 {
-    "SHA-256": "4a5bfdf1308157245bff92ea38e6717f93d0dd0ad25782fb0b16a65864ae8867",
+    "SHA-256": "a97683acce23e4b4d161fe0e3f5aae1cb789e162544b48177ef4bae5b7d9c6bd",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -5596,6 +5596,52 @@
                     0.33,
                     0.33,
                     0.33
+                ]
+            }
+        },
+        "nightmare": {
+            "skill_id": "nightmare",
+            "name": "Nightmare",
+            "description": "Put your target to sleep in a terrifying nightmare for DURATION turns.\nIf the target takes any damage, they awake and their turn begins right away.\n",
+            "script_to_run": "Nightmare",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 6.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "cooldown": [
+                    8,
+                    6,
+                    4
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3
+                ],
+                "duration": [
+                    2,
+                    2,
+                    2
                 ]
             }
         }

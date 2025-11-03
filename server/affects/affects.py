@@ -70,10 +70,31 @@ class AffectStunned(Affect):
     # called at start of turn
     def set_turn(self):
         super().set_turn()
-        #self.affect_target_actor.simple_broadcast(
-        #    f'You are too stunned to act!',
-        #    f'{self.affect_target_actor.pretty_name()} is too stunned to act!')
+        self.affect_target_actor.simple_broadcast(
+            f'You are too stunned to act!',
+            f'{self.affect_target_actor.pretty_name()} is too stunned to act!')
         self.affect_target_actor.finish_turn()
+
+class AffectNightmare(Affect):
+    
+    def set_turn(self):
+        super().set_turn()
+        self.affect_target_actor.simple_broadcast(
+            f'You are sleeping and cannot act!',
+            f'{self.affect_target_actor.pretty_name()} is sleeping and cannot act!')
+        self.affect_target_actor.finish_turn()
+
+    def take_damage_after_calc(self, damage_obj: Damage):
+        if damage_obj.damage_type != DamageType.HEALING and damage_obj.damage_type != DamageType.CANCELLED:
+            damage_obj.damage_taker_actor.room.combat.order.insert(0, damage_obj.damage_taker_actor)
+            #damage_obj.damage_taker_actor.room.combat.current_actor = damage_obj.damage_taker_actor
+            self.on_finished()
+            #damage_obj.damage_taker_actor.set_turn()
+        return damage_obj
+
+    def on_finished(self, silent = False):
+        return super().on_finished(silent)
+        
 
 class Leech(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, leech_power):
@@ -233,6 +254,8 @@ class AffectDeflectMagic(Affect):
             damage_obj.damage_source_action = self
             damage_obj.damage_type = DamageType.PURE
         return damage_obj
+
+
 
 class AffectEthereal(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, dmg_amp):

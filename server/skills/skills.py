@@ -264,6 +264,7 @@ class SkillCleave(SkillDamage):
             damage_obj.damage_source_actor.room.combat.order.insert(0, damage_obj.damage_source_actor)
             damage_obj.damage_source_actor.room.combat.current_actor = damage_obj.damage_source_actor
             del damage_obj.damage_source_actor.cooldown_manager.cooldowns[self.skill_id]
+            #damage_obj.damage_source_actor.set_turn()
     
 class SkillRefresh(SkillDamage):
     def use(self):
@@ -568,6 +569,20 @@ class SkillRefreshingDrink(Skill):
     
 
 # XD affliction only skills
+
+class SkillNightmare(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            turns = int(self.script_values['duration'][self.users_skill_level])
+            affect = affects.AffectNightmare(
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
+                name = 'Nightmared', description = f'Unable to act until affect wears off, damage will start your turn', 
+                turns = turns,
+                get_prediction_string_append = 'is sleeping!',
+                get_prediction_string_clear = True)
+            self.other.affect_manager.set_affect_object(affect)  
 
 class SkillBecomeEthereal(Skill):
     def use(self):

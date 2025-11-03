@@ -717,9 +717,10 @@ class Actor:
             self.sendLine(output)
 
     def set_turn(self):
-        if type(self).__name__ == "Player":
-            output = f'{Color.IMPORTANT}Your turn{Color.NORMAL}'
-            self.sendLine(output)
+        if type(self).__name__ != "11Player":
+            output_self = f'{Color.IMPORTANT}Your turn{Color.NORMAL}'
+            output_other = f'{Color.IMPORTANT}{self.pretty_name()}\'s turn{Color.NORMAL}'
+            self.simple_broadcast(output_self,output_other)
             '''
             order = self.room.combat.order
             if order == []:
