@@ -151,7 +151,7 @@ class Npc(Actor):
         if skills != None:
             self.skill_manager.skills = copy.deepcopy(skills)
 
-        #self.ai = EnemyAI(self)
+        
 
     def talk_to(self, talker):
         if not super().talk_to(talker): 
