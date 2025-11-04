@@ -1,5 +1,5 @@
 {
-    "SHA-256": "3914659b31071960b8cbe1efa0afcd5a3741ae890478e656de74086aa0dee615",
+    "SHA-256": "4eb9fbd305e00d0b836160c25062c269994757135297cc307d5c78970dff2b17",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -5642,6 +5642,93 @@
                     2,
                     2,
                     2
+                ]
+            }
+        },
+        "_broken_chain_lightning": {
+            "skill_id": "_broken_chain_lightning",
+            "name": "Chain Lightning",
+            "description": "Heal all party members for DAMAGE + 0%-CRIT% SOUL health.\n",
+            "script_to_run": "DamageByMind",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 9.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    4,
+                    6,
+                    8,
+                    10,
+                    12,
+                    14
+                ],
+                "crit": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "mp_cost": [
+                    20,
+                    22,
+                    24,
+                    26,
+                    28,
+                    30
+                ],
+                "cooldown": [
+                    6,
+                    6,
+                    6,
+                    5,
+                    5,
+                    4
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "bounce_amount": [
+                    4,
+                    4,
+                    4,
+                    4,
+                    4,
+                    4
+                ],
+                "bounce_bonus": [
+                    -0.2,
+                    -0.18,
+                    -0.16,
+                    -0.14,
+                    -0.12,
+                    -0.1
                 ]
             }
         }
@@ -19103,40 +19190,173 @@
         }
     },
     "equipment_reforges": {
-        "soft": {
-            "reforge_id": "soft",
-            "name": "Soft",
-            "slot": "weapon",
-            "roll": 100,
-            "description": "Deal 10% less physical damage"
+        "normal": {
+            "reforge_id": "normal",
+            "name": "Normal",
+            "slot_weapon": true,
+            "slot_body": true,
+            "slot_head": true,
+            "slot_trinket": true,
+            "slot_relic": true,
+            "roll_chance": 100,
+            "affliction_to_create": "0.0",
+            "description": "default prefix, if this reforge gets applied it simply removes the current one and then itself to reset the item to natural state"
         },
-        "dumb": {
-            "reforge_id": "dumb",
-            "name": "Dumb",
-            "slot": "weapon",
-            "roll": 100,
-            "description": "Deal 10% less magical damage and healing"
+        "light": {
+            "reforge_id": "light",
+            "name": "Light",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgeLight",
+            "description": "Deal 10% less physical damage, but there is a 10% chance you get an extra turn in the current round as last actor"
         },
-        "hard": {
-            "reforge_id": "hard",
-            "name": "Hard",
-            "slot": "weapon",
-            "roll": 100,
-            "description": "Deal 10% more physical damage "
+        "heavy": {
+            "reforge_id": "heavy",
+            "name": "Heavy",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgeHeavy",
+            "description": "Deal 10% more physical damage, but extend a random cooldown by 1 each turn start in combat"
         },
-        "smart": {
-            "reforge_id": "smart",
-            "name": "Smart",
-            "slot": "weapon",
-            "roll": 100,
-            "description": "Deal 10% more magical damage and healing"
+        "powerful": {
+            "reforge_id": "powerful",
+            "name": "Powerful",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgePowerful",
+            "description": "Deal 10% more magical damage, but you have a 50% chance to lose 5% health on turn start in combat"
         },
-        "warding": {
-            "reforge_id": "warding",
-            "name": "Warding",
-            "slot": "weapon",
-            "roll": 100,
-            "description": "10% chance to cast level 1 refresh on any damage received"
+        "holy": {
+            "reforge_id": "holy",
+            "name": "Holy",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgeHoly",
+            "description": "Deal 10% more pure damage, but all other damage dealt is reduced by 10%"
+        },
+        "healthy": {
+            "reforge_id": "healthy",
+            "name": "Healthy",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "RefogeHealthy",
+            "description": "Deal 10% more healing, but 10% less damage"
+        },
+        "controlling": {
+            "reforge_id": "controlling",
+            "name": "Controlling",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgeControlling",
+            "description": "Deal 10% less damage, but deal 5% more damage for each enemy in combat"
+        },
+        "dramatic": {
+            "reforge_id": "dramatic",
+            "name": "Dramatic",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgeDramatic",
+            "description": "Deal 25% more damage at combat start, but deal 10% less for each turn, until dealing -25%"
+        },
+        "punishing": {
+            "reforge_id": "punishing",
+            "name": "Punishing",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgePunishing",
+            "description": "Dealing physical damage to a target under 25% health has a 10% chance to instantly kill them"
+        },
+        "wild": {
+            "reforge_id": "wild",
+            "name": "Wild",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgeWild",
+            "description": "Chance to use swing at a random enemy at turn start equal to half of percent of health missing"
+        },
+        "repelling": {
+            "reforge_id": "repelling",
+            "name": "Repelling",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "RefogeRepelling",
+            "description": "Deal 10% less damage, but whenever you deal a killing blow, roll initiative removing all non party members from the new round"
+        },
+        "adapting": {
+            "reforge_id": "adapting",
+            "name": "Adapting",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ReforgeAdapting",
+            "description": "Deal 10% less damage, but you change damage type depending on which armor your target has the least of"
+        },
+        "dangerous": {
+            "reforge_id": "dangerous",
+            "name": "Dangerous",
+            "slot_weapon": false,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 0,
+            "affliction_to_create": "ReforgeDangerous",
+            "description": "Deal 20% more damage, "
+        },
+        "leeching": {
+            "reforge_id": "leeching",
+            "name": "Leeching",
+            "slot_weapon": false,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 0,
+            "affliction_to_create": "ReforgeLeeching",
+            "description": "Gain 20% more health from the Leech skill, but heal 5% less from all other sources"
         }
     }
 }

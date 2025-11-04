@@ -91,12 +91,11 @@ class Item:
         output = f'{col}{self.name}@normal'
 
         if self.item_type == ItemType.EQUIPMENT:
-            reforge = None
-            for bon in self.manager.bonuses.values():
-                if bon.type == BonusTypes.REFORGE:
-                    reforge = EQUIPMENT_REFORGES[bon.key]['name']
-            if reforge != None:
-                output = f'{col}{reforge} {self.name}@normal'
+            reforge_id = self.get_reforge_id()
+            if reforge_id in EQUIPMENT_REFORGES:
+                reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
+                if reforge_name != None:
+                    output = f'@yellow{reforge_name} {col}{self.name}@normal'
         
         #if rank_only:
         #    if self.item_type == ItemType.EQUIPMENT:  

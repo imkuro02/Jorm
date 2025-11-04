@@ -99,6 +99,10 @@ def command_use(self, line, is_trying = False):
     class FakeSkill:
         def __init__(self, name):
             self.name = name
+
+        def pretty_name(self):
+            return self.name
+            
     for skill in list_of_skill_names:
         skills_dict[skill] = FakeSkill(skill)
 

@@ -65,6 +65,12 @@ class Affect:
     def dealt_damage(self, damage_obj):
         return damage_obj
 
+class AffectTest(Affect):
+    def merge_request(self, affect_to_merge):
+        print(self)
+        if affect_to_merge.turns > self.turns:
+            self.turns = affect_to_merge.turns
+        return True
 
 class AffectStunned(Affect):
     # called at start of turn

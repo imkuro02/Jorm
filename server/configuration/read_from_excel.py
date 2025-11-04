@@ -45,12 +45,17 @@ def configure_equipment_reforges(SHEET):
     for row in SHEET['equipment_reforges']:
         x = SHEET['equipment_reforges']
         for index in range(0, len(x[row])):
-
+            #slot_weapon	slot_body	slot_head	slot_trinket	slot_relic	roll_chance	affliction_to_create
             EQUIPMENT_REFORGES[x['reforge_id'][index]] = {
                 'reforge_id':                   x['reforge_id'][index],
                 'name':                         x['name'][index],
-                'slot':                         x['slot'][index],
-                'roll':                         int(x['roll'][index]),
+                'slot_weapon':                         bool(x['slot_weapon'][index]),
+                'slot_body':                         bool(x['slot_body'][index]),
+                'slot_head':                         bool(x['slot_head'][index]),
+                'slot_trinket':                         bool(x['slot_trinket'][index]),
+                'slot_relic':                         bool(x['slot_relic'][index]),
+                'roll_chance':                         int(x['roll_chance'][index]),
+                'affliction_to_create':                         str(x['affliction_to_create'][index]),
                 'description':                  x['description'][index],
             }
 

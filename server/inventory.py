@@ -38,8 +38,8 @@ class TriggerableManager:
 
     # called at end of turn
     def finish_turn(self):
-        if self.actor.status != ActorStatusType.FIGHTING: 
-            return
+        #if self.actor.status != ActorStatusType.FIGHTING: 
+        #    return
         for item in self.items():
             if item.premade_id in self.triggered:
                 continue

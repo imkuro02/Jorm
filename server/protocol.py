@@ -320,7 +320,7 @@ class Protocol(protocol.Protocol):
             self.actor.stat_manager.stats.update(actor['stats'])
             self.actor.skill_manager.skills = actor['skills']
             # remove removed skills
-            tmp = self.actor.skill_manager.skills
+            tmp = copy.deepcopy(self.actor.skill_manager.skills)
             for skill in tmp:
                 if skill not in SKILLS:
                     del self.actor.skill_manager.skills[skill]
@@ -413,7 +413,7 @@ class Protocol(protocol.Protocol):
         self.actor.get_any_new_patches()
         self.actor.new_room_look()
         self.actor.friend_manager.friend_broadcast_login()
-        
+        self.actor.finish_turn()
         
         
 

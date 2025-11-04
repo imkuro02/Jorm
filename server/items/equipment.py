@@ -4,6 +4,7 @@ from items.misc import Item
 from utils import Table
 import skills.skills 
 import random
+import affects.affects as affects
 
 
 class EquipSkillManager:
@@ -82,20 +83,36 @@ class EquipmentBonusManager:
 
 
     def check_if_valid(self, bonus):
-        if bonus.type != BonusTypes.SKILL_LEVEL or bonus.type != BonusTypes.STAT:
+       
+
+        if bonus.type != BonusTypes.REFORGE and bonus.type != BonusTypes.SKILL_LEVEL and bonus.type != BonusTypes.STAT:
+            print('def check_if_valid(self, bonus) not of type')
             return False
 
         if bonus.type == BonusTypes.SKILL_LEVEL:
             if bonus.key not in SKILLS:
+                print('def check_if_valid(self, bonus) not in skills')
+                return False
+        
+        if bonus.type == BonusTypes.REFORGE:
+            if bonus.key not in EQUIPMENT_REFORGES:
+                print(bonus.key, 'def check_if_valid(self, bonus) not in ')
                 return False
 
         if bonus.type == BonusTypes.STAT:
             if bonus.key not in StatType.name:
+                print('def check_if_valid(self, bonus) not in stats')
                 return False
+
+        return True
 
     def add_bonus(self, bonus): 
         id = len(self.bonuses)
         
+        if not self.check_if_valid(bonus):
+            print('failed to add bonus ', bonus.__dict__)
+            return
+
         if bonus.val == 0:
             return
 
@@ -350,11 +367,34 @@ class Equipment(Item):
         _skill_obj.pre_use()
         del _skill_obj
 
+    def get_reforge_id(self):
+        for i in self.manager.bonuses.values():
+            if i.type == BonusTypes.REFORGE:
+                return i.key
+        return None
+
     def set_turn(self):
         pass
 
     # called at end of turn
     def finish_turn(self):
+        reforge_id = self.get_reforge_id()
+        if reforge_id == None:
+            return
+
+        reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
+        reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
+        slot_name = EquipmentSlotType.name[self.slot]
+        wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
+        affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
+        aff = affects.AffectTest(
+            affect_source_actor = self.inventory_manager.owner,
+            affect_target_actor = self.inventory_manager.owner,
+            name = affliction_name,
+            description = reforge_description,
+            turns = 3,
+        ) 
+        self.inventory_manager.owner.affect_manager.set_affect_object(aff)    
         pass
 
     # called whenever hp updates in any way
@@ -362,37 +402,9 @@ class Equipment(Item):
         return damage_obj
 
     def take_damage_after_calc(self, damage_obj):
-        if self.inventory_manager.owner.status == ActorStatusType.DEAD:
-            return damage_obj
-
-        if self.equiped:
-            for i in self.manager.bonuses.values():
-                if i.type == BonusTypes.REFORGE:
-                    match i.key:
-                        case 'warding':
-                            if (damage_obj.damage_type == DamageType.PHYSICAL or damage_obj.damage_type == DamageType.MAGICAL) and damage_obj.damage_to_stat == StatType.HP:
-                                roll = random.randint(0,10)
-                                if roll == 1:
-                                    self.use_skill('refresh', triggered_by_damage_obj = damage_obj)
         return damage_obj
     
     def deal_damage(self, damage_obj):
-        if self.equiped:
-            for i in self.manager.bonuses.values():
-                if i.type == BonusTypes.REFORGE:
-                    match i.key:
-                        case 'soft':
-                            if damage_obj.damage_type == DamageType.PHYSICAL:
-                                damage_obj.damage_value = int(damage_obj.damage_value*.9)
-                        case 'dumb':
-                            if damage_obj.damage_type == DamageType.PHYSICAL or damage_obj.damage_type == DamageType.HEALING:
-                                damage_obj.damage_value = int(damage_obj.damage_value*.9)
-                        case 'hard':
-                            if damage_obj.damage_type == DamageType.PHYSICAL:
-                                damage_obj.damage_value = int(damage_obj.damage_value*1.1) 
-                        case 'smart':
-                            if damage_obj.damage_type == DamageType.PHYSICAL or damage_obj.damage_type == DamageType.HEALING:
-                                damage_obj.damage_value = int(damage_obj.damage_value*1.1)
         return damage_obj
     
     def dealt_damage(self, damage_obj):

@@ -9,6 +9,13 @@ versions:
     - Now, each time someones turn begins it is announced 
     - Damage received is displayed in a more informative way
     - Fixed trading with npcs for quests, where you view the dialog of completion even if you didnt hand in item succesfully
+    - Fixed bug where offensive bouncy skills could bounce to an already dead target then continue bouncing
+    - --- ADDED REFORGING ---
+    - Reforges are passive afflictions that apply and refresh themselves based on equipment worn
+    - Reforge afflictions currently dont do anything but give description, this will soon change
+    - Reforges cost item level times 10 scrap 
+    - Added "help reforge"
+    - Added "help scrap"
   '311025':
     id: '311025'
     title: More skills!

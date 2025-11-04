@@ -195,15 +195,24 @@ class Skill:
                 targets = self.pre_use_get_targets()
                 if _skill_object.other in targets:
                     targets.remove(_skill_object.other)
+                
+                
+                #self.user.simple_broadcast(str([[target.name+','+target.status] for target in targets]), str(targets))
                 if targets == []:
-                    to_broadcast = 'no valid bounce targets'
-                    #self.user.simple_broadcast(to_broadcast, to_broadcast)
-                    return
-                _skill_object.other = random.choice(targets)
+                    to_broadcast = '*Fizzles out*'
+                    self.user.simple_broadcast(to_broadcast, to_broadcast)
+                    break
+
+                _new_target = random.choice(targets)
+                _skill_object.other = _new_target
+                self.other = _new_target
+                #_skill_object.other.combat_event = self.combat_event
                 #self.user.simple_broadcast(_skill_object.bounce,'fjdsbfkdsaf')
                 #to_broadcast = 
                 #self.simple_broadcast('')
+                
                 _skill_object.use()
+
 
 
 class SkillDamage(Skill):

@@ -186,7 +186,9 @@ def get_match(line, things):
 
     # create a list of names for fuzzy wuzzy
     for thing in things.values():
-        thing_names.append(remove_color(thing.name))
+        #thing_names.append(remove_color(thing.name))
+        thing_names.append(remove_color(thing.pretty_name()))
+        #print(thing_names)
 
     # get a list of matches
     matches = match_word_get_list(line, thing_names)
@@ -196,7 +198,8 @@ def get_match(line, things):
     for val in things.values():
         #print(index, matches[index-1][0].lower(),'----------', i, val.name)
         
-        if line.lower() in remove_color(val.name).lower(): 
+        #if line.lower() in remove_color(val.name).lower(): 
+        if line.lower() in remove_color(val.pretty_name()).lower(): 
             if i == index:
                 return val
             i += 1

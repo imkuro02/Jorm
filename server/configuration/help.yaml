@@ -169,6 +169,36 @@ commands:
       - look
       - keep
       - equipment
+  scrap:
+    group: items
+    syntax: 
+      - scrap <item name>
+      - scrap all
+    description: |
+      Scrap an item or items.
+      Scrapping an item destroys it, but gives you scrap in return.
+      Non equippable items return their amount as scrap.
+      Equippable items return their item level +1 as scrap.
+      Scrap can be used as both currency, and reforge material.
+      You cannot scrap items that are kept or equipped.
+    related:
+      - items
+      - reforge
+      - keep
+      - equipment   
+  reforge:
+    group: items
+    syntax: 
+      - reforge <item name>
+    description: |
+      Reforge an equippable item, giving it a reforge bonus.
+      Reforge bonuses are passive afflictions that apply to your character on equip.
+      Only one reforge can be present at a time.
+      An item reforge costs the items level times 10 Scrap.
+    related:
+      - items
+      - keep
+      - equipment   
   inventory:
     group: items
     syntax: 
@@ -222,8 +252,10 @@ commands:
     group: items
     syntax: 
       - get <item>
+      - get all
     description: | 
       Pick an item up and put it in your inventory.
+      "get all" gets all items on the ground.
     related:
       - inventory
       - drop
@@ -231,10 +263,12 @@ commands:
     group: items
     syntax: 
       - drop <item>
+      - drop all
     description: | 
       Drop an item on the ground.
       Kept (@redK@normal) or equipped (@greenE@normal) items cannot be dropped.
       Items cannot be dropped during an ongoing trade.
+      "drop all" drops all unkept and unequipped items on the ground.
     related:
       - inventory
       - get

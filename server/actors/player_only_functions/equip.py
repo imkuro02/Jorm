@@ -10,10 +10,24 @@ def command_equipment(self, line):
         if item == None:
             self.sendLine('Equip what?', sound = Audio.ERROR)
             return
+        
+        
         if item.equiped:
             self.inventory_unequip(item)
         else:
             self.inventory_equip(item)
+        # you can technically eq an item and unequip again to get the affliction
+        # for one turn, until it is your turn, so things that might proc while enemy is first
+        # you could have 2 of, easy solution is to have finish turn run twice for that not to happen
+        # or literally anything, idk u can figure it out
+        to_del = []
+        for i in self.affect_manager.affects.values():
+            if 'Wearing' in i.name or 'Wielding' in i.name:
+                to_del.append(i)
+        for i in to_del:
+            i.on_finished(silent = True) 
+        self.finish_turn(force_cooldown = True)
+
         return
 
     output = f'You are wearing:\n{self.get_character_equipment(hide_empty = False)}\n'
