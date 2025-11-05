@@ -336,7 +336,7 @@ class Player(Actor):
         
     def die(self, unload = False):
         super().die(unload = False)
-        lost_exp = int(self.stat_manager.stats[StatType.EXP]*0.1)
+        lost_exp = int(self.stat_manager.stats[StatType.EXP]*0.025)
         self.collect_lost_exp_rooms[self.room.id] = lost_exp
         self.gain_exp(-lost_exp)
         

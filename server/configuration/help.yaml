@@ -641,16 +641,16 @@ commands:
       without arguments, you will see the room
     related:
       - map
-      - scan
-  scan: 
-    group: other
-    syntax: 
-      - scan
-    description: |
-      Scan your surroundings in a 3x3 grid, display all characters and their locations.
-      Will not uncover hidden exits.
-    related:
-      - look
+  #    - scan
+  #scan: 
+  #  group: other
+  #  syntax: 
+  #    - scan
+  #  description: |
+ #     Scan your surroundings in a 3x3 grid, display all characters and their locations.
+ #     Will not uncover hidden exits.
+ #   related:
+ #     - look
   map:
     group: other
     syntax:

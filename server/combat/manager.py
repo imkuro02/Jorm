@@ -1,4 +1,4 @@
-from configuration.config import ActorStatusType, StatType, DamageType
+from configuration.config import ActorStatusType, StatType, DamageType, SKILLS
 from combat.combat_event import CombatEvent
 from combat.damage_event import Damage
 import random
@@ -23,7 +23,10 @@ class Combat:
             else: 
                 p.set_base_threat()
                 p.stat_manager.stats[StatType.INITIATIVE] = 0  
-
+                for skill_id in p.skill_manager.skills:
+                    cool = SKILLS[skill_id]['script_values']['cooldown'][0]-1
+                    p.cooldown_manager.add_cooldown(skill_id,cool)
+                #p.predict_use_best_skill()
             p.ai.clear_prediction()
 
         for p in self.room.actors.values():
@@ -142,16 +145,19 @@ class Combat:
                     i.heal(value = 99999)
 
             if i.party_manager.party != None:
+
                 one_alive = False
                 for par in i.party_manager.party.participants.values():
                     if par.status != ActorStatusType.DEAD:
                         one_alive = True
                 
-                if one_alive:
-                    if i.status == ActorStatusType.DEAD:
-                        i.stat_manager.stats[StatType.HP] = 1
-                        i.simple_broadcast(f'You get up again.', f'{i.pretty_name()} gets up again.')
-                        i.status = ActorStatusType.NORMAL
+                #if one_alive and self.round:
+                #    if i.status == ActorStatusType.DEAD:
+                #        i.stat_manager.stats[StatType.HP] = 1
+                #        i.simple_broadcast(f'You get up again.', f'{i.pretty_name()} gets up again.')
+                #        i.status = ActorStatusType.NORMAL
+                #        i.affect_manager.unload_all_affects(forced = False)
+                #        #i.set_turn()
             
             if i.status != ActorStatusType.DEAD:
                 i.status = ActorStatusType.NORMAL

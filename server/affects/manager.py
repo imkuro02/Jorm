@@ -10,11 +10,20 @@ class AffectsManager:
         #print(i)
         return affs
 
-    def unload_all_affects(self, silent = False):
+    def unload_all_affects(self, silent = False, forced = True):
         # REMOVE ALL AFFECTS VERY IMPORTANT
         aff_to_delete = []
         for aff in self.get_all_afflictions().values():
-            aff_to_delete.append(aff)
+            if forced == True:
+                #self.actor.sendLine(f'forced unload of affects true: {aff.name}')
+                aff_to_delete.append(aff)
+                continue
+            
+            if not aff.custom_go_away:
+                #self.actor.sendLine(f'not custom go away of affects true: {aff.name}')
+                aff_to_delete.append(aff)
+                continue
+                
         for aff in aff_to_delete:
             aff.on_finished(silent)
 

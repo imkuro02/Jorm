@@ -382,6 +382,9 @@ class Equipment(Item):
         if reforge_id == None:
             return
 
+        if self.inventory_manager.owner.status == ActorStatusType.DEAD:
+            return
+            
         reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
         reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
         slot_name = EquipmentSlotType.name[self.slot]

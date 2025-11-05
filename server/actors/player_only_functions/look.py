@@ -242,7 +242,11 @@ def command_map(self, line, return_gmcp = False):
                     for d in directions.values():
                         if d in grid:
                             if grid[d] in self.room.world.rooms:
-                                w_col, w_char, w_prio = self.room.world.rooms[grid[d]].get_wall_data()
+                                wall_data = self.room.world.rooms[grid[d]].get_wall_data()
+                                if len(wall_data) == 3:
+                                    w_col, w_char, w_prio = wall_data
+                                else:
+                                    w_col, w_char, w_prio = cell
                                 if int(cell[2]) >= int(w_prio):
                                     cell = [w_col, w_char, w_prio]
 

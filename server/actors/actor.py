@@ -546,7 +546,7 @@ class Actor:
             print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
             return
 
-        self.affect_manager.unload_all_affects(silent = True)
+        self.affect_manager.unload_all_affects(silent = True, forced = False)
         self.cooldown_manager.unload_all_cooldowns()
 
         self.ai.die()
@@ -571,12 +571,14 @@ class Actor:
         ]
 
         die_line = random.choice(die_lines)
+        tooltip_solo = f'type "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect' 
+        tooltip_party = f'your party leader needs to "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect you'
+        tooltip = tooltip_solo if self.party_manager.party == None else tooltip_party
         self.simple_broadcast(
-                f'{Color.BAD}You died{Color.NORMAL} "help rest"',
+                f'{Color.BAD}You died{Color.NORMAL}... {tooltip}',
                 f'{self.pretty_name()} {Color.BAD}{die_line}{Color.NORMAL}',
                 sound = sound
                 )
-        
 
         if self.room.combat != None:
             if self.room.combat.current_actor == self:

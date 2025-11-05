@@ -3,7 +3,14 @@ from combat.damage_event import Damage
 import utils 
 
 class Affect:
-    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, get_prediction_string_append = None, get_prediction_string_clear = False):
+    def __init__(self, 
+    affect_source_actor, 
+    affect_target_actor, 
+    name, description, 
+    turns, 
+    get_prediction_string_append = None, get_prediction_string_clear = False,
+    custom_go_away = False
+    ):
         self.affect_target_actor = affect_target_actor
         self.affect_source_actor = affect_source_actor
 
@@ -20,6 +27,11 @@ class Affect:
         # if this is true, the prediction string will be empty and only include affects
         self.get_prediction_string_clear = get_prediction_string_clear
         self.turns = turns
+
+        # if custom_go_away is true, the affliction only vanishes when "rest home"
+        # not on death, on rest now, or anything else
+        self.custom_go_away = custom_go_away
+
 
     def merge_request(self, affect_to_merge):
         return False
@@ -67,7 +79,7 @@ class Affect:
 
 class AffectTest(Affect):
     def merge_request(self, affect_to_merge):
-        print(self)
+        #print(self)
         if affect_to_merge.turns > self.turns:
             self.turns = affect_to_merge.turns
         return True

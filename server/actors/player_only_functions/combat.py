@@ -218,7 +218,7 @@ def rest_here(self, line):
     self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
-    self.affect_manager.unload_all_affects()
+    self.affect_manager.unload_all_affects(forced = False)
     self.cooldown_manager.unload_all_cooldowns()
     #self.new_room_look()
     self.finish_turn()
@@ -254,7 +254,7 @@ def rest_home(self, line):
         self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
 
         self.simple_broadcast(
-            'You ressurect',
+            None,
             f'{self.pretty_name()} ressurects')
 
         #tp home
@@ -267,8 +267,9 @@ def rest_home(self, line):
             rest_site = self.party_manager.party.actor.recall_site
         self.protocol.factory.world.rooms[rest_site].move_actor(self, silent = True)
 
+        self.new_room_look()
         self.simple_broadcast(
-            None,
+            'You ressurect',
             f'{self.pretty_name()} has ressurected')
     else:
 
@@ -278,11 +279,12 @@ def rest_home(self, line):
                 f'{self.pretty_name()} rests'
                 )
         else:
+            
             self.simple_broadcast(
-                f'You return to rest',
+                None,
                 f'{self.pretty_name()} returns back to rest'
                 )
-
+            
             #tp home
             if self.recall_site not in self.protocol.factory.world.rooms:
                 self.recall_site = 'tutorial'
@@ -293,19 +295,21 @@ def rest_home(self, line):
                 rest_site = self.party_manager.party.actor.recall_site
             self.protocol.factory.world.rooms[rest_site].move_actor(self, silent = True)
 
+            self.new_room_look()
             self.simple_broadcast(
-                None,
+                'You returned to rest',
                 f'{self.pretty_name()} has returned to rest'
                 )
-                
+    
+
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
     self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects()
     self.cooldown_manager.unload_all_cooldowns()
-    self.new_room_look()
     self.finish_turn()
+    
 
 @check_not_in_combat
 def command_rest(self, line):

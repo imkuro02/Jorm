@@ -91,7 +91,7 @@ commands = {
     #'setcall':  'command_recall_set',
     #'gocall':   'command_recall_go',
     'look':     'command_look',
-    'scan':     'command_scan',
+    #'scan':     'command_scan',              # disabled due to not working properly with instances
     'map':      'command_map',
     'lore':     'command_lore',
     'trade':    'command_trade',

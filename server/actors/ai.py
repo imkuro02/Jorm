@@ -2,6 +2,7 @@ import random
 from skills.manager import use_skill, get_user_skill_level_as_index
 from configuration.config import ActorStatusType
 from configuration.config import StatType, SKILLS, MsgType, StaticRooms
+from affects.affects import Affect
 
 
 class AI:
@@ -627,7 +628,101 @@ class VoreDragonLesserAI(VoreAI):
         self.vore_room_name =           'Mouth of the dragon'
         self.vore_room_description =    'The smell of charcoal mixed with burnt flesh overwhelms you\nIt is hot, wet, and dark here.'
         self.vore_room_spawns =         'dragon_tongue_0\ndragon_tooth_0\ndragon_tooth_0\ndragon_tooth_0\ndragon_tooth_0'
-                                        
+
+class AffectDeathAfterTurns(Affect):
+    def __init__(self, 
+                affect_source_actor,
+                affect_target_actor, 
+                name, description,
+                turns, 
+                custom_go_away,
+                turn_lines,
+                on_finished_death_line,
+                on_finished_survive_line
+                ):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, custom_go_away = custom_go_away)
+        # reverse the list, since turns go down instead of up
+        self.turn_lines = turn_lines[::-1]
+        self.on_finished_death_line = on_finished_death_line
+        self.on_finished_survive_line = on_finished_survive_line
+
+    def on_applied(self):
+        super().on_applied()
+
+    def set_turn(self, original = True):
+
+        self.turns -= 1
+        
+        if self.turns < len(self.turn_lines) and self.turns >= 0:
+            self.affect_target_actor.sendLine(self.turn_lines[self.turns])
+
+        if self.turns <= 0:
+            self.turns = 0
+
+        if not self.affect_target_actor.room.is_an_instance():
+            self.affect_target_actor.sendLine(self.on_finished_survive_line)
+            super().on_finished() 
+
+    def on_finished(self, silent=False):
+        if self.affect_target_actor.status == ActorStatusType.DEAD:
+            self.turn = 0
+            return
+
+        if not self.affect_target_actor.room.is_an_instance():
+            self.affect_target_actor.sendLine(self.on_finished_survive_line)
+            return super().on_finished(silent)
+        else:
+            self.affect_target_actor.sendLine(self.on_finished_death_line)
+            self.affect_target_actor.die()
+            
+        self.turn = 0
+         
+
+class TheWellBelowTrapAI(EnemyAI):
+    def __init__(self,actor):
+        super().__init__(actor)
+        self.current_room = self.actor.room
+        self.dead = False
+
+    def die(self):
+        if self.dead:
+            return
+        for par in self.current_room.actors.values():
+            if par == self.actor:
+                continue
+            par.sendLine(f'As {self.actor.pretty_name()} breaks, a gush of water follows.\nIt slams against the walls, then subsides\nthere is a pool of water beneath you, which slowly grows')
+            turns = 20
+            drowning = AffectDeathAfterTurns(
+                affect_source_actor = par,
+                affect_target_actor = par, 
+                name = 'Drowning', description = f'You will drown and die when the affliction ends', 
+                turns = turns, 
+                custom_go_away = True,
+                turn_lines = [
+                    'The water is slowly flooding the room',
+                    'The water is rising slowly',
+                    'You are ankle deep',
+                    'The water is rising slowly',
+                    'The water is rising to your knees',
+                    'The water is rising slowly',
+                    'The water is rising to your waist',
+                    'The water is rising slowly',
+                    'The water is rising to your chest',
+                    'The water is rising slowly',
+                    'The water is rising to your armpits',
+                    'The water is rising slowly',
+                    'Your neck is in water',
+                    'The water is rising slowly',
+                    'You feel the water hit your chin',
+                    'The water is rising slowly',
+                    'You are barely staying above the water now'
+                    'The water is rising slowly, this is it',],
+                on_finished_death_line = 'The water consumes you, and you drown',
+                on_finished_survive_line = 'You get to catch your breath'
+                )
+            drowning.turns = len(drowning.turn_lines)
+            par.affect_manager.set_affect_object(drowning)
+        self.dead = True
 
 def get_ai(ai_name):
     match ai_name:
@@ -639,6 +734,8 @@ def get_ai(ai_name):
             return CowardAI
         case 'BossRat':
             return BossRatAI
+        case 'TheWellBelowTrap':
+            return TheWellBelowTrapAI
         # vore ai is broken again
         #case 'Vore':
         #    return VoreAI
