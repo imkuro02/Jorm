@@ -1,3 +1,4 @@
+
 class AffectsManager:
     def __init__(self, actor):
         self.actor = actor
@@ -33,7 +34,6 @@ class AffectsManager:
         # the new affect will override current
         # merging logic of turns and whatnot happens in merge_request
         merged = False
-
         affs = self.affects
         if affect.name in affs:
             merged = self.affects[affect.name].merge_request(affect)

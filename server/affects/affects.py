@@ -77,13 +77,6 @@ class Affect:
     def dealt_damage(self, damage_obj):
         return damage_obj
 
-class AffectTest(Affect):
-    def merge_request(self, affect_to_merge):
-        #print(self)
-        if affect_to_merge.turns > self.turns:
-            self.turns = affect_to_merge.turns
-        return True
-
 class AffectStunned(Affect):
     # called at start of turn
     def set_turn(self):
@@ -511,3 +504,77 @@ class AffectDOT(Affect):
         )
 
         damage_obj.run()
+
+# XD Reforges
+
+class AffectReforge(Affect):
+    def __init__(self, 
+            affect_source_actor, 
+            affect_target_actor, 
+            name, description, 
+            turns,
+            source_item_id = None
+        ):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+        self.source_item_id = source_item_id
+
+    def merge_request(self, affect_to_merge):
+        # check if has this attribute, if so check if they are caused by same item
+        if hasattr(affect_to_merge, 'source_item_id'):
+            # if two reforges from one item, drop newest one
+            if self.source_item_id != affect_to_merge.source_item_id:
+                return False
+        #if self.name + self.description != affect_to_merge.name + affect_to_merge.description:
+        #    return False
+        if affect_to_merge.turns > self.turns:
+            self.turns = affect_to_merge.turns
+        return True
+    
+    # called when applied 
+    def on_applied(self):
+        affects = self.affect_target_actor.affect_manager.affects
+
+        # Move this affect to the front of the dict
+        if self in affects.values():
+            # Remove and reinsert at the beginning
+            for key, value in list(affects.items()):
+                if value == self:
+                    affects.pop(key)
+                    # Reinsert at the front (Python 3.7+ keeps insertion order)
+                    affects = {key: self, **affects}
+                    break
+
+            # Update the original dict reference
+            self.affect_target_actor.affect_manager.affects = affects
+        #super().on_applied()
+        pass
+
+    # called when effect is over
+    def on_finished(self, silent = False):
+        super().on_finished(silent = True)
+
+    # called at start of turn
+    def set_turn(self):
+        self.turns -= 1
+        pass
+
+    # called at end of turn
+    def finish_turn(self):
+        pass
+
+    # called whenever hp updates in any way
+    def take_damage_before_calc(self, damage_obj):
+        return damage_obj
+
+    def take_damage_after_calc(self, damage_obj):
+        return damage_obj
+    
+    def deal_damage(self, damage_obj):
+        return damage_obj
+    
+    def dealt_damage(self, damage_obj):
+        return damage_obj
+    
+class ReforgeTest(AffectReforge):
+    def finish_turn(self):
+        pass

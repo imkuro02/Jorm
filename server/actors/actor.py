@@ -338,16 +338,16 @@ class Actor:
                 output = 'You are affected with:\n' 
             else:
                 output = f'{target.pretty_name()} is affected with:\n'
-            t = utils.Table(3,1)
+            t = utils.Table(3,3)
             t.add_data('Aff')
-            t.add_data('x')
+            t.add_data('dur')
             t.add_data('Description')
             #output += f'{"Affliction":<15} {"For":<3} {"Info"}\n'
             
             for aff in target.affect_manager.affects.values():
                 #output += f'{aff.info()}'
                 t.add_data(aff.name)
-                t.add_data(aff.turns)
+                t.add_data(f'{aff.turns}')
                 t.add_data(aff.description)
             output = output + t.get_table()
         return output

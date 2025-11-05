@@ -378,6 +378,10 @@ class Equipment(Item):
 
     # called at end of turn
     def finish_turn(self):
+        if not self.equiped:
+            #print(self.name,'not equipped')
+            return
+        
         reforge_id = self.get_reforge_id()
         if reforge_id == None:
             return
@@ -386,16 +390,20 @@ class Equipment(Item):
             return
             
         reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
-        reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
+        #reforge_name = 'Reforged'
+        #reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
+        reforge_description = f'Reforged: {reforge_name}'
         slot_name = EquipmentSlotType.name[self.slot]
         wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
-        affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
-        aff = affects.AffectTest(
+        #affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
+        affliction_name = f'{wear_or_wield} {slot_name}'
+        aff = affects.ReforgeTest(
             affect_source_actor = self.inventory_manager.owner,
             affect_target_actor = self.inventory_manager.owner,
             name = affliction_name,
             description = reforge_description,
             turns = 3,
+            source_item_id = self
         ) 
         self.inventory_manager.owner.affect_manager.set_affect_object(aff)    
         pass
