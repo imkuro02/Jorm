@@ -446,7 +446,8 @@ class Equipment(Item):
                 name = affliction_name,
                 description = reforge_description,
                 turns = 3,
-                source_item_id = self
+                source_item = self,
+                reforge_variables = EQUIPMENT_REFORGES[reforge_id]['vars']
             ) 
             self.inventory_manager.owner.affect_manager.set_affect_object(aff)    
             

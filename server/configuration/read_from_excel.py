@@ -57,6 +57,13 @@ def configure_equipment_reforges(SHEET):
                 'roll_chance':                         int(x['roll_chance'][index]),
                 'affliction_to_create':                         str(x['affliction_to_create'][index]),
                 'description':                  x['description'][index],
+                # these values can be anything and the AfflictionReforge objects should handle them
+                'vars': {
+                    'var_a': str(x['var_a'][index]),
+                    'var_b': str(x['var_b'][index]),
+                    'var_c': str(x['var_c'][index]),
+                    'var_d': str(x['var_d'][index])
+                }
             }
 
     end = time.time()

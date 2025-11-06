@@ -513,16 +513,19 @@ class AffectReforge(Affect):
             affect_target_actor, 
             name, description, 
             turns,
-            source_item_id = None
+            source_item = None,
+            reforge_variables = None
         ):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
-        self.source_item_id = source_item_id
+        self.source_item = source_item
+        self.reforge_variables = reforge_variables
+
 
     def merge_request(self, affect_to_merge):
         # check if has this attribute, if so check if they are caused by same item
-        if hasattr(affect_to_merge, 'source_item_id'):
+        if hasattr(affect_to_merge, 'source_item'):
             # if two reforges from one item, drop newest one
-            if self.source_item_id != affect_to_merge.source_item_id:
+            if self.source_item != affect_to_merge.source_item:
                 return False
         #if self.name + self.description != affect_to_merge.name + affect_to_merge.description:
         #    return False
@@ -580,88 +583,34 @@ class ReforgeTest(AffectReforge):
         pass
 
 
-class ReforgeApplyBonusToStat(AffectReforge):
+class ReforgeStatBonusPerItemLevel(AffectReforge):
     def __init__(self, 
             affect_source_actor, 
             affect_target_actor, 
             name, description, turns,
-            source_item_id = None,
-            stat_to_bonus = StatType.HPMAX,
-            stat_bonus = 1
+            source_item = None,
+            reforge_variables = None
         ):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
-        self.source_item_id = source_item_id
-        self.stat_to_bonus = stat_to_bonus
-        self.stat_bonus = stat_bonus
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+        self.stat = self.reforge_variables['var_a']
+        self.bonus = float(self.reforge_variables['var_b'])
+        #self.bonus = self.bonus * self.source_item.stat_manager.reqs[StatType.LVL]
+        #self.source_item.stat_manager.reqs[self.stat] += 1 * self.bonus
+        #self.source_item.stat_manager.stats[self.stat] += 1 * self.bonus
 
+
+        
+        self.bonus = int(self.bonus * self.source_item.stat_manager.reqs[StatType.LVL])
+        
+
+        # 2 - 5 = -3
+        #if self.affect_target_actor.stat_manager.stats[self.stat] - self.bonus <= 0:
+        #    self.bonus = self.bonus - self.affect_target_actor.stat_manager.stats[self.stat]
+        
     def on_applied(self):
         super().on_applied()
-        self.affect_target_actor.stat_manager.stats[self.stat_to_bonus] += self.stat_bonus
-    
+        self.affect_target_actor.stat_manager.stats[self.stat] += self.bonus
+
     def on_finished(self, silent=False):
-        self.affect_target_actor.stat_manager.stats[self.stat_to_bonus] -= self.stat_bonus
+        self.affect_target_actor.stat_manager.stats[self.stat] -= self.bonus
         return super().on_finished(silent)
-    
-class ReforgeStrong(ReforgeApplyBonusToStat):
-    def __init__(self, 
-            affect_source_actor, 
-            affect_target_actor, 
-            name, description, 
-            turns,
-            source_item_id = None
-        ):
-        stat_to_bonus = StatType.GRIT,
-        stat_bonus = 5
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, 
-                         source_item_id =   source_item_id, 
-                         stat_to_bonus =    stat_to_bonus, 
-                         stat_bonus =       stat_bonus
-                         )
-
-class ReforgeSwift(ReforgeApplyBonusToStat):
-    def __init__(self, 
-            affect_source_actor, 
-            affect_target_actor, 
-            name, description, 
-            turns,
-            source_item_id = None
-        ):
-        stat_to_bonus = StatType.FLOW,
-        stat_bonus = 5
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, 
-                         source_item_id =   source_item_id, 
-                         stat_to_bonus =    stat_to_bonus, 
-                         stat_bonus =       stat_bonus
-                         )
-        
-class ReforgeSmart(ReforgeApplyBonusToStat):
-    def __init__(self, 
-            affect_source_actor, 
-            affect_target_actor, 
-            name, description, 
-            turns,
-            source_item_id = None
-        ):
-        stat_to_bonus = StatType.MIND
-        stat_bonus = 5
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, 
-                         source_item_id =   source_item_id, 
-                         stat_to_bonus =    stat_to_bonus, 
-                         stat_bonus =       stat_bonus
-                         )
-
-class ReforgeBlessed(ReforgeApplyBonusToStat):
-    def __init__(self, 
-            affect_source_actor, 
-            affect_target_actor, 
-            name, description, 
-            turns,
-            source_item_id = None
-        ):
-        stat_to_bonus = StatType.SOUL
-        stat_bonus = 5
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, 
-                         source_item_id =   source_item_id, 
-                         stat_to_bonus =    stat_to_bonus, 
-                         stat_bonus =       stat_bonus
-                         )
