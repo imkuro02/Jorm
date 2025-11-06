@@ -423,24 +423,33 @@ class Equipment(Item):
         if self.inventory_manager.owner.status == ActorStatusType.DEAD:
             return
             
-        reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
-        #reforge_name = 'Reforged'
-        #reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
-        reforge_description = f'Reforged: {reforge_name}'
-        slot_name = EquipmentSlotType.name[self.slot]
-        wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
-        #affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
-        affliction_name = f'{wear_or_wield} {slot_name}'
-        aff = affects.ReforgeTest(
-            affect_source_actor = self.inventory_manager.owner,
-            affect_target_actor = self.inventory_manager.owner,
-            name = affliction_name,
-            description = reforge_description,
-            turns = 3,
-            source_item_id = self
-        ) 
-        self.inventory_manager.owner.affect_manager.set_affect_object(aff)    
-        pass
+        reforge_obj = None
+        affliction_to_create = f'Reforge{EQUIPMENT_REFORGES[reforge_id]["affliction_to_create"]}'
+        try:
+            reforge_obj = getattr(affects, affliction_to_create)
+        except AttributeError:
+            err = f'cant set affliction object of {affliction_to_create} on {self} of id {self.premade_id} of unique id {self.id} finish_turn()'
+            self.inventory_manager.owner.simple_broadcast(err,err)
+            
+        if reforge_obj:
+            reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
+            #reforge_name = 'Reforged'
+            #reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
+            reforge_description = f'Reforged: {reforge_name}'
+            slot_name = EquipmentSlotType.name[self.slot]
+            wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
+            #affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
+            affliction_name = f'{wear_or_wield} {slot_name}'
+            aff = reforge_obj(
+                affect_source_actor = self.inventory_manager.owner,
+                affect_target_actor = self.inventory_manager.owner,
+                name = affliction_name,
+                description = reforge_description,
+                turns = 3,
+                source_item_id = self
+            ) 
+            self.inventory_manager.owner.affect_manager.set_affect_object(aff)    
+            
 
     # called whenever hp updates in any way
     def take_damage_before_calc(self, damage_obj):

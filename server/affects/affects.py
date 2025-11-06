@@ -547,7 +547,7 @@ class AffectReforge(Affect):
             # Update the original dict reference
             self.affect_target_actor.affect_manager.affects = affects
         #super().on_applied()
-        pass
+        #print('aff applied')
 
     # called when effect is over
     def on_finished(self, silent = False):
@@ -578,3 +578,90 @@ class AffectReforge(Affect):
 class ReforgeTest(AffectReforge):
     def finish_turn(self):
         pass
+
+
+class ReforgeApplyBonusToStat(AffectReforge):
+    def __init__(self, 
+            affect_source_actor, 
+            affect_target_actor, 
+            name, description, turns,
+            source_item_id = None,
+            stat_to_bonus = StatType.HPMAX,
+            stat_bonus = 1
+        ):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+        self.source_item_id = source_item_id
+        self.stat_to_bonus = stat_to_bonus
+        self.stat_bonus = stat_bonus
+
+    def on_applied(self):
+        super().on_applied()
+        self.affect_target_actor.stat_manager.stats[self.stat_to_bonus] += self.stat_bonus
+    
+    def on_finished(self, silent=False):
+        self.affect_target_actor.stat_manager.stats[self.stat_to_bonus] -= self.stat_bonus
+        return super().on_finished(silent)
+    
+class ReforgeStrong(ReforgeApplyBonusToStat):
+    def __init__(self, 
+            affect_source_actor, 
+            affect_target_actor, 
+            name, description, 
+            turns,
+            source_item_id = None
+        ):
+        stat_to_bonus = StatType.GRIT,
+        stat_bonus = 5
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, 
+                         source_item_id =   source_item_id, 
+                         stat_to_bonus =    stat_to_bonus, 
+                         stat_bonus =       stat_bonus
+                         )
+
+class ReforgeSwift(ReforgeApplyBonusToStat):
+    def __init__(self, 
+            affect_source_actor, 
+            affect_target_actor, 
+            name, description, 
+            turns,
+            source_item_id = None
+        ):
+        stat_to_bonus = StatType.FLOW,
+        stat_bonus = 5
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, 
+                         source_item_id =   source_item_id, 
+                         stat_to_bonus =    stat_to_bonus, 
+                         stat_bonus =       stat_bonus
+                         )
+        
+class ReforgeSmart(ReforgeApplyBonusToStat):
+    def __init__(self, 
+            affect_source_actor, 
+            affect_target_actor, 
+            name, description, 
+            turns,
+            source_item_id = None
+        ):
+        stat_to_bonus = StatType.MIND
+        stat_bonus = 5
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, 
+                         source_item_id =   source_item_id, 
+                         stat_to_bonus =    stat_to_bonus, 
+                         stat_bonus =       stat_bonus
+                         )
+
+class ReforgeBlessed(ReforgeApplyBonusToStat):
+    def __init__(self, 
+            affect_source_actor, 
+            affect_target_actor, 
+            name, description, 
+            turns,
+            source_item_id = None
+        ):
+        stat_to_bonus = StatType.SOUL
+        stat_bonus = 5
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, 
+                         source_item_id =   source_item_id, 
+                         stat_to_bonus =    stat_to_bonus, 
+                         stat_bonus =       stat_bonus
+                         )
