@@ -592,15 +592,15 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
             reforge_variables = None
         ):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
-        self.stat = self.reforge_variables['var_a']
-        self.bonus = float(self.reforge_variables['var_b'])
+        #self.stat = self.reforge_variables['var_a']
+        #self.bonus = float(self.reforge_variables['var_b'])
         #self.bonus = self.bonus * self.source_item.stat_manager.reqs[StatType.LVL]
         #self.source_item.stat_manager.reqs[self.stat] += 1 * self.bonus
         #self.source_item.stat_manager.stats[self.stat] += 1 * self.bonus
 
 
         
-        self.bonus = int(self.bonus * self.source_item.stat_manager.reqs[StatType.LVL])
+        #self.bonus = int(self.bonus * self.source_item.stat_manager.reqs[StatType.LVL])
         
 
         # 2 - 5 = -3
@@ -609,8 +609,8 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
         
     def on_applied(self):
         super().on_applied()
-        self.affect_target_actor.stat_manager.stats[self.stat] += self.bonus
+        #self.affect_target_actor.stat_manager.stats[self.stat] += self.bonus
 
     def on_finished(self, silent=False):
-        self.affect_target_actor.stat_manager.stats[self.stat] -= self.bonus
+        #self.affect_target_actor.stat_manager.stats[self.stat] -= self.bonus
         return super().on_finished(silent)

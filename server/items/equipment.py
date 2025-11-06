@@ -105,6 +105,33 @@ class EquipmentBonusManager:
                 return False
 
         return True
+    
+    def remove_bonus(self, bonus):
+        match bonus.type:
+            case 'reforge':
+                if EQUIPMENT_REFORGES[bonus.key] == 'StatBonusPerItemLevel':
+                    reforge_variables = EQUIPMENT_REFORGES[bonus.key]['vars']
+                    stat = reforge_variables['var_a']
+                    bonus = float(reforge_variables['var_b'])
+                    bonus = int(bonus * self.stat_manager.reqs[StatType.LVL])
+                    self.stat_manager.reqs[stat] -= bonus
+                    self.stat_manager.stats[stat] -= bonus
+            case 'skill_level':
+                #if bonus.key in SKILLS:
+                #    self.item.skill_manager.learn(bonus.key, bonus.val)
+                #    return
+                return
+            case 'skill_values':
+                return
+            case 'stat':
+                if bonus.key in [
+                    StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
+                    StatType.FLOW, StatType.MIND, StatType.SOUL, 
+                    StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS
+                    ]:
+                    self.item.stat_manager.stats[bonus.key] -= bonus.val
+                    
+        del self.bonuses[bonus.id]
 
     def add_bonus(self, bonus): 
         id = len(self.bonuses)
@@ -124,12 +151,15 @@ class EquipmentBonusManager:
 
         match bonus.type:
             case 'reforge':
-                return
-            #    match bonus.key:
-            #        case REFORGE.SOFT:
-            #            self.item.stat_manager.stats[StatType.HPMAX] += 10
-            #            self.item.stat_manager.stats[StatType.HPMAX] += 10
-            #            return
+                if EQUIPMENT_REFORGES[bonus.key]['affliction_to_create'] == 'StatBonusPerItemLevel':
+                    reforge_variables = EQUIPMENT_REFORGES[bonus.key]['vars']
+                    stat = reforge_variables['var_a']
+                    bonus = float(reforge_variables['var_b'])
+                    bonus = int(bonus * self.item.stat_manager.reqs[StatType.LVL])
+                    self.item.stat_manager.reqs[stat] += bonus
+                    self.item.stat_manager.stats[stat] += bonus
+                    return
+
             case 'skill_level':
                 if bonus.key in SKILLS:
                     self.item.skill_manager.learn(bonus.key, bonus.val)
@@ -149,8 +179,7 @@ class EquipmentBonusManager:
         del self.bonuses[id]
         print(f'cant add enchant for some reason {bonus.__dict__}')
 
-    def remove_bonus(self, bonus):
-        return
+
 
             
 
@@ -329,10 +358,10 @@ class Equipment(Item):
         to_del = []
         for bon in item.manager.bonuses.values():
             if bon.type == BonusTypes.REFORGE:
-                to_del.append(bon.id)
+                to_del.append(bon)
 
-        for bon_id in to_del:
-            del item.manager.bonuses[bon_id]
+        for bon in to_del:
+            item.manager.remove_bonus(bon)
 
         reforge_choices = []
         for i in EQUIPMENT_REFORGES:
