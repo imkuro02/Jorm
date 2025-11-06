@@ -1,0 +1,16 @@
+the_well_bellow_quest:
+  name: Find the lost toy in the well bellow
+  description: 
+    in_progress: |
+      The train enthusiast in the village has asked me to find their lost toy.
+      The toy fell down the well.
+    completed: |
+      I found the toy, now just need to make my way out and return it-
+    turned_in: |
+      I returned the toy, a job well done.
+  objectives:
+    Find the lost toy:
+      type: collect_x
+      objective: the_well_bellow_quest_item
+      completed_at: 1
+      

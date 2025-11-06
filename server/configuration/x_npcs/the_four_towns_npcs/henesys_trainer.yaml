@@ -31,7 +31,8 @@ henesys_trainer:
           quest_turn_in:
             id: apprentice_emblem_cleric
             reward: 
-              - soul relic 1
+              - item: soul relic 1
+                amount: 1
             reward_exp: 20
 
     end:

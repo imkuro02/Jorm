@@ -27,7 +27,8 @@ ellinia_shop_weapon:
             id: ellinia_shop_weapon_quest_1
             reward_exp: 25
             reward: 
-              - ellinia_shop_weapon_quest_1
+              - item: ellinia_shop_weapon_quest_1
+                amount: 1
         # quest 2
         - say: I need a wand..
           goto: ellinia_shop_weapon_quest_2_start       
@@ -50,7 +51,8 @@ ellinia_shop_weapon:
             id: ellinia_shop_weapon_quest_2
             reward_exp: 25
             reward: 
-              - ellinia_shop_weapon_quest_2
+              - item: ellinia_shop_weapon_quest_2
+                amount: 1
         # quest 3
         - say: I need a wand...
           goto: ellinia_shop_weapon_quest_3_start    
@@ -75,7 +77,8 @@ ellinia_shop_weapon:
             id: ellinia_shop_weapon_quest_3
             reward_exp: 25
             reward: 
-              - ellinia_shop_weapon_quest_3
+              - item: ellinia_shop_weapon_quest_3
+                amount: 1
     end:
       dialog: |
         says "Farewell"

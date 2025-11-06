@@ -167,41 +167,7 @@ def command_reforge(self, line):
             self.sendLine(f'You need atleast {reforge_cost} of {ITEMS[reforge_currency]["name"]} to reforge this item.')
             return
 
-        to_del = []
-        for bon in item.manager.bonuses.values():
-            if bon.type == BonusTypes.REFORGE:
-                to_del.append(bon.id)
-
-        for bon_id in to_del:
-            del item.manager.bonuses[bon_id]
-
-        reforge_choices = []
-        for i in EQUIPMENT_REFORGES:
-            # i is the reforge_id
-            #print(EQUIPMENT_REFORGES[i])
-            if EQUIPMENT_REFORGES[i]['slot_'+item.slot]:
-                reforge_choices.append(EQUIPMENT_REFORGES[i])
-
-        reforge_chances = {}
-        _chance = 0
-        for i in reforge_choices:
-            #print('choice')
-            reforge_chances[i['reforge_id']] = {'start':_chance + i['roll_chance'], 'range': i['roll_chance']}
-            _chance = _chance + i['roll_chance']
-
-        rolled_reforge = None
-        
-        roll = random.randint(0,_chance)
-        # print(roll,_chance)
-        for i in reforge_chances:
-            if roll <= reforge_chances[i]['start'] and roll >= reforge_chances[i]['range']:
-                #print(i)
-                rolled_reforge = i
-                break
-
-        if rolled_reforge != None:
-            new_bonus = EquipmentBonus(type = BonusTypes.REFORGE, key = rolled_reforge, val = 1, premade_bonus = False)
-            item.manager.add_bonus(new_bonus)
+        item = item.reforge()
 
         items_pretty_name_after_reforge.append(item.pretty_name())
 

@@ -31,7 +31,8 @@ kerning_trainer:
           quest_turn_in:
             id: apprentice_emblem_rogue
             reward: 
-             - flow relic 1
+              - item: flow relic 1
+                amount: 1
             reward_exp: 20
 
           # qkill_kerning_trainer

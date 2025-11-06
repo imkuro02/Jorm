@@ -1,7 +1,7 @@
 versions:
   '031125':
     id: '031125'
-    title: Inventory management, skills and damage
+    title: Inventory management, skills, damage, and reforges
     unixtime: 1761899677
     features:
     - drop all and get all now displays items interacted with in one line
@@ -11,15 +11,19 @@ versions:
     - Fixed trading with npcs for quests, where you view the dialog of completion even if you didnt hand in item succesfully
     - Fixed bug where offensive bouncy skills could bounce to an already dead target then continue bouncing
     - Scan command temporarely disabled due to not working properly in instances
-    - Party members dont get up after death, and they need to rest to get up
-    - 
     - --- ADDED REFORGING ---
     - Reforges are passive afflictions that apply and refresh themselves based on equipment worn
     - Reforge afflictions currently dont do anything but give description, this will soon change
     - Reforges cost item level times 10 scrap 
     - Added "help reforge"
     - Added "help scrap"
-    
+    - Random drop items have a LVL in 100 chance of being already reforged
+    - --- MAP CHANGES ---
+    - One new quest
+    - New dungeon "The well bellow"
+    - Door to ellinia has been removed, Lavoratory is now the main passage during all hours 
+    - --- QUEST CHANGES ---
+    - Quests can now reward amounts of items, not just one at a time, this means you can be rewarded with x amount of scrap for a quest
   '311025':
     id: '311025'
     title: More skills!

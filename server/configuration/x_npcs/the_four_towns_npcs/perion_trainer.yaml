@@ -30,7 +30,8 @@ perion_trainer:
           quest_turn_in:
             id: apprentice_emblem_fighter
             reward: 
-              - grit relic 1
+              - item: grit relic 1
+                amount: 1
             reward_exp: 20
 
     end:

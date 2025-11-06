@@ -31,7 +31,8 @@ ellinia_trainer:
           quest_turn_in:
             id: apprentice_emblem_mage
             reward: 
-              - mind relic 1
+              - item: mind relic 1
+                amount: 1
             reward_exp: 20
 
     end:

@@ -47,7 +47,8 @@ bartender:
             id: rat_king
             reward_exp: 50
             reward:
-              - beer_stein
+              - item: beer_stein
+                amount: 1
     in_progress:
       dialog: 
       - line: |

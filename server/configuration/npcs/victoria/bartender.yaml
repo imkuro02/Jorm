@@ -50,7 +50,8 @@ bartender:
             id: rat_king
             reward_exp: 50
             reward:
-              - beer_stein
+              - item: beer_stein
+                amount: 1
         - line: |
             ask about equipment
           goto: ask_about_equipment
@@ -99,8 +100,10 @@ bartender:
             id: first_equipment_set
             reward_exp: 10
             reward:
-              - grit body 1
-              - grit head 1
+              - item: grit body 1
+                amount: 1
+              - item: grit head 1
+                amount: 1
         - line: |
             pick something for avoidability
           goto: first_equipment_set_turn_in
@@ -108,8 +111,10 @@ bartender:
             id: first_equipment_set
             reward_exp: 10
             reward:
-              - flow body 1
-              - flow head 1
+              - item: flow body 1
+                amount: 1
+              - item: flow head 1
+                amount: 1
         - line: |
             pick something smart
           goto: first_equipment_set_turn_in
@@ -117,8 +122,10 @@ bartender:
             id: first_equipment_set
             reward_exp: 10
             reward:
-              - mind body 1
-              - mind head 1  
+              - item: mind body 1
+                amount: 1
+              - item: mind head 1  
+                amount: 1
         - line: |
             pick something the developer has a preference for
           goto: first_equipment_set_turn_in
@@ -126,8 +133,10 @@ bartender:
             id: first_equipment_set
             reward_exp: 11
             reward:
-              - soul body 1
-              - soul head 1
+              - item: soul body 1
+                amount: 1
+              - item: soul head 1
+                amount: 1
 
     first_equipment_set_turn_in:
       dialog: 

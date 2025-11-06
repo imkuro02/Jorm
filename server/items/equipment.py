@@ -324,11 +324,45 @@ class Equipment(Item):
      
 
 
-    #    SOFT:   'Deal 10% less physical damage',
-    #    DUMB:   'Deal 10% less magical and healing damage',
+    def reforge(self):
+        item = self
+        to_del = []
+        for bon in item.manager.bonuses.values():
+            if bon.type == BonusTypes.REFORGE:
+                to_del.append(bon.id)
 
-    #    HARD:   'Deal 10% more physical damage',
-    #    SMART:  'Deal 10% more magical and healing damage',
+        for bon_id in to_del:
+            del item.manager.bonuses[bon_id]
+
+        reforge_choices = []
+        for i in EQUIPMENT_REFORGES:
+            # i is the reforge_id
+            #print(EQUIPMENT_REFORGES[i])
+            if EQUIPMENT_REFORGES[i]['slot_'+item.slot]:
+                reforge_choices.append(EQUIPMENT_REFORGES[i])
+
+        reforge_chances = {}
+        _chance = 0
+        for i in reforge_choices:
+            #print('choice')
+            reforge_chances[i['reforge_id']] = {'start':_chance + i['roll_chance'], 'range': i['roll_chance']}
+            _chance = _chance + i['roll_chance']
+
+        rolled_reforge = None
+        
+        roll = random.randint(0,_chance)
+        # print(roll,_chance)
+        for i in reforge_chances:
+            if roll <= reforge_chances[i]['start'] and roll >= reforge_chances[i]['range']:
+                #print(i)
+                rolled_reforge = i
+                break
+
+        if rolled_reforge != None:
+            new_bonus = EquipmentBonus(type = BonusTypes.REFORGE, key = rolled_reforge, val = 1, premade_bonus = False)
+            item.manager.add_bonus(new_bonus)
+
+        return item
 
     # called at start of turn
 

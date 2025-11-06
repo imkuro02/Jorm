@@ -345,9 +345,11 @@ class Dialog:
 
             if 'reward' in answer:
                 for item_id in answer['reward']:
-                    item = load_item(item_id)
+                    item = load_item(item_id['item'])
+                    
                     if item == None:
                         continue
+                    item.stack = item_id['amount']
                     self.player.inventory_manager.add_item(item)
                     self.player.sendLine(f'You got: {item.pretty_name()}')
 
