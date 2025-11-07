@@ -11,6 +11,7 @@ class BonusTypes:
     REFORGE = 'reforge'
     SKILL_LEVEL = 'skill_level'
     STAT  = 'stat'
+    STAT_REQ = 'reqs'
 
 class Color:
     NORMAL =                '@normal'

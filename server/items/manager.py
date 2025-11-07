@@ -77,10 +77,10 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
         new_item.new = False
         new_item.slot = ITEMS[premade_id]['slot']
 
-        if not max_stats:
-            roll = random.randint(0,100)
-            if roll <= new_item.stat_manager.reqs[StatType.LVL]:
-                new_item.reforge()
+        #if unique_id == None:
+        #    roll = random.randint(0,100)
+        #    if roll <= new_item.stat_manager.reqs[StatType.LVL]:
+        #        new_item.reforge()
 
     if item_type == ItemType.MISC:
         new_item = Item()

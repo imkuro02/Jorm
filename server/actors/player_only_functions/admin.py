@@ -419,6 +419,8 @@ def command_load_item(self, line):
         self.sendLine(f'{line} is not a premade item')
         return
     item = items.load_item(line)
+    if item.premade_id == 'currency_0':
+        item.stack = 999999999999
     self.inventory_manager.add_item(item)
 
 @check_is_admin

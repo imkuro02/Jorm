@@ -85,7 +85,10 @@ class EquipmentBonusManager:
     def check_if_valid(self, bonus):
        
 
-        if bonus.type != BonusTypes.REFORGE and bonus.type != BonusTypes.SKILL_LEVEL and bonus.type != BonusTypes.STAT:
+        if (bonus.type != BonusTypes.REFORGE 
+            and bonus.type != BonusTypes.SKILL_LEVEL 
+            and bonus.type != BonusTypes.STAT 
+            and bonus.type != BonusTypes.STAT_REQ):
             print('def check_if_valid(self, bonus) not of type')
             return False
 
@@ -107,23 +110,25 @@ class EquipmentBonusManager:
         return True
     
     def remove_bonus(self, bonus):
+        #print(bonus.__dict__, bonus.type == 'reforge')
+        #print(EQUIPMENT_REFORGES[bonus.key])
         match bonus.type:
-            case 'reforge':
-                if EQUIPMENT_REFORGES[bonus.key] == 'StatBonusPerItemLevel':
+            case BonusTypes.REFORGE:
+                if EQUIPMENT_REFORGES[bonus.key]['affliction_to_create'] == 'StatBonusPerItemLevel':
                     reforge_variables = EQUIPMENT_REFORGES[bonus.key]['vars']
                     stat = reforge_variables['var_a']
-                    bonus = float(reforge_variables['var_b'])
-                    bonus = int(bonus * self.stat_manager.reqs[StatType.LVL])
-                    self.stat_manager.reqs[stat] -= bonus
-                    self.stat_manager.stats[stat] -= bonus
-            case 'skill_level':
+                    _bonus = float(reforge_variables['var_b'])
+                    _bonus = int(_bonus * self.item.stat_manager.reqs[StatType.LVL])
+                    self.item.stat_manager.reqs[stat] -= _bonus
+                    self.item.stat_manager.stats[stat] -= _bonus
+                    
+            case BonusTypes.SKILL_LEVEL:
                 #if bonus.key in SKILLS:
                 #    self.item.skill_manager.learn(bonus.key, bonus.val)
                 #    return
-                return
-            case 'skill_values':
-                return
-            case 'stat':
+                pass
+           
+            case BonusTypes.STAT:
                 if bonus.key in [
                     StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
                     StatType.FLOW, StatType.MIND, StatType.SOUL, 
@@ -131,57 +136,116 @@ class EquipmentBonusManager:
                     ]:
                     self.item.stat_manager.stats[bonus.key] -= bonus.val
                     
+            case BonusTypes.STAT_REQ:
+                if bonus.key in [
+                    StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
+                    StatType.FLOW, StatType.MIND, StatType.SOUL, 
+                    StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS, 
+                    StatType.LVL
+                    ]:
+                    self.item.stat_manager.reqs[bonus.key] -= bonus.val
+                    
+        print(bonus.__dict__,'removed')
         del self.bonuses[bonus.id]
 
-    def add_bonus(self, bonus): 
-        id = len(self.bonuses)
+    def add_bonus(self, bonus, recursive = True, merging = True): 
         
+
+        
+            
+        if bonus.id == 0:
+            id = len(self.bonuses) + 1
+        else:
+            id = bonus.id
+
+        '''
+        for i in self.bonuses:
+            if not merging:
+                break
+            if self.bonuses[i].type == bonus.type and self.bonuses[i].key == bonus.key:
+                #updated_bonus = self.bonuses[i]
+                #self.remove_bonus(updated_bonus)
+                #updated_bonus.val = updated_bonus.val + bonus.val
+                self.bonuses[i].val = self.bonuses[i].val + bonus.val
+
+                returned_bonus = self.add_bonus(bonus, merging = False)
+                # delete it but dont actually run the remove bonus thing
+                del self.bonuses[returned_bonus.id]
+        
+                return
+        '''
+
         if not self.check_if_valid(bonus):
             print('failed to add bonus ', bonus.__dict__)
             return
 
-        if bonus.val == 0:
-            return
+        self.bonuses[id] = bonus
+        bonus.id = id
 
-        if id in self.bonuses:
-            self.bonuses[id].val += bonus.val
-        else:
-            self.bonuses[id] = bonus
-            bonus.id = id
+            
+        #print(bonus.__dict__,'added')
+        
+        if recursive:
+            to_del = []
+            for bon in self.bonuses.values():
+                if bon.type == BonusTypes.REFORGE:
+                    to_del.append(bon)
 
+            for bon in to_del:
+                self.remove_bonus(bon)
+                #print('temp removing reforge', bon)
+                
         match bonus.type:
-            case 'reforge':
+            case BonusTypes.REFORGE:
                 if EQUIPMENT_REFORGES[bonus.key]['affliction_to_create'] == 'StatBonusPerItemLevel':
                     reforge_variables = EQUIPMENT_REFORGES[bonus.key]['vars']
                     stat = reforge_variables['var_a']
-                    bonus = float(reforge_variables['var_b'])
-                    bonus = int(bonus * self.item.stat_manager.reqs[StatType.LVL])
-                    self.item.stat_manager.reqs[stat] += bonus
-                    self.item.stat_manager.stats[stat] += bonus
-                    return
+                    _bonus = float(reforge_variables['var_b'])
+                    _bonus = int(_bonus * self.item.stat_manager.reqs[StatType.LVL])
+                    self.item.stat_manager.reqs[stat] += _bonus
+                    self.item.stat_manager.stats[stat] += _bonus
+                    
 
-            case 'skill_level':
+            case BonusTypes.SKILL_LEVEL:
                 if bonus.key in SKILLS:
                     self.item.skill_manager.learn(bonus.key, bonus.val)
-                    return
-            case 'skill_values':
-                pass
-                return
-            case 'stat':
+                    
+            case BonusTypes.STAT:
                 if bonus.key in [
                     StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
                     StatType.FLOW, StatType.MIND, StatType.SOUL, 
                     StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS
                     ]:
                     self.item.stat_manager.stats[bonus.key] += bonus.val
-                    return
-                
-        del self.bonuses[id]
-        print(f'cant add enchant for some reason {bonus.__dict__}')
+                    
+            case BonusTypes.STAT_REQ:
+                if bonus.key in [
+                    StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
+                    StatType.FLOW, StatType.MIND, StatType.SOUL, 
+                    StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS, 
+                    StatType.LVL
+                    ]:
+                    self.item.stat_manager.reqs[bonus.key] += bonus.val
+                    
 
 
+        if recursive:
+            for bon in to_del:
+                #bon.id = bonus.id
+                self.add_bonus(bon, recursive = False)
+                #print('after temp removing reforge, add it back', bon.__dict__)
 
+
+        # resort list so there are no empty spaces
+        tmp = {}
+        x = 0
+        for i in self.bonuses:
+            x += 1
+            tmp[x] = self.bonuses[i]
+            tmp[x].id = x
             
+        self.bonuses = tmp
+        #return bonus
 
 class Equipment(Item):
     def __init__(self):
@@ -257,15 +321,18 @@ class Equipment(Item):
             for bonus in self.manager.bonuses.values():
                 col = f'{Color.GOOD}+' if bonus.val >= 1 else f'{Color.BAD}'
                 match bonus.type:
-                    case 'reforge':
+                    case BonusTypes.REFORGE:
                         output += f'Reforged: {col.replace("+","")}{bonus.key}{Color.BACK}\n'
-                        output += f'-> {EQUIPMENT_REFORGES[bonus.key]["description"]}\n'
+                        output += f'          {EQUIPMENT_REFORGES[bonus.key]["description"]}\n'
 
-                    case 'skill_level':
+                    case BonusTypes.SKILL_LEVEL:
                         output += f'Affect {SKILLS[bonus.key]["name"]} by {col}{bonus.val}{Color.BACK}\n'
 
-                    case 'stat':
+                    case BonusTypes.STAT:
                         output += f'Affect {StatType.name[bonus.key]} by {col}{bonus.val}{Color.BACK}\n'
+
+                    case BonusTypes.STAT_REQ:
+                        output += f'Requirement {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n'
 
         if self.equiped == False:
             output += f'\n{Color.TOOLTIP}On equip changes:{Color.NORMAL}\n'
@@ -353,7 +420,7 @@ class Equipment(Item):
      
 
 
-    def reforge(self):
+    def reforge(self, forced_reforge_id = None):
         item = self
         to_del = []
         for bon in item.manager.bonuses.values():
@@ -377,19 +444,25 @@ class Equipment(Item):
             reforge_chances[i['reforge_id']] = {'start':_chance + i['roll_chance'], 'range': i['roll_chance']}
             _chance = _chance + i['roll_chance']
 
+
         rolled_reforge = None
         
-        roll = random.randint(0,_chance)
-        # print(roll,_chance)
-        for i in reforge_chances:
-            if roll <= reforge_chances[i]['start'] and roll >= reforge_chances[i]['range']:
-                #print(i)
-                rolled_reforge = i
-                break
+        if forced_reforge_id == None:
+            roll = random.randint(0,_chance)
+            # print(roll,_chance)
+            for i in reforge_chances:
+                if roll <= reforge_chances[i]['start'] and roll >= reforge_chances[i]['range']:
+                    #print(i)
+                    rolled_reforge = i
+                    break
+        else:
+            rolled_reforge = forced_reforge_id
 
         if rolled_reforge != None:
             new_bonus = EquipmentBonus(type = BonusTypes.REFORGE, key = rolled_reforge, val = 1, premade_bonus = False)
             item.manager.add_bonus(new_bonus)
+
+
 
         return item
 
@@ -441,6 +514,10 @@ class Equipment(Item):
 
     # called at end of turn
     def finish_turn(self):
+
+        if self.get_reforge_id():
+            self.reforge(self.get_reforge_id())
+
         if not self.equiped:
             #print(self.name,'not equipped')
             return
