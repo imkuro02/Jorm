@@ -119,7 +119,7 @@ class EquipmentBonusManager:
                     stat = reforge_variables['var_a']
                     _bonus = float(reforge_variables['var_b'])
                     _bonus = int(_bonus * self.item.stat_manager.reqs[StatType.LVL])
-                    self.item.stat_manager.reqs[stat] -= _bonus
+                    #self.item.stat_manager.reqs[stat] -= _bonus
                     self.item.stat_manager.stats[stat] -= _bonus
                     
             case BonusTypes.SKILL_LEVEL:
@@ -202,7 +202,7 @@ class EquipmentBonusManager:
                     stat = reforge_variables['var_a']
                     _bonus = float(reforge_variables['var_b'])
                     _bonus = int(_bonus * self.item.stat_manager.reqs[StatType.LVL])
-                    self.item.stat_manager.reqs[stat] += _bonus
+                    #self.item.stat_manager.reqs[stat] += _bonus
                     self.item.stat_manager.stats[stat] += _bonus
                     
 
@@ -322,17 +322,17 @@ class Equipment(Item):
                 col = f'{Color.GOOD}+' if bonus.val >= 1 else f'{Color.BAD}'
                 match bonus.type:
                     case BonusTypes.REFORGE:
-                        output += f'Reforged: {col.replace("+","")}{bonus.key}{Color.BACK}\n'
-                        output += f'          {EQUIPMENT_REFORGES[bonus.key]["description"]}\n'
+                        output += f'{Color.TOOLTIP}Reforged: "{Color.IMPORTANT}{EQUIPMENT_REFORGES[bonus.key]["name"]}{Color.TOOLTIP}"{Color.NORMAL}\n'
+                        output += f'{EQUIPMENT_REFORGES[bonus.key]["description"]}\n'
 
                     case BonusTypes.SKILL_LEVEL:
-                        output += f'Affect {SKILLS[bonus.key]["name"]} by {col}{bonus.val}{Color.BACK}\n'
+                        output += f'Skill {SKILLS[bonus.key]["name"]} {col}{bonus.val}{Color.BACK}\n'
 
                     case BonusTypes.STAT:
-                        output += f'Affect {StatType.name[bonus.key]} by {col}{bonus.val}{Color.BACK}\n'
+                        output += f'Stat {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n'
 
                     case BonusTypes.STAT_REQ:
-                        output += f'Requirement {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n'
+                        output += f'Required {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n'
 
         if self.equiped == False:
             output += f'\n{Color.TOOLTIP}On equip changes:{Color.NORMAL}\n'
