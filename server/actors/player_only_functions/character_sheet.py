@@ -116,8 +116,7 @@ def command_practice(self, line):
             if skill_cost <= 0:
                 skill_cost = 1
             ##
-            for item in equips:
-                self.inventory_equip(item, forced = True)
+            
 
             skill_level = 0
             if skill_id in self.skill_manager.skills:
@@ -129,15 +128,19 @@ def command_practice(self, line):
 
             can_afford = skill_cost <= self.stat_manager.stats[StatType.PP]
             meets_lvl_req = skill_level_req <= self.stat_manager.stats[StatType.LVL]
+            skill_max_level = int(SKILLS[skill_id]["script_values"]['levels'][-1])
 
             col = Color.NORMAL
             if override_color != None:
                 col = override_color
-            t.add_data(f'{"" if skill_level <= 0 else f"{Color.GOOD}Cur Prac Level{Color.NORMAL} {Color.IMPORTANT}{skill_level}{Color.NORMAL}:"}', col = col)
+            t.add_data(f'{"" if skill_level <= 0 else f"{Color.GOOD}Practice Level{Color.NORMAL} {Color.IMPORTANT}{skill_level}{Color.NORMAL}:"}', col = col)
             t.add_data(f'{skill_name}', col = col, filler='.')
-            t.add_data(f' Costs {skill_cost} PP', col = col)
-            t.add_data(f'(can practice)' if (can_afford and meets_lvl_req) else f'', col = col)
+            t.add_data(f' Costs {skill_cost} PP' if skill_level < skill_max_level else ' Max Level', col = col)
+            t.add_data(f'(can practice)' if (can_afford and meets_lvl_req and skill_level < skill_max_level) else f'', col = col)
             #t.add_data(f'Requires Level {skill_level_req}.')
+
+            for item in equips:
+                self.inventory_equip(item, forced = True)
 
         output = ''
         output += f'*All skills go up in cost by 1 PP, except the skill you practice.\n'
@@ -163,6 +166,8 @@ def command_practice(self, line):
         if skill_id in self.skill_manager.skills:
             if self.skill_manager.skills[skill_id] >= SKILLS[skill_id]['script_values']['levels'][-1]:
                 self.sendLine(f'{skill_name} is already max level')
+                for item in equips:
+                    self.inventory_equip(item, forced = True)
                 return
 
         #print(self.skill_manager.skills)
@@ -171,6 +176,7 @@ def command_practice(self, line):
         if pp_to_spend <= 0:
             pp_to_spend = 1
         ##
+
         for item in equips:
             self.inventory_equip(item, forced = True)
 
@@ -385,22 +391,66 @@ def command_skills(self, line):
 
         t = utils.Table(3, spaces = 2)
         t.add_data('Skill')
-        t.add_data('R')
-        t.add_data('Lvl')
+        t.add_data('Ready')
+        t.add_data('Level')
+
 
         for skill_id in SKILLS:
-            if skill_id not in self.skill_manager.skills:
-                continue # skip unknown skills
-            if self.skill_manager.skills[skill_id] <= 0:
-                continue
-                
-            t.add_data(id_to_name[skill_id])
-            if skill_id not in self.cooldown_manager.cooldowns:
-                t.add_data('Y',Color.GOOD)
-            else: 
-                t.add_data(f'{self.cooldown_manager.cooldowns[skill_id]}', Color.BAD)
+            
+            equips = []
+            for item in self.slots_manager.slots.values():
+                if item == None:
+                    continue
+                equips.append(self.inventory_manager.items[item])
 
-            t.add_data(self.skill_manager.skills[skill_id],Color.GOOD)
+            cur_lvl = 0
+            if skill_id in self.skill_manager.skills:
+                cur_lvl = self.skill_manager.skills[skill_id]
+
+            for item in equips:
+                self.inventory_unequip(item, silent = True)
+
+            nat_lvl = 0
+            if skill_id in self.skill_manager.skills:
+                nat_lvl = self.skill_manager.skills[skill_id]
+
+
+            for item in equips:
+                self.inventory_equip(item, forced = True)
+
+            #if skill_id not in self.skill_manager.skills:
+            #    continue # skip unknown skills
+            #if self.skill_manager.skills[skill_id] <= 0:
+            #    continue
+                
+            if nat_lvl == 0 and cur_lvl == 0:
+                continue
+
+
+            diff = cur_lvl-nat_lvl
+
+            t.add_data(id_to_name[skill_id])
+            if skill_id not in self.cooldown_manager.cooldowns and diff >= 0:
+                t.add_data('Ready',Color.GOOD)
+            elif skill_id in self.cooldown_manager.cooldowns and diff >= 0: 
+                t.add_data(f'In {self.cooldown_manager.cooldowns[skill_id]}', Color.BAD)
+            elif diff <= 0:
+                t.add_data(f'Never', Color.BAD)
+
+            
+            if diff == 0:
+                diff = ''
+            elif diff < 0:
+                diff = f'{Color.NORMAL}({Color.BAD}{diff}{Color.NORMAL})'
+            elif diff > 0:
+                diff = f'{Color.NORMAL}({Color.GOOD}+{diff}{Color.NORMAL})'
+
+            if cur_lvl >= 1:
+                cur_lvl = f'{Color.GOOD}{cur_lvl}{Color.NORMAL}'
+            else:
+                cur_lvl = f'{Color.BAD}{cur_lvl}{Color.NORMAL}'
+
+            t.add_data(f'{cur_lvl} {diff}')
         self.sendLine(t.get_table())
 
 @check_not_in_combat
