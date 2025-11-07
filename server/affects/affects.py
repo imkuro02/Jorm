@@ -520,6 +520,11 @@ class AffectReforge(Affect):
         self.source_item = source_item
         self.reforge_variables = reforge_variables
 
+        # need to double check if afflictions get messed up when unequipping shit
+        # during "practice" and "skills" commands
+        #import random
+        #self.description = str(random.randint(0,99999))
+
 
     def merge_request(self, affect_to_merge):
         # check if has this attribute, if so check if they are caused by same item
