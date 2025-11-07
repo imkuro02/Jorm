@@ -145,9 +145,15 @@ class EquipmentBonusManager:
                     ]:
                     self.item.stat_manager.reqs[bonus.key] -= bonus.val
                     
-        print(bonus.__dict__,'removed')
+        #print(bonus.__dict__,'removed')
         del self.bonuses[bonus.id]
 
+    # recursive is used for re-adding reforge bonuses
+    # if recursive is true, remove all reforges
+    # apply whatever bonus was added
+    # then re-add the removed reforges
+    # merging is supposed to merge its value to an already existing bonus if possible
+    # currently disabled because it didnt fawking work
     def add_bonus(self, bonus, recursive = True, merging = True): 
         
 
