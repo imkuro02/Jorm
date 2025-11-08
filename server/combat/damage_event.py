@@ -1,6 +1,6 @@
 
-from configuration.config import StatType, DamageType, IndentType
-from utils import indent
+from configuration.config import StatType, DamageType
+from utils import indent, IndentType
 from combat.combat_event import CombatEvent
 class Damage:
     def __init__(self, 

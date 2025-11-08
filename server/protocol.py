@@ -73,7 +73,7 @@ class Protocol(protocol.Protocol):
                 packet = packet.encode('utf-8')
                 self.transport.write(packet)
                 #return
-        #print(packet)
+        #utils.debug_print(packet)
         packet = IAC + SB + GMCP + gmcp_data_type.encode('utf-8') + ' '.encode('utf-8') + gmcp_data.encode('utf-8') + IAC + SE
         self.transport.write(packet)
 
@@ -244,7 +244,7 @@ class Protocol(protocol.Protocol):
             return False
 
         account = self.factory.db.find_account_from_username(username)
-        #print(self.account)
+        #utils.debug_print(self.account)
         if account != None and account[0] != self.id:
             self.sendLine('This username is already taken')
             return False
@@ -283,11 +283,11 @@ class Protocol(protocol.Protocol):
         for i in self.actor.slots_manager.slots.values():
             if i not in self.actor.inventory_manager.items:
                 if i == None: continue
-                print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{i} is not in inventory?')
+                utils.debug_print(f'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{i} is not in inventory?')
 
     def load_actor(self):
         actor = self.factory.db.read_actor(self.account[0])
-        #print('>>>',actor)
+        #utils.debug_print('>>>',actor)
 
         if actor == None: # new actor
             self.actor = Player(self, _id = None, name = self.username, room = self.factory.world.rooms[StaticRooms.LOADING])
@@ -328,7 +328,7 @@ class Protocol(protocol.Protocol):
             for alias in actor['settings_aliases']:
                 self.actor.settings_manager.aliases[alias] = actor['settings_aliases'][alias]
 
-            #print(actor['settings'])
+            #utils.debug_print(actor['settings'])
             if actor['settings'] != {}:
                 self.actor.settings_manager.gmcp = actor['settings']['gmcp']
                 self.actor.settings_manager.view_room = actor['settings']['view_room']
@@ -352,7 +352,7 @@ class Protocol(protocol.Protocol):
 
                 if item['item_id'] in bonuses:
                     for bonus in bonuses[item['item_id']]:
-                        #print(bonus)
+                        #utils.debug_print(bonus)
                         boon = EquipmentBonus(type = bonus['type'], key = bonus['key'], val = bonus['val'])
                         new_item.manager.add_bonus(boon)
 
@@ -365,15 +365,15 @@ class Protocol(protocol.Protocol):
             for item_id in actor['equipment']:
                 # skip if item is somehow not in inventory
                 if item_id not in self.actor.inventory_manager.items:
-                    print(item_id, 'is equiped but not in inventory?')
+                    utils.debug_print(item_id, 'is equiped but not in inventory?')
                     continue
                 if self.actor.inventory_manager.items[item_id].item_type != ItemType.EQUIPMENT:
-                    print(item_id, 'is equiped but not ItemType.EQUIPMENT')
+                    utils.debug_print(item_id, 'is equiped but not ItemType.EQUIPMENT')
                     continue
                 item = self.actor.inventory_manager.items[item_id]
                 self.actor.inventory_equip(item, forced = True)
 
-            #print(actor['friends'])
+            #utils.debug_print(actor['friends'])
             if actor['friends'] != []:
                 for i in actor['friends']:
                     # skip if somehow you friended yourself
@@ -384,7 +384,7 @@ class Protocol(protocol.Protocol):
                         continue
                     self.actor.friend_manager.friends.append(i[1])
 
-            #print(actor['explored_rooms'])
+            #utils.debug_print(actor['explored_rooms'])
             if actor['explored_rooms'] != []:
                 for i in actor['explored_rooms']:
                     self.actor.explored_rooms.append(i[1])
@@ -423,11 +423,11 @@ class Protocol(protocol.Protocol):
         
     def save_actor(self):
         if self.guest:
-            print('Not saving guest lol xd')
+            utils.debug_print('Not saving guest lol xd')
             return
 
         if self.actor == None:
-            print('no actor')
+            utils.debug_print('no actor')
             return
         
         self.factory.db.write_actor(self.actor)

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "2a55e0fc2dbcbd9feca810ffb367df80a53c3ebc107b61bacc1a1da5dfc7152b",
+    "SHA-256": "83cc734464fe8e40e972e354f1cb139f3684de3c0831cc18afc041456643f551",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -20061,6 +20061,42 @@
                 "var_a": "healing",
                 "var_b": "1.1",
                 "var_c": "0.9",
+                "var_d": "0.0"
+            }
+        },
+        "phy_to_mag": {
+            "reforge_id": "phy_to_mag",
+            "name": "Ethereal",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ConvertDamageType",
+            "description": "Convert all physical damage to magical damage",
+            "vars": {
+                "var_a": "physical",
+                "var_b": "magical",
+                "var_c": "0.0",
+                "var_d": "0.0"
+            }
+        },
+        "mag_to_phy": {
+            "reforge_id": "mag_to_phy",
+            "name": "Tangible",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ConvertDamageType",
+            "description": "Convert all magical damage to physical damage",
+            "vars": {
+                "var_a": "magical",
+                "var_b": "physical",
+                "var_c": "0.0",
                 "var_d": "0.0"
             }
         }

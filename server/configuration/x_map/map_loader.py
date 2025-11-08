@@ -18,7 +18,7 @@ def load_map():
         for filename in files:
             if filename.endswith('.json'):
                 file_path = os.path.join(root, filename)
-                print(file_path)
+                utils.debug_print(file_path)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
                     file_path = file_path.replace('configuration/map/','').replace('.json','')
@@ -27,7 +27,7 @@ def load_map():
                     elems = data ['elements']
                     for i in elems:
                         objects[i['id']] = i
-                        print(i)
+                        utils.debug_print(i)
 
                     for i in objects.values():
                         if i['_type'] == 'Room':
@@ -35,7 +35,7 @@ def load_map():
                                 continue
 
                             ROOM_ID = file_path+'#'+i['_subtitle']
-                            #print(i['_subtitle'] == 'loading',i['_subtitle'] )
+                            #utils.debug_print(i['_subtitle'] == 'loading',i['_subtitle'] )
                             
                             # skip if this room has already been loaded
                             if ROOM_ID in rooms:
@@ -54,10 +54,10 @@ def load_map():
                             room['instanced'] = False
 
                             if '_fillColor' in i:
-                                #print(i['_subtitle'], i['_fillColor'])
+                                #utils.debug_print(i['_subtitle'], i['_fillColor'])
                                 room['can_be_recall_site'] = i['_fillColor'] == 'rgb(213, 229, 214)' or i['_fillColor'] == '#D5E5D6'
                                 room['instanced'] = i['_fillColor'] == '#F6D5D5'
-                                #print(room['instanced'])
+                                #utils.debug_print(room['instanced'])
 
                             room['enemies'] = []
                             for obj in i['objects']:
@@ -145,11 +145,11 @@ def load_map():
     #for r in rooms.values():
     #    if 'tutorial' not in r['id']:
     #        continue 
-        #print(r)
+        #utils.debug_print(r)
             
                     
     return(rooms)
 
 if __name__ == '__main__':
     w = load_map()
-    #print(w)
+    #utils.debug_print(w)

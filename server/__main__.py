@@ -6,6 +6,7 @@ from utils import logging, Table
 import configuration.config as config
 config.load()
 import time
+import utils
 
 
 class ServerFactory(protocol.Factory):
@@ -53,7 +54,7 @@ class ServerFactory(protocol.Factory):
 
         self.runtime = time.time() - self.start
         #if self.runtime > self.ticks_passed/30:
-        #print(self.ticks_passed, self.runtime, self.ticks_passed/30 , '\r')
+        #utils.debug_print(self.ticks_passed, self.runtime, self.ticks_passed/30 , '\r')
 
     def buildProtocol(self, addr):
         return Protocol(self)
@@ -72,8 +73,8 @@ if __name__ == '__main__':
     reactor.listenSSL(4000, factory, ssl_context) 
     # AND NON SSL MUAHHAHA TELNET LETSGOOOO 
     reactor.listenTCP(4001, factory)
-    print("Server started on port 4000 with SSL and 4001 non SSL")
+    utils.debug_print("Server started on port 4000 with SSL and 4001 non SSL")
     reactor.run()
 
     factory.world.game_time.save_game_time()
-    print('Exiting...')
+    utils.debug_print('Exiting...')

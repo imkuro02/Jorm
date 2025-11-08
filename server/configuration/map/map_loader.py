@@ -83,7 +83,7 @@ def load_map():
         if 'wall_data' in json_data:
             room_wall_data = json_data['wall_data']
 
-        #print(room_spawner)
+        #utils.debug_print(room_spawner)
         nodes[room_id] = {
             'id': room_id,
             'name': room_name,
@@ -98,7 +98,7 @@ def load_map():
             #'items': room_items
         }
 
-        #print(room_from_file, room_id)
+        #utils.debug_print(room_from_file, room_id)
 
 
 
@@ -138,4 +138,4 @@ def load_map():
     return(nodes)
 
 if __name__ == '__main__':
-    print(load_map())
+    utils.debug_print(load_map())

@@ -1,7 +1,7 @@
 import pandas as pd
 from math import isnan
 from pandas_ods_reader import read_ods
-
+import utils
 #SHEET = {}
 
 import time
@@ -34,7 +34,7 @@ def read_from_ods_file():
     SHEET['enemies'] =             read_ods(file_path, 'enemies')
     SHEET['crafting_recipes'] =    read_ods(file_path, 'crafting_recipes')
     end = time.time()
-    print(end - start,'LOADING OF CONFIG.ODS')
+    utils.debug_print(end - start,'LOADING OF CONFIG.ODS')
 
     return SHEET
 
@@ -70,7 +70,7 @@ def configure_equipment_reforges(SHEET):
             }
 
     end = time.time()
-    print(end - start,'EQUIPMENT_REFORGES')
+    utils.debug_print(end - start,'EQUIPMENT_REFORGES')
     return EQUIPMENT_REFORGES
 
 def configure_skill_script_values(SHEET):
@@ -127,7 +127,7 @@ def configure_skill_script_values(SHEET):
                 }
 
     end = time.time()
-    print(end - start,'SKILL_SCRIPT_VALUES')
+    utils.debug_print(end - start,'SKILL_SCRIPT_VALUES')
     return SKILL_SCRIPT_VALUES
 
 def configure_USE_PERSPECTIVES(SHEET):
@@ -146,7 +146,7 @@ def configure_USE_PERSPECTIVES(SHEET):
                     x['key'][index]:        x['value'][index] 
                 }
     end = time.time()
-    print(end - start,'USE_PERSPECTIVES')   
+    utils.debug_print(end - start,'USE_PERSPECTIVES')   
     return USE_PERSPECTIVES
 
 def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
@@ -183,7 +183,7 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
     for skill in SKILLS:
         SKILLS[skill]['script_values'] = SKILL_SCRIPT_VALUES[skill]
     end = time.time()
-    print(end - start,'SKILL')
+    utils.debug_print(end - start,'SKILL')
     return SKILLS
 
 def configure_ITEMS(SHEET, USE_PERSPECTIVES):
@@ -248,7 +248,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
     for row in SHEET['items_equipment']:
         x = SHEET['items_equipment']
         for index in range(0, len(x[row])):
-            #print(x['premade_id'][index])
+            #utils.debug_print(x['premade_id'][index])
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':   x['premade_id'][index],
                 'name':         x['name'][index],
@@ -311,12 +311,12 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
             premade_id = x['premade_id'][index]
 
             if premade_id not in ITEMS:
-                print(f'excel loader skipping premade_id "{premade_id}" because this item doesnt exist (shadow error)')
+                utils.debug_print(f'excel loader skipping premade_id "{premade_id}" because this item doesnt exist (shadow error)')
                 continue
             
             for i in range(0,4):
                 i += 1
-                #print(i)
+                #utils.debug_print(i)
                 
                 ingredient = str(x[f'ingredient_{i}'][index])
                 quantity = int(x[f'quantity_{i}'][index])
@@ -325,20 +325,20 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     continue
 
                 ingredients[ingredient] = quantity
-                #print(f'ingredient_{i}',ingredient)
+                #utils.debug_print(f'ingredient_{i}',ingredient)
                 if premade_id not in ITEMS[ingredient]['crafting_ingredient_for']:
                     ITEMS[ingredient]['crafting_ingredient_for'].append(premade_id)
                 
             
             if ingredients not in ITEMS[premade_id]['crafting_recipe_ingredients']:
                 ITEMS[premade_id]['crafting_recipe_ingredients'].append(ingredients)
-                #print(f'craft {premade_id} ingredients: ',ingredients)
+                #utils.debug_print(f'craft {premade_id} ingredients: ',ingredients)
 
     
 
 
     end = time.time()
-    print(end - start,'ITEMS')
+    utils.debug_print(end - start,'ITEMS')
     return ITEMS
 
 def configure_ENEMIES(SHEET, ITEMS):
@@ -381,7 +381,7 @@ def configure_ENEMIES(SHEET, ITEMS):
 
 
     end = time.time()
-    print(end - start,'ENEMIES')
+    utils.debug_print(end - start,'ENEMIES')
 
     start = time.time()
     # ADD ENEMY LOOT
@@ -473,7 +473,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                     ENEMIES[e]['loot'][i] = int(loot[i])
 
     end = time.time()
-    print(end - start,'LOOT')
+    utils.debug_print(end - start,'LOOT')
 
 
     start = time.time()
@@ -499,7 +499,7 @@ def configure_ENEMIES(SHEET, ITEMS):
         ENEMIES[npc_id]['skills'] = ENEMY_SKILLS[npc_id]
     
     end = time.time()
-    print(end - start,'ENEMY_SKILLS')
+    utils.debug_print(end - start,'ENEMY_SKILLS')
 
     '''
     start = time.time()
@@ -534,7 +534,7 @@ def configure_ENEMIES(SHEET, ITEMS):
         ENEMIES[npc_id]['combat_loop'] = ENEMY_COMBAT_LOOP[npc_id]
 
     end = time.time()
-    print(end - start,'ENEMY_COMBAT_LOOP')
+    utils.debug_print(end - start,'ENEMY_COMBAT_LOOP')
     '''
     return ENEMIES
 
@@ -563,20 +563,20 @@ def is_checksum_same():
     excel_checksum = get_checksum('configuration/config.ods', "sha256")
     json_checksum = None
     file_json = Path('configuration/config.json')
-    print(f"Excel SHA-256: {excel_checksum}")
+    utils.debug_print(f"Excel SHA-256: {excel_checksum}")
 
     data = {}
     if file_json.exists() and file_json.is_file():
         try:
             with open(file_json, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            print("JSON data successfully loaded")
+            utils.debug_print("JSON data successfully loaded")
         except json.JSONDecodeError as e:
-            print(f"Error decoding JSON: {e}")
+            utils.debug_print(f"Error decoding JSON: {e}")
         except Exception as e:
-            print(f"Unexpected error: {e}")
+            utils.debug_print(f"Unexpected error: {e}")
     else:
-        print("Json config file does not exist.")
+        utils.debug_print("Json config file does not exist.")
 
     if data != {}:
         json_checksum = data['SHA-256']

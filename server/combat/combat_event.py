@@ -1,4 +1,5 @@
 from configuration.config import ActorStatusType, StatType, DamageType, Audio, MsgType, Color
+import utils
 
 class CombatEvent:
     def __init__(self):
@@ -10,7 +11,7 @@ class CombatEvent:
 
     def pop_from_queue(self):
         self.popped.append(self.queue[0])
-        print(self.queue[0].damage_source_action)
+        #utils.debug_print(self.queue[0].damage_source_action)
         self.queue.pop(0)
         
 
@@ -34,7 +35,7 @@ class CombatEvent:
                 case DamageType.PURE:
                     color = Color.DAMAGE_PURE
             if not pop.silent:
-                #print(pop)
+                #utils.debug_print(pop)
                 if pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'] == 0:
                     percentage = 0
                 else:
@@ -89,8 +90,8 @@ class CombatEvent:
 
             # do not clamp if actor is unloaded
             #if actor.stat_manager == None:
-            #    print(f'{actor} was unloaded but somehow took damage (probably a heal tick)')
-            #    print(f'{actor.name} was unloaded but somehow took damage (probably a heal tick)')
+            #    utils.debug_print(f'{actor} was unloaded but somehow took damage (probably a heal tick)')
+            #    utils.debug_print(f'{actor.name} was unloaded but somehow took damage (probably a heal tick)')
             #    continue
             actor.stat_manager.hp_mp_clamp_update()
         
@@ -152,34 +153,34 @@ class CombatEvent:
         #    return
 
         # add attacker buffs
-        print('base dmg:',damage_obj.damage_value)
+        utils.debug_print('base dmg:',damage_obj.damage_value)
         damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(damage_obj)
-        print('deal_damage dmg:',damage_obj.damage_value)
+        utils.debug_print('deal_damage dmg:',damage_obj.damage_value)
         damage_obj = damage_obj.damage_source_actor.inventory_manager.deal_damage(damage_obj)
-        print('deal_damage dmg:',damage_obj.damage_value)
+        utils.debug_print('deal_damage dmg:',damage_obj.damage_value)
 
         # before taking damage, receiver buffs
         damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_before_calc(damage_obj)
-        print('take_damage dmg:',damage_obj.damage_value)
+        utils.debug_print('take_damage dmg:',damage_obj.damage_value)
         damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_before_calc(damage_obj)
-        print('take_damage dmg:',damage_obj.damage_value)
+        utils.debug_print('take_damage dmg:',damage_obj.damage_value)
        
         # +/- armor calculation and hp removal
         damage_obj.calculate()
-        print('calculated',damage_obj.damage_value)
+        utils.debug_print('calculated',damage_obj.damage_value)
 
         # after taking damage, receiver buffs
         damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_after_calc(damage_obj)
-        print('take_damage dmg:',damage_obj.damage_value)
+        utils.debug_print('take_damage dmg:',damage_obj.damage_value)
         damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_after_calc(damage_obj)
-        print('take_damage dmg:',damage_obj.damage_value)
+        utils.debug_print('take_damage dmg:',damage_obj.damage_value)
 
 
         # effects after successful attack
         damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
-        print('dealt_damage',damage_obj.damage_value)
+        utils.debug_print('dealt_damage',damage_obj.damage_value)
         damage_obj.damage_source_actor.inventory_manager.dealt_damage(damage_obj)
-        print('dealt_damage',damage_obj.damage_value)
+        utils.debug_print('dealt_damage',damage_obj.damage_value)
         # add threat to the attacker
         damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += damage_obj.damage_value
         self.pop_from_queue()

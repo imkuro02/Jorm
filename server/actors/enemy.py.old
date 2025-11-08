@@ -10,7 +10,7 @@ from actors.ai import EnemyAI
 '''
 def create_enemy(room, npc_id, spawn_for_lore = False):
     if npc_id not in ENEMIES:
-        print(f'error creating enemy: {npc_id}')
+        utils.debug_print(f'error creating enemy: {npc_id}')
         return
 
     enemy = ENEMIES[npc_id]
@@ -27,14 +27,14 @@ def create_enemy(room, npc_id, spawn_for_lore = False):
     _loot = enemy['loot']
     loot = _loot
     description = enemy['description']
-    #print(enemy['name'],LOOT[_loot],'XD')
+    #utils.debug_print(enemy['name'],LOOT[_loot],'XD')
 
         
 
     for item in loot.keys():
-        #print(loot)
+        #utils.debug_print(loot)
         if item not in ITEMS:
-            print(item, 'does not exist in loot table for ', npc_id)
+            utils.debug_print(item, 'does not exist in loot table for ', npc_id)
     e = Enemy(npc_id, name, description, room, stats, loot, skills)
 
     return e
@@ -83,7 +83,7 @@ class Enemy(Actor):
 
 
     def sendLine(self, line):
-        print(f'sendLine called in a enemy function? line: {line}')
+        utils.debug_print(f'sendLine called in a enemy function? line: {line}')
 
     def tick(self):
         super().tick()

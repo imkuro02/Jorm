@@ -3,7 +3,7 @@ from skills.manager import use_skill, get_user_skill_level_as_index
 from configuration.config import ActorStatusType
 from configuration.config import StatType, SKILLS, MsgType, StaticRooms
 from affects.affects import Affect
-
+import utils
 
 class AI:
     def __init__(self, actor):
@@ -100,13 +100,13 @@ class AI:
                 continue
             if skill_id in self.actor.cooldown_manager.cooldowns:
                 if for_prediction and self.actor.cooldown_manager.cooldowns[skill_id] > 1:
-                    #print('WHAT,,',self.actor.cooldown_manager.cooldowns[skill_id])
+                    #utils.debug_print('WHAT,,',self.actor.cooldown_manager.cooldowns[skill_id])
                     continue
                 if not for_prediction:
-                    #print('not for prediction!_')
+                    #utils.debug_print('not for prediction!_')
                     continue
             if self.actor.skill_manager.skills[skill_id] <= 0:
-                #print('WHAT')
+                #utils.debug_print('WHAT')
                 continue
             skills.append(skill_id)
         return skills
@@ -114,7 +114,7 @@ class AI:
    
 
     def clear_prediction(self):
-        #print(self.actor.name, 'prediction cleared')
+        #utils.debug_print(self.actor.name, 'prediction cleared')
         self.prediction_target = None
         self.prediction_skill = None
         self.prediction_item = None
@@ -168,7 +168,7 @@ class AI:
         
         allies, enemies = self.get_targets()
         skills = self.get_skills(for_prediction = for_prediction, combat_only_skills = True)
-        #print(self.actor.name,skills)
+        #utils.debug_print(self.actor.name,skills)
         # try to use a skill 5 times, if it fails return false
         # return true if you managed to use a skill
         for i in range(0,20):
@@ -210,12 +210,12 @@ class AI:
             
 
 
-            #print(self.actor.name, 'prediction target:', target.name)
+            #utils.debug_print(self.actor.name, 'prediction target:', target.name)
             
                 
                 
             
-            #print(target, skill_to_use)
+            #utils.debug_print(target, skill_to_use)
             self.prediction_target = target
             self.prediction_skill = skill_to_use
             #for i in self.actor.room.combat.participants.values():
@@ -344,7 +344,7 @@ class PlayerAI(AI):
             if self.has_prediction():
                 self.use_prediction()
                 self.clear_prediction()
-                #print('using prediction')
+                #utils.debug_print('using prediction')
                 #if self.actor.settings_manager.autobattler:
                 #    self.predict_use_best_skill(offensive_only = True)
         
@@ -405,7 +405,7 @@ class CowardAI(AI):
         if len(self.actor.room.exits) >= 1:
             stats = self.actor.stat_manager.stats
             roll = (100 - (stats[StatType.HP] / stats[StatType.HPMAX] * 100)) / 5 
-            print(roll)
+            utils.debug_print(roll)
             if roll > random.randint(1,100):
                 #random_dir = random.choice(self.actor.room.exits)
                 self.actor.simple_broadcast('',f'{self.actor.pretty_name()} flees!')
@@ -568,20 +568,20 @@ class VoreAI(AI):
     def vore_room_close(self):
         if self.vore_room == None:
             return
-        #print(self.vore_room.__dict__)
+        #utils.debug_print(self.vore_room.__dict__)
         self.actor.room.world.rooms_to_unload.append(self.vore_room.id)
         #del self.rooms[self.vore_room_id]
         
     # grab a party and add it to vore room
     def vore_room_grab_party(self):
-        print('grabbing party')
+        utils.debug_print('grabbing party')
         to_move = []
         for i in self.original_room.actors.values():
             if type(i).__name__ != 'Player':
-                print('not player', i.name)
+                utils.debug_print('not player', i.name)
                 continue
             if i.status != ActorStatusType.FIGHTING:
-                print('not fighting', i.name)
+                utils.debug_print('not fighting', i.name)
                 continue
             to_move.append(i)
 
@@ -765,5 +765,5 @@ def get_ai(ai_name):
         #case 'VoreDragonLesser':
         #    return VoreDragonLesserAI
         case _:
-            print('something requested get_ai: ', ai_name, 'check the config.ods')
+            utils.debug_print('something requested get_ai: ', ai_name, 'check the config.ods')
             return EnemyAI

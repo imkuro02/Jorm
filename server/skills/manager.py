@@ -26,7 +26,7 @@ def error(user, err):
         user.sendLine(err)
         user.sendSound(Audio.ERROR)
     else:
-        print(err)
+        utils.debug_print(err)
 
 def get_user_skill_level_as_index(user,skill_id):
     skill = SKILLS[skill_id]

@@ -165,7 +165,7 @@ class Quest:
             output += f'{Color.DESC_QUEST}' + self.description['turned_in'] + f'{Color.NORMAL}\n'
 
         for objective in self.objectives.values():
-            #print(objective.__dict__)
+            #utils.debug_print(objective.__dict__)
             if objective.type == OBJECTIVE_TYPES.TURNED_IN:
                 continue
             
@@ -282,7 +282,7 @@ class Objective:
         return False
 
     def propose_objective_count_addition(self, objective_count_proposal: 'ObjectiveCountProposal'):
-        #print(self.__dict__, objective_count_proposal.__dict__)
+        #utils.debug_print(self.__dict__, objective_count_proposal.__dict__)
         if objective_count_proposal.requirement_id != self.requirement_id:
             return False
         if objective_count_proposal.type != self.type:
@@ -322,7 +322,7 @@ def create_quest(quest_id, actor):
         return quest
 
     if quest_id not in QUESTS:
-        print(quest_id, 'does not exist in configuration.config QUESTS')
+        utils.debug_print(quest_id, 'does not exist in configuration.config QUESTS')
         return
     
     quest_dict =  QUESTS[quest_id]
@@ -342,9 +342,9 @@ if __name__ == '__main__':
     from configuration.config import load
     load()
     quest = create_quest('debug_quest')
-    print(quest.quest_id)
-    print(quest.objectives)
+    utils.debug_print(quest.quest_id)
+    utils.debug_print(quest.objectives)
     for obj in quest.objectives:
-        print(obj,  quest.objectives)
-        print(quest.objectives[obj].__dict__)
+        utils.debug_print(obj,  quest.objectives)
+        utils.debug_print(quest.objectives[obj].__dict__)
 

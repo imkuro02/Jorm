@@ -286,7 +286,7 @@ def command_gain_exp(self, exp):
     try:
         self.stat_manager.stats[StatType.EXP] += int(exp)
     except ValueError:
-        print('gain_exp needs a int')
+        utils.debug_print('gain_exp needs a int')
         pass
 
 @check_is_admin
@@ -356,7 +356,7 @@ def command_create_item(self, line):
 @check_is_admin
 @check_no_empty_line
 def command_update_item(self, line):
-    #print(line)
+    #utils.debug_print(line)
     try:
         item = self.get_item(line.split()[0])
         item_id = item.id
@@ -402,7 +402,7 @@ def command_update_item(self, line):
                 return
 
             if stat[0] == 'r':
-                #print(stat, stat[1::])
+                #utils.debug_print(stat, stat[1::])
                 if str(stat[1::]) in self.inventory_manager.items[item_id].stat_manager.reqs:
                     self.inventory_manager.items[str(item_id)].stat_manager.reqs[str(stat[1::])] = int(value)
                     self.sendLine('@greenUpdated@normal')
@@ -585,7 +585,7 @@ def command_quest(self, line = 'list'):
             t.add_data(quest.name)
             t.add_data(quest.get_state(as_string = True))
             if quest.get_state() == QUEST_STATE_TYPES.IN_PROGRESS:
-                #print('WHART')
+                #utils.debug_print('WHART')
                 t.add_data(f'{quest.get_progress_percentage()}%')
             else:
                 t.add_data('')
@@ -674,7 +674,7 @@ def command_lore(self, line):
         all_rooms_e_spawns_in = []
         for room in LORE['rooms'].values():
             for spawn_points in room['spawner']:
-                #print(e_id in spawn_points, room['name'], e_id, spawn_points)
+                #utils.debug_print(e_id in spawn_points, room['name'], e_id, spawn_points)
                 if e_id in spawn_points:
                     #if room['name'] in all_rooms_e_spawns_in:
                     #    continue
@@ -721,7 +721,7 @@ def command_lore(self, line):
         return
     
     if to_find in list_of_items:
-        #print(LORE['items'][to_find])
+        #utils.debug_print(LORE['items'][to_find])
         output = f'{Color.IMPORTANT}You are pondering{Color.NORMAL}: '
         if to_find in LORE['items']:
             item_id = LORE['items'][to_find]['premade_id']

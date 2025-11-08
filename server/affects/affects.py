@@ -40,7 +40,9 @@ class Affect:
     #    return f'{self.name:<15} {self.turns:<3} {self.description}\n'
 
     # called when applied 
-    def on_applied(self):
+    def on_applied(self, silent = False):
+        if silent:
+            return
         self.affect_manager.actor.simple_broadcast(
             f'You are {self.name}',
             f'{self.affect_manager.actor.pretty_name()} is {self.name}',
@@ -320,7 +322,7 @@ class AffectMageArmor(Affect):
                 mp_dmg = round(damage_obj.damage_value*self.reduction)
                 hp_dmg = damage_obj.damage_value - mp_dmg
 
-                #print(damage_obj.damage_value, hp_dmg, mp_dmg)
+                #utils.debug_print(damage_obj.damage_value, hp_dmg, mp_dmg)
                 damage_obj.damage_value = hp_dmg
 
                 #damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP] -= mp_dmg
@@ -359,7 +361,7 @@ class AffectEnrage(Affect):
 
     def take_damage_before_calc(self, damage_obj: Damage):
         if damage_obj.damage_type != DamageType.CANCELLED:
-            #print(self.bonus)
+            #utils.debug_print(self.bonus)
             if damage_obj.damage_type == DamageType.HEALING:
                 damage_obj.damage_value = damage_obj.damage_value-(damage_obj.damage_value*self.bonus)
             else:
@@ -434,7 +436,7 @@ class AffectStealth(Affect):
         if damage_obj.damage_type != DamageType.PHYSICAL:
             return damage_obj
 
-        #print(utils.get_object_parent(damage_obj.damage_source_action))
+        #utils.debug_print(utils.get_object_parent(damage_obj.damage_source_action))
         #return damage_obj
         if utils.get_object_parent(damage_obj.damage_source_action) != 'Skill':
             return damage_obj
@@ -554,12 +556,12 @@ class AffectReforge(Affect):
 
             # Update the original dict reference
             self.affect_target_actor.affect_manager.affects = affects
-        super().on_applied()
-        #print('aff applied')
+        super().on_applied(silent = True)
+        #utils.debug_print('aff applied')
 
     # called when effect is over
     def on_finished(self, silent = False):
-        super().on_finished(silent = False)
+        super().on_finished(silent = True)
 
     # called at start of turn
     def set_turn(self):
@@ -622,12 +624,19 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
 
 class ReforgePlusDamageTypeMinusDamageTypes(AffectReforge):
     def deal_damage(self, damage_obj):
-        #print(damage_obj.damage_value)
+        #utils.debug_print(damage_obj.damage_value)
         if damage_obj.damage_type == self.reforge_variables['var_a']:
             damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_b']))
         else:
             damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_c']))
-        #print(damage_obj.damage_value)
+        #utils.debug_print(damage_obj.damage_value)
+        return damage_obj
+    
+class ReforgeConvertDamageType(AffectReforge):
+    def deal_damage(self, damage_obj):
+        #utils.debug_print(damage_obj.damage_value)
+        if damage_obj.damage_type == self.reforge_variables['var_a']:
+            damage_obj.damage_type = self.reforge_variables['var_b']
         return damage_obj
 ''' 
 # not fully working
@@ -643,7 +652,7 @@ class ReforgePureDamageBonusToNonTargettingEnemies(AffectReforge):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
 
     def deal_damage(self, damage_obj):
-        #print('damage_obj.damage_taker_actor.ai.prediction_target == damage_obj.damage_source_actor:',damage_obj.damage_taker_actor.ai.prediction_target == damage_obj.damage_source_actor)
+        #utils.debug_print('damage_obj.damage_taker_actor.ai.prediction_target == damage_obj.damage_source_actor:',damage_obj.damage_taker_actor.ai.prediction_target == damage_obj.damage_source_actor)
         if damage_obj.damage_taker_actor.ai.prediction_target != damage_obj.damage_source_actor:
             damage_obj.damage_value = int(damage_obj.damage_value * 1.1)
             damage_obj.damage_source_actor.simple_broadcast('HOLY MOLY','HOLY MOLY')

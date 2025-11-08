@@ -3,11 +3,17 @@ import logging
 import datetime
 import time
 import re
-from configuration.config import IndentType
+#from configuration.config import IndentType
 import math
 import weakref
 import random
+import traceback
 
+def debug_print(*args, **kwargs):
+    stack = traceback.extract_stack()
+    filename, lineno, func, _ = stack[-2]
+    print(f"[{filename}:{lineno} in {func}()]", *args, **kwargs)
+    
 class RefTracker:
     def __init__(self):
         self.refs = []
@@ -21,14 +27,14 @@ class RefTracker:
             obj = ref()  # dereference
             if obj is not None:
                 t = type(obj).__name__  # get class name as string
-                #print(t)
+                #utils.debug_print(t)
                 # count per type
                 refs[t] = refs.get(t, 0) + 1
             else:
                 pass
-                #print("<collected>")
+                #utils.debug_print("<collected>")
 
-        print("Ref sum:", refs)
+        debug_print("Ref sum:", refs)
             
 
 REFTRACKER = RefTracker()
@@ -51,9 +57,9 @@ def unload_fr():
                 try:
                     obj_dict[key] = None
                 except Exception as e:
-                    print(e)
+                    utils.debug_print(e)
         except Exception as e:
-            print(e)
+            utils.debug_print(e)
         _unloaded.append(obj_to_unload)
 
     for i in _unloaded:
@@ -188,7 +194,7 @@ def get_match(line, things):
     for thing in things.values():
         #thing_names.append(remove_color(thing.name))
         thing_names.append(remove_color(thing.pretty_name()))
-        #print(thing_names)
+        #utils.debug_print(thing_names)
 
     # get a list of matches
     matches = match_word_get_list(line, thing_names)
@@ -196,7 +202,7 @@ def get_match(line, things):
     # loop thru the matches, if the "line" is in the "things" name, add 1 to i, if i == index, then that is the "thing" you are looking for
     i = 1
     for val in things.values():
-        #print(index, matches[index-1][0].lower(),'----------', i, val.name)
+        #utils.debug_print(index, matches[index-1][0].lower(),'----------', i, val.name)
         
         #if line.lower() in remove_color(val.name).lower(): 
         if line.lower() in remove_color(val.pretty_name()).lower(): 
@@ -269,7 +275,7 @@ class Table:
 
     def get_table(self):
         if not self.data:
-            #print("No data available to display.")
+            #utils.debug_print("No data available to display.")
             return ''
         
         index = 0
@@ -280,11 +286,11 @@ class Table:
 
         i = 0
         for elem in self.data:
-            #print(widths[i], len(elem['val']))
+            #utils.debug_print(widths[i], len(elem['val']))
             if widths[i] < len(remove_color(elem['val'])) + self.SPACE:
                 widths[i] = len(remove_color(elem['val'])) + self.SPACE
-            #print(index)
-            #print(i,index,elem,widths[index])
+            #utils.debug_print(index)
+            #utils.debug_print(i,index,elem,widths[index])
             i += 1
             if i == self.columns:
                 index += 1
@@ -294,7 +300,7 @@ class Table:
         i = 0
         index = 0
         for elem in self.data:
-            #print(i,index,elem,widths[i])
+            #utils.debug_print(i,index,elem,widths[i])
             tmp_output = f'{remove_color(elem["val"]):<{widths[i]}}'
             tmp_output = tmp_output.replace(remove_color(elem['val']),elem['col']+elem['val']+f'@normal')
             #output += add_color(tmp_output)
@@ -388,9 +394,9 @@ def chunkate(input_string, max_width=800):
     # Now we have a list of chunks, which could be either color codes or regular text.
     output = ''
     line_length = 0
-    #print(chunks)
+    #utils.debug_print(chunks)
     for chunk in chunks:
-        #print(repr(chunk))
+        #utils.debug_print(repr(chunk))
         # If it's a color code, we don't add its length to the line length but just append it
         if chunk.startswith('@'):
             word_length = 0
@@ -398,7 +404,7 @@ def chunkate(input_string, max_width=800):
             for col in colors:
                 _chunk = _chunk.replace(col,'')
             word_length = len(_chunk)
-            #print(repr(chunk))
+            #utils.debug_print(repr(chunk))
             #word_length = len(chunk) - len(colors.get(chunk, ''))  # Subtract the length of the color code itself
         elif chunk == '\n':
             word_length = 0
@@ -407,7 +413,7 @@ def chunkate(input_string, max_width=800):
             word_length = len(chunk)
 
         if chunk == '\n':
-            #print('RESET CHUNJ')
+            #utils.debug_print('RESET CHUNJ')
             #output += str('R'*(max_width-(line_length+word_length)))
             line_length = 0
             
@@ -415,7 +421,7 @@ def chunkate(input_string, max_width=800):
         # Check if the word fits in the current line
         if line_length + word_length > max_width:
             # If it doesn't, add a line break
-            #print('NEW LINE')
+            #utils.debug_print('NEW LINE')
             #output += str('N'*(max_width-(line_length)))
             output += '\n'
             line_length = 0  # Reset line length
@@ -435,6 +441,11 @@ def add_line_breaks(input_string, max_width=100):
             output += l+'\n'
     return output
 
+class IndentType:
+    NONE = 'none'
+    MINOR = 'minor'
+    MAJOR = 'major'
+    
 def indent(line, indent: IndentType):
     _indent = ''
     match indent:
@@ -493,7 +504,7 @@ def progress_bar(size, cur_value, max_value, color = '@white', style=0):
     #output = output + '.'*(size-scaled_size)
     output = ' '*(size)
     output = output[:round(size/2)] + percentage_text + output[round(size/2):]
-    #print(len(output))
+    #utils.debug_print(len(output))
     output = output
     scaled_size += round(percentage_size/2) 
     if percentage == 0:
@@ -531,22 +542,22 @@ def progress_bar(size, cur_value, max_value, color = '@white', style=0):
 import random
 for i in range(0,101):
     col = random.choice('@red @green @cyan @yellow'.split())
-    print(add_color(progress_bar(8,i,100,col)))
+    utils.debug_print(add_color(progress_bar(8,i,100,col)))
 '''
 
 
 if __name__ == '__main__':
     
     line = '@reda@backb@redhello@greenchat@backwhatsup'
-    print(add_color(line))
+    utils.debug_print(add_color(line))
 
     input_string = "This this is a test @redtest\n of the line breaking @greenwith\n color and @back new ttt lines wo. This is a test @redtest of the line breaking @greenwith color and @back new lines. This is a test @redtest of"
     formatted_string = add_color(add_line_breaks(input_string))
 
-    print(formatted_string)
+    utils.debug_print(formatted_string)
     strings = formatted_string.split('\n')
     for s in strings:
-        print(len(s))
+        utils.debug_print(len(s))
 
 
                 

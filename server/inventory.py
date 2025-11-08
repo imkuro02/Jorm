@@ -20,8 +20,8 @@ class TriggerableManager:
                 continue
             sorted_items.append(self.inventory.items[item_id])
 
-        #print('items sorted')
-        #print(sorted_items)
+        #utils.debug_print('items sorted')
+        #utils.debug_print(sorted_items)
         return sorted_items#[item for item in self.inventory.items.values()]
     
     def reset_triggered(self):
@@ -138,7 +138,7 @@ class InventoryManager:
 
     def get_item_by_premade_id(self, item_id):
         for i in self.items.values():
-            #print(i.premade_id)
+            #utils.debug_print(i.premade_id)
             if i.premade_id == item_id:
                 return i
         return None

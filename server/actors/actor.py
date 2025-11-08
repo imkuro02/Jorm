@@ -543,7 +543,7 @@ class Actor:
         self.status = ActorStatusType.DEAD
 
         if self.room == None:
-            print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
+            utils.debug_print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
             return
 
         self.affect_manager.unload_all_affects(silent = True, forced = False)
@@ -596,20 +596,20 @@ class Actor:
                 if self in self.room.combat.participants.values():
                     del self.room.combat.participants[self.id]
         except Exception as e:
-            print(self, 'could not remove from room combat participants while unloading')
-            print(e)
+            utils.debug_print(self, 'could not remove from room combat participants while unloading')
+            utils.debug_print(e)
 
         try:        
             del self.room.actors[self.id]
         except Exception as e:
-            print(self, 'could not remove from room actors while unloading')
-            print(e)
+            utils.debug_print(self, 'could not remove from room actors while unloading')
+            utils.debug_print(e)
             
         try:     
             self.room = None
         except Exception as e:
-            print(self, 'could not set room to none while unloading')
-            print(e)
+            utils.debug_print(self, 'could not set room to none while unloading')
+            utils.debug_print(e)
 
         for i in self.inventory_manager.items.values():
             unload(i)
@@ -630,7 +630,7 @@ class Actor:
         
         #refs = gc.get_referrers(self)
         #if refs != []:
-        #    print(f'could not unload {self}:    {refs}')
+        #    utils.debug_print(f'could not unload {self}:    {refs}')
 
 
     def simple_broadcast(self, line_self, line_others, send_to = 'room', sound = None, msg_type = None):
@@ -649,7 +649,7 @@ class Actor:
         if send_to == 'room_party':
             players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player' and  actor.party_manager.get_party_id() == self.party_manager.get_party_id()]
             
-        #print(players)
+        #utils.debug_print(players)
         for player in players:
             if player == self:
                 if line_self == None:
@@ -682,10 +682,10 @@ class Actor:
         if self.room == None:
             return
         if self.room.combat == None:
-            #print('no combat')
+            #utils.debug_print('no combat')
             return
         if self != self.room.combat.current_actor:
-            #print('not my turn')
+            #utils.debug_print('not my turn')
             return
         
         self.room.combat.next_turn()
@@ -750,9 +750,9 @@ class Actor:
         #self.stat_manager.stats[StatType.THREAT] = int(self.stat_manager.stats[StatType.THREAT]*.90)
 
     def sendLine(self, line, msg_type = None):
-        print(f'sendLine called in a object class Npc function? line: {line}')
+        utils.debug_print(f'sendLine called in a object class Npc function? line: {line}')
 
     def sendSound(self, sfx):
-        print(f'sendSound called in a object class Npc function? line: {sfx}')
+        utils.debug_print(f'sendSound called in a object class Npc function? line: {sfx}')
     
 

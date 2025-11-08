@@ -12,7 +12,7 @@ def get_all_tables_and_values(database_path):
     # Loop through each table and get its data
     for table in tables:
         table_name = table[0]
-        print(f"Table: {table_name}")
+        utils.debug_print(f"Table: {table_name}")
         
         # Get all rows from the table
         cursor.execute(f"SELECT * FROM {table_name}")
@@ -20,13 +20,13 @@ def get_all_tables_and_values(database_path):
 
         # Get column names
         column_names = [description[0] for description in cursor.description]
-        print(f"Columns: {column_names}")
+        utils.debug_print(f"Columns: {column_names}")
 
-        # Print all rows from the table
+        # utils.debug_print all rows from the table
         for row in rows:
-            print(row)
+            utils.debug_print(row)
         
-        print("\n" + "-"*50 + "\n")
+        utils.debug_print("\n" + "-"*50 + "\n")
     
     # Close the connection
     conn.close()

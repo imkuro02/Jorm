@@ -26,13 +26,13 @@ with open(filename, 'r') as file:
 
     data['nodes'] = new_data
     #for i in data['nodes'].values():
-        #print(i)
+        #utils.debug_print(i)
     #for i in data['edges'].values():
-        #print(i)
+        #utils.debug_print(i)
 
     with open('output.json', 'w') as outfile:
-        json.dump(data, outfile, indent=4)  # `indent=4` makes it pretty-printed
+        json.dump(data, outfile, indent=4)  # `indent=4` makes it pretty-utils.debug_printed
 
 
-# Print the loaded data
-#print(data)
+# utils.debug_print the loaded data
+#utils.debug_print(data)

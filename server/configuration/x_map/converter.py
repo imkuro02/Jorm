@@ -33,7 +33,7 @@ def load_map():
                             #    continue
 
                             ROOM_ID = file_path+'#'+i['_subtitle']
-                            #print(i['_subtitle'] == 'loading',i['_subtitle'] )
+                            #utils.debug_print(i['_subtitle'] == 'loading',i['_subtitle'] )
                             
                             # skip if this room has already been loaded
                             if ROOM_ID in rooms:
@@ -53,10 +53,10 @@ def load_map():
                             room['instanced'] = False
 
                             if '_fillColor' in i:
-                                #print(i['_subtitle'], i['_fillColor'])
+                                #utils.debug_print(i['_subtitle'], i['_fillColor'])
                                 room['can_be_recall_site'] = i['_fillColor'] == 'rgb(213, 229, 214)' or i['_fillColor'] == '#D5E5D6'
                                 room['instanced'] = i['_fillColor'] == '#F6D5D5'
-                                #print(room['instanced'])
+                                #utils.debug_print(room['instanced'])
 
                             room['enemies'] = []
                             for obj in i['objects']:
@@ -144,7 +144,7 @@ def load_map():
     #for r in rooms.values():
     #    if 'tutorial' not in r['id']:
     #        continue 
-        #print(r)
+        #utils.debug_print(r)
 
     from uuid import uuid4   
     _rooms = {}
@@ -155,7 +155,7 @@ def load_map():
         #position":{"x":240,"y":304},"data":{"id":"6e904f3a-11d3-4871-889e-bb314cb2a813","json":{}}}}
         #,"edges":{}}
         PEEID = r['id']#str(uuid4())
-        #print(PEEID)
+        #utils.debug_print(PEEID)
         col = 'red'
 
         if 'ellinia#' in PEEID:
@@ -165,12 +165,12 @@ def load_map():
         if 'tutorial#' in PEEID:
             col = 'yellow'
 
-        #print(r)
+        #utils.debug_print(r)
 
         
 
         # _spawner = '\n'.join([', '.join([r['items']]])+', '.join([r['npcs']]))+'\n'.join(', '.join([r['enemies']]))
-        #print(r['items'])
+        #utils.debug_print(r['items'])
 
         _i = r['items']  
         _e = r['enemies']    
@@ -220,7 +220,7 @@ def load_map():
         
 
     for i in my_dict['nodes'].values():
-        print(i['data']['json']['spawner'])
+        utils.debug_print(i['data']['json']['spawner'])
 
     with open('data.json', 'w') as json_file:
         json.dump(my_dict, json_file, indent=4)
@@ -229,4 +229,4 @@ def load_map():
 
 if __name__ == '__main__':
     w = load_map()
-    print(w)
+    utils.debug_print(w)

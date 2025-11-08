@@ -479,15 +479,15 @@ def command_craft(self, line):
     
 
     if ingredients == []:
-        #print('if statement')
-        #print(item_crafting_recipes)
+        #utils.debug_print('if statement')
+        #utils.debug_print(item_crafting_recipes)
         recipe_to_use = item_crafting_recipes[0]
-        #print('recipe', to_find)
+        #utils.debug_print('recipe', to_find)
         for ingredient_id in recipe_to_use:
             ingredients_to_use.append(self.get_item(ITEMS[ingredient_id]['name']))
         
         
-    #print(ingredients_to_use)
+    #utils.debug_print(ingredients_to_use)
     for item in range(0,len(ingredients)):
         ingredients_to_use.append(self.get_item(ingredients[item]))
 
@@ -502,8 +502,8 @@ def command_craft(self, line):
             if len(ingredients_to_use) != len(recipe):
                 continue
 
-            #print(ingredients_to_use, len(ingredients_to_use))
-            #print(recipe, len(recipe))
+            #utils.debug_print(ingredients_to_use, len(ingredients_to_use))
+            #utils.debug_print(recipe, len(recipe))
             for index in range(0,len(recipe)):
                 if ingredients_to_use[index].premade_id != list(recipe)[index]:
                     recipe_failed = True
@@ -533,14 +533,14 @@ def command_craft(self, line):
             
     for index in range(0,len(recipe_to_use)):
         output = output + f"{list(recipe_to_use.values())[index]} {ingredients_to_use[index].name}, "
-        #print(':::', ingredients_to_use[index], list(recipe_to_use.values())[index])
+        #utils.debug_print(':::', ingredients_to_use[index], list(recipe_to_use.values())[index])
         self.inventory_manager.remove_item(item = ingredients_to_use[index], stack = list(recipe_to_use.values())[index])
             
         
 
     item = items.load_item(item_id)
-    #print(item.premade_id)
-    #print(self.inventory_manager.add_item(item))
+    #utils.debug_print(item.premade_id)
+    #utils.debug_print(self.inventory_manager.add_item(item))
     self.inventory_manager.add_item(item)
     output = f'You craft {item.name} using: ' + output[:-2]
     self.sendLine(output)

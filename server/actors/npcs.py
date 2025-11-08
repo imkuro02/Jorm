@@ -159,7 +159,7 @@ class Npc(Actor):
         # if returned true, start dialog
         talker.simple_broadcast(f'You approach {self.pretty_name()}', f'{talker.pretty_name()} approaches {self.pretty_name()}.')
         talker.current_dialog = Dialog(talker, self, self.dialog_tree)
-        talker.current_dialog.print_dialog()
+        talker.current_dialog.utils.debug_print_dialog()
         #return True
 
     # this function returns whether the npc has a quest to hand out or turn in / both
@@ -177,20 +177,20 @@ class Npc(Actor):
             
             if 'options' not in branch:
                 continue
-            #print(branch['options'])
+            #utils.debug_print(branch['options'])
             for option in branch['options']:
-                #print('!')
+                #utils.debug_print('!')
                 if 'quest_check' not in option:
                     continue
 
                 if 'quest_start' not in option and 'quest_turn_in' not in option:
                     continue
 
-                #print('checking, ',option['quest_check'])
+                #utils.debug_print('checking, ',option['quest_check'])
                 check_valid = True
                 for quest_to_check in option['quest_check']:
                     not_valid = quest_man.check_quest_state(quest_to_check['id']) != quest_to_check['state']
-                    #print(not_valid, quest_man.check_quest_state(quest_to_check['id']) , quest_to_check['state'])
+                    #utils.debug_print(not_valid, quest_man.check_quest_state(quest_to_check['id']) , quest_to_check['state'])
                     if not_valid:    
                         check_valid = False
                         
@@ -222,7 +222,7 @@ class Npc(Actor):
         if self.ai != None:
             self.ai.tick()
         #except Exception as e:
-        #    print(self.name, e)
+        #    utils.debug_print(self.name, e)
 
     def drop_loot_on_ground(self):
         for item in self.loot: 

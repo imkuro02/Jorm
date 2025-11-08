@@ -71,12 +71,12 @@ class Dialog:
         #    options.append({'index':0, 'say': 'Bye', 'goto': 'end'})
         return options
 
-    def print_dialog(self):
+    def utils.debug_print_dialog(self):
         dialog_line = self.dialog_tree[self.current_line]['dialog']
 
         available_dialogs = []
         for option in self.dialog_tree[self.current_line]['dialog']:
-            print(option)
+            utils.debug_print(option)
             dic = {}
             if 'quest_check' in option:
                 this_option_is_good = True
@@ -94,10 +94,10 @@ class Dialog:
 
 
 
-        #print('>',output)
+        #utils.debug_print('>',output)
         
         # if there is only one option, that option is end
-        # so dont print anything dialogue should end
+        # so dont utils.debug_print anything dialogue should end
 
         #if len(self.get_valid_options()) >= 2:
         for i in self.get_valid_options():
@@ -142,12 +142,12 @@ class Dialog:
         self.current_line = answer['goto']
 
         if 'quest_objective_count_proposal' in answer:
-            self.print_dialog()
+            self.utils.debug_print_dialog()
             self.player.quest_manager.propose_objective_count_addition(answer['quest_objective_count_proposal'])
             return True
 
         if 'quest_start' in answer:
-            self.print_dialog()
+            self.utils.debug_print_dialog()
             self.player.quest_manager.start_quest(answer['quest_start']['id'])
             return True
 
@@ -158,7 +158,7 @@ class Dialog:
                     self.end_dialog()
                     return True
 
-            self.print_dialog()
+            self.utils.debug_print_dialog()
             self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
             self.player.sendLine(f'@goodQuest turned in@normal: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
 
@@ -182,7 +182,7 @@ class Dialog:
             return True
             
 
-        self.print_dialog()
+        self.utils.debug_print_dialog()
         return True
 
     def end_dialog(self):

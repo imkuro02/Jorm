@@ -55,7 +55,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
                                         )
                     new_item.manager.add_bonus(boon)
         except Exception as e:
-            print(premade_id)
+            utils.debug_print(premade_id)
 
         #if not max_stats:
         #    random.seed(new_item.id)

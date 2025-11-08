@@ -2,6 +2,7 @@ from configuration.config import ActorStatusType, StatType, DamageType, SKILLS
 from combat.combat_event import CombatEvent
 from combat.damage_event import Damage
 import random
+import utils
 from utils import unload
 
 class Combat:
@@ -63,7 +64,7 @@ class Combat:
         #    self.combat_over()
         #    return
 
-        #print(self.time_since_turn_finished, len(self.participants))
+        #utils.debug_print(self.time_since_turn_finished, len(self.participants))
         if self.time_since_turn_finished == 30*20:
             if type(self.current_actor).__name__ == "Player":
                 self.current_actor.simple_broadcast(
@@ -102,7 +103,7 @@ class Combat:
             if i in self.participants.values():
                 i.tick()
             else:
-                print(f'combat manager cannot find participant: {i} is not here')
+                utils.debug_print(f'combat manager cannot find participant: {i} is not here')
 
         #if team1_died or team2_died:
         #    self.combat_over()
@@ -110,12 +111,12 @@ class Combat:
         #if self.current_actor.room != self.room:
 
         if self.current_actor not in self.participants.values():
-            print(self.current_actor, 'not here')
+            utils.debug_print(self.current_actor, 'not here')
             self.next_turn()
             return
 
         if self.current_actor.status == ActorStatusType.NORMAL:
-            print(self.current_actor.name, 'removed from combat')
+            utils.debug_print(self.current_actor.name, 'removed from combat')
             if self.current_actor.id in self.participants: 
                 #self.participants[self.current_actor.id].status = ActorStatusType.NORMAL
                 del self.participants[self.current_actor.id]
@@ -168,12 +169,12 @@ class Combat:
 
         
         self.room.combat = None
-        print('combat over')
+        utils.debug_print('combat over')
         #self.unload()
         
 
     def next_turn(self):
-        #print('next turn', self.turn)
+        #utils.debug_print('next turn', self.turn)
         actors = []
         for actor in self.participants.values():
             actors.append(actor)
@@ -192,7 +193,7 @@ class Combat:
         
         
 
-        #print(participating_parties)
+        #utils.debug_print(participating_parties)
         if len(participating_parties) <= 1 and self.turn >= 1:
            self.combat_over()
            return

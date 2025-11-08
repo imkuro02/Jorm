@@ -65,7 +65,7 @@ class AI:
         
         new_room.move_actor(self.actor)
 
-        #print(self.actor.id,'i wandered!',self.actor.name)
+        #utils.debug_print(self.actor.id,'i wandered!',self.actor.name)
 
     def tick(self):
         if self.actor.factory.ticks_passed <= 3:
@@ -139,7 +139,7 @@ class AI:
 
             # dont try to use a skill on an ally if you cant use it on them
             if ally != self.actor and s['target_others_is_valid'] == 0:
-                #print(f'cannot {skill}')
+                #utils.debug_print(f'cannot {skill}')
                 continue
             
             ally_stats =    ally.stat_manager.stats
@@ -152,9 +152,9 @@ class AI:
             score_low_hp_enemy  = s['weight_low_hp_enemy']  * (((enemy_stats[StatType.HPMAX] - enemy_stats[StatType.HP])/enemy_stats[StatType.HPMAX])* 100)* s['script_values']['cooldown'][level]
             score_high_hp_enemy = s['weight_high_hp_enemy'] * ((enemy_stats[StatType.HP] / enemy_stats[StatType.HPMAX]) * 100)                          * s['script_values']['cooldown'][level]
 
-            #print([score_low_hp_ally , score_high_hp_ally , score_low_hp_enemy , score_high_hp_enemy])
+            #utils.debug_print([score_low_hp_ally , score_high_hp_ally , score_low_hp_enemy , score_high_hp_enemy])
             score = score_low_hp_ally + score_high_hp_ally + score_low_hp_enemy + score_high_hp_enemy
-            #print(skill, score)
+            #utils.debug_print(skill, score)
             if score > best_score:
                 best_score = score
                 best_skill = skill
@@ -196,7 +196,7 @@ class AIBasic(AI):
         '''
         self_missing_hp = (self.actor.stat_manager.stats[StatType.HP]/self.actor.stat_manager.stats[StatType.HPMAX])
         self_missing_hp = abs(1-self_missing_hp)
-        print(self_missing_hp)
+        utils.debug_print(self_missing_hp)
         skills_to_pick_from = {}
         for skill in self.actor.skill_manager.skills:
             s = {
@@ -208,7 +208,7 @@ class AIBasic(AI):
             skills_to_pick_from[s['id']] = s
 
         for s in skills_to_pick_from.values():
-            print(s)
+            utils.debug_print(s)
         
         #random_target = random.choice([actor for actor in self.actor.room.combat.participants.values() if type(actor).__name__ != type(self.actor).__name__])
         skill_to_use = self.actor.combat_loop[0]

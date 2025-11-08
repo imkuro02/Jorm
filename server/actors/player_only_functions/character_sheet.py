@@ -110,7 +110,7 @@ def command_practice(self, line):
 
             for item in equips:
                 self.inventory_unequip(item, silent = True)
-            #print(self.skill_manager.skills)
+            #utils.debug_print(self.skill_manager.skills)
             ##
             skill_cost = SKILLS[skill_id]['practice_cost'] + (sum(self.skill_manager.skills.values())) - (self.skill_manager.skills[skill_id] if skill_id in self.skill_manager.skills else 0) -2 # -2 since you start with two skills
             if skill_cost <= 0:
@@ -170,7 +170,7 @@ def command_practice(self, line):
                     self.inventory_equip(item, forced = True)
                 return
 
-        #print(self.skill_manager.skills)
+        #utils.debug_print(self.skill_manager.skills)
         ##
         pp_to_spend = SKILLS[skill_id]['practice_cost'] + (sum(self.skill_manager.skills.values())) - (self.skill_manager.skills[skill_id] if skill_id in self.skill_manager.skills else 0) -2 # -2 since you start with two skills
         if pp_to_spend <= 0:
@@ -192,7 +192,7 @@ def command_practice(self, line):
             self.sendLine(f'{Color.BAD}You are not high enough level to practice {skill_name}{Color.NORMAL}')
             return
         
-        #print(SKILLS[skill_id])
+        #utils.debug_print(SKILLS[skill_id])
         #minimum_practice_req = SKILLS[skill_id]['script_values']['levels'][0]
         #current_prac_level = 0
 
@@ -356,7 +356,7 @@ def command_skills(self, line):
 
             
             for val_nam in SkillScriptValuesToNames:
-                #print(val_nam)
+                #utils.debug_print(val_nam)
                 if val_nam == 'levels':
                     continue
                 dic = SkillScriptValuesToNames
@@ -477,7 +477,7 @@ def command_respec(self, line):
     temp_player = Player(None, self.name, None)
     self.stat_manager.stats = temp_player.stat_manager.stats
     self.skill_manager.skills = temp_player.skill_manager.skills
-    #print(temp_player)
+    #utils.debug_print(temp_player)
     del temp_player
 
 

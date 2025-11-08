@@ -6,6 +6,7 @@ import csv
 import os
 import configuration.read_from_excel as rfe
 import random
+import utils
 
 class BonusTypes:
     REFORGE = 'reforge'
@@ -111,10 +112,7 @@ SkillScriptValuesToNames = {
     'mp_cost':      'MP-COST'
 }
 
-class IndentType:
-    NONE = 'none'
-    MINOR = 'minor'
-    MAJOR = 'major'
+
     
 class ItemType:
     MISC = 'misc'
@@ -329,11 +327,11 @@ def load():
     SPLASH_SCREENS['screens'] = splash_screens
 
     WORLD['world'] = configuration.map.map_loader.load_map()
-    #print(len(WORLD['world']))
+    #utils.debug_print(len(WORLD['world']))
 
     LORE = load_lore()
 
-    print('reloaded')
+    utils.debug_print('reloaded')
 
 
 

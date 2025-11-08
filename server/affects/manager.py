@@ -8,7 +8,7 @@ class AffectsManager:
         affs = {}
         for i in self.affects.values():
             affs[i.name] = i
-        #print(i)
+        #utils.debug_print(i)
         return affs
 
     def unload_all_affects(self, silent = False, forced = True):

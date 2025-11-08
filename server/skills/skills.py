@@ -82,7 +82,7 @@ class Skill:
                 continue
 
     def use(self):
-        #print('aoe:',self.aoe)
+        #utils.debug_print('aoe:',self.aoe)
         if not self.no_cooldown:
             cool = self.script_values['cooldown'][self.users_skill_level]
             #if cool <= 1: 
@@ -242,7 +242,7 @@ class SkillDamage(Skill):
             if self.combat_event == None:
                 damage_obj.run()
             # easy way of checking if a skill killed someone
-            #print(f'{damage_obj.damage_taker_actor.name} {damage_obj.damage_taker_actor.status}')
+            #utils.debug_print(f'{damage_obj.damage_taker_actor.name} {damage_obj.damage_taker_actor.status}')
             return damage_obj
 
 # XD parent damage skills
@@ -479,7 +479,7 @@ class SkillBash(SkillDamageByGrit):
             if self.combat_event == None:  
                 damage_obj = super().use()
             
-            print(damage_obj)
+            utils.debug_print(damage_obj)
             if all_armors[damage_obj.damage_taker_actor] > 0:
                 was_blocked = damage_obj.damage_value <= -1
                 if not was_blocked:

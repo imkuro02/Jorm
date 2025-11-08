@@ -158,7 +158,7 @@ def command_use(self, line, is_trying = False):
                 self.sendLine('> Use command queued! <')
                 return True
 
-    #print([i for i in self.queued_lines if not i.strip().startswith('try')])
+    #utils.debug_print([i for i in self.queued_lines if not i.strip().startswith('try')])
     if self.room.combat == None:
         if self.ai.use_prediction():
             # clear all try commands

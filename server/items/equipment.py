@@ -21,7 +21,7 @@ class EquipSkillManager:
     
     def unlearn(self, skill_id, amount = 1):
         if skill_id not in self.skills:
-            print(f'{self.item.name} cant unlearn {skill_id} because it is not learned')
+            utils.debug_print(f'{self.item.name} cant unlearn {skill_id} because it is not learned')
             return
         
         if amount == self.skills[skill_id]:
@@ -89,29 +89,29 @@ class EquipmentBonusManager:
             and bonus.type != BonusTypes.SKILL_LEVEL 
             and bonus.type != BonusTypes.STAT 
             and bonus.type != BonusTypes.STAT_REQ):
-            print('def check_if_valid(self, bonus) not of type')
+            utils.debug_print('def check_if_valid(self, bonus) not of type')
             return False
 
         if bonus.type == BonusTypes.SKILL_LEVEL:
             if bonus.key not in SKILLS:
-                print('def check_if_valid(self, bonus) not in skills')
+                utils.debug_print('def check_if_valid(self, bonus) not in skills')
                 return False
         
         if bonus.type == BonusTypes.REFORGE:
             if bonus.key not in EQUIPMENT_REFORGES:
-                print(bonus.key, 'def check_if_valid(self, bonus) not in ')
+                utils.debug_print(bonus.key, 'def check_if_valid(self, bonus) not in ')
                 return False
 
         if bonus.type == BonusTypes.STAT:
             if bonus.key not in StatType.name:
-                print('def check_if_valid(self, bonus) not in stats')
+                utils.debug_print('def check_if_valid(self, bonus) not in stats')
                 return False
 
         return True
     
     def remove_bonus(self, bonus):
-        #print(bonus.__dict__, bonus.type == 'reforge')
-        #print(EQUIPMENT_REFORGES[bonus.key])
+        #utils.debug_print(bonus.__dict__, bonus.type == 'reforge')
+        #utils.debug_print(EQUIPMENT_REFORGES[bonus.key])
         match bonus.type:
             case BonusTypes.REFORGE:
                 if EQUIPMENT_REFORGES[bonus.key]['affliction_to_create'] == 'StatBonusPerItemLevel':
@@ -145,7 +145,7 @@ class EquipmentBonusManager:
                     ]:
                     self.item.stat_manager.reqs[bonus.key] -= bonus.val
                     
-        #print(bonus.__dict__,'removed')
+        #utils.debug_print(bonus.__dict__,'removed')
         del self.bonuses[bonus.id]
 
     # recursive is used for re-adding reforge bonuses
@@ -182,14 +182,14 @@ class EquipmentBonusManager:
         '''
 
         if not self.check_if_valid(bonus):
-            print('failed to add bonus ', bonus.__dict__)
+            utils.debug_print('failed to add bonus ', bonus.__dict__)
             return
 
         self.bonuses[id] = bonus
         bonus.id = id
 
             
-        #print(bonus.__dict__,'added')
+        #utils.debug_print(bonus.__dict__,'added')
         
         if recursive:
             to_del = []
@@ -199,7 +199,7 @@ class EquipmentBonusManager:
 
             for bon in to_del:
                 self.remove_bonus(bon)
-                #print('temp removing reforge', bon)
+                #utils.debug_print('temp removing reforge', bon)
                 
         match bonus.type:
             case BonusTypes.REFORGE:
@@ -239,7 +239,7 @@ class EquipmentBonusManager:
             for bon in to_del:
                 #bon.id = bonus.id
                 self.add_bonus(bon, recursive = False)
-                #print('after temp removing reforge, add it back', bon.__dict__)
+                #utils.debug_print('after temp removing reforge, add it back', bon.__dict__)
 
 
         # resort list so there are no empty spaces
@@ -439,14 +439,14 @@ class Equipment(Item):
         reforge_choices = []
         for i in EQUIPMENT_REFORGES:
             # i is the reforge_id
-            #print(EQUIPMENT_REFORGES[i])
+            #utils.debug_print(EQUIPMENT_REFORGES[i])
             if EQUIPMENT_REFORGES[i]['slot_'+item.slot]:
                 reforge_choices.append(EQUIPMENT_REFORGES[i])
 
         reforge_chances = {}
         _chance = 0
         for i in reforge_choices:
-            #print('choice')
+            #utils.debug_print('choice')
             reforge_chances[i['reforge_id']] = {'start':_chance + i['roll_chance'], 'range': i['roll_chance']}
             _chance = _chance + i['roll_chance']
 
@@ -455,10 +455,10 @@ class Equipment(Item):
         
         if forced_reforge_id == None:
             roll = random.randint(0,_chance)
-            # print(roll,_chance)
+            # utils.debug_print(roll,_chance)
             for i in reforge_chances:
                 if roll <= reforge_chances[i]['start'] and roll >= reforge_chances[i]['range']:
-                    #print(i)
+                    #utils.debug_print(i)
                     rolled_reforge = i
                     break
         else:
@@ -504,7 +504,7 @@ class Equipment(Item):
             combat_event = triggered_by_damage_obj.combat_event
         )
 
-        #print('aaa',triggered_by_damage_obj.combat_event == _skill_obj.combat_event)
+        #utils.debug_print('aaa',triggered_by_damage_obj.combat_event == _skill_obj.combat_event)
 
         _skill_obj.pre_use()
         del _skill_obj
@@ -525,7 +525,7 @@ class Equipment(Item):
             self.reforge(self.get_reforge_id())
 
         if not self.equiped:
-            #print(self.name,'not equipped')
+            #utils.debug_print(self.name,'not equipped')
             return
         
         reforge_id = self.get_reforge_id()

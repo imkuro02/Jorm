@@ -203,16 +203,16 @@ class Database:
                 'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in']['count'] == 1 and q != 'daily_quest'] ),
                 'explored_rooms': len([q for q in actor['explored_rooms']])  
             }
-            #print(actor['quests'], actor['quests'].values())
+            #utils.debug_print(actor['quests'], actor['quests'].values())
             actor_objs.append(actor_obj)
 
 
         # Sort actor_objs list from most experience to least experience
         sorted_actor_objs = sorted(actor_objs, key=lambda x: x['exp'], reverse=True)
 
-        # Print the sorted list of actor objects
+        # utils.debug_print the sorted list of actor objects
         #for actor in sorted_actor_objs:
-        #    print(actor)
+        #    utils.debug_print(actor)
         return sorted_actor_objs
         
     def create_new_account(self, unique_id, username, password):
@@ -399,7 +399,7 @@ class Database:
             #    continue
 
             for objective in quest.objectives.values():
-                #print(objective)
+                #utils.debug_print(objective)
                 my_dict['quest_id'] = objective.quest_id
                 my_dict['objective_name'] = objective.name
                 my_dict['objective_type'] = objective.type
@@ -468,7 +468,7 @@ class Database:
         for key in actor.friend_manager.friends:
             my_dict['actor_id'] = actor_id
             my_dict['friend_id'] = key
-            #print(f'{actor_id} adds {key}')
+            #utils.debug_print(f'{actor_id} adds {key}')
             self.cursor.execute('''
                 INSERT INTO friend (
                     actor_id, friend_id
@@ -486,7 +486,7 @@ class Database:
         for key in actor.explored_rooms:
             my_dict['actor_id'] = actor_id
             my_dict['room_id'] = key
-            #print(f'{actor_id} adds {key}')
+            #utils.debug_print(f'{actor_id} adds {key}')
             self.cursor.execute('''
                 INSERT INTO explored_rooms (
                     actor_id, room_id
@@ -524,41 +524,41 @@ class Database:
         ''', (actor_id,))
 
         stats = self.cursor.fetchone()
-        #print('stats',stats)
+        #utils.debug_print('stats',stats)
 
         self.cursor.execute('''
             SELECT * FROM inventory WHERE actor_id = ?
         ''', (actor_id,))
 
         inventory = self.cursor.fetchall()
-        #print('inventory',inventory)
+        #utils.debug_print('inventory',inventory)
 
         self.cursor.execute('''
             SELECT * FROM equipment WHERE actor_id = ?
         ''', (actor_id,))
 
         equipment = self.cursor.fetchall()
-        #print('equipment',equipment)
+        #utils.debug_print('equipment',equipment)
 
         self.cursor.execute('''
             SELECT * FROM skills WHERE actor_id = ?
         ''', (actor_id,))
 
         skills = self.cursor.fetchall()
-        #print('skills',skills)
+        #utils.debug_print('skills',skills)
 
         self.cursor.execute('''
             SELECT * FROM quests WHERE actor_id = ?
         ''', (actor_id,))
 
         quests = self.cursor.fetchall()
-        #print('quests',quests)
+        #utils.debug_print('quests',quests)
 
         self.cursor.execute('''
             SELECT * FROM equipment_bonuses WHERE actor_id = ?
         ''', (actor_id,))
         bonuses = self.cursor.fetchall()
-        #print('bonuses', bonuses)
+        #utils.debug_print('bonuses', bonuses)
 
         self.cursor.execute('''
             SELECT * FROM settings_aliases WHERE actor_id = ?
@@ -661,11 +661,11 @@ class Database:
         
         my_dict['settings_aliases'] = {}
         for alias in settings_aliases:
-            #print(alias)
+            #utils.debug_print(alias)
             my_dict['settings_aliases'][alias[1]] = alias[2]
 
         my_dict['settings'] = {}
-        #print(settings)
+        #utils.debug_print(settings)
         if settings != None:
             my_dict['settings'] = {
                 'gmcp': settings[1],
@@ -674,10 +674,10 @@ class Database:
                 'prompt': settings[4]
             }
        
-        #print(my_dict['settings_aliases'])
+        #utils.debug_print(my_dict['settings_aliases'])
 
         my_dict['settings'] = {}
-        #print(settings)
+        #utils.debug_print(settings)
         if settings != None:
             my_dict['settings'] = {
                 'gmcp': settings[1],
@@ -686,21 +686,21 @@ class Database:
                 'prompt': settings[4]
             }
        
-        #print(my_dict['settings_aliases'])
+        #utils.debug_print(my_dict['settings_aliases'])
         my_dict['friends'] = []
         if friends != None:
             for friend in friends:
-                #print('loading friend,',friend)
+                #utils.debug_print('loading friend,',friend)
                 my_dict['friends'].append(friend)
-        #print(my_dict['friends'])
+        #utils.debug_print(my_dict['friends'])
 
-        #print(my_dict['settings_aliases'])
+        #utils.debug_print(my_dict['settings_aliases'])
         my_dict['explored_rooms'] = []
         if explored_rooms != None:
             for explored_room in explored_rooms:
-                #print('loading friend,',friend)
+                #utils.debug_print('loading friend,',friend)
                 my_dict['explored_rooms'].append(explored_room)
-        #print(my_dict['friends'])
+        #utils.debug_print(my_dict['friends'])
         
         
         return my_dict
@@ -760,7 +760,7 @@ class Database:
         
         acc = self.cursor.fetchone()
         if acc == None:
-            print('cant remove this pogchamp')
+            utils.debug_print('cant remove this pogchamp')
             return
         unique_id = acc[0]
         actor_id = acc[1]

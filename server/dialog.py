@@ -318,12 +318,12 @@ class Dialog:
             
 
         if 'quest_objective_count_proposal' in answer:
-            #self.print_dialog()
+            #self.utils.debug_print_dialog()
             self.player.quest_manager.propose_objective_count_addition(answer['quest_objective_count_proposal'])
             #return True
 
         if 'quest_start' in answer:
-            #self.print_dialog()
+            #self.utils.debug_print_dialog()
             self.player.quest_manager.start_quest(answer['quest_start']['id'])
             #return True
 
@@ -334,7 +334,7 @@ class Dialog:
                     self.end_dialog()
                     return True
 
-            #self.print_dialog()
+            #self.utils.debug_print_dialog()
             turned_in_successfully = self.player.quest_manager.turn_in_quest(answer['quest_turn_in']['id'])
             if turned_in_successfully:
                 self.player.sendLine(f'{Color.GOOD}Quest turned in{Color.NORMAL}: {self.player.quest_manager.quests[answer["quest_turn_in"]["id"]].name}')
@@ -361,7 +361,7 @@ class Dialog:
                 self.player.stat_manager.stats[StatType.PP] += answer['reward_practice_points']
                 self.player.sendLine(f'You got: {answer["reward_practice_points"]} Practice point'+('s' if answer['reward_practice_points'] >= 2 else ''))
 
-        self.print_dialog()
+        self.utils.debug_print_dialog()
 
         if 'teleport_player' in answer:
             if self.player.party_manager.party == None:

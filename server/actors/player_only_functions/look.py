@@ -109,7 +109,7 @@ def command_map(self, line, return_gmcp = False):
         
     for r in range(0,VIEW_RANGE*1):
         for room_loc in _grid:
-            #print(_grid[room_loc])
+            #utils.debug_print(_grid[room_loc])
             if grid[room_loc] == 'PATH':
                 continue
 
@@ -147,7 +147,7 @@ def command_map(self, line, return_gmcp = False):
                 if not room.doorway: #and room.get_real_id() in self.explored_rooms:
              
                 
-                    #print(_exit.to_room_id, grid.values())
+                    #utils.debug_print(_exit.to_room_id, grid.values())
                     if _exit.to_room_id not in grid.values():
                         if _loc in grid:
                             continue
@@ -168,7 +168,7 @@ def command_map(self, line, return_gmcp = False):
             _grid[r] = grid[r]
 
 
-    #print(grid)
+    #utils.debug_print(grid)
     for _x in range(0,(VIEW_RANGE*2)+1):
         for _y in range(0,(VIEW_RANGE*2)+1):
             """
@@ -315,7 +315,7 @@ def command_map(self, line, return_gmcp = False):
                 if important_dialog_dict['quest_turn_in']:
                     quest_turn_in = True
             
-            #print(room)
+            #utils.debug_print(room)
             # left
             cell = ''
             if room.doorway:
@@ -384,10 +384,10 @@ def command_map(self, line, return_gmcp = False):
                 x += len('@normal')
             else:
                 break
-        #print(strip_len, left_strip_len)
+        #utils.debug_print(strip_len, left_strip_len)
         if strip_len < left_strip_len:
             left_strip_len = strip_len
-            #print(i[x-10:])
+            #utils.debug_print(i[x-10:])
 
     for i in split_output:            
         if (i).replace('@normal','').replace(' ','') != '':
@@ -397,7 +397,7 @@ def command_map(self, line, return_gmcp = False):
     def pad_lines_to_be_map_width(combined_output):
         lines = combined_output.split('\n')
         first_line_length = len(utils.remove_color(lines[0]))
-        #print(first_line_length, f'"{(utils.remove_color(lines[0]))}"')
+        #utils.debug_print(first_line_length, f'"{(utils.remove_color(lines[0]))}"')
 
         if first_line_length < MAP_WIDTH:
             padding_needed = (MAP_WIDTH - first_line_length) 

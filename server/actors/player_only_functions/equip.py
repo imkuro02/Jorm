@@ -64,13 +64,13 @@ def inventory_equip(self, item, forced = False):
         item.equiped = True 
         for stat_name in item.stat_manager.stats:
             stat_val = item.stat_manager.stats[stat_name]
-            #print(stat_name, item.stat_manager.stats[stat_name])
+            #utils.debug_print(stat_name, item.stat_manager.stats[stat_name])
             if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] += stat_val
             if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] += stat_val
             if stat_name == StatType.PHYARMORMAX: self.stat_manager.stats[StatType.PHYARMOR] += stat_val
             if stat_name == StatType.MAGARMORMAX: self.stat_manager.stats[StatType.MAGARMOR] += stat_val
             self.stat_manager.stats[stat_name] += stat_val
-            #print(self.stat_manager.stats[stat_name])
+            #utils.debug_print(self.stat_manager.stats[stat_name])
 
         self.inventory_manager.limit = self.inventory_manager.base_limit + self.stat_manager.stats[StatType.INVSLOTS]
         
@@ -86,7 +86,7 @@ def inventory_equip(self, item, forced = False):
             self.stat_manager.hp_mp_clamp_update()
 
         #self.slots[item.slot] = item.id
-        #print(self.slots[item.slot])
+        #utils.debug_print(self.slots[item.slot])
 
         # clamp the max mp and hp
         

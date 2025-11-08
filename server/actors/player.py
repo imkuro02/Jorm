@@ -270,7 +270,7 @@ class UpdateChecker:
                 }
 
 
-        #print(_grid)
+        #utils.debug_print(_grid)
         if self.last_grid == _grid:
             return
         self.last_grid = _grid
@@ -438,7 +438,7 @@ class Player(Actor):
             
             
             
-            #print((time.time()-start)*1000)
+            #utils.debug_print((time.time()-start)*1000)
             line = utils.add_color(line)
             #line += f'\n'
 
@@ -482,7 +482,7 @@ class Player(Actor):
         self.queued_lines.append(line)
 
     def handle(self, line):
-        #print(line)
+        #utils.debug_print(line)
         for trans in translations:
             if line.startswith(trans):
                 line = translations[trans] + line[len(trans):]
@@ -552,7 +552,7 @@ class Player(Actor):
                         self.sendLine('An alias cannot trigger another alias')
                         continue
                     self.queued_lines.append(l)
-                    #print(l)
+                    #utils.debug_print(l)
                     
                 return
 

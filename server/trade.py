@@ -177,7 +177,7 @@ class TradeManager:
         trader_me.sendLine(output)
 
     #def trade_undo(self, line):
-    #    print(self.actor, 'undo')
+    #    utils.debug_print(self.actor, 'undo')
 
     def trade_stop(self, line = '', silent = False):
         if self.trade == None:

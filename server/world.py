@@ -34,7 +34,7 @@ class Spawner:
         for i in range(0,len(self.room_dict['spawner'])):
             self.spawn_points[i] = None
 
-        #print(self.spawn_points_items)
+        #utils.debug_print(self.spawn_points_items)
         self.respawn_all()
         REFTRACKER.add_ref(self)
 
@@ -72,19 +72,19 @@ class Spawner:
                     s.unload()
                     #self.spawn_points[i] = None
                 except Exception as e:
-                    pass #print(e)
+                    pass #utils.debug_print(e)
 
         #return
         if 'spawner' in self.room_dict:
             for i, _list in enumerate(self.room_dict['spawner']):
-                #print(self.spawn_points[i])
+                #utils.debug_print(self.spawn_points[i])
                 if self.spawn_points[i] != None:
                     continue
                     
                 _selected = random.choice(_list)
                 
-                #print(ENEMIES)
-                #print(NPCS[_selected])
+                #utils.debug_print(ENEMIES)
+                #utils.debug_print(NPCS[_selected])
                 if _selected in ITEMS:
                     item = load_item(_selected)
                     self.room.inventory_manager.add_item(item)
@@ -125,7 +125,7 @@ class Exit:
         if self.active_time_of_day == None:
             return True
         if self.active_time_of_day not in self.room.world.game_time.TIME_OF_DAY:
-            print(self.active_time_of_day, f'not in TIME OF DAY, object: {self.__dict__}')
+            utils.debug_print(self.active_time_of_day, f'not in TIME OF DAY, object: {self.__dict__}')
         return self.room.world.game_time.TIME_OF_DAY[self.active_time_of_day]
 
     #def get_room_name(self):
@@ -165,7 +165,7 @@ class Room:
         self.exits = []                 # exits in this room
         self.tick_when_loaded = self.world.factory.ticks_passed
         for _exit in exits:
-            #print(_exit)
+            #utils.debug_print(_exit)
             if type(_exit).__name__ == 'Exit':
                 _exit_dict = {
                     'direction': _exit.direction, 
@@ -219,9 +219,9 @@ class Room:
         #wall_data_prio = wall_data[2]
         return wall_data
     def get_real_id(self):
-        #print(self.id)
+        #utils.debug_print(self.id)
         if '#' in self.id:
-            #print(self.id.split('#')[0])
+            #utils.debug_print(self.id.split('#')[0])
             return self.id.split('#')[0] 
         return self.id
 
@@ -302,7 +302,7 @@ class Room:
             npcs_here = False
             players_here = False
             for i in self.actors.values():
-                #print(i)
+                #utils.debug_print(i)
                 if i == player_participant:
                     participants[i.id] = i
                     players_here = True
@@ -342,7 +342,7 @@ class Room:
         npcs_here = False
         players_here = False
         for i in self.actors.values():
-            #print(i)
+            #utils.debug_print(i)
             if type(i).__name__ == "Player":
                 participants[i.id] = i
                 players_here = True
@@ -461,7 +461,7 @@ class GameTime:
             with open(filename, "r") as f:
                 self.game_date_time = int(f.read().strip())
 
-        print("Game Time:", self.game_date_time)
+        utils.debug_print("Game Time:", self.game_date_time)
 
     def save_game_time(self):
         filename = "gametime.txt"
@@ -563,13 +563,13 @@ class World:
         boss_mob.stat_manager.stats[StatType.EXP] = boss_mob.stat_manager.stats[StatType.EXP] * 5
 
     def reload(self):
-        print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
+        utils.debug_print(f'loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed/30)}')
         to_del = []
         for r in self.rooms:
             players = [actor for actor in self.rooms[r].actors.values() if type(actor).__name__ == "Player"]
             if len(players) >= 1:
                 continue
-            print('del room: ', self.rooms[r].id)
+            utils.debug_print('del room: ', self.rooms[r].id)
             to_del.append(r)
 
         for d in to_del:
@@ -635,9 +635,9 @@ class World:
             for x in to_unload:
                 unload(x)
                 
-            #print(self.rooms[i])
+            #utils.debug_print(self.rooms[i])
             unload(self.rooms[i])
-            #print(self.rooms[i])
+            #utils.debug_print(self.rooms[i])
             del self.rooms[i]
             
         self.rooms_to_unload = []
@@ -647,9 +647,9 @@ class World:
             rooms.append(self.rooms[i])
         for i in rooms:
             ##if i.name.lower() == 'South-west corner'.lower():
-            #    print(i.id)
+            #    utils.debug_print(i.id)
             #    for x in i.actors.values():
-            #        print('>', x.name)
+            #        utils.debug_print('>', x.name)
             i.tick()
             
 
