@@ -1,5 +1,5 @@
 {
-    "SHA-256": "f2d8a38392bb7a0b0bc70a9434118d28cfc0bc91dd24542186d1fe85edde0f64",
+    "SHA-256": "2a55e0fc2dbcbd9feca810ffb367df80a53c3ebc107b61bacc1a1da5dfc7152b",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -19779,12 +19779,12 @@
         "weak": {
             "reforge_id": "weak",
             "name": "Weak",
-            "slot_weapon": false,
+            "slot_weapon": true,
             "slot_body": true,
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 125,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Lose 0.5 Grit per item level",
             "vars": {
@@ -19797,12 +19797,12 @@
         "slow": {
             "reforge_id": "slow",
             "name": "Slow",
-            "slot_weapon": false,
+            "slot_weapon": true,
             "slot_body": true,
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 125,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Lose 0.5 Flow per item level",
             "vars": {
@@ -19815,12 +19815,12 @@
         "dumb": {
             "reforge_id": "dumb",
             "name": "Dumb",
-            "slot_weapon": false,
+            "slot_weapon": true,
             "slot_body": true,
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 125,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Lose 0.5 Mind per item level",
             "vars": {
@@ -19833,12 +19833,12 @@
         "damned": {
             "reforge_id": "damned",
             "name": "Damned",
-            "slot_weapon": false,
+            "slot_weapon": true,
             "slot_body": true,
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 125,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Lose 0.5 Soul per item level",
             "vars": {
@@ -19851,12 +19851,12 @@
         "strong": {
             "reforge_id": "strong",
             "name": "Strong",
-            "slot_weapon": false,
+            "slot_weapon": true,
             "slot_body": true,
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 100,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Gain 0.5 Grit per item level",
             "vars": {
@@ -19869,12 +19869,12 @@
         "swift": {
             "reforge_id": "swift",
             "name": "Swift",
-            "slot_weapon": false,
+            "slot_weapon": true,
             "slot_body": true,
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 100,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Gain 0.5 Flow per item level",
             "vars": {
@@ -19887,12 +19887,12 @@
         "smart": {
             "reforge_id": "smart",
             "name": "Smart",
-            "slot_weapon": false,
+            "slot_weapon": true,
             "slot_body": true,
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 100,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Gain 0.5 Mind per item level",
             "vars": {
@@ -19905,12 +19905,12 @@
         "blessed": {
             "reforge_id": "blessed",
             "name": "Blessed",
-            "slot_weapon": false,
+            "slot_weapon": true,
             "slot_body": true,
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 100,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Gain 0.5 Soul per item level",
             "vars": {
@@ -19928,7 +19928,7 @@
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 100,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Gain 2 physical armor per item level",
             "vars": {
@@ -19946,7 +19946,7 @@
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 125,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Lose 2 physical armor per item level",
             "vars": {
@@ -19964,7 +19964,7 @@
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 100,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Gain 2 magical armor per item level",
             "vars": {
@@ -19982,7 +19982,7 @@
             "slot_head": true,
             "slot_trinket": true,
             "slot_relic": true,
-            "roll_chance": 70,
+            "roll_chance": 125,
             "affliction_to_create": "StatBonusPerItemLevel",
             "description": "Lose 2 magical armor per item level",
             "vars": {
@@ -19992,75 +19992,57 @@
                 "var_d": "0.0"
             }
         },
-        "light": {
-            "reforge_id": "light",
-            "name": "Light",
+        "masterwork": {
+            "reforge_id": "masterwork",
+            "name": "Masterwork",
             "slot_weapon": true,
             "slot_body": false,
             "slot_head": false,
             "slot_trinket": false,
             "slot_relic": false,
             "roll_chance": 100,
-            "affliction_to_create": "Light",
-            "description": "Deal 10% less physical damage, but there is a 10% chance you get an extra turn in the current round as last actor",
+            "affliction_to_create": "PlusDamageTypeMinusDamageTypes",
+            "description": "Physical damage is 10% more efficient, all other damage is reduced by 10%",
             "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
+                "var_a": "physical",
+                "var_b": "1.1",
+                "var_c": "0.9",
                 "var_d": "0.0"
             }
         },
-        "heavy": {
-            "reforge_id": "heavy",
-            "name": "Heavy",
+        "bejewled": {
+            "reforge_id": "bejewled",
+            "name": "Bejeweled",
             "slot_weapon": true,
             "slot_body": false,
             "slot_head": false,
             "slot_trinket": false,
             "slot_relic": false,
             "roll_chance": 100,
-            "affliction_to_create": "Heavy",
-            "description": "Deal 10% more physical damage, but extend a random cooldown by 1 each turn start in combat",
+            "affliction_to_create": "PlusDamageTypeMinusDamageTypes",
+            "description": "Magical damage is 10% more efficient, all other damage is reduced by 10%",
             "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
+                "var_a": "magical",
+                "var_b": "1.1",
+                "var_c": "0.9",
                 "var_d": "0.0"
             }
         },
-        "powerful": {
-            "reforge_id": "powerful",
-            "name": "Powerful",
+        "sacred": {
+            "reforge_id": "sacred",
+            "name": "Sacred",
             "slot_weapon": true,
             "slot_body": false,
             "slot_head": false,
             "slot_trinket": false,
             "slot_relic": false,
             "roll_chance": 100,
-            "affliction_to_create": "Powerful",
-            "description": "Deal 10% more magical damage, but you have a 50% chance to lose 5% health on turn start in combat",
+            "affliction_to_create": "PlusDamageTypeMinusDamageTypes",
+            "description": "Pure damage is 10% more efficient, all other damage is reduced by 10%",
             "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "holy": {
-            "reforge_id": "holy",
-            "name": "Holy",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Holy",
-            "description": "Deal 10% more pure damage, but all other damage dealt is reduced by 10%",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
+                "var_a": "pure",
+                "var_b": "1.1",
+                "var_c": "0.9",
                 "var_d": "0.0"
             }
         },
@@ -20073,228 +20055,12 @@
             "slot_trinket": false,
             "slot_relic": false,
             "roll_chance": 100,
-            "affliction_to_create": "Healthy",
-            "description": "Deal 10% more healing, but 10% less damage",
+            "affliction_to_create": "PlusDamageTypeMinusDamageTypes",
+            "description": "Healing is 10% more efficient, all other damage is reduced by 10%",
             "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "controlling": {
-            "reforge_id": "controlling",
-            "name": "Controlling",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Controlling",
-            "description": "Deal 10% less damage, but deal 5% more damage for each enemy in combat",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "dramatic": {
-            "reforge_id": "dramatic",
-            "name": "Dramatic",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Dramatic",
-            "description": "Deal 25% more damage at combat start, but deal 10% less for each turn, until dealing -25%",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "punishing": {
-            "reforge_id": "punishing",
-            "name": "Punishing",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Punishing",
-            "description": "Dealing physical damage to a target under 25% health has a 10% chance to instantly kill them",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "wild": {
-            "reforge_id": "wild",
-            "name": "Wild",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Wild",
-            "description": "Chance to use swing at a random enemy at turn start equal to half of percent of health missing",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "repelling": {
-            "reforge_id": "repelling",
-            "name": "Repelling",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Repelling",
-            "description": "Deal 10% less damage, but whenever you deal a killing blow, roll initiative removing all non party members from the new round",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "adapting": {
-            "reforge_id": "adapting",
-            "name": "Adapting",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Adapting",
-            "description": "Deal 10% less damage, but you change damage type depending on which armor your target has the least of",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "dangerous": {
-            "reforge_id": "dangerous",
-            "name": "Dangerous",
-            "slot_weapon": false,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 0,
-            "affliction_to_create": "Dangerous",
-            "description": "Deal 20% more damage, ",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "leeching": {
-            "reforge_id": "leeching",
-            "name": "Leeching",
-            "slot_weapon": false,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 0,
-            "affliction_to_create": "Leeching",
-            "description": "Gain 20% more health from the Leech skill, but heal 5% less from all other sources",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "Barricade": {
-            "reforge_id": "Barricade",
-            "name": "Dungeoneering",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Dungeoneering",
-            "description": "Deal 25% more damage in dungeons but 25% less damage otherwise",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "adventuring": {
-            "reforge_id": "adventuring",
-            "name": "Adventuring",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Adventuring",
-            "description": "Deal 25% less damage in dungeons, but 25% more otherwise",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "hunting": {
-            "reforge_id": "hunting",
-            "name": "Hunting",
-            "slot_weapon": true,
-            "slot_body": false,
-            "slot_head": false,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Hunting",
-            "description": "Deal 30% more dmg to enemys with less then or equal to 50% health",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
-                "var_d": "0.0"
-            }
-        },
-        "thorny": {
-            "reforge_id": "thorny",
-            "name": "Thorny",
-            "slot_weapon": false,
-            "slot_body": true,
-            "slot_head": true,
-            "slot_trinket": false,
-            "slot_relic": false,
-            "roll_chance": 100,
-            "affliction_to_create": "Thorny",
-            "description": "Deal 20% more damage with the Thorns skill, but lower max health by 10%",
-            "vars": {
-                "var_a": "0.0",
-                "var_b": "0.0",
-                "var_c": "0.0",
+                "var_a": "healing",
+                "var_b": "1.1",
+                "var_c": "0.9",
                 "var_d": "0.0"
             }
         }

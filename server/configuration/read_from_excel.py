@@ -45,6 +45,9 @@ def configure_equipment_reforges(SHEET):
     for row in SHEET['equipment_reforges']:
         x = SHEET['equipment_reforges']
         for index in range(0, len(x[row])):
+            # skip if dont load is true
+            if bool(x['dont_load'][index]):
+                continue
             #slot_weapon	slot_body	slot_head	slot_trinket	slot_relic	roll_chance	affliction_to_create
             EQUIPMENT_REFORGES[x['reforge_id'][index]] = {
                 'reforge_id':                   x['reforge_id'][index],

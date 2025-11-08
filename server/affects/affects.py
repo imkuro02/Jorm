@@ -527,13 +527,13 @@ class AffectReforge(Affect):
 
 
     def merge_request(self, affect_to_merge):
-        # check if has this attribute, if so check if they are caused by same item
+        # check if has this attribute, if so then the affliction is caused by an equipment
         if hasattr(affect_to_merge, 'source_item'):
-            # if two reforges from one item, drop newest one
+            # if the items are different, dont merge but overwrite
             if self.source_item != affect_to_merge.source_item:
                 return False
-        #if self.name + self.description != affect_to_merge.name + affect_to_merge.description:
-        #    return False
+
+        # if same affliction but new one has more turns, add more turns
         if affect_to_merge.turns > self.turns:
             self.turns = affect_to_merge.turns
         return True
@@ -554,12 +554,12 @@ class AffectReforge(Affect):
 
             # Update the original dict reference
             self.affect_target_actor.affect_manager.affects = affects
-        #super().on_applied()
+        super().on_applied()
         #print('aff applied')
 
     # called when effect is over
     def on_finished(self, silent = False):
-        super().on_finished(silent = True)
+        super().on_finished(silent = False)
 
     # called at start of turn
     def set_turn(self):
@@ -619,3 +619,36 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
     def on_finished(self, silent=False):
         #self.affect_target_actor.stat_manager.stats[self.stat] -= self.bonus
         return super().on_finished(silent)
+
+class ReforgePlusDamageTypeMinusDamageTypes(AffectReforge):
+    def deal_damage(self, damage_obj):
+        #print(damage_obj.damage_value)
+        if damage_obj.damage_type == self.reforge_variables['var_a']:
+            damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_b']))
+        else:
+            damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_c']))
+        #print(damage_obj.damage_value)
+        return damage_obj
+''' 
+# not fully working
+# enemies that have spent their round do not count as targetting you
+class ReforgePureDamageBonusToNonTargettingEnemies(AffectReforge):
+    def __init__(self, 
+            affect_source_actor, 
+            affect_target_actor, 
+            name, description, turns,
+            source_item = None,
+            reforge_variables = None
+        ):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+
+    def deal_damage(self, damage_obj):
+        #print('damage_obj.damage_taker_actor.ai.prediction_target == damage_obj.damage_source_actor:',damage_obj.damage_taker_actor.ai.prediction_target == damage_obj.damage_source_actor)
+        if damage_obj.damage_taker_actor.ai.prediction_target != damage_obj.damage_source_actor:
+            damage_obj.damage_value = int(damage_obj.damage_value * 1.1)
+            damage_obj.damage_source_actor.simple_broadcast('HOLY MOLY','HOLY MOLY')
+        else:
+            damage_obj.damage_value = int(damage_obj.damage_value * 0.5)
+            damage_obj.damage_source_actor.simple_broadcast('unHOLY MOLY','unHOLY MOLY')
+        return damage_obj
+'''

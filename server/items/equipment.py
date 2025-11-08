@@ -540,18 +540,25 @@ class Equipment(Item):
         try:
             reforge_obj = getattr(affects, affliction_to_create)
         except AttributeError:
+            reforge_obj = affects.AffectReforge
             err = f'cant set affliction object of {affliction_to_create} on {self} of id {self.premade_id} of unique id {self.id} finish_turn()'
             self.inventory_manager.owner.simple_broadcast(err,err)
             
+        
         if reforge_obj:
             reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
             #reforge_name = 'Reforged'
             #reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
-            reforge_description = f'Reforged: {reforge_name}'
+            
             slot_name = EquipmentSlotType.name[self.slot]
+            
             wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
             #affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
-            affliction_name = f'{wear_or_wield} {slot_name}'
+            affliction_name = f'{wear_or_wield} {self.name}'
+            reforge_description = f'Your {slot_name} item is {reforge_name}'
+            if reforge_obj == affects.AffectReforge:
+                reforge_description = reforge_description + ' (Affliction didnt load properly)'
+
             aff = reforge_obj(
                 affect_source_actor = self.inventory_manager.owner,
                 affect_target_actor = self.inventory_manager.owner,

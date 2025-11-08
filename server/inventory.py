@@ -8,7 +8,7 @@ class TriggerableManager:
         self.actor = self.inventory.owner
         self.triggered = []
 
-    def items(self):
+    def get_items_sorted(self):
         unsorted_items = [item for item in self.inventory.items.values()]
         sorted_equipment_ids = [item_id for item_id in self.actor.slots_manager.slots.values() if item_id != None]
         sorted_items = []
@@ -20,6 +20,7 @@ class TriggerableManager:
                 continue
             sorted_items.append(self.inventory.items[item_id])
 
+        #print('items sorted')
         #print(sorted_items)
         return sorted_items#[item for item in self.inventory.items.values()]
     
@@ -34,7 +35,7 @@ class TriggerableManager:
     def set_turn(self):
         if self.actor.status != ActorStatusType.FIGHTING: 
             return
-        for item in self.items():
+        for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
                 continue
             item.set_turn()
@@ -45,7 +46,7 @@ class TriggerableManager:
     def finish_turn(self):
         #if self.actor.status != ActorStatusType.FIGHTING: 
         #    return
-        for item in self.items():
+        for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
                 continue
             item.finish_turn()
@@ -56,7 +57,7 @@ class TriggerableManager:
     def take_damage_before_calc(self, damage_obj: 'Damage'):
         if self.actor.status != ActorStatusType.FIGHTING: 
             return damage_obj
-        for item in self.items():
+        for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
                 continue
             damage_obj = item.take_damage_before_calc(damage_obj)
@@ -68,7 +69,7 @@ class TriggerableManager:
     def take_damage_after_calc(self, damage_obj: 'Damage'):
         if self.actor.status != ActorStatusType.FIGHTING: 
             return damage_obj
-        for item in self.items():
+        for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
                 continue
             damage_obj = item.take_damage_after_calc(damage_obj)
@@ -79,7 +80,7 @@ class TriggerableManager:
     def deal_damage(self, damage_obj: 'Damage'):
         if self.actor.status != ActorStatusType.FIGHTING: 
             return damage_obj
-        for item in self.items():
+        for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
                 continue
             damage_obj = item.deal_damage(damage_obj)
@@ -90,7 +91,7 @@ class TriggerableManager:
     def dealt_damage(self, damage_obj: 'Damage'):
         if self.actor.status != ActorStatusType.FIGHTING: 
             return damage_obj
-        for item in self.items():
+        for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
                 continue
             damage_obj = item.dealt_damage(damage_obj)
@@ -99,7 +100,7 @@ class TriggerableManager:
         return damage_obj
     
     def gain_exp(self, exp):
-        for item in self.items():
+        for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
                 continue
             exp = item.gain_exp(exp)
