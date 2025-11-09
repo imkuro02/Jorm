@@ -409,7 +409,7 @@ def command_map(self, line, return_gmcp = False):
         return '\n'.join(lines)
     
     combined_output = t.get_table()#pad_lines_to_be_map_width(t.get_table())
-   
+
     if not return_gmcp:
         self.sendLine('<Map Start>\n'+combined_output+'<Map End>')
     else:
@@ -484,7 +484,7 @@ def command_scan(self, line):
     
     self.sendLine(f'You scan your surroundings and see: \n{see[:-1:]}')
 
-def command_look(self, line):
+def command_look(self, line, return_gmcp = False):
     def look_room(self, room_id):
         room = self.factory.world.rooms[room_id]
 
@@ -557,8 +557,11 @@ def command_look(self, line):
         
         
 
-
-        self.sendLine(see)
+        if not return_gmcp:
+            self.sendLine(see)
+        else:
+            return see
+        #self.sendLine(see)
 
 
 
@@ -588,8 +591,8 @@ def command_look(self, line):
     #self.sendLine(look_at)
 
     if line == '':
-        look_room(self, self.room.id)
-        return
+        see = look_room(self, self.room.id)
+        return see
     
     if look_at in list_of_actors:
         actor = self.get_actor(line)

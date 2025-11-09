@@ -1,5 +1,5 @@
 {
-    "SHA-256": "83cc734464fe8e40e972e354f1cb139f3684de3c0831cc18afc041456643f551",
+    "SHA-256": "1c6688dad95bbc2b44b79e50ead6770860752bdfa7cddadbb367db3836e450fa",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4595,77 +4595,6 @@
                 ]
             }
         },
-        "cure_light_wounds": {
-            "skill_id": "cure_light_wounds",
-            "name": "Cure Light Wounds",
-            "description": "Heal your target for DAMAGE + 0%-CRIT% SOUL health.\n",
-            "script_to_run": "CureLightWounds",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": true,
-            "practice_cost": 1,
-            "level_req": 4.0,
-            "use_perspectives": {
-                "use_case_name": "use_cure_light_wounds",
-                "you on you": "You pray for yourself",
-                "you on other": "You pray for #OTHER#",
-                "user on user": "#USER# prays for themselves",
-                "user on you": "#USER# prays for you",
-                "user on other": "#USER# prays for #OTHER#",
-                "you on you fail": "You lose concentration while praying for yourself",
-                "you on other fail": "You lose concentration while praying for #OTHER#",
-                "user on user fail": "#USER# loses their concentration while praying for themselves",
-                "user on you fail": "#USER# loses their concentration while praying for you",
-                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
-            },
-            "is_offensive": 0.0,
-            "end_turn": false,
-            "script_values": {
-                "damage": [
-                    10,
-                    12,
-                    14,
-                    16,
-                    18,
-                    20
-                ],
-                "crit": [
-                    2.0,
-                    2.0,
-                    2.0,
-                    2.0,
-                    2.0,
-                    2.0
-                ],
-                "mp_cost": [
-                    10,
-                    12,
-                    14,
-                    16,
-                    18,
-                    20
-                ],
-                "cooldown": [
-                    6,
-                    6,
-                    6,
-                    5,
-                    5,
-                    4
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
-                ]
-            }
-        },
         "enrage": {
             "skill_id": "enrage",
             "name": "Enrage",
@@ -6013,85 +5942,6 @@
                 ]
             }
         },
-        "finisher": {
-            "skill_id": "finisher",
-            "name": "Finisher",
-            "description": "Swing at your target.\nDealing DAMAGE + 0%-CRIT% of the highest stat between GRIT and FLOW physical damage.\nBOUNCE AMOUNT is equal to how many skills currently are on cooldown.\n",
-            "script_to_run": "Finisher",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": false,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": false,
-            "can_be_practiced": true,
-            "practice_cost": 1,
-            "level_req": 6.0,
-            "use_perspectives": {
-                "use_case_name": "use_swing",
-                "you on you": "You swing and hit yourself!",
-                "you on other": "You swing and hit #OTHER#",
-                "user on user": "#USER# swings and hits themselves!",
-                "user on you": "#USER# swings and hits you!",
-                "user on other": "#USER# swings and hits #OTHER#",
-                "you on you fail": "You lose your footing while swinging at yourself!",
-                "you on other fail": "You lose your footing while swinging at #OTHER#",
-                "user on user fail": "#USER# loses their footing while swinging at themselves",
-                "user on you fail": "#USER# loses their footing while swinging at you!",
-                "user on other fail": "#USER# loses their footing while swinging at #OTHER#"
-            },
-            "is_offensive": 1.0,
-            "end_turn": true,
-            "script_values": {
-                "damage": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
-                ],
-                "crit": [
-                    0.4,
-                    0.45,
-                    0.5,
-                    0.55,
-                    0.6,
-                    0.65
-                ],
-                "cooldown": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
-                ],
-                "bounce_amount": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ],
-                "bounce_bonus": [
-                    0.33,
-                    0.33,
-                    0.33,
-                    0.33,
-                    0.33,
-                    0.33
-                ]
-            }
-        },
         "nightmare": {
             "skill_id": "nightmare",
             "name": "Nightmare",
@@ -6135,93 +5985,6 @@
                     2,
                     2,
                     2
-                ]
-            }
-        },
-        "_broken_chain_lightning": {
-            "skill_id": "_broken_chain_lightning",
-            "name": "Chain Lightning",
-            "description": "Heal all party members for DAMAGE + 0%-CRIT% SOUL health.\n",
-            "script_to_run": "DamageByMind",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": false,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 9.0,
-            "use_perspectives": {
-                "use_case_name": "use_generic",
-                "you on you": "You concentrate.",
-                "you on other": "You concentrate on #OTHER#.",
-                "user on user": "#USER# concentrates.",
-                "user on you": "#USER# concentrates on you.",
-                "user on other": "#USER# concentrates on #OTHER#.",
-                "you on you fail": "You fail to concentrate.",
-                "you on other fail": "You fail to concentrate on #OTHER#.",
-                "user on user fail": "#USER# fails to concentrate.",
-                "user on you fail": "#USER# fails to concentrate on you.",
-                "user on other fail": "#USER# fails to concentrate on #OTHER#."
-            },
-            "is_offensive": 1.0,
-            "end_turn": true,
-            "script_values": {
-                "damage": [
-                    4,
-                    6,
-                    8,
-                    10,
-                    12,
-                    14
-                ],
-                "crit": [
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "mp_cost": [
-                    20,
-                    22,
-                    24,
-                    26,
-                    28,
-                    30
-                ],
-                "cooldown": [
-                    6,
-                    6,
-                    6,
-                    5,
-                    5,
-                    4
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
-                ],
-                "bounce_amount": [
-                    4,
-                    4,
-                    4,
-                    4,
-                    4,
-                    4
-                ],
-                "bounce_bonus": [
-                    -0.2,
-                    -0.18,
-                    -0.16,
-                    -0.14,
-                    -0.12,
-                    -0.1
                 ]
             }
         }

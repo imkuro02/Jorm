@@ -155,6 +155,8 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
     for row in SHEET['skills']:
         x = SHEET['skills']
         for index in range(0, len(x[row])):
+            if bool(x['dont_load'][index]):
+                continue
 
             SKILLS[x['skill_id'][index]] = {
                 'skill_id':                 x['skill_id'][index],

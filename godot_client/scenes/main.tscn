@@ -50,6 +50,7 @@ color = Color(0, 0, 0, 1)
 script = ExtResource("4_6wn6w")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="canvas"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -77,7 +78,6 @@ anchor_bottom = 1.0
 color = Color(0, 0, 0, 1)
 
 [node name="Background" type="TextureRect" parent="canvas/HBoxContainer/side_panel"]
-visible = false
 modulate = Color(0, 0, 0, 1)
 texture_filter = 1
 layout_mode = 0
@@ -89,7 +89,6 @@ texture = ExtResource("9_2qqwb")
 stretch_mode = 1
 
 [node name="map" type="Panel" parent="canvas/HBoxContainer/side_panel"]
-visible = false
 custom_minimum_size = Vector2(448, 448)
 layout_mode = 0
 offset_top = 512.0
@@ -166,12 +165,10 @@ texture = ExtResource("12_5afyf")
 
 [node name="map" type="Node" parent="canvas/HBoxContainer/side_panel/map"]
 
-[node name="ascii_map" type="RichTextLabel" parent="canvas/HBoxContainer/side_panel"]
+[node name="look_room" type="RichTextLabel" parent="canvas/HBoxContainer/side_panel"]
 layout_mode = 2
-offset_left = 8.0
-offset_top = 616.0
-offset_right = 408.0
-offset_bottom = 952.0
+offset_right = 638.0
+offset_bottom = 392.0
 size_flags_horizontal = 3
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
@@ -179,6 +176,20 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
 selection_enabled = true
 script = ExtResource("3_gkcnj")
+
+[node name="ascii_map" type="RichTextLabel" parent="canvas/HBoxContainer/side_panel"]
+layout_mode = 2
+offset_left = 912.0
+offset_right = 1280.0
+offset_bottom = 344.0
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+metadata/_edit_group_ = true
 
 [node name="Panel2" type="Panel" parent="canvas/HBoxContainer"]
 visible = false
@@ -270,10 +281,12 @@ text = "INPUT:
 [node name="HBoxContainer" type="HBoxContainer" parent="canvas/HBoxContainer/input_output"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = -0.479
+anchor_top = 0.333
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 8.0
+offset_left = -0.059967
+offset_top = 0.320007
 offset_right = -8.0
 offset_bottom = -48.0
 
@@ -301,6 +314,96 @@ visible = false
 custom_minimum_size = Vector2(224, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="canvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="BoxContainer" parent="canvas/VBoxContainer"]
+layout_mode = 2
+
+[node name="ascii_map" type="RichTextLabel" parent="canvas/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 332)
+layout_mode = 2
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+metadata/_edit_group_ = true
+
+[node name="look_room" type="RichTextLabel" parent="canvas/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+
+[node name="output" type="HBoxContainer" parent="canvas/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="output" type="RichTextLabel" parent="canvas/VBoxContainer/output"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+
+[node name="debug" type="RichTextLabel" parent="canvas/VBoxContainer/output"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_ckiy7")
+bbcode_enabled = true
+text = "fdsafdsafs"
+selection_enabled = true
+
+[node name="input" type="ColorRect" parent="canvas/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+color = Color(0.775063, 0.775063, 0.775063, 1)
+
+[node name="input" type="LineEdit" parent="canvas/VBoxContainer/input"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.25
+anchor_right = 1.0
+anchor_bottom = 1.25
+offset_left = 72.0
+offset_top = -44.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("19_jxno8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ujqkk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bwqeb")
+flat = true
+
+[node name="Label" type="Label" parent="canvas/VBoxContainer/input"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_top = 4.0
+offset_right = 1264.0
+offset_bottom = 26.0
+theme_override_fonts/font = ExtResource("19_jxno8")
+text = "INPUT:
+"
 
 [node name="sfx_manager" type="AudioStreamPlayer" parent="."]
 volume_db = -20.292

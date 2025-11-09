@@ -6,15 +6,14 @@ extends Control
 var socket = WebSocketPeer.new()
 
 # References to UI nodes
-@onready var INPUT = $canvas/HBoxContainer/input_output/input/input
-@onready var OUTPUT = $canvas/HBoxContainer/input_output/HBoxContainer/output
-@onready var DEBUG = $canvas/HBoxContainer/input_output/HBoxContainer/debug
-@onready var ACTORS_OUTPUT = $canvas/HBoxContainer/Control/actors_output
+@onready var INPUT = $canvas/VBoxContainer/input/input
+@onready var OUTPUT = $canvas/VBoxContainer/output/output
+@onready var DEBUG = $canvas/VBoxContainer/output/debug
 @onready var SFX_MAN = $sfx_manager
-@onready var MAP = $canvas/HBoxContainer/side_panel/map
-@onready var ASCIIMAP = $canvas/HBoxContainer/side_panel/ascii_map
-@onready var CLOCK = $canvas/HBoxContainer/side_panel/Clock
-@onready var BACKGROUND_COLOR = $canvas/background_color
+@onready var LOOK_ROOM = $canvas/VBoxContainer/VBoxContainer/look_room
+@onready var ASCIIMAP = $canvas/VBoxContainer/VBoxContainer/ascii_map
+
+
 
 const IAC      : int = 255
 const WILL     : int = 251
@@ -156,15 +155,21 @@ func handle_gmcp(message: String):
 			var sfx = load("res://audio/sfx/" + data_dict['name'])
 			SFX_MAN.stream = sfx
 			SFX_MAN.play()
-		'Actors':
-			ACTORS_OUTPUT.set_text("")
-			ACTORS_OUTPUT.clear()
-			ACTORS_OUTPUT.get_message(dict_string)
+		#'Actors':
+		#	ACTORS_OUTPUT.set_text("")
+		#	ACTORS_OUTPUT.clear()
+		#	ACTORS_OUTPUT.get_message(dict_string)
+		'MAP':
+			ASCIIMAP.clear()
+			ASCIIMAP.get_message(dict_string)
 		'MMAAPP':
 			ASCIIMAP.clear()
 			ASCIIMAP.get_message(dict_string)
-		'Time':
-			CLOCK.get_message(data_dict)
+		'LOOK_ROOM':
+			LOOK_ROOM.clear()
+			LOOK_ROOM.get_message(dict_string)
+		#'Time':
+		#	CLOCK.get_message(data_dict)
 			#BACKGROUND_COLOR.get_message(data_dict)
 
 

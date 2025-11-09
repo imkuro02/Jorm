@@ -407,6 +407,7 @@ class Protocol(protocol.Protocol):
 
         # disable / enable ascii map depending on gmcp settings
         self.actor.settings_manager.view_map = not self.enabled_gmcp
+        self.actor.settings_manager.view_room = not self.enabled_gmcp
         self.sendLine('You are now in JORM! ascii map has been turned ' + ('on' if self.actor.settings_manager.view_map else 'off' )+ ' due to current gmcp settings (help settings)')
         
         
