@@ -159,7 +159,7 @@ class Npc(Actor):
         # if returned true, start dialog
         talker.simple_broadcast(f'You approach {self.pretty_name()}', f'{talker.pretty_name()} approaches {self.pretty_name()}.')
         talker.current_dialog = Dialog(talker, self, self.dialog_tree)
-        talker.current_dialog.utils.debug_print_dialog()
+        talker.current_dialog.print_dialog()
         #return True
 
     # this function returns whether the npc has a quest to hand out or turn in / both

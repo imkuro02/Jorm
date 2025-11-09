@@ -107,7 +107,7 @@ class QuestManager:
 
         self.quests[quest_id] = quest
         if silent == False:
-            self.actor.sendLine(f'{Color.GOOD}nNew quest{Color.NORMAL}: {quest.name}')
+            self.actor.sendLine(f'{Color.GOOD}New quest{Color.NORMAL}: {quest.name}')
             self.view(quest.name)
         self.actor.inventory_manager.count_quest_items()
 
