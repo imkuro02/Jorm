@@ -1,4 +1,4 @@
-from actors.player_only_functions.checks import check_not_in_party_or_is_party_leader, check_alive, check_no_empty_line, check_no_empty_line, check_your_turn, check_not_in_combat
+from actors.player_only_functions.checks import check_no_unfriendlies_present_in_room, check_not_in_party_or_is_party_leader, check_alive, check_no_empty_line, check_no_empty_line, check_your_turn, check_not_in_combat
 from configuration.config import DamageType, ItemType, ActorStatusType, StatType, Audio
 import utils
 from skills.manager import get_skills, use_skill
@@ -235,6 +235,7 @@ def rest_home_request(self, line):
 
 
 @check_not_in_party_or_is_party_leader
+@check_no_unfriendlies_present_in_room
 def rest_here_request(self, line):
     if self.party_manager.party != None:
         for par in self.party_manager.party.participants.values():

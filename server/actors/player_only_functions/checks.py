@@ -1,6 +1,7 @@
 
 from configuration.config import ActorStatusType
 
+
 def check_is_admin(func):
     def wrapper(*args, **kwargs):
         self = args[0] if args else kwargs.get('self')
@@ -102,6 +103,19 @@ def check_not_in_party(func):
         self = args[0] if args else kwargs.get('self')
         if self.party_manager.party != None:
             self.sendLine('You can\'t do this while in a party')
+            return
+        return func(*args, **kwargs)
+    return wrapper
+
+def check_no_unfriendlies_present_in_room(func):
+    def wrapper(*args, **kwargs):
+        self = args[0] if args else kwargs.get('self')
+        enemy_found = False
+        for i in self.room.actors.values():
+            if type(i).__name__ != 'Player':
+                enemy_found = True
+        if enemy_found:
+            self.sendLine(f'You can\'t do this while enemies are nearby')
             return
         return func(*args, **kwargs)
     return wrapper

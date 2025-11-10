@@ -40,6 +40,7 @@ def command_get(self, line):
             
         else:
             self.sendLine(f'You can\'t pick up {item.pretty_name()}', sound = Audio.ERROR)
+            return
 
     self.simple_broadcast(
         f'You get {", ".join(items_pretty_name_before_pickup)}',

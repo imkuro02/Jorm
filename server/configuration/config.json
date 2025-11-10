@@ -3750,7 +3750,7 @@
             },
             "include_in_daily_quests": false,
             "skills": {
-                "refresh": 1,
+                "refresh": 100,
                 "magic_missile": 1
             },
             "loot": {

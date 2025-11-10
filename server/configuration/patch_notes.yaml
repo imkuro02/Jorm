@@ -11,6 +11,7 @@ versions:
     - Fixed trading with npcs for quests, where you view the dialog of completion even if you didnt hand in item succesfully
     - Fixed bug where offensive bouncy skills could bounce to an already dead target then continue bouncing
     - Scan command temporarely disabled due to not working properly in instances
+    - Rest here command is interrupted when npcs are present
     - --- ADDED REFORGING ---
     - Reforges are passive afflictions that apply and refresh themselves based on equipment worn
     - Reforge afflictions currently dont do anything but give description, this will soon change

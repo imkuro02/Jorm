@@ -68,7 +68,7 @@ class PartyManager:
 
     def get_party_id(self):
         if self.party != None:
-            _id = self.party.actor.id
+            return self.party.actor.id
         else:
             # all enemies will get party id enemies
             # as their party id, this is so they dont
@@ -78,10 +78,10 @@ class PartyManager:
             # that is so pvp functions as expected
             # when not in party
             if type(self.actor).__name__ != "Player":
-                _id = 'party id enemies'
-            else:
-                _id = self.actor.id #'party id players' 
-        return _id
+                return 'party id enemies'
+            if type(self.actor).__name__ == "Player":
+                return 'party id players' #self.actor.id #'party id players' 
+
         
     def clear_invites(self):
         self.invitations = []

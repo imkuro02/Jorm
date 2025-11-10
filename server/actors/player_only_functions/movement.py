@@ -101,8 +101,8 @@ def command_go(self, line = '', room_id = None):
             roll = 0
             if self.stat_manager.stats[StatType.LVL] - (highest_can_start_fights_level+3) <= 0:
                 roll = 1#random.randint(0,5)
-            else:
-                roll = 0
+            if self.room.is_an_instance():
+                roll = 1
             #if self.room.world.game_time.TIME_OF_DAY['night']:
             #    roll = random.randint(0,2)
             
