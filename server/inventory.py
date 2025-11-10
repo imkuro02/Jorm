@@ -1,6 +1,7 @@
 from configuration.config import ItemType, ActorStatusType
 from quest import ObjectiveCountProposal, OBJECTIVE_TYPES
 from items.manager import load_item
+import utils
 
 class TriggerableManager:
     def __init__(self, inventory):
