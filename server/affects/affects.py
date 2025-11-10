@@ -1,6 +1,7 @@
 from configuration.config import DamageType, StatType, ActorStatusType
 from combat.damage_event import Damage
 import utils 
+import random
 
 class Affect:
     def __init__(self, 
@@ -115,17 +116,22 @@ class Leech(Affect):
         self.leech_power = leech_power
 
     def dealt_damage(self, damage_obj):
+        
         if damage_obj.damage_type != DamageType.PHYSICAL:
             return damage_obj
+
+        
 
         if damage_obj.damage_value <= 0:
             return damage_obj
         
+        damage_value = round(damage_obj.damage_value * self.leech_power)
+
         leech_heal_damage_obj = Damage(
             damage_source_actor = self.affect_target_actor,
             damage_taker_actor = self.affect_target_actor,
             damage_source_action = self,
-            damage_value = round(damage_obj.damage_value * self.leech_power),
+            damage_value = damage_value,
             damage_type = DamageType.HEALING,
             combat_event = damage_obj.combat_event
         )
@@ -358,7 +364,7 @@ class AffectEnrage(Affect):
         self.bonus_grit = 0 #int(stats[StatType.GRIT] * bonus)
         #self.bonus_armor = 0 #extra_armor
 
-
+    '''
     def take_damage_before_calc(self, damage_obj: Damage):
         if damage_obj.damage_type != DamageType.CANCELLED:
             #utils.debug_print(self.bonus)
@@ -368,7 +374,7 @@ class AffectEnrage(Affect):
                 damage_obj.damage_value = damage_obj.damage_value+(damage_obj.damage_value*self.bonus)
             damage_obj.damage_value = int(damage_obj.damage_value)
         return damage_obj
-
+    '''
 
     def on_applied(self):
         super().on_applied()
@@ -634,10 +640,48 @@ class ReforgePlusDamageTypeMinusDamageTypes(AffectReforge):
     
 class ReforgeConvertDamageType(AffectReforge):
     def deal_damage(self, damage_obj):
-        #utils.debug_print(damage_obj.damage_value)
         if damage_obj.damage_type == self.reforge_variables['var_a']:
             damage_obj.damage_type = self.reforge_variables['var_b']
         return damage_obj
+
+class ReforgeSkillDamageBonus(AffectReforge):
+    def deal_damage(self, damage_obj):
+        if utils.get_object_parent(damage_obj.damage_source_action) == 'Skill':
+            if damage_obj.damage_source_action.skill_id == self.reforge_variables['var_a']:
+                damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_b']))
+
+
+        return damage_obj
+
+# this can make indirect healing like leech heal you for less...
+class ReforgeRandomTargetBonus(AffectReforge):
+    def __init__(self, 
+            affect_source_actor, 
+            affect_target_actor, 
+            name, description, turns,
+            source_item = None,
+            reforge_variables = None
+        ):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+        self.target = None
+    
+    def set_turn(self):
+        super().set_turn()
+        if self.affect_target_actor.status != ActorStatusType.FIGHTING:
+            return 
+        self.target = random.choice(list(self.affect_target_actor.room.combat.participants.values()))
+        if self.target == self.affect_target_actor:
+            self.affect_target_actor.sendLine(f'You are your own target')
+        else:
+            self.affect_target_actor.sendLine(f'Your target is {self.target.pretty_name()}')
+
+    def deal_damage(self, damage_obj):
+        if damage_obj.damage_taker_actor == self.target:
+            damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_a']))
+        else:
+            damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_b']))
+        return damage_obj
+
 ''' 
 # not fully working
 # enemies that have spent their round do not count as targetting you

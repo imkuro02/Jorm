@@ -109,13 +109,13 @@ def command_use(self, line, is_trying = False):
     # target yourself if not trying to target anything else
     if ' on ' not in line and ' at ' not in line:
         action = line
-        action = utils.get_match(action, {**self.inventory_manager.items, **skills_dict})
+        action = utils.get_match(action, {**skills_dict, **self.inventory_manager.items})
         target = self
 
     # if you are targetting something else set target to that
     else:
         action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
-        action = utils.get_match(action, {**self.inventory_manager.items, **skills_dict})
+        action = utils.get_match(action, {**skills_dict, **self.inventory_manager.items})
         target = utils.get_match(target, {**self.room.actors, **self.inventory_manager.items})
 
     #self.sendLine(action.name)

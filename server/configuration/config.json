@@ -1,5 +1,5 @@
 {
-    "SHA-256": "1c6688dad95bbc2b44b79e50ead6770860752bdfa7cddadbb367db3836e450fa",
+    "SHA-256": "26ea09a080c154b476eec60969b04d8c8f1ca267f61479340b7677b6dd07de27",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4595,10 +4595,81 @@
                 ]
             }
         },
+        "cure_light_wounds": {
+            "skill_id": "cure_light_wounds",
+            "name": "Cure Light Wounds",
+            "description": "Heal your target for DAMAGE + 0%-CRIT% SOUL health.\n",
+            "script_to_run": "CureLightWounds",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 4.0,
+            "use_perspectives": {
+                "use_case_name": "use_cure_light_wounds",
+                "you on you": "You pray for yourself",
+                "you on other": "You pray for #OTHER#",
+                "user on user": "#USER# prays for themselves",
+                "user on you": "#USER# prays for you",
+                "user on other": "#USER# prays for #OTHER#",
+                "you on you fail": "You lose concentration while praying for yourself",
+                "you on other fail": "You lose concentration while praying for #OTHER#",
+                "user on user fail": "#USER# loses their concentration while praying for themselves",
+                "user on you fail": "#USER# loses their concentration while praying for you",
+                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
+            },
+            "is_offensive": 0.0,
+            "end_turn": false,
+            "script_values": {
+                "damage": [
+                    10,
+                    12,
+                    14,
+                    16,
+                    18,
+                    20
+                ],
+                "crit": [
+                    2.0,
+                    2.0,
+                    2.0,
+                    2.0,
+                    2.0,
+                    2.0
+                ],
+                "mp_cost": [
+                    10,
+                    12,
+                    14,
+                    16,
+                    18,
+                    20
+                ],
+                "cooldown": [
+                    6,
+                    6,
+                    6,
+                    5,
+                    5,
+                    4
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ]
+            }
+        },
         "enrage": {
             "skill_id": "enrage",
             "name": "Enrage",
-            "description": "Become enraged.\nGRIT is amplified by BONUS%\nBut you take BONUS% extra damage, and receive BONUS% less healing\n",
+            "description": "Become enraged.\nGRIT is amplified by BONUS%\n",
             "script_to_run": "Enrage",
             "target_others_is_valid": false,
             "target_item_is_valid": false,
@@ -4625,25 +4696,16 @@
             "end_turn": false,
             "script_values": {
                 "bonus": [
-                    0.2,
-                    0.21,
-                    0.22,
-                    0.23,
-                    0.24,
-                    0.25
+                    1.0,
+                    1.1,
+                    1.2
                 ],
                 "hp_cost": [
-                    2,
-                    2,
-                    2,
-                    2,
-                    2,
-                    2
+                    15,
+                    30,
+                    60
                 ],
                 "duration": [
-                    5,
-                    5,
-                    5,
                     5,
                     5,
                     5
@@ -4651,18 +4713,12 @@
                 "cooldown": [
                     7,
                     7,
-                    7,
-                    7,
-                    7,
                     7
                 ],
                 "levels": [
                     1,
                     2,
-                    3,
-                    4,
-                    5,
-                    6
+                    3
                 ]
             }
         },
@@ -4751,36 +4807,29 @@
             "end_turn": false,
             "script_values": {
                 "bonus": [
-                    1.0,
-                    1.1,
-                    1.2,
-                    1.3,
-                    1.4,
-                    1.5
+                    0.5,
+                    0.5,
+                    0.5
                 ],
                 "duration": [
                     3,
-                    3,
-                    3,
-                    3,
-                    3,
-                    3
+                    4,
+                    5
                 ],
                 "cooldown": [
                     5,
                     5,
-                    5,
-                    5,
-                    5,
                     5
+                ],
+                "hp_cost": [
+                    10,
+                    15,
+                    20
                 ],
                 "levels": [
                     1,
                     2,
-                    3,
-                    4,
-                    5,
-                    6
+                    3
                 ]
             }
         },
@@ -4815,35 +4864,23 @@
             "script_values": {
                 "bonus": [
                     0.5,
-                    0.6,
-                    0.7,
-                    0.8,
-                    0.9,
-                    1.0
+                    0.5,
+                    0.5
                 ],
                 "cooldown": [
-                    4,
-                    4,
-                    4,
-                    4,
-                    4,
-                    4
+                    6,
+                    6,
+                    6
                 ],
                 "duration": [
                     2,
-                    2,
-                    2,
-                    2,
-                    2,
-                    2
+                    3,
+                    4
                 ],
                 "levels": [
                     1,
                     2,
-                    3,
-                    4,
-                    5,
-                    6
+                    3
                 ]
             }
         },
@@ -19539,8 +19576,8 @@
                 "var_d": "0.0"
             }
         },
-        "weak": {
-            "reforge_id": "weak",
+        "grit_lose": {
+            "reforge_id": "grit_lose",
             "name": "Weak",
             "slot_weapon": true,
             "slot_body": true,
@@ -19557,8 +19594,8 @@
                 "var_d": "0.0"
             }
         },
-        "slow": {
-            "reforge_id": "slow",
+        "flow_lose": {
+            "reforge_id": "flow_lose",
             "name": "Slow",
             "slot_weapon": true,
             "slot_body": true,
@@ -19575,8 +19612,8 @@
                 "var_d": "0.0"
             }
         },
-        "dumb": {
-            "reforge_id": "dumb",
+        "mind_lose": {
+            "reforge_id": "mind_lose",
             "name": "Dumb",
             "slot_weapon": true,
             "slot_body": true,
@@ -19593,8 +19630,8 @@
                 "var_d": "0.0"
             }
         },
-        "damned": {
-            "reforge_id": "damned",
+        "soul_lose": {
+            "reforge_id": "soul_lose",
             "name": "Damned",
             "slot_weapon": true,
             "slot_body": true,
@@ -19611,8 +19648,8 @@
                 "var_d": "0.0"
             }
         },
-        "strong": {
-            "reforge_id": "strong",
+        "grit_gain": {
+            "reforge_id": "grit_gain",
             "name": "Strong",
             "slot_weapon": true,
             "slot_body": true,
@@ -19629,8 +19666,8 @@
                 "var_d": "0.0"
             }
         },
-        "swift": {
-            "reforge_id": "swift",
+        "flow_gain": {
+            "reforge_id": "flow_gain",
             "name": "Swift",
             "slot_weapon": true,
             "slot_body": true,
@@ -19647,8 +19684,8 @@
                 "var_d": "0.0"
             }
         },
-        "smart": {
-            "reforge_id": "smart",
+        "mind_gain": {
+            "reforge_id": "mind_gain",
             "name": "Smart",
             "slot_weapon": true,
             "slot_body": true,
@@ -19665,8 +19702,8 @@
                 "var_d": "0.0"
             }
         },
-        "blessed": {
-            "reforge_id": "blessed",
+        "soul_gain": {
+            "reforge_id": "soul_gain",
             "name": "Blessed",
             "slot_weapon": true,
             "slot_body": true,
@@ -19683,8 +19720,8 @@
                 "var_d": "0.0"
             }
         },
-        "thick": {
-            "reforge_id": "thick",
+        "armor_gain": {
+            "reforge_id": "armor_gain",
             "name": "Thick",
             "slot_weapon": false,
             "slot_body": true,
@@ -19701,8 +19738,8 @@
                 "var_d": "0.0"
             }
         },
-        "thin": {
-            "reforge_id": "thin",
+        "armor_lose": {
+            "reforge_id": "armor_lose",
             "name": "Thin",
             "slot_weapon": false,
             "slot_body": true,
@@ -19719,8 +19756,8 @@
                 "var_d": "0.0"
             }
         },
-        "warded": {
-            "reforge_id": "warded",
+        "marmor_gain": {
+            "reforge_id": "marmor_gain",
             "name": "Warded",
             "slot_weapon": false,
             "slot_body": true,
@@ -19737,8 +19774,8 @@
                 "var_d": "0.0"
             }
         },
-        "exposed": {
-            "reforge_id": "exposed",
+        "marmor_lose": {
+            "reforge_id": "marmor_lose",
             "name": "Exposed",
             "slot_weapon": false,
             "slot_body": true,
@@ -19755,8 +19792,8 @@
                 "var_d": "0.0"
             }
         },
-        "masterwork": {
-            "reforge_id": "masterwork",
+        "dmg_phy_bonus": {
+            "reforge_id": "dmg_phy_bonus",
             "name": "Masterwork",
             "slot_weapon": true,
             "slot_body": false,
@@ -19765,7 +19802,7 @@
             "slot_relic": false,
             "roll_chance": 100,
             "affliction_to_create": "PlusDamageTypeMinusDamageTypes",
-            "description": "Physical damage is 10% more efficient, all other damage is reduced by 10%",
+            "description": "You deal 10% more physical damage, but 10% less healing and other damage types",
             "vars": {
                 "var_a": "physical",
                 "var_b": "1.1",
@@ -19773,8 +19810,8 @@
                 "var_d": "0.0"
             }
         },
-        "bejewled": {
-            "reforge_id": "bejewled",
+        "dmg_mag_bonus": {
+            "reforge_id": "dmg_mag_bonus",
             "name": "Bejeweled",
             "slot_weapon": true,
             "slot_body": false,
@@ -19783,7 +19820,7 @@
             "slot_relic": false,
             "roll_chance": 100,
             "affliction_to_create": "PlusDamageTypeMinusDamageTypes",
-            "description": "Magical damage is 10% more efficient, all other damage is reduced by 10%",
+            "description": "You deal 10% more magical damage, but 10% less healing and other damage types",
             "vars": {
                 "var_a": "magical",
                 "var_b": "1.1",
@@ -19791,8 +19828,8 @@
                 "var_d": "0.0"
             }
         },
-        "sacred": {
-            "reforge_id": "sacred",
+        "dmg_pure_bonus": {
+            "reforge_id": "dmg_pure_bonus",
             "name": "Sacred",
             "slot_weapon": true,
             "slot_body": false,
@@ -19801,7 +19838,7 @@
             "slot_relic": false,
             "roll_chance": 100,
             "affliction_to_create": "PlusDamageTypeMinusDamageTypes",
-            "description": "Pure damage is 10% more efficient, all other damage is reduced by 10%",
+            "description": "You deal 10% more pure damage, but 10% less healing and other damage types",
             "vars": {
                 "var_a": "pure",
                 "var_b": "1.1",
@@ -19809,8 +19846,8 @@
                 "var_d": "0.0"
             }
         },
-        "healthy": {
-            "reforge_id": "healthy",
+        "dmg_heal_bonus": {
+            "reforge_id": "dmg_heal_bonus",
             "name": "Healthy",
             "slot_weapon": true,
             "slot_body": false,
@@ -19819,7 +19856,7 @@
             "slot_relic": false,
             "roll_chance": 100,
             "affliction_to_create": "PlusDamageTypeMinusDamageTypes",
-            "description": "Healing is 10% more efficient, all other damage is reduced by 10%",
+            "description": "You heal your targets for 10% more, but you deal 10% less damage",
             "vars": {
                 "var_a": "healing",
                 "var_b": "1.1",
@@ -19859,6 +19896,78 @@
             "vars": {
                 "var_a": "magical",
                 "var_b": "physical",
+                "var_c": "0.0",
+                "var_d": "0.0"
+            }
+        },
+        "skill_bonus_swing": {
+            "reforge_id": "skill_bonus_swing",
+            "name": "Swinging",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "SkillDamageBonus",
+            "description": "Your Swing skill deals 15% more damage",
+            "vars": {
+                "var_a": "swing",
+                "var_b": "1.15",
+                "var_c": "0.0",
+                "var_d": "0.0"
+            }
+        },
+        "skill_bonus_stab": {
+            "reforge_id": "skill_bonus_stab",
+            "name": "Stabbing",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "SkillDamageBonus",
+            "description": "Your Stab skill deals 15% more damage",
+            "vars": {
+                "var_a": "stab",
+                "var_b": "1.15",
+                "var_c": "0.0",
+                "var_d": "0.0"
+            }
+        },
+        "skill_bonus_magic_missile": {
+            "reforge_id": "skill_bonus_magic_missile",
+            "name": "Homing",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "SkillDamageBonus",
+            "description": "Your Magic Missile skill deals 15% more damage",
+            "vars": {
+                "var_a": "magic_missile",
+                "var_b": "1.15",
+                "var_c": "0.0",
+                "var_d": "0.0"
+            }
+        },
+        "skill_bonus_smite": {
+            "reforge_id": "skill_bonus_smite",
+            "name": "Vengeful",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "roll_chance": 100,
+            "affliction_to_create": "SkillDamageBonus",
+            "description": "Your Smite skill deals 15% more damage",
+            "vars": {
+                "var_a": "smite",
+                "var_b": "1.15",
                 "var_c": "0.0",
                 "var_d": "0.0"
             }

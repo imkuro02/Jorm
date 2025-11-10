@@ -1,6 +1,7 @@
 
 from configuration.config import ItemType, EquipmentSlotType, StatType, SKILLS, Color, DamageType, BonusTypes, EQUIPMENT_REFORGES, ActorStatusType
 from items.misc import Item
+import utils
 from utils import Table
 import skills.skills 
 import random
@@ -99,7 +100,7 @@ class EquipmentBonusManager:
         
         if bonus.type == BonusTypes.REFORGE:
             if bonus.key not in EQUIPMENT_REFORGES:
-                utils.debug_print(bonus.key, 'def check_if_valid(self, bonus) not in ')
+                utils.debug_print(f'{bonus.key} def check_if_valid(self, bonus) not in ')
                 return False
 
         if bonus.type == BonusTypes.STAT:
@@ -439,8 +440,8 @@ class Equipment(Item):
         reforge_choices = []
         for i in EQUIPMENT_REFORGES:
             # i is the reforge_id
-            #utils.debug_print(EQUIPMENT_REFORGES[i])
-            if EQUIPMENT_REFORGES[i]['slot_'+item.slot]:
+            #utils.debug_print(f"{EQUIPMENT_REFORGES[i]['slot_'+item.slot]} {EQUIPMENT_REFORGES[i]['reforge_id']}")
+            if bool(EQUIPMENT_REFORGES[i]['slot_'+item.slot]):
                 reforge_choices.append(EQUIPMENT_REFORGES[i])
 
         reforge_chances = {}

@@ -367,6 +367,10 @@ def command_skills(self, line):
                         # floats are most likely percentages
                         # so convert them to string and add "%"
                         if isinstance(val, int):
+                            if val_nam == 'hp_cost':
+                                val += int(self.stat_manager.stats[StatType.LVL]*.5)
+                            pass
+                        if isinstance(val, int):
                             if val_nam == 'mp_cost':
                                 val += int(self.stat_manager.stats[StatType.LVL]*.5)
                             pass

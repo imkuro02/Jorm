@@ -101,9 +101,11 @@ def skill_checks(user, target, skill_id):
     hp_cost = 0
     mp_cost = 0
 
-    if 'mp_cost' in skill['script_values']:
+    if 'hp_cost' in skill['script_values']:
+        hp_cost = skill['script_values']['hp_cost'][users_skill_level]
+        hp_cost = hp_cost + int(user.stat_manager.stats[StatType.LVL]*.5)
         if hp_cost > user.stat_manager.stats[StatType.HP] + 1:
-            hp_cost = skill['script_values']['hp_cost'][users_skill_level]
+            
             error(user, f'You need atleast {hp_cost} HP to use {skill_name}')
             return False
     if 'mp_cost' in skill['script_values']:
