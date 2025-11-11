@@ -158,6 +158,8 @@ class AffectThorns(Affect):
             damage_type = DamageType.PURE,
             combat_event = damage_obj.combat_event
         )
+
+        
         
         return damage_obj
 

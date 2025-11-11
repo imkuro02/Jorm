@@ -1,4 +1,10 @@
 versions:
+  '111125':
+    id: '111125'
+    title: Skills
+    unixtime: 1761899677
+    features:
+    - Chain lightning added
   '031125':
     id: '031125'
     title: Inventory management, skills, damage, and reforges

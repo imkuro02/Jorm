@@ -1,5 +1,5 @@
 {
-    "SHA-256": "26ea09a080c154b476eec60969b04d8c8f1ca267f61479340b7677b6dd07de27",
+    "SHA-256": "150660128dfcc7c4b73e85d466556c3a0d9badff0906036c758e5edb4d8df787",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3750,7 +3750,7 @@
             },
             "include_in_daily_quests": false,
             "skills": {
-                "refresh": 100,
+                "refresh": 1,
                 "magic_missile": 1
             },
             "loot": {
@@ -6022,6 +6022,93 @@
                     2,
                     2,
                     2
+                ]
+            }
+        },
+        "chain_lightning": {
+            "skill_id": "chain_lightning",
+            "name": "Chain Lightning",
+            "description": "Heal all party members for DAMAGE + 0%-CRIT% SOUL health.\n",
+            "script_to_run": "DamageByMind",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 9.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "crit": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "mp_cost": [
+                    20,
+                    22,
+                    24,
+                    26,
+                    28,
+                    30
+                ],
+                "cooldown": [
+                    6,
+                    6,
+                    6,
+                    5,
+                    5,
+                    4
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "bounce_amount": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "bounce_bonus": [
+                    -0.2,
+                    -0.18,
+                    -0.16,
+                    -0.14,
+                    -0.12,
+                    -0.1
                 ]
             }
         }
