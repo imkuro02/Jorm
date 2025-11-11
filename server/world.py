@@ -63,7 +63,11 @@ class Spawner:
         '''
         
         for i in self.spawn_points:
-            if self.spawn_points[i] in self.room.actors.values() or self.spawn_points[i] in self.room.inventory_manager.items.values():
+            roll = 0
+            if not self.room.is_player_present():
+                roll = random.randint(0,100)
+
+            if roll != 1 and (self.spawn_points[i] in self.room.actors.values() or self.spawn_points[i] in self.room.inventory_manager.items.values()):
                 continue
             else:
                 try:
@@ -95,7 +99,12 @@ class Spawner:
                     #_selected = random.choice(_list)
                     npc = create_npc(self.room,_selected)
                     self.spawn_points[i] = npc
+                    '''
+                    roll = random.randint(0,100)
+                    if roll == 1:
+                        npc.simple_broadcast('',f'{npc.name} has spawned', send_to = 'world')
                     continue
+                    '''
 
                 if _selected in NPCS:
                     #_selected = random.choice(_list)
@@ -557,7 +566,7 @@ class World:
         boss_mob = random.choice(all_mobs)
         boss_mob.name = '<!>' + boss_mob.name + '<!>'
         boss_mob.simple_broadcast('',
-        f'{boss_mob.pretty_name()} is terrorizing {boss_mob.room.name}', worldwide = True)
+        f'{boss_mob.pretty_name()} is terrorizing {boss_mob.room.name}', send_to = 'world')
         for s in boss_mob.stat_manager.stats:
             boss_mob.stat_manager.stats[s] = boss_mob.stat_manager.stats[s] * 2
         boss_mob.stat_manager.stats[StatType.EXP] = boss_mob.stat_manager.stats[StatType.EXP] * 5
