@@ -147,8 +147,8 @@ class AffectThorns(Affect):
         if damage_obj.damage_type != DamageType.PHYSICAL:
             return damage_obj
 
-        if damage_obj.damage_value > 0:
-            return damage_obj
+        #if damage_obj.damage_value > 0:
+        #    return damage_obj
         
         thorns_damage = Damage(
             damage_source_actor = self.affect_source_actor,
