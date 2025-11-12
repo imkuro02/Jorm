@@ -251,6 +251,9 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
         x = SHEET['items_equipment']
         for index in range(0, len(x[row])):
             #utils.debug_print(x['premade_id'][index])
+            if bool(x['legacy'][index]):
+                continue
+                
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':   x['premade_id'][index],
                 'name':         x['name'][index],
