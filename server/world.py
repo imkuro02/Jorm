@@ -63,16 +63,20 @@ class Spawner:
         '''
         
         for i in self.spawn_points:
+            
             roll = 0
-            #if not self.room.is_player_present():
-            #    roll = random.randint(0,100)
+            if not self.room.is_player_present():
+                roll = 1 #random.randint(0,100)
+            
 
             if roll != 1 and (self.spawn_points[i] in self.room.actors.values() or self.spawn_points[i] in self.room.inventory_manager.items.values()):
                 continue
             else:
                 try:
+                    #print('unload')
                     s = self.spawn_points[i]
                     self.spawn_points[i] = None
+                    
                     s.unload()
                     #self.spawn_points[i] = None
                 except Exception as e:
@@ -105,6 +109,7 @@ class Spawner:
                         npc.simple_broadcast('',f'{npc.name} has spawned', send_to = 'world')
                     continue
                     '''
+                    continue
 
                 if _selected in NPCS:
                     #_selected = random.choice(_list)
