@@ -64,8 +64,8 @@ class Spawner:
         
         for i in self.spawn_points:
             roll = 0
-            if not self.room.is_player_present():
-                roll = random.randint(0,100)
+            #if not self.room.is_player_present():
+            #    roll = random.randint(0,100)
 
             if roll != 1 and (self.spawn_points[i] in self.room.actors.values() or self.spawn_points[i] in self.room.inventory_manager.items.values()):
                 continue

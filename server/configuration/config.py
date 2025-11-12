@@ -109,7 +109,8 @@ SkillScriptValuesToNames = {
     'bounce_bonus':  'BOUNCE BONUS',
     'cooldown':     'COOLDOWN',
     'hp_cost':      'HP-COST',
-    'mp_cost':      'MP-COST'
+    'mp_cost':      'MP-COST',
+    'delay':        'DELAY'
 }
 
 

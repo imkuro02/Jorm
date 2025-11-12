@@ -261,6 +261,7 @@ def command_skills(self, line):
         _bounces = 0 if not 'bounce_amount' in skill["script_values"] else 1
         _bounce_bonus = 0 if not 'bounce_bonus' in skill["script_values"] else 1
         _ends_turn = skill["end_turn"]
+        _has_delay = 'delay' in skill["script_values"]
         _name = skill["name"]
         _target = ''
         _targets = [_target_self, _target_others, _target_items]
@@ -295,6 +296,8 @@ def command_skills(self, line):
         extra_info = ''
         if not _ends_turn:
             extra_info += f'{_name} does not end your turn in combat.' + '\n'
+            if _has_delay:
+                extra_info += f' * {_name} delay will override this behaviour' + '\n'
         if _is_aoe:
             others = 'enemies' if _is_offensive else 'allies'
             extra_info += f'{_name} affects your chosen target, but also AOE amount of {others}.' + '\n'
@@ -304,6 +307,10 @@ def command_skills(self, line):
             extra_info += f' but then bounces BOUNCES times to {others},' + '\n'
             extra_info += f' the power is amplified by BOUNCE BONUS each bounce,' + '\n'
             extra_info += f' * if there are no valid targets, the bounce stops.' + '\n'
+        if _has_delay:
+            extra_info += f'The use of {_name} will be delayed and' + '\n'
+            extra_info += f'no other actions can be taken until finished.' + '\n'
+            extra_info += f' * No delay out of combat.' + '\n'
         extra_info += f'{_name} {_combat}.' + '\n'
         if not _can_practice:
             extra_info += f'{_name} CANNOT be learned via practices.' + '\n'

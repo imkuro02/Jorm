@@ -80,6 +80,35 @@ class Affect:
     def dealt_damage(self, damage_obj):
         return damage_obj
 
+# this affect takes a skill object before its ran and runs it when affect runs outta time
+class AffectDelayedAction(Affect):
+    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, skills_to_use_objects):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+        self.skills_to_use_objects = skills_to_use_objects
+        self.get_prediction_string_append = f'will finish in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
+        self.get_prediction_string_clear = True
+        
+    def set_turn(self):
+        super().set_turn()
+        self.get_prediction_string_append = f'will finish in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
+        self.get_prediction_string_clear = True
+        self.affect_target_actor.simple_broadcast(
+            f'You are charging an action',
+            f'{self.affect_target_actor.pretty_name()} is charging an action')
+        self.affect_target_actor.finish_turn()
+
+    def on_finished(self, silent = False):
+        super().on_finished(silent)
+        if self.affect_target_actor.status != ActorStatusType.FIGHTING:
+            return
+
+        for i in self.skills_to_use_objects:
+            if i.other.status != ActorStatusType.FIGHTING:
+                continue
+            i.pre_use(no_delay = True)
+
+        self.affect_target_actor.finish_turn()
+
 class AffectStunned(Affect):
     # called at start of turn
     def set_turn(self):

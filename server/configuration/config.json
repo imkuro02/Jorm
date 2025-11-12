@@ -1,5 +1,5 @@
 {
-    "SHA-256": "150660128dfcc7c4b73e85d466556c3a0d9badff0906036c758e5edb4d8df787",
+    "SHA-256": "62321bd3c8420a2892874af0630601e9a386cec87cb21864f57d5f97fd13526e",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -109,7 +109,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "nudge": 1
+                "nudge": 1,
+                "barrier": 1
             },
             "loot": {
                 "rat_hide": 10,
@@ -5135,69 +5136,6 @@
                 ]
             }
         },
-        "alchemy": {
-            "skill_id": "alchemy",
-            "name": "Alchemy",
-            "description": "Alchemize an equipable item, destroying the item in exchange for experience.\nExperience granted is based on BONUS% of items level.\n",
-            "script_to_run": "Alchemy",
-            "target_others_is_valid": false,
-            "target_item_is_valid": true,
-            "target_self_is_valid": false,
-            "can_use_in_combat": false,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 1,
-            "level_req": 0.0,
-            "use_perspectives": {
-                "use_case_name": "use_alchemy",
-                "you on you": "alchemy error check config use_perspectives 1",
-                "you on other": "#OTHER# melts in your hands, you feel it strengthen you",
-                "user on user": "alchemy error check config use_perspectives 3",
-                "user on you": "alchemy error check config use_perspectives 4",
-                "user on other": "#OTHER# melts in #USER#'s hands, they seem strenghtened",
-                "you on you fail": "alchemy error check config use_perspectives 6",
-                "you on other fail": "alchemy error check config use_perspectives 7",
-                "user on user fail": "alchemy error check config use_perspectives 8",
-                "user on you fail": "alchemy error check config use_perspectives 9",
-                "user on other fail": "alchemy error check config use_perspectives 10"
-            },
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "bonus": [
-                    1.0,
-                    1.1,
-                    1.2,
-                    1.3,
-                    1.4,
-                    1.5
-                ],
-                "mp_cost": [
-                    10,
-                    10,
-                    10,
-                    10,
-                    10,
-                    10
-                ],
-                "cooldown": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
-                ]
-            }
-        },
         "bless": {
             "skill_id": "bless",
             "name": "Bless",
@@ -6104,11 +6042,57 @@
                 ],
                 "bounce_bonus": [
                     -0.2,
-                    -0.18,
-                    -0.16,
-                    -0.14,
-                    -0.12,
-                    -0.1
+                    -0.2,
+                    -0.2,
+                    -0.2,
+                    -0.2,
+                    -0.2
+                ]
+            }
+        },
+        "barrier": {
+            "skill_id": "barrier",
+            "name": "Barrier",
+            "description": "Heal your targets physical and magical armor for DAMAGE + SOUL + MIND.\n",
+            "script_to_run": "Barrier",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 1.0,
+            "use_perspectives": {
+                "use_case_name": "use_cure_light_wounds",
+                "you on you": "You pray for yourself",
+                "you on other": "You pray for #OTHER#",
+                "user on user": "#USER# prays for themselves",
+                "user on you": "#USER# prays for you",
+                "user on other": "#USER# prays for #OTHER#",
+                "you on you fail": "You lose concentration while praying for yourself",
+                "you on other fail": "You lose concentration while praying for #OTHER#",
+                "user on user fail": "#USER# loses their concentration while praying for themselves",
+                "user on you fail": "#USER# loses their concentration while praying for you",
+                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
+            },
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "damage": [
+                    10
+                ],
+                "cooldown": [
+                    1
+                ],
+                "hp_cost": [
+                    10
+                ],
+                "levels": [
+                    1
+                ],
+                "delay": [
+                    1
                 ]
             }
         }

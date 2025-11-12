@@ -29,7 +29,7 @@ class Skill:
             if 'crit' not in self.script_values or stat_type == None:
                 dmg = self.script_values['damage'][self.users_skill_level]
             else:
-                crit_min = int(self.script_values['crit'][self.users_skill_level]*80)
+                crit_min = int(self.script_values['crit'][self.users_skill_level]*50)
                 crit_max = int(self.script_values['crit'][self.users_skill_level]*100)
                 dmg_stat = int(self.user.stat_manager.stats[stat_type])
                 dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
@@ -114,9 +114,39 @@ class Skill:
         targets = targets[::-1]
         return targets
 
-    def pre_use(self, override_bounce_amount = None):
+    def pre_use_attempt_to_apply_delay_affect(self, skill):
+        if self.user.status != ActorStatusType.FIGHTING:
+            return False
+        delay = 0
+        delayed_actions = []
+        if 'delay' in skill['script_values']:
+            delay = int(skill['script_values']['delay'][self.users_skill_level])
+            delayed_actions = [self]
+        else:
+            return False
+
+        if delayed_actions != []:
+            print('delayed')
+            delayed_actions_affect = affects.AffectDelayedAction(
+                affect_source_actor = self.user,
+                affect_target_actor = self.user,
+                name = 'Charging an action', description = f'Skills will be used when this affliction is over',
+                turns = delay-1,
+                skills_to_use_objects = delayed_actions
+            )
+            self.user.affect_manager.set_affect_object(delayed_actions_affect)
+            self.user.finish_turn()
+            return True
+        return False
+    
+    def pre_use(self, override_bounce_amount = None, no_delay = False):
         skill = SKILLS[self.skill_id]
         skill_obj = self.__class__
+
+        if not no_delay:
+            if self.pre_use_attempt_to_apply_delay_affect(skill):
+                return 
+
         _skill_objects = []
 
         targets = self.pre_use_get_targets()
@@ -126,6 +156,8 @@ class Skill:
         else:
             bounce_amount = override_bounce_amount
 
+         
+        
         if 'aoe' in skill['script_values']:
             current_aoe = 0
             for target in targets:
@@ -171,6 +203,8 @@ class Skill:
         for _skill_object in _skill_objects:
 
             _skill_object.silent_use = self.silent_use
+
+
             _skill_object.use()
 
             self.silent_use = True
@@ -212,6 +246,9 @@ class Skill:
                 #self.simple_broadcast('')
                 
                 _skill_object.use()
+
+       
+            
 
 
 
@@ -633,6 +670,17 @@ class SkillMageArmor(Skill):
                 damage_to_stat = StatType.MAGARMOR
                 )
             damage_obj.run()     
+
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self, combat_event = self.combat_event,
+                damage_source_actor = self.user,
+                damage_value = int(self.get_dmg_value(stat_type = StatType.MIND)),
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.PHYARMOR
+                )
+            damage_obj.run()     
+
             turns = int(self.script_values['duration'][self.users_skill_level])
             reduction = self.script_values['bonus'][self.users_skill_level]
             ethereal_affect = affects.AffectMageArmor(
@@ -641,6 +689,34 @@ class SkillMageArmor(Skill):
                 name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.', 
                 turns = turns, reduction = reduction)
             self.other.affect_manager.set_affect_object(ethereal_affect)  
+
+
+class SkillBarrier(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            #dmg = int((self.get_dmg_value(stat_type = StatType.MIND) + self.get_dmg_value(stat_type = StatType.SOUL)))
+            #dmg = self.get_dmg_value(stat_type = StatType.MIND) + self.get_dmg_value(stat_type = StatType.SOUL)
+            dmg = self.script_values['damage'][self.users_skill_level] + int((self.user.stat_manager.stats[StatType.MIND] + self.user.stat_manager.stats[StatType.SOUL])/2)
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self, combat_event = self.combat_event,
+                damage_source_actor = self.user,
+                damage_value = dmg,
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.MAGARMOR
+                )
+            damage_obj.run()     
+
+            damage_obj = Damage(
+                damage_taker_actor = self.other,
+                damage_source_action = self, combat_event = self.combat_event,
+                damage_source_actor = self.user,
+                damage_value = dmg,
+                damage_type = DamageType.HEALING,
+                damage_to_stat = StatType.PHYARMOR
+                )
+            damage_obj.run()     
 
 class SkillDisorient(Skill):
     def use(self):

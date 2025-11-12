@@ -733,7 +733,7 @@ class Actor:
                 self.sendLine(output)
                 self.show_prompts(self.room.combat.order)
             '''
-            
+          
         if self.room == None:
             return
         if self.room.combat == None:
@@ -742,7 +742,7 @@ class Actor:
         
         
            
-            
+        print(self.room.combat)
 
         self.affect_manager.set_turn()
         self.cooldown_manager.set_turn()

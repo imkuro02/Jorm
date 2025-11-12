@@ -48,8 +48,8 @@ class AI:
             # affects like stun when at 0 will not do anything but display 
             # the aff is over, so when something is at 0 it wont trigger on actor turn
             # and therefor should not display
-            if aff.turns == 0:
-                continue
+            #if aff.turns == 0:
+            #    continue
             if aff.get_prediction_string_append != None:
                 aff_appends.append(aff.get_prediction_string_append)
             if aff.get_prediction_string_clear == True:
