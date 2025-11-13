@@ -80,7 +80,8 @@ class PartyManager:
             if type(self.actor).__name__ != "Player":
                 return 'party id enemies'
             if type(self.actor).__name__ == "Player":
-                return 'party id players' #self.actor.id #'party id players' 
+                #return 'party id players' #self.actor.id #'party id players' 
+                return self.actor.id
 
         
     def clear_invites(self):
