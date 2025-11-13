@@ -6,12 +6,12 @@ extends Control
 var socket = WebSocketPeer.new()
 
 # References to UI nodes
-@onready var INPUT = $canvas/VBoxContainer/input/input
-@onready var OUTPUT = $canvas/VBoxContainer/output/output
-@onready var DEBUG = $canvas/VBoxContainer/output/debug
+@onready var INPUT = $canvas/input/input
+@onready var OUTPUT = $canvas/container/output/output
+@onready var DEBUG = $canvas/container/output/debug
 @onready var SFX_MAN = $sfx_manager
-@onready var LOOK_ROOM = $canvas/VBoxContainer/VBoxContainer/look_room
-@onready var ASCIIMAP = $canvas/VBoxContainer/VBoxContainer/ascii_map
+@onready var LOOK_ROOM = $canvas/container/map_room/look_room
+@onready var ASCIIMAP = $canvas/container/map_room/ascii_map
 
 
 
