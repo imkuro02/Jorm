@@ -1,5 +1,5 @@
 {
-    "SHA-256": "62321bd3c8420a2892874af0630601e9a386cec87cb21864f57d5f97fd13526e",
+    "SHA-256": "a239898444f25e418a2033f9af8686bca26fb991611a337e76f67aea4506d4fb",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -109,8 +109,7 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "nudge": 1,
-                "barrier": 1
+                "nudge": 1
             },
             "loot": {
                 "rat_hide": 10,
@@ -258,6 +257,7 @@
                 "simple_bark": 5,
                 "tree_branch": 10,
                 "rock": 39,
+                "tree_root": 39,
                 "summoning_rock": 39,
                 "red potion": 100,
                 "blue potion": 100,
@@ -1722,6 +1722,7 @@
                 "tree_root": 10,
                 "tree_branch": 10,
                 "rock": 33,
+                "simple_bark": 33,
                 "summoning_rock": 33,
                 "red potion": 100,
                 "blue potion": 100,
@@ -2932,6 +2933,8 @@
                 "nudge": 1
             },
             "loot": {
+                "ant_antenna": 34,
+                "ant_mandible": 34,
                 "ant_pheromone": 34,
                 "ant_resin": 34
             },
@@ -4070,41 +4073,26 @@
             "end_turn": true,
             "script_values": {
                 "damage": [
-                    1,
                     2,
-                    3,
-                    4,
-                    5,
-                    6
+                    2,
+                    2
                 ],
                 "crit": [
                     0.5,
-                    0.52,
-                    0.54,
-                    0.56,
-                    0.58,
-                    0.6
+                    0.6,
+                    0.7
                 ],
                 "mp_cost": [
+                    5,
                     10,
-                    10,
-                    10,
-                    10,
-                    10,
-                    1
+                    15
                 ],
                 "aoe": [
-                    5,
-                    5,
-                    5,
-                    5,
-                    5,
-                    5
+                    0,
+                    1,
+                    2
                 ],
                 "cooldown": [
-                    1,
-                    1,
-                    1,
                     1,
                     1,
                     1
@@ -4112,10 +4100,7 @@
                 "levels": [
                     1,
                     2,
-                    3,
-                    4,
-                    5,
-                    6
+                    3
                 ]
             }
         },
@@ -6052,7 +6037,7 @@
         },
         "barrier": {
             "skill_id": "barrier",
-            "name": "Barrier",
+            "name": "Mend Armor",
             "description": "Heal your targets physical and magical armor for DAMAGE + SOUL + MIND.\n",
             "script_to_run": "Barrier",
             "target_others_is_valid": true,
@@ -6435,7 +6420,7 @@
             "item_type": "misc",
             "stack_max_amount": 9,
             "drop_tags": [
-                "none"
+                "wood"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6457,6 +6442,39 @@
                 "grit weapon c6"
             ]
         },
+        "simple_bark": {
+            "premade_id": "simple_bark",
+            "name": "Simple Bark",
+            "description": "Some tree bark, wonder what this could be used for?",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "stack_max_amount": 9,
+            "drop_tags": [
+                "wood"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": [
+                "grit weapon c1",
+                "grit body c1",
+                "grit head c1",
+                "soul weapon c1",
+                "soul weapon c1_2",
+                "grit weapon c3_2",
+                "pig_leather"
+            ]
+        },
         "tree_root": {
             "premade_id": "tree_root",
             "name": "Tree root",
@@ -6469,7 +6487,7 @@
             "item_type": "misc",
             "stack_max_amount": 9,
             "drop_tags": [
-                "none"
+                "wood"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6679,7 +6697,7 @@
             "item_type": "misc",
             "stack_max_amount": 9,
             "drop_tags": [
-                "none"
+                "wandering_rock"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
@@ -6972,39 +6990,6 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
-        },
-        "simple_bark": {
-            "premade_id": "simple_bark",
-            "name": "Simple Bark",
-            "description": "Some tree bark, wonder what this could be used for?",
-            "description_room": null,
-            "invisible": 0.0,
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "item_type": "misc",
-            "stack_max_amount": 9,
-            "drop_tags": [
-                "none"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 40,
-            "drop_chance_level": 0,
-            "drop_chance_under_bonus": 20,
-            "drop_chance_over_bonus": -1,
-            "drop_chance_range_under": 1,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": [
-                "grit weapon c1",
-                "grit body c1",
-                "grit head c1",
-                "soul weapon c1",
-                "soul weapon c1_2",
-                "grit weapon c3_2",
-                "pig_leather"
-            ]
         },
         "simple_wood": {
             "premade_id": "simple_wood",
@@ -8511,6 +8496,56 @@
             "stack_max_amount": 9,
             "drop_tags": [
                 "none"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "ant_antenna": {
+            "premade_id": "ant_antenna",
+            "name": "Ant Antennae",
+            "description": "The ant antennae ",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "stack_max_amount": 9,
+            "drop_tags": [
+                "ant"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "ant_mandible": {
+            "premade_id": "ant_mandible",
+            "name": "Ant Mandible",
+            "description": "The hard and sharp ant mandible.",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "stack_max_amount": 9,
+            "drop_tags": [
+                "ant"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,

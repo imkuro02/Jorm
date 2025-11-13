@@ -61,7 +61,7 @@ def create_npc(room, npc_id, spawn_for_lore = False):
     if npc_id in NPCS:
         #name =      NPCS[npc_id]['name']
         #desc =      NPCS[npc_id]['description']
-        tree =      NPCS[npc_id]['tree']
+        tree =      copy.deepcopy(NPCS[npc_id]['tree'])
 
 
     npc_class = Enemy

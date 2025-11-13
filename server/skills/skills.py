@@ -120,7 +120,7 @@ class Skill:
         delay = 0
         delayed_actions = []
         if 'delay' in skill['script_values']:
-            delay = int(skill['script_values']['delay'][self.users_skill_level])
+            delay = int(self.script_values['delay'][self.users_skill_level])
             delayed_actions = [self]
         else:
             return False
@@ -152,19 +152,19 @@ class Skill:
         targets = self.pre_use_get_targets()
         
         if override_bounce_amount == None:
-            bounce_amount = skill['script_values']['bounce_amount'][self.users_skill_level] if 'bounce_amount' in skill['script_values'] else 0
+            bounce_amount = self.script_values['bounce_amount'][self.users_skill_level] if 'bounce_amount' in self.script_values else 0
         else:
             bounce_amount = override_bounce_amount
 
          
         
-        if 'aoe' in skill['script_values']:
+        if 'aoe' in self.script_values:
             current_aoe = 0
             for target in targets:
 
                 _skill_obj = skill_obj(
                     skill_id = self.skill_id, 
-                    script_values = skill['script_values'], 
+                    script_values = self.script_values, 
                     user = self.user, 
                     other = target, 
                     users_skill_level = self.users_skill_level, 
@@ -177,14 +177,14 @@ class Skill:
                     combat_event = self.combat_event
                 )
                 _skill_objects.append(_skill_obj)
-                if current_aoe > skill['script_values']['aoe'][self.users_skill_level]:
+                if current_aoe >= self.script_values['aoe'][self.users_skill_level]:
                     break
                 current_aoe += 1
 
         else:
             _skill_obj = skill_obj(
                 skill_id = self.skill_id, 
-                script_values = skill['script_values'], 
+                script_values = self.script_values, 
                 user = self.user, 
                 other = self.other, 
                 users_skill_level = self.users_skill_level, 
@@ -222,8 +222,8 @@ class Skill:
             while _skill_object.bounce >= 1:
                 _skill_object.silent_use = self.silent_use
                 _skill_object.bounce -= 1
-                if 'bounce_bonus' in skill['script_values']:
-                    damage = damage + int(damage *  skill['script_values']['bounce_bonus'][self.users_skill_level])
+                if 'bounce_bonus' in self.script_values:
+                    damage = damage + int(damage *  self.script_values['bounce_bonus'][self.users_skill_level])
                 _skill_object.get_dmg_value_override = damage
                 
                 targets = self.pre_use_get_targets()
