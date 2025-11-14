@@ -182,6 +182,7 @@ class Actor:
         self.room = room
         if self.room != None:
             self.factory = self.room.world.factory
+        self.room_previous = None
         self.ai = actors.ai.get_ai(ai)(self)
 
         

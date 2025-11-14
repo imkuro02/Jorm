@@ -1,10 +1,16 @@
 versions:
-  '111125':
-    id: '111125'
+  '141125':
+    id: '141125'
     title: Skills
     unixtime: 1761899677
     features:
-    - Chain lightning added
+    - Skill; Chain lightning added
+    - Skill; Mend Armor added
+    - Enemies never attack by themselves anymore
+    - Enemies that are aggressive and your lvl -3 will show as "in your way"
+    - Enemies that are "in your way" do not allow you to walk in any direction except to the room you came from
+    - Fleeing does not return you to rest spot, it makes you exit current combat
+    - Rest here command cannot be used with npcs present
   '031125':
     id: '031125'
     title: Inventory management, skills, damage, and reforges

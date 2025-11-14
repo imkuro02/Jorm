@@ -371,7 +371,7 @@ class Room:
             self.combat = Combat(self, participants)
         
     def move_actor(self, actor, silent = False, dont_unload_instanced = False):
-        
+        actor.room_previous = actor.room.get_real_id()
         self.remove_actor(actor)
 
         if not silent and actor.room != self:

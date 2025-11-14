@@ -97,7 +97,10 @@ def command_go(self, line = '', room_id = None):
                     if highest_can_start_fights_level < actor.stat_manager.stats[StatType.LVL]:
                         highest_can_start_fights_level = actor.stat_manager.stats[StatType.LVL]
 
-        if yes_any_can_start_fights:
+        
+        
+        # if aggressive enemies are present while you cannot go to a new room, but you can still return to previous room
+        if yes_any_can_start_fights and direction.get_room_obj().get_real_id() != self.room_previous:
             roll = 0
             if self.stat_manager.stats[StatType.LVL] - (highest_can_start_fights_level+3) <= 0:
                 roll = 1#random.randint(0,5)
@@ -109,10 +112,10 @@ def command_go(self, line = '', room_id = None):
             if roll == 1:
                 if self.party_manager.party != None:
                     if self.party_manager.party.actor == self:
-                        self.command_fight('')
+                        self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
                         return
                 else:
-                    self.command_fight('')
+                    self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
                     return
             
         if direction.blocked and self.room.is_enemy_present():
