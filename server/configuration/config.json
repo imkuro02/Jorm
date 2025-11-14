@@ -1,5 +1,5 @@
 {
-    "SHA-256": "a239898444f25e418a2033f9af8686bca26fb991611a337e76f67aea4506d4fb",
+    "SHA-256": "b3b650aaccdab14bee15393a83618e75fa60e25c0b1f93603851965b50258b73",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -6035,11 +6035,11 @@
                 ]
             }
         },
-        "barrier": {
-            "skill_id": "barrier",
+        "mend_armor": {
+            "skill_id": "mend_armor",
             "name": "Mend Armor",
             "description": "Heal your targets physical and magical armor for DAMAGE + SOUL + MIND.\n",
-            "script_to_run": "Barrier",
+            "script_to_run": "MendArmor",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
             "target_self_is_valid": true,
@@ -8625,13 +8625,13 @@
             "drop_tags": [
                 "none"
             ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
             "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
@@ -11784,7 +11784,7 @@
         },
         "flow head c1": {
             "premade_id": "flow head c1",
-            "name": "Shroom cap hat",
+            "name": "Shroom cap hood",
             "description": "A big shroom cap with its core scraped out to fit your head.",
             "description_room": null,
             "invisible": 0.0,
@@ -11891,7 +11891,7 @@
         },
         "flow head c6": {
             "premade_id": "flow head c6",
-            "name": "Red cap hat",
+            "name": "Red cap hood",
             "description": "None",
             "description_room": null,
             "invisible": 0.0,
@@ -12189,7 +12189,7 @@
         },
         "grit head 6": {
             "premade_id": "grit head 6",
-            "name": "Iron cap",
+            "name": "Iron helm",
             "description": "A polished iron cap, it distorts your face when you use it like a mirror",
             "description_room": null,
             "invisible": 0.0,
@@ -12287,7 +12287,7 @@
         },
         "grit head 9 bone": {
             "premade_id": "grit head 9 bone",
-            "name": "Skullcap",
+            "name": "Skull mask",
             "description": "This macabre helmet is made of the skull of a unidentifiable creature.",
             "description_room": null,
             "invisible": 0.0,

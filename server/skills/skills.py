@@ -691,7 +691,7 @@ class SkillMageArmor(Skill):
             self.other.affect_manager.set_affect_object(ethereal_affect)  
 
 
-class SkillBarrier(Skill):
+class SkillMendArmor(Skill):
     def use(self):
         super().use()
         if self.success:
