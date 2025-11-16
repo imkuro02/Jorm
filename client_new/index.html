@@ -6,28 +6,91 @@
   <title>Jorm</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-      background-color: burlywood;
-      display: flex;
-      justify-content: center;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  color: white;
+
+  background-image: url("imgs/Brick_12-128x128.png");
+  background-repeat: repeat;  
+  background-position: top left; 
+  position: relative; /* needed for overlay */
+}
+
+/* Black tint overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background-color: rgba(0, 0, 0, 0.6); /* adjust opacity for darkness */
+  pointer-events: none; /* allows clicks through overlay */
+  z-index: -1; /* behind all content */
+}
+
+
+    a:link {
+      color: #4ecaff;
+    }
+
+    a:visited {
+      color: #c38aff;
     }
 
     .container {
       width: 1280px;
-      background-color: wheat;
-      margin: 20px auto;
-      padding: 20px;
+      background-color: rgba(4, 12, 2, 0.8);
+      margin: 10px auto;
+      padding: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    iframe {
-      width: 100%;
-      height: 960px;
-      border: none;
-      margin-bottom: 20px;
-    }
+.iframe-wrapper {
+  margin-top: 32px;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 64px;
+
+  /* Creates a stacking context so ::before can go behind iframe */
+  z-index: 0;
+}
+
+.iframe-wrapper iframe {
+  width: 100%;
+  max-width: 1280px;
+  height: 960px;
+  border: none;
+  display: block;
+
+  position: relative;
+  z-index: 2;   /* iframe IN FRONT */
+  
+}
+
+.iframe-wrapper::before {
+  content: "";
+  position: absolute;
+
+  
+  /* Expand outside iframe for overflowing border */
+  top: -48px;
+  left: -48px;
+  right: -48px;
+  bottom: -48px;
+
+  border: 48px solid transparent;
+  border-image-source: url("imgs/gptart5-2.png");
+  border-image-slice: 8 fill;
+  border-image-repeat: repeat;
+
+  pointer-events: none; /* clicks go through */
+
+  z-index: 1;   /* border BEHIND iframe but above wrapper background */
+  image-rendering: pixelated;
+}
 
     .content {
       display: flex;
@@ -54,7 +117,9 @@
 </head>
 <body>
   <div class="container">
-    <iframe src="https://jorm.kurowski.xyz/play"></iframe>
+    <div class="iframe-wrapper">
+      <iframe src="https://jorm.kurowski.xyz/play"></iframe>
+    </div>
 
     <div class="content">
       <div class="text-section">
@@ -81,14 +146,5 @@
       </div>
     </div>
   </div>
-
-  <!-- Prevent Firefox from unfocusing on Backspace -->
-  <script>
-    window.addEventListener("keydown", function(e) {
-      if (e.key === "Backspace") {
-        e.preventDefault();
-      }
-    });
-  </script>
 </body>
 </html>
