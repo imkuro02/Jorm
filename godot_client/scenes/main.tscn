@@ -317,10 +317,16 @@ size_flags_horizontal = 3
 
 [node name="input" type="ColorRect" parent="canvas"]
 custom_minimum_size = Vector2(0, 32)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 8.0
-offset_top = 920.0
-offset_right = 1272.0
-offset_bottom = 952.0
+offset_top = -40.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
 color = Color(0.775063, 0.775063, 0.775063, 1)
 
 [node name="input" type="LineEdit" parent="canvas/input"]
