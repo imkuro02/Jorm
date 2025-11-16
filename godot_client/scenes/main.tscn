@@ -364,17 +364,6 @@ grow_vertical = 2
 [node name="map_room" type="VBoxContainer" parent="canvas/container"]
 layout_mode = 2
 
-[node name="ascii_map" type="RichTextLabel" parent="canvas/container/map_room"]
-custom_minimum_size = Vector2(400, 332)
-layout_mode = 2
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("19_jxno8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-bbcode_enabled = true
-selection_enabled = true
-script = ExtResource("3_gkcnj")
-metadata/_edit_group_ = true
-
 [node name="look_room" type="RichTextLabel" parent="canvas/container/map_room"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -385,6 +374,17 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
 selection_enabled = true
 script = ExtResource("3_gkcnj")
+
+[node name="ascii_map" type="RichTextLabel" parent="canvas/container/map_room"]
+custom_minimum_size = Vector2(400, 332)
+layout_mode = 2
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+metadata/_edit_group_ = true
 
 [node name="output" type="HBoxContainer" parent="canvas/container"]
 layout_mode = 2
