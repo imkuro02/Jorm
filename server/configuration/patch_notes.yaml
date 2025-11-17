@@ -1,4 +1,11 @@
 versions:
+  '171125':
+    id: '171125'
+    title: Skills
+    unixtime: 1761899677
+    features:
+    - death log command
+    - last words command
   '141125':
     id: '141125'
     title: Skills

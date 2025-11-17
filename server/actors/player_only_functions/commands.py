@@ -6,7 +6,8 @@ from actors.player_only_functions.talk import command_talk
 
 from actors.player_only_functions.combat import (
     command_fight, command_pass_turn, 
-    command_use, command_use_try, command_rest, rest_set, rest_here, rest_home, rest_home_request, rest_here_request, command_party
+    command_use, command_use_try, command_rest, rest_set, rest_here, rest_home, rest_home_request, rest_here_request, command_party,
+    command_set_death_last_words, command_get_death_log
 )
 
 from actors.player_only_functions.charging_mini_game import (
@@ -128,6 +129,8 @@ commands = {
     #'target':   'command_target',
     'pass':     'command_pass_turn',
     'rest':     'command_rest',
+    'last-words':'command_set_death_last_words',
+    'death-log': 'command_get_death_log',
     'party':    'command_party',
     
     'respec':   'command_respec',
@@ -207,6 +210,10 @@ translations = {
     
     'recall':            'rest home',
     'recall set':        'rest set',
+
+
+    'last words':        'last-words',
+    'death log':        'death-log',
 
     'north':             'go north',
     'east':              'go east',

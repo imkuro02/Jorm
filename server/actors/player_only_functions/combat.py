@@ -244,9 +244,24 @@ def rest_here_request(self, line):
             par.rest_here(line)
     self.rest_here(line)
 
+def command_get_death_log(self, line):
+    output = '\n'.join(self.factory.death_log_manager.death_log)
+    self.sendLine(output)
+
+def command_set_death_last_words(self, line):
+    if self.status != ActorStatusType.DEAD:
+        self.sendLine('You are not dead yet!')
+        return
+    self.death_log_last_words = line
+    self.sendLine(f'Your last words are "{line}", type "rest home" to ressurect')
+
 def rest_home(self, line):
+    
+
     self.sendSound(Audio.BUFF)
     if self.status == ActorStatusType.DEAD:
+
+        self.try_to_add_to_death_log()
         self.status = ActorStatusType.NORMAL
 
         self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
