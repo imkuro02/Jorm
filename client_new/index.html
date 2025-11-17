@@ -13,7 +13,8 @@
   justify-content: center;
   color: white;
 
-  background-image: url("imgs/Brick_12-128x128.png");
+  background-image: url("https://jorm.kurowski.xyz/imgs/Brick_12-128x128.png");
+ background-color: #373131;
   background-repeat: repeat;  
   background-position: top left; 
   position: relative; /* needed for overlay */
@@ -59,7 +60,7 @@ body::before {
 }
 
 .iframe-wrapper iframe {
-  width: 100%;
+  width: 1280px;
   max-width: 1280px;
   height: 960px;
   border: none;
@@ -76,14 +77,14 @@ body::before {
 
   
   /* Expand outside iframe for overflowing border */
-  top: -48px;
-  left: -48px;
-  right: -48px;
-  bottom: -48px;
+  top: -96px;
+  left: -96px;
+  right: -96px;
+  bottom: -96px;
 
-  border: 48px solid transparent;
-  border-image-source: url("imgs/gptart5-2.png");
-  border-image-slice: 8 fill;
+  border: 96px solid transparent;
+  border-image-source: url("https://jorm.kurowski.xyz/imgs/s18.png");
+  border-image-slice: 32 fill;
   border-image-repeat: repeat;
 
   pointer-events: none; /* clicks go through */
