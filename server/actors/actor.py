@@ -40,7 +40,7 @@ class ActorStatManager:
             StatType.THREAT: 0,
             StatType.INITIATIVE: 0
             }
-        
+
     def hp_mp_clamp_update(self):
         # max
         if self.stats[StatType.PHYARMOR] >= self.stats[StatType.PHYARMORMAX]:
@@ -49,7 +49,7 @@ class ActorStatManager:
         if self.stats[StatType.MAGARMOR] >= self.stats[StatType.MAGARMORMAX]:
             self.stats[StatType.MAGARMOR] = self.stats[StatType.MAGARMORMAX]
 
-        # min 
+        # min
         if self.stats[StatType.PHYARMOR] <= 0:
             self.stats[StatType.PHYARMOR] = 0
 
@@ -63,7 +63,7 @@ class ActorStatManager:
         if self.stats[StatType.MP] >= self.stats[StatType.MPMAX]:
             self.stats[StatType.MP] = self.stats[StatType.MPMAX]
 
-        # min 
+        # min
         if self.stats[StatType.HP] <= 0:
             self.stats[StatType.HP] = 0
 
@@ -92,7 +92,7 @@ class SkillManager:
 
         for skill in to_del:
             del self.skills[skill]
-                
+
 
     def learn(self, skill_id, amount = 1):
         if skill_id not in self.skills:
@@ -100,7 +100,7 @@ class SkillManager:
         else:
             self.skills[skill_id] += amount
         self.delete_skills_at_0()
-    
+
     def unlearn(self, skill_id, amount = 1):
         if skill_id not in self.skills:
             self.skills[skill_id] = -amount
@@ -162,21 +162,21 @@ class SlotsManager:
 
 class Actor:
     def __init__(
-        self, 
+        self,
         _id = None,
         ai = None,
         name = None,
-        description = None, 
-        room = None, 
-        
+        description = None,
+        room = None,
+
     ):
 
         if _id == None:
             self.id = str(uuid.uuid4())
-        else: 
+        else:
             self.id = _id
-        
-        
+
+
         self.name = name
         self.description = description
         self.room = room
@@ -185,8 +185,8 @@ class Actor:
         self.room_previous = None
         self.ai = actors.ai.get_ai(ai)(self)
 
-        
-        
+
+
         self.inventory_manager =    InventoryManager(self)
         self.slots_manager =        SlotsManager(self)
 
@@ -199,9 +199,9 @@ class Actor:
         self.skill_manager =        SkillManager(self)
         self.cooldown_manager =     CooldownManager(self)
 
-        
+
         self.dialog_tree = None
-        
+
 
         if self.room != None:
             self.room.move_actor(self, silent = True)
@@ -238,7 +238,7 @@ class Actor:
             '#MP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).rjust(justing, just_space),
             '#PHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing, just_space),
             '#MAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing, just_space),
-   
+
             '#LHP#':             str(self.stat_manager.stats[StatType.HP]).ljust(justing, just_space),
             '#LHPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).ljust(justing, just_space),
 
@@ -256,7 +256,7 @@ class Actor:
             '#LMP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).ljust(justing, just_space),
             '#LPHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing, just_space),
             '#LMAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing, just_space),
-        
+
             '#GRIT#':             str(self.stat_manager.stats[StatType.GRIT]).rjust(justing, just_space),
             '#FLOW#':             str(self.stat_manager.stats[StatType.FLOW]).rjust(justing, just_space),
             '#MIND#':             str(self.stat_manager.stats[StatType.MIND]).rjust(justing, just_space),
@@ -267,7 +267,7 @@ class Actor:
             '#LMIND#':             str(self.stat_manager.stats[StatType.MIND]).ljust(justing, just_space),
             '#LSOUL#':             str(self.stat_manager.stats[StatType.SOUL]).ljust(justing, just_space),
             '#LLVL#':              str(self.stat_manager.stats[StatType.LVL]).ljust(justing, just_space),
-            
+
         }
 
         for trans in translations:
@@ -288,7 +288,7 @@ class Actor:
         #return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
         #return(f'{utils.progress_bar(12,hp,mhp,"@red")}')
         return self.add_prompt_syntax(actor_that_asked.settings_manager.prompt)
-        
+
     # only npc class has this
     def get_important_dialog(self, actor_to_compare, return_dict = False):
         return False
@@ -301,11 +301,11 @@ class Actor:
             talker.sendLine('There is nothing to talk about')
             return False
         return True # return true if no errors
-        
+
     def pretty_name(self):
         output = ''
-        
-        
+
+
         match type(self).__name__:
             case "Enemy":
                 output = output + f'{Color.NAME_ENEMY}{self.name}{Color.NORMAL}'
@@ -316,7 +316,7 @@ class Actor:
                     output = output + f'{Color.NAME_PLAYER}{self.name}{Color.NORMAL}'
             case "Npc":
                 output = output + f'{Color.NAME_NPC}{self.name}{Color.NORMAL}'
-        
+
         #if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
         #output = output + f'{self.party_manager.get_party_id()}'
@@ -336,7 +336,7 @@ class Actor:
                 output = f'{target.pretty_name()} is not affected by anything'
         else:
             if target == self:
-                output = 'You are affected with:\n' 
+                output = 'You are affected with:\n'
             else:
                 output = f'{target.pretty_name()} is affected with:\n'
             t = utils.Table(3,3)
@@ -344,7 +344,7 @@ class Actor:
             t.add_data('dur')
             t.add_data('Description')
             #output += f'{"Affliction":<15} {"For":<3} {"Info"}\n'
-            
+
             for aff in target.affect_manager.affects.values():
                 #output += f'{aff.info()}'
                 t.add_data(aff.name)
@@ -371,12 +371,12 @@ class Actor:
     def get_character_sheet(self):
         output = f'{self.pretty_name()} ({self.status})\n'
         # if no description then ignore
-        if self.description != None: 
+        if self.description != None:
             output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
 
         output += self.get_character_equipment()
-        
-        
+
+
         if not self.dont_join_fights:
             t = utils.Table(4,1)
             _piss = [StatType.HP, StatType.MP, StatType.PHYARMOR, StatType.MAGARMOR, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
@@ -391,7 +391,7 @@ class Actor:
                     t.add_data('')
                     t.add_data('')
 
-        
+
             output += t.get_table()
 
         if type(self).__name__ == 'Player':
@@ -405,14 +405,14 @@ class Actor:
             t.add_data(self.stat_manager.stats[StatType.PP])
             '''
 
-            
+
 
             t.add_data('Experience:')
             t.add_data(self.stat_manager.stats[StatType.EXP])
             t.add_data('/')
             t.add_data(self.get_exp_needed_to_level())
-            
-                
+
+
             #    t.add_data(str(self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level()))
             t.add_data('Can level?:')
             t.add_data(f'{Color.GOOD}YES{Color.NORMAL}' if self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level() else f'{Color.BAD}NO{Color.NORMAL}')
@@ -429,14 +429,14 @@ class Actor:
             t.add_data('')
             t.add_data('')
 
-            
+
 
             output += t.get_table()
-       
-        
+
+
         return output
 
-   
+
 
     def get_base_threat(self):
         s = self.stat_manager.stats
@@ -447,7 +447,7 @@ class Actor:
         self.stat_manager.stats[StatType.THREAT] = 0
 
     def heal(self, heal_hp = True, heal_mp = True, heal_armor = True, heal_marmor = True, value = 1, silent = True):
-         
+
         if heal_hp:
             damage_obj = Damage(
                 damage_taker_actor = self,
@@ -459,9 +459,9 @@ class Actor:
                 silent = silent,
                 dont_proc = True
                 )
-            damage_obj.run()      
+            damage_obj.run()
 
-        if heal_mp:    
+        if heal_mp:
             damage_obj = Damage(
                 damage_taker_actor = self,
                 damage_source_actor = self,
@@ -473,7 +473,7 @@ class Actor:
                 silent = silent,
                 dont_proc = True
                 )
-            damage_obj.run()   
+            damage_obj.run()
 
         if heal_armor:
             damage_obj = Damage(
@@ -487,9 +487,9 @@ class Actor:
                 silent = silent,
                 dont_proc = True
                 )
-            damage_obj.run() 
+            damage_obj.run()
 
-        if heal_marmor:    
+        if heal_marmor:
             damage_obj = Damage(
                 damage_taker_actor = self,
                 damage_source_actor = self,
@@ -501,12 +501,12 @@ class Actor:
                 silent = silent,
                 dont_proc = True
                 )
-            damage_obj.run()   
+            damage_obj.run()
         self.stat_manager.hp_mp_clamp_update()
         self.set_base_threat()
 
-        
-        
+
+
     def tick(self):
         '''
         if self.status == ActorStatusType.NORMAL:
@@ -514,11 +514,11 @@ class Actor:
             if self.factory.ticks_passed % 30 == 0:
                 if not self.room.is_an_instance():
                     self.heal(value = self.stat_manager.stats[StatType.LVL])
-                    
+
         '''
         pass
-                
-                
+
+
 
     '''
     def deal_damage(self, damage_obj: Damage):
@@ -533,13 +533,13 @@ class Actor:
         damage_obj = self.affect_manager.take_damage(damage_obj)
         return damage_obj
     '''
-    
+
     def gain_exp(self, exp):
         pass
 
     def gain_practice_points(self, pp):
         pass
-        
+
     def die(self, unload = True):
         self.status = ActorStatusType.DEAD
 
@@ -551,8 +551,8 @@ class Actor:
         self.cooldown_manager.unload_all_cooldowns()
 
         self.ai.die()
-        
-        
+
+
 
         sound = Audio.ENEMY_DEATH
 
@@ -560,7 +560,7 @@ class Actor:
             sound = Audio.PLAYER_DEATH
         else:
             sound = Audio.ENEMY_DEATH
-            
+
         die_lines = [
             'has become a chalk outline on the ground',
             'ragdolls across the room',
@@ -573,9 +573,9 @@ class Actor:
 
         die_line = random.choice(die_lines)
 
-        tooltip_solo =  f'Type "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect and return to your rest site' 
+        tooltip_solo =  f'Type "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect and return to your rest site'
         tooltip_party = f'Your party leader needs to "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect you'
-        
+
         tooltip = tooltip_solo if self.party_manager.party == None else tooltip_party
 
         self.simple_broadcast(
@@ -591,11 +591,11 @@ class Actor:
         if type(self).__name__ != "Player":
             if unload:
                 self.unload()
-        
+
     def unload(self):
         self.ai.die()
 
-        try:        
+        try:
             if self.room.combat != None:
                 if self in self.room.combat.participants.values():
                     del self.room.combat.participants[self.id]
@@ -603,13 +603,13 @@ class Actor:
             utils.debug_print(self, 'could not remove from room combat participants while unloading')
             utils.debug_print(e)
 
-        try:        
+        try:
             del self.room.actors[self.id]
         except Exception as e:
             utils.debug_print(self, 'could not remove from room actors while unloading')
             utils.debug_print(e)
-            
-        try:     
+
+        try:
             self.room = None
         except Exception as e:
             utils.debug_print(self, 'could not set room to none while unloading')
@@ -622,16 +622,16 @@ class Actor:
 
         unload(self.inventory_manager.triggerable_manager)
         unload(self.quest_manager)
-        
+
         to_unload = []
         for i in self.__dict__:
             to_unload.append(i)
         for i in to_unload:
             unload(i)
-            
-        
+
+
         unload(self)
-        
+
         #refs = gc.get_referrers(self)
         #if refs != []:
         #    utils.debug_print(f'could not unload {self}:    {refs}')
@@ -652,7 +652,7 @@ class Actor:
 
         if send_to == 'room_party':
             players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player' and  actor.party_manager.get_party_id() == self.party_manager.get_party_id()]
-            
+
         #utils.debug_print(players)
         for player in players:
             if player == self:
@@ -682,7 +682,7 @@ class Actor:
         self.affect_manager.finish_turn()
         self.cooldown_manager.finish_turn()
         self.inventory_manager.finish_turn()
-        
+
         if self.room == None:
             return
         if self.room.combat == None:
@@ -691,7 +691,7 @@ class Actor:
         if self != self.room.combat.current_actor:
             #utils.debug_print('not my turn')
             return
-        
+
         self.room.combat.next_turn()
 
     def show_prompts(self, order = None):
@@ -704,7 +704,7 @@ class Actor:
             #output = f'@yellowYour turn.@normal'
             #self.sendLine(output)
             par = self
-            
+
             #output = par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
             if order == None:
                 _list = self.room.combat.participants.values()
@@ -714,11 +714,11 @@ class Actor:
             for par in _list:
                 if par.status == ActorStatusType.DEAD:
                     continue
-                if par == self: 
+                if par == self:
                     output += par.prompt(self)+' '+'You'+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
                 else:
                     output += par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
-            
+
             output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)
 
@@ -737,16 +737,16 @@ class Actor:
                 self.sendLine(output)
                 self.show_prompts(self.room.combat.order)
             '''
-          
+
         if self.room == None:
             return
         if self.room.combat == None:
             return
-        
-        
-        
-           
-        print(self.room.combat)
+
+
+
+
+        #print(self.room.combat)
 
         self.affect_manager.set_turn()
         self.cooldown_manager.set_turn()
@@ -758,5 +758,3 @@ class Actor:
 
     def sendSound(self, sfx):
         utils.debug_print(f'sendSound called in a object class Npc function? line: {sfx}')
-    
-
