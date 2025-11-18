@@ -93,7 +93,7 @@ class CombatEvent:
             #    utils.debug_print(f'{actor} was unloaded but somehow took damage (probably a heal tick)')
             #    utils.debug_print(f'{actor.name} was unloaded but somehow took damage (probably a heal tick)')
             #    continue
-            actor.death_log_last_death = f'{pop.damage_taker_actor.pretty_name()} died to {pop.damage_source_actor.pretty_name()}\'s {pop.damage_source_action.name}'
+            
             actor.stat_manager.hp_mp_clamp_update()
         
 

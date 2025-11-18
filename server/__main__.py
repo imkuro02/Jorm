@@ -8,30 +8,6 @@ config.load()
 import time
 import utils
 
-class DeathLogManager:
-    def __init__(self, factory):
-        self.factory = factory
-        self.death_log = []
-
-    def add_death(self, message):
-        game_date_time = self.factory.world.game_time.get_game_time()
-        day_name = game_date_time['day_name']
-        month_name = game_date_time['month_name']
-        day = game_date_time['day']
-        month = game_date_time['month']
-        year = game_date_time['year']
-        hour = game_date_time['hour']
-        minute = game_date_time['minute']
-
-        time_of_day_label = 'wrong time error'
-        for i in 'morning noon evening night'.split():
-            if self.factory.world.game_time.TIME_OF_DAY[i]:
-                time_of_day_label = i
-        real_time = utils.get_unix_timestamp()
-        game_time = f'On the date of {day:02}/{month+1:02}/{year:04}, a {day_name} of {month_name}. It was {time_of_day_label} {hour:02}:{minute:02}'
-        self.death_log.append(f'({real_time})... {message}')
-        
-
 class ServerFactory(protocol.Factory):
     def __init__(self):
         self.protocols = set()
@@ -50,8 +26,6 @@ class ServerFactory(protocol.Factory):
 
         # where the actors will be stored for rank command
         self.ranks = {}
-
-        self.death_log_manager = DeathLogManager(self)
         
     def tick(self):
         

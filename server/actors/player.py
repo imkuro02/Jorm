@@ -335,9 +335,6 @@ class Player(Actor):
         self.update_checker = UpdateChecker(self)
         self.friend_manager = FriendManager(self)
 
-        self.death_log_last_death = ''
-        self.death_log_last_words = ''
-
         self.loaded = True
         
     def die(self, unload = False):
@@ -348,24 +345,10 @@ class Player(Actor):
         self.gain_exp(-lost_exp)
         
     
-    def try_to_add_to_death_log(self):
-        if self.status != ActorStatusType.DEAD:
-            return
-
-        if self.death_log_last_death == '':
-            return
-
-        if self.death_log_last_words == '':
-            self.death_log_last_words = 'damn'
-        death_log_message = f'{self.death_log_last_death}... Their last words were "{self.death_log_last_words}"'
-        self.death_log_last_words = ''
-        self.death_log_last_death = ''
-
-        self.factory.death_log_manager.add_death(death_log_message)
+  
         
 
     def unload(self):
-        self.try_to_add_to_death_log()
         self.loaded = False
         self.status = ActorStatusType.NORMAL
         self.affect_manager.unload_all_affects(silent = True)

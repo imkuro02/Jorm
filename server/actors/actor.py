@@ -573,12 +573,11 @@ class Actor:
 
         die_line = random.choice(die_lines)
 
-        tooltip_bonus = f'Type "{Color.IMPORTANT}last words {Color.NORMAL}<{Color.IMPORTANT}your last words here{Color.NORMAL}>" to set your last words'
         tooltip_solo =  f'Type "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect and return to your rest site' 
-        tooltip_party = f'your party leader needs to "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect you'
+        tooltip_party = f'Your party leader needs to "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect you'
         
         tooltip = tooltip_solo if self.party_manager.party == None else tooltip_party
-        tooltip = '\n'+ tooltip_bonus + '\n' + tooltip
+
         self.simple_broadcast(
                 f'{Color.BAD}You died{Color.NORMAL}... {tooltip}',
                 f'{self.pretty_name()} {Color.BAD}{die_line}{Color.NORMAL}',
