@@ -8,8 +8,8 @@ class Dialog:
         self.player = _player
         self.npc = _npc
         self.dialog_tree = _dialog_tree
-        
-        self.current_line = 'start' 
+
+        self.current_line = 'start'
 
     def send_output(self, output):
         #output = output.replace('<npc>',self.npc.pretty_name().replace('<player>',self.player.pretty_name()))
@@ -43,7 +43,7 @@ class Dialog:
 
                 if not this_option_is_good:
                     continue
-      
+
 
             if 'quest_objective_check' in option:
                 this_option_is_good = True
@@ -64,7 +64,7 @@ class Dialog:
                         this_option_is_good = False
                         break
 
-                
+
                 if not 'NOT' in check:
                     if not this_option_is_good:
                         continue
@@ -74,7 +74,7 @@ class Dialog:
 
             dic['index'] = i
 
-            
+
             if 'line' in option:
                 dic['line'] = option['line']
             if 'line_room_party' in option:
@@ -82,8 +82,8 @@ class Dialog:
             if 'line_room_not_party' in option:
                 dic['line_room_not_party'] = option['line_room_not_party']
 
-            
-            
+
+
 
             dic['goto'] = option['goto']
 
@@ -105,14 +105,14 @@ class Dialog:
                 quest_id =      option['quest_turn_in']['id']
                 if not self.player.quest_manager.check_quest_state(quest_id) == QUEST_STATE_TYPES.COMPLETED:
                     continue
-                    
+
                 dic['quest_turn_in'] =   {'id':quest_id}
                 if 'reward' in option['quest_turn_in']:
                     dic['reward'] =          option['quest_turn_in']['reward']
-                if 'reward_exp' in option['quest_turn_in']: 
-                    dic['reward_exp'] =      option['quest_turn_in']['reward_exp'] 
-                if 'reward_practice_points' in option['quest_turn_in']: 
-                    dic['reward_practice_points'] =      option['quest_turn_in']['reward_practice_points'] 
+                if 'reward_exp' in option['quest_turn_in']:
+                    dic['reward_exp'] =      option['quest_turn_in']['reward_exp']
+                if 'reward_practice_points' in option['quest_turn_in']:
+                    dic['reward_practice_points'] =      option['quest_turn_in']['reward_practice_points']
 
             if 'quest_start' in option:
                 quest_id =              option['quest_start']['id']
@@ -121,11 +121,11 @@ class Dialog:
             if 'quest_objective' in option:
                 #self.type =             _type               # what kind of objective this is
                 #self.requirement_id =   _requirement_id     # the id of whatever is required
-                #self.to_add =           _to_add             # how much to add 
+                #self.to_add =           _to_add             # how much to add
                 requirement_id =              option['quest_objective']['requirement_id']
                 objective_count_proposal = ObjectiveCountProposal('conversation', requirement_id, 1)
                 dic['quest_objective_count_proposal'] = objective_count_proposal
-        
+
             options.append(dic)
 
             i += 1
@@ -152,7 +152,7 @@ class Dialog:
                     else:
                         if self.player.quest_manager.check_quest_state(quest_id) == quest_state:
                             this_option_is_good = False
-                            
+
                 if not this_option_is_good:
                     continue
 
@@ -181,11 +181,11 @@ class Dialog:
                 else:
                     if this_option_is_good:
                         continue
-                        
+
             if 'check_not_in_party_or_is_party_leader' in option:
                 if not self.actor.is_not_in_party_or_is_party_leader():
                     continue
-               
+
 
 
             available_dialogs.append(option)
@@ -210,7 +210,7 @@ class Dialog:
         for i in self.get_valid_options():
             output_line += f'{Color.NORMAL}{i["index"]}: {i["line"]}'
 
-        
+
         if output_line != None:
             output_line =                   output_line.replace('<npc>',self.npc.pretty_name()).replace('<player>',self.player.pretty_name())
             self.player.sendLine(output_line.strip())
@@ -230,14 +230,14 @@ class Dialog:
         if self.current_line == 'end':
             self.end_dialog()
 
-        
-        
+
+
     def answer(self, line):
         try:
             line = int(line)
         except ValueError:
             line = 0
-        
+
         answer = None
         options = self.get_valid_options()
 
@@ -245,7 +245,7 @@ class Dialog:
             if line == option['index']:
                 answer = option
                 break
-                
+
         # return False if the answer is invalid
         # or True if answer is valid and dialog continues
         if answer == None:
@@ -305,17 +305,17 @@ class Dialog:
                         self.end_dialog()
                         return True
                 self.player.sendLine(f'You give away the items requested')
-                
+
             if 'give_to_player' in answer['trade']:
                 for i in answer['trade']['give_to_player']:
                     item = load_item(i['item'])
                     if item == None:
                         continue
                     item.stack = i['amount']
-                    self.player.inventory_manager.add_item(item)
+                    self.player.inventory_manager.add_item(item, stack_items = False)
                     self.player.sendLine(f'You got: {item.pretty_name()}')
 
-            
+
 
         if 'quest_objective_count_proposal' in answer:
             #self.print_dialog()
@@ -346,11 +346,11 @@ class Dialog:
             if 'reward' in answer:
                 for item_id in answer['reward']:
                     item = load_item(item_id['item'])
-                    
+
                     if item == None:
                         continue
                     item.stack = item_id['amount']
-                    self.player.inventory_manager.add_item(item)
+                    self.player.inventory_manager.add_item(item, stack_items = False)
                     self.player.sendLine(f'You got: {item.pretty_name()}')
 
             if 'reward_exp' in answer:
@@ -368,9 +368,9 @@ class Dialog:
                 self.player.command_go(line = '', room_id = answer['teleport_player'])
             else:
                 self.player.party_manager.party.actor.command_go(line = '', room_id = answer['teleport_player'])
-            
 
-        
+
+
         return True
 
     def end_dialog(self):

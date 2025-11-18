@@ -18,7 +18,7 @@ class SETTINGS:
     AUTO_BATTLER = 'autobattler'
     PROMPT = 'prompt'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, USR, PROMPT, AUTO_BATTLER
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, USR, PROMPT, #AUTO_BATTLER
     ]
 
 
@@ -40,7 +40,7 @@ class Settings:
         self.pvp = pvp
         self.debug = debug
         self.autobattler = False
-        
+
         #self.prompt_default2 = '[@bred#HP#@normal/@bred#HPMAX#@normal | @bred#PHYARM#@normal/@bred#PHYARMMAX#@normal] [@bcyan#MP#@normal/@bcyan#MPMAX#@normal | @bcyan#MAGARM#@normal/@bcyan#MAGARMMAX#@normal]>'
         #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
         #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
@@ -56,8 +56,8 @@ class Settings:
         if prompt != None:
             self.prompt = prompt
         else:
-            self.prompt = self.prompt_default['0']        
-        
+            self.prompt = self.prompt_default['0']
+
     def true_or_false(self, value):
         if value in LIST_ON:
             return True
@@ -65,7 +65,7 @@ class Settings:
             return False
         return False
 
-    
+
     def command_settings(self, line):
         original_line = line
         line = line.split()
@@ -157,18 +157,18 @@ class Settings:
                 if succ and proto.guest:
                     proto.guest = False
                     proto.actor.sendLine(f'{Color.GOOD}This account is no longer a guest account\n{Color.IMPORTANT}REMEMBER: You should set a password with "settings password <new password>"{Color.NORMAL}')
-        
+
             case SETTINGS.PWD:
                 proto = self.actor.protocol
                 if proto.guest:
                     proto.actor.sendLine(f'{Color.BAD}You are currently a guest, you need to set a new username before changing your password{Color.NORMAL}')
                     return
-                
+
                 password = ' '.join(original_line.split()[1:])
                 username = proto.username
                 #proto.guest = False
                 proto.register_account_changes(username, password)
-                
+
 
             case SETTINGS.AUTO_BATTLER:
                 if len(line) == 1:
@@ -190,7 +190,7 @@ class Settings:
                 #proto.register_account_changes(username, password)
 
 
-        
+
 @check_no_empty_line
 def command_settings(self, line):
     self.settings_manager.command_settings(line)

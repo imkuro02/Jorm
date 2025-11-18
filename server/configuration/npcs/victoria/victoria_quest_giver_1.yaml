@@ -1,0 +1,173 @@
+victoria_quest_giver_1:
+  tree:
+    start:
+      dialog: []
+      options: []
+
+# victoria_quest_find_a_small_hat
+    dialogs_for_search_for_small_hat:
+      append_to: start
+      dialog:
+        - line: |
+            <npc> looks up at you "Have you seen my hat?"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: turned_in
+              NOT: 1
+            - id: victoria_quest_find_a_small_hat_1
+              state: not_started
+
+        - line: |
+            <npc> looks up at you and says "thank you for the hat! have you seen my really big hat?"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: turned_in
+            - id: victoria_quest_find_a_small_hat_1
+              state: not_started
+
+      options:
+        - line: |
+            say "No I have not"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: not_started
+            - id: victoria_quest_find_a_small_hat_1
+              state: not_started
+
+          goto: dont_start_search_for_small_hat
+
+        - line: |
+            say "What kind of hat?"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: not_started
+            - id: victoria_quest_find_a_small_hat_1
+              state: not_started
+
+          goto: start_search_for_small_hat
+          quest_start:
+            id: victoria_quest_find_a_small_hat
+
+        - line: |
+            say "Still looking, kid"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: in_progress
+            - id: victoria_quest_find_a_small_hat_1
+              state: not_started
+          goto: dont_start_search_for_small_hat
+
+        - line: |
+            say "Is this it?"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: completed
+            - id: victoria_quest_find_a_small_hat_1
+              state: not_started
+
+          quest_turn_in:
+            id: victoria_quest_find_a_small_hat
+            reward_exp: 15
+            reward:
+              - item: currency_0
+                amount: 25
+          goto: turn_in_quest_find_small_hat
+
+
+    dont_start_search_for_small_hat:
+      dialog:
+        - line: |
+            <npc> says "Bummer..."
+
+    start_search_for_small_hat:
+      dialog:
+        - line: |
+            <npc> says "Well it was round, and it was orange, and it went on my head! please bring it to me!"
+
+    turn_in_quest_find_small_hat:
+      dialog:
+        - line: |
+            "Wow!" <npc>'s eyes fill with joy as they put on the "hat".. "This wasn't my hat, but it is now!"
+# victoria_quest_find_a_small_hat
+# victoria_quest_find_a_small_hat_1
+    dialogs_for_search_for_small_hat_1:
+      append_to: start
+      dialog:
+        - line: |
+            <npc> looks up at you "Have you seen my big hat?"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: turned_in
+            - id: victoria_quest_find_a_small_hat_1
+              state: turned_in
+              NOT: 1
+
+        - line: |
+            <npc> looks up at you and says "thank you for the big hat!"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: turned_in
+            - id: victoria_quest_find_a_small_hat_1
+              state: turned_in
+
+      options:
+        - line: |
+            say "No I have not"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: turned_in
+            - id: victoria_quest_find_a_small_hat_1
+              state: not_started
+          goto: dont_start_search_for_small_hat_1
+
+        - line: |
+            say "What kind of hat?"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: turned_in
+            - id: victoria_quest_find_a_small_hat_1
+              state: not_started
+          goto: start_search_for_small_hat_1
+          quest_start:
+            id: victoria_quest_find_a_small_hat_1
+
+        - line: |
+            say "Still looking, kid"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: turned_in
+            - id: victoria_quest_find_a_small_hat_1
+              state: in_progress
+          goto: dont_start_search_for_small_hat_1
+
+        - line: |
+            say "Is this it?"
+          quest_check:
+            - id: victoria_quest_find_a_small_hat
+              state: turned_in
+            - id: victoria_quest_find_a_small_hat_1
+              state: completed
+          quest_turn_in:
+            id: victoria_quest_find_a_small_hat_1
+            reward_exp: 15
+            reward:
+              - item: currency_0
+                amount: 25
+          goto: turn_in_quest_find_small_hat_1
+
+
+    dont_start_search_for_small_hat_1:
+      dialog:
+        - line: |
+            <npc> says "Bummer..."
+
+    start_search_for_small_hat_1:
+      dialog:
+        - line: |
+            <npc> says "Well it was round, and it was orange, and it was REALLY big! please bring it to me!"
+
+    turn_in_quest_find_small_hat_1:
+      dialog:
+        - line: |
+            "Wow!" <npc>'s eyes fill with joy as they put on the "hat".. "This wasn't my hat, but it is now!"
+# victoria_quest_find_a_small_hat_1

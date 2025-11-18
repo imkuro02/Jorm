@@ -1,10 +1,10 @@
 tutorial_1:
   tree:
     start:
-      dialog: 
-        - line: | 
+      dialog:
+        - line: |
             <npc> says "Hello there"
-        - line: | 
+        - line: |
             <npc> says "Greetings"
       options:
         - line: |
@@ -44,7 +44,7 @@ tutorial_1:
           quest_turn_in:
             id: tutorial_1
             reward_exp: 4
-            reward: 
+            reward:
               - item: currency_0
                 amount: 150
 
@@ -54,9 +54,9 @@ tutorial_1:
           quest_check:
             - id: tutorial_1
               state: turned_in
-            
+
     help_level:
-      dialog: 
+      dialog:
         - line: |
             <npc> says "Ah! use the "level" command to level up.
             You can level one of four main stats,
@@ -68,7 +68,7 @@ tutorial_1:
             type "level soul" to level up soul.
 
             simple right?"
-      options: 
+      options:
         - line: |
             ask "What else?"
           goto: help_me
@@ -83,19 +83,19 @@ tutorial_1:
 
             Then to actually practice;
             You need to type "practice [skill name]"
-      options: 
+      options:
         - line: |
             ask "What else?"
           goto: help_me
 
     help_help:
-      dialog: 
+      dialog:
       - line: |
           <npc> says "Im not a dictionary, but if you need one"
-          they scratch their chin and say 
-          "use the "help" command to quickly find whatever it is 
+          they scratch their chin and say
+          "use the "help" command to quickly find whatever it is
           you are curious about"
-      options: 
+      options:
         - line: |
             ask "What else?"
           goto: help_me
@@ -111,31 +111,31 @@ tutorial_1:
         - line: |
             ask "How do I practice skills?"
           goto: help_practice
-        - line: | 
+        - line: |
             ask "What else?"
           goto: help_help
         - line: |
             say "I just want to leave"
           goto: quest_already_turned_in
-      
-      
+
+
     quest_already_turned_in:
-      dialog: 
+      dialog:
       - line: |
-          <npc> says "just go to the south-east corner. 
+          <npc> says "just go to the south-east corner.
           Then type "go crossroad" to leave"
     quest_turn_in_failed:
-      dialog: 
+      dialog:
       - line: |
           <npc> looks you up and down then says "well where is it?"
-          The corpse is not in your inventory 
+          The corpse is not in your inventory
           "You probably didn't pick it up"
     quest_turn_in_success:
       dialog:
       - line: |
           <npc> says "Ah! perfect, this will make a fine snack"
           They smile "but before you go, You should level up first"
-      options: 
+      options:
         - line: |
             ask "Level up?"
           goto: help_level
@@ -155,7 +155,7 @@ tutorial_1:
             ask "Why?"
           goto: why_fight
     start_tutorial_1:
-      dialog: 
+      dialog:
       - line: |
           <npc> says "Simple, go to the Northern wall, crawl into the hole.
           kill whatever is there, and bring me the corpse"
@@ -170,22 +170,22 @@ tutorial_1:
       dialog:
       - line: |
           <npc> says "fighting is very simple.
-          To start a fight type @tip"fight"@back. 
+          To start a fight type @tip"fight"@back.
           This will put you in combat with all enemies in the room.
 
           to actually fight them, you need to use your skills during your turn.
           type @tip"skills"@back to view all your skills.
           and when in combat type @tip"use [skill] on [enemy]"@back to use your skills on them."
     why_fight:
-      dialog: 
+      dialog:
       - line: |
-          <npc> says "Just do it" 
+          <npc> says "Just do it"
       options:
         - line: |
             ask "How do I kill it?"
           goto: how_to_fight
     where_am_i:
-      dialog: 
+      dialog:
       - line: |
           <npc> answers "A sanctuary of sorts"
       options:
@@ -200,7 +200,3 @@ tutorial_1:
     end:
       dialog: |
         <npc> turns away from you.
-
-
-
-

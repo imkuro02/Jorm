@@ -1,5 +1,5 @@
 {
-    "SHA-256": "b3b650aaccdab14bee15393a83618e75fa60e25c0b1f93603851965b50258b73",
+    "SHA-256": "076a1bfbafaf794cd4a195257fa1dfe9ea671fb61c5f05be52f74a7e23c68129",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3863,6 +3863,34 @@
             "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "victoria_quest_giver_1": {
+            "npc_id": "victoria_quest_giver_1",
+            "ai": "Enemy",
+            "name": "Child",
+            "description": "A small humanoid child, they look dumb and stupid, they drag their heels as they walk in circles",
+            "stats": {
+                "grit": 0,
+                "hp": 1,
+                "mp": 0,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "exp": 0,
+                "lvl": 0
+            },
+            "include_in_daily_quests": false,
+            "skills": {},
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": true,
             "drop_tags": [
                 "all"
             ]
@@ -13146,7 +13174,7 @@
         },
         "soul head 3": {
             "premade_id": "soul head 3",
-            "name": "Fine silk cap",
+            "name": "Fine silk hat",
             "description": "A hood made of the finest silk",
             "description_room": null,
             "invisible": 0.0,
@@ -13158,10 +13186,10 @@
             "bonuses": 0.0,
             "stats": {
                 "grit": 0,
-                "hp_max": 20,
+                "hp_max": 10,
                 "mp_max": 20,
-                "phy_armor_max": 20,
-                "mag_armor_max": 20,
+                "phy_armor_max": 10,
+                "mag_armor_max": 10,
                 "flow": 0,
                 "mind": 0,
                 "soul": 1,
@@ -13342,7 +13370,7 @@
         },
         "soul head c1": {
             "premade_id": "soul head c1",
-            "name": "White rat fur cap",
+            "name": "White rat fur hat",
             "description": "A cap made with white fluffy fur",
             "description_room": null,
             "invisible": 0.0,
@@ -13395,7 +13423,7 @@
         },
         "soul head c3": {
             "premade_id": "soul head c3",
-            "name": "Orange mushroom cap",
+            "name": "Orange mushroom hat",
             "description": "A orange mushroom cap hollowed out to fit your head and a string to keep it on.",
             "description_room": null,
             "invisible": 0.0,
@@ -13449,7 +13477,7 @@
         },
         "soul head c6": {
             "premade_id": "soul head c6",
-            "name": "Blue silk cap",
+            "name": "Blue silk hat",
             "description": "A silk hood dyed blue.",
             "description_room": null,
             "invisible": 0.0,

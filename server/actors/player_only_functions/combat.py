@@ -8,7 +8,7 @@ def command_target(self, line):
     list_of_actors = [actor.name for actor in self.room.actors.values()]
     list_of_items = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
     target = utils.get_match(line, {**self.room.actors, **self.inventory_manager.items})
-    
+
     if line in 'c none clear 0 stop noone'.split():
         self.ai.target = None
         self.sendLine('Target cleared')
@@ -33,13 +33,14 @@ def command_target(self, line):
 @check_alive
 def command_fight(self, line):
     if self.status == ActorStatusType.FIGHTING:
-        if self.ai.predict_use_best_skill(offensive_only = True, for_prediction = False) == False:
-            self.command_pass_turn(line = '')
+        self.sendLine('You are already fighting! you can "flee" or "pass" or "use <skill>"')
+        #if self.ai.predict_use_best_skill(offensive_only = True, for_prediction = False) == False:
+        #   self.command_pass_turn(line = '')
         #self.ai.tick()
         return
     else:
         self.finish_turn()
-    
+
     if self.party_manager.party == None:
         self.room.join_combat(self)
     else:
@@ -50,7 +51,7 @@ def command_fight(self, line):
 
     #self.ai.clear_prediction()
 
-    
+
 
 @check_alive
 def command_pass_turn(self, line):
@@ -74,7 +75,7 @@ def command_pass_turn(self, line):
 #@check_not_in_combat
 def command_use_try(self, line):
     self.command_use(line, is_trying=True)
-        
+
 
 
 def command_use(self, line, is_trying = False):
@@ -102,7 +103,7 @@ def command_use(self, line, is_trying = False):
 
         def pretty_name(self):
             return self.name
-            
+
     for skill in list_of_skill_names:
         skills_dict[skill] = FakeSkill(skill)
 
@@ -124,7 +125,7 @@ def command_use(self, line, is_trying = False):
     _target = None
 
     _action = action
-    if isinstance(target, str): 
+    if isinstance(target, str):
         if target in list_of_items:
             _target = target #self.get_item(target)
         if target in list_of_actors:
@@ -182,7 +183,7 @@ def command_use(self, line, is_trying = False):
 
 
 
-        
+
 
 '''
 def command_recall_set(self, line):
@@ -245,7 +246,7 @@ def rest_here_request(self, line):
     self.rest_here(line)
 
 def rest_home(self, line):
-    
+
 
     self.sendSound(Audio.BUFF)
     if self.status == ActorStatusType.DEAD:
@@ -281,12 +282,12 @@ def rest_home(self, line):
                 f'{self.pretty_name()} rests'
                 )
         else:
-            
+
             self.simple_broadcast(
                 None,
                 f'{self.pretty_name()} returns back to rest'
                 )
-            
+
             #tp home
             if self.recall_site not in self.protocol.factory.world.rooms:
                 self.recall_site = 'tutorial'
@@ -302,7 +303,7 @@ def rest_home(self, line):
                 'You returned to rest',
                 f'{self.pretty_name()} has returned to rest'
                 )
-    
+
 
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
     self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
@@ -311,7 +312,7 @@ def rest_home(self, line):
     self.affect_manager.unload_all_affects()
     self.cooldown_manager.unload_all_cooldowns()
     self.finish_turn()
-    
+
 
 @check_not_in_combat
 def command_rest(self, line):
@@ -338,8 +339,7 @@ def command_rest(self, line):
         self.rest_home_request(line)
         return
 
-    
+
 
 def command_party(self, line):
     self.party_manager.handle_party_message(line)
-            

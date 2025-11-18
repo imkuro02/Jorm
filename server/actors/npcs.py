@@ -23,7 +23,7 @@ def create_npc(room, npc_id, spawn_for_lore = False):
 
     #if npc_id not in ENEMIES:
     #    return
-    
+
 
     if npc_id in ENEMIES:
         #names = 'Auxy Niymiae Tanni Rahji Rahj Rahjii Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan'
@@ -57,7 +57,7 @@ def create_npc(room, npc_id, spawn_for_lore = False):
         for i in _loot:
             loot[i] = _loot[i]
         '''
-            
+
     if npc_id in NPCS:
         #name =      NPCS[npc_id]['name']
         #desc =      NPCS[npc_id]['description']
@@ -71,48 +71,48 @@ def create_npc(room, npc_id, spawn_for_lore = False):
         npc_class = Npc
 
     my_npc = npc_class(
-        npc_id = npc_id, 
+        npc_id = npc_id,
         ai = ai,
         name = name,
         description = desc,
-        room = room, 
-        stats = stats, 
-        loot = loot, 
+        room = room,
+        stats = stats,
+        loot = loot,
         skills = skills,
         dialog_tree = tree,
         can_start_fights = can_start_fights,
         dont_join_fights = dont_join_fights
-    )  
+    )
 
     return my_npc
 
 
-        
+
 class Npc(Actor):
     def __init__(
-        self, 
-        npc_id = None, 
+        self,
+        npc_id = None,
         ai = None,
         name = None,
-        description = None, 
-        room = None, 
-        stats = None, 
-        loot = None, 
+        description = None,
+        room = None,
+        stats = None,
+        loot = None,
         skills = None,
         dialog_tree = None,
         can_start_fights = False,
         dont_join_fights = True
     ):
         super().__init__(
-            name = name, 
+            name = name,
 
             ai = ai,
-            description = description, 
+            description = description,
             room = room,
-            
+
         )
 
-        # this script is responsible for setting the dialog tree aswell as appending append_to 
+        # this script is responsible for setting the dialog tree aswell as appending append_to
         # probably should be moved sometime into dialog.py
         self.dialog_tree = dialog_tree
         if self.dialog_tree != None:
@@ -121,20 +121,21 @@ class Npc(Actor):
                     location = self.dialog_tree[d]['append_to']
                     if 'dialog' in self.dialog_tree[d]:
                         if 'dialog' not in self.dialog_tree[location]:
-                                self.dialog_tree[location]['dialog'] = []
+                            self.dialog_tree[location]['dialog'] = []
                         for i in self.dialog_tree[d]['dialog']:
                             self.dialog_tree[location]['dialog'].append(i)
 
                     if 'options' in self.dialog_tree[d]:
                         if 'options' not in self.dialog_tree[location]:
-                                self.dialog_tree[location]['options'] = []
+                            self.dialog_tree[location]['options'] = []
                         for i in self.dialog_tree[d]['options']:
                             self.dialog_tree[location]['options'].append(i)
+
         self.npc_id = npc_id
-        
+
         self.can_start_fights = can_start_fights
         self.dont_join_fights = dont_join_fights
-        
+
 
         if stats != None:
             self.stat_manager.stats = {**self.stat_manager.stats, **stats}
@@ -143,7 +144,7 @@ class Npc(Actor):
             self.stat_manager.stats[StatType.PHYARMORMAX] = self.stat_manager.stats[StatType.PHYARMOR]
             self.stat_manager.stats[StatType.MAGARMORMAX] = self.stat_manager.stats[StatType.MAGARMOR]
 
-        
+
 
         if loot != None:
             self.loot = copy.deepcopy(loot)
@@ -153,10 +154,10 @@ class Npc(Actor):
         if skills != None:
             self.skill_manager.skills = copy.deepcopy(skills)
 
-        
+
 
     def talk_to(self, talker):
-        if not super().talk_to(talker): 
+        if not super().talk_to(talker):
             return
         # if returned true, start dialog
         talker.simple_broadcast(f'You approach {self.pretty_name()}', f'{talker.pretty_name()} approaches {self.pretty_name()}.')
@@ -165,18 +166,18 @@ class Npc(Actor):
         #return True
 
     # this function returns whether the npc has a quest to hand out or turn in / both
-    # actor_to_compare is the player that is checking 
+    # actor_to_compare is the player that is checking
     def get_important_dialog(self, actor_to_compare, return_dict = False):
         has_quest_to_start = False
         has_quest_to_turn_in = False
         quest_man = actor_to_compare.quest_manager
         output = ''
-        
+
         if self.dialog_tree == None:
             return False
-        
+
         for branch in self.dialog_tree.values():
-            
+
             if 'options' not in branch:
                 continue
             #utils.debug_print(branch['options'])
@@ -193,10 +194,10 @@ class Npc(Actor):
                 for quest_to_check in option['quest_check']:
                     not_valid = quest_man.check_quest_state(quest_to_check['id']) != quest_to_check['state']
                     #utils.debug_print(not_valid, quest_man.check_quest_state(quest_to_check['id']) , quest_to_check['state'])
-                    if not_valid:    
+                    if not_valid:
                         check_valid = False
-                        
-                        
+
+
                     #output = output + quest_to_check['id'] + ': ' + quest_to_check['state'] + ' ### '
 
                 if check_valid:
@@ -207,7 +208,7 @@ class Npc(Actor):
 
         if return_dict:
             return {'quest_not_started': has_quest_to_start, 'quest_turn_in': has_quest_to_turn_in}
-        
+
         if has_quest_to_start and has_quest_to_turn_in:
             output = output + '\nHas both a quest to start and a quest to turn in'
         else:
@@ -227,7 +228,7 @@ class Npc(Actor):
         #    utils.debug_print(self.name, e)
 
     def drop_loot_on_ground(self):
-        for item in self.loot: 
+        for item in self.loot:
             roll = random.random()
             if roll >= self.loot[item]:
                 continue
@@ -236,11 +237,11 @@ class Npc(Actor):
             self.simple_broadcast('',f'{new_item.name} hits the ground with a thud.')
             self.room.inventory_manager.add_item(new_item)
 
-    
+
     def drop_loot(self, actor, room):
         all_items = ITEMS
-        
-        for item in self.loot: 
+
+        for item in self.loot:
             if self.loot[item] != 1:
                 roll = random.randrange(1,self.loot[item])
                 if roll != 1:
@@ -248,15 +249,15 @@ class Npc(Actor):
 
             new_item = load_item(item)
 
-            if actor.inventory_manager.add_item(new_item):   
+            if actor.inventory_manager.add_item(new_item):
                 actor.sendLine(f'You loot {new_item.name} (1 in {self.loot[item]} chance)')
             else:
                 actor.sendLine(f'Your inventory is full, {new_item.name} has been dropped on the ground')
                 room.inventory_manager.add_item(new_item)
-    
+
 
     def die(self):
-        
+
         if self.room == None:
             super().die()
             return
@@ -267,11 +268,11 @@ class Npc(Actor):
             super().die()
             return
 
-       
-       
+
+
         room = self.room
         participants = room.combat.participants.values()
-        
+
         super().die(unload = False)
 
         for actor in participants:
@@ -283,7 +284,7 @@ class Npc(Actor):
                 #self.drop_loot_on_ground()
                 proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
                 actor.quest_manager.propose_objective_count_addition(proposal)
-        
+
         del self.room.actors[self.id]
         if self.room.combat != None:
             if self.id in self.room.combat.participants:
@@ -291,33 +292,33 @@ class Npc(Actor):
 
         super().unload()
 
-        
+
     def set_turn(self):
         super().set_turn()
 
 class Enemy(Npc):
     def __init__(
-        self, 
-        npc_id = None, 
+        self,
+        npc_id = None,
         ai = None,
         name = None,
-        description = None, 
-        room = None, 
-        stats = None, 
-        loot = None, 
+        description = None,
+        room = None,
+        stats = None,
+        loot = None,
         skills = None,
         dialog_tree = None,
         can_start_fights = False,
         dont_join_fights = True
     ):
         super().__init__(
-            npc_id = npc_id, 
+            npc_id = npc_id,
             ai = ai,
             name = name,
-            description = description, 
-            room = room, 
-            stats = stats, 
-            loot = loot, 
+            description = description,
+            room = room,
+            stats = stats,
+            loot = loot,
             skills = skills,
             dialog_tree = dialog_tree,
             can_start_fights = can_start_fights,

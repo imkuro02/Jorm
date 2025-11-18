@@ -4,8 +4,9 @@ versions:
     title: Skills
     unixtime: 1761899677
     features:
-    - death log command
-    - last words command
+    - Auto battler removed, and fight no longer auto plays skills
+    - Two new quests from "The Child" by the western town exit
+    - Quests can have unknown objectives
   '141125':
     id: '141125'
     title: Skills
@@ -25,7 +26,7 @@ versions:
     features:
     - drop all and get all now displays items interacted with in one line
     - New skill; Nightmare, sleep a target for 3 turns, if target awakes from damage, their turn begins instantly
-    - Now, each time someones turn begins it is announced 
+    - Now, each time someones turn begins it is announced
     - Damage received is displayed in a more informative way
     - Fixed trading with npcs for quests, where you view the dialog of completion even if you didnt hand in item succesfully
     - Fixed bug where offensive bouncy skills could bounce to an already dead target then continue bouncing
@@ -34,14 +35,14 @@ versions:
     - --- ADDED REFORGING ---
     - Reforges are passive afflictions that apply and refresh themselves based on equipment worn
     - Reforge afflictions currently dont do anything but give description, this will soon change
-    - Reforges cost item level times 10 scrap 
+    - Reforges cost item level times 10 scrap
     - Added "help reforge"
     - Added "help scrap"
     - Random drop items have a LVL in 100 chance of being already reforged
     - --- MAP CHANGES ---
     - One new quest
     - New dungeon "The well bellow"
-    - Door to ellinia has been removed, Lavoratory is now the main passage during all hours 
+    - Door to ellinia has been removed, Lavoratory is now the main passage during all hours
     - --- QUEST CHANGES ---
     - Quests can now reward amounts of items, not just one at a time, this means you can be rewarded with x amount of scrap for a quest
   '311025':
@@ -85,7 +86,7 @@ versions:
     - Afk loggout timer increased from 15 min to 30 min
     - Different wall art for different rooms
     - Wall art has width of 2 now
-    - Unexplored rooms have a yellow ? 
+    - Unexplored rooms have a yellow ?
     - Logging explored rooms, count of all rooms explored appears in rank
     - Rank command tab 'Cred' has been renamed to 'Quests'
     - Rank command now shows online status and all characters are now eligable
@@ -101,7 +102,7 @@ versions:
     - Gossip command 'gossip <your message>', a friend only shout alternative
     - ---
     - Lore command no longer shows unecessary info, like item drops for enemies that dont drop anything
-    - Looking at / Loring an npc that cannot be in combat will no longer display their stats (they often er just 1) 
+    - Looking at / Loring an npc that cannot be in combat will no longer display their stats (they often er just 1)
     - ---
     - Ant hill area is now explorable in the jungle
   '161025':
@@ -184,7 +185,7 @@ versions:
     title: Vore
     unixtime: 1759026240
     features:
-    - Added "Lesser Dragon" enemy. 
+    - Added "Lesser Dragon" enemy.
       Lesser Dragon can devour players in combat.
       Being devoured puts you in a custom "dragon mouth room".
       Lesser Dragon spawns in perion, sharing octopus spawn.
