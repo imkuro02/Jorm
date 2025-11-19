@@ -24,7 +24,7 @@ class TriggerableManager:
         #utils.debug_print('items sorted')
         #utils.debug_print(sorted_items)
         return sorted_items#[item for item in self.inventory.items.values()]
-    
+
     def reset_triggered(self):
         self.triggered = []
 
@@ -34,7 +34,7 @@ class TriggerableManager:
 
     # called at start of turn
     def set_turn(self):
-        if self.actor.status != ActorStatusType.FIGHTING: 
+        if self.actor.status != ActorStatusType.FIGHTING:
             return
         for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
@@ -45,7 +45,7 @@ class TriggerableManager:
 
     # called at end of turn
     def finish_turn(self):
-        #if self.actor.status != ActorStatusType.FIGHTING: 
+        #if self.actor.status != ActorStatusType.FIGHTING:
         #    return
         for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
@@ -56,7 +56,7 @@ class TriggerableManager:
 
     # called whenever hp updates in any way
     def take_damage_before_calc(self, damage_obj: 'Damage'):
-        if self.actor.status != ActorStatusType.FIGHTING: 
+        if self.actor.status != ActorStatusType.FIGHTING:
             return damage_obj
         for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
@@ -68,7 +68,7 @@ class TriggerableManager:
 
     # called whenever hp updates in any way
     def take_damage_after_calc(self, damage_obj: 'Damage'):
-        if self.actor.status != ActorStatusType.FIGHTING: 
+        if self.actor.status != ActorStatusType.FIGHTING:
             return damage_obj
         for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
@@ -77,9 +77,9 @@ class TriggerableManager:
             self.add_triggered(item)
         self.reset_triggered()
         return damage_obj
-    
+
     def deal_damage(self, damage_obj: 'Damage'):
-        if self.actor.status != ActorStatusType.FIGHTING: 
+        if self.actor.status != ActorStatusType.FIGHTING:
             return damage_obj
         for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
@@ -88,9 +88,9 @@ class TriggerableManager:
             self.add_triggered(item)
         self.reset_triggered()
         return damage_obj
-    
+
     def dealt_damage(self, damage_obj: 'Damage'):
-        if self.actor.status != ActorStatusType.FIGHTING: 
+        if self.actor.status != ActorStatusType.FIGHTING:
             return damage_obj
         for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
@@ -99,7 +99,7 @@ class TriggerableManager:
             self.add_triggered(item)
         self.reset_triggered()
         return damage_obj
-    
+
     def gain_exp(self, exp):
         for item in self.get_items_sorted():
             if item.premade_id in self.triggered:
@@ -108,7 +108,7 @@ class TriggerableManager:
             self.add_triggered(item)
         self.reset_triggered()
         return exp
-        
+
 
 #               proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
 #                owner.quest_manager.propose_objective_count_addition(proposal)
@@ -116,11 +116,11 @@ class InventoryManager:
     def __init__(self, owner, limit = 20*1):
         self.owner = owner
         self.triggerable_manager = TriggerableManager(self)
-        self.limit = limit 
+        self.limit = limit
         self.base_limit = limit
         self.items = {}
         self.can_pick_up_anything = False
-            
+
     # forward to triggerable manager
     def set_turn(self):
         return self.triggerable_manager.set_turn()
@@ -158,7 +158,7 @@ class InventoryManager:
         return self.limit - len(self.items)
 
     def is_empty(self):
-        if len(self.items) == 0: 
+        if len(self.items) == 0:
             return True
         return False
 
@@ -182,11 +182,11 @@ class InventoryManager:
 
                 if _i.stack == _i.stack_max:
                     continue
-                    
+
                 if _i.stack + item.stack > _i.stack_max:
                     _i.time_on_ground = 0
                     item.stack -= (_i.stack_max - _i.stack)
-                    _i.stack = _i.stack_max 
+                    _i.stack = _i.stack_max
                     self.items[item.id] = item
                     if not dont_send_objective_proposal and type(self.owner).__name__ == 'Player':
                         self.owner.quest_manager.propose_objective_count_addition(
@@ -201,11 +201,11 @@ class InventoryManager:
                         ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item.premade_id, item.stack)
                     )
                 return True
-            
+
         if not forced:
             if len(self.items) >= self.limit:
                 return False
-        
+
         self.items[item.id] = item
 
         if type(self.owner).__name__ != 'Room':
@@ -240,14 +240,14 @@ class InventoryManager:
             if not i.can_tinker_with():
                 continue
             if item_premade_id == i.premade_id:
-                
+
                 # if this item has more stacks than what needs to be removed
                 if i.stack > (stack - stacks_removed):
                     _stack = (stack - stacks_removed)
                     i.stack -= _stack
                     stacks_removed += _stack
                     continue
-                    
+
 
                 # if this item has less stacks than what needs to be removed
                 if i.stack <= (stack - stacks_removed):
@@ -271,7 +271,7 @@ class InventoryManager:
             )
 
         return True
-                
+
 
 
 
@@ -300,10 +300,15 @@ class InventoryManager:
         new_item = load_item(item.premade_id)
         item.stack -= value
         new_item.stack = value
-        self.add_item(new_item, stack_items = False, dont_send_objective_proposal = True) 
+        self.add_item(new_item, stack_items = False, dont_send_objective_proposal = True)
 
     def count_quest_items(self):
         if type(self.owner).__name__ == 'Player':
+            for quest in self.owner.quest_manager.quests.values():
+                for objective in quest.objectives.values():
+                    if objective.type == OBJECTIVE_TYPES.COLLECT_X:
+                        objective.count = 0
+
             for item in self.items.values():
                 self.owner.quest_manager.propose_objective_count_addition(
                     ObjectiveCountProposal(OBJECTIVE_TYPES.COLLECT_X, item.premade_id, item.stack)
