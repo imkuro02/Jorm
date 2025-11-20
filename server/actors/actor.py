@@ -42,31 +42,35 @@ class ActorStatManager:
             }
 
     def gain_stat_points(self, stat = StatType.GRIT, points = 1):
+        hp_bonus = 0
+        mp_bonus = 0
+        pa_bonus = 0
+        ma_bonus = 0
         match stat:
             case StatType.GRIT:
                 stat = StatType.GRIT
-                hp_bonus = 4
-                mp_bonus = 0
-                pa_bonus = 2
-                ma_bonus = 0
+                hp_bonus = 10
+                mp_bonus = 3
+                pa_bonus = 5
+                ma_bonus = 1
             case StatType.FLOW:
                 stat = StatType.FLOW
-                hp_bonus = 4
-                mp_bonus = 0
-                pa_bonus = 0
-                ma_bonus = 2
+                hp_bonus = 5
+                mp_bonus = 3
+                pa_bonus = 10
+                ma_bonus = 1
             case StatType.MIND:
                 stat = StatType.MIND
-                hp_bonus = 0
-                mp_bonus = 4
-                pa_bonus = 0
-                ma_bonus = 2
+                hp_bonus = 1
+                mp_bonus = 10
+                pa_bonus = 3
+                ma_bonus = 5
             case StatType.SOUL:
                 stat = StatType.SOUL
-                hp_bonus = 0
-                mp_bonus = 4
-                pa_bonus = 2
-                ma_bonus = 0
+                hp_bonus = 3
+                mp_bonus = 5
+                pa_bonus = 1
+                ma_bonus = 10
             case _:
                 hp_bonus = 0
                 mp_bonus = 0

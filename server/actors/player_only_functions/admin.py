@@ -1,144 +1,158 @@
-from actors.player_only_functions.checks import check_is_admin, check_no_empty_line, check_not_in_combat
-import items.manager as items
-from items.manager import load_item
-import configuration.config as config
-import yaml
 import os
+
+import configuration.config as config
+import items.manager as items
 import utils
-from configuration.config import PATCH_NOTES, ItemType, StatType, EquipmentSlotType, SKILLS, LORE, StaticRooms, HELPFILES, Color
+import yaml
+from actors.player_only_functions.checks import (
+    check_is_admin,
+    check_no_empty_line,
+    check_not_in_combat,
+)
+from configuration.config import (
+    HELPFILES,
+    LORE,
+    PATCH_NOTES,
+    SKILLS,
+    Color,
+    EquipmentSlotType,
+    ItemType,
+    StaticRooms,
+    StatType,
+)
+from items.manager import load_item
 from utils import REFTRACKER
+
 
 def get_any_new_patches(self):
     patches = PATCH_NOTES
-    for i in patches['versions']:
-        i = patches['versions'][i]
-        unix_version = int(i['unixtime'])
+    for i in patches["versions"]:
+        i = patches["versions"][i]
+        unix_version = int(i["unixtime"])
         unix_last_login = int(self.date_of_last_login_previous)
         is_new = unix_version > unix_last_login
         if is_new:
-            self.sendLine(f'{Color.IMPORTANT}You have unread news! type "news" to view what you have missed, "help news" to see more!{Color.NORMAL}')
+            self.sendLine(
+                f'{Color.IMPORTANT}You have unread news! type "news" to view what you have missed, "help news" to see more!{Color.NORMAL}'
+            )
             return True
         else:
             return False
 
+
 def command_patch_notes(self, line):
-
-
     patches = PATCH_NOTES
 
+    if line in patches["versions"]:
+        v = patches["versions"][line]
+        _id = v["id"]
+        _title = v["title"]
+        _features = v["features"]
 
-    if line in patches['versions']:
-        v = patches['versions'][line]
-        _id = v['id']
-        _title = v['title']
-        _features = v['features']
-
-        output = ''
+        output = ""
         output += f'Reading "{_title}", patch id: {_id}\nFeatures:\n'
-        for i in v['features']:
-            output += f'- {i}\n'
+        for i in v["features"]:
+            output += f"- {i}\n"
         self.sendLine(output)
         return
 
-    
+    t = utils.Table(3, 3)
+    t.add_data("Status")
+    t.add_data("Patch")
+    t.add_data("Title")
 
-    t = utils.Table(3,3)
-    t.add_data('Status')
-    t.add_data('Patch')
-    t.add_data('Title')
+    for i in patches["versions"]:
+        i = patches["versions"][i]
 
-    for i in patches['versions']:
-        i = patches['versions'][i]
-        
-        unix_version = int(i['unixtime'])
+        unix_version = int(i["unixtime"])
         unix_last_login = int(self.date_of_last_login_previous)
         is_new = unix_version > unix_last_login
 
         col = Color.IMPORTANT if is_new else Color.NORMAL
 
         if is_new:
-            t.add_data('New', col)
+            t.add_data("New", col)
         else:
-            t.add_data('Old', col)
-        t.add_data(i['id'], col)
-        t.add_data(i['title'], col)
+            t.add_data("Old", col)
+        t.add_data(i["id"], col)
+        t.add_data(i["title"], col)
 
     self.sendLine(t.get_table())
 
-        
 
 def command_show_ref_all(self, line):
     REFTRACKER.show_ref_all()
 
+
 def command_help(self, line):
     help = HELPFILES
-    output = ''
+    output = ""
 
-    if line == '':
+    if line == "":
         groups = {}
-        for i in help['commands']:
-            if help['commands'][i]['group'] not in groups:
-                groups[help['commands'][i]['group']] = []
-            groups[help['commands'][i]['group']].append(i)
-            
-        output = 'Here are all helpfiles, sorted by GROUP.\n'
-        t = utils.Table(2,3)
+        for i in help["commands"]:
+            if help["commands"][i]["group"] not in groups:
+                groups[help["commands"][i]["group"]] = []
+            groups[help["commands"][i]["group"]].append(i)
+
+        output = "Here are all helpfiles, sorted by GROUP.\n"
+        t = utils.Table(2, 3)
         for group in groups:
             t.add_data(str(group).upper())
             t.add_data(" ".join(groups[group]))
-            #output = f'{output}{str(group)}: {" ".join(groups[group])}\n'
+            # output = f'{output}{str(group)}: {" ".join(groups[group])}\n'
         output = output + t.get_table()
     else:
-        best_match = utils.match_word(line, help['commands'].keys())
-        if best_match in help['commands']:
-            output = f'<{Color.IMPORTANT}Helpfile{Color.NORMAL} for {Color.IMPORTANT}{best_match}{Color.NORMAL}>\n'
+        best_match = utils.match_word(line, help["commands"].keys())
+        if best_match in help["commands"]:
+            output = f"<{Color.IMPORTANT}Helpfile{Color.NORMAL} for {Color.IMPORTANT}{best_match}{Color.NORMAL}>\n"
 
-            if 'syntax' in help['commands'][best_match]:
-                output += '\n'
-                output += 'Syntax:\n'
-                syntax      = (help['commands'][best_match]['syntax']) 
+            if "syntax" in help["commands"][best_match]:
+                output += "\n"
+                output += "Syntax:\n"
+                syntax = help["commands"][best_match]["syntax"]
                 for i in syntax:
-                    output = output + ' - '+ i + '\n'
-            
-            if 'description' in help['commands'][best_match]:
-                output += '\n'
-                description = (help['commands'][best_match]['description']) 
-                output = output + description + ''
+                    output = output + " - " + i + "\n"
 
-            if 'related' in help['commands'][best_match]:
-                output += '\n'
-                output = output + f'{Color.IMPORTANT}Also check out{Color.NORMAL}: '
-                related      = (help['commands'][best_match]['related']) 
+            if "description" in help["commands"][best_match]:
+                output += "\n"
+                description = help["commands"][best_match]["description"]
+                output = output + description + ""
+
+            if "related" in help["commands"][best_match]:
+                output += "\n"
+                output = output + f"{Color.IMPORTANT}Also check out{Color.NORMAL}: "
+                related = help["commands"][best_match]["related"]
                 for i in related:
-                    output = output + '' + i + ' '
+                    output = output + "" + i + " "
 
     self.sendLine(output)
-        
+
 
 def command_get_time(self, line):
-    if line == '0':
-        self.sendLine('Unix time is: '+str(utils.get_unix_timestamp()))
-    elif line == '1':
+    if line == "0":
+        self.sendLine("Unix time is: " + str(utils.get_unix_timestamp()))
+    elif line == "1":
         self.sendLine(str(self.room.world.game_time.get_game_time_int()))
-    elif line == '2':
+    elif line == "2":
         self.sendLine(str(self.room.world.game_time.get_game_time_compact_str()))
-    elif line == '3':
+    elif line == "3":
         self.sendLine(str(self.room.world.game_time.TIME_OF_DAY))
     else:
         game_date_time = self.room.world.game_time.get_game_time()
-        day_name = game_date_time['day_name']
-        month_name = game_date_time['month_name']
-        day = game_date_time['day']
-        month = game_date_time['month']
-        year = game_date_time['year']
-        hour = game_date_time['hour']
-        minute = game_date_time['minute']
+        day_name = game_date_time["day_name"]
+        month_name = game_date_time["month_name"]
+        day = game_date_time["day"]
+        month = game_date_time["month"]
+        year = game_date_time["year"]
+        hour = game_date_time["hour"]
+        minute = game_date_time["minute"]
 
-        time_of_day_label = 'wrong time error'
-        for i in 'morning noon evening night'.split():
+        time_of_day_label = "wrong time error"
+        for i in "morning noon evening night".split():
             if self.room.world.game_time.TIME_OF_DAY[i]:
                 time_of_day_label = i
-        output = f'The date is {day:02}/{month+1:02}/{year:04}, its a {day_name} of {month_name}. It is {time_of_day_label} {hour:02}:{minute:02}.'
+        output = f"The date is {day:02}/{month + 1:02}/{year:04}, its a {day_name} of {month_name}. It is {time_of_day_label} {hour:02}:{minute:02}."
         self.sendLine(output)
 
 
@@ -147,9 +161,10 @@ def command_set_time(self, line):
     try:
         self.room.world.game_time.set_game_time(line)
     except Exception as e:
-        self.sendLine(f'Cant set time: {e}')
+        self.sendLine(f"Cant set time: {e}")
 
-'''
+
+"""
 def command_help(self, line):
     files = os.listdir('help')
     file_text = [f.replace('.txt', '') for f in files]
@@ -162,109 +177,106 @@ def command_help(self, line):
 
     best_match = utils.match_word(line, files)
     with open(f'help/{best_match}', "r") as file:
-        content = file.read() 
+        content = file.read()
         content = content.replace(' "',' @yellow"')
         content = content.replace('" ','"@normal ')
 
     self.sendLine(content)
-'''
+"""
+
 
 def command_history(self, line):
-    if line == '':
-        line = 'chat'
+    if line == "":
+        line = "chat"
 
     messages = []
     start = 0
-    for i in sorted(self.msg_history.keys(), reverse = True):
+    for i in sorted(self.msg_history.keys(), reverse=True):
         start = i
 
     if start <= 0:
         start = 0
 
     maximum = 100
-    for i in sorted(self.msg_history.keys(), reverse = True):
-        if any(word.lower() in self.msg_history[i]['type'] for word in line.split()) or 'all' in line.lower():
-            messages.append(f'{i} - '+self.msg_history[i]['line'])
+    for i in sorted(self.msg_history.keys(), reverse=True):
+        if (
+            any(word.lower() in self.msg_history[i]["type"] for word in line.split())
+            or "all" in line.lower()
+        ):
+            messages.append(f"{i} - " + self.msg_history[i]["line"])
             maximum -= 1
         if maximum == 0:
             break
-    self.sendLine('<History Start>')
+    self.sendLine("<History Start>")
     for i in reversed(messages):
-        self.sendLine(i, msg_type = None)
-    self.sendLine('<History End>')
-    
+        self.sendLine(i, msg_type=None)
+    self.sendLine("<History End>")
+
 
 def command_ranks(self, line):
-    
-    #limit = 200
-    #if limit >= 200: limit = 200
-    #if limit <= 1: limit = 1
+    # limit = 200
+    # if limit >= 200: limit = 200
+    # if limit <= 1: limit = 1
     t = utils.Table(7, 3)
     ranks = self.factory.ranks
-    #ranks = ranks[::-1]
-    
-    t.add_data('Rank')
-    t.add_data('LVL')
-    t.add_data('Name')
-    t.add_data('EXP')
-    t.add_data('Quests')
-    t.add_data('Rooms')
-    #t.add_data('Created')
-    #t.add_data('Logged In')
-    #t.add_data('Game Time')
-    t.add_data('Status')
-    
-    
-    #length = len(ranks)
-    #if length >= limit:
+    # ranks = ranks[::-1]
+
+    t.add_data("Rank")
+    t.add_data("LVL")
+    t.add_data("Name")
+    t.add_data("EXP")
+    t.add_data("Quests")
+    t.add_data("Rooms")
+    # t.add_data('Created')
+    # t.add_data('Logged In')
+    # t.add_data('Game Time')
+    t.add_data("Status")
+
+    # length = len(ranks)
+    # if length >= limit:
     #    length = limit
     rank = 0
-    for i in range(0,len(ranks)):
+    for i in range(0, len(ranks)):
         rank += 1
-        #if ranks[i]['time_in_game'] == 0:
+        # if ranks[i]['time_in_game'] == 0:
         #    continue
-        #if ranks[i]['quests_turned_in'] == 0:
+        # if ranks[i]['quests_turned_in'] == 0:
         #    continue
-        #t.add_data(f'{len(ranks)-i}. ')
-        if line != '':
-            if line != ranks[i]['name']:
+        # t.add_data(f'{len(ranks)-i}. ')
+        if line != "":
+            if line != ranks[i]["name"]:
                 continue
-        t.add_data(f'{rank}. ')
-        t.add_data(ranks[i]['lvl'])
-        t.add_data(ranks[i]['name'])
-        t.add_data(ranks[i]['exp'])
-        t.add_data(ranks[i]['quests_turned_in'])
-        t.add_data(ranks[i]['explored_rooms'])
-        #t.add_data(utils.get_datetime_from_unix(ranks[i]['date_of_creation']))
-        #t.add_data(utils.get_datetime_ago_from_unix(ranks[i]['date_of_last_login']))
-        #t.add_data(utils.seconds_to_dhms(ranks[i]['time_in_game']))
+        t.add_data(f"{rank}. ")
+        t.add_data(ranks[i]["lvl"])
+        t.add_data(ranks[i]["name"])
+        t.add_data(ranks[i]["exp"])
+        t.add_data(ranks[i]["quests_turned_in"])
+        t.add_data(ranks[i]["explored_rooms"])
+        # t.add_data(utils.get_datetime_from_unix(ranks[i]['date_of_creation']))
+        # t.add_data(utils.get_datetime_ago_from_unix(ranks[i]['date_of_last_login']))
+        # t.add_data(utils.seconds_to_dhms(ranks[i]['time_in_game']))
 
         online = False
         for prot in self.room.world.factory.protocols:
             if prot.actor == None:
                 continue
-            if prot.actor.name == ranks[i]['name']:
+            if prot.actor.name == ranks[i]["name"]:
                 online = True
         col = Color.BAD
         if online:
             col = Color.GOOD
         if online:
-            online = 'Online'
+            online = "Online"
         else:
-            online = 'Offline'
-        t.add_data(f'{online}',col)
-        
-        
-        
-    
+            online = "Offline"
+        t.add_data(f"{online}", col)
+
     output = t.get_table()
     self.sendLine(output)
 
 
-
-
 def command_send_prompt(self, line):
-    if line == '':
+    if line == "":
         self.sendLine(self.prompt(self))
     else:
         actor = None
@@ -275,10 +287,10 @@ def command_send_prompt(self, line):
             actor = self.get_actor(line)
 
         if actor == None:
-            self.sendLine('Pormpt who?')
+            self.sendLine("Pormpt who?")
             return
-        
-        self.sendLine(f'Prompt for {actor.pretty_name()}:\n{actor.prompt(self)}')
+
+        self.sendLine(f"Prompt for {actor.pretty_name()}:\n{actor.prompt(self)}")
 
 
 @check_is_admin
@@ -286,43 +298,46 @@ def command_gain_exp(self, exp):
     try:
         self.stat_manager.stats[StatType.EXP] += int(exp)
     except ValueError:
-        utils.debug_print('gain_exp needs a int')
+        utils.debug_print("gain_exp needs a int")
         pass
+
 
 @check_is_admin
 def command_bonus(self, line):
-    if line == '':
-        self.sendLine('check help admin for syntax')
+    if line == "":
+        self.sendLine("check help admin for syntax")
         return
 
-    if len(line.split(',')) != 4:
-        self.sendLine('check help admin for syntax')
+    if len(line.split(",")) != 4:
+        self.sendLine("check help admin for syntax")
         return
-    
-    item_name, _type, key, val = line.split(',')
+
+    item_name, _type, key, val = line.split(",")
     item = self.get_item(item_name)
-    
+
     if item == None:
-        self.sendLine('Bonus what? (cant find item)')
+        self.sendLine("Bonus what? (cant find item)")
         return
-    
+
     if item.item_type != ItemType.EQUIPMENT:
-        self.sendLine('Cant bonus a non equipable item')
+        self.sendLine("Cant bonus a non equipable item")
         return
 
     if item.equiped:
-        self.sendLine('Cant bonus a currently equipped item')
+        self.sendLine("Cant bonus a currently equipped item")
         return
 
     try:
         val = int(val)
     except ValueError:
-        self.sendLine('Value is not an intiger')
+        self.sendLine("Value is not an intiger")
         return
 
     from items.equipment import EquipmentBonus
-    boon = EquipmentBonus(type = _type, key = key, val = val)
+
+    boon = EquipmentBonus(type=_type, key=key, val=val)
     item.manager.add_bonus(boon)
+
 
 @check_is_admin
 def command_sethp(self, line):
@@ -333,7 +348,7 @@ def command_sethp(self, line):
         self.sendLine(str(e))
 
 
-'''
+"""
 @check_is_admin
 @check_no_empty_line
 def command_create_item(self, line):
@@ -351,8 +366,8 @@ def command_create_item(self, line):
         new_item = items.Consumable()
         new_item.name = 'New item'
         self.inventory_manager.add_item(new_item)
-'''
-'''
+"""
+"""
 @check_is_admin
 @check_no_empty_line
 def command_update_item(self, line):
@@ -360,7 +375,7 @@ def command_update_item(self, line):
     try:
         item = self.get_item(line.split()[0])
         item_id = item.id
-        stat = line.split()[1] 
+        stat = line.split()[1]
         value = " ".join(line.split()[2::])
 
         if stat in 'name':
@@ -394,7 +409,7 @@ def command_update_item(self, line):
                 self.inventory_manager.items[item_id].slot = getattr(EquipmentSlotType, value)
                 self.sendLine('@greenUpdated@normal')
                 return
-               
+
 
             if str(stat) in self.inventory_manager.items[item_id].stat_manager.stats:
                 self.inventory_manager.items[str(item_id)].stat_manager.stats[str(stat)] = int(value)
@@ -410,49 +425,56 @@ def command_update_item(self, line):
 
     except Exception as e:
         self.sendLine(f'something went wrong with updating the item: {e}')
-'''
+"""
+
+
 @check_is_admin
 @check_no_empty_line
 def command_load_item(self, line):
     data = config.ITEMS
     if line not in data:
-        self.sendLine(f'{line} is not a premade item')
+        self.sendLine(f"{line} is not a premade item")
         return
     item = items.load_item(line)
-    if item.premade_id == 'currency_0':
+    if item.premade_id == "currency_0":
         item.stack = 999999999999
     self.inventory_manager.add_item(item)
+
 
 @check_is_admin
 @check_no_empty_line
 def command_load_npcs(self, line):
-    if ':' in line:
-        npc_id, unique_name = line.split(':')
+    if ":" in line:
+        npc_id, unique_name = line.split(":")
         n = create_npc(self.room, npc_id)
         n.name = unique_name
 
         return
 
-    if line == 'boss':
+    if line == "boss":
         self.room.world.spawn_boss()
         return
-    
+
     create_npc(self.room, line)
+
 
 def command_kill(self, line):
     actor = self.get_actor(line)
     if actor == None:
-        self.sendLine('Kill who?')
+        self.sendLine("Kill who?")
         return
     actor.die()
 
+
 def command_export(self, line):
-    if line == '':
+    if line == "":
         self.sendLine(str(self.room.__dict__))
         return
-    
+
     list_of_actors = [actor.name for actor in self.room.actors.values()]
-    list_of_inventory = [utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
+    list_of_inventory = [
+        utils.remove_color(item.name) for item in self.inventory_manager.items.values()
+    ]
     whole_list = list_of_actors + list_of_inventory
 
     best_match = utils.match_word(line, whole_list)
@@ -461,18 +483,18 @@ def command_export(self, line):
     if best_match in list_of_inventory:
         item = self.get_item(best_match)
         if item == None:
-            self.sendLine('cant find this item to export')
+            self.sendLine("cant find this item to export")
             return
 
         self.sendLine(str(item.__dict__))
-        '''
+        """
         item_dict = item.to_dict()
-        
+
         del item_dict['id']
         item_dict = {item_dict['name'].lower(): item_dict}
         yaml_text = yaml.dump(item_dict, default_flow_style=False)
         self.sendLine(yaml_text, color = False)
-        '''
+        """
 
     # export actor
     if best_match in list_of_actors:
@@ -483,11 +505,12 @@ def command_export(self, line):
 
 @check_is_admin
 def command_reload_config(self, line):
-    #self.sendLine(StaticRooms.LOADING)
-    
-    #import configuration.config as config
+    # self.sendLine(StaticRooms.LOADING)
+
+    # import configuration.config as config
     self.room.world.reload()
-    #config.load()
+    # config.load()
+
 
 @check_not_in_combat
 @check_is_admin
@@ -500,11 +523,12 @@ def command_teleport(self, line):
             user = proto.actor
             break
     if user != None:
-        #user.room.move_actor(self)
-        self.command_go(line='', room_id = user.room.id )
-        self.sendLine(f'You teleport to {user.pretty_name()}')
+        # user.room.move_actor(self)
+        self.command_go(line="", room_id=user.room.id)
+        self.sendLine(f"You teleport to {user.pretty_name()}")
     else:
         self.sendLine(f'Cant find "{line}"')
+
 
 @check_not_in_combat
 @check_is_admin
@@ -518,11 +542,12 @@ def command_kick(self, line):
             break
     if user != None:
         user.protocol.disconnect()
-        self.sendLine(f'{user.pretty_name()} kicked')
+        self.sendLine(f"{user.pretty_name()} kicked")
+
 
 def command_online(self, line):
-    output = ''
-    t = utils.Table(4,3)
+    output = ""
+    t = utils.Table(4, 3)
     for proto in self.protocol.factory.protocols:
         # ignore protocols that have not yet signed in
         if proto.actor == None:
@@ -532,11 +557,12 @@ def command_online(self, line):
     output = t.get_table()
     self.sendLine(output)
 
+
 # sql to create first admin
 # sqlite> insert into admins (actor_id, admin_level) values ("a0cb51d7-4e93-49a2-b3bb-d201cbdfb10b", 100);
 @check_is_admin
 def command_grant_admin(self, line):
-    try: 
+    try:
         name, admin_level = [item.strip('"') for item in line.split()]
         admin_level = int(admin_level)
     except ValueError:
@@ -547,155 +573,226 @@ def command_grant_admin(self, line):
         if name == proto.actor.name:
             proto.actor.admin = admin_level
 
-from quest import OBJECTIVE_TYPES, QUEST_STATE_TYPES
-def command_quest(self, line = 'list'):
-    lines = line.split(' ')
-    command = lines[0]
-    
 
-    if command.lower() in 'list':
+from quest import OBJECTIVE_TYPES, QUEST_STATE_TYPES
+
+
+def command_quest(self, line="list"):
+    lines = line.split(" ")
+    command = lines[0]
+
+    if command.lower() in "list":
         count = 0
-        t = utils.Table(3,3)
-        t.add_data('Quest')
-        t.add_data('State')
-        t.add_data('')
+        t = utils.Table(3, 3)
+        t.add_data("Quest")
+        t.add_data("State")
+        t.add_data("")
         for quest in self.quest_manager.quests.values():
             if quest.get_state() == QUEST_STATE_TYPES.TURNED_IN:
                 continue
             count += 1
             t.add_data(quest.name)
-            t.add_data(quest.get_state(as_string = True))
+            t.add_data(quest.get_state(as_string=True))
             if quest.get_state() == QUEST_STATE_TYPES.IN_PROGRESS:
-                t.add_data(f'{quest.get_progress_percentage()}%')
+                t.add_data(f"{quest.get_progress_percentage()}%")
             else:
-                t.add_data('')
+                t.add_data("")
         if count == 0:
-            self.sendLine('You got no quests')
+            self.sendLine("You got no quests")
             return
         self.sendLine(t.get_table())
-        return # show all quests
-        
-    if command.lower() in 'all':
+        return  # show all quests
+
+    if command.lower() in "all":
         count = 0
-        t = utils.Table(3,3)
-        t.add_data('Quest')
-        t.add_data('State')
-        t.add_data('')
+        t = utils.Table(3, 3)
+        t.add_data("Quest")
+        t.add_data("State")
+        t.add_data("")
         for quest in self.quest_manager.quests.values():
             t.add_data(quest.name)
-            t.add_data(quest.get_state(as_string = True))
+            t.add_data(quest.get_state(as_string=True))
             if quest.get_state() == QUEST_STATE_TYPES.IN_PROGRESS:
-                #utils.debug_print('WHART')
-                t.add_data(f'{quest.get_progress_percentage()}%')
+                # utils.debug_print('WHART')
+                t.add_data(f"{quest.get_progress_percentage()}%")
             else:
-                t.add_data('')
+                t.add_data("")
             count += 1
         if count == 0:
-            self.sendLine('You got no quests')
+            self.sendLine("You got no quests")
             return
         self.sendLine(t.get_table())
-        return 
-    
-    if len(lines) < 2:
-        self.sendLine('Too few arguments')
         return
-    quest_name = ' '.join(lines[1:])
 
-    #if command.lower() in 'add':
+    if len(lines) < 2:
+        self.sendLine("Too few arguments")
+        return
+    quest_name = " ".join(lines[1:])
+
+    # if command.lower() in 'add':
     #    self.quest_manager.start_quest(quest_name)
     #    return
-    if command.lower() in 'view':
+    if command.lower() in "view":
         self.quest_manager.view(quest_name)
         return
-    if command.lower() in 'drop':
+    if command.lower() in "drop":
         self.quest_manager.drop(quest_name)
         return
-    
-    
 
 
-
-#from actors.enemy import create_enemy
-from actors.npcs import create_npc
-@check_no_empty_line
-def command_lore(self, line):
-
-   
-
-    
-    list_of_enemies = [enemy for enemy in LORE['enemies']]
-    list_of_items = [item for item in LORE['items']]
-    list_of_rooms = [room for room in LORE['rooms']]
-    list_of_skills = [skill for skill in LORE['skills']]
-
-    if line in 'grit flow mind soul phy_armor mag_armor hp mp'.split():
+@check_is_admin
+def command_force_build(self, line):
+    list_of_items = [item for item in LORE["items"]]
+    if line in "grit flow mind soul phy_armor mag_armor hp mp".split():
         line = line.strip()
-        if line in 'hp mp phy_armor mag_armor'.strip():
-            line += '_max'
+        if line in "hp mp phy_armor mag_armor".strip():
+            line += "_max"
         temp_slots_manager = {}
         for slot in self.slots_manager.slots:
             temp_slots_manager[slot] = None
 
         for item in list_of_items:
-            if 'stats' in LORE['items'][item]:
-                if LORE['items'][item]['requirements']['lvl'] > self.stat_manager.stats[StatType.LVL]:
+            if "stats" in LORE["items"][item]:
+                if (
+                    LORE["items"][item]["requirements"]["lvl"]
+                    > self.stat_manager.stats[StatType.LVL]
+                ):
                     continue
-                if temp_slots_manager[LORE['items'][item]['slot']] != None:
-                    if LORE['items'][item]['stats'][line] + LORE['items'][item]['requirements']['lvl'] >= temp_slots_manager[LORE['items'][item]['slot']]['stats'][line] + temp_slots_manager[LORE['items'][item]['slot']]['requirements']['lvl']:
-                        temp_slots_manager[LORE['items'][item]['slot']] = LORE['items'][item]
+                if temp_slots_manager[LORE["items"][item]["slot"]] != None:
+                    if (
+                        LORE["items"][item]["stats"][line]
+                        + LORE["items"][item]["requirements"]["lvl"]
+                        >= temp_slots_manager[LORE["items"][item]["slot"]]["stats"][
+                            line
+                        ]
+                        + temp_slots_manager[LORE["items"][item]["slot"]][
+                            "requirements"
+                        ]["lvl"]
+                    ):
+                        temp_slots_manager[LORE["items"][item]["slot"]] = LORE["items"][
+                            item
+                        ]
                 else:
-                    temp_slots_manager[LORE['items'][item]['slot']] = LORE['items'][item]
-        
-        t = utils.Table(2,3)
+                    temp_slots_manager[LORE["items"][item]["slot"]] = LORE["items"][
+                        item
+                    ]
+
+        t = utils.Table(2, 3)
         for slot in temp_slots_manager:
             t.add_data(slot)
             if temp_slots_manager[slot] == None:
-                t.add_data('---')
+                t.add_data("---")
             else:
-                t.add_data(temp_slots_manager[slot]['name'])
-        self.sendLine(f'Best in slot equipment for your level:\n{t.get_table()}')
+                t.add_data(temp_slots_manager[slot]["name"])
+
+        self.sendLine(
+            f"Due to your level this eq has been set on you:\n {t.get_table()}"
+        )
+
+        for slot in temp_slots_manager:
+            if temp_slots_manager[slot] == None:
+                continue
+
+            i = load_item(temp_slots_manager[slot]['premade_id'], max_stats=True)
+
+            if i == None:
+                continue
+            self.inventory_manager.add_item(i)
+            self.inventory_equip(i, forced=True)
         return
 
 
-    
+# from actors.enemy import create_enemy
+from actors.npcs import create_npc
+
+
+@check_no_empty_line
+def command_lore(self, line):
+    list_of_enemies = [enemy for enemy in LORE["enemies"]]
+    list_of_items = [item for item in LORE["items"]]
+    list_of_rooms = [room for room in LORE["rooms"]]
+    list_of_skills = [skill for skill in LORE["skills"]]
+
+    if line in "grit flow mind soul phy_armor mag_armor hp mp".split():
+        line = line.strip()
+        if line in "hp mp phy_armor mag_armor".strip():
+            line += "_max"
+        temp_slots_manager = {}
+        for slot in self.slots_manager.slots:
+            temp_slots_manager[slot] = None
+
+        for item in list_of_items:
+            if "stats" in LORE["items"][item]:
+                if (
+                    LORE["items"][item]["requirements"]["lvl"]
+                    > self.stat_manager.stats[StatType.LVL]
+                ):
+                    continue
+                if temp_slots_manager[LORE["items"][item]["slot"]] != None:
+                    if (
+                        LORE["items"][item]["stats"][line]
+                        + LORE["items"][item]["requirements"]["lvl"]
+                        >= temp_slots_manager[LORE["items"][item]["slot"]]["stats"][
+                            line
+                        ]
+                        + temp_slots_manager[LORE["items"][item]["slot"]][
+                            "requirements"
+                        ]["lvl"]
+                    ):
+                        temp_slots_manager[LORE["items"][item]["slot"]] = LORE["items"][
+                            item
+                        ]
+                else:
+                    temp_slots_manager[LORE["items"][item]["slot"]] = LORE["items"][
+                        item
+                    ]
+
+        t = utils.Table(2, 3)
+        for slot in temp_slots_manager:
+            t.add_data(slot)
+            if temp_slots_manager[slot] == None:
+                t.add_data("---")
+            else:
+                t.add_data(temp_slots_manager[slot]["name"])
+        self.sendLine(f"Best in slot equipment for your level:\n{t.get_table()}")
+        return
+
     whole_list = list_of_enemies + list_of_items + list_of_rooms + list_of_skills
 
     to_find = utils.match_word(line, whole_list)
-    
-    #self.sendLine(to_find)
-    
+
+    # self.sendLine(to_find)
+
     if to_find in list_of_enemies:
-        e_id = LORE['enemies'][to_find]['npc_id']
-        e = create_npc(self.room.world.rooms[StaticRooms.LOADING], e_id, spawn_for_lore = True)
+        e_id = LORE["enemies"][to_find]["npc_id"]
+        e = create_npc(
+            self.room.world.rooms[StaticRooms.LOADING], e_id, spawn_for_lore=True
+        )
         if e == None:
             return
-        
-        
-        all_rooms_e_spawns_in = []
-        for room in LORE['rooms'].values():
-            for spawn_points in room['spawner']:
-                #utils.debug_print(e_id in spawn_points, room['name'], e_id, spawn_points)
-                if e_id in spawn_points:
-                    #if room['name'] in all_rooms_e_spawns_in:
-                    #    continue
-                    if room['name'] not in all_rooms_e_spawns_in:
-                        all_rooms_e_spawns_in.append(room['name'])
 
-        t = utils.Table(3,3)
+        all_rooms_e_spawns_in = []
+        for room in LORE["rooms"].values():
+            for spawn_points in room["spawner"]:
+                # utils.debug_print(e_id in spawn_points, room['name'], e_id, spawn_points)
+                if e_id in spawn_points:
+                    # if room['name'] in all_rooms_e_spawns_in:
+                    #    continue
+                    if room["name"] not in all_rooms_e_spawns_in:
+                        all_rooms_e_spawns_in.append(room["name"])
+
+        t = utils.Table(3, 3)
         for room in all_rooms_e_spawns_in:
             t.add_data(room)
         output_room_spawns = t.get_table()
-        
-
 
         all_loot_they_drop = {}
         for loot in e.loot:
-            i = load_item(loot, max_stats = True)
+            i = load_item(loot, max_stats=True)
             i.new = False
-            all_loot_they_drop[i.pretty_name()] = f'1:{e.loot[loot]}'
+            all_loot_they_drop[i.pretty_name()] = f"1:{e.loot[loot]}"
 
-        
-        t = utils.Table(4,3)
+        t = utils.Table(4, 3)
         for loot in all_loot_they_drop:
             t.add_data(loot)
             t.add_data(all_loot_they_drop[loot])
@@ -706,66 +803,67 @@ def command_lore(self, line):
 
         # THIS IS AN ISSUE WIT DA GUUUUH WID DA GUUUH
         # WIT DA utils.Table CODE
-        output = f'{Color.IMPORTANT}You are pondering{Color.NORMAL}: '
-        output += e.get_character_sheet()+'\n'
-        if output_room_spawns != '':
-            output += f'{Color.IMPORTANT}Roaming area{Color.NORMAL}:\n'
-            output += output_room_spawns.strip()+'\n'+'\n'
-        if output_loot_drops != '':
-            output += f'{Color.IMPORTANT}Potential drops{Color.NORMAL}:\n'
-            output += output_loot_drops+'\n'+'\n'
+        output = f"{Color.IMPORTANT}You are pondering{Color.NORMAL}: "
+        output += e.get_character_sheet() + "\n"
+        if output_room_spawns != "":
+            output += f"{Color.IMPORTANT}Roaming area{Color.NORMAL}:\n"
+            output += output_room_spawns.strip() + "\n" + "\n"
+        if output_loot_drops != "":
+            output += f"{Color.IMPORTANT}Potential drops{Color.NORMAL}:\n"
+            output += output_loot_drops + "\n" + "\n"
 
         self.sendLine(output.strip())
 
         e.die()
         return
-    
+
     if to_find in list_of_items:
-        #utils.debug_print(LORE['items'][to_find])
-        output = f'{Color.IMPORTANT}You are pondering{Color.NORMAL}: '
-        if to_find in LORE['items']:
-            item_id = LORE['items'][to_find]['premade_id']
-            i = load_item(item_id, max_stats = True)
+        # utils.debug_print(LORE['items'][to_find])
+        output = f"{Color.IMPORTANT}You are pondering{Color.NORMAL}: "
+        if to_find in LORE["items"]:
+            item_id = LORE["items"][to_find]["premade_id"]
+            i = load_item(item_id, max_stats=True)
             i.new = False
-            output += i.identify(self) 
-            
+            output += i.identify(self)
+
             all_dropped_from = []
-            for e in LORE['enemies']:
-                if item_id in LORE['enemies'][e]['loot']:
-                    all_dropped_from.append([e,f'1:{LORE["enemies"][e]["loot"][item_id]}'])
-            
+            for e in LORE["enemies"]:
+                if item_id in LORE["enemies"][e]["loot"]:
+                    all_dropped_from.append(
+                        [e, f"1:{LORE['enemies'][e]['loot'][item_id]}"]
+                    )
+
         if all_dropped_from != []:
-            output += f'\n{Color.IMPORTANT}Looted from{Color.NORMAL}: \n'
-            t = utils.Table(4,3)
+            output += f"\n{Color.IMPORTANT}Looted from{Color.NORMAL}: \n"
+            t = utils.Table(4, 3)
             for i in all_dropped_from:
-                t.add_data(f'{i[0]}: ')
+                t.add_data(f"{i[0]}: ")
                 t.add_data(i[1])
             output = output + t.get_table()
 
         self.sendLine(output)
         return
-    
+
     if to_find in list_of_rooms:
         return
 
-    
     if to_find in list_of_skills:
         self.command_skills(to_find)
-        output = f'{Color.IMPORTANT}Items with this skill{Color.NORMAL}:\n'
-        t = utils.Table(6,1)
-        t.add_data('Lvl')
-        t.add_data('Name')
-        t.add_data('Lvl')
-        t.add_data('Name')
-        t.add_data('Lvl')
-        t.add_data('Name')
+        output = f"{Color.IMPORTANT}Items with this skill{Color.NORMAL}:\n"
+        t = utils.Table(6, 1)
+        t.add_data("Lvl")
+        t.add_data("Name")
+        t.add_data("Lvl")
+        t.add_data("Name")
+        t.add_data("Lvl")
+        t.add_data("Name")
 
         sorted_items = {}
         item_count = 0
-        for i in LORE['items'].values():
-            if i['item_type'] != ItemType.EQUIPMENT:
+        for i in LORE["items"].values():
+            if i["item_type"] != ItemType.EQUIPMENT:
                 continue
-            if LORE['skills'][to_find]['skill_id'] in str(i['bonuses']):
+            if LORE["skills"][to_find]["skill_id"] in str(i["bonuses"]):
                 t.add_data(f"{i['requirements']['lvl']}.")
                 t.add_data(f"{i['name']}")
                 item_count += 1
@@ -773,22 +871,19 @@ def command_lore(self, line):
             output += t.get_table()
             self.sendLine(output)
 
-    
     return
 
-
     # target yourself if not trying to target anything else
-    if ' on ' not in line and ' at ' not in line:
+    if " on " not in line and " at " not in line:
         action = line
         action = utils.match_word(action, list_of_items + list_of_skill_names)
         target = self
 
     # if you are targetting something else set target to that
     else:
-        action, target = line.replace(' on ',' | ').replace(' at ',' | ').split(' | ')
+        action, target = line.replace(" on ", " | ").replace(" at ", " | ").split(" | ")
         action = utils.match_word(action, list_of_items + list_of_skill_names)
-        #target = utils.match_word(target, list_of_items + list_of_actors)
-
+        # target = utils.match_word(target, list_of_items + list_of_actors)
 
     _action = None
     _target = None
@@ -797,17 +892,21 @@ def command_lore(self, line):
         _action = self.get_item(action)
     if action in list_of_skill_names:
         _action = name_to_id[action]
-    
+
+
 @check_no_empty_line
 def command_friend_add(self, line):
-    self.friend_manager.friend_add(friend_to_add_username = line)
+    self.friend_manager.friend_add(friend_to_add_username=line)
+
 
 @check_no_empty_line
 def command_friend_remove(self, line):
-    self.friend_manager.friend_remove(friend_to_remove_username = line)
+    self.friend_manager.friend_remove(friend_to_remove_username=line)
+
 
 def command_friend_list(self, line):
     self.friend_manager.friend_list()
+
 
 @check_no_empty_line
 def command_friend_broadcast(self, line):
@@ -820,24 +919,24 @@ def command_calculator(self, line):
     allowed_chars_special = "()"
     allowed_chars = allowed_chars_nums + allowed_chars_special + allowed_chars_math
 
-    if line == '':
+    if line == "":
         self.sendLine(f'Only these characters are allowed: "{allowed_chars}"')
         return
-    
+
     for i in line:
         if i not in allowed_chars:
             self.sendLine(f'Only these characters are allowed: "{allowed_chars}"')
             return
-    
+
     try:
         answer = float(eval(line))
         if answer.is_integer():
             answer = int(answer)
     except Exception as e:
-        answer = f'ERROR {e}'
+        answer = f"ERROR {e}"
 
     last_color = Color.NORMAL
-    _line = ''
+    _line = ""
     for l in line:
         color = None
         if l in allowed_chars_nums:
@@ -851,6 +950,4 @@ def command_calculator(self, line):
         else:
             _line = _line + color + l
 
-            
-
-    self.sendLine(f'{_line}  {Color.NORMAL}=  {answer}')
+    self.sendLine(f"{_line}  {Color.NORMAL}=  {answer}")

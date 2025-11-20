@@ -8,12 +8,13 @@ import math
 import weakref
 import random
 import traceback
+from configuration.config import StatType
 
 def debug_print(*args, **kwargs):
     stack = traceback.extract_stack()
     filename, lineno, func, _ = stack[-2]
     print(f"[{filename}:{lineno} in {func}()]", *args, **kwargs)
-    
+
 class RefTracker:
     def __init__(self):
         self.refs = []
@@ -35,11 +36,32 @@ class RefTracker:
                 #utils.debug_print("<collected>")
 
         debug_print("Ref sum:", refs)
-            
+
 
 REFTRACKER = RefTracker()
 
 TOUNLOAD = {}
+
+def calculate_skill_hp_cost(actor, base_value):
+    _cost = int(base_value + (actor.stat_manager.stats[StatType.LVL]*.5))
+    return _cost
+
+    _min =  int(actor.stat_manager.stats[StatType.MPMAX]*0.05)
+    _absolute_minimum = 1
+    _max =  int(actor.stat_manager.stats[StatType.MPMAX]*1)
+
+    if _cost <= _absolute_minimum:
+        return _absolute_minimum
+    if _cost >= _max:
+        return _max
+    if _cost <= _min:
+        return _min
+    return _cost
+
+def calculate_skill_mp_cost(actor, base_value):
+    _cost = int(base_value + (actor.stat_manager.stats[StatType.LVL]*.5))
+
+    return _cost
 
 def unload(obj_to_unload):
     TOUNLOAD[obj_to_unload] = 0
@@ -64,7 +86,7 @@ def unload_fr():
 
     for i in _unloaded:
         del TOUNLOAD[i]
-       
+
 
 def generate_name():
     names = [
@@ -73,9 +95,9 @@ def generate_name():
         "Thomas", "Sandra", "Erling", "Viktor", "Wiktor",
         "Sam", "Dan", 'Xsefe'
     ]
-    
-    
-    return random.choice(names) 
+
+
+    return random.choice(names)
 
 
 logging.basicConfig(
@@ -100,31 +122,31 @@ logging.critical("This is a critical message.")
 
 
 colors = {
-    '@black':   '\x1b[0;30m', 
-    '@red':     '\x1b[0;31m', 
-    '@green':   '\x1b[0;32m', 
-    '@yellow':  '\x1b[0;33m', 
-    '@blue':    '\x1b[0;34m', 
-    '@purple':  '\x1b[0;35m', 
-    '@cyan':    '\x1b[0;36m', 
-    '@white':   '\x1b[0;37m', 
+    '@black':   '\x1b[0;30m',
+    '@red':     '\x1b[0;31m',
+    '@green':   '\x1b[0;32m',
+    '@yellow':  '\x1b[0;33m',
+    '@blue':    '\x1b[0;34m',
+    '@purple':  '\x1b[0;35m',
+    '@cyan':    '\x1b[0;36m',
+    '@white':   '\x1b[0;37m',
 
-    '@bblack':  '\x1b[1;30m', 
-    '@bred':    '\x1b[1;31m', 
-    '@bgreen':  '\x1b[1;32m', 
-    '@byellow': '\x1b[1;33m', 
-    '@bblue':   '\x1b[1;34m', 
-    '@bpurple': '\x1b[1;35m', 
-    '@bcyan':   '\x1b[1;36m', 
-    '@bwhite':  '\x1b[1;37m', 
+    '@bblack':  '\x1b[1;30m',
+    '@bred':    '\x1b[1;31m',
+    '@bgreen':  '\x1b[1;32m',
+    '@byellow': '\x1b[1;33m',
+    '@bblue':   '\x1b[1;34m',
+    '@bpurple': '\x1b[1;35m',
+    '@bcyan':   '\x1b[1;36m',
+    '@bwhite':  '\x1b[1;37m',
 
     '@bgred':      '\x1b[0;41m',
-    '@bggreen':   '\x1b[0;42m', 
-    '@bgyellow':  '\x1b[0;43m', 
-    '@bgblue':    '\x1b[0;44m', 
-    '@bgpurple':  '\x1b[0;45m', 
-    '@bgcyan':    '\x1b[0;46m', 
-    '@bgwhite':   '\x1b[0;47m', 
+    '@bggreen':   '\x1b[0;42m',
+    '@bgyellow':  '\x1b[0;43m',
+    '@bgblue':    '\x1b[0;44m',
+    '@bgpurple':  '\x1b[0;45m',
+    '@bgcyan':    '\x1b[0;46m',
+    '@bgwhite':   '\x1b[0;47m',
 
 
 
@@ -138,29 +160,29 @@ colors = {
     '@good':          '\x1b[0;32m',
     '@bad':           '\x1b[0;35m',
 
-    '@normal':        '\x1b[0m', 
+    '@normal':        '\x1b[0m',
     '@back':          '\x1b[0;00x',
     '@tip':       '\x1b[1;33m',
 
     '@stat':    '\x1b[0;35m',
     '@wall':    '\x1b[100;30m',
-    
+
     '@color':         '\x1b[0;00y',
-    
-    
+
+
 }
 
 def match_word(word: str, l: list, get_score = False):
     # dont process empty, return first
     if not word.strip():
         return l[0]
-    
+
     best_match, best_score = process.extractOne(word, l)
     if get_score:
         return best_match, best_score
     else:
         return best_match
-    
+
 
 def get_match(line, things):
     index = 1
@@ -168,7 +190,7 @@ def get_match(line, things):
     if '.' in line:
         index = line.split('.')[0]
         line = line.split('.')[1]
-    
+
     line = line.strip()
     #index = index.strip()
     try:
@@ -183,7 +205,7 @@ def get_match(line, things):
 
     # reverse the dictionary so you can search from last order
     if index <= -1:
-        things_reversed = {} 
+        things_reversed = {}
         for i in reversed(things):
             things_reversed[i] = things[i]
         things = things_reversed
@@ -203,29 +225,29 @@ def get_match(line, things):
     i = 1
     for val in things.values():
         #utils.debug_print(index, matches[index-1][0].lower(),'----------', i, val.name)
-        
-        #if line.lower() in remove_color(val.name).lower(): 
-        if line.lower() in remove_color(val.pretty_name()).lower(): 
+
+        #if line.lower() in remove_color(val.name).lower():
+        if line.lower() in remove_color(val.pretty_name()).lower():
             if i == index:
                 return val
             i += 1
 
 def match_word_get_list(word: str, l: list):
     # dont process empty, return first
-    if not word.strip(): 
+    if not word.strip():
         return [match for match in l]
-    
+
     matches = process.extract(word, l, limit=None)
     best_matches = [match for match in matches]
     return best_matches
 
- 
+
 
 def remove_color(line):
     for color_code in colors:
         line = line.replace(color_code, '')
-    
-    
+
+
     return line
 
 def print_colors():
@@ -254,7 +276,7 @@ def add_color(line):
                 colors_used[index] = colors_used[index-2]
             else:
                 colors_used[index] = '@normal'
-    
+
     for color_code in colors:
         line = line.replace(color_code, '@color')
 
@@ -277,7 +299,7 @@ class Table:
         if not self.data:
             #utils.debug_print("No data available to display.")
             return ''
-        
+
         index = 0
         i = 0
         widths = {}
@@ -305,7 +327,7 @@ class Table:
             tmp_output = tmp_output.replace(remove_color(elem['val']),elem['col']+elem['val']+f'@normal')
             #output += add_color(tmp_output)
             tmp_output = tmp_output.rstrip().ljust(len(tmp_output), elem['fil'])
-            
+
             output += tmp_output
             i += 1
             if i == self.columns:
@@ -314,10 +336,10 @@ class Table:
                 i = 0
 
         #output = output[:-1] if output.endswith("\n") else output
-        
+
         return output
 
-        
+
 def get_unix_timestamp():
     return int(time.time())
 
@@ -326,7 +348,7 @@ def get_datetime_from_unix(timestamp):
 
 def get_datetime_ago_from_unix(timestamp):
     curr_time = get_unix_timestamp()
-    # timestamp is the same as date_of_last_login 
+    # timestamp is the same as date_of_last_login
 
     ago = curr_time - timestamp
     ago = seconds_to_dhms(int(ago), return_as_dict = True)
@@ -416,7 +438,7 @@ def chunkate(input_string, max_width=800):
             #utils.debug_print('RESET CHUNJ')
             #output += str('R'*(max_width-(line_length+word_length)))
             line_length = 0
-            
+
 
         # Check if the word fits in the current line
         if line_length + word_length > max_width:
@@ -445,7 +467,7 @@ class IndentType:
     NONE = 'none'
     MINOR = 'minor'
     MAJOR = 'major'
-    
+
 def indent(line, indent: IndentType):
     _indent = ''
     match indent:
@@ -456,7 +478,7 @@ def indent(line, indent: IndentType):
         case IndentType.MAJOR:
             _indent = '>> '
     return (_indent) + line
-        
+
 # returns the topmost parent class name
 def get_object_parent(obj):
     parent = obj.__class__.__mro__[-2].__name__
@@ -467,7 +489,7 @@ def progress_bar(size, cur_value, max_value, color = '@white', style=0):
     end = ']'
 
     bg_color = '@bg'+color[1::]
-    
+
     if max_value == 0:
         percentage = 0
     elif max_value == cur_value:
@@ -493,44 +515,44 @@ def progress_bar(size, cur_value, max_value, color = '@white', style=0):
     elif max_value == cur_value:
         scaled_size = size + percentage_size
     else:
-        scaled_size = round((cur_value / max_value) * size) 
+        scaled_size = round((cur_value / max_value) * size)
 
 
     #output = ' '*(scaled_size+remaining_size)
     #output = bg_color + output
-    
 
-    #output = '#'*scaled_size 
+
+    #output = '#'*scaled_size
     #output = output + '.'*(size-scaled_size)
     output = ' '*(size)
     output = output[:round(size/2)] + percentage_text + output[round(size/2):]
     #utils.debug_print(len(output))
     output = output
-    scaled_size += round(percentage_size/2) 
+    scaled_size += round(percentage_size/2)
     if percentage == 0:
         scaled_size = 0
     if percentage >= 100:
-        scaled_size += round(percentage_size/2) 
+        scaled_size += round(percentage_size/2)
 
-    output = bg_color + output[:scaled_size] + '@normal' + output[scaled_size:] 
-    
-    #output = bg_color + output[:scaled_size-int(percentage_size/2)] + color + output[scaled_size-int(percentage_size/2):] 
+    output = bg_color + output[:scaled_size] + '@normal' + output[scaled_size:]
+
+    #output = bg_color + output[:scaled_size-int(percentage_size/2)] + color + output[scaled_size-int(percentage_size/2):]
     #output = bg_color + output
-    
+
     '''
 
-    output = ('#'*scaled_size) + (','*(size-scaled_size)) 
+    output = ('#'*scaled_size) + (','*(size-scaled_size))
     middle = math.ceil(len(output)/2)
     output = output[:middle] + percentage_text + output[middle:]
     output = bg_color + output
-    output = output[:scaled_size+len(bg_color)] + color + output[scaled_size+len(bg_color):] 
+    output = output[:scaled_size+len(bg_color)] + color + output[scaled_size+len(bg_color):]
     #output = output[:len(bg_color)+scaled_size] + color
     '''
 
     output = f'@normal[{output}@normal]'
 
     #output = '.'*(scaled_size+remaining_size) + percentage_text
-    #output = output[int(len(output)):] + percentage_text  
+    #output = output[int(len(output)):] + percentage_text
     #output = output[:scaled_size] + color + output[scaled_size:]
     #output = '['+bg_color + output + '@normal]'
 
@@ -547,7 +569,7 @@ for i in range(0,101):
 
 
 if __name__ == '__main__':
-    
+
     line = '@reda@backb@redhello@greenchat@backwhatsup'
     utils.debug_print(add_color(line))
 
@@ -558,8 +580,3 @@ if __name__ == '__main__':
     strings = formatted_string.split('\n')
     for s in strings:
         utils.debug_print(len(s))
-
-
-                
-
-

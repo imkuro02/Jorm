@@ -5,7 +5,7 @@ from actors.player_only_functions.emotes import command_say, command_shout, comm
 from actors.player_only_functions.talk import command_talk
 
 from actors.player_only_functions.combat import (
-    command_fight, command_pass_turn, 
+    command_fight, command_pass_turn,
     command_use, command_use_try, command_rest, rest_set, rest_here, rest_home, rest_home_request, rest_here_request, command_party,
 )
 
@@ -24,15 +24,15 @@ from actors.player_only_functions.inventory import (
 )
 
 from actors.player_only_functions.character_sheet import (
-    command_level_up, command_practice, command_skills, command_stats, 
+    command_level_up, command_practice, command_skills, command_stats,
     command_respec, command_affects, get_exp_needed_to_level
 )
 
 from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin, command_show_ref_all,
     command_load_item, command_load_npcs, command_export, command_help, command_ranks,
-    command_send_prompt, command_reload_config, command_lore, command_quest, command_bonus,
-    command_kill, command_sethp, command_history, command_get_time, command_set_time, 
+    command_send_prompt, command_reload_config, command_force_build, command_lore, command_quest, command_bonus,
+    command_kill, command_sethp, command_history, command_get_time, command_set_time,
     command_patch_notes, get_any_new_patches,
     command_friend_add, command_friend_remove, command_friend_list, command_friend_broadcast,
     command_calculator,
@@ -73,7 +73,7 @@ commands = {
     # da rest
     'talk':     'command_talk',
     'bonus':    'command_bonus',
-    
+
     'quest':    'command_quest',
     'help':     'command_help',
     'history':  'command_history',
@@ -81,23 +81,24 @@ commands = {
     'say':      'command_say',
     'shout':    'command_shout',
     'roll':     'command_roll',
-    
+
     'befriend': 'command_friend_add',
     'unfriend': 'command_friend_remove',
     'friend':   'command_friend_list',
     'gossip':   'command_friend_broadcast',
-    
+
     'go':       'command_go',
     #'setcall':  'command_recall_set',
     #'gocall':   'command_recall_go',
     'look':     'command_look',
     #'scan':     'command_scan',              # disabled due to not working properly with instances
     'map':      'command_map',
+    '_forcebuild': 'command_force_build',
     'lore':     'command_lore',
     'trade':    'command_trade',
 
     'emote':    'command_emote',
-    
+
     'level':    'command_level_up',
     'practice': 'command_practice',
 
@@ -111,7 +112,7 @@ commands = {
     'reforge':  'command_reforge',
     'skills':   'command_skills',
     'affects':  'command_affects',
-    
+
 
     'identify': 'command_identify',
     'scrap':    'command_scrap',
@@ -129,7 +130,7 @@ commands = {
     'pass':     'command_pass_turn',
     'rest':     'command_rest',
     'party':    'command_party',
-    
+
     'respec':   'command_respec',
     'prompt':   'command_send_prompt',
 
@@ -141,7 +142,7 @@ commands = {
     'pray':     'command_charging_mini_game_toggle',
 
     'news':     'command_patch_notes',
-    '_teleport': 'command_teleport',  
+    '_teleport': 'command_teleport',
     'online':   'command_online',
     '_kick':     'command_kick',
     '_admin':    'command_grant_admin',
@@ -153,22 +154,22 @@ commands = {
     '_mexp':     'command_gain_exp',
     '_reload':   'command_reload_config',
     '_kill':     'command_kill',
-    
+
     '_sethp':    'command_sethp',
     'calculator':'command_calculator'
 
-    
+
 }
 
 '''
 ALL_COMMANDS = []
 
 for i in commands:
-    ALL_COMMANDS.append(i)    
-for i in one_letter_commands: 
-    ALL_COMMANDS.append(i)  
+    ALL_COMMANDS.append(i)
+for i in one_letter_commands:
+    ALL_COMMANDS.append(i)
 for i in shortcuts_to_commands:
-    ALL_COMMANDS.append(i)  
+    ALL_COMMANDS.append(i)
 
 import actors.player_only_functions.settings
 actors.player_only_functions.settings.BANNED_ALIASES = ALL_COMMANDS
@@ -180,7 +181,7 @@ translations = {
     'speak':             'talk ',
     'speak to':          'talk ',
     'speak with':        'talk ',
-    
+
     'pick up ':          'get ',
     'pick up item ':     'get ',
     'pick up items ':    'get ',
@@ -204,7 +205,7 @@ translations = {
     'go to ':            'go ',
     'go in ':            'go ',
     'enter ':            'go ',
-    
+
     'recall':            'rest home',
     'recall set':        'rest set',
 
@@ -238,7 +239,7 @@ translations = {
     'smile':            'emote smile',
 
     'hug':              'emote hug',
-    
+
     'nod at ':          'emote nod ',
     'nod':              'emote nod',
 
@@ -249,7 +250,7 @@ translations = {
     'facepalm':         'emote facepalm',
 
     'applaud':          'emote applaud',
-    
+
     'point at ':        'emote point ',
     'point':            'emote point',
 
@@ -257,6 +258,6 @@ translations = {
 
     'score': 'stats',
     'who': 'online'
-    
-    
+
+
 }

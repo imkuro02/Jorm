@@ -2,7 +2,7 @@ import utils
 import random
 
 from configuration.config import SKILLS, DamageType, ActorStatusType, StatType, Audio
-import skills.skills 
+import skills.skills
 
 
 def get_skills():
@@ -18,7 +18,7 @@ def get_skills():
 def error(user, err):
     if type(user).__name__ == "Player":
         # return if in combat and autobattling
-        # because then its likely that the error is caused by 
+        # because then its likely that the error is caused by
         # autobattler using wrong skill
         #if user.settings_manager.autobattler:
         #    if user.status == ActorStatusType.FIGHTING:
@@ -31,7 +31,7 @@ def error(user, err):
 def get_user_skill_level_as_index(user,skill_id):
     skill = SKILLS[skill_id]
     users_skill_level = -1
-    #_users_skill_level = user.stat_manager.stats[StatType.LVL] 
+    #_users_skill_level = user.stat_manager.stats[StatType.LVL]
     _users_skill_level = user.skill_manager.skills[skill_id]
     for i in range(0,len(skill['script_values']['levels'])):
         if _users_skill_level >= skill['script_values']['levels'][i]:
@@ -50,7 +50,7 @@ def skill_checks(user, target, skill_id):
     if skill_id in user.cooldown_manager.cooldowns:
             error(user, f'{skill_name} is on cooldown!')
             return False
-    
+
     if utils.get_object_parent(target) == 'Actor':
         # cant target yourself
         if target == user and not skill['target_self_is_valid']:
@@ -62,13 +62,13 @@ def skill_checks(user, target, skill_id):
             if utils.get_object_parent(target) != 'Item':
                 error(user, f'You can\'t use {skill_name} on others')
                 return False
-            
+
         #if utils.get_object_parent(target) != "Actor":
         #    error(user, f'You can\'t use {skill_name} on {target.name}')
         #    return False
 
-        
-         
+
+
         if not skill['can_use_in_combat']:
             if user.status == ActorStatusType.FIGHTING:
                 error(user, f'{skill_name} cannot be used in combat')
@@ -88,12 +88,12 @@ def skill_checks(user, target, skill_id):
         if user.status != ActorStatusType.FIGHTING and target.status == ActorStatusType.FIGHTING:
             error(user, f'{target.name} is in a fight you are not participating in!')
             return False
-        
+
     if utils.get_object_parent(target) == 'Item' and not skill['target_item_is_valid']:
         error(user, f'You can\'t use {skill_name} on items')
         return False
-    
-    
+
+
 
 
     users_skill_level = get_user_skill_level_as_index(user,skill_id)
@@ -105,21 +105,21 @@ def skill_checks(user, target, skill_id):
         hp_cost = skill['script_values']['hp_cost'][users_skill_level]
         hp_cost = hp_cost + int(user.stat_manager.stats[StatType.LVL]*.5)
         if hp_cost > user.stat_manager.stats[StatType.HP]+1:
-            
+
             error(user, f'You need atleast {hp_cost+1} HP to use {skill_name}')
             return False
     if 'mp_cost' in skill['script_values']:
-        
-        mp_cost = skill['script_values']['mp_cost'][users_skill_level]
 
-        mp_cost += int(user.stat_manager.stats[StatType.LVL]*.5)
+        #mp_cost = skill['script_values']['mp_cost'][users_skill_level]
+
+        mp_cost = utils.calculate_skill_mp_cost(actor = user, base_value = skill['script_values']['mp_cost'][users_skill_level])
 
         if mp_cost > user.stat_manager.stats[StatType.MP]:
             error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
             return False
 
-    user.stat_manager.stats[StatType.HP] -= hp_cost 
-    user.stat_manager.stats[StatType.MP] -= mp_cost 
+    user.stat_manager.stats[StatType.HP] -= hp_cost
+    user.stat_manager.stats[StatType.MP] -= mp_cost
 
     return True
 
@@ -134,7 +134,7 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
                 f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal',
                 f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
-        
+
         users_skill_level = 0
         use_perspectives = consumable_item.use_perspectives
         success = True # random.randint(1,100) < skill['script_values']['chance'][users_skill_level]*100
@@ -142,13 +142,13 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
         no_cooldown = True
 
         _skill_obj = skill_obj(
-            skill_id = skill_id, 
-            script_values = skill['script_values'], 
-            user = user, 
-            other = target, 
-            users_skill_level = users_skill_level, 
-            use_perspectives = use_perspectives, 
-            success = success, 
+            skill_id = skill_id,
+            script_values = skill['script_values'],
+            user = user,
+            other = target,
+            users_skill_level = users_skill_level,
+            use_perspectives = use_perspectives,
+            success = success,
             silent_use = silent_use
             #aoe = skill['aoe'],
             #bounce = skill['bounce']
@@ -157,7 +157,7 @@ def use_skill_from_consumable(user: "Actor", target: "Actor", skill_id: str, con
         _skill_obj.pre_use()
         del _skill_obj
         return True
-        
+
 
 
 def use_skill(user, target, skill_id, no_checks = False):
@@ -168,11 +168,11 @@ def use_skill(user, target, skill_id, no_checks = False):
     if skill_id not in user.skill_manager.skills:
         user.sendLine(f'You do not know {skill["name"]}')
         return False
-    
+
     if user.skill_manager.skills[skill_id] <= 0:
         user.sendLine(f'You do not know {skill["name"]}')
         return False
-    
+
     users_skill_level = get_user_skill_level_as_index(user,skill_id)
 
     if users_skill_level == -1:
@@ -187,23 +187,23 @@ def use_skill(user, target, skill_id, no_checks = False):
                 f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal',
                 f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
-        
+
         use_perspectives = skill['use_perspectives']
 
-        
+
 
         success = True #random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
         silent_use = False
         no_cooldown = False
 
         _skill_obj = skill_obj(
-            skill_id = skill_id, 
-            script_values = skill['script_values'], 
-            user = user, 
-            other = target, 
-            users_skill_level = users_skill_level, 
-            use_perspectives = use_perspectives, 
-            success = success, 
+            skill_id = skill_id,
+            script_values = skill['script_values'],
+            user = user,
+            other = target,
+            users_skill_level = users_skill_level,
+            use_perspectives = use_perspectives,
+            success = success,
             silent_use = silent_use
             #aoe = skill['aoe'],
             #bounce = skill['bounce']
@@ -216,7 +216,7 @@ def use_skill(user, target, skill_id, no_checks = False):
         '''
         if skill['aoe']:
             targets = []
-            
+
             for i in user.room.actors.values():
                 if user.status != i.status:
                     continue
@@ -226,17 +226,17 @@ def use_skill(user, target, skill_id, no_checks = False):
                 else:
                     if i.party_manager.get_party_id() != user.party_manager.get_party_id():
                         targets.append(i)
-            
+
             for target in targets:
                 _skill_obj = skill_obj(
-                    skill_id = skill_id, 
-                    script_values = skill['script_values'], 
-                    user = user, 
-                    other = target, 
-                    users_skill_level = users_skill_level, 
-                    use_perspectives = use_perspectives, 
-                    success = success, 
-                    silent_use = silent_use, 
+                    skill_id = skill_id,
+                    script_values = skill['script_values'],
+                    user = user,
+                    other = target,
+                    users_skill_level = users_skill_level,
+                    use_perspectives = use_perspectives,
+                    success = success,
+                    silent_use = silent_use,
                     aoe = skill['aoe'],
                     bounce = skill['bounce']
                 )
@@ -248,14 +248,14 @@ def use_skill(user, target, skill_id, no_checks = False):
             return True
         else:
             _skill_obj = skill_obj(
-                skill_id = skill_id, 
-                script_values = skill['script_values'], 
-                user = user, 
-                other = target, 
-                users_skill_level = users_skill_level, 
-                use_perspectives = use_perspectives, 
-                success = success, 
-                silent_use = silent_use, 
+                skill_id = skill_id,
+                script_values = skill['script_values'],
+                user = user,
+                other = target,
+                users_skill_level = users_skill_level,
+                use_perspectives = use_perspectives,
+                success = success,
+                silent_use = silent_use,
                 aoe = skill['aoe'],
                 bounce = skill['bounce']
             )
@@ -266,6 +266,3 @@ def use_skill(user, target, skill_id, no_checks = False):
         '''
 
     return False
-
-
-
