@@ -1,5 +1,5 @@
 {
-    "SHA-256": "076a1bfbafaf794cd4a195257fa1dfe9ea671fb61c5f05be52f74a7e23c68129",
+    "SHA-256": "223957b309bc9d5e017d7259248534aa54b49638e0c423df8f022fb2af9159a2",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4454,7 +4454,7 @@
         "mage_armor": {
             "skill_id": "mage_armor",
             "name": "Mage Armor",
-            "description": "Magically protect your target.\nProtected targets convert BONUS% of damage received to magicka drain for DURATION turns.\nIf damage exceeds current magicka, damage is taken as normal.\nAswell as heal magicka equal to DAMAGE + 0%-CRIT% of MIND.\n",
+            "description": "Magically protect your target.\nProtected targets convert BONUS% of damage received to magicka drain for DURATION turns.\nIf damage exceeds current magicka, damage is taken as normal.\nTarget recovers physical and magical armor equal to DAMAGE + 0%-CRIT% of MIND.\n",
             "script_to_run": "MageArmor",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -8697,7 +8697,7 @@
             "invisible": 0.0,
             "ambience": null,
             "ambience_sfx": null,
-            "can_pick_up": false,
+            "can_pick_up": true,
             "item_type": "misc",
             "stack_max_amount": 1,
             "drop_tags": [
@@ -13736,7 +13736,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": 0.0,
+            "bonuses": "skill_level:beer_stein_chug=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,

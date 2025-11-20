@@ -41,6 +41,60 @@ class ActorStatManager:
             StatType.INITIATIVE: 0
             }
 
+    def gain_stat_points(self, stat = StatType.GRIT, points = 1):
+        match stat:
+            case StatType.GRIT:
+                stat = StatType.GRIT
+                hp_bonus = 4
+                mp_bonus = 0
+                pa_bonus = 2
+                ma_bonus = 0
+            case StatType.FLOW:
+                stat = StatType.FLOW
+                hp_bonus = 4
+                mp_bonus = 0
+                pa_bonus = 0
+                ma_bonus = 2
+            case StatType.MIND:
+                stat = StatType.MIND
+                hp_bonus = 0
+                mp_bonus = 4
+                pa_bonus = 0
+                ma_bonus = 2
+            case StatType.SOUL:
+                stat = StatType.SOUL
+                hp_bonus = 0
+                mp_bonus = 4
+                pa_bonus = 2
+                ma_bonus = 0
+            case _:
+                hp_bonus = 0
+                mp_bonus = 0
+                pa_bonus = 0
+                ma_bonus = 0
+
+        self.stats[stat] += points
+        self.stats[StatType.HPMAX] += points * hp_bonus
+        self.stats[StatType.HP] += points * hp_bonus
+        self.stats[StatType.MPMAX] += points * mp_bonus
+        self.stats[StatType.MP] += points * mp_bonus
+        self.stats[StatType.PHYARMORMAX] += points * pa_bonus
+        self.stats[StatType.PHYARMOR] += points * pa_bonus
+        self.stats[StatType.MAGARMORMAX] += points * ma_bonus
+        self.stats[StatType.MAGARMOR] += points * ma_bonus
+
+        match stat:
+            case StatType.HPMAX:
+                self.stats[StatType.HP] += points
+            case StatType.MPMAX:
+                self.stats[StatType.MP] += points
+            case StatType.PHYARMORMAX:
+                self.stats[StatType.PHYARMOR] += points
+            case StatType.MAGARMORMAX:
+                self.stats[StatType.MAGARMOR] += points
+
+
+
     def hp_mp_clamp_update(self):
         # max
         if self.stats[StatType.PHYARMOR] >= self.stats[StatType.PHYARMORMAX]:

@@ -10,8 +10,8 @@ def command_equipment(self, line):
         if item == None:
             self.sendLine('Equip what?', sound = Audio.ERROR)
             return
-        
-        
+
+
         if item.equiped:
             self.inventory_unequip(item)
         else:
@@ -25,7 +25,7 @@ def command_equipment(self, line):
             if 'Wearing' in i.name or 'Wielding' in i.name:
                 to_del.append(i)
         for i in to_del:
-            i.on_finished(silent = True) 
+            i.on_finished(silent = True)
         self.finish_turn(force_cooldown = True)
 
         return
@@ -46,13 +46,13 @@ def inventory_equip(self, item, forced = False):
         req_not_met = False
         for stat_name in item.stat_manager.reqs:
             if self.stat_manager.stats[stat_name] < item.stat_manager.reqs[stat_name]:
-                if not forced: 
+                if not forced:
                     self.sendLine(
-                        f'@redYou do not meet the requirements of {item.stat_manager.reqs[stat_name]} {StatType.name[stat_name]}@normal', 
+                        f'@redYou do not meet the requirements of {item.stat_manager.reqs[stat_name]} {StatType.name[stat_name]}@normal',
                         sound = Audio.ERROR
                         )
                 req_not_met = True
-        
+
         if req_not_met and forced == False:
             return
 
@@ -61,23 +61,24 @@ def inventory_equip(self, item, forced = False):
 
         self.slots_manager.slots[item.slot] = item.id
 
-        item.equiped = True 
+        item.equiped = True
         for stat_name in item.stat_manager.stats:
             stat_val = item.stat_manager.stats[stat_name]
+            self.stat_manager.gain_stat_points(stat_name, stat_val)
             #utils.debug_print(stat_name, item.stat_manager.stats[stat_name])
-            if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] += stat_val
-            if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] += stat_val
-            if stat_name == StatType.PHYARMORMAX: self.stat_manager.stats[StatType.PHYARMOR] += stat_val
-            if stat_name == StatType.MAGARMORMAX: self.stat_manager.stats[StatType.MAGARMOR] += stat_val
-            self.stat_manager.stats[stat_name] += stat_val
+            #if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] += stat_val
+            #if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] += stat_val
+            #if stat_name == StatType.PHYARMORMAX: self.stat_manager.stats[StatType.PHYARMOR] += stat_val
+            #if stat_name == StatType.MAGARMORMAX: self.stat_manager.stats[StatType.MAGARMOR] += stat_val
+            #self.stat_manager.stats[stat_name] += stat_val
             #utils.debug_print(self.stat_manager.stats[stat_name])
 
         self.inventory_manager.limit = self.inventory_manager.base_limit + self.stat_manager.stats[StatType.INVSLOTS]
-        
+
         for skill in item.skill_manager.skills:
             self.skill_manager.learn(skill, item.skill_manager.skills[skill])
 
-        if not forced: 
+        if not forced:
             self.sendSound(Audio.ITEM_GET)
             self.simple_broadcast(
                 f'You equip {item.name}',
@@ -89,7 +90,7 @@ def inventory_equip(self, item, forced = False):
         #utils.debug_print(self.slots[item.slot])
 
         # clamp the max mp and hp
-        
+
 
 def inventory_unequip(self, item, silent = False):
     if item.equiped:
@@ -98,20 +99,21 @@ def inventory_unequip(self, item, silent = False):
 
         for stat_name in item.stat_manager.stats:
             stat_val = item.stat_manager.stats[stat_name]
-            if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] -= stat_val
-            if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] -= stat_val
-            if stat_name == StatType.PHYARMORMAX: self.stat_manager.stats[StatType.PHYARMOR] -= stat_val
-            if stat_name == StatType.MAGARMORMAX: self.stat_manager.stats[StatType.MAGARMOR] -= stat_val
-            self.stat_manager.stats[stat_name] -= stat_val
+            self.stat_manager.gain_stat_points(stat_name, -stat_val)
+            #if stat_name == StatType.HPMAX: self.stat_manager.stats[StatType.HP] -= stat_val
+            #if stat_name == StatType.MPMAX: self.stat_manager.stats[StatType.MP] -= stat_val
+            #if stat_name == StatType.PHYARMORMAX: self.stat_manager.stats[StatType.PHYARMOR] -= stat_val
+            #if stat_name == StatType.MAGARMORMAX: self.stat_manager.stats[StatType.MAGARMOR] -= stat_val
+            #self.stat_manager.stats[stat_name] -= stat_val
 
         self.inventory_manager.limit = self.inventory_manager.base_limit + self.stat_manager.stats[StatType.INVSLOTS]
-        
+
         for skill in item.skill_manager.skills:
             self.skill_manager.unlearn(skill, item.skill_manager.skills[skill])
 
         if silent:
             return
-            
+
         self.stat_manager.hp_mp_clamp_update()
         self.sendSound(Audio.ITEM_GET)
         self.simple_broadcast(
