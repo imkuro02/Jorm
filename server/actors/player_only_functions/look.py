@@ -23,7 +23,7 @@ def command_map(self, line, return_gmcp = False):
         EW =                        ' '#f'{Color.MAP_PATH}-'
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
-     
+
         DOOR_M =                      f'{Color.MAP_ROOM}^'
         DOOR_L =                      f'{Color.MAP_ROOM}|'
         DOOR_R =                      f'{Color.MAP_ROOM}|'
@@ -36,12 +36,12 @@ def command_map(self, line, return_gmcp = False):
         #SPECIAL_EXIT =              f'{Color.MAP_NORMAL}?'
         #SPECIAL_EXIT_AND_PLAYER =   f'{Color.MAP_NORMAL}?'
         RECALL_SITE_AND_PLAYER =    f'{Color.MAP_PLAYER}+'
-        
+
         # right
         STAIRS_DOWN =   f'{Color.MAP_NORMAL}>'
         # left
         STAIRS_UP =     f'{Color.MAP_NORMAL}<'
-        
+
     offsets = {
         'north': [ 0  ,  -2 ],
         'west':  [ -2 ,  0 ],
@@ -69,7 +69,7 @@ def command_map(self, line, return_gmcp = False):
     }
 
     t = utils.Table((VIEW_RANGE*2)+1,0)
-    
+
     grid = {}
     start_room = self.protocol.factory.world.rooms[room_id]
     grid[START_LOC] = room_id
@@ -91,10 +91,10 @@ def command_map(self, line, return_gmcp = False):
         y += offsets[_exit.direction][0] + VIEW_RANGE
         _loc = f'{x},{y}'
 
-        
+
         if _loc not in grid:
             grid[_loc] = _exit.to_room_id
-        
+
 
         x += -offsets_path[_exit.direction][1]
         y += -offsets_path[_exit.direction][0]
@@ -106,7 +106,7 @@ def command_map(self, line, return_gmcp = False):
     _grid = {}
     for r in grid:
         _grid[r] = grid[r]
-        
+
     for r in range(0,VIEW_RANGE*1):
         for room_loc in _grid:
             #utils.debug_print(_grid[room_loc])
@@ -114,8 +114,8 @@ def command_map(self, line, return_gmcp = False):
                 continue
 
             room = self.protocol.factory.world.rooms[grid[room_loc]]
-            
-            
+
+
             #if room.doorway:
             #    continue
 
@@ -131,30 +131,30 @@ def command_map(self, line, return_gmcp = False):
                 #    continue
                 #if _exit.item_required != None:
                 #    continue
-                
+
                 # do not duplicate if room leads to one that already is placed
                 #if _exit.to_room_id in grid.values():
                 #    continue
                 x = _x
                 y = _y
-                x += offsets[_exit.direction][1] 
-                y += offsets[_exit.direction][0] 
+                x += offsets[_exit.direction][1]
+                y += offsets[_exit.direction][0]
                 _loc = f'{x},{y}'
 
                 #if _loc not in grid:
                 #    continue
 
                 if not room.doorway: #and room.get_real_id() in self.explored_rooms:
-             
-                
+
+
                     #utils.debug_print(_exit.to_room_id, grid.values())
                     if _exit.to_room_id not in grid.values():
                         if _loc in grid:
                             continue
-                        
-                        grid[_loc] = _exit.to_room_id 
-                                  
-                
+
+                        grid[_loc] = _exit.to_room_id
+
+
                 x += -offsets_path[_exit.direction][1]
                 y += -offsets_path[_exit.direction][0]
                 _loc = f'{x},{y}'
@@ -186,16 +186,16 @@ def command_map(self, line, return_gmcp = False):
             t.add_data('ERR','@red')
             """
             loc = f'{_x},{_y}'
-            
+
             cell = ''
 
             _grid = grid
 
 
             if loc not in grid:
-                
+
                 __x, __y, = map(int, loc.split(','))
-                
+
                 directions = {
                     'w': f'{__x-1},{__y}',
                     'e': f'{__x+1},{__y}',
@@ -237,7 +237,7 @@ def command_map(self, line, return_gmcp = False):
                             walled = True
                             continue
 
-                   
+
                     cell = ['@red','X','999999999']
                     for d in directions.values():
                         if d in grid:
@@ -251,33 +251,33 @@ def command_map(self, line, return_gmcp = False):
                                     cell = [w_col, w_char, w_prio]
 
 
-                    cell = f'{cell[0]}{cell[1]}'              
-                                
-                            
+                    cell = f'{cell[0]}{cell[1]}'
+
+
                     if _y % 2 != 0:
                         cell = cell*ROOM_WIDTH
                     else:
                         cell = cell*PATH_WIDTH
-                    
+
                     if not walled:
                         for _dir in directions:
                             if directions[_dir] not in grid:
                                 t.add_data(cell)
                                 walled = True
                                 break
-                       
-                
+
+
                 if not walled:
                     cell = ' '*PATH_WIDTH
                     t.add_data(cell)
-                    walled = True 
+                    walled = True
                 continue
-            
+
             #if grid[loc] == 'PATH':
             #    cell = ' '+Art.GROUND+' '
             #    t.add_data(cell)
             #    continue
-            
+
 
             if grid[loc] == 'PATH':
                 __x, __y = loc.split(',')
@@ -297,7 +297,7 @@ def command_map(self, line, return_gmcp = False):
                     cell = ' '+Art.NS+' '
                 if _north or _south:
                     cell = ''+(Art.EW*PATH_WIDTH)+''
-                
+
 
                 t.add_data(cell)
                 continue
@@ -314,7 +314,7 @@ def command_map(self, line, return_gmcp = False):
                     quest_not_started = True
                 if important_dialog_dict['quest_turn_in']:
                     quest_turn_in = True
-            
+
             #utils.debug_print(room)
             # left
             cell = ''
@@ -324,11 +324,11 @@ def command_map(self, line, return_gmcp = False):
                 cell += Art.STAIRS_UP
             else:
                 cell += Art.EMPTY
-                
+
             # mid
             if 100 == 10:
                 pass
-            
+
             elif room.can_be_recall_site and loc == START_LOC:
                 cell += Art.RECALL_SITE_AND_PLAYER
             #elif len([ x for x in room.exits if x.direction not in offsets ]) != 0 and loc == START_LOC: #set(offsets.keys()) - set(grid[loc].exits.keys()):
@@ -347,7 +347,7 @@ def command_map(self, line, return_gmcp = False):
                 cell += Art.QUEST # '?'
             else:
                 cell += Art.GROUND
-                
+
 
             # right
             if room.doorway:
@@ -357,13 +357,13 @@ def command_map(self, line, return_gmcp = False):
             else:
                 cell += Art.EMPTY
 
-            
+
 
             t.add_data(cell)
             #self.sendLine(t.get_table()+'\n\n\n-----------\n\n\n')
 
-            
-            
+
+
     # empty space stripper
     '''
     output = t.get_table()
@@ -389,7 +389,7 @@ def command_map(self, line, return_gmcp = False):
             left_strip_len = strip_len
             #utils.debug_print(i[x-10:])
 
-    for i in split_output:            
+    for i in split_output:
         if (i).replace('@normal','').replace(' ','') != '':
             combined_output = combined_output + i[left_strip_len:] + '\n'
     ##############################################################################
@@ -400,14 +400,14 @@ def command_map(self, line, return_gmcp = False):
         #utils.debug_print(first_line_length, f'"{(utils.remove_color(lines[0]))}"')
 
         if first_line_length < MAP_WIDTH:
-            padding_needed = (MAP_WIDTH - first_line_length) 
+            padding_needed = (MAP_WIDTH - first_line_length)
             # Add one space per missing character to **each** line
             import math
-            lines = [(f' ' * math.ceil(padding_needed/2)) + line + (f' ' * math.floor(padding_needed/2)) for line in lines] 
+            lines = [(f' ' * math.ceil(padding_needed/2)) + line + (f' ' * math.floor(padding_needed/2)) for line in lines]
             #lines += str((math.ceil(padding_needed/2))) + ',.' + str((math.floor(padding_needed/2)))
-       
+
         return '\n'.join(lines)
-    
+
     combined_output = t.get_table()#pad_lines_to_be_map_width(t.get_table())
 
     if not return_gmcp:
@@ -425,7 +425,7 @@ def command_scan(self, line):
     for r in nearby_rooms:
         nearby_actors[r] = self.room.world.rooms[nearby_rooms[r]].actors.values()
     if len(nearby_actors) >= 1:
-        
+
         location_translations = {
             'x': {
                 '-1':   'west',
@@ -444,7 +444,7 @@ def command_scan(self, line):
             }
         }
 
-        
+
         for a in nearby_actors:
             x, y, z = a.split(',')
             x = location_translations['x'][str(max(-1, min(1, int(x))))]
@@ -452,7 +452,7 @@ def command_scan(self, line):
             z = location_translations['z'][str(max(-1, min(1, int(z))))]
 
             EMPTY = ''
-            if x == EMPTY and y == EMPTY and z == EMPTY: 
+            if x == EMPTY and y == EMPTY and z == EMPTY:
                 direction_name = f'What the fuck?'
             elif x == EMPTY and y != EMPTY and z != EMPTY:
                 direction_name = f' {y} and {z}'
@@ -468,7 +468,7 @@ def command_scan(self, line):
                 direction_name = f' {y}'
             elif x != EMPTY and y != EMPTY and z != EMPTY:
                 direction_name = f' {y}-{x} and {z}'
-            
+
             for i in nearby_actors[a]:
                 see = see + ''+i.pretty_name() + ' is'
                 if i.status == ActorStatusType.DEAD:
@@ -481,7 +481,7 @@ def command_scan(self, line):
     if see == '':
         self.sendLine('You scan your surroundings but see no one')
         return
-    
+
     self.sendLine(f'You scan your surroundings and see: \n{see[:-1:]}')
 
 def command_look(self, line, return_gmcp = False):
@@ -510,7 +510,7 @@ def command_look(self, line, return_gmcp = False):
             exit_count += 1
             #else:
             #    see = see + f'@red{exit_name}@normal, '
-        
+
         if exit_count == 0:
             see = see + 'You don\'t see any exits\n'
         else:
@@ -518,7 +518,7 @@ def command_look(self, line, return_gmcp = False):
             #see = see + '\n'
 
         #see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
-        
+
         for i in room.actors.values():
             if i == self:
                 pass
@@ -530,12 +530,12 @@ def command_look(self, line, return_gmcp = False):
                     see = see + f' and is fighting'
                 see = see +'\n'
 
-        
 
 
 
-        
-        
+
+
+
 
         if not room.inventory_manager.is_empty():
             see_items = ''
@@ -552,10 +552,10 @@ def command_look(self, line, return_gmcp = False):
 
             if see_items != '':
                see = see + '' + see_items
-        
-        
-        
-        
+
+
+
+
 
         if not return_gmcp:
             self.sendLine(see)
@@ -573,14 +573,16 @@ def command_look(self, line, return_gmcp = False):
         #    sheet = sheet + f'@yellow{important_dialog}@normal'
 
         self.sendLine(f'You are looking at {sheet}')
-        return 
+        return
 
     def look_item(identifier, item):
         output = item.identify(identifier = identifier)
         identifier.sendLine('You look at: ' + output)
         return
 
-    
+    if self.room == None:
+        return
+
     list_of_actors =        [actor.name for actor in self.room.actors.values()]
     list_of_directions =    [] #[_exit.direction for _exit in self.room.exits.values()]
     #list_of_items =        [item.name for item in self.inventory_manager.items.values()] + [item.name for item in self.room.inventory_manager.items.values()]
@@ -593,7 +595,7 @@ def command_look(self, line, return_gmcp = False):
     if line == '':
         see = look_room(self, self.room.id)
         return see
-    
+
     if look_at in list_of_actors:
         actor = self.get_actor(line)
         if actor == None:
@@ -639,27 +641,27 @@ def get_nearby_rooms(self, view_range = 1):
         z = 0
         x += offsets[_exit.direction][0] #+ VIEW_RANGE
         y += offsets[_exit.direction][1] #+ VIEW_RANGE
-        z += offsets[_exit.direction][2] 
+        z += offsets[_exit.direction][2]
 
         _loc = f'{x}{split}{y}{split}{z}'
 
-        
-        
+
+
         if _loc not in grid:
             grid[_loc] = _exit.to_room_id
-        
+
 
 
 
     _grid = {}
     for r in grid:
         _grid[r] = grid[r]
-        
+
     for r in range(0,VIEW_RANGE*1):
         for room_loc in _grid:
 
             room = self.protocol.factory.world.rooms[grid[room_loc]]
-            
+
             if room.doorway:
                 continue
 
@@ -672,11 +674,11 @@ def get_nearby_rooms(self, view_range = 1):
                     continue
                 if _exit.secret:
                     continue
-                
 
-                x = _x + offsets[_exit.direction][0] 
-                y = _y + offsets[_exit.direction][1] 
-                z = _z + offsets[_exit.direction][2] 
+
+                x = _x + offsets[_exit.direction][0]
+                y = _y + offsets[_exit.direction][1]
+                z = _z + offsets[_exit.direction][2]
 
                 # basically, viewrange of 1 will do this
                 #
@@ -686,7 +688,7 @@ def get_nearby_rooms(self, view_range = 1):
                 #        XXX
                 #         X
                 #
-                # so uh dont do that 
+                # so uh dont do that
 
                 if abs(x) > VIEW_RANGE or abs(y) > VIEW_RANGE or abs(y) > VIEW_RANGE:
                     continue
@@ -695,7 +697,7 @@ def get_nearby_rooms(self, view_range = 1):
 
                 if _exit.to_room_id in grid.values():
                     continue
-        
+
 
                 if _loc not in grid:
                     grid[_loc] = _exit.to_room_id
@@ -711,8 +713,8 @@ def get_nearby_rooms(self, view_range = 1):
     return _grid
 
 def new_room_look(self):
-    
-    
+
+
     if self.settings_manager.view_room:
         self.command_look('')
     if self.settings_manager.view_map:
