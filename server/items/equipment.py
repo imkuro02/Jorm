@@ -3,7 +3,7 @@ from configuration.config import ItemType, EquipmentSlotType, StatType, SKILLS, 
 from items.misc import Item
 import utils
 from utils import Table
-import skills.skills 
+import skills.skills
 import random
 import affects.affects as affects
 
@@ -19,12 +19,12 @@ class EquipSkillManager:
             self.skills[skill_id] = amount
         else:
             self.skills[skill_id] += amount
-    
+
     def unlearn(self, skill_id, amount = 1):
         if skill_id not in self.skills:
             utils.debug_print(f'{self.item.name} cant unlearn {skill_id} because it is not learned')
             return
-        
+
         if amount == self.skills[skill_id]:
             del self.skills[skill_id]
             return
@@ -34,10 +34,10 @@ class EquipSkillManager:
 class EquipmentStatManager:
     def __init__(self, item):
         self.item = item
-        
+
         self.stats = {
             StatType.HPMAX: 0,
-            StatType.MPMAX: 0,
+            #StatType.MPMAX: 0,
             StatType.PHYARMORMAX: 0,
             StatType.MAGARMORMAX:0,
             StatType.GRIT: 0,
@@ -46,10 +46,10 @@ class EquipmentStatManager:
             StatType.SOUL: 0,
             StatType.INVSLOTS: 0
             }
-        
+
         self.reqs = {
             StatType.HPMAX: 0,
-            StatType.MPMAX: 0,
+            #StatType.MPMAX: 0,
             StatType.PHYARMORMAX: 0,
             StatType.MAGARMORMAX:0,
             StatType.GRIT: 0,
@@ -59,9 +59,9 @@ class EquipmentStatManager:
             StatType.LVL: 0,
             StatType.INVSLOTS: 0
             }
-        
+
 class EquipmentBonus:
-    def __init__(   self, 
+    def __init__(   self,
                     id = 0,
                     type = 'stat',
                     key = 'marmor',
@@ -73,7 +73,7 @@ class EquipmentBonus:
         self.type =   type
         self.key =    key
         self.val =    val
-        
+
 
 
 
@@ -84,11 +84,11 @@ class EquipmentBonusManager:
 
 
     def check_if_valid(self, bonus):
-       
 
-        if (bonus.type != BonusTypes.REFORGE 
-            and bonus.type != BonusTypes.SKILL_LEVEL 
-            and bonus.type != BonusTypes.STAT 
+
+        if (bonus.type != BonusTypes.REFORGE
+            and bonus.type != BonusTypes.SKILL_LEVEL
+            and bonus.type != BonusTypes.STAT
             and bonus.type != BonusTypes.STAT_REQ):
             utils.debug_print('def check_if_valid(self, bonus) not of type')
             return False
@@ -97,7 +97,7 @@ class EquipmentBonusManager:
             if bonus.key not in SKILLS:
                 utils.debug_print('def check_if_valid(self, bonus) not in skills')
                 return False
-        
+
         if bonus.type == BonusTypes.REFORGE:
             if bonus.key not in EQUIPMENT_REFORGES:
                 utils.debug_print(f'{bonus.key} def check_if_valid(self, bonus) not in ')
@@ -109,7 +109,7 @@ class EquipmentBonusManager:
                 return False
 
         return True
-    
+
     def remove_bonus(self, bonus):
         #utils.debug_print(bonus.__dict__, bonus.type == 'reforge')
         #utils.debug_print(EQUIPMENT_REFORGES[bonus.key])
@@ -122,30 +122,30 @@ class EquipmentBonusManager:
                     _bonus = int(_bonus * self.item.stat_manager.reqs[StatType.LVL])
                     #self.item.stat_manager.reqs[stat] -= _bonus
                     self.item.stat_manager.stats[stat] -= _bonus
-                    
+
             case BonusTypes.SKILL_LEVEL:
                 #if bonus.key in SKILLS:
                 #    self.item.skill_manager.learn(bonus.key, bonus.val)
                 #    return
                 pass
-           
+
             case BonusTypes.STAT:
                 if bonus.key in [
-                    StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
-                    StatType.FLOW, StatType.MIND, StatType.SOUL, 
+                    StatType.HPMAX, StatType.GRIT,
+                    StatType.FLOW, StatType.MIND, StatType.SOUL,
                     StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS
                     ]:
                     self.item.stat_manager.stats[bonus.key] -= bonus.val
-                    
+
             case BonusTypes.STAT_REQ:
                 if bonus.key in [
-                    StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
-                    StatType.FLOW, StatType.MIND, StatType.SOUL, 
-                    StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS, 
+                    StatType.HPMAX, StatType.GRIT,
+                    StatType.FLOW, StatType.MIND, StatType.SOUL,
+                    StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS,
                     StatType.LVL
                     ]:
                     self.item.stat_manager.reqs[bonus.key] -= bonus.val
-                    
+
         #utils.debug_print(bonus.__dict__,'removed')
         del self.bonuses[bonus.id]
 
@@ -155,11 +155,11 @@ class EquipmentBonusManager:
     # then re-add the removed reforges
     # merging is supposed to merge its value to an already existing bonus if possible
     # currently disabled because it didnt fawking work
-    def add_bonus(self, bonus, recursive = True, merging = True): 
-        
+    def add_bonus(self, bonus, recursive = True, merging = True):
 
-        
-            
+
+
+
         if bonus.id == 0:
             id = len(self.bonuses) + 1
         else:
@@ -178,7 +178,7 @@ class EquipmentBonusManager:
                 returned_bonus = self.add_bonus(bonus, merging = False)
                 # delete it but dont actually run the remove bonus thing
                 del self.bonuses[returned_bonus.id]
-        
+
                 return
         '''
 
@@ -189,9 +189,9 @@ class EquipmentBonusManager:
         self.bonuses[id] = bonus
         bonus.id = id
 
-            
+
         #utils.debug_print(bonus.__dict__,'added')
-        
+
         if recursive:
             to_del = []
             for bon in self.bonuses.values():
@@ -201,7 +201,7 @@ class EquipmentBonusManager:
             for bon in to_del:
                 self.remove_bonus(bon)
                 #utils.debug_print('temp removing reforge', bon)
-                
+
         match bonus.type:
             case BonusTypes.REFORGE:
                 if EQUIPMENT_REFORGES[bonus.key]['affliction_to_create'] == 'StatBonusPerItemLevel':
@@ -211,29 +211,29 @@ class EquipmentBonusManager:
                     _bonus = int(_bonus * self.item.stat_manager.reqs[StatType.LVL])
                     #self.item.stat_manager.reqs[stat] += _bonus
                     self.item.stat_manager.stats[stat] += _bonus
-                    
+
 
             case BonusTypes.SKILL_LEVEL:
                 if bonus.key in SKILLS:
                     self.item.skill_manager.learn(bonus.key, bonus.val)
-                    
+
             case BonusTypes.STAT:
                 if bonus.key in [
-                    StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
-                    StatType.FLOW, StatType.MIND, StatType.SOUL, 
+                    StatType.HPMAX, StatType.GRIT,
+                    StatType.FLOW, StatType.MIND, StatType.SOUL,
                     StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS
                     ]:
                     self.item.stat_manager.stats[bonus.key] += bonus.val
-                    
+
             case BonusTypes.STAT_REQ:
                 if bonus.key in [
-                    StatType.HPMAX, StatType.MPMAX, StatType.GRIT, 
-                    StatType.FLOW, StatType.MIND, StatType.SOUL, 
-                    StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS, 
+                    StatType.HPMAX, StatType.GRIT,
+                    StatType.FLOW, StatType.MIND, StatType.SOUL,
+                    StatType.PHYARMOR, StatType.MAGARMOR, StatType.INVSLOTS,
                     StatType.LVL
                     ]:
                     self.item.stat_manager.reqs[bonus.key] += bonus.val
-                    
+
 
 
         if recursive:
@@ -250,7 +250,7 @@ class EquipmentBonusManager:
             x += 1
             tmp[x] = self.bonuses[i]
             tmp[x].id = x
-            
+
         self.bonuses = tmp
         #return bonus
 
@@ -263,13 +263,13 @@ class Equipment(Item):
         self.slot = EquipmentSlotType.TRINKET
         self.equiped = False
 
-        self.rank = 0 
-        
+        self.rank = 0
+
         self.stat_manager = EquipmentStatManager(self)
         self.manager = EquipmentBonusManager(self)
         self.skill_manager = EquipSkillManager(self)
 
-        '''       
+        '''
         boon = EquipmentBonus(type = 'skill_level', key = 'swing', val = 1)
         self.manager.add_bonus(boon)
         boon = EquipmentBonus(type = 'stat', key = 'grit', val = 1)
@@ -277,7 +277,7 @@ class Equipment(Item):
         boon = EquipmentBonus(type = 'stat', key = 'armor', val = 1)
         self.manager.add_bonus(boon)
         '''
-        
+
 
 
 
@@ -288,7 +288,7 @@ class Equipment(Item):
             'stats': self.stat_manager.stats,
             'requirements': self.stat_manager.reqs
         } | super().to_dict()
-        
+
         return my_dict
 
     def set_stat(self, stat, value):
@@ -299,7 +299,7 @@ class Equipment(Item):
         output += f'{Color.TOOLTIP}Equipment slot:{Color.NORMAL} {EquipmentSlotType.name[self.slot]}\n'
         output += f'{Color.TOOLTIP}Requirements to equip:{Color.NORMAL}\n'
         t = Table(2,3)
-        ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.INVSLOTS]
+        ordered_stats = [StatType.LVL, StatType.HPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.INVSLOTS]
         for stat in ordered_stats:
             if self.stat_manager.reqs[stat] == 0:
                 continue
@@ -307,10 +307,10 @@ class Equipment(Item):
             t.add_data(StatType.name[stat])
             t.add_data(self.stat_manager.reqs[stat], col = col)
         output += t.get_table()
-       
+
         output += f'\n{Color.TOOLTIP}Total stats with bonuses:{Color.NORMAL}\n'
         t = Table(2,3)
-        ordered_stats = [StatType.HPMAX, StatType.MPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.INVSLOTS]
+        ordered_stats = [StatType.HPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.INVSLOTS]
         for stat in ordered_stats:
             if self.stat_manager.stats[stat] == 0:
                 continue
@@ -346,17 +346,17 @@ class Equipment(Item):
             eq = None
             if identifier.slots_manager.slots[self.slot] != None and identifier.slots_manager.slots[self.slot] != self.id:
                 eq = identifier.inventory_manager.items[identifier.slots_manager.slots[self.slot]]
-            
+
             t = Table(3,3)
             no_changes = True
             for stat in ordered_stats:
                 difference = self.stat_manager.stats[stat]
                 if eq != None:
                     difference = self.stat_manager.stats[stat] - eq.stat_manager.stats[stat]
-            
+
 
                 new_stat = identifier.stat_manager.stats[stat] + difference
-                
+
                 if new_stat == identifier.stat_manager.stats[stat]:
                     continue
                 elif new_stat < identifier.stat_manager.stats[stat]:
@@ -369,21 +369,21 @@ class Equipment(Item):
                     t.add_data(f'{StatType.name[stat]}')
                     t.add_data(f'+{difference}', col=f'{Color.GOOD}')
                     t.add_data(f'({new_stat})')
-            
+
             if no_changes:
                 t.add_data(f'No changes')
                 t.add_data(f'')
                 t.add_data(f'')
             #output += t.get_table()
-            
+
 
             def construct_id(bonus):
                 return f'{bonus.type}/{bonus.key}'
-            
+
             def construct_dict(bonuses, bonus, positive):
                 if bonus.type != 'skill_level':
                     return bonuses
-                
+
                 if construct_id(bonus) in bonuses:
                     bonuses[construct_id(bonus)]['val'] += bonus.val * (1 if positive else -1)
                 else:
@@ -393,7 +393,7 @@ class Equipment(Item):
                         'val': bonus.val * (1 if positive else -1)
                     }
                 return bonuses
-            
+
             bonuses = {}
             for bonus in self.manager.bonuses.values():
                 bonuses = construct_dict(bonuses, bonus, positive = True)
@@ -408,9 +408,9 @@ class Equipment(Item):
                 new = bonus['val']
                 if bonus['key'] in identifier.skill_manager.skills:
                     val = bonus['val']
-                    curr = identifier.skill_manager.skills[bonus['key']] 
+                    curr = identifier.skill_manager.skills[bonus['key']]
                     new = curr + val
-                
+
                 if new == curr:
                     continue
 
@@ -420,11 +420,11 @@ class Equipment(Item):
                 else:
                     t.add_data(f'+{val}',   f'{Color.GOOD}')
                 t.add_data(f'({new})')
-                
-                
+
+
             output += t.get_table()
         return output.strip('\n')
-     
+
 
 
     def reforge(self, forced_reforge_id = None):
@@ -453,7 +453,7 @@ class Equipment(Item):
 
 
         rolled_reforge = None
-        
+
         if forced_reforge_id == None:
             roll = random.randint(0,_chance)
             # utils.debug_print(roll,_chance)
@@ -485,7 +485,7 @@ class Equipment(Item):
                 f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal',
                 f'@redscript_to_run:{skill["script_to_run"]} is not a valid skill object in skills.py@normal')
             return False
-        
+
         use_perspectives = skill['use_perspectives']
         success = True #random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
         silent_use = True
@@ -493,13 +493,13 @@ class Equipment(Item):
 
 
         _skill_obj = skill_obj(
-            skill_id = skill_id, 
-            script_values = skill['script_values'], 
-            user = self.inventory_manager.owner, 
-            other = self.inventory_manager.owner, 
-            users_skill_level = 0, 
-            use_perspectives = use_perspectives, 
-            success = success, 
+            skill_id = skill_id,
+            script_values = skill['script_values'],
+            user = self.inventory_manager.owner,
+            other = self.inventory_manager.owner,
+            users_skill_level = 0,
+            use_perspectives = use_perspectives,
+            success = success,
             silent_use = silent_use,
             no_cooldown = no_cooldown,
             combat_event = triggered_by_damage_obj.combat_event
@@ -528,14 +528,14 @@ class Equipment(Item):
         if not self.equiped:
             #utils.debug_print(self.name,'not equipped')
             return
-        
+
         reforge_id = self.get_reforge_id()
         if reforge_id == None:
             return
 
         if self.inventory_manager.owner.status == ActorStatusType.DEAD:
             return
-            
+
         reforge_obj = None
         affliction_to_create = f'Reforge{EQUIPMENT_REFORGES[reforge_id]["affliction_to_create"]}'
         try:
@@ -544,15 +544,15 @@ class Equipment(Item):
             reforge_obj = affects.AffectReforge
             err = f'cant set affliction object of {affliction_to_create} on {self} of id {self.premade_id} of unique id {self.id} finish_turn()'
             self.inventory_manager.owner.simple_broadcast(err,err)
-            
-        
+
+
         if reforge_obj:
             reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
             #reforge_name = 'Reforged'
             #reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
-            
+
             slot_name = EquipmentSlotType.name[self.slot]
-            
+
             wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
             #affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
             affliction_name = f'{wear_or_wield} {self.name}'
@@ -568,9 +568,9 @@ class Equipment(Item):
                 turns = 3,
                 source_item = self,
                 reforge_variables = EQUIPMENT_REFORGES[reforge_id]['vars']
-            ) 
-            self.inventory_manager.owner.affect_manager.set_affect_object(aff)    
-            
+            )
+            self.inventory_manager.owner.affect_manager.set_affect_object(aff)
+
 
     # called whenever hp updates in any way
     def take_damage_before_calc(self, damage_obj):
@@ -578,20 +578,15 @@ class Equipment(Item):
 
     def take_damage_after_calc(self, damage_obj):
         return damage_obj
-    
+
     def deal_damage(self, damage_obj):
         return damage_obj
-    
+
     def dealt_damage(self, damage_obj):
         #if self.stack >= 10:
         #    self.inventory_manager.owner.simple_broadcast(f'You are carrying so much of {self.name} it deals extra damage!','')
         return damage_obj
-    
+
     # called when exp is gained
     def gain_exp(self, exp):
         return exp
-
-        
-        
-
-

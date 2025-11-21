@@ -108,18 +108,18 @@ def skill_checks(user, target, skill_id):
 
             error(user, f'You need atleast {hp_cost+1} HP to use {skill_name}')
             return False
-    if 'mp_cost' in skill['script_values']:
+    #if 'mp_cost' in skill['script_values']:
 
         #mp_cost = skill['script_values']['mp_cost'][users_skill_level]
 
-        mp_cost = utils.calculate_skill_mp_cost(actor = user, base_value = skill['script_values']['mp_cost'][users_skill_level])
+    #    mp_cost = utils.calculate_skill_mp_cost(actor = user, base_value = skill['script_values']['mp_cost'][users_skill_level])
 
-        if mp_cost > user.stat_manager.stats[StatType.MP]:
-            error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
-            return False
+    #    if mp_cost > user.stat_manager.stats[StatType.MP]:
+    #        error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
+    #        return False
 
     user.stat_manager.stats[StatType.HP] -= hp_cost
-    user.stat_manager.stats[StatType.MP] -= mp_cost
+    #user.stat_manager.stats[StatType.MP] -= mp_cost
 
     return True
 

@@ -1,14 +1,14 @@
 from configuration.config import DamageType, StatType, ActorStatusType
 from combat.damage_event import Damage
-import utils 
+import utils
 import random
 
 class Affect:
-    def __init__(self, 
-    affect_source_actor, 
-    affect_target_actor, 
-    name, description, 
-    turns, 
+    def __init__(self,
+    affect_source_actor,
+    affect_target_actor,
+    name, description,
+    turns,
     get_prediction_string_append = None, get_prediction_string_clear = False,
     custom_go_away = False
     ):
@@ -16,11 +16,11 @@ class Affect:
         self.affect_source_actor = affect_source_actor
 
         self.affect_manager = self.affect_target_actor.affect_manager
-        
+
         #self.affect_manager = affect_manager
         #self.affect_target_actor = self.affect_manager.actor
-        
-        
+
+
         self.name = name
         self.description = description
         # get prediction string will append this text
@@ -40,7 +40,7 @@ class Affect:
     #def info(self):
     #    return f'{self.name:<15} {self.turns:<3} {self.description}\n'
 
-    # called when applied 
+    # called when applied
     def on_applied(self, silent = False):
         if silent:
             return
@@ -73,10 +73,10 @@ class Affect:
 
     def take_damage_after_calc(self, damage_obj):
         return damage_obj
-    
+
     def deal_damage(self, damage_obj):
         return damage_obj
-    
+
     def dealt_damage(self, damage_obj):
         return damage_obj
 
@@ -87,7 +87,7 @@ class AffectDelayedAction(Affect):
         self.skills_to_use_objects = skills_to_use_objects
         self.get_prediction_string_append = f'will finish in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
         self.get_prediction_string_clear = True
-        
+
     def set_turn(self):
         super().set_turn()
         self.get_prediction_string_append = f'will finish in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
@@ -119,7 +119,7 @@ class AffectStunned(Affect):
         self.affect_target_actor.finish_turn()
 
 class AffectNightmare(Affect):
-    
+
     def set_turn(self):
         super().set_turn()
         self.affect_target_actor.simple_broadcast(
@@ -137,7 +137,7 @@ class AffectNightmare(Affect):
 
     def on_finished(self, silent = False):
         return super().on_finished(silent)
-        
+
 
 class Leech(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, leech_power):
@@ -145,15 +145,15 @@ class Leech(Affect):
         self.leech_power = leech_power
 
     def dealt_damage(self, damage_obj):
-        
+
         if damage_obj.damage_type != DamageType.PHYSICAL:
             return damage_obj
 
-        
+
 
         if damage_obj.damage_value <= 0:
             return damage_obj
-        
+
         damage_value = round(damage_obj.damage_value * self.leech_power)
 
         leech_heal_damage_obj = Damage(
@@ -164,9 +164,9 @@ class Leech(Affect):
             damage_type = DamageType.HEALING,
             combat_event = damage_obj.combat_event
         )
-        
+
         return damage_obj
-    
+
 class AffectThorns(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, damage_reflected_power):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
@@ -178,7 +178,7 @@ class AffectThorns(Affect):
 
         #if damage_obj.damage_value > 0:
         #    return damage_obj
-        
+
         thorns_damage = Damage(
             damage_source_actor = self.affect_source_actor,
             damage_taker_actor = damage_obj.damage_source_actor,
@@ -188,8 +188,8 @@ class AffectThorns(Affect):
             combat_event = damage_obj.combat_event
         )
 
-        
-        
+
+
         return damage_obj
 
 class AffectArmorReduceToZero(Affect):
@@ -205,7 +205,7 @@ class AffectArmorReduceToZero(Affect):
         self.marmor = self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR]
         self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = 0
 
-        
+
         damage_obj = Damage(
             damage_source_actor = self.affect_source_actor,
             damage_taker_actor = self.affect_target_actor,
@@ -229,8 +229,8 @@ class AffectArmorReduceToZero(Affect):
         )
 
         damage_obj.run()
-        
-        
+
+
 
     def on_finished(self, silent=False):
         if self.affect_target_actor.status == ActorStatusType.DEAD:
@@ -262,8 +262,7 @@ class AffectArmorReduceToZero(Affect):
 
         damage_obj.run()
         return super().on_finished(silent)
-        
-
+'''
 class AffectOvercharge(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, bonus = 1):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
@@ -293,11 +292,12 @@ class AffectOvercharge(Affect):
 
         damage_obj.run()
         return super().on_finished(silent)
+'''
 
 class AffectDeflectMagic(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
-    
+
     def take_damage_before_calc(self, damage_obj: Damage):
         if damage_obj.damage_type == DamageType.MAGICAL:
             damage_obj.damage_taker_actor = damage_obj.damage_source_actor
@@ -311,7 +311,7 @@ class AffectEthereal(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, dmg_amp):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
         self.dmg_amp = dmg_amp
-    
+
     def take_damage_before_calc(self, damage_obj: Damage):
         if damage_obj.damage_type == DamageType.PHYSICAL:
             damage_obj.damage_type = DamageType.CANCELLED
@@ -324,7 +324,7 @@ class AffectEthereal(Affect):
             damage_obj.damage_value = int(damage_obj.damage_value * self.dmg_amp)
 
         return damage_obj
-    
+
     def deal_damage(self, damage_obj: Damage):
         if damage_obj.damage_type == DamageType.PHYSICAL:
             damage_obj.damage_type = DamageType.CANCELLED
@@ -334,11 +334,12 @@ class AffectEthereal(Affect):
                     )
         return damage_obj
 
+'''
 class AffectMageArmor(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, reduction):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
         self.reduction = reduction
-    
+
     def take_damage_before_calc(self, damage_obj: 'Damage'):
         match damage_obj.damage_type:
             case DamageType.CANCELLED:
@@ -348,7 +349,7 @@ class AffectMageArmor(Affect):
             case DamageType.PURE:
                 return damage_obj
             case _:
-            
+
                 if damage_obj.damage_value < 0:
                     return damage_obj
 
@@ -384,12 +385,13 @@ class AffectMageArmor(Affect):
                 return damage_obj
 
         return damage_obj
-    
+'''
+
 class AffectEnrage(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, bonus):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
         self._stats = self.affect_target_actor.stat_manager.stats
-        
+
         self.bonus = bonus
 
         self.bonus_grit = 0 #int(stats[StatType.GRIT] * bonus)
@@ -421,7 +423,7 @@ class AffectEnrage(Affect):
         #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] -= self.bonus_armor
         #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] -= self.bonus_marmor
         return super().on_finished(silent)
-    
+
 class AffectAdrenaline(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, extra_hp):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
@@ -477,10 +479,10 @@ class AffectStealth(Affect):
         #return damage_obj
         if utils.get_object_parent(damage_obj.damage_source_action) != 'Skill':
             return damage_obj
-        
+
         if damage_obj.damage_source_action.skill_id != 'stab':
             return damage_obj
-        
+
         damage_obj.damage_value = int(damage_obj.damage_value * self.bonus)
         return damage_obj
 
@@ -503,7 +505,7 @@ class AffectBleed(Affect):
         if affect_to_merge.turns > self.turns:
             if self.damage < affect_to_merge.damage:
                 self.damage = affect_to_merge.damage
-            
+
             self.turns = affect_to_merge.turns
         #if affect_to_merge.damage < self.damage:
         #    return False
@@ -547,10 +549,10 @@ class AffectDOT(Affect):
 # XD Reforges
 
 class AffectReforge(Affect):
-    def __init__(self, 
-            affect_source_actor, 
-            affect_target_actor, 
-            name, description, 
+    def __init__(self,
+            affect_source_actor,
+            affect_target_actor,
+            name, description,
             turns,
             source_item = None,
             reforge_variables = None
@@ -576,8 +578,8 @@ class AffectReforge(Affect):
         if affect_to_merge.turns > self.turns:
             self.turns = affect_to_merge.turns
         return True
-    
-    # called when applied 
+
+    # called when applied
     def on_applied(self):
         affects = self.affect_target_actor.affect_manager.affects
 
@@ -615,22 +617,22 @@ class AffectReforge(Affect):
 
     def take_damage_after_calc(self, damage_obj):
         return damage_obj
-    
+
     def deal_damage(self, damage_obj):
         return damage_obj
-    
+
     def dealt_damage(self, damage_obj):
         return damage_obj
-    
+
 class ReforgeTest(AffectReforge):
     def finish_turn(self):
         pass
 
 
 class ReforgeStatBonusPerItemLevel(AffectReforge):
-    def __init__(self, 
-            affect_source_actor, 
-            affect_target_actor, 
+    def __init__(self,
+            affect_source_actor,
+            affect_target_actor,
             name, description, turns,
             source_item = None,
             reforge_variables = None
@@ -643,14 +645,14 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
         #self.source_item.stat_manager.stats[self.stat] += 1 * self.bonus
 
 
-        
+
         #self.bonus = int(self.bonus * self.source_item.stat_manager.reqs[StatType.LVL])
-        
+
 
         # 2 - 5 = -3
         #if self.affect_target_actor.stat_manager.stats[self.stat] - self.bonus <= 0:
         #    self.bonus = self.bonus - self.affect_target_actor.stat_manager.stats[self.stat]
-        
+
     def on_applied(self):
         super().on_applied()
         #self.affect_target_actor.stat_manager.stats[self.stat] += self.bonus
@@ -668,7 +670,7 @@ class ReforgePlusDamageTypeMinusDamageTypes(AffectReforge):
             damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_c']))
         #utils.debug_print(damage_obj.damage_value)
         return damage_obj
-    
+
 class ReforgeConvertDamageType(AffectReforge):
     def deal_damage(self, damage_obj):
         if damage_obj.damage_type == self.reforge_variables['var_a']:
@@ -686,20 +688,20 @@ class ReforgeSkillDamageBonus(AffectReforge):
 
 # this can make indirect healing like leech heal you for less...
 class ReforgeRandomTargetBonus(AffectReforge):
-    def __init__(self, 
-            affect_source_actor, 
-            affect_target_actor, 
+    def __init__(self,
+            affect_source_actor,
+            affect_target_actor,
             name, description, turns,
             source_item = None,
             reforge_variables = None
         ):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
         self.target = None
-    
+
     def set_turn(self):
         super().set_turn()
         if self.affect_target_actor.status != ActorStatusType.FIGHTING:
-            return 
+            return
         self.target = random.choice(list(self.affect_target_actor.room.combat.participants.values()))
         if self.target == self.affect_target_actor:
             self.affect_target_actor.sendLine(f'You are your own target')
@@ -713,13 +715,13 @@ class ReforgeRandomTargetBonus(AffectReforge):
             damage_obj.damage_value = int(damage_obj.damage_value * float(self.reforge_variables['var_b']))
         return damage_obj
 
-''' 
+'''
 # not fully working
 # enemies that have spent their round do not count as targetting you
 class ReforgePureDamageBonusToNonTargettingEnemies(AffectReforge):
-    def __init__(self, 
-            affect_source_actor, 
-            affect_target_actor, 
+    def __init__(self,
+            affect_source_actor,
+            affect_target_actor,
             name, description, turns,
             source_item = None,
             reforge_variables = None

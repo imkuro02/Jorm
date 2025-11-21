@@ -7,6 +7,7 @@ versions:
     - Auto battler removed, and fight no longer auto plays skills
     - Two new quests from "The Child" by the western town exit
     - Quests can have unknown objectives
+    - Mana is removed, no skills consume mana
   '141125':
     id: '141125'
     title: Skills

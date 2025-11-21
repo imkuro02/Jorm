@@ -140,7 +140,7 @@ class Npc(Actor):
         if stats != None:
             self.stat_manager.stats = {**self.stat_manager.stats, **stats}
             self.stat_manager.stats[StatType.HPMAX] = self.stat_manager.stats[StatType.HP]
-            self.stat_manager.stats[StatType.MPMAX] = self.stat_manager.stats[StatType.MP]
+            #self.stat_manager.stats[StatType.MPMAX] = self.stat_manager.stats[StatType.MP]
             self.stat_manager.stats[StatType.PHYARMORMAX] = self.stat_manager.stats[StatType.PHYARMOR]
             self.stat_manager.stats[StatType.MAGARMORMAX] = self.stat_manager.stats[StatType.MAGARMOR]
 

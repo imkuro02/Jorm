@@ -9,7 +9,7 @@ class Database:
         self.cursor = self.conn.cursor()
 
         # Create the users table
-        self.cursor.execute('''          
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS accounts (
             unique_id TEXT PRIMARY KEY,
             username TEXT NOT NULL,
@@ -17,13 +17,13 @@ class Database:
         )''')
 
         # Create admins table
-        self.cursor.execute('''          
+        self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS admins (
                 actor_id TEXT,
                 admin_level INT
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS actors (
             unique_id TEXT UNIQUE NOT NULL,
             actor_id TEXT PRIMARY KEY NOT NULL,
@@ -35,7 +35,7 @@ class Database:
             FOREIGN KEY(unique_id) REFERENCES users(unique_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS stats (
             actor_id TEXT PRIMARY KEY,
             hp_max INT NOT NULL,
@@ -56,7 +56,7 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS inventory (
             actor_id TEXT NOT NULL,
             premade_id TEXT NOT NULL,
@@ -66,14 +66,14 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS equipment (
             actor_id TEXT NOT NULL,
             item_id TEXT NOT NULL,
             FOREIGN KEY(item_id) REFERENCES inventory(item_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS equipment_bonuses (
             actor_id TEXT NOT NULL,
             item_id TEXT NOT NULL,
@@ -84,7 +84,7 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS skills (
             actor_id TEXT NOT NULL,
             skill_id TEXT NOT NULL,
@@ -92,7 +92,7 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES inventory(actor_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS quests (
             actor_id TEXT NOT NULL,
             quest_id TEXT NOT NULL,
@@ -104,7 +104,7 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS settings_aliases (
             actor_id TEXT NOT NULL,
             key TEXT NOT NULL,
@@ -112,7 +112,7 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS settings (
             actor_id TEXT PRIMARY KEY,
             gmcp BOOL NOT NULL,
@@ -122,14 +122,14 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS friend (
             actor_id TEXT NOT NULL,
             friend_id TEXT NOT NULL,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
-        self.cursor.execute(''' 
+        self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS explored_rooms (
             actor_id TEXT NOT NULL,
             room_id TEXT NOT NULL,
@@ -143,19 +143,19 @@ class Database:
     def find_account_from_username(self, username):
         self.cursor.execute(
             '''
-                SELECT unique_id, username, password 
+                SELECT unique_id, username, password
                 FROM accounts WHERE username = ?
             ''', (username,))
 
         account = self.cursor.fetchone()
-        
-        
+
+
         return account
 
     def find_actor_name_from_actor_id(self, _id):
         self.cursor.execute(
             '''
-                SELECT actor_id, actor_name 
+                SELECT actor_id, actor_name
                 FROM actors WHERE actor_id = ?
             ''', (_id,))
 
@@ -165,7 +165,7 @@ class Database:
     def find_actor_id_from_actor_name(self, _username):
         self.cursor.execute(
             '''
-                SELECT actor_id, actor_name 
+                SELECT actor_id, actor_name
                 FROM actors WHERE actor_name = ?
             ''', (_username,))
 
@@ -175,10 +175,10 @@ class Database:
     def find_all_accounts(self):
         self.cursor.execute(
             '''
-                SELECT unique_id, username, password 
-                FROM accounts 
+                SELECT unique_id, username, password
+                FROM accounts
             ''')
-        
+
         accounts = self.cursor.fetchall()
 
         actor_objs = []
@@ -190,7 +190,7 @@ class Database:
             # 'quests': {'tutorial_1': {'Get a corpse': 0, 'turned_in': 1}
             if actor == None:
                 continue
-            
+
             # Create actor_obj and append to the list
             actor_obj = {
                 'name': acc[1],  # Assuming acc[1] is the account's name
@@ -198,10 +198,10 @@ class Database:
                 'lvl': actor['stats']['lvl'],  # Extract level from actor stats
                 'date_of_creation': actor['meta_data']['date_of_creation'],
                 'date_of_last_login': actor['meta_data']['date_of_last_login'],
-                'time_in_game': actor['meta_data']['time_in_game'], 
+                'time_in_game': actor['meta_data']['time_in_game'],
                 #'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in'] == 1])
                 'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in']['count'] == 1 and q != 'daily_quest'] ),
-                'explored_rooms': len([q for q in actor['explored_rooms']])  
+                'explored_rooms': len([q for q in actor['explored_rooms']])
             }
             #utils.debug_print(actor['quests'], actor['quests'].values())
             actor_objs.append(actor_obj)
@@ -214,12 +214,12 @@ class Database:
         #for actor in sorted_actor_objs:
         #    utils.debug_print(actor)
         return sorted_actor_objs
-        
+
     def create_new_account(self, unique_id, username, password):
         self.cursor.execute('''
             INSERT INTO accounts (unique_id, username, password)
             VALUES (?, ?, ?)
-            ON CONFLICT(unique_id) DO UPDATE SET 
+            ON CONFLICT(unique_id) DO UPDATE SET
                 username = excluded.username,
                 password = excluded.password
         ''', (unique_id, username, password))
@@ -227,7 +227,7 @@ class Database:
 
     def write_actor(self, actor):
         actor_id = actor.id
-        
+
         my_dict = {}
         my_dict['unique_id'] = actor.protocol.id
         my_dict['actor_id'] = actor_id
@@ -252,7 +252,7 @@ class Database:
                 actor_date_of_last_login = excluded.actor_date_of_last_login,
                 actor_time_in_game = excluded.actor_time_in_game
         ''', my_dict)
-        
+
         self.cursor.execute('''
             DELETE FROM equipment WHERE actor_id = ?
         ''', (actor_id,))
@@ -263,7 +263,7 @@ class Database:
         for item_id in actor.slots_manager.slots.values():
             my_dict['item_id'] = item_id
             if item_id != None:
-                
+
                 self.cursor.execute('''
                     INSERT INTO equipment (
                         actor_id, item_id
@@ -271,7 +271,7 @@ class Database:
                         :actor_id, :item_id
                     )
                     ''', my_dict)
-                
+
         self.cursor.execute('''
             DELETE FROM skills WHERE actor_id = ?
         ''', (actor_id,))
@@ -285,22 +285,24 @@ class Database:
         my_dict = {}
         my_dict = actor.stat_manager.stats
         my_dict['actor_id'] = actor_id
+        #my_dict['mp_max'] = 0
+        #my_dict['mp'] = 0
 
         self.cursor.execute('''
             INSERT INTO stats (
-                actor_id, hp_max, mp_max, hp, mp,
+                actor_id, hp_max, hp,
                 phy_armor, mag_armor, phy_armor_max, mag_armor_max, grit, flow, mind, soul,
                 exp, lvl, pp
             ) VALUES (
-                :actor_id, :hp_max, :mp_max, :hp, :mp,
+                :actor_id, :hp_max, :hp,
                 :phy_armor, :mag_armor, :phy_armor_max, :mag_armor_max, :grit, :flow, :mind, :soul,
                 :exp, :lvl, :pp
             )
             ON CONFLICT(actor_id) DO UPDATE SET
                 hp_max = excluded.hp_max,
-                mp_max = excluded.mp_max,
+
                 hp = excluded.hp,
-                mp = excluded.mp,
+
                 phy_armor = excluded.phy_armor,
                 mag_armor = excluded.mag_armor,
                 phy_armor_max = excluded.phy_armor_max,
@@ -314,7 +316,7 @@ class Database:
                 pp = excluded.pp
         ''', my_dict)
 
-        
+
 
         my_dict = {}
         my_dict['actor_id'] = actor_id
@@ -322,7 +324,7 @@ class Database:
         self.cursor.execute('''
             DELETE FROM inventory WHERE actor_id = ?
         ''', (actor_id,))
-        
+
         for item in actor.inventory_manager.items.values():
             my_dict['item_id'] = item.id
             my_dict['item_keep'] = item.keep
@@ -383,19 +385,19 @@ class Database:
                         ''', my_dict)
 
 
-                
+
         for eq_id in unequiped:
             actor.inventory_equip(actor.inventory_manager.items[eq_id], forced = True)
-            
+
         my_dict = {}
         my_dict['actor_id'] = actor_id
 
         self.cursor.execute('''
             DELETE FROM quests WHERE actor_id = ?
         ''', (actor_id,))
-        
+
         for quest in actor.quest_manager.quests.values():
-            #if quest.id == 'daily_quest': 
+            #if quest.id == 'daily_quest':
             #    continue
 
             for objective in quest.objectives.values():
@@ -420,7 +422,7 @@ class Database:
         self.cursor.execute('''
             DELETE FROM settings_aliases WHERE actor_id = ?
         ''', (actor_id,))
-        
+
         for key in actor.settings_manager.aliases:
             value = actor.settings_manager.aliases[key]
             my_dict['key'] = key
@@ -452,7 +454,7 @@ class Database:
             )
         ''', my_dict)
 
-        #self.cursor.execute(''' 
+        #self.cursor.execute('''
         #CREATE TABLE IF NOT EXISTS friend (
         #    actor_id TEXT NOT NULL,
         #    friend_id TEXT NOT NULL,
@@ -494,7 +496,7 @@ class Database:
                     :actor_id, :room_id
                 )
             ''', my_dict)
-                
+
         self.write_admins(actor)
         self.conn.commit()
 
@@ -593,7 +595,7 @@ class Database:
         self.cursor.execute('''
             SELECT actor_date_of_creation, actor_date_of_last_login, actor_time_in_game FROM actors WHERE actor_id = ?
         ''', (actor_id,))
-        
+
         dates = self.cursor.fetchone()
 
         my_dict['meta_data'] = {
@@ -604,25 +606,25 @@ class Database:
 
         my_dict['stats'] = {
             'hp_max': stats[1],
-            'mp_max': stats[2],
-            'hp': stats[3],
-            'mp': stats[4],
-            'grit':stats[5],
-            'flow':stats[6],
-            'mind': stats[7],
-            'soul': stats[8],
-            'phy_armor': stats[9],
-            'mag_armor': stats[10],
-            'phy_armor_max': stats[11],
-            'mag_armor_max': stats[12],
-            'exp': stats[13],
-            'lvl': stats[14],
-            'pp': stats[15],
+            #'mp_max': stats[2],
+            'hp': stats[2],
+            #'mp': stats[4],
+            'grit':stats[3],
+            'flow':stats[4],
+            'mind': stats[5],
+            'soul': stats[6],
+            'phy_armor': stats[7],
+            'mag_armor': stats[8],
+            'phy_armor_max': stats[9],
+            'mag_armor_max': stats[10],
+            'exp': stats[11],
+            'lvl': stats[12],
+            'pp': stats[13],
         }
 
         my_dict['inventory'] = {}
         for item in inventory:
-            my_dict['inventory'][item[2]] = {        
+            my_dict['inventory'][item[2]] = {
                 'item_id': item[2],
                 'item_keep': item[3],
                 'premade_id': item[1],
@@ -645,20 +647,20 @@ class Database:
             else:
                 my_dict['equipment_bonuses'][bonus[1]] = []
                 my_dict['equipment_bonuses'][bonus[1]].append(boon_dict)
-                
+
 
         my_dict['skills'] = {}
         for skill in skills:
             my_dict['skills'][skill[1]] = skill[2]
 
         my_dict['quests'] = {}
-        for quest in quests:            
+        for quest in quests:
             if quest[1] in my_dict['quests']:
                 my_dict['quests'][quest[1]] = my_dict['quests'][quest[1]] | {quest[2]: {'type': quest[3], 'req_id': quest[4], 'count': quest[5], 'goal': quest[6]}}
             else:
                 my_dict['quests'][quest[1]] = {quest[2]: {'type': quest[3], 'req_id': quest[4], 'count': quest[5], 'goal': quest[6]}}
 
-        
+
         my_dict['settings_aliases'] = {}
         for alias in settings_aliases:
             #utils.debug_print(alias)
@@ -673,7 +675,7 @@ class Database:
                 'view_map': settings[3],
                 'prompt': settings[4]
             }
-       
+
         #utils.debug_print(my_dict['settings_aliases'])
 
         my_dict['settings'] = {}
@@ -685,7 +687,7 @@ class Database:
                 'view_map': settings[3],
                 'prompt': settings[4]
             }
-       
+
         #utils.debug_print(my_dict['settings_aliases'])
         my_dict['friends'] = []
         if friends != None:
@@ -701,10 +703,10 @@ class Database:
                 #utils.debug_print('loading friend,',friend)
                 my_dict['explored_rooms'].append(explored_room)
         #utils.debug_print(my_dict['friends'])
-        
-        
+
+
         return my_dict
-    
+
     # write down admin on save
     # if your admin level is 0 dont need to write it
     def write_admins(self, actor):
@@ -733,18 +735,18 @@ class Database:
 
     def delete(self, username):
         self.cursor.execute('''
-            SELECT name 
-            FROM sqlite_master 
+            SELECT name
+            FROM sqlite_master
             WHERE type = 'table'
             AND name NOT LIKE 'sqlite_%'
             AND sql LIKE '%actor_id%';
         ''', ())
 
         tables_actors = self.cursor.fetchall()
-        
+
         self.cursor.execute('''
-            SELECT name 
-            FROM sqlite_master 
+            SELECT name
+            FROM sqlite_master
             WHERE type = 'table'
             AND name NOT LIKE 'sqlite_%'
             AND sql LIKE '%unique_id%';
@@ -757,14 +759,14 @@ class Database:
             FROM actors
             WHERE actor_name = ?
             ''',(username,))
-        
+
         acc = self.cursor.fetchone()
         if acc == None:
             utils.debug_print('cant remove this pogchamp')
             return
         unique_id = acc[0]
         actor_id = acc[1]
-        
+
         return
 
         for i in tables_actors:
@@ -778,7 +780,7 @@ class Database:
             ''', (unique_id,))
 
 
-      
+
     def close(self):
         # Close the database connection
         self.conn.close()

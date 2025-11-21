@@ -22,8 +22,8 @@ class ActorStatManager:
         self.stats = {
             StatType.HPMAX:     30,
             StatType.HP:        30,
-            StatType.MPMAX:     0,
-            StatType.MP:        0,
+            #StatType.MPMAX:     0,
+            #StatType.MP:        0,
             StatType.PHYARMOR:     0,
             StatType.PHYARMORMAX:  0,
             StatType.MAGARMOR:    0,
@@ -49,28 +49,28 @@ class ActorStatManager:
         match stat:
             case StatType.GRIT:
                 stat = StatType.GRIT
-                hp_bonus = 9
-                mp_bonus = 3
+                hp_bonus = 20
+                mp_bonus = 0
                 pa_bonus = 0
                 ma_bonus = 0
             case StatType.FLOW:
                 stat = StatType.FLOW
-                hp_bonus = 8
-                mp_bonus = 4
-                pa_bonus = 0
-                ma_bonus = 0
+                hp_bonus = 10
+                mp_bonus = 0
+                pa_bonus = 5
+                ma_bonus = 5
             case StatType.MIND:
                 stat = StatType.MIND
-                hp_bonus = 4
-                mp_bonus = 8
-                pa_bonus = 0
-                ma_bonus = 0
+                hp_bonus = 5
+                mp_bonus = 0
+                pa_bonus = 5
+                ma_bonus = 10
             case StatType.SOUL:
                 stat = StatType.SOUL
-                hp_bonus = 6
-                mp_bonus = 6
-                pa_bonus = 0
-                ma_bonus = 0
+                hp_bonus = 5
+                mp_bonus = 0
+                pa_bonus = 10
+                ma_bonus = 5
             case _:
                 hp_bonus = 0
                 mp_bonus = 0
@@ -80,8 +80,8 @@ class ActorStatManager:
         self.stats[stat] += points
         self.stats[StatType.HPMAX] += points * hp_bonus
         self.stats[StatType.HP] += points * hp_bonus
-        self.stats[StatType.MPMAX] += points * mp_bonus
-        self.stats[StatType.MP] += points * mp_bonus
+        #self.stats[StatType.MPMAX] += points * mp_bonus
+        #self.stats[StatType.MP] += points * mp_bonus
         self.stats[StatType.PHYARMORMAX] += points * pa_bonus
         self.stats[StatType.PHYARMOR] += points * pa_bonus
         self.stats[StatType.MAGARMORMAX] += points * ma_bonus
@@ -90,8 +90,8 @@ class ActorStatManager:
         match stat:
             case StatType.HPMAX:
                 self.stats[StatType.HP] += points
-            case StatType.MPMAX:
-                self.stats[StatType.MP] += points
+            #case StatType.MPMAX:
+            #    self.stats[StatType.MP] += points
             case StatType.PHYARMORMAX:
                 self.stats[StatType.PHYARMOR] += points
             case StatType.MAGARMORMAX:
@@ -118,15 +118,15 @@ class ActorStatManager:
         if self.stats[StatType.HP] >= self.stats[StatType.HPMAX]:
             self.stats[StatType.HP] = self.stats[StatType.HPMAX]
 
-        if self.stats[StatType.MP] >= self.stats[StatType.MPMAX]:
-            self.stats[StatType.MP] = self.stats[StatType.MPMAX]
+        #if self.stats[StatType.MP] >= self.stats[StatType.MPMAX]:
+        #    self.stats[StatType.MP] = self.stats[StatType.MPMAX]
 
         # min
         if self.stats[StatType.HP] <= 0:
             self.stats[StatType.HP] = 0
 
-        if self.stats[StatType.MP] <= 0:
-            self.stats[StatType.MP] = 0
+        #if self.stats[StatType.MP] <= 0:
+        #    self.stats[StatType.MP] = 0
 
         # death
         if self.stats[StatType.HP] <= 0:
@@ -279,8 +279,8 @@ class Actor:
             '#HP#':             str(self.stat_manager.stats[StatType.HP]).rjust(justing, just_space),
             '#HPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).rjust(justing, just_space),
 
-            '#MP#':             str(self.stat_manager.stats[StatType.MP]).rjust(justing, just_space),
-            '#MPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).rjust(justing, just_space),
+            #'#MP#':             str(self.stat_manager.stats[StatType.MP]).rjust(justing, just_space),
+            #'#MPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).rjust(justing, just_space),
 
             '#PHYARM#':         str(self.stat_manager.stats[StatType.PHYARMOR]).rjust(justing, just_space),
             '#PHYARMMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).rjust(justing, just_space),
@@ -293,15 +293,15 @@ class Actor:
 
             # int((cur_value / max_value) * 100)
             '#HP%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing, just_space),
-            '#MP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).rjust(justing, just_space),
+            #'#MP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).rjust(justing, just_space),
             '#PHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing, just_space),
             '#MAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing, just_space),
 
             '#LHP#':             str(self.stat_manager.stats[StatType.HP]).ljust(justing, just_space),
             '#LHPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).ljust(justing, just_space),
 
-            '#LMP#':             str(self.stat_manager.stats[StatType.MP]).ljust(justing, just_space),
-            '#LMPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).ljust(justing, just_space),
+            #'#LMP#':             str(self.stat_manager.stats[StatType.MP]).ljust(justing, just_space),
+            #'#LMPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).ljust(justing, just_space),
 
             '#LPHYARM#':         str(self.stat_manager.stats[StatType.PHYARMOR]).ljust(justing, just_space),
             '#LPHYARMMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).ljust(justing, just_space),
@@ -311,7 +311,7 @@ class Actor:
 
             # int((cur_value / max_value) * 100)
             '#LHP%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).ljust(justing, just_space),
-            '#LMP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).ljust(justing, just_space),
+            #'#LMP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).ljust(justing, just_space),
             '#LPHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing, just_space),
             '#LMAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing, just_space),
 
@@ -339,8 +339,8 @@ class Actor:
 
         hp =    self.stat_manager.stats[StatType.HP]
         mhp =   self.stat_manager.stats[StatType.HPMAX]
-        mp =    self.stat_manager.stats[StatType.MP]
-        mmp =   self.stat_manager.stats[StatType.MPMAX]
+        #mp =    self.stat_manager.stats[StatType.MP]
+        #mmp =   self.stat_manager.stats[StatType.MPMAX]
         #xp =    self.stat_manager.stats[StatType.EXP]
         #mxp =   self.stat_manager.stats[StatType.MPMAX]
         #return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
@@ -437,7 +437,7 @@ class Actor:
 
         if not self.dont_join_fights:
             t = utils.Table(4,1)
-            _piss = [StatType.HP, StatType.MP, StatType.PHYARMOR, StatType.MAGARMOR, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
+            _piss = [StatType.HP, StatType.PHYARMOR, StatType.MAGARMOR, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
             for _shit in _piss:
                 t.add_data(StatType.name[_shit]+':')
                 if _shit+'_max' in StatType.name:
@@ -504,7 +504,7 @@ class Actor:
         #self.stat_manager.stats[StatType.THREAT] = self.get_base_threat()
         self.stat_manager.stats[StatType.THREAT] = 0
 
-    def heal(self, heal_hp = True, heal_mp = True, heal_armor = True, heal_marmor = True, value = 1, silent = True):
+    def heal(self, heal_hp = True, heal_armor = True, heal_marmor = True, value = 1, silent = True):
 
         if heal_hp:
             damage_obj = Damage(
@@ -519,19 +519,19 @@ class Actor:
                 )
             damage_obj.run()
 
-        if heal_mp:
-            damage_obj = Damage(
-                damage_taker_actor = self,
-                damage_source_actor = self,
-                damage_source_action = self,
-                damage_value = value,
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.MP,
-                add_threat = False,
-                silent = silent,
-                dont_proc = True
-                )
-            damage_obj.run()
+        #if heal_mp:
+        #    damage_obj = Damage(
+        #        damage_taker_actor = self,
+        #        damage_source_actor = self,
+        #        damage_source_action = self,
+        #        damage_value = value,
+        #        damage_type = DamageType.HEALING,
+        #        damage_to_stat = StatType.MP,
+        #        add_threat = False,
+        #        silent = silent,
+        #        dont_proc = True
+        #        )
+        #    damage_obj.run()
 
         if heal_armor:
             damage_obj = Damage(

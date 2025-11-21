@@ -16,12 +16,12 @@ class BonusTypes:
 
 class Color:
     NORMAL =                '@normal'
-    BACK =                  '@back' 
-    ERROR =                 '@bgred'  
+    BACK =                  '@back'
+    ERROR =                 '@bgred'
 
     GOOD =                  '@bgreen'
     BAD =                   '@bpurple'
-    
+
     IMPORTANT =             '@yellow'
     TOOLTIP =               '@tip'
     DESCRIPTION =           '@cyan'
@@ -70,7 +70,7 @@ class Color:
     #STAT_PRACTICE_POINTS =  NORMAL
     #STAT_BAG_SPACE =        NORMAL
 
-    
+
 class MsgType:
     SAY = 'say'
     SHOUT = 'shout'
@@ -79,7 +79,7 @@ class MsgType:
     ALL = 'all'
     DEBUG = 'debug'
     GOSSIP = 'gossip'
-    
+
 class Audio:
     PLAYER_DEATH = 'die1.wav'
     ENEMY_DEATH = 'die.wav'
@@ -114,7 +114,7 @@ SkillScriptValuesToNames = {
 }
 
 
-    
+
 class ItemType:
     MISC = 'misc'
     EQUIPMENT = 'equipment'
@@ -191,9 +191,9 @@ class EquipmentSlotType:
 
 class StatType:
     HPMAX =     'hp_max'
-    MPMAX =     'mp_max'
+    #MPMAX =     'mp_max'
     HP =        'hp'
-    MP =        'mp'
+    #MP =        'mp'
     GRIT =      'grit'
     FLOW =      'flow'
     MIND =      'mind'
@@ -206,17 +206,17 @@ class StatType:
     LVL =       'lvl'
     PP =        'pp'
     INVSLOTS = 'inv_slots'
-    
+
 
     # not saved in db
     THREAT =    'threat'
     INITIATIVE = 'initiative'
-    
+
     name = {
         HPMAX:  'Max Health',
-        MPMAX:  'Max Magicka',
+        #MPMAX:  'Max Magicka',
         HP:     'Health',
-        MP:     'Magicka',
+        #MP:     'Magicka',
         GRIT:   'Grit',
         FLOW:   'Flow',
         MIND:   'Mind',
@@ -240,7 +240,7 @@ PATCH_NOTES = {}
 PATCH_NOTES_PATH = 'configuration/patch_notes.yaml'
 with open(PATCH_NOTES_PATH, 'r') as file:
     PATCH_NOTES = yaml.safe_load(file)
-    
+
 #data = rfe.load()
 ITEMS = {}
 ENEMIES = {}
@@ -273,7 +273,7 @@ def load_lore():
     for i in SKILLS:
         LORE['skills'][SKILLS[i]['name']]  = SKILLS[i]
 
-    return LORE 
+    return LORE
 
 def load():
     global QUESTS
@@ -301,7 +301,7 @@ def load():
                 HELPFILES[i] = ALL_HELP[i]
 
     QUESTS_DIRECTORY = 'configuration/quests/'
-    
+
     for root, dirs, files in os.walk(QUESTS_DIRECTORY):
         for filename in files:
             if filename.endswith('.yaml'):
@@ -333,8 +333,3 @@ def load():
     LORE = load_lore()
 
     utils.debug_print('reloaded')
-
-
-
-
-

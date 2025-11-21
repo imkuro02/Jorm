@@ -363,10 +363,10 @@ def command_skills(self, line):
                             if val_nam == 'hp_cost':
                                 val = utils.calculate_skill_hp_cost(actor = self, base_value = skill['script_values']['mp_cost'][index])
                             pass
-                        if isinstance(val, int):
-                            if val_nam == 'mp_cost':
-                                val = utils.calculate_skill_mp_cost(actor = self, base_value = skill['script_values']['mp_cost'][index])
-                            pass
+                        #if isinstance(val, int):
+                        #    if val_nam == 'mp_cost':
+                        #        val = utils.calculate_skill_mp_cost(actor = self, base_value = skill['script_values']['mp_cost'][index])
+                        #    pass
                         if isinstance(val, float):
                             val = int(val*100)
                             val = str(val)+'%'

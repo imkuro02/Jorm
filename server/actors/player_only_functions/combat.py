@@ -216,7 +216,7 @@ def rest_here(self, line):
         )
 
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
-    self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
+    #self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects(forced = False)
@@ -252,7 +252,7 @@ def rest_home(self, line):
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL
         self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
-        self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
+        #self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
         self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
         self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
 
@@ -306,7 +306,7 @@ def rest_home(self, line):
 
 
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
-    self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
+    #self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
     self.stat_manager.stats[StatType.PHYARMOR] = int(self.stat_manager.stats[StatType.PHYARMORMAX])
     self.stat_manager.stats[StatType.MAGARMOR] = int(self.stat_manager.stats[StatType.MAGARMORMAX])
     self.affect_manager.unload_all_affects()

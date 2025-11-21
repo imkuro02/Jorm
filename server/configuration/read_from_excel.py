@@ -41,7 +41,7 @@ def read_from_ods_file():
 def configure_equipment_reforges(SHEET):
     start = time.time()
     EQUIPMENT_REFORGES = {}
-    
+
     for row in SHEET['equipment_reforges']:
         x = SHEET['equipment_reforges']
         for index in range(0, len(x[row])):
@@ -82,14 +82,14 @@ def configure_skill_script_values(SHEET):
             d_vals = {
                 x['value_name'][index]: [
                     x['value0'][index],
-                    x['value1'][index], 
-                    x['value2'][index], 
-                    x['value3'][index], 
-                    x['value4'][index], 
-                    x['value5'][index], 
-                    x['value6'][index], 
-                    x['value7'][index], 
-                    x['value8'][index], 
+                    x['value1'][index],
+                    x['value2'][index],
+                    x['value3'][index],
+                    x['value4'][index],
+                    x['value5'][index],
+                    x['value6'][index],
+                    x['value7'][index],
+                    x['value8'][index],
                     x['value9'][index]
                 ]
             }
@@ -114,7 +114,7 @@ def configure_skill_script_values(SHEET):
                     i = float(i)
                 else:
                     i = int(i)
-                    
+
                 d_vals[x['value_name'][index]].append(i)
 
             if x['skill_id'][index] in SKILL_SCRIPT_VALUES:
@@ -143,10 +143,10 @@ def configure_USE_PERSPECTIVES(SHEET):
                 # create a fresh dict
                 USE_PERSPECTIVES[x['use_case_id'][index]] = {
                     'use_case_name':        x['use_case_name'][index],
-                    x['key'][index]:        x['value'][index] 
+                    x['key'][index]:        x['value'][index]
                 }
     end = time.time()
-    utils.debug_print(end - start,'USE_PERSPECTIVES')   
+    utils.debug_print(end - start,'USE_PERSPECTIVES')
     return USE_PERSPECTIVES
 
 def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
@@ -234,7 +234,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'ambience':          None if str(x['ambience'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience'][index],
                 'ambience_sfx':     None if str(x['ambience_sfx'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['ambience_sfx'][index],
                 'can_pick_up':  bool(x['can_pick_up'][index]),
-                
+
                 'drop_tags':         str(x['drop_tags'][index]).split(','),
                 'drop_from_random':         int(x['drop_from_random'][index]),
                 'drop_chance_base':         int(x['drop_chance_base'][index]),
@@ -244,16 +244,16 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'drop_chance_range_under':  int(x['drop_chance_range_under'][index]),
                 'drop_chance_range_over':   int(x['drop_chance_range_over'][index]),
                 'drop_chance_stat_filter':  str(x['drop_chance_stat_filter'][index]),
-                
+
             }
-    
+
     for row in SHEET['items_equipment']:
         x = SHEET['items_equipment']
         for index in range(0, len(x[row])):
             #utils.debug_print(x['premade_id'][index])
             if bool(x['legacy'][index]):
                 continue
-                
+
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':   x['premade_id'][index],
                 'name':         x['name'][index],
@@ -269,7 +269,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'stats': {
                     'grit':     int(x['grit'][index]),
                     'hp_max':   int(x['hp_max'][index]),
-                    'mp_max':   int(x['mp_max'][index]),
+                    #'mp_max':   int(x['mp_max'][index]),
                     'phy_armor_max':    int(x['phy_armor'][index]),
                     'mag_armor_max':   int(x['mag_armor'][index]),
                     'flow':     int(x['flow'][index]),
@@ -280,7 +280,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 'requirements': {
                     'lvl':      int(x['lvl'][index]),
                     'hp_max':   int(x['rhp_max'][index]),
-                    'mp_max':   int(x['rmp_max'][index]),
+                    #'mp_max':   int(x['rmp_max'][index]),
                     'phy_armor_max':    int(x['rphy_armor'][index]),
                     'mag_armor_max':   int(x['rmag_armor'][index]),
                     'grit':     int(x['rgrit'][index]),
@@ -309,7 +309,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
 
     for row in SHEET['crafting_recipes']:
         x = SHEET['crafting_recipes']
-        
+
         for index in range(0, len(x[row])):
 
             ingredients = {}
@@ -318,11 +318,11 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
             if premade_id not in ITEMS:
                 utils.debug_print(f'excel loader skipping premade_id "{premade_id}" because this item doesnt exist (shadow error)')
                 continue
-            
+
             for i in range(0,4):
                 i += 1
                 #utils.debug_print(i)
-                
+
                 ingredient = str(x[f'ingredient_{i}'][index])
                 quantity = int(x[f'quantity_{i}'][index])
 
@@ -333,13 +333,13 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 #utils.debug_print(f'ingredient_{i}',ingredient)
                 if premade_id not in ITEMS[ingredient]['crafting_ingredient_for']:
                     ITEMS[ingredient]['crafting_ingredient_for'].append(premade_id)
-                
-            
+
+
             if ingredients not in ITEMS[premade_id]['crafting_recipe_ingredients']:
                 ITEMS[premade_id]['crafting_recipe_ingredients'].append(ingredients)
                 #utils.debug_print(f'craft {premade_id} ingredients: ',ingredients)
 
-    
+
 
 
     end = time.time()
@@ -351,9 +351,9 @@ def configure_ENEMIES(SHEET, ITEMS):
     ENEMIES = {}
     for row in SHEET['enemies']:
         x = SHEET['enemies']
-        
+
         for index in range(0, len(x[row])):
-            
+
             ENEMIES[x['npc_id'][index]] = {
                 'npc_id':       x['npc_id'][index],
                 'ai':           x['ai'][index],
@@ -376,13 +376,13 @@ def configure_ENEMIES(SHEET, ITEMS):
                 'loot': {},         # EMPTY DICT TO STORE LOOT
                 'combat_loop': {},  # EMPTY DICT TO STORE COMBAT LOOP
                 'can_start_fights': bool(x['can_start_fights'][index]),
-                'dont_join_fights':  bool(x['dont_join_fights'][index]),  
+                'dont_join_fights':  bool(x['dont_join_fights'][index]),
                 'no_random_loot':   bool(x['no_random_loot'][index]),
                 'drop_tags':         str(x['drop_tags'][index]).split(','), # drop tags for items
             }
 
-        
-            
+
+
 
 
     end = time.time()
@@ -412,21 +412,21 @@ def configure_ENEMIES(SHEET, ITEMS):
 
     for e in ENEMIES:
         if ENEMIES[e]['no_random_loot']:
-            continue 
+            continue
         loot = {}
         for i in ITEMS:
             if 'drop_from_random' in ITEMS[i]:
-                
+
                 similar_tags = False
                 for item_tag in ITEMS[i]['drop_tags']:
                     for enem_tag in ENEMIES[e]['drop_tags']:
                         if item_tag == enem_tag:
                             similar_tags = True
                             break
-                
+
                 if not similar_tags:
                     continue
-            
+
 
 
 
@@ -442,13 +442,13 @@ def configure_ENEMIES(SHEET, ITEMS):
                 # if stat filter does not matchhighest stat and stat filter is not "none" skip
                 if ITEMS[i]['drop_chance_stat_filter'] != highest_enemy_stat['stat'] and ITEMS[i]['drop_chance_stat_filter'] != 'none':
                     continue
-                
+
                 base_drop_chance = ITEMS[i]['drop_chance_base']
                 lvl_diff = ENEMIES[e]['stats']['lvl'] - ITEMS[i]['drop_chance_level']
 
                 #if ENEMIES[e]['stats']['lvl'] - ITEMS[i]['drop_chance_level'] < ITEMS[i]['drop_chance_range_under']:
                 #    continue
-                
+
 
                 # negative diff means enemy is lower level
                 # positive diff means enemy is higher level
@@ -458,7 +458,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                         if abs(lvl_diff) > ITEMS[i]['drop_chance_range_over']:
                             continue
                         base_drop_chance += abs(lvl_diff) * ITEMS[i]['drop_chance_over_bonus']
-                        
+
                     else:
                         if abs(lvl_diff) > ITEMS[i]['drop_chance_range_under']:
                             continue
@@ -502,7 +502,7 @@ def configure_ENEMIES(SHEET, ITEMS):
 
     for npc_id in ENEMY_SKILLS:
         ENEMIES[npc_id]['skills'] = ENEMY_SKILLS[npc_id]
-    
+
     end = time.time()
     utils.debug_print(end - start,'ENEMY_SKILLS')
 
@@ -513,7 +513,7 @@ def configure_ENEMIES(SHEET, ITEMS):
     for row in SHEET['enemy_combat_loop']:
         x = SHEET['enemy_combat_loop']
         for index in range(0,len(x[row])):
-            d_vals = { 
+            d_vals = {
                 x['order'][index]: {
                     'target':   str(x['target'][index]),
                     'skill':    str(x['skill_id'][index])
@@ -551,7 +551,7 @@ def load_from_excel():
     ITEMS =                   configure_ITEMS(SHEET, USE_PERSPECTIVES)
     ENEMIES =                 configure_ENEMIES(SHEET, ITEMS)
     EQUIPMENT_REFORGES =      configure_equipment_reforges(SHEET)
-    
+
     # PACK IT ALL UP
     whole_dict = {
         'enemies': ENEMIES,
@@ -587,7 +587,7 @@ def is_checksum_same():
         json_checksum = data['SHA-256']
 
     return json_checksum == excel_checksum
-    
+
 
 
 def load():
@@ -619,4 +619,3 @@ def get_checksum(file_path, algorithm='sha256'):
 
 if __name__ == '__main__':
     load()
-    
