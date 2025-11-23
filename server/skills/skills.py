@@ -505,7 +505,7 @@ class SkillManaFeed(Skill):
                         )
                     if self.combat_event == None:
                         damage_obj.run()
-
+'''
 class SkillBash(SkillDamageByGrit):
     def use(self):
         if self.success:
@@ -529,7 +529,7 @@ class SkillBash(SkillDamageByGrit):
                         get_prediction_string_clear = True
                     )
                     self.other.affect_manager.set_affect_object(stunned_affect)
-'''
+
 
 class SkillDoubleWhack(SkillDamageByGritFlow):
     def use(self):
