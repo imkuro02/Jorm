@@ -443,19 +443,19 @@ class SkillDamageByFlowApplyBleed(SkillDamage):
     def use(self):
         super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
         was_blocked = False
-        roll = random.randint(0,1)
+        damage_obj = super().use()
+        was_blocked = damage_obj.damage_value <= -1
         if not was_blocked:
-            if roll <= self.user.stat_manager.stats[StatType.LVL] and not was_blocked:
-                bleed_damage = int(self.user.stat_manager.stats[StatType.LVL]/2)
-                stunned_affect = affects.AffectBleed(
-                    affect_source_actor = self.user,
-                    affect_target_actor = self.other,
-                    name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
-                    turns = 3,
-                    damage = bleed_damage,
-                    #get_prediction_string_append = 'is bleeding'
-                )
-                self.other.affect_manager.set_affect_object(stunned_affect)
+            bleed_damage = int(self.user.stat_manager.stats[StatType.LVL]/2)
+            stunned_affect = affects.AffectBleed(
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
+                name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
+                turns = 3,
+                damage = bleed_damage,
+                #get_prediction_string_append = 'is bleeding'
+            )
+            self.other.affect_manager.set_affect_object(stunned_affect)
 '''
 class SkillManaFeed(Skill):
     def use(self):
@@ -506,6 +506,7 @@ class SkillManaFeed(Skill):
                     if self.combat_event == None:
                         damage_obj.run()
 '''
+'''
 class SkillBash(SkillDamageByGrit):
     def use(self):
         if self.success:
@@ -529,7 +530,23 @@ class SkillBash(SkillDamageByGrit):
                         get_prediction_string_clear = True
                     )
                     self.other.affect_manager.set_affect_object(stunned_affect)
+'''
 
+class SkillBash(SkillDamageByGrit):
+    def use(self):
+        if self.success:
+            damage_obj = super().use()
+            was_blocked = damage_obj.damage_value <= -1
+            if not was_blocked:
+                stunned_affect = affects.AffectStunned(
+                    affect_source_actor = self.user,
+                    affect_target_actor = self.other,
+                    name = 'Stunned', description = 'Unable to act during combat turns',
+                    turns = self.script_values['duration'][self.users_skill_level],
+                    get_prediction_string_append = 'is stunned!',
+                    get_prediction_string_clear = True
+                )
+                self.other.affect_manager.set_affect_object(stunned_affect)
 
 class SkillDoubleWhack(SkillDamageByGritFlow):
     def use(self):
@@ -580,12 +597,38 @@ class SkillApplyDOT(Skill):
 class SkillRegenHP30(SkillRegenPercentFromPotion):
     def use(self):
         super().use(power_percent = .3, stat_to_heal = StatType.HP)
+class SkillRegenPhyArmor30(SkillRegenPercentFromPotion):
+    def use(self):
+        super().use(power_percent = .3, stat_to_heal = StatType.PHYARMOR)
+class SkillRegenMagArmor30(SkillRegenPercentFromPotion):
+    def use(self):
+        super().use(power_percent = .3, stat_to_heal = StatType.MAGARMOR)
 '''
 class SkillRegenMP30(SkillRegenPercentFromPotion):
     def use(self):
         super().use(power_percent = .3, stat_to_heal = StatType.MP)
 '''
 class SkillRenewHP30(SkillApplyDOT):
+    def use(self):
+        power_percent = .3
+        turns = 3
+        damage_value = int(self.other.stat_manager.stats[StatType.HPMAX]*(power_percent/turns))
+        super().use(
+                name = 'Renewed',
+                description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns',
+                damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.HP, turns = turns)
+
+class SkillRenewPhyArmor30(SkillApplyDOT):
+    def use(self):
+        power_percent = .3
+        turns = 3
+        damage_value = int(self.other.stat_manager.stats[StatType.HPMAX]*(power_percent/turns))
+        super().use(
+                name = 'Renewed',
+                description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns',
+                damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.HP, turns = turns)
+
+class SkillRenewMagArmor30(SkillApplyDOT):
     def use(self):
         power_percent = .3
         turns = 3

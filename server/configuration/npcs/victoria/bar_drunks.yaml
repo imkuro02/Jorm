@@ -1,7 +1,7 @@
 bar_drunk_1:
   tree:
     start:
-      dialog: 
+      dialog:
       - line: |
           "Aye!" they yell
         quest_objective_check:
@@ -19,7 +19,7 @@ bar_drunk_1:
           - id: first_equipment_set
             state: in_progress
             NOT: 1
-        
+
         quest_objective_check:
             - id: first_equipment_set
               objective_id: Speak with a wasted
@@ -34,7 +34,7 @@ bar_drunk_1:
             - id: first_equipment_set
               objective_id: Speak with a wasted
               objective_count: 1
-              
+
       options:
         - line: yell back "Stop yelling so loudly!"
           goto: first_equipment_set_how_to
@@ -47,10 +47,10 @@ bar_drunk_1:
               objective_count: 0
 
 
-    first_equipment_set_how_to: 
-      dialog: 
+    first_equipment_set_how_to:
+      dialog:
         - line: |
-            "Only if you bring me a sweet sweet RED POTION!" they yell in your face
+            "Only if you bring me a sweet sweet Green Potion!" they yell in your face
       options:
       - line: |
           say "Fine, here!"
@@ -66,23 +66,23 @@ bar_drunk_1:
           give_to_player:
             - item: rock
               amount: 1
-          give_to_npc: 
-            - item: red potion
+          give_to_npc:
+            - item: potion_hp_30
               amount: 1
         quest_objective:
             requirement_id: first_equipment_set/wasted
 
     first_equipment_set_completed:
-      dialog: 
+      dialog:
         - line: |
             "Now I can party all night loooong wooo!!" they scream at the top of their lungs. "here is your reward oh brave adventurer!" they hand you a rock...
 
-            
-            
+
+
 bar_drunk_0:
   tree:
     start:
-      dialog: 
+      dialog:
       - line: |
           "Aye!" they yell
         quest_objective_check:
@@ -105,7 +105,7 @@ bar_drunk_0:
         quest_check:
           - id: first_equipment_set
             state: completed
-        
+
         quest_objective_check:
             - id: first_equipment_set
               objective_id: Speak with a drunk
@@ -120,7 +120,7 @@ bar_drunk_0:
             - id: first_equipment_set
               objective_id: Speak with a drunk
               objective_count: 1
-              
+
       options:
         - line: |
             snap back "Quiet!"
@@ -134,8 +134,8 @@ bar_drunk_0:
               objective_count: 0
 
 
-    first_equipment_set_how_to: 
-      dialog: 
+    first_equipment_set_how_to:
+      dialog:
         - line: |
             "Only if you bring me a sweet sweet BLUE POTION!" they yell in your face
       options:
@@ -153,13 +153,13 @@ bar_drunk_0:
           give_to_player:
             - item: rock
               amount: 1
-          give_to_npc: 
-            - item: blue potion
+          give_to_npc:
+            - item: potion_mag_armor_30
               amount: 1
         quest_objective:
             requirement_id: first_equipment_set/drunk
 
     first_equipment_set_completed:
-      dialog: 
+      dialog:
         - line: |
             "Now I can party all night loooong wooo!!" they scream at the top of their lungs. "here is your reward oh brave adventurer!" they hand you a rock...

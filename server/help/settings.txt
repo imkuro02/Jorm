@@ -1,17 +1,17 @@
 ................................................................................
-Title: Settings 
+Title: Settings
 
-settings: "settings [setting]" you can reset to default with "settings reset" 
+settings: "settings [setting]" you can reset to default with "settings reset"
 
-alias: "settings alias [alias] [a sentence to replace with]" 
+alias: "settings alias [alias] [a sentence to replace with]"
 alias: "settings alias" will display all aliases
 alias: "settings alias [alias]" will remove the alias.
 Aliases can be used to replace text within your input.
 An alias can replace a single word with a sentence.
-For example: "settings alias heal use red potion on" this alias will convert
-any mention of "heal" with "use red potion on" 
+For example: "settings alias heal use green potion on" this alias will convert
+any mention of "heal" with "use green potion on"
 
-gmcp: "settings gmcp [on/off]" 
+gmcp: "settings gmcp [on/off]"
 This setting does nothing but is a fun fidget toy!
 
 viewroom: "settings viewroom [on/off]" display room information when you move
