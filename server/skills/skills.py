@@ -444,18 +444,17 @@ class SkillDamageByFlowApplyBleed(SkillDamage):
         super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
         was_blocked = False
         damage_obj = super().use()
-        was_blocked = damage_obj.damage_value <= -1
-        if not was_blocked:
-            bleed_damage = int(self.user.stat_manager.stats[StatType.LVL]/2)
-            stunned_affect = affects.AffectBleed(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
-                turns = 3,
-                damage = bleed_damage,
-                #get_prediction_string_append = 'is bleeding'
-            )
-            self.other.affect_manager.set_affect_object(stunned_affect)
+        bleed_damage = int(self.user.stat_manager.stats[StatType.LVL]/2)
+        stunned_affect = affects.AffectBleed(
+            affect_source_actor = self.user,
+            affect_target_actor = self.other,
+            name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
+            turns = self.script_values['duration'][self.users_skill_level],
+            resisted_by = StatType.PHYARMOR,
+            damage = bleed_damage,
+            #get_prediction_string_append = 'is bleeding'
+        )
+        self.other.affect_manager.set_affect_object(stunned_affect)
 '''
 class SkillManaFeed(Skill):
     def use(self):
@@ -536,17 +535,16 @@ class SkillBash(SkillDamageByGrit):
     def use(self):
         if self.success:
             damage_obj = super().use()
-            was_blocked = damage_obj.damage_value <= -1
-            if not was_blocked:
-                stunned_affect = affects.AffectStunned(
-                    affect_source_actor = self.user,
-                    affect_target_actor = self.other,
-                    name = 'Stunned', description = 'Unable to act during combat turns',
-                    turns = self.script_values['duration'][self.users_skill_level],
-                    get_prediction_string_append = 'is stunned!',
-                    get_prediction_string_clear = True
-                )
-                self.other.affect_manager.set_affect_object(stunned_affect)
+            stunned_affect = affects.AffectStunned(
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
+                name = 'Stunned', description = 'Unable to act during combat turns',
+                turns = self.script_values['duration'][self.users_skill_level],
+                resisted_by = StatType.PHYARMOR,
+                get_prediction_string_append = 'is stunned!',
+                get_prediction_string_clear = True
+            )
+            self.other.affect_manager.set_affect_object(stunned_affect)
 
 class SkillDoubleWhack(SkillDamageByGritFlow):
     def use(self):

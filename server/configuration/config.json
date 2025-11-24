@@ -1,5 +1,5 @@
 {
-    "SHA-256": "43bdcc671107ac9d274f088cc5cc7840de3ba9e4ce5408efabbf65d85319fc73",
+    "SHA-256": "1dce2538dc54e7ddd8a028a166968abc87642dfe1d28f1b95c704dcb3adb077f",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4074,7 +4074,7 @@
         "bash": {
             "skill_id": "bash",
             "name": "Bash",
-            "description": "Bash your target.\nDealing DAMAGE + 0%-CRIT% of GRIT physical damage.\nIf your targets armor goes below 0 on hit, stun target for DURATION of turns.\n",
+            "description": "Bash your target.\nDealing DAMAGE + 0%-CRIT% of GRIT physical damage.\nApplies Stunned on target for DURATION turns,\nAt a 50% chance if physical armor is broken,\nAt a 100% chance if all armor is broken.\n",
             "script_to_run": "Bash",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -4277,7 +4277,7 @@
         "stab": {
             "skill_id": "stab",
             "name": "Stab",
-            "description": "Lunge and stab your target.\nDealing DAMAGE + 0%-CRIT% FLOW physical damage.\nMay cause target to bleed, dealing LVL Pure damage per turn for 3 turns.\n",
+            "description": "Lunge and stab your target.\nDealing DAMAGE + 0%-CRIT% FLOW physical damage.\nApplies Bleeding on target for DURATION turns,\nAt a 50% chance if physical armor is broken,\nAt a 100% chance if all armor is brokenm\nBleeding deals half of users level as physical damage per turn, halving each turn.\n",
             "script_to_run": "DamageByFlowApplyBleed",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -4334,6 +4334,14 @@
                     4,
                     5,
                     6
+                ],
+                "duration": [
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
                 ]
             }
         },

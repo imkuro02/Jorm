@@ -9,6 +9,7 @@ class Affect:
     affect_target_actor,
     name, description,
     turns,
+    resisted_by = None,
     get_prediction_string_append = None, get_prediction_string_clear = False,
     custom_go_away = False
     ):
@@ -23,6 +24,8 @@ class Affect:
 
         self.name = name
         self.description = description
+        # the armor type to resist
+        self.resisted_by = resisted_by
         # get prediction string will append this text
         self.get_prediction_string_append = get_prediction_string_append
         # if this is true, the prediction string will be empty and only include affects
@@ -42,6 +45,27 @@ class Affect:
 
     # called when applied
     def on_applied(self, silent = False):
+        if self.resisted_by != None:
+            roll = random.randint(1,100)
+            chance = 0
+            if self.affect_manager.actor.stat_manager.stats[StatType.MAGARMOR] <= 0 and self.affect_manager.actor.stat_manager.stats[StatType.PHYARMOR] <= 0:
+                chance += 100
+            elif self.affect_manager.actor.stat_manager.stats[self.resisted_by] <= 0:
+                chance += 50
+
+            if roll >= chance:
+                #self.affect_manager.actor.simple_broadcast(
+                #    f'You resist {self.name} (rolled {roll}/100 when need under {chance})',
+                #    f'{self.affect_manager.actor.pretty_name()} resists {self.name} (rolled {roll}/100 when need under {chance})',
+                #)
+                self.affect_manager.actor.simple_broadcast(
+                    f'You resist {self.name}',
+                    f'{self.affect_manager.actor.pretty_name()} resists {self.name}',
+                )
+                self.affect_manager.pop_affect(self)
+                return
+
+
         if silent:
             return
         self.affect_manager.actor.simple_broadcast(
@@ -497,8 +521,8 @@ class AffectStealth(Affect):
         return super().on_finished(silent)
 
 class AffectBleed(Affect):
-    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, damage):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns )
+    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, resisted_by, damage):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, resisted_by)
         self.damage = damage
 
     def merge_request(self, affect_to_merge):

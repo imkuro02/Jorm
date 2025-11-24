@@ -34,18 +34,18 @@ class AI:
         if self.prediction_skill == None and self.prediction_item == None:
             return False
         return True
-    
+
     def override_prediction(self, prediction_string = ''):
         self.prediction_override = prediction_string
 
     def get_prediction_string(self, who_checks):
         if self.prediction_override != '':
             return self.prediction_override
-        
+
         aff_appends = []
         include_prediction = True
         for aff in self.actor.affect_manager.affects.values():
-            # affects like stun when at 0 will not do anything but display 
+            # affects like stun when at 0 will not do anything but display
             # the aff is over, so when something is at 0 it wont trigger on actor turn
             # and therefor should not display
             #if aff.turns == 0:
@@ -74,29 +74,29 @@ class AI:
                         prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on you'
                     else:
                         prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on {self.prediction_target.pretty_name()}'
-                
+
             prediction_string = prediction_string + ' '
 
-        
+
         return prediction_string + f'{" ".join(aff_appends)}'
 
     def get_targets(self):
         actors = self.actor.room.combat.participants.values()
-        enemies = [ actor for actor in actors 
-                    if actor.party_manager.get_party_id() != self.actor.party_manager.get_party_id() 
+        enemies = [ actor for actor in actors
+                    if actor.party_manager.get_party_id() != self.actor.party_manager.get_party_id()
                     and actor.status == ActorStatusType.FIGHTING    ]
 
-        allies = [  actor for actor in actors 
-                    if actor.party_manager.get_party_id() == self.actor.party_manager.get_party_id() 
+        allies = [  actor for actor in actors
+                    if actor.party_manager.get_party_id() == self.actor.party_manager.get_party_id()
                     and actor.status == ActorStatusType.FIGHTING    ]
         return allies, enemies
 
     def get_skills(self, for_prediction = False, combat_only_skills = True):
-        
+
         skills = []
         # if for prediction is true, be able to pick skills that are available NEXT TURN
         for skill_id in self.actor.skill_manager.skills:
-            if combat_only_skills and not SKILLS[skill_id]['can_use_in_combat']: 
+            if combat_only_skills and not SKILLS[skill_id]['can_use_in_combat']:
                 continue
             if skill_id in self.actor.cooldown_manager.cooldowns:
                 if for_prediction and self.actor.cooldown_manager.cooldowns[skill_id] > 1:
@@ -111,7 +111,7 @@ class AI:
             skills.append(skill_id)
         return skills
 
-   
+
 
     def clear_prediction(self):
         #utils.debug_print(self.actor.name, 'prediction cleared')
@@ -146,12 +146,12 @@ class AI:
                 else:
                     self.actor.finish_turn()
                 return True
-            
+
         #debug = f'skill {self.prediction_skill}, target {self.prediction_target}'
         #self.actor.simple_broadcast(debug,debug)
         return False
-        
-        
+
+
 
     def predict_use_best_skill(self, offensive_only = False, for_prediction = True):
         self.prediction_target = None
@@ -162,17 +162,17 @@ class AI:
 
         if self.actor.room == None:
             return False
-        
+
         if self.actor.room.combat == None:
             return False
-        
+
         allies, enemies = self.get_targets()
         skills = self.get_skills(for_prediction = for_prediction, combat_only_skills = True)
         #utils.debug_print(self.actor.name,skills)
         # try to use a skill 5 times, if it fails return false
         # return true if you managed to use a skill
         for i in range(0,20):
-            
+
             if skills == []:
                 break
 
@@ -199,7 +199,7 @@ class AI:
                 continue
 
             target = self.actor
-            
+
             if SKILLS[skill_to_use]['target_others_is_valid']:
                 target = random.choice(targets)
                 for t in targets:
@@ -207,14 +207,14 @@ class AI:
                         continue
                     if t.stat_manager.stats[StatType.THREAT] >= target.stat_manager.stats[StatType.THREAT]:
                         target = t
-            
+
 
 
             #utils.debug_print(self.actor.name, 'prediction target:', target.name)
-            
-                
-                
-            
+
+
+
+
             #utils.debug_print(target, skill_to_use)
             self.prediction_target = target
             self.prediction_skill = skill_to_use
@@ -226,8 +226,8 @@ class AI:
     def use_best_skill(self, offensive_only = False):
         if self.actor.room.combat == None:
             return
-        
-       
+
+
         allies, enemies = self.get_targets()
         skills = self.get_skills()
         self.actor.sendLine('use_best_skill, will use these skills ' + str(skills), msg_type = [MsgType.DEBUG])
@@ -235,7 +235,7 @@ class AI:
         # try to use a skill 5 times, if it fails return false
         # return true if you managed to use a skill
         for i in range(0,20):
-            
+
             if skills == []:
                 self.actor.sendLine('no valid skills!!', msg_type = [MsgType.DEBUG])
                 break
@@ -270,7 +270,7 @@ class AI:
             for t in targets:
                 if t.stat_manager.stats[StatType.THREAT] > target.stat_manager.stats[StatType.THREAT]:
                     target = t
-            
+
             if use_skill(self.actor, target, skill_to_use) == True:
                 self.actor.finish_turn()
                 return True
@@ -291,15 +291,15 @@ class AI:
     def tick(self):
         if self.actor.factory.ticks_passed <= 3:
             return False
-        
+
         # if none of these checks exit the loop, then that indicates this enemy is in combat
         if self.actor.room == None:
             return False
-            
+
         if self.actor.status == ActorStatusType.NORMAL:
             #self.wander()
             return False
-        
+
         if self.actor.room.combat == None:
             return False
 
@@ -308,22 +308,22 @@ class AI:
 
         if self.actor.room.combat.time_since_turn_finished <= int(10):
             return False
-        
+
         return True
 
 class PlayerAI(AI):
     def __init__(self, actor):
         super().__init__(actor)
         self.can_use_skills_without_ending_turn = True
-        
+
     def use_prediction(self):
         if super().use_prediction():
             return True
         #self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         return False
-    
+
     def initiative(self):
-        
+
         return
 
     def tick(self):
@@ -333,7 +333,7 @@ class PlayerAI(AI):
 
         if self.actor.settings_manager.autobattler:
             if self.actor.stat_manager.stats[StatType.HP] <= self.actor.stat_manager.stats[StatType.HPMAX]*0.1:
-                self.actor.sendLine(f'Turning off Autobattler; Your HP is below 10%!') 
+                self.actor.sendLine(f'Turning off Autobattler; Your HP is below 10%!')
                 self.actor.settings_manager.autobattler = False
 
         if self.actor.settings_manager.autobattler:
@@ -347,7 +347,7 @@ class PlayerAI(AI):
                 #utils.debug_print('using prediction')
                 #if self.actor.settings_manager.autobattler:
                 #    self.predict_use_best_skill(offensive_only = True)
-        
+
 
 class EnemyAI(AI):
 
@@ -359,20 +359,20 @@ class EnemyAI(AI):
         #self.predict_use_best_skill()
         self.actor.finish_turn()
         return False
-    
+
     def tick(self):
         if not super().tick():
             return
-        
+
         self.use_prediction()
-        
-        
-        
+
+
+
 class SlimeAI(AI):
     def tick(self):
         if not super().tick():
             return
-        
+
         stats = self.actor.stat_manager.stats
         if stats[StatType.HP] < stats[StatType.HPMAX]*.75 and stats[StatType.HPMAX] > 10 :
             stats[StatType.HP] = int(stats[StatType.HP]*.5)
@@ -387,7 +387,7 @@ class SlimeAI(AI):
             self.actor.finish_turn()
         else:
             self.use_prediction()
-            
+
 
     def use_prediction(self):
         if super().use_prediction():
@@ -401,17 +401,17 @@ class CowardAI(AI):
     def tick(self):
         if not super().tick():
             return
-    
+
         if len(self.actor.room.exits) >= 1:
             stats = self.actor.stat_manager.stats
-            roll = (100 - (stats[StatType.HP] / stats[StatType.HPMAX] * 100)) / 5 
+            roll = (100 - (stats[StatType.HP] / stats[StatType.HPMAX] * 100)) / 5
             utils.debug_print(roll)
             if roll > random.randint(1,100):
                 #random_dir = random.choice(self.actor.room.exits)
                 self.actor.simple_broadcast('',f'{self.actor.pretty_name()} flees!')
                 #new_room = random_dir.get_room_obj().id
 
-                
+
                 world = self.actor.room.world
                 self.actor.status = ActorStatusType.NORMAL
 
@@ -419,7 +419,7 @@ class CowardAI(AI):
                 self.die()
                 self.actor.finish_turn()
                 return
-                
+
         self.use_prediction()
 
     def use_prediction(self):
@@ -434,7 +434,7 @@ class BossRatAI(AI):
     def __init__(self, actor):
         super().__init__(actor)
         self.turn = 0
-    
+
     def initiative(self):
         self.predict_use_best_skill()
         self.turn += 1
@@ -445,17 +445,17 @@ class BossRatAI(AI):
                 self.override_prediction('licks their snout in anticipation')
             case _:
                 self.override_prediction()
-                
-        
+
+
         if self.turn == 7:
             self.turn = 0
 
     def tick(self):
         if not super().tick():
             return
-        
-        
-        
+
+
+
         if self.turn == 6:
 
             heal = 0
@@ -476,7 +476,7 @@ class BossRatAI(AI):
 
             self.actor.simple_broadcast('',f'{self.actor.pretty_name()} Devours the rats! healing for {heal}')
             self.actor.heal(value=heal, silent = True)
-                
+
             self.actor.finish_turn()
             return
 
@@ -487,7 +487,7 @@ class BossRatAI(AI):
                 rat.room.join_combat(rat)
             self.actor.finish_turn()
             return
-            
+
         self.use_prediction()
         return
 
@@ -502,7 +502,7 @@ class BossRatAI(AI):
 class VoreAI(AI):
     def __init__(self, actor):
         super().__init__(actor)
-        self.rooms = self.actor.room.world.rooms 
+        self.rooms = self.actor.room.world.rooms
         self.vore_room_id = f'{self.actor.room.id}-vored-by-{self.actor.id}'
         self.vore_room = None
         self.original_room = self.actor.room
@@ -533,23 +533,23 @@ class VoreAI(AI):
     def tick(self):
         if not super().tick():
             return
-        
+
         if self.turn == self.turn_vore:
             if self.vore_room == None:
                 self.vore_room_open()
             self.vore_room_grab_party()
             self.actor.finish_turn()
             return
-            
+
         self.use_prediction()
         return
 
     def create_vore_room_from_template(self):
-        return Room(self.actor.room.world, self.vore_room_id, 
-            name =          self.vore_room_name, # 'Vore room name', 
-            description =   self.vore_room_description, # 'Vore room description', 
-            from_file =    'vore_room', 
-            exits = [], can_be_recall_site = False, doorway = False, instanced = False, no_spawner = True) 
+        return Room(self.actor.room.world, self.vore_room_id,
+            name =          self.vore_room_name, # 'Vore room name',
+            description =   self.vore_room_description, # 'Vore room description',
+            from_file =    'vore_room',
+            exits = [], can_be_recall_site = False, doorway = False, instanced = False, no_spawner = True)
 
      # create new vore room
     def vore_room_open(self):
@@ -571,7 +571,7 @@ class VoreAI(AI):
         #utils.debug_print(self.vore_room.__dict__)
         self.actor.room.world.rooms_to_unload.append(self.vore_room.id)
         #del self.rooms[self.vore_room_id]
-        
+
     # grab a party and add it to vore room
     def vore_room_grab_party(self):
         utils.debug_print('grabbing party')
@@ -586,7 +586,7 @@ class VoreAI(AI):
             to_move.append(i)
 
         for i in to_move:
-            i.simple_broadcast( f'{self.actor.pretty_name()} vores you!', 
+            i.simple_broadcast( f'{self.actor.pretty_name()} vores you!',
                                 f'{self.actor.pretty_name()} vores {i.pretty_name()}!')
         for i in to_move:
             self.vore_room.move_actor(i, silent = True, dont_unload_instanced = True)
@@ -594,7 +594,7 @@ class VoreAI(AI):
 
         #for i in to_move:
         #    i.command_look('')
-            
+
 
     def vore_room_kick_all_parties(self):
         if self.vore_room == None:
@@ -607,9 +607,9 @@ class VoreAI(AI):
             to_move.append(i)
 
         for i in to_move:
-             i.simple_broadcast( f'{self.actor.pretty_name()} spits you out!', 
+             i.simple_broadcast( f'{self.actor.pretty_name()} spits you out!',
                                 f'{self.actor.pretty_name()} spits out {i.pretty_name()}!')
-        for i in to_move:                     
+        for i in to_move:
             self.original_room.move_actor(i, silent = True, dont_unload_instanced = True)
             i.status = ActorStatusType.NORMAL
 
@@ -631,11 +631,11 @@ class VoreDragonLesserAI(VoreAI):
 
 '''
 class AffectDelayedDeathInsideInstancedArea(Affect):
-    def __init__(self, 
+    def __init__(self,
                 affect_source_actor,
-                affect_target_actor, 
+                affect_target_actor,
                 name, description,
-                turns, 
+                turns,
                 custom_go_away,
                 turn_lines               = None,
                 on_apply_line            = None,
@@ -643,26 +643,26 @@ class AffectDelayedDeathInsideInstancedArea(Affect):
                 on_finished_survive_line = None
                 ):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns, custom_go_away = custom_go_away)
-        
-        if turn_lines == None: 
+
+        if turn_lines == None:
             turn_lines = ['line1','line2','line3']
 
-        if on_apply_line == None: 
+        if on_apply_line == None:
             on_apply_line = 'you die'
 
-        if on_finished_survive_line == None: 
+        if on_finished_survive_line == None:
             on_finished_survive_line = 'you survive'
 
-        if on_finished_death_line == None: 
+        if on_finished_death_line == None:
             on_finished_death_line = 'you die'
 
         # reverse the list, since turns go down instead of up
         self.turn_lines = turn_lines[::-1]
-        
+
         self.on_apply_line = on_apply_line
         self.on_finished_death_line = on_finished_death_line
         self.on_finished_survive_line = on_finished_survive_line
-        
+
 
     def on_applied(self):
         self.affect_target_actor.sendLine(self.on_apply_line)
@@ -671,13 +671,13 @@ class AffectDelayedDeathInsideInstancedArea(Affect):
     def set_turn(self):
 
         self.turns -= 1
-        
-        
+
+
 
         if not self.affect_target_actor.room.is_an_instance():
             self.affect_target_actor.sendLine(self.on_finished_survive_line)
             return super().on_finished(silent = True)
-        
+
         if self.turns < len(self.turn_lines) and self.turns >= 0:
             self.affect_target_actor.sendLine(self.turn_lines[self.turns])
 
@@ -695,9 +695,9 @@ class AffectDelayedDeathInsideInstancedArea(Affect):
         else:
             self.affect_target_actor.sendLine(self.on_finished_death_line)
             self.affect_target_actor.die()
-            
+
         self.turn = 0
-         
+
 
 class TheWellBelowTrapAI(EnemyAI):
     def __init__(self,actor):
@@ -714,9 +714,9 @@ class TheWellBelowTrapAI(EnemyAI):
             #par.sendLine()
             drowning = AffectDelayedDeathInsideInstancedArea(
                 affect_source_actor = par,
-                affect_target_actor = par, 
-                name = 'Slow drowning', description = f'You will drown and die when the affliction ends', 
-                turns = 1, 
+                affect_target_actor = par,
+                name = 'Slow drowning', description = f'You will drown and die when the affliction ends',
+                turns = 1,
                 custom_go_away = True,
                 turn_lines = [
                     '@blueThe water is slowly flooding the room@normal',
