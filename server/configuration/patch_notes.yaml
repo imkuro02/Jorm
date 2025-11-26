@@ -1,4 +1,14 @@
 versions:
+  '261125':
+    id: '261125'
+    title: Skills
+    unixtime: 1761899677
+    features:
+    - Keep is now two commands, keep and unkeep.
+    - Fixed all item descriptions
+    - Temporarely removed some items with unfinished names, they would drop from mobs by accident
+      if you see an item "error" it means that that item is temporarely removed, and might
+      be re-added later as an actual usable item
   '171125':
     id: '171125'
     title: Skills

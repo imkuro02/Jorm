@@ -20,7 +20,7 @@ from actors.player_only_functions.equip import (
 )
 
 from actors.player_only_functions.inventory import (
-    command_inventory, command_identify, command_keep, command_get, command_drop, command_scrap, command_reforge, command_trade, command_split, command_sort, raise_item, lower_item, command_craft
+    command_inventory, command_identify, command_keep, command_unkeep, command_get, command_drop, command_scrap, command_reforge, command_trade, command_split, command_sort, raise_item, lower_item, command_craft
 )
 
 from actors.player_only_functions.character_sheet import (
@@ -120,6 +120,7 @@ commands = {
     'drop':     'command_drop',
     #'wear':     'command_wear',
     'keep':     'command_keep',
+    'unkeep':   'command_unkeep',
     #'remove':   'command_remove',
 
     'use':      'command_use',

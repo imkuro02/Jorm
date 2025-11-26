@@ -16,7 +16,7 @@ def get_item(self, line, search_mode = 'self', inventory = None):
     line = line.strip()
 
     if line == '':
-        return 
+        return
 
     # you can input custom inventory
     if inventory != None:
@@ -27,12 +27,20 @@ def get_item(self, line, search_mode = 'self', inventory = None):
         inventory = self.inventory_manager.items
 
     # only search items that are not kept in inventory
+    if search_mode == 'kept':
+        inventory = {}
+        for item in self.inventory_manager.items.values():
+            if item.keep == False:
+                continue
+            inventory[item.id] = self.inventory_manager.items[item.id]
+
+    # only search items that are not kept in inventory
     if search_mode == 'unkept':
         inventory = {}
         for item in self.inventory_manager.items.values():
             if item.keep == True:
-                continue 
-            inventory[item.id] = self.inventory_manager.items[item.id] 
+                continue
+            inventory[item.id] = self.inventory_manager.items[item.id]
 
     # search the rooms inventory
     if search_mode == 'room':
@@ -46,20 +54,20 @@ def get_item(self, line, search_mode = 'self', inventory = None):
         inventory = {}
         for item in self.inventory_manager.items.values():
             if item.item_type != ItemType.EQUIPMENT:
-                continue 
+                continue
             if item.equiped == False:
-                continue 
-            inventory[item.id] = self.inventory_manager.items[item.id] 
+                continue
+            inventory[item.id] = self.inventory_manager.items[item.id]
 
     # search equipement that is not yet equiped
     if search_mode == 'equipable':
         inventory = {}
         for item in self.inventory_manager.items.values():
             if item.item_type != ItemType.EQUIPMENT:
-                continue 
+                continue
             #if item.equiped == True:
-            #    continue 
-            inventory[item.id] = self.inventory_manager.items[item.id] 
+            #    continue
+            inventory[item.id] = self.inventory_manager.items[item.id]
 
     if len(inventory) == 0:
         return

@@ -27,12 +27,12 @@ commands:
     syntax:
       - emote <emote>
     description: |
-      Emotes are currently very weird. 
+      Emotes are currently very weird.
 
       You can view a full list of all emotes with 'emote'.
-      Most emotes are aliased. 
+      Most emotes are aliased.
 
-      stuff like 'point at <character>' will automatically 
+      stuff like 'point at <character>' will automatically
       correct to proper syntax.
     related:
       - say
@@ -41,10 +41,10 @@ commands:
       - room
   fight:
     group: combat
-    syntax: 
+    syntax:
       - fight
     description: |
-      Start a fight / Automatically use first offensive 
+      Start a fight / Automatically use first offensive
       skill available if already in a fight.
     related:
       - use
@@ -58,7 +58,7 @@ commands:
     description: |
       Pass your turn.
       If not in combat, you still spend one turn.
-      Passing a turn out of combat might be beneficial 
+      Passing a turn out of combat might be beneficial
       to wait out debuffs without resting.
     related:
       - rest
@@ -71,12 +71,12 @@ commands:
     description: |
       Use a skill or an item on someone / something.
 
-      Using a skill or an item without specifying a target 
+      Using a skill or an item without specifying a target
       will attempt to use it on yourself.
 
       Using a skill or an item will spend one turn in combat.
-      Some skills cannot be used on others (help skills). 
-      Items can always be used on yourself. 
+      Some skills cannot be used on others (help skills).
+      Items can always be used on yourself.
       Items can only be used on others in combat.
     related:
       - skills
@@ -104,18 +104,18 @@ commands:
       - rest now/here
     description: |
       Resting is a way of quickly recovering aswell as fast travel.
-      
-      Using the rest command without 
+
+      Using the rest command without
       arguments displays your rest spot.
 
-      The "set" argument will set a rest spot, 
+      The "set" argument will set a rest spot,
       The "now" or "here" argument will make you rest.
       The "home" argument will make you return to your resting point and rest
 
       Resting;
-        - ressurects 
-        - resets cooldowns 
-        - resets afflictions 
+        - ressurects
+        - resets cooldowns
+        - resets afflictions
         - heals you to full
 
       IMPORTANT:
@@ -171,7 +171,7 @@ commands:
       - equipment
   scrap:
     group: items
-    syntax: 
+    syntax:
       - scrap <item name>
       - scrap all
     description: |
@@ -185,10 +185,10 @@ commands:
       - items
       - reforge
       - keep
-      - equipment   
+      - equipment
   reforge:
     group: items
-    syntax: 
+    syntax:
       - reforge <item name>
     description: |
       Reforge an equippable item, giving it a reforge bonus.
@@ -198,23 +198,23 @@ commands:
     related:
       - items
       - keep
-      - equipment   
+      - equipment
   inventory:
     group: items
-    syntax: 
+    syntax:
       - inventory
     description: |
       Display your whole inventory in order from oldest to newest.
     related:
       - look
       - keep
-      - equipment   
+      - equipment
       - get
       - drop
       - craft
   craft:
     group: items
-    syntax: 
+    syntax:
       - craft <item name to craft> from <ingredient 1> and <ingredient 2> ...
       - craft <item name to craft>, <ingredient 1>, <ingredient 2> ...
       - craft <item name to craft>
@@ -230,7 +230,7 @@ commands:
       - inventory
   sort:
     group: items
-    syntax: 
+    syntax:
       - sort
     description: |
       Sort your items alphabetically, then sort by equipped, then by kept
@@ -240,9 +240,11 @@ commands:
     group: items
     syntax:
       - keep <item>
+      - unkeep <item>
     description: |
       Keep an item, appending the (@redK@normal) affix.
       Kept items cannot be traded or dropped, but can still be consumed.
+      You can unkeep an item with the "unkeep" command
     related:
       - inventory
       - trade
@@ -250,10 +252,10 @@ commands:
       - drop
   get:
     group: items
-    syntax: 
+    syntax:
       - get <item>
       - get all
-    description: | 
+    description: |
       Pick an item up and put it in your inventory.
       "get all" gets all items on the ground.
     related:
@@ -261,10 +263,10 @@ commands:
       - drop
   drop:
     group: items
-    syntax: 
+    syntax:
       - drop <item>
       - drop all
-    description: | 
+    description: |
       Drop an item on the ground.
       Kept (@redK@normal) or equipped (@greenE@normal) items cannot be dropped.
       Items cannot be dropped during an ongoing trade.
@@ -288,7 +290,7 @@ commands:
       Trades are a secure way of moving items from one account to another.
       Kept (@redK@normal) or equipped (@greenE@normal) items cannot be traded.
       Items offered for a trade will have the (@yellowT@normal) affix.
-    related:  
+    related:
       - keep
       - equipment
       - affixes
@@ -307,12 +309,12 @@ commands:
     syntax:
       - level <stat>
     description: |
-      After accumulating enough experience, 
+      After accumulating enough experience,
       you can use the level command to level up.
-      
+
       You can level up grit/flow/mind/soul.
       Leveling up gives you one practice point.
-    related: 
+    related:
       - stats
       - practice
   respec:
@@ -321,7 +323,7 @@ commands:
       - respec
     description: |
       Reset your character to level 1, keeping all experience.
-      Stats and practice points gained through other means than leveling 
+      Stats and practice points gained through other means than leveling
       will NOT be kept.
     related:
       - stats
@@ -333,9 +335,9 @@ commands:
       - practice <skill>
     description: |
       The command without any arguments displays all skills you can practice.
-      The skills will show your current practice level, and how much it costs 
+      The skills will show your current practice level, and how much it costs
       practice again.
-      Using the command with a skill at the end will spend x amount of 
+      Using the command with a skill at the end will spend x amount of
       practice points to level it up once.
     related:
       - skills
@@ -378,7 +380,7 @@ commands:
       View your own or somebody elses afflictions.
       Afflictions are status effects that linger between turns.
       Afflictions will display the duration of turns until it ends
-      and a short description of what it does. 
+      and a short description of what it does.
   history:
     group: talking
     syntax:
@@ -393,27 +395,27 @@ commands:
       - emote
   prompt:
     group: settings
-    syntax: 
-      - settings prompt <custom values>                                   
+    syntax:
+      - settings prompt <custom values>
     description: |
       Create a custom prompt
       Example: "settings prompt [#HP#/#HPMAX#]"
       This will make your prompt look like "[100/100]"
 
       Here are all possible values for prompts:
-      #HP#          - Health 
-      #MP#          - Magicka 
-      #PHYARM#      - Physical Armor 
+      #HP#          - Health
+      #MP#          - Magicka
+      #PHYARM#      - Physical Armor
       #MAGARM#      - Magical Armor
-      #HPMAX#       - Maximum Health 
-      #MPMAX#       - Maximum Magicka 
-      #PHYARMMAX#   - Maximum Physical Armor 
+      #HPMAX#       - Maximum Health
+      #MPMAX#       - Maximum Magicka
+      #PHYARMMAX#   - Maximum Physical Armor
       #MAGARMMAX#   - Maximum Magical Armor
       #HP%#         - Health percentage
       #MP%#         - Magicka percentage
       #PHYARM%#     - Physical Armor percentage
       #MAGARM%#     - Magical Armor percentage
-      #THREAT#      - Current Threat 
+      #THREAT#      - Current Threat
       #GRIT#        - Value of GRIT
       #FLOW#        - Value of FLOW
       #MIND#        - Value of MIND
@@ -441,7 +443,7 @@ commands:
       settings prompt <0-5>
 
       settings prompt 0 is the default prompt
-      
+
       Lastly: here is an example of a prompt:
       "---@.bred#HP#@.normal/@.bred#LHPMAX#@.normal HP--->"
     related:
@@ -449,14 +451,14 @@ commands:
       - colors
   settings:
     group: settings
-    syntax: 
-      - settings alias                                    
+    syntax:
+      - settings alias
       - settings alias <your alias> <a command>
-      - settings alias <your alias>                       
-      - settings <gmcp|viewroom|viewmap|debug> <on|off>   
+      - settings alias <your alias>
+      - settings <gmcp|viewroom|viewmap|debug> <on|off>
       - settings logout
-      - settings username <new username> 
-      - settings password <new password> 
+      - settings username <new username>
+      - settings password <new password>
       - settings prompt <custom prompt>
     description: |
       'settings alias' will display all aliases.
@@ -465,7 +467,7 @@ commands:
       debug       - toggle debug (dont)
       viewroom    - toggle to automatically view rooms with 'look' command when moving
       viewmap     - toggle to automatically view ascii map with 'map' command when moving
-      logout      - will log you out of the game and close the connection. 
+      logout      - will log you out of the game and close the connection.
       autobattler - toggle to automatically use skills during combat.
       prompt      - has its own help file "help prompt"
     related:
@@ -475,8 +477,8 @@ commands:
       - alias
   alias:
     group: settings
-    syntax: 
-      - settings alias                                    
+    syntax:
+      - settings alias
       - settings alias <your alias> <a command>
     description: |
       Aliases are macros that get set with "settings alias <your alias> <a command>".
@@ -507,8 +509,8 @@ commands:
   guest:
     group: other
     syntax:
-      - settings username <new username> 
-      - settings password <new password> 
+      - settings username <new username>
+      - settings password <new password>
     description: |
       As a guest, your character will NOT be saved when you log out.
       To make your character permanent, run "settings username <new username>".
@@ -528,7 +530,7 @@ commands:
       - help
       - help <helpfile>
     description: |
-      'help' alone shows all help files, you can then 'help <helpfile>' 
+      'help' alone shows all help files, you can then 'help <helpfile>'
       to view other helpfiles in search for what you need help with.
       If you still can't figure something out, contact @vinmonopolet on discord.
       Alternatively if someone is online, try shouting :)
@@ -576,14 +578,14 @@ commands:
       - online
   lore:
     group: other
-    syntax: 
+    syntax:
       - lore <item|npc|skill|stat>
     description: |
-      View all details of an item, npc or skill. Including room spawns, drop rates and what items 
+      View all details of an item, npc or skill. Including room spawns, drop rates and what items
       grant that skill as a bonus.
 
       You can lore for the following stats; grit, flow, mind, soul, hp, mp, armor and marmr.
-      Loring for a stat will display best in slot equipment at your level that boosts the 
+      Loring for a stat will display best in slot equipment at your level that boosts the
       stat you lored for the most.
 
       Example: "lore grit" -> "Best in slot equipment for grit".
@@ -623,7 +625,7 @@ commands:
       Rooms are not literal rooms, but more like positions in the world you are in.
       Rooms have a name, description, exits and items / characters in them.
       Rooms with a @greengreen@normal name are resting spots.
-      Rooms with a @badpurple@normal name are dungeon rooms. 
+      Rooms with a @badpurple@normal name are dungeon rooms.
       Where you do not regenerate passively.
       @badPurple@normal rooms are also instanced, meaning unless in a party, other players will not be seen.
       Rooms with a @yellowyellow@normal name are regular rooms. Where you do regenerate passively.
@@ -631,9 +633,9 @@ commands:
       - look
       - map
       - party
-  look: 
+  look:
     group: other
-    syntax: 
+    syntax:
       - look
       - look <character|item>
     description: |
@@ -642,9 +644,9 @@ commands:
     related:
       - map
   #    - scan
-  #scan: 
+  #scan:
   #  group: other
-  #  syntax: 
+  #  syntax:
   #    - scan
   #  description: |
  #     Scan your surroundings in a 3x3 grid, display all characters and their locations.
@@ -665,7 +667,7 @@ commands:
       - <get|drop|look|talk|equipment> <index>.<item|character>
     description: |
       indexes, or indexing, is a way of specifying which character or item you are targetting.
-      if you have more than one Handaxe in your inventory, it could be difficult to specify which 
+      if you have more than one Handaxe in your inventory, it could be difficult to specify which
       one you want to look at.
 
       You can use indexes by specifying a number. For example;
@@ -686,7 +688,7 @@ commands:
       After using the talk command, you might get some response options.
       Type the number without anything extra to respond to what the npc has said.
       When you no longer see any options, the conversation is over.
-      You can leave a conversation or just not respond at any time and the 
+      You can leave a conversation or just not respond at any time and the
       conversation will end.
     related:
       - indexes
@@ -698,8 +700,8 @@ commands:
     description: |
       You can move from room to room via exits.
       You use the go command and specify an exit like so: "go west".
-      
-      Directions like NORTH EAST SOUTH WEST UP and DOWN will work 
+
+      Directions like NORTH EAST SOUTH WEST UP and DOWN will work
       without the "go" command.
 
       Likewise N E S W U and D will also function as valid exits if present.
@@ -741,7 +743,7 @@ commands:
       Colors can be used to enhance the "say" command.
       Or can be used to customize your prompt with "set prompt"
 
-      To use a color, you need to prefix it with a "@" like "@.red" 
+      To use a color, you need to prefix it with a "@" like "@.red"
       (remove the ".") inbetween
 
       example: "say @.bgyellowHELLO@.normal" -> "say @bgyellowHELLO@normal"
@@ -770,5 +772,3 @@ commands:
       Use "calculator 255*0.3" to quickly get the value in return
     related:
       - nothing
-
-
