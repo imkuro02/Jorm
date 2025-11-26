@@ -194,6 +194,10 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
     for row in SHEET['items_misc']:
         x = SHEET['items_misc']
         for index in range(0, len(x[row])):
+
+            if bool(x['dont_load'][index]):
+                continue
+
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':       x['premade_id'][index],
                 'name':             x['name'][index],
@@ -221,6 +225,9 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
     for row in SHEET['items_consumable']:
         x = SHEET['items_consumable']
         for index in range(0, len(x[row])):
+
+            if bool(x['dont_load'][index]):
+                continue
 
             ITEMS[x['premade_id'][index]] = {
                 'premade_id':       x['premade_id'][index],
@@ -252,6 +259,9 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
         for index in range(0, len(x[row])):
             #utils.debug_print(x['premade_id'][index])
             if bool(x['legacy'][index]):
+                continue
+
+            if bool(x['dont_load'][index]):
                 continue
 
             ITEMS[x['premade_id'][index]] = {
