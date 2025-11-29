@@ -1,5 +1,5 @@
 {
-    "SHA-256": "8acf764c4af0418b3bb003cbcf20870d63ce28dc0b619187fc9234a648b6ee42",
+    "SHA-256": "32fd8c7186e16cdfef086b6c42d9c2deff263adf15f04283671ce6797e5d5ed9",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -9122,7 +9122,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:beer_stein_chug=1,special:soul_gain=1,special:skill_bonus_swing=1",
+            "bonuses": "skill_level:beer_stein_chug=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -9134,7 +9134,7 @@
                 "inv_slots": 0
             },
             "requirements": {
-                "lvl": 10,
+                "lvl": 1,
                 "hp_max": 0,
                 "phy_armor_max": 0,
                 "mag_armor_max": 0,
@@ -18159,6 +18159,53 @@
             "drop_chance_range_under": 3,
             "drop_chance_range_over": 7,
             "drop_chance_stat_filter": "soul",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "test_0": {
+            "premade_id": "test_0",
+            "name": "Sword of testing",
+            "description": "This is a test item kuro will be using for fucking around",
+            "description_room": null,
+            "invisible": 0.0,
+            "item_type": "equipment",
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "slot": "weapon",
+            "bonuses": "special:soul_gain=1,special:skill_bonus_swing=1",
+            "stats": {
+                "grit": 0,
+                "hp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "requirements": {
+                "lvl": 10,
+                "hp_max": 0,
+                "phy_armor_max": 0,
+                "mag_armor_max": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "inv_slots": 0
+            },
+            "drop_tags": [
+                "none"
+            ],
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "grit",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         }

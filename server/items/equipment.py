@@ -456,7 +456,7 @@ class Equipment(Item):
 
         reforge_chances = {}
         _chance = 0
-        for i in reforge_choices: # reverse this list
+        for i in reforge_choices:
             #utils.debug_print('choice')
             reforge_chances[i['reforge_id']] = {'start':_chance + i['roll_chance'], 'range': i['roll_chance']}
             _chance = _chance + i['roll_chance']
@@ -543,15 +543,16 @@ class Equipment(Item):
             return
 
         reforges_to_apply = []
-        reforges_to_apply.append(self.get_reforge_id())
+
         for i in self.manager.bonuses.values():
             if i.type == BonusTypes.SPECIAL:
                 #utils.debug_print(f'>>{i.key}')
                 reforges_to_apply.append(i.key)
+        reforges_to_apply.append(self.get_reforge_id())
 
         #utils.debug_print(reforges_to_apply)
 
-        for reforge_id in reforges_to_apply:
+        for reforge_id in reversed(reforges_to_apply):
 
             if reforge_id == None:
                 continue
