@@ -87,6 +87,7 @@ class EquipmentBonusManager:
 
 
         if (bonus.type != BonusTypes.REFORGE
+            and bonus.type != BonusTypes.SPECIAL
             and bonus.type != BonusTypes.SKILL_LEVEL
             and bonus.type != BonusTypes.STAT
             and bonus.type != BonusTypes.STAT_REQ):
@@ -99,6 +100,11 @@ class EquipmentBonusManager:
                 return False
 
         if bonus.type == BonusTypes.REFORGE:
+            if bonus.key not in EQUIPMENT_REFORGES:
+                utils.debug_print(f'{bonus.key} def check_if_valid(self, bonus) not in ')
+                return False
+
+        if bonus.type == BonusTypes.SPECIAL:
             if bonus.key not in EQUIPMENT_REFORGES:
                 utils.debug_print(f'{bonus.key} def check_if_valid(self, bonus) not in ')
                 return False
@@ -329,17 +335,21 @@ class Equipment(Item):
                 col = f'{Color.GOOD}+' if bonus.val >= 1 else f'{Color.BAD}'
                 match bonus.type:
                     case BonusTypes.REFORGE:
-                        output += f'{Color.TOOLTIP}Reforged: "{Color.IMPORTANT}{EQUIPMENT_REFORGES[bonus.key]["name"]}{Color.TOOLTIP}"{Color.NORMAL}\n'
-                        output += f'{EQUIPMENT_REFORGES[bonus.key]["description"]}\n'
+                        output += f'+ {Color.TOOLTIP}Reforged: "{Color.IMPORTANT}{EQUIPMENT_REFORGES[bonus.key]["name"]}{Color.TOOLTIP}"{Color.NORMAL}\n'
+                        output += f'  {EQUIPMENT_REFORGES[bonus.key]["description"]}\n'
+
+                    case BonusTypes.SPECIAL:
+                        #output += f'{Color.TOOLTIP}Special: "{Color.IMPORTANT}{EQUIPMENT_REFORGES[bonus.key]["name"]}{Color.TOOLTIP}"{Color.NORMAL}\n'
+                        output += f'+ {EQUIPMENT_REFORGES[bonus.key]["description"]}\n'
 
                     case BonusTypes.SKILL_LEVEL:
-                        output += f'Skill {SKILLS[bonus.key]["name"]} {col}{bonus.val}{Color.BACK}\n'
+                        output += f'+ Skill {SKILLS[bonus.key]["name"]} {col}{bonus.val}{Color.BACK}\n'
 
                     case BonusTypes.STAT:
-                        output += f'Stat {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n'
+                        output += f'+ Stat {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n'
 
                     case BonusTypes.STAT_REQ:
-                        output += f'Required {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n'
+                        output += f'+ Required {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n'
 
         if self.equiped == False:
             output += f'\n{Color.TOOLTIP}On equip changes:{Color.NORMAL}\n'
@@ -522,6 +532,9 @@ class Equipment(Item):
     # called at end of turn
     def finish_turn(self):
 
+        #for i in self.manager.bonuses.values():
+        #   utils.debug_print(f'{self.name}, {i.id}: {i.type} {i.key} {i.val}')
+
         if self.get_reforge_id():
             self.reforge(self.get_reforge_id())
 
@@ -529,47 +542,57 @@ class Equipment(Item):
             #utils.debug_print(self.name,'not equipped')
             return
 
-        reforge_id = self.get_reforge_id()
-        if reforge_id == None:
-            return
+        reforges_to_apply = []
+        reforges_to_apply.append(self.get_reforge_id())
+        for i in self.manager.bonuses.values():
+            if i.type == BonusTypes.SPECIAL:
+                #utils.debug_print(f'>>{i.key}')
+                reforges_to_apply.append(i.key)
 
-        if self.inventory_manager.owner.status == ActorStatusType.DEAD:
-            return
+        #utils.debug_print(reforges_to_apply)
 
-        reforge_obj = None
-        affliction_to_create = f'Reforge{EQUIPMENT_REFORGES[reforge_id]["affliction_to_create"]}'
-        try:
-            reforge_obj = getattr(affects, affliction_to_create)
-        except AttributeError:
-            reforge_obj = affects.AffectReforge
-            err = f'cant set affliction object of {affliction_to_create} on {self} of id {self.premade_id} of unique id {self.id} finish_turn()'
-            self.inventory_manager.owner.simple_broadcast(err,err)
+        for reforge_id in reforges_to_apply:
+
+            if reforge_id == None:
+                continue
+
+            if self.inventory_manager.owner.status == ActorStatusType.DEAD:
+                continue
+
+            reforge_obj = None
+            affliction_to_create = f'Reforge{EQUIPMENT_REFORGES[reforge_id]["affliction_to_create"]}'
+            try:
+                reforge_obj = getattr(affects, affliction_to_create)
+            except AttributeError:
+                reforge_obj = affects.AffectReforge
+                err = f'cant set affliction object of {affliction_to_create} on {self} of id {self.premade_id} of unique id {self.id} finish_turn()'
+                self.inventory_manager.owner.simple_broadcast(err,err)
 
 
-        if reforge_obj:
-            reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
-            #reforge_name = 'Reforged'
-            #reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
+            if reforge_obj:
+                reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
+                #reforge_name = 'Reforged'
+                #reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
 
-            slot_name = EquipmentSlotType.name[self.slot]
+                slot_name = EquipmentSlotType.name[self.slot]
 
-            wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
-            #affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
-            affliction_name = f'{wear_or_wield} {self.name}'
-            reforge_description = f'Your {slot_name} item is {reforge_name}'
-            if reforge_obj == affects.AffectReforge:
-                reforge_description = reforge_description + ' (Affliction didnt load properly)'
+                wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
+                #affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
+                affliction_name = f'{wear_or_wield} {reforge_name} {self.name}'
+                reforge_description = f'Your {slot_name} item is {reforge_name}'
+                if reforge_obj == affects.AffectReforge:
+                    reforge_description = reforge_description + ' (Affliction didnt load properly)'
 
-            aff = reforge_obj(
-                affect_source_actor = self.inventory_manager.owner,
-                affect_target_actor = self.inventory_manager.owner,
-                name = affliction_name,
-                description = reforge_description,
-                turns = 3,
-                source_item = self,
-                reforge_variables = EQUIPMENT_REFORGES[reforge_id]['vars']
-            )
-            self.inventory_manager.owner.affect_manager.set_affect_object(aff)
+                aff = reforge_obj(
+                    affect_source_actor = self.inventory_manager.owner,
+                    affect_target_actor = self.inventory_manager.owner,
+                    name = affliction_name,
+                    description = reforge_description,
+                    turns = 3,
+                    source_item = self,
+                    reforge_variables = EQUIPMENT_REFORGES[reforge_id]['vars']
+                )
+                self.inventory_manager.owner.affect_manager.set_affect_object(aff)
 
 
     # called whenever hp updates in any way

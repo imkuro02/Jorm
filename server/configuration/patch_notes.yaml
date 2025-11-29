@@ -9,6 +9,13 @@ versions:
     - Temporarely removed some items with unfinished names, they would drop from mobs by accident
       if you see an item "error" it means that that item is temporarely removed, and might
       be re-added later as an actual usable item
+    - equipment bonus types now include, stat, requirement, skill, reforge and special
+      stat boosts a stat (flat)
+      requirement is a stat requirement (flat)
+      skill boosts a skill level by n
+      reforge applies a special affliction on equip
+      special uses same system as reforge, but these cannot be reforged away, and apply to certain items only
+      special might end up being unused but if i ever want to use it its there
   '171125':
     id: '171125'
     title: Skills
