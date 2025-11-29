@@ -9122,7 +9122,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "slot": "trinket",
-            "bonuses": "skill_level:beer_stein_chug=1,special:skill_bonus_swing=1",
+            "bonuses": "skill_level:beer_stein_chug=1,special:soul_gain=1,special:skill_bonus_swing=1",
             "stats": {
                 "grit": 0,
                 "hp_max": 0,
@@ -9134,7 +9134,7 @@
                 "inv_slots": 0
             },
             "requirements": {
-                "lvl": 1,
+                "lvl": 10,
                 "hp_max": 0,
                 "phy_armor_max": 0,
                 "mag_armor_max": 0,

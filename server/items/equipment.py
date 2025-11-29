@@ -120,7 +120,7 @@ class EquipmentBonusManager:
         #utils.debug_print(bonus.__dict__, bonus.type == 'reforge')
         #utils.debug_print(EQUIPMENT_REFORGES[bonus.key])
         match bonus.type:
-            case BonusTypes.REFORGE:
+            case BonusTypes.REFORGE | BonusTypes.SPECIAL:
                 if EQUIPMENT_REFORGES[bonus.key]['affliction_to_create'] == 'StatBonusPerItemLevel':
                     reforge_variables = EQUIPMENT_REFORGES[bonus.key]['vars']
                     stat = reforge_variables['var_a']
@@ -209,7 +209,7 @@ class EquipmentBonusManager:
                 #utils.debug_print('temp removing reforge', bon)
 
         match bonus.type:
-            case BonusTypes.REFORGE:
+            case BonusTypes.REFORGE | BonusTypes.SPECIAL:
                 if EQUIPMENT_REFORGES[bonus.key]['affliction_to_create'] == 'StatBonusPerItemLevel':
                     reforge_variables = EQUIPMENT_REFORGES[bonus.key]['vars']
                     stat = reforge_variables['var_a']
@@ -456,7 +456,7 @@ class Equipment(Item):
 
         reforge_chances = {}
         _chance = 0
-        for i in reforge_choices:
+        for i in reforge_choices: # reverse this list
             #utils.debug_print('choice')
             reforge_chances[i['reforge_id']] = {'start':_chance + i['roll_chance'], 'range': i['roll_chance']}
             _chance = _chance + i['roll_chance']

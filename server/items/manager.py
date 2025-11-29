@@ -9,6 +9,7 @@ from items.consumable import Consumable
 from items.equipment import Equipment, EquipmentBonus
 from items.error import ErrorItem
 import random
+import utils
 random = random.Random()
 
 def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id is used for equipment seeds
@@ -28,13 +29,13 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
         new_item = Equipment()
         new_item.new = True
 
-        
+
         for key in ITEMS[premade_id]['stats']:
             new_item.stat_manager.stats[key] += ITEMS[premade_id]['stats'][key]
 
         for key in ITEMS[premade_id]['requirements']:
             new_item.stat_manager.reqs[key] += ITEMS[premade_id]['requirements'][key]
-        
+
         if unique_id == None:
             unique_id = new_item.id
         else:
@@ -47,15 +48,15 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
                     _key = b.split(':')[1].split('=')[0]
                     _val = int(b.split('=')[1])
                     val = _val
-                    boon = EquipmentBonus(  
-                                            type = _type, 
-                                            key = _key, 
+                    boon = EquipmentBonus(
+                                            type = _type,
+                                            key = _key,
                                             val = val,
                                             premade_bonus = True
                                         )
                     new_item.manager.add_bonus(boon)
         except Exception as e:
-            utils.debug_print(premade_id)
+            utils.debug_print(f'{premade_id} error on creation {e}')
 
         #if not max_stats:
         #    random.seed(new_item.id)
@@ -66,9 +67,9 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
         #        if new_val >= 0:
         #            continue
 
-       #         boon = EquipmentBonus(  
-       #                                 type = 'stat', 
-       #                                 key = stat, 
+       #         boon = EquipmentBonus(
+       #                                 type = 'stat',
+       #                                 key = stat,
        #                                 val = new_val,
        #                                 premade_bonus = True
        #                             )
@@ -87,19 +88,19 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
 
     if item_type == ItemType.SCENERY:
         new_item = Scenery()
-        
-        
+
+
 
 
     if item_type == ItemType.CONSUMABLE:
         new_item = Consumable()
 
-        
+
         new_item.skill_manager.skills = ITEMS[premade_id]['skills']
         new_item.use_perspectives = ITEMS[premade_id]['use_perspectives']
 
 
-    
+
     new_item.name = ITEMS[premade_id]['name']
     new_item.description = ITEMS[premade_id]['description']
     new_item.description_room = ITEMS[premade_id]['description_room']
@@ -111,7 +112,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
         new_item.stack_max = ITEMS[premade_id]['stack_max_amount']
 
     new_item.premade_id = ITEMS[premade_id]['premade_id']
-    
+
     new_item.crafting_recipe_ingredients =  ITEMS[premade_id]['crafting_recipe_ingredients']
     new_item.crafting_ingredient_for =      ITEMS[premade_id]['crafting_ingredient_for']
 
@@ -120,12 +121,10 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
     # if there is no uuid present in the item dict received, then that item is being created for the first time
     # and if there is uuid present, then the item is most likely loaded from the database and should
     # receive its id, and not get a new randomly generated one
-    
+
 
     return new_item
-  
+
 
 def save_item(item):
     return item.to_dict()
-
-
