@@ -164,6 +164,7 @@ class UpdateChecker:
 
         self.actor.protocol.send_gmcp(output, "Actors")
 
+    '''
     def tick_show_map(self):
         split = ","
 
@@ -280,7 +281,7 @@ class UpdateChecker:
         self.last_grid = _grid
         # self.actor.sendLine(str(_grid))
         self.protocol.send_gmcp(_grid, "Map")
-
+'''
     def tick_send_time(self):
         time = self.actor.room.world.game_time.get_game_time()
         self.actor.protocol.send_gmcp(

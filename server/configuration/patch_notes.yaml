@@ -16,6 +16,8 @@ versions:
       reforge applies a special affliction on equip
       special uses same system as reforge, but these cannot be reforged away, and apply to certain items only
       special might end up being unused but if i ever want to use it its there
+    - Map has been altered and several areas have been moved around
+    - Fixed a bug where secret up and down exits would render on the minimap
   '171125':
     id: '171125'
     title: Skills

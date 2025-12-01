@@ -320,7 +320,7 @@ def command_map(self, line, return_gmcp = False):
             cell = ''
             if room.doorway:
                 cell += Art.DOOR_L
-            elif 'up' in [ x.direction for x in room.exits ]:
+            elif 'up' in [x.direction for x in room.exits if not x.secret]:
                 cell += Art.STAIRS_UP
             else:
                 cell += Art.EMPTY
@@ -352,7 +352,7 @@ def command_map(self, line, return_gmcp = False):
             # right
             if room.doorway:
                 cell += Art.DOOR_R
-            elif 'down' in [ x.direction for x in room.exits ]:
+            elif 'down' in [x.direction for x in room.exits if not x.secret]:
                 cell += Art.STAIRS_DOWN
             else:
                 cell += Art.EMPTY
