@@ -1,5 +1,5 @@
 {
-    "SHA-256": "32fd8c7186e16cdfef086b6c42d9c2deff263adf15f04283671ce6797e5d5ed9",
+    "SHA-256": "717296f628ceaaa26d2fb19e8c0eaae0edf24e66b4b60a52961b6d18f6b6a0ee",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -659,7 +659,7 @@
             "npc_id": "red_cap",
             "ai": "Enemy",
             "name": "Red Cap",
-            "description": "A large red-capped mushroom with grayish spots. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs; its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump",
+            "description": "The mushroom is 4 feet tall, it has a large red cap. It can move by hopping around, making a thud with each jump.",
             "stats": {
                 "grit": 15,
                 "hp": 80,
@@ -774,7 +774,7 @@
             "npc_id": "blue_mushroom",
             "ai": "Enemy",
             "name": "Blue Mushroom",
-            "description": "A large orange-capped mushroom with grayish spots, the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs; its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops as it moves, its body making a loud thud with each short jump.",
+            "description": "The mushroom is 4 feet tall, it has a large blue cap. It can move by hopping around, making a thud with each jump.",
             "stats": {
                 "grit": 10,
                 "hp": 80,
@@ -1001,7 +1001,7 @@
             "npc_id": "horned_mushroom",
             "ai": "Enemy",
             "name": "Horned Mushroom",
-            "description": "A large blue-capped mushroom with grayish spots. The mushroom cap is covered in thorns the size of glass bottles. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs; its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "The mushroom is 4 feet tall, it has a large cyan cap, which is covered in thorns. It can move by hopping around, making a thud with each jump.",
             "stats": {
                 "grit": 25,
                 "hp": 100,
@@ -1176,7 +1176,7 @@
             "npc_id": "mushroom_soldier",
             "ai": "Enemy",
             "name": "Mushroom Soldier",
-            "description": "A large red-capped mushroom with grayish spots. The mushroom cap is covered in thorns the size of glass bottles. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs, yet it holds a shield in one spore-covered hand and a sword in the other. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "The mushroom is 4 feet tall, it has a large red cap. It can move by hopping around, making a thud with each jump. It has no arms yet stands ready with a spear by its side.",
             "stats": {
                 "grit": 30,
                 "hp": 200,
@@ -1232,7 +1232,7 @@
             "npc_id": "mushroom_thief",
             "ai": "Enemy",
             "name": "Mushroom Thief",
-            "description": "A large purple-capped mushroom with grayish spots. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs, yet it holds a dagger in one spore-covered hand. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "The mushroom is 4 feet tall, it has a large red cap. It can move by hopping around, making a thud with each jump. It has no arms yet you see a knife at the ready.",
             "stats": {
                 "grit": 10,
                 "hp": 140,
@@ -1283,7 +1283,7 @@
             "npc_id": "mushroom_mage",
             "ai": "Enemy",
             "name": "Mushroom Mage",
-            "description": "A large blue-capped mushroom with grayish spots. It is the size of a large dog. Its stem is the color of an eggshell. The cap flares out in a way that resembles a wizard’s hat, giving it a mystical appearance. It has no arms or legs, yet it holds a staff in one spore-covered hand. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "The mushroom is 4 feet tall, it has a large blue cap. It can move by hopping around, making a thud with each jump. It murmurs and chants, mycelium covers the lower part of its face, resembling a long white beard.",
             "stats": {
                 "grit": 10,
                 "hp": 120,
@@ -1339,7 +1339,7 @@
             "npc_id": "mushroom_cleric",
             "ai": "Enemy",
             "name": "Mushroom Cleric",
-            "description": "A large yellow-capped mushroom with grayish spots. The mushroom cap is covered in blunt thorns the size of fists. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs, yet it holds a mace in one spore-covered hand. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "The mushroom is 4 feet tall, it has a large yellow cap. It can move by hopping around, making a thud with each jump.",
             "stats": {
                 "grit": 10,
                 "hp": 100,
@@ -1396,7 +1396,7 @@
             "npc_id": "mushroom_zombie",
             "ai": "Enemy",
             "name": "Mushroom zombie",
-            "description": "A large brown-capped mushroom with grayish spots. It is the size of a large dog. Its stem is the color of an eggshell, mottled with patches of decay. Its cap looks ragged and weathered, as if rotting away. It has no arms or legs. Its eyes glare at you with a vacant, soulless stare. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "The mushroom is 4 feet tall, it has a large purple cap. It can move by hopping around, making a thud with each jump. Its eyes are lifeless, and the stem partly rotted.",
             "stats": {
                 "grit": 30,
                 "hp": 300,
@@ -1454,7 +1454,7 @@
             "npc_id": "zombie",
             "ai": "Enemy",
             "name": "Zombie",
-            "description": "A tall humanoid with purple-tinged skin, mottled and uneven in tone. Its body is gaunt, with skin stretched tight over protruding bones. Its movements are slow and jerky, accompanied by low, guttural groans.",
+            "description": "A tall humanoid with purple skin, mottled and uneven in tone. Its body is gaunt, with skin stretched tight over protruding bones. Its movements are slow and jerky, accompanied by low, guttural groans.",
             "stats": {
                 "grit": 30,
                 "hp": 300,
