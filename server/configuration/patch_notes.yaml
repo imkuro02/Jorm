@@ -1,7 +1,7 @@
 versions:
   '261125':
     id: '261125'
-    title: Skills
+    title: New map and stat changes
     unixtime: 1761899677
     features:
     - Keep is now two commands, keep and unkeep.
@@ -18,6 +18,11 @@ versions:
       special might end up being unused but if i ever want to use it its there
     - Map has been altered and several areas have been moved around
     - Fixed a bug where secret up and down exits would render on the minimap
+    - To speed up combat, all damage is increased by a flat amount of your level.
+      If you are level 10, all danage you deal has a bonus of 10 always
+      (Same goes for enemies)
+    - Equipment items now display item level in their name
+    - Your Turn combat prompt will display your stat prompt right afterwards when in combat
   '171125':
     id: '171125'
     title: Skills

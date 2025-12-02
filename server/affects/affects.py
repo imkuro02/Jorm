@@ -438,12 +438,15 @@ class AffectEnrage(Affect):
         self.bonus_grit = int(self._stats[StatType.GRIT] * self.bonus)
         #self.bonus_armor = -int(self._stats[StatType.PHYARMOR] * self.bonus)
         #self.bonus_marmor = -int(self._stats[StatType.MAGARMOR] * self.bonus)
-        self.affect_target_actor.stat_manager.stats[StatType.GRIT] += self.bonus_grit
+        #self.affect_target_actor.stat_manager.stats[StatType.GRIT] += self.bonus_grit
+        self.affect_target_actor.stat_manager.gain_stat_points(StatType.GRIT, self.bonus_grit)
         #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] += self.bonus_armor
         #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] += self.bonus_marmor
 
     def on_finished(self, silent=False):
-        self.affect_target_actor.stat_manager.stats[StatType.GRIT] -= self.bonus_grit
+        #self.affect_target_actor.stat_manager.stats[StatType.GRIT] -= self.bonus_grit
+        self.affect_target_actor.stat_manager.gain_stat_points(StatType.GRIT, -self.bonus_grit)
+        self.affect_target_actor.stat_manager.hp_mp_clamp_update()
         #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] -= self.bonus_armor
         #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] -= self.bonus_marmor
         return super().on_finished(silent)
@@ -476,10 +479,11 @@ class AffectBoostStat(Affect):
     def on_applied(self):
         super().on_applied()
         self.new_stat = int( self.affect_target_actor.stat_manager.stats[self.stat] * self.bonus )
-        self.affect_target_actor.stat_manager.stats[self.stat] += self.new_stat
+        #self.affect_target_actor.stat_manager.stats[self.stat] += self.new_stat
+        self.affect_target_actor.stat_manager.gain_stat_points(self.stat, self.new_stat)
 
     def on_finished(self, silent=False):
-        self.affect_target_actor.stat_manager.stats[self.stat] -= self.new_stat
+        self.affect_target_actor.stat_manager.gain_stat_points(self.stat, -self.new_stat)
         self.affect_target_actor.stat_manager.hp_mp_clamp_update()
         return super().on_finished(silent)
 

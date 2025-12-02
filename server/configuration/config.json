@@ -1,5 +1,5 @@
 {
-    "SHA-256": "717296f628ceaaa26d2fb19e8c0eaae0edf24e66b4b60a52961b6d18f6b6a0ee",
+    "SHA-256": "fcd0a0e5b68117f24dc2c1555bb39da9c15a53429c4f457acfc65ad183c0689d",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4886,7 +4886,7 @@
         "regen_hp_30": {
             "skill_id": "regen_hp_30",
             "name": "Minor Health Regen",
-            "description": "Instantly regenerate 30% of your maximum health.",
+            "description": "Instantly regenerate 30% of your maximum health.\n",
             "script_to_run": "RegenHP30",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -4920,7 +4920,7 @@
         "regen_phy_armor_30": {
             "skill_id": "regen_phy_armor_30",
             "name": "Minor Physique Regen",
-            "description": "Instantly regenerate 30% of your maximum physical armor.",
+            "description": "Instantly regenerate 30% of your maximum physical armor.\n",
             "script_to_run": "RegenPhyArmor30",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -4954,7 +4954,7 @@
         "regen_mag_armor_30": {
             "skill_id": "regen_mag_armor_30",
             "name": "Minor Magic Regen",
-            "description": "Instantly regenerate 30% of your maximum magical armor.",
+            "description": "Instantly regenerate 30% of your maximum magical armor.\n",
             "script_to_run": "RegenMagArmor30",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -4988,7 +4988,7 @@
         "beer_stein_chug": {
             "skill_id": "beer_stein_chug",
             "name": "Chug",
-            "description": "Take a big chug, healing BONUS% of health and all armor.",
+            "description": "Take a big chug, healing BONUS% of health and all armor.\n",
             "script_to_run": "RefreshingDrink",
             "target_others_is_valid": false,
             "target_item_is_valid": false,

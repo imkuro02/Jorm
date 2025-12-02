@@ -795,6 +795,8 @@ class Actor:
                 self.sendLine(output)
                 self.show_prompts(self.room.combat.order)
             '''
+        if type(self).__name__ == "Player":
+            self.sendLine(self.prompt(self))
 
         if self.room == None:
             return

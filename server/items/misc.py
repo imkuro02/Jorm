@@ -1,5 +1,5 @@
 import uuid
-from configuration.config import ItemType, ITEMS, Color, BonusTypes, EQUIPMENT_REFORGES
+from configuration.config import ItemType, ITEMS, Color, BonusTypes, EQUIPMENT_REFORGES, StatType
 import random
 from utils import get_object_parent
 from utils import REFTRACKER
@@ -23,15 +23,15 @@ class Item:
         self.can_pick_up = True
         # if invisible is true, then the room wont display it in the list of items on ground
         # but if description_room is anything but false, that will still be displayed
-        self.invisible = False 
+        self.invisible = False
 
         # crafting
         self.crafting_recipe_ingredients = []
         self.crafting_ingredient_for = []
 
-        
+
         REFTRACKER.add_ref(self)
-            
+
     def can_tinker_with(self):
         if self.keep:
             #
@@ -42,7 +42,7 @@ class Item:
                 return False
 
         return True
-        
+
     def tick(self):
         if self.ambience == None:
             return
@@ -59,10 +59,10 @@ class Item:
                 owner = owner.room
 
             if len(owner.actors) >= 1:
-                
+
                 ac = random.choice(list(owner.actors.values()))
                 ac.simple_broadcast(self.ambience, self.ambience, sound = self.ambience_sfx)
-    
+
     def pretty_name(self, rank_only = False):
         def get_article(word): # chatGPT
             vowels = "aeiou"
@@ -87,7 +87,7 @@ class Item:
 
             case 'consumable':
                 col = '@yellow'
-            
+
         output = f'{col}{self.name}@normal'
 
         if self.item_type == ItemType.EQUIPMENT:
@@ -96,23 +96,24 @@ class Item:
                 reforge_name = EQUIPMENT_REFORGES[reforge_id]['name']
                 if reforge_name != None:
                     output = f'@yellow{reforge_name} {col}{self.name}@normal'
-        
+
         #if rank_only:
-        #    if self.item_type == ItemType.EQUIPMENT:  
-        #        if self.rank != 0: 
+        #    if self.item_type == ItemType.EQUIPMENT:
+        #        if self.rank != 0:
         #            if self.rank > 0:
         #                output = output + f' (@green+{self.rank}@normal)'
         #            else:
         #                output = output + f' (@red{self.rank}@normal)'
         #        return output
-                
-        if self.item_type == ItemType.EQUIPMENT:     
-            #if self.rank != 0: 
+
+        if self.item_type == ItemType.EQUIPMENT:
+            #if self.rank != 0:
             #    if self.rank > 0:
             #        output = output + f' (@green+{self.rank}@normal)'
             #    else:
             #        output = output + f' (@red{self.rank}@normal)'
-            
+            lvl = self.stat_manager.reqs[StatType.LVL]
+            output = f'{Color.ITEM_EQUIPPED}{lvl:2}{Color.NORMAL}Lv ' + output
             if self.equiped:   output = output + f' ({Color.ITEM_EQUIPPED}E{Color.NORMAL})'
             if self.keep:      output = output + f' ({Color.ITEM_KEEP}K{Color.NORMAL})'
             if self.new:       output = output + f' ({Color.ITEM_NEW}N{Color.NORMAL})'
@@ -124,7 +125,7 @@ class Item:
             if self.crafting_ingredient_for != []: output = output + f' ({Color.ITEM_MATERIAL}M{Color.NORMAL})'
 
         return output
-       
+
     def to_dict(self):
         my_dict = {
             'id': self.id,
@@ -151,8 +152,8 @@ class Item:
     def identify(self, identifier = None):
         output = f'{self.pretty_name()}\n'
         output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
-        
-        
+
+
         if self.crafting_ingredient_for != []:
             output += '\n'
             output += f'Ingredient for: '
@@ -172,9 +173,9 @@ class Item:
             #output = output[:-2]
             output += '\n'
 
-        
-            
-        
+
+
+
         self.new = False
         return output
 
@@ -205,15 +206,15 @@ class Item:
 
     def take_damage_after_calc(self, damage_obj):
         return damage_obj
-    
+
     def deal_damage(self, damage_obj):
         return damage_obj
-    
+
     def dealt_damage(self, damage_obj):
         #if self.stack >= 10:
         #    self.inventory_manager.owner.simple_broadcast(f'You are carrying so much of {self.name} it deals extra damage!','')
         return damage_obj
-    
+
     # called when exp is gained
     def gain_exp(self, exp):
         return exp
