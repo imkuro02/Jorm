@@ -936,6 +936,19 @@ class SkillPortal(Skill):
             e.talk_to(self.user)
             e.die()
 
+class SkillPromise(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+           # damage_bonus = self.script_values['bonus'][self.users_skill_level]
+            stealthed_affect = affects.AffectPromise(
+                affect_source_actor = self.user,
+                affect_target_actor = self.other,
+                name = 'Promised',
+                description = f'Pause all healing and damage',
+                turns = int(self.script_values['duration'][self.users_skill_level]),
+            )
+            self.other.affect_manager.set_affect_object(stealthed_affect)
 class SkillAlchemy(Skill):
     def use(self):
         super().use()

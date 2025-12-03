@@ -574,6 +574,52 @@ class AffectDOT(Affect):
 
         damage_obj.run()
 
+class AffectPromise(Affect):
+
+    def merge_request(self, affect_to_merge):
+        return True
+
+    def on_applied(self):
+        super().on_applied()
+        self.accumulated_damage = 0
+        self.hp = self.affect_target_actor.stat_manager.stats[StatType.HP]
+        self.pa = self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR]
+        self.ma = self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR]
+
+    def on_finished(self, silent = False):
+        super().on_finished(silent = False)
+        if self.accumulated_damage >= 0:
+            return
+
+        damage_obj = Damage(
+            damage_source_actor = self.affect_target_actor,
+            damage_taker_actor = self.affect_target_actor,
+            damage_source_action = self,
+            damage_value = -self.accumulated_damage,
+            damage_type = DamageType.PURE,
+        )
+
+        damage_obj.run()
+
+
+
+    def take_damage_after_calc(self, damage_obj):
+        # self.affect_target_actor.simple_broadcast('absorbed','absorbed')
+        #if self.turns <= 0:
+        #    return damage_obj
+
+        if damage_obj.damage_type == DamageType.HEALING:
+            self.accumulated_damage += damage_obj.damage_value
+        elif damage_obj.damage_type != DamageType.CANCELLED:
+            self.accumulated_damage += damage_obj.damage_value
+
+        self.affect_target_actor.stat_manager.stats[StatType.HP] = self.hp
+        self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = self.pa
+        self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = self.ma
+
+        return damage_obj
+
+
 # XD Reforges
 
 class AffectReforge(Affect):

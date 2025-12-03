@@ -1,5 +1,5 @@
 {
-    "SHA-256": "fcd0a0e5b68117f24dc2c1555bb39da9c15a53429c4f457acfc65ad183c0689d",
+    "SHA-256": "a8481ae8a3afb6a967448c2b70bde9c47cdb59f3c82aad4af3ea210ba798ecb9",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -2784,8 +2784,9 @@
             "include_in_daily_quests": false,
             "skills": {
                 "magic_missile": 2,
-                "mend_armor": 2,
-                "thorns": 2
+                "chain_lightning": 2,
+                "cure_light_wounds": 2,
+                "promise": 2
             },
             "loot": {
                 "rock": 20,
@@ -6029,6 +6030,52 @@
                 ],
                 "delay": [
                     1
+                ]
+            }
+        },
+        "promise": {
+            "skill_id": "promise",
+            "name": "Promise",
+            "description": "Cast promise on your target, all damage and healing is delayed for DURATION of turns.\nAt the end of the affliction the target receives damage - healing as pure damage, the target cannot heal beyond their current health.\n",
+            "script_to_run": "Promise",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 6.0,
+            "use_perspectives": {
+                "use_case_name": "use_cure_light_wounds",
+                "you on you": "You pray for yourself",
+                "you on other": "You pray for #OTHER#",
+                "user on user": "#USER# prays for themselves",
+                "user on you": "#USER# prays for you",
+                "user on other": "#USER# prays for #OTHER#",
+                "you on you fail": "You lose concentration while praying for yourself",
+                "you on other fail": "You lose concentration while praying for #OTHER#",
+                "user on user fail": "#USER# loses their concentration while praying for themselves",
+                "user on you fail": "#USER# loses their concentration while praying for you",
+                "user on other fail": "#USER# loses their concentration while praying for #OTHER#"
+            },
+            "is_offensive": 0.0,
+            "end_turn": false,
+            "script_values": {
+                "duration": [
+                    3,
+                    3,
+                    3
+                ],
+                "cooldown": [
+                    3,
+                    2,
+                    1
+                ],
+                "levels": [
+                    1,
+                    2,
+                    3
                 ]
             }
         }
