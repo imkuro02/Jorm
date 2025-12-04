@@ -617,8 +617,8 @@ class AffectPromise(Affect):
         self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = self.pa
         self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = self.ma
 
-        out = f'accumulated damage is {self.accumulated_damage}'
-        self.affect_target_actor.simple_broadcast(out,out)
+        #out = f'accumulated damage is {self.accumulated_damage}'
+        #self.affect_target_actor.simple_broadcast(out,out)
 
         return damage_obj
 
