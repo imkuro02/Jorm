@@ -11,7 +11,7 @@ import utils
 class ServerFactory(protocol.Factory):
     def __init__(self):
         self.protocols = set()
-        
+
         self.db = Database()
         self.ticks_passed = 0
         self.runtime = time.time()
@@ -22,13 +22,13 @@ class ServerFactory(protocol.Factory):
         tickloop.start(1 / self.tickrate)
 
         logging.info('Server started')
-        
+
 
         # where the actors will be stored for rank command
         self.ranks = {}
-        
+
     def tick(self):
-        
+
         # kick afk users after 16 min, notified at min 15
         to_disconnect = []
         for i in self.protocols:
@@ -39,7 +39,7 @@ class ServerFactory(protocol.Factory):
         for i in to_disconnect:
             i.disconnect()
             #i.connectionLost('AFK')
-            
+
 
         self.ticks_passed += 1
         self.world.tick()
@@ -48,7 +48,8 @@ class ServerFactory(protocol.Factory):
         if self.ticks_passed % (30 * 120) == 0 or self.ticks_passed == 10:
             for i in self.protocols:
                 if i.actor != None:
-                    self.db.write_actor(i.actor)
+                    #self.db.write_actor(i.actor)
+                    i.save_actor()
             self.ranks = self.db.find_all_accounts()
 
         self.runtime = time.time() - self.start
@@ -69,8 +70,8 @@ if __name__ == '__main__':
     ssl_context = ssl.DefaultOpenSSLContextFactory('server.key', 'server.crt')
 
     # Listen on SSL port
-    reactor.listenSSL(4000, factory, ssl_context) 
-    # AND NON SSL MUAHHAHA TELNET LETSGOOOO 
+    reactor.listenSSL(4000, factory, ssl_context)
+    # AND NON SSL MUAHHAHA TELNET LETSGOOOO
     reactor.listenTCP(4001, factory)
     utils.debug_print("Server started on port 4000 with SSL and 4001 non SSL")
     reactor.run()

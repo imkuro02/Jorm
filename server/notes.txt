@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS actors (
             FOREIGN KEY(unique_id) REFERENCES users(unique_id)
         );
 
-insert into actors 
-(unique_id, actor_id, actor_name, actor_recall_site, actor_date_of_creation, actor_date_of_last_login, actor_time_in_game) 
+insert into actors
+(unique_id, actor_id, actor_name, actor_recall_site, actor_date_of_creation, actor_date_of_last_login, actor_time_in_game)
 select unique_id, actor_id, actor_name, actor_recall_site, 0, 0, 0
 from actors_old;
 
@@ -70,28 +70,28 @@ CREATE TABLE IF NOT EXISTS inventory (
 
 INSERT INTO inventory (actor_id, premade_id, item_id, item_keep, item_stack)
 SELECT actor_id, premade_id, item_id, item_keep, 1 from inventory_old;
- 
- 
+
+
 ...
 
 ----- excel stuff
 
 =IFERROR(VLOOKUP($A2; skills.$A:$B; 2; 0),VLOOKUP($A2; items_consumable.$A:$B; 2; 0))
 
-=IFERROR(  
-	IFERROR(   
-		VLOOKUP(A2; items_equipment.A:B; 2; 0);   
-		VLOOKUP(A2; items_misc.A:B; 2; 0)   
-	);  
-	VLOOKUP(A2; items_consumable.A:B; 2; 0)  
+=IFERROR(
+	IFERROR(
+		VLOOKUP(A2; items_equipment.A:B; 2; 0);
+		VLOOKUP(A2; items_misc.A:B; 2; 0)
+	);
+	VLOOKUP(A2; items_consumable.A:B; 2; 0)
 )
 
-=IFERROR(   
-		VLOOKUP(A2; skills.A:B; 2; 0);   
-		VLOOKUP(A2; consumable.A:B; 2; 0)   
-	);  
+=IFERROR(
+		VLOOKUP(A2; skills.A:B; 2; 0);
+		VLOOKUP(A2; consumable.A:B; 2; 0)
+	);
 
-=VLOOKUP(I2; use_perspectives.A:B; 2; 0) 
+=VLOOKUP(I2; use_perspectives.A:B; 2; 0)
 
 
 
@@ -114,3 +114,73 @@ VALUES (
     1,
     2
 );
+
+Unhandled error in Deferred:
+
+Traceback (most recent call last):
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/internet/defer.py", line 216, in maybeDeferred
+    result = f(*args, **kwargs)
+  File "/root/JORM/Jorm3/server/__main__.py", line 51, in tick
+    self.db.write_actor(i.actor)
+  File "/root/JORM/Jorm3/server/database.py", line 232, in write_actor
+    my_dict['unique_id'] = actor.protocol.id
+builtins.AttributeError: 'NoneType' object has no attribute 'id'
+
+[/root/JORM/Jorm3/server/protocol.py:505 in save_actor()] Not saving guest lol xd
+Unhandled Error
+Traceback (most recent call last):
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/python/log.py", line 96, in callWithLogger
+    return callWithContext({"system": lp}, func, *args, **kw)
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/python/log.py", line 80, in callWithContext
+    return context.call({ILogContext: newCtx}, func, *args, **kw)
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/python/context.py", line 117, in callWithContext
+    return self.currentContext().callWithContext(ctx, func, *args, **kw)
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/python/context.py", line 82, in callWithContext
+    return func(*args, **kw)
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/internet/posixbase.py", line 504, in _doReadOrWrite
+    self._disconnectSelectable(selectable, why, inRead)
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/internet/posixbase.py", line 109, in _disconnectSelectable
+    selectable.readConnectionLost(f)
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/internet/tcp.py", line 311, in readConnectionLost
+    self.connectionLost(reason)
+  File "/root/JORM/Jorm/server/env/lib/python3.12/site-packages/twisted/internet/tcp.py", line 328, in connectionLost
+    protocol.connectionLost(reason)
+  File "/root/JORM/Jorm3/server/protocol.py", line 541, in connectionLost
+    self.unload_actor()
+  File "/root/JORM/Jorm3/server/protocol.py", line 519, in unload_actor
+    self.actor.affect_manager.unload_all_affects(silent=False)
+builtins.AttributeError: 'NoneType' object has no attribute 'unload_all_affects'
+
+[/root/JORM/Jorm3/server/actors/ai.py:768 in get_ai()] something requested get_ai:  None check the config.ods
+[/root/JORM/Jorm3/server/protocol.py:505 in save_actor()] Not saving guest lol xd
+[/root/JORM/Jorm3/server/protocol.py:505 in save_actor()] Not saving guest lol xd
+[/root/JORM/Jorm3/server/actors/ai.py:768 in get_ai()] something requested get_ai:  None check the config.ods
+[/root/JORM/Jorm3/server/protocol.py:505 in save_actor()] Not saving guest lol xd
+[/root/JORM/Jorm3/server/protocol.py:505 in save_actor()] Not saving guest lol xd
+^C[/root/JORM/Jorm3/server/__main__.py:79 in <module>()] Exiting...
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/root/JORM/Jorm3/client/__main__.py", line 66, in main
+    await asyncio.Future()  # run forever
+    ^^^^^^^^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/root/JORM/Jorm3/client/__main__.py", line 69, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+root@localhost:~/JORM/Jorm3# ./start.sh
