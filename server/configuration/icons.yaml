@@ -1,16 +1,11 @@
-test:
+
+tree_branch:
   icon:
-    - 12345678
-    -        *
-    -    + //
-    - >\  //
-    -   \// x
-    -   //-<
-    -  //
-    - //
-    -
-    - 12345678
-  colors:
-    yellow: +*x
-    bgyellow: \/-
-    green: <>
+    - "@cyan       *"
+    - "@cyan   + @yellow// "
+    - "@green>@yellow\\  //  "
+    - "@yellow  \\// @cyanx "
+    - "@yellow  //-@green<  "
+    - "@yellow //     "
+    - "@yellow//      "
+    - "        "

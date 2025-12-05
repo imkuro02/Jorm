@@ -285,6 +285,8 @@ def add_color(line):
 
     return line
 
+
+
 class Table:
     def __init__(self, columns = 0, spaces = 5):
         self.columns = columns

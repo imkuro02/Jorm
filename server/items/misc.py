@@ -1,5 +1,5 @@
 import uuid
-from configuration.config import ItemType, ITEMS, Color, BonusTypes, EQUIPMENT_REFORGES, StatType
+from configuration.config import ItemType, ITEMS, Color, BonusTypes, EQUIPMENT_REFORGES, StatType, get_icon
 import random
 from utils import get_object_parent
 from utils import REFTRACKER
@@ -177,6 +177,10 @@ class Item:
 
 
         self.new = False
+
+        # just an idea im floating around but might not get implemented
+        #output = output + get_icon(self.premade_id)
+        #
         return output
 
     def use(self, user, target):

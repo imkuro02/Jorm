@@ -8,6 +8,20 @@ import configuration.read_from_excel as rfe
 import random
 import utils
 
+ICONS = {}
+ICONS_PATH = 'configuration/icons.yaml'
+with open(ICONS_PATH, 'r') as file:
+    ICONS = yaml.safe_load(file)
+
+def get_icon(icon_id):
+    if icon_id not in ICONS:
+        return 'no art'
+
+    icon = ICONS[icon_id]
+    icon_art = 'NEWLINEHERE'.join(icon['icon'])
+    icon_art = icon_art.replace('NEWLINEHERE','\n')
+    return icon_art
+
 class BonusTypes:
     REFORGE = 'reforge'
     SPECIAL = 'special'
