@@ -52,8 +52,7 @@ for line in lines:
     if current_id:
         buffer.append(line)
 
-# show result
-print(ICONS)
+
 
 def get_icon(icon_id):
     if icon_id not in ICONS:

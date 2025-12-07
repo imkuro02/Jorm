@@ -426,7 +426,7 @@ class Actor:
         output = t.get_table()
         return output
 
-    def get_character_sheet(self, sheet_getter = None):
+    def get_character_sheet(self, sheet_getter = None, is_glancing = False):
         output = f'{self.pretty_name()} ({self.status})\n'
         # if no description then ignore
 
@@ -436,8 +436,9 @@ class Actor:
                     if type(self).__name__ != 'Player':
                         output += get_icon(self.npc_id)
 
-        if self.description != None:
-            output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
+        if not is_glancing:
+            if self.description != None:
+                output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
 
         output += self.get_character_equipment()
 

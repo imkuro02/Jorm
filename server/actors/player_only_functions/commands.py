@@ -13,7 +13,7 @@ from actors.player_only_functions.charging_mini_game import (
     command_charging_mini_game_toggle
 )
 
-from actors.player_only_functions.look import command_look, command_map, new_room_look, command_scan, get_nearby_rooms
+from actors.player_only_functions.look import command_look, command_glance, command_map, new_room_look, command_scan, get_nearby_rooms
 
 from actors.player_only_functions.equip import (
     command_equipment, inventory_equip, inventory_unequip
@@ -91,6 +91,7 @@ commands = {
     #'setcall':  'command_recall_set',
     #'gocall':   'command_recall_go',
     'look':     'command_look',
+    'glance':   'command_glance',
     #'scan':     'command_scan',              # disabled due to not working properly with instances
     'map':      'command_map',
     '_forcebuild': 'command_force_build',

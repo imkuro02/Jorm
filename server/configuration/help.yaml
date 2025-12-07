@@ -654,6 +654,18 @@ commands:
  #     Will not uncover hidden exits.
  #   related:
  #     - look
+  glance:
+    group: other
+    syntax:
+      - glance
+      - glance <character>
+    description: |
+      View information about a character, item or room, if you use 'glance'
+      without arguments, you will see the room.
+      Glance does not show the description if glancing at a character or the room,
+      but does show a description on items always
+    related:
+      - map
   map:
     group: other
     syntax:

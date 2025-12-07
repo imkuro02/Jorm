@@ -804,7 +804,7 @@ def command_lore(self, line):
         # THIS IS AN ISSUE WIT DA GUUUUH WID DA GUUUH
         # WIT DA utils.Table CODE
         output = f"{Color.IMPORTANT}You are pondering{Color.NORMAL}: "
-        output += e.get_character_sheet() + "\n"
+        output += e.get_character_sheet(sheet_getter = self) + "\n"
         if output_room_spawns != "":
             output += f"{Color.IMPORTANT}Roaming area{Color.NORMAL}:\n"
             output += output_room_spawns.strip() + "\n" + "\n"

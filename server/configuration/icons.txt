@@ -509,6 +509,8 @@ the_well_below_trap
 @bred  /"@,
 @bred |@yellow0 0@bred|
 @white | : |
+@white  ( )
+@white _| |_
 [end]
 
 [id:the_well_bellow_quest_item_enemy]

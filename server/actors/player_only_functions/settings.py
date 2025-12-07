@@ -129,7 +129,7 @@ class Settings:
                     return
                 value = line[1]
                 self.view_ascii_art = self.true_or_false(value)
-                self.actor.sendLine(f'View Ascii Art enabled: {self.view_map}')
+                self.actor.sendLine(f'View Ascii Art enabled: {self.view_ascii_art}')
 
             case SETTINGS.VIEW_ROOM:
                 if len(line) == 1:

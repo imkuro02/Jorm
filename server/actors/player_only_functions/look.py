@@ -484,8 +484,8 @@ def command_scan(self, line):
 
     self.sendLine(f'You scan your surroundings and see: \n{see[:-1:]}')
 
-def command_look(self, line, return_gmcp = False):
-    def look_room(self, room_id):
+def command_look(self, line, return_gmcp = False, is_glancing = False):
+    def look_room(self, room_id, is_glancing = is_glancing):
         room = self.factory.world.rooms[room_id]
 
         if room_id == self.room.id:
@@ -493,7 +493,8 @@ def command_look(self, line, return_gmcp = False):
         else:
             see = f'You look at {room.pretty_name()}\n'
         #see += draw_local_area(self, room_id)
-        see = see + f'{Color.DESCRIPTION}{room.get_description()}{Color.NORMAL}\n'
+        if not is_glancing:
+            see = see + f'{Color.DESCRIPTION}{room.get_description()}{Color.NORMAL}\n'
 
 
         exits = self.protocol.factory.world.rooms[room.id].get_active_exits()
@@ -565,13 +566,13 @@ def command_look(self, line, return_gmcp = False):
 
 
 
-    def look_actor(actor):
-        sheet = actor.get_character_sheet(sheet_getter=self)
+    def look_actor(actor, is_glancing = False):
+        sheet = actor.get_character_sheet(sheet_getter=self, is_glancing = is_glancing)
         self.sendLine(f'You are looking at {sheet}')
         return
 
-    def look_item(identifier, item):
-        output = item.identify(identifier = identifier)
+    def look_item(identifier, item, is_glancing = False):
+        output = item.identify(identifier = identifier, is_glancing = is_glancing)
         identifier.sendLine('You look at: ' + output)
         return
 
@@ -585,6 +586,7 @@ def command_look(self, line, return_gmcp = False):
     whole_list = list_of_items + list_of_directions + list_of_actors
 
     look_at = utils.match_word(line, whole_list)
+    #print(line,look_at,whole_list)
     #self.sendLine(look_at)
 
     if line == '':
@@ -595,13 +597,17 @@ def command_look(self, line, return_gmcp = False):
         actor = self.get_actor(line)
         if actor == None:
             return
-        look_actor(actor)
+        look_actor(actor, is_glancing = is_glancing)
 
     if look_at in list_of_items:
         item = self.get_item(line, search_mode = 'room')
         if item == None:
             return
         look_item(self, item)
+
+
+def command_glance(self, line):
+    return self.command_look(line, is_glancing = True)
 
 
 def get_nearby_rooms(self, view_range = 1):
