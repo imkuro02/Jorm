@@ -19,10 +19,13 @@ versions:
     - Map has been altered and several areas have been moved around
     - Fixed a bug where secret up and down exits would render on the minimap
     - To speed up combat, all damage is increased by a flat amount of your level.
-      If you are level 10, all danage you deal has a bonus of 10 always
+      If you are level 10, all damage you deal has a bonus of 10 always
       (Same goes for enemies)
     - Equipment items now display item level in their name
     - Your Turn combat prompt will display your stat prompt right afterwards when in combat
+    - Ascii art has been added for all mobs in game
+    - Ascii art can be turned off with settings
+    # - THIS IS A NOTE FOR MYSELF DELETE TABLE SETTINGS BEFORE PLAYING! "drop table settings;"
   '171125':
     id: '171125'
     title: Skills
