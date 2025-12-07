@@ -8,6 +8,7 @@ import configuration.read_from_excel as rfe
 import random
 import utils
 
+'''
 ICONS = {}
 ICONS_PATH = 'configuration/icons.yaml'
 with open(ICONS_PATH, 'r') as file:
@@ -17,9 +18,54 @@ def get_icon(icon_id):
     if icon_id not in ICONS:
         return 'no art'
 
+    icon = ICONS[icon_id]['icon']
+    #icon_art = 'NEWLINEHERE'.join(icon['icon'])
+    #icon_art = icon_art.replace('NEWLINEHERE','\n')
+    return icon
+'''
+ICONS = {}
+
+ICONS_PATH = 'configuration/icons.txt'
+
+with open(ICONS_PATH, 'r') as f:
+    lines = f.readlines()
+
+current_id = None
+buffer = []
+
+for line in lines:
+    line = line.rstrip("\n")
+
+    if line.startswith("[id:"):
+        # extract id inside brackets
+        current_id = line[4:-1]   # removes "[id:" and "]"
+        buffer = []
+        continue
+
+    if line == "[end]":
+        if current_id:
+            ICONS[current_id] = "\n".join(buffer)
+            current_id = None
+        continue
+
+    # inside a block
+    if current_id:
+        buffer.append(line)
+
+# show result
+print(ICONS)
+
+def get_icon(icon_id):
+    if icon_id not in ICONS:
+        return ''
+    border = ''#'@normal|  '
     icon = ICONS[icon_id]
-    icon_art = 'NEWLINEHERE'.join(icon['icon'])
-    icon_art = icon_art.replace('NEWLINEHERE','\n')
+    icon = icon.split('\n')
+    icon_art = ''
+    for i in icon:
+        icon_art += border + i + '\n'
+
+
     return icon_art
 
 class BonusTypes:

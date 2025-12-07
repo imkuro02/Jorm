@@ -3,7 +3,7 @@ import uuid
 from combat.damage_event import Damage
 from items.manager import Item
 from affects.manager import AffectsManager
-from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType, Audio, Color, SKILLS
+from configuration.config import DamageType, ActorStatusType, EquipmentSlotType, StatType, Audio, Color, SKILLS, get_icon
 from skills.manager import use_skill
 from inventory import InventoryManager
 import utils
@@ -426,9 +426,16 @@ class Actor:
         output = t.get_table()
         return output
 
-    def get_character_sheet(self):
+    def get_character_sheet(self, sheet_getter = None):
         output = f'{self.pretty_name()} ({self.status})\n'
         # if no description then ignore
+
+        if sheet_getter != None:
+            if type(sheet_getter).__name__ == 'Player':
+                if sheet_getter.settings_manager.view_ascii_art:
+                    if type(self).__name__ != 'Player':
+                        output += get_icon(self.npc_id)
+
         if self.description != None:
             output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
 

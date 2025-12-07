@@ -1,0 +1,96 @@
+
+[id:sword]
+@white   /¨\
+@white   | |
+@white   | |
+@white   | |
+@white   |_|
+@yellow  [@cyan_v_@yellow]
+@yellow    |
+@yellow    X
+[end]
+
+@bwhite sword
+@yellow    /
+@yellow x--D@white========>
+@yellow    \
+
+@bwhite snail
+@green  ,--._    @yellow@  @
+@green / @bgreen,-, @green'._@bgreen|  |
+@green| @bgreen(_? '  @bgreen/ @whitevv@bgreen/
+@green \.________.@bgreen/
+
+@bwhite wandering stump
+@byellow     _
+@byellow  ,-_/ ',
+@byellow  | @green @   @
+@byellow  [ @bred  vwv@byellow ]
+@byellow  |   @brednmn@byellow|
+@byellow    u   u
+
+@bwhite stick / magic wand?
+@cyan        *
+@cyan    + @yellow//
+@green>@yellow\\  //
+@yellow  \\// @cyanx
+@yellow   //-@green<
+@yellow  //
+@yellow //
+
+
+---
+@bwhite  ,-'-,
+@bwhite / _.,*\
+@bwhite |/ v \|
+@bwhite \|   |/
+---
+@bwhite  _   _
+@bwhite /#\v/#\
+@bwhite |*#|#*|
+@bwhite /*#|#*\
+---
+@bwhite      ,_.
+@bwhite      ) |
+@bwhite     / /
+@bwhite  , ,/
+@bwhite   +
+@bwhite /  `
+---
+@bwhite  ,-|-.
+@bwhite /  |.,\
+@bwhite |/ v \|
+@bwhite \|   |/
+---
+---
+@bwhite  /\ /\
+@bwhite /- _ -\
+@bwhite |/   \|
+@bwhite \|   |/
+---
+---
+@bwhite      __*
+@bwhite    _/ /
+@bwhite __/   |
+@bwhite    '-./__
+---
+---
+@bwhite  ,'\
+@bwhite  @ /
+@bwhite   |
+@bwhite   |
+@bwhite   |
+@bwhite   o
+---
+
+@bwhite helmet
+@yellow  ,-'-,
+@yellow / _ _ \
+@yellow |/ v \|
+@yellow \|   |/
+
+@bwhite helmet
+@cyan  ,-'-,
+@cyan / _ _ \
+@cyan |/ v \|
+@cyan \|   |/

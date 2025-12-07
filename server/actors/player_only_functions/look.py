@@ -1,5 +1,5 @@
 
-from configuration.config import ActorStatusType, Color
+from configuration.config import ActorStatusType, Color, get_icon
 import utils
 import random
 random = random.Random()
@@ -566,12 +566,7 @@ def command_look(self, line, return_gmcp = False):
 
 
     def look_actor(actor):
-        sheet = actor.get_character_sheet()
-
-        #important_dialog = actor.get_important_dialog(actor_to_compare = self)
-        #if important_dialog != False:
-        #    sheet = sheet + f'@yellow{important_dialog}@normal'
-
+        sheet = actor.get_character_sheet(sheet_getter=self)
         self.sendLine(f'You are looking at {sheet}')
         return
 

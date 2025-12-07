@@ -8,7 +8,8 @@ class SETTINGS:
     ALIAS = 'alias'
     LOOK = 'look'
     VIEW_ROOM = 'viewroom'
-    VIEW_MAP = 'view_map'
+    VIEW_MAP = 'viewmap'
+    VIEW_ASCII_ART = 'viewasciiart'
     PVP = 'pvp'
     RESET = 'reset'
     LOGOUT = 'logout'
@@ -18,7 +19,7 @@ class SETTINGS:
     AUTO_BATTLER = 'autobattler'
     PROMPT = 'prompt'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, PVP, RESET, LOGOUT, DEBUG, PWD, USR, PROMPT, #AUTO_BATTLER
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, VIEW_ASCII_ART, PVP, RESET, LOGOUT, DEBUG, PWD, USR, PROMPT, #AUTO_BATTLER
     ]
 
 
@@ -27,7 +28,7 @@ LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_map = False, pvp = False, debug = False, prompt = None):
+    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_ascii_art = True, view_map = False, pvp = False, debug = False, prompt = None):
         self.actor = actor
         if aliases == None:
             self.aliases = {}
@@ -37,6 +38,7 @@ class Settings:
 
         self.view_room = view_room
         self.view_map = view_map
+        self.view_ascii_art = view_ascii_art
         self.pvp = pvp
         self.debug = debug
         self.autobattler = False
@@ -120,6 +122,14 @@ class Settings:
                 value = line[1]
                 self.view_map = self.true_or_false(value)
                 self.actor.sendLine(f'View Map enabled: {self.view_map}')
+
+            case SETTINGS.VIEW_ASCII_ART:
+                if len(line) == 1:
+                    self.actor.sendLine('View Ascii Art setting needs an argument (on or off?)')
+                    return
+                value = line[1]
+                self.view_ascii_art = self.true_or_false(value)
+                self.actor.sendLine(f'View Ascii Art enabled: {self.view_map}')
 
             case SETTINGS.VIEW_ROOM:
                 if len(line) == 1:

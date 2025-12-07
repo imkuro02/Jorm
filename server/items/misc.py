@@ -151,6 +151,7 @@ class Item:
 
     def identify(self, identifier = None):
         output = f'{self.pretty_name()}\n'
+        #output += get_icon(self.premade_id)
         output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
 
 
@@ -178,8 +179,8 @@ class Item:
 
         self.new = False
 
-        # just an idea im floating around but might not get implemented
-        #output = output + get_icon(self.premade_id)
+        #just an idea im floating around but might not get implemented
+
         #
         return output
 

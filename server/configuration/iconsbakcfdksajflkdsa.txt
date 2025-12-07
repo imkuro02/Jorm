@@ -281,7 +281,7 @@ kerning_trainer
 @white|  : |
 [end]
 
-[id:bar_drunk_1]
+[id:bar_drunk_0]
 @bred  /"@,
 @bred |@yellow@ @
 @white/    \ @cyan?
@@ -414,7 +414,7 @@ mushroom_kingdom_queen
 @yellow| @white[!]@yellow |
 @yellow|__@white[x]@yellow|
 @yellow |   |
-[end]
+
 
 [id:ellinia_shop_weapon]
 @bpurple   ??
@@ -440,7 +440,6 @@ ant_alchemist
 bee_worker
 bee_soldier
 bee_queen
-
 [id:mushroom_zombie_behemoth]
 @purple   _,-"'-,_
 @purple,-"   @redo  .8@purple'\
@@ -503,7 +502,6 @@ the_well_below_trap
 [id:the_well_bellow_eel]
 @cyan\-,_,-'(@yellowo o@cyan)
 @cyan \_--'"  (@yelloww@cyan)
-[end]
 
 [id:the_well_bellow_quest_giver]
 @bred  /"@,
@@ -512,8 +510,8 @@ the_well_below_trap
 [end]
 
 [id:the_well_bellow_quest_item_enemy]
-@white         @* @,
+         @* @,
 @yellow   ______   _@white@@yellow_
-@yellow  |  |  |'-_| |
+  |  |  |'-_| |
 @purple  O@yellow-@purpleO@yellow-@purpleO@yellow-@purpleO@yellow-@purpleO@yellow-@purpleO@yellow-@purpleO
 [end]

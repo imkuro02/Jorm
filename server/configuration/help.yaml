@@ -455,7 +455,7 @@ commands:
       - settings alias
       - settings alias <your alias> <a command>
       - settings alias <your alias>
-      - settings <gmcp|viewroom|viewmap|debug> <on|off>
+      - settings <gmcp|viewroom|viewmap|viewasciiart|debug> <on|off>
       - settings logout
       - settings username <new username>
       - settings password <new password>
@@ -463,13 +463,14 @@ commands:
     description: |
       'settings alias' will display all aliases.
       Setting an alias without <a command> will remove it
-      gmcp        - toggle gmcp
-      debug       - toggle debug (dont)
-      viewroom    - toggle to automatically view rooms with 'look' command when moving
-      viewmap     - toggle to automatically view ascii map with 'map' command when moving
-      logout      - will log you out of the game and close the connection.
-      autobattler - toggle to automatically use skills during combat.
-      prompt      - has its own help file "help prompt"
+      gmcp         - toggle gmcp
+      debug        - toggle debug (dont)
+      viewroom     - toggle to automatically view rooms with 'look' command when moving
+      viewmap      - toggle to automatically view ascii map with 'map' command when moving
+      viewasciiart - toggle to automatically view ascii art with 'look' command when looking
+      logout       - will log you out of the game and close the connection.
+      autobattler  - toggle to automatically use skills during combat.
+      prompt       - has its own help file "help prompt"
     related:
       - prompt
       - look
