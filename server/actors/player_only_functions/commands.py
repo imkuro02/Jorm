@@ -125,7 +125,7 @@ commands = {
     #'remove':   'command_remove',
 
     'use':      'command_use',
-    'try':      'command_use_try',
+    #'try':      'command_use_try',
     'flee':     'command_flee',
     'fight':    'command_fight',
     #'target':   'command_target',

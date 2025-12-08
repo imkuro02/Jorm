@@ -80,6 +80,7 @@ def command_use_try(self, line):
 
 def command_use(self, line, is_trying = False):
     _line = line
+    is_trying = True
 
     if line.endswith((' on', ' at')):
         self.sendLine('Use on who?')

@@ -83,18 +83,18 @@ commands:
       - items
       - inventory
       - look
-  try:
-    group: combat
-    syntax:
-      - try <skill|item>
-      - try <skill|item> on <character|item>
-    description: |
-      Works just like the use command, except will not queue the action when triggered outside of your turn.
-      Useful for aliases, where you wish to attempt one of several actions, but dont want them to queue.
-    related:
-      - settings
-      - alias
-      - use
+  #try:
+  #  group: combat
+  #  syntax:
+  #    - try <skill|item>
+  #    - try <skill|item> on <character|item>
+  #  description: |
+  #    Works just like the use command, except will not queue the action when triggered outside of your turn.
+  #    Useful for aliases, where you wish to attempt one of several actions, but dont want them to queue.
+  #  related:
+  #    - settings
+  #    - alias
+  #    - use
   rest:
     group: combat
     syntax:
@@ -488,8 +488,7 @@ commands:
       @goodArguments@normal
       Arguements are what follows after your alias command
 
-      Example alias: "settings alias boom try bash on #0#; try swing on #0#"
-      * when using aliases, it is preferable to use "try" instead of "use"
+      Example alias: "settings alias boom use bash on #0#; use swing on #0#"
 
       #number# will be replaced with the words after your alias
       typing "boom kuro" will replace all "#0#" with "kuro"

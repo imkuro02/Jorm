@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=25 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://bpj1614sj6bm1" path="res://images/kuro/quest_not_started.png" id="11_lm5rf"]
 [ext_resource type="Texture2D" uid="uid://cu7xomnl37t4g" path="res://images/kuro/enemy.png" id="12_5afyf"]
 [ext_resource type="FontFile" uid="uid://csvw2gt15o8yp" path="res://fonts/PixelCode-Medium.ttf" id="19_jxno8"]
+[ext_resource type="Script" path="res://scripts/input.gd" id="20_c83m0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_723ol"]
 
@@ -345,6 +346,7 @@ theme_override_fonts/font = ExtResource("19_jxno8")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ujqkk")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_bwqeb")
 flat = true
+script = ExtResource("20_c83m0")
 
 [node name="Label" type="Label" parent="canvas/input"]
 modulate = Color(0, 0, 0, 1)
@@ -378,6 +380,7 @@ focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
+text = "client version: 091225"
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 

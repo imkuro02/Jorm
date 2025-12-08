@@ -26,6 +26,7 @@ versions:
     - Ascii art has been added for all mobs in game
     - Ascii art can be turned off with settings
     - Command glance has been added (look without a description)
+    - Command try has been removed, and use works like try USED to work
     # - THIS IS A NOTE FOR MYSELF DELETE TABLE SETTINGS BEFORE PLAYING! "drop table settings;"
   '171125':
     id: '171125'
