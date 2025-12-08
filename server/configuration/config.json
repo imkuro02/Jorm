@@ -1,11 +1,11 @@
 {
-    "SHA-256": "a8481ae8a3afb6a967448c2b70bde9c47cdb59f3c82aad4af3ea210ba798ecb9",
+    "SHA-256": "1a9681e3a09db7659da087d48adfee7db58c5edd592ec8c81740399f8e93af72",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
             "ai": "Enemy",
             "name": "Tiny mouse",
-            "description": "A tiny, round creature the size of a palm. Its fur is white. It has a short, slightly upturned snout. Its ears are round and twitch at every sound.",
+            "description": "A tiny, round mouse the size of a palm. Its fur is white. It has a short, slightly upturned snout. Its ears are round and twitch at every sound. ",
             "stats": {
                 "grit": 1,
                 "hp": 15,
@@ -2295,7 +2295,7 @@
             "npc_id": "mushroom_kingdom_entrance_guard",
             "ai": "Enemy",
             "name": "Mushrom Guard",
-            "description": "A large red-capped mushroom with grayish spots. The mushroom cap is covered in thorns the size of glass bottles. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs, yet it holds a shield in one spore-covered hand and a sword in the other. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "A large red-capped mushroom. The guard is tall and slender.  It hops as it moves. A spear is by its side, ready to jab at any threats.",
             "stats": {
                 "grit": 30,
                 "hp": 200,
@@ -2351,7 +2351,7 @@
             "npc_id": "mushroom_kingdom_guard",
             "ai": "Enemy",
             "name": "Mushrom Guard",
-            "description": "A large red-capped mushroom with grayish spots. The mushroom cap is covered in thorns the size of glass bottles. It is the size of a large dog. Its stem is the color of an eggshell. It has no arms or legs, yet it holds a shield in one spore-covered hand and a sword in the other. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "A large red-capped mushroom. The guard is tall and slender.  It hops as it moves. A spear is by its side, ready to jab at any threats.",
             "stats": {
                 "grit": 30,
                 "hp": 200,
@@ -2652,7 +2652,7 @@
             "npc_id": "mushroom_kingdom_wizard",
             "ai": "Enemy",
             "name": "Mushroom Wizard",
-            "description": "A large blue-capped mushroom with grayish spots. It is the size of a large dog. Its stem is the color of an eggshell. The cap flares out in a way that resembles a wizard’s hat, giving it a mystical appearance. It has no arms or legs, yet it holds a staff in one spore-covered hand. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
+            "description": "A large red-capped mushroom. The guard is tall and slender.  It hops as it moves. The cap flares out in a way that resembles a wizard’s hat, giving it a mystical appearance. It has no arms or legs, yet it holds a staff in one spore-covered hand. Its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops around when it moves, its body making a loud thud with each short jump.",
             "stats": {
                 "grit": 10,
                 "hp": 150,
