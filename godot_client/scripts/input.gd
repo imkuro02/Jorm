@@ -13,6 +13,7 @@ func _process(delta):
 	pass
 
 func _input(event):
+	return
 	if Input.is_key_pressed(KEY_UP):
 		if history_line == 0:
 			history_line += 1
