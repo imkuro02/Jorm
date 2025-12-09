@@ -64,6 +64,10 @@ class ServerFactory(protocol.Factory):
             if client.username != None:
                 client.sendLine(message)
 
+#for i in config.ICONS:
+#    print('\n\n')
+#    print(utils.add_color(config.ICONS[i]))
+#
 if __name__ == '__main__':
     factory = ServerFactory()
 

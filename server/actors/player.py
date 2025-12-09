@@ -293,10 +293,11 @@ class UpdateChecker:
         # if self.actor.factory.ticks_passed % 30 != 0:
         #    return
         # self.tick_show_actors()
-        _look = self.actor.command_look("", return_gmcp=True)
+
         _map = self.actor.command_map("", return_gmcp=True)
         self.actor.protocol.send_gmcp(utils.add_color(_map), "MAP")
-        self.actor.protocol.send_gmcp(utils.add_color(_look), "LOOK_ROOM")
+        #_look = self.actor.command_look("", return_gmcp=True)
+        #self.actor.protocol.send_gmcp(utils.add_color(_look), "LOOK_ROOM")
 
         # self.tick_show_map()
         self.tick_send_time()

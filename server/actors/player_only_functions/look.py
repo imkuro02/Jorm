@@ -531,6 +531,38 @@ def command_look(self, line, return_gmcp = False, is_glancing = False):
                     see = see + f' and is fighting'
                 see = see +'\n'
 
+        # XD icons
+        icons = []
+        for i in room.actors.values():
+            if type(i).__name__ == 'Player':
+                continue
+            if len(icons) >= 3:
+                continue
+            icons.append(get_icon(i.npc_id).split('\n'))
+
+        max_height = 0
+        for i in icons:
+            if len(i) >= max_height:
+                max_height = len(i)
+
+        amount = len(icons)
+        if amount != 0:
+            t = utils.Table(amount)
+            #column = 0
+            row = 0
+            for row in range(0,max_height):
+                for column in range(0,amount):
+                    try:
+                        t.add_data(icons[column][row])
+
+                    except Exception as e:
+                        pass
+
+
+
+            see = see +'\n'+t.get_table()
+
+
 
 
 
