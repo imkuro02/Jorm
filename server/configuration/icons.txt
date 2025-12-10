@@ -336,7 +336,8 @@ guard_coward
 @white   --|   |.--@yellow@
 @white      @yellowu u
 [end]
-mushroom_kingdom_queen
+
+[id:mushroom_kingdom_queen]
 @yellow    _,-"'-,_
 @yellow ,-"   @redo  .8@yellow'\
 @yellow \,.@red8@yellow_,,,_:._/
