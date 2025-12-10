@@ -576,8 +576,8 @@ class AffectDOT(Affect):
 
 class AffectPromise(Affect):
 
-    def merge_request(self, affect_to_merge):
-        return True
+    #def merge_request(self, affect_to_merge):
+    #    return True
 
     def on_applied(self):
         super().on_applied()
