@@ -20,10 +20,10 @@ class Combat:
         for p in self.participants.values():
             if type(p).__name__ == 'Player':
                 p.set_base_threat()
-                p.stat_manager.stats[StatType.INITIATIVE] = 0 
-            else: 
+                p.stat_manager.stats[StatType.INITIATIVE] = 0
+            else:
                 p.set_base_threat()
-                p.stat_manager.stats[StatType.INITIATIVE] = 0  
+                p.stat_manager.stats[StatType.INITIATIVE] = 0
                 for skill_id in p.skill_manager.skills:
                     cool = SKILLS[skill_id]['script_values']['cooldown'][0]-1
                     p.cooldown_manager.add_cooldown(skill_id,cool)
@@ -117,7 +117,7 @@ class Combat:
 
         if self.current_actor.status == ActorStatusType.NORMAL:
             utils.debug_print(self.current_actor.name, 'removed from combat')
-            if self.current_actor.id in self.participants: 
+            if self.current_actor.id in self.participants:
                 #self.participants[self.current_actor.id].status = ActorStatusType.NORMAL
                 del self.participants[self.current_actor.id]
             self.next_turn()
@@ -125,7 +125,7 @@ class Combat:
 
         if self.current_actor.status == ActorStatusType.DEAD:
             self.next_turn()
-            return      
+            return
 
     def combat_over(self):
         if self.combat_active:
@@ -133,14 +133,15 @@ class Combat:
         else:
             self.combat_active = False
             return
-        
-        
-        for i in self.participants.values():
+
+        participants = self.participants.values()
+        for i in participants:
             if type(i).__name__ == "Player":
                 i.sendLine('@yellowCombat over!@normal')
                 #i.heal(value = 99999)
             else:
                 if i.status != ActorStatusType.DEAD:
+                    i.heal(value = 99999)
                     i.cooldown_manager.unload_all_cooldowns()
                     i.affect_manager.unload_all_affects()
                     i.heal(value = 99999)
@@ -151,7 +152,7 @@ class Combat:
                 for par in i.party_manager.party.participants.values():
                     if par.status != ActorStatusType.DEAD:
                         one_alive = True
-                
+
                 if one_alive and self.round:
                     if i.status == ActorStatusType.DEAD:
                         i.stat_manager.stats[StatType.HP] = 1
@@ -159,7 +160,7 @@ class Combat:
                         i.status = ActorStatusType.NORMAL
                         i.affect_manager.unload_all_affects(forced = False)
                         #i.set_turn()
-            
+
             if i.status != ActorStatusType.DEAD:
                 i.status = ActorStatusType.NORMAL
                 #threat = i.stat_manager.stats[StatType.THREAT]
@@ -167,11 +168,11 @@ class Combat:
                 #i.heal(value = threat, silent = True)
                 #i.heal(heal_hp = False, heal_mp = False, value = 10000, silent = True)
 
-        
+
         self.room.combat = None
         utils.debug_print('combat over')
         #self.unload()
-        
+
 
     def next_turn(self):
         #utils.debug_print('next turn', self.turn)
@@ -187,18 +188,18 @@ class Combat:
         for i in self.participants.values():
             if i.status == ActorStatusType.FIGHTING and i.party_manager.get_party_id() not in participating_parties:
                 participating_parties.append(i.party_manager.get_party_id())
-                
 
-        
-        
-        
+
+
+
+
 
         #utils.debug_print(participating_parties)
         if len(participating_parties) <= 1 and self.turn >= 1:
            self.combat_over()
            return
 
-        
+
         self.time_since_turn_finished = 0
         if len(self.order) == 0:
             self.initiative()
@@ -215,10 +216,10 @@ class Combat:
         if self.current_actor.room != self.room:
             self.next_turn()
             return
-        
+
         self.current_actor.set_turn()
         self.turn += 1
-        
+
 
 
     def initiative(self):
@@ -226,7 +227,7 @@ class Combat:
             if i.status != ActorStatusType.DEAD:
                 self.order.append(i)
         self.order.sort(key=lambda x: random.randint(0,x.stat_manager.stats[StatType.FLOW]), reverse=True)
-        
+
         if self.order == []:
             self.combat_over()
             return
@@ -240,13 +241,13 @@ class Combat:
                     order = order + 'YOU' + ' -> '
                 else:
                     order = order + i.pretty_name() + ' -> '
-                
+
             order = order + f'ROUND {self.round}'
             #par.sendLine(('#'*80)+'\n'+order)
             par.sendLine(order)
 
-        
-        
+
+
         for i in self.order:
             if i.room != self.room:
                 continue
@@ -258,9 +259,9 @@ class Combat:
 
         # only add predictions at the very first round of combat
         # after that predictions get rolled after turn end
-        for par in self.participants.values():   
+        for par in self.participants.values():
             par.ai.initiative()
-            
+
             #par.ai.predict_use_best_skill()
 
         for par in self.participants.values():
@@ -270,5 +271,3 @@ class Combat:
         self.next_turn()
         #self.current_actor = self.order[0]
         #self.current_actor.set_turn()
-
-        
