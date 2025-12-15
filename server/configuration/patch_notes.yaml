@@ -1,4 +1,11 @@
 versions:
+  '151225':
+    id: '151225'
+    title: Balance
+    unixtime: 1761899677
+    features:
+    - Equipment can no longer boost max health
+    - Afflictions can no longer kill enemies after combat (for example you flee and then the enemy bleeds out)
   '261125':
     id: '261125'
     title: New map and stat changes

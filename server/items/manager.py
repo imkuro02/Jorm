@@ -31,7 +31,10 @@ def load_item(item_premade_id, unique_id = None, max_stats = False): # unique_id
 
 
         for key in ITEMS[premade_id]['stats']:
+            if 'hp' in key:
+                continue
             new_item.stat_manager.stats[key] += ITEMS[premade_id]['stats'][key]
+
 
         for key in ITEMS[premade_id]['requirements']:
             new_item.stat_manager.reqs[key] += ITEMS[premade_id]['requirements'][key]

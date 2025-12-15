@@ -1,5 +1,5 @@
 {
-    "SHA-256": "1a9681e3a09db7659da087d48adfee7db58c5edd592ec8c81740399f8e93af72",
+    "SHA-256": "2fa09ef6c9ac671469d2a91c7d9917f92623c1dd68ea95408eef860ecf19adf2",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -1356,7 +1356,7 @@
             "skills": {
                 "smite": 1,
                 "cure_light_wounds": 3,
-                "mend_armor": 1
+                "refresh": 1
             },
             "loot": {
                 "rock": 28,
@@ -6017,19 +6017,24 @@
             "end_turn": true,
             "script_values": {
                 "damage": [
-                    10
+                    10,
+                    20,
+                    30
                 ],
                 "cooldown": [
+                    1,
+                    1,
                     1
                 ],
                 "hp_cost": [
-                    10
+                    10,
+                    15,
+                    20
                 ],
                 "levels": [
-                    1
-                ],
-                "delay": [
-                    1
+                    1,
+                    2,
+                    3
                 ]
             }
         },
@@ -6068,14 +6073,19 @@
                     3
                 ],
                 "cooldown": [
-                    3,
-                    2,
-                    1
+                    5,
+                    4,
+                    3
                 ],
                 "levels": [
                     1,
                     2,
                     3
+                ],
+                "delay": [
+                    1,
+                    1,
+                    1
                 ]
             }
         }
@@ -17507,7 +17517,7 @@
         "grit body 15 golem": {
             "premade_id": "grit body 15 golem",
             "name": "Golem armor",
-            "description": "0.0",
+            "description": "A heavy breastplate made of rock and debree",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17554,7 +17564,7 @@
         "grit head 15 ant": {
             "premade_id": "grit head 15 ant",
             "name": "Ant helm",
-            "description": "0.0",
+            "description": "A sturdy helmet made of interlocked chitin plates, shaped in the shape of a giant ants head, the antennas twitch rapidly as the wearer speaks.",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17601,7 +17611,7 @@
         "grit head 15 golem": {
             "premade_id": "grit head 15 golem",
             "name": "Golem helm",
-            "description": "0.0",
+            "description": "A hollowed out rock in the shape of a square. It has a stern face engraved on each side of the helmet, the face in the front is pourous and enables visibility, the top is covered in moss",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17648,7 +17658,7 @@
         "grit trinket 15 ant": {
             "premade_id": "grit trinket 15 ant",
             "name": "Ant medallion",
-            "description": "0.0",
+            "description": "A tiny ant mandible tied with a string",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17695,7 +17705,7 @@
         "grit trinket 15 golem": {
             "premade_id": "grit trinket 15 golem",
             "name": "Golem medallion",
-            "description": "0.0",
+            "description": "A small amethyst gem hangs from a long copper chain",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17742,7 +17752,7 @@
         "grit weapon 15 ant": {
             "premade_id": "grit weapon 15 ant",
             "name": "Ant mandible",
-            "description": "0.0",
+            "description": "A large and long ant mandible thats been sharpened, the sides are reinforced with thin steel plates and bolts",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17789,7 +17799,7 @@
         "grit weapon 15 golem": {
             "premade_id": "grit weapon 15 golem",
             "name": "Golem gauntlets",
-            "description": "0.0",
+            "description": "A hollowed out rock, molded and chiseled to resemble a locked fist, it is quiet heavy, and the knuckles are cracked",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17836,7 +17846,7 @@
         "mind body 15": {
             "premade_id": "mind body 15",
             "name": "Pixie outfit",
-            "description": "0.0",
+            "description": "A traditional pixie robe, except its been sewn for a humanoid, the robe shimmers",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17883,7 +17893,7 @@
         "mind head 15": {
             "premade_id": "mind head 15",
             "name": "Pixie mask",
-            "description": "0.0",
+            "description": "A clean white disk, it has a has a face with red blush painted on it, the eyes are hollowed out, with thin black fabric going over the holes to conceal the eyes",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17930,7 +17940,7 @@
         "mind trinket 15": {
             "premade_id": "mind trinket 15",
             "name": "Pixie medallion",
-            "description": "0.0",
+            "description": "A small oval of glass filled with shining liquid hangs from a string",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -17977,7 +17987,7 @@
         "mind weapon 15": {
             "premade_id": "mind weapon 15",
             "name": "Pixie wand",
-            "description": "0.0",
+            "description": "A polished wooden stick, with the tip of the wand capped off with pure gold",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
