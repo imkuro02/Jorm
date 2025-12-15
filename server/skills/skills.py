@@ -449,7 +449,7 @@ class SkillDamageByFlowApplyBleed(SkillDamage):
         stunned_affect = affects.AffectBleed(
             affect_source_actor = self.user,
             affect_target_actor = self.other,
-            name = 'Bleeding', description = f'{bleed_damage} Physical damage per turn until healed',
+            name = 'Bleeding', description = f'Receive physical damage each turn until healed',
             turns = self.script_values['duration'][self.users_skill_level],
             resisted_by = StatType.PHYARMOR,
             damage = bleed_damage,
