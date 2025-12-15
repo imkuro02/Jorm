@@ -141,7 +141,8 @@ class Combat:
                 #i.heal(value = 99999)
             else:
                 if i.status != ActorStatusType.DEAD:
-                    i.heal(value = 99999)
+                    i.stat_manager.stats[StatType.HP] = 9999999999999
+                    #i.heal(value = 99999)
                     i.cooldown_manager.unload_all_cooldowns()
                     i.affect_manager.unload_all_affects()
                     i.heal(value = 99999)
