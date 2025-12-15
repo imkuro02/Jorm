@@ -535,11 +535,11 @@ class AffectBleed(Affect):
         return damage_obj
 
     def merge_request(self, affect_to_merge):
-        if affect_to_merge.turns > self.turns:
-            if self.damage < affect_to_merge.damage:
-                self.damage = affect_to_merge.damage
-
-            self.turns = affect_to_merge.turns
+        #if affect_to_merge.turns > self.turns:
+            #if self.damage < affect_to_merge.damage:
+            #    self.damage = affect_to_merge.damage
+        self.damage += affect_to_merge.damage
+        self.turns = affect_to_merge.turns
         #if affect_to_merge.damage < self.damage:
         #    return False
         return True

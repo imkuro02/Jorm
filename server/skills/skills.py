@@ -450,7 +450,7 @@ class SkillDamageByFlowApplyBleed(SkillDamage):
             affect_source_actor = self.user,
             affect_target_actor = self.other,
             name = 'Bleeding', description = f'{bleed_damage} Physical damage per turn until healed',
-            turns = 99, #self.script_values['duration'][self.users_skill_level],
+            turns = self.script_values['duration'][self.users_skill_level],
             resisted_by = StatType.PHYARMOR,
             damage = bleed_damage,
             #get_prediction_string_append = 'is bleeding'
