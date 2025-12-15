@@ -442,15 +442,15 @@ class SkillWildMagic(Skill):
 
 class SkillDamageByFlowApplyBleed(SkillDamage):
     def use(self):
-        super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
+        #super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
         was_blocked = False
         damage_obj = super().use()
         bleed_damage = int(self.user.stat_manager.stats[StatType.LVL]/2)
         stunned_affect = affects.AffectBleed(
             affect_source_actor = self.user,
             affect_target_actor = self.other,
-            name = 'Bleeding', description = f'Attackers Level as Physical damage per turn',
-            turns = self.script_values['duration'][self.users_skill_level],
+            name = 'Bleeding', description = f'{bleed_damage} Physical damage per turn until healed',
+            turns = 99, #self.script_values['duration'][self.users_skill_level],
             resisted_by = StatType.PHYARMOR,
             damage = bleed_damage,
             #get_prediction_string_append = 'is bleeding'

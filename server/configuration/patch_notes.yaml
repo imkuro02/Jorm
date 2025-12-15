@@ -6,6 +6,7 @@ versions:
     features:
     - Equipment can no longer boost max health
     - Afflictions can no longer kill enemies after combat (for example you flee and then the enemy bleeds out)
+    - Some skills have their values changed slightly
   '261125':
     id: '261125'
     title: New map and stat changes

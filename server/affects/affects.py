@@ -529,6 +529,11 @@ class AffectBleed(Affect):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns, resisted_by)
         self.damage = damage
 
+    def take_damage_after_calc(self, damage_obj):
+        if damage_obj.damage_type == DamageType.HEALING:
+            self.on_finished()
+        return damage_obj
+
     def merge_request(self, affect_to_merge):
         if affect_to_merge.turns > self.turns:
             if self.damage < affect_to_merge.damage:
@@ -549,7 +554,7 @@ class AffectBleed(Affect):
             damage_type = DamageType.PHYSICAL,
         )
 
-        self.damage = int(self.damage*0.5)
+        #self.damage = int(self.damage*0.5)
 
         damage_obj.run()
 

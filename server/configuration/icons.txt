@@ -76,7 +76,7 @@ big_rat
 [id:wandering_rock]
 @green     _.---,@yellow|
 @white   ,'     @yellow- + -
-@white   \ @bwhiteu w u   @yellow|
+@white   \ @bwhite        @yellow|
 @white    '-,___x-'
 [end]
 
