@@ -60,6 +60,14 @@ class Combat:
 
         self.time_since_turn_finished += 1
 
+        participating_parties = []
+        for i in self.participants.values():
+            if i.status == ActorStatusType.FIGHTING and i.party_manager.get_party_id() not in participating_parties:
+                participating_parties.append(i.party_manager.get_party_id())
+
+        if len(participating_parties) <= 1 :
+           self.combat_over()
+           return
         #if len(self.participants) == 0:
         #    self.combat_over()
         #    return
@@ -185,10 +193,10 @@ class Combat:
                 continue
             actor.stat_manager.hp_mp_clamp_update()
 
-        participating_parties = []
-        for i in self.participants.values():
-            if i.status == ActorStatusType.FIGHTING and i.party_manager.get_party_id() not in participating_parties:
-                participating_parties.append(i.party_manager.get_party_id())
+        #participating_parties = []
+        #for i in self.participants.values():
+        #    if i.status == ActorStatusType.FIGHTING and i.party_manager.get_party_id() not in participating_parties:
+        #        participating_parties.append(i.party_manager.get_party_id())
 
 
 
@@ -196,9 +204,9 @@ class Combat:
 
 
         #utils.debug_print(participating_parties)
-        if len(participating_parties) <= 1 and self.turn >= 1:
-           self.combat_over()
-           return
+        #if len(participating_parties) <= 1 and self.turn >= 1:
+        #   self.combat_over()
+        #   return
 
 
         self.time_since_turn_finished = 0

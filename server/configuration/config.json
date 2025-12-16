@@ -1,5 +1,5 @@
 {
-    "SHA-256": "cdc36de2535807a477cf6e577b776a70e1ab281b29706af103afe276c26158d8",
+    "SHA-256": "c745159d6b71a138116c9d51bd9f95314dd56902b094232cf165e84618ae0380",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4688,9 +4688,9 @@
             "end_turn": false,
             "script_values": {
                 "bonus": [
-                    1.0,
-                    1.1,
-                    1.2
+                    0.1,
+                    0.2,
+                    0.3
                 ],
                 "hp_cost": [
                     15,
@@ -4818,69 +4818,6 @@
                     1,
                     2,
                     3
-                ]
-            }
-        },
-        "adrenaline": {
-            "skill_id": "adrenaline",
-            "name": "Adrenal Surge",
-            "description": "The adrenaline makes you feel alive.\nMax health is amplified by BONUS% max health for DURATION turns.\n",
-            "script_to_run": "Adrenaline",
-            "target_others_is_valid": false,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": true,
-            "practice_cost": 1,
-            "level_req": 6.0,
-            "use_perspectives": {
-                "use_case_name": "use_generic",
-                "you on you": "You concentrate.",
-                "you on other": "You concentrate on #OTHER#.",
-                "user on user": "#USER# concentrates.",
-                "user on you": "#USER# concentrates on you.",
-                "user on other": "#USER# concentrates on #OTHER#.",
-                "you on you fail": "You fail to concentrate.",
-                "you on other fail": "You fail to concentrate on #OTHER#.",
-                "user on user fail": "#USER# fails to concentrate.",
-                "user on you fail": "#USER# fails to concentrate on you.",
-                "user on other fail": "#USER# fails to concentrate on #OTHER#."
-            },
-            "is_offensive": 0.0,
-            "end_turn": false,
-            "script_values": {
-                "bonus": [
-                    0.2,
-                    0.2,
-                    0.3,
-                    0.3,
-                    0.4,
-                    0.4
-                ],
-                "cooldown": [
-                    10,
-                    10,
-                    10,
-                    10,
-                    10,
-                    10
-                ],
-                "duration": [
-                    8,
-                    8,
-                    8,
-                    8,
-                    8,
-                    8
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
                 ]
             }
         },
@@ -5566,7 +5503,7 @@
         "chain_heal": {
             "skill_id": "chain_heal",
             "name": "Chain Heal",
-            "description": "Heal all party members for DAMAGE + 0%-CRIT% SOUL health.\n",
+            "description": "Shoot a bouncing lightning bolt.\nDealing DAMAGE + 0%-CRIT% MIND magic damage to target.\n",
             "script_to_run": "CureLightWounds",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -6086,6 +6023,57 @@
                     1,
                     1,
                     1
+                ]
+            }
+        },
+        "brain_sap": {
+            "skill_id": "brain_sap",
+            "name": "Brain Sap",
+            "description": "Send a psychic wave of energy thorugh your target.\n Dealing DAMAGE +0%-CRIT% MIND magical damage.\n",
+            "script_to_run": "DamageByMind",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 1.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 1.0,
+            "end_turn": false,
+            "script_values": {
+                "damage": [
+                    10,
+                    10
+                ],
+                "crit": [
+                    0.33,
+                    0.33
+                ],
+                "hp_cost": [
+                    10,
+                    20
+                ],
+                "cooldown": [
+                    1,
+                    0
+                ],
+                "levels": [
+                    1,
+                    2
                 ]
             }
         }

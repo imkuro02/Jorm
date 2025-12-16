@@ -86,9 +86,11 @@ class Skill:
         #utils.debug_print('aoe:',self.aoe)
         if not self.no_cooldown:
             cool = self.script_values['cooldown'][self.users_skill_level]
+            if cool != 0:
+                self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
             #if cool <= 1:
             #    cool = 2
-            self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
+
 
         if self.silent_use:
             return
@@ -800,7 +802,7 @@ class SkillEnrage(Skill):
             enrage_affect = affects.AffectEnrage(
                 affect_source_actor = self.user,
                 affect_target_actor = self.other,
-                name = 'Enraged', description = f'Grit increased, and all armor decreased by {int(bonus*100)}%',
+                name = 'Enraged', description = f'Grit temporarely increased',
                 turns = turns, bonus = bonus)
             self.user.affect_manager.set_affect_object(enrage_affect)
 
