@@ -7,7 +7,7 @@ versions:
     - Equipment can no longer boost max health
     - Afflictions can no longer kill enemies after combat (for example you flee and then the enemy bleeds out)
     - Some skills have their values changed slightly
-    - Bleed has been buffed, it deals character lvl/2 damage per turn
+    - Bleed has been buffed, it deals character lvl/2 damage per turn, increasing with each bleed stack
   '261125':
     id: '261125'
     title: New map and stat changes
