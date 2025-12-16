@@ -8,6 +8,7 @@ versions:
     - Afflictions can no longer kill enemies after combat (for example you flee and then the enemy bleeds out)
     - Some skills have their values changed slightly
     - Bleed has been buffed, it deals character lvl/2 damage per turn, increasing with each bleed stack
+    - Item reforge afflictions are now "wearing [reforge] [slot]"
   '261125':
     id: '261125'
     title: New map and stat changes

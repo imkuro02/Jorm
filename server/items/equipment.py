@@ -579,7 +579,7 @@ class Equipment(Item):
 
                 wear_or_wield = 'Wearing' if self.slot != EquipmentSlotType.WEAPON else 'Wielding'
                 #affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
-                affliction_name = f'{wear_or_wield} {reforge_name} {self.name}'
+                affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
                 reforge_description = f'Your {slot_name} item is {reforge_name}'
                 if reforge_obj == affects.AffectReforge:
                     reforge_description = reforge_description + ' (Affliction didnt load properly)'
