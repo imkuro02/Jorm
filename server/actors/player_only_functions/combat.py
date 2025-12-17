@@ -2,7 +2,7 @@ from actors.player_only_functions.checks import check_no_unfriendlies_present_in
 from configuration.config import DamageType, ItemType, ActorStatusType, StatType, Audio
 import utils
 from skills.manager import get_skills, use_skill
-
+from affects import affects
 '''
 def command_target(self, line):
     list_of_actors = [actor.name for actor in self.room.actors.values()]
@@ -313,6 +313,15 @@ def rest_home(self, line):
     self.affect_manager.unload_all_affects()
     self.cooldown_manager.unload_all_cooldowns()
     self.finish_turn()
+
+    well_rested = affects.AffectWellRested(
+        affect_source_actor = self,
+        affect_target_actor = self,
+        name = 'Rested', description = f'You take half damage round 1',
+        turns = 0 + int(self.stat_manager.stats[StatType.LVL] * 15),
+        custom_go_away = True
+    )
+    self.affect_manager.set_affect_object(well_rested)
 
 
 @check_not_in_combat

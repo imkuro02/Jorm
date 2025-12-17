@@ -104,6 +104,24 @@ class Affect:
     def dealt_damage(self, damage_obj):
         return damage_obj
 
+
+class AffectWellRested(Affect):
+    def set_turn(self):
+        # only count if not dead or in combat
+        if self.affect_target_actor.status == ActorStatusType.NORMAL:
+            self.turns -= 1
+        pass
+
+    def take_damage_after_calc(self, damage_obj):
+        if self.affect_target_actor.status != ActorStatusType.FIGHTING:
+            return damage_obj
+        #print(self.affect_target_actor.room.combat.round)
+        if self.affect_target_actor.room.combat.round != 2:
+            return damage_obj
+        if damage_obj.damage_type == DamageType.HEALING:
+            return damage_obj
+        damage_obj.damage_value = int(damage_obj.damage_value / 2)
+        return damage_obj
 # this affect takes a skill object before its ran and runs it when affect runs outta time
 class AffectDelayedAction(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, skills_to_use_objects):
