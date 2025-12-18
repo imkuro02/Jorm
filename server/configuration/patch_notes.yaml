@@ -1,4 +1,16 @@
 versions:
+  '171225':
+    id: '171225'
+    title: Balance
+    unixtime: 1761899677
+    features:
+    - Well rested buff added
+    - Afflictions are now dispellable
+    - Afflictions are tagged as buffs, debuffs, or indispellable
+    - Dispel skill added, dispelling enemy buffs and ally debuffs
+    - Skills that grant buffs on enemies are not blocked by armor
+    - Bleed cannot be dispelled with just regular healing anymore
+    - Skills with Bounce or AOE will now target the party of the main target
   '151225':
     id: '151225'
     title: Balance

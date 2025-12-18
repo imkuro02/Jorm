@@ -11,7 +11,8 @@ class Affect:
     turns,
     resisted_by = None,
     get_prediction_string_append = None, get_prediction_string_clear = False,
-    custom_go_away = False
+    custom_go_away = False,
+    dispellable = True,
     ):
         self.affect_target_actor = affect_target_actor
         self.affect_source_actor = affect_source_actor
@@ -35,6 +36,7 @@ class Affect:
         # if custom_go_away is true, the affliction only vanishes when "rest home"
         # not on death, on rest now, or anything else
         self.custom_go_away = custom_go_away
+        self.dispellable = dispellable
 
 
     def merge_request(self, affect_to_merge):
@@ -107,7 +109,7 @@ class Affect:
 
 class AffectWellRested(Affect):
     def set_turn(self):
-        # only count if not dead or in combat
+        # only count if not dead and not in combat
         if self.affect_target_actor.status == ActorStatusType.NORMAL:
             self.turns -= 1
         pass
@@ -125,7 +127,7 @@ class AffectWellRested(Affect):
 # this affect takes a skill object before its ran and runs it when affect runs outta time
 class AffectDelayedAction(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, skills_to_use_objects):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, dispellable = False)
         self.skills_to_use_objects = skills_to_use_objects
         self.get_prediction_string_append = f'will finish in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
         self.get_prediction_string_clear = True
@@ -235,8 +237,8 @@ class AffectThorns(Affect):
         return damage_obj
 
 class AffectArmorReduceToZero(Affect):
-    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, dispellable = False):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, dispellable = dispellable)
         self.armor = 0
         self.marmor = 0
 
@@ -547,10 +549,10 @@ class AffectBleed(Affect):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns, resisted_by)
         self.damage = damage
 
-    def take_damage_after_calc(self, damage_obj):
-        if damage_obj.damage_type == DamageType.HEALING:
-            self.on_finished()
-        return damage_obj
+    #def take_damage_after_calc(self, damage_obj):
+    #    if damage_obj.damage_type == DamageType.HEALING:
+    #        self.on_finished()
+    #    return damage_obj
 
     def merge_request(self, affect_to_merge):
         #if affect_to_merge.turns > self.turns:
@@ -631,6 +633,7 @@ class AffectPromise(Affect):
         #if self.turns <= 0:
         #    return damage_obj
 
+        damage_obj.damage_value = abs(damage_obj.damage_value)
         if damage_obj.damage_type == DamageType.HEALING:
             self.accumulated_damage -= damage_obj.damage_value
         elif damage_obj.damage_type != DamageType.CANCELLED:
@@ -655,9 +658,10 @@ class AffectReforge(Affect):
             name, description,
             turns,
             source_item = None,
-            reforge_variables = None
+            reforge_variables = None,
+            dispellable = False
         ):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, dispellable = dispellable)
         self.source_item = source_item
         self.reforge_variables = reforge_variables
 
@@ -735,9 +739,10 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
             affect_target_actor,
             name, description, turns,
             source_item = None,
-            reforge_variables = None
+            reforge_variables = None,
+            dispellable = False
         ):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables, dispellable = dispellable)
         #self.stat = self.reforge_variables['var_a']
         #self.bonus = float(self.reforge_variables['var_b'])
         #self.bonus = self.bonus * self.source_item.stat_manager.reqs[StatType.LVL]
@@ -795,7 +800,7 @@ class ReforgeRandomTargetBonus(AffectReforge):
             source_item = None,
             reforge_variables = None
         ):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables, dispellable = dispellable)
         self.target = None
 
     def set_turn(self):

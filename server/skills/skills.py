@@ -104,12 +104,10 @@ class Skill:
                 continue
             if self.other == i:
                 continue
-            if not skill['is_offensive']:
-                if i.party_manager.get_party_id() == self.user.party_manager.get_party_id():
-                    targets.append(i)
-            else:
-                if i.party_manager.get_party_id() != self.user.party_manager.get_party_id():
-                    targets.append(i)
+
+            if i.party_manager.get_party_id() == self.other.party_manager.get_party_id():
+                targets.append(i)
+
 
 
         random.shuffle(targets)
@@ -778,7 +776,7 @@ class SkillDisorient(Skill):
                 affect_source_actor = self.user,
                 affect_target_actor = self.other,
                 name = 'Disoriented', description = f'All armor is reduced to 0 momentarily',
-                turns = turns)
+                turns = turns, dispellable = False)
             self.other.affect_manager.set_affect_object(_effect)
 
 class SkillDeflectMagic(Skill):
@@ -921,6 +919,52 @@ class SkillBoostStats(SkillBoostStat):
         super().use(name_of_boost='Soul Blessed',stat=StatType.SOUL)
 
 # XD unique skills
+class SkillDispel(Skill):
+    def use(self):
+       super().use()
+       if self.success:
+            is_ally = self.other.party_manager.get_party_id() == self.user.party_manager.get_party_id()
+            affs = self.other.affect_manager.affects.values()
+            to_dispel = []
+            if is_ally:
+                for i in affs:
+                    if i.dispellable and i.resisted_by != None:
+                        to_dispel.append(i)
+
+            if not is_ally:
+                for i in affs:
+                    if i.dispellable and i.resisted_by == None:
+                        to_dispel.append(i)
+
+            if to_dispel == []:
+                self.user.sendLine('Nothing to dispel')
+                return
+
+            dispel_this = random.choice(to_dispel)
+            dispel_this.on_finished()
+
+            if is_ally:
+                damage_obj = Damage(
+                    damage_taker_actor = self.other,
+                    damage_source_action = self, combat_event = self.combat_event,
+                    damage_source_actor = self.user,
+                    damage_value = int(self.user.stat_manager.stats[StatType.SOUL]),
+                    damage_type = DamageType.HEALING,
+                    )
+                damage_obj.run()
+            else:
+                damage_obj = Damage(
+                    damage_taker_actor = self.other,
+                    damage_source_action = self, combat_event = self.combat_event,
+                    damage_source_actor = self.user,
+                    damage_value = int(self.user.stat_manager.stats[StatType.MIND]),
+                    damage_type = DamageType.MAGICAL,
+                    )
+                damage_obj.run()
+
+
+
+
 
 class SkillGetPracticePoint(Skill):
      def use(self):

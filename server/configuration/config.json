@@ -1,5 +1,5 @@
 {
-    "SHA-256": "c745159d6b71a138116c9d51bd9f95314dd56902b094232cf165e84618ae0380",
+    "SHA-256": "c3300c58a4232d3a0c67d66372fa649c1e0b11c58856a78d422fe053d78fb158",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -4263,7 +4263,7 @@
         "stab": {
             "skill_id": "stab",
             "name": "Stab",
-            "description": "Lunge and stab your target.\nDealing DAMAGE + 0%-CRIT% FLOW physical damage.\nApplies Bleeding on target for DURATION turns,\nAt a 50% chance if physical armor is broken,\nAt a 100% chance if all armor is broken\nBleeding deals half of users level as physical damage per turn. Bleed can be dispelled with any form of healing. Bleed damage stacks.\n",
+            "description": "Lunge and stab your target.\nDealing DAMAGE + 0%-CRIT% FLOW physical damage.\nApplies Bleeding on target for DURATION turns,\nAt a 50% chance if physical armor is broken,\nAt a 100% chance if all armor is broken\nBleeding deals half of users level as physical damage per turn. Bleed damage stacks.\n",
             "script_to_run": "DamageByFlowApplyBleed",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -6018,11 +6018,6 @@
                     1,
                     2,
                     3
-                ],
-                "delay": [
-                    1,
-                    1,
-                    1
                 ]
             }
         },
@@ -6074,6 +6069,43 @@
                 "levels": [
                     1,
                     2
+                ]
+            }
+        },
+        "dispel": {
+            "skill_id": "dispel",
+            "name": "Dispel",
+            "description": "Dispel your target, removing a random buff if its an enemy, or a random debuff if its an ally.\nDispelling an affliction will cause it to activate its last turn action if applicable.\nDoes nothing if there are no dispellable afflictions.\nSuccessfully dispelling an enemy deals your MIND in magic damage.\nSuccesfully dispelling an ally will heal them for your SOUL.\n",
+            "script_to_run": "Dispel",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 1.0,
+            "use_perspectives": {
+                "use_case_name": "use_generic",
+                "you on you": "You concentrate.",
+                "you on other": "You concentrate on #OTHER#.",
+                "user on user": "#USER# concentrates.",
+                "user on you": "#USER# concentrates on you.",
+                "user on other": "#USER# concentrates on #OTHER#.",
+                "you on you fail": "You fail to concentrate.",
+                "you on other fail": "You fail to concentrate on #OTHER#.",
+                "user on user fail": "#USER# fails to concentrate.",
+                "user on you fail": "#USER# fails to concentrate on you.",
+                "user on other fail": "#USER# fails to concentrate on #OTHER#."
+            },
+            "is_offensive": 0.0,
+            "end_turn": false,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "cooldown": [
+                    6
                 ]
             }
         }
@@ -9402,7 +9434,7 @@
         "flow relic 1": {
             "premade_id": "flow relic 1",
             "name": "Apprentice rogue emblem",
-            "description": "You have proved your worth, and are now an apprentice fighter",
+            "description": "You have proved your worth, and are now an apprentice rogue",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -10296,7 +10328,7 @@
         "mind relic 1": {
             "premade_id": "mind relic 1",
             "name": "Apprentice mage emblem",
-            "description": "You have proved your worth, and are now an apprentice fighter",
+            "description": "You have proved your worth, and are now an apprentice mage",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -10797,7 +10829,7 @@
         "soul relic 1": {
             "premade_id": "soul relic 1",
             "name": "Apprentice cleric emblem",
-            "description": "You have proved your worth, and are now an apprentice fighter",
+            "description": "You have proved your worth, and are now an apprentice cleric",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -18022,7 +18054,7 @@
         "soul body 15": {
             "premade_id": "soul body 15",
             "name": "Bishop robe",
-            "description": "0.0",
+            "description": "A thick and heavy white robe",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -18069,7 +18101,7 @@
         "soul head 15": {
             "premade_id": "soul head 15",
             "name": "Bishop hat",
-            "description": "0.0",
+            "description": "A tall and pointy hat with golden threads",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -18116,7 +18148,7 @@
         "soul trinket 15": {
             "premade_id": "soul trinket 15",
             "name": "Bishop medallion",
-            "description": "0.0",
+            "description": "A large golden crescent hangs off of a thin chain",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",
@@ -18163,7 +18195,7 @@
         "soul weapon 15": {
             "premade_id": "soul weapon 15",
             "name": "Bishop staff",
-            "description": "0.0",
+            "description": "A long metallic rod with a golden crescent",
             "description_room": null,
             "invisible": 0.0,
             "item_type": "equipment",

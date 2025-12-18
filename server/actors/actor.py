@@ -405,7 +405,12 @@ class Actor:
 
             for aff in target.affect_manager.affects.values():
                 #output += f'{aff.info()}'
-                t.add_data(aff.name)
+                col = Color.GOOD
+                if aff.resisted_by != None:
+                    col = Color.BAD
+                if not aff.dispellable:
+                    col = Color.IMPORTANT
+                t.add_data(aff.name, col = col)
                 t.add_data(f'{aff.turns}')
                 t.add_data(aff.description)
             output = output + t.get_table()
