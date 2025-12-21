@@ -35,7 +35,7 @@ class Skill:
                 dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
                 dmg = int(dmg)
 
-            dmg = dmg + (self.user.stat_manager.stats[StatType.LVL]*2)
+            #dmg = dmg + (self.user.stat_manager.stats[StatType.LVL]*2)
             self.get_dmg_value_override = dmg
             return self.get_dmg_value_override
         else:

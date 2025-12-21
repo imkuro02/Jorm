@@ -314,6 +314,7 @@ def rest_home(self, line):
     self.cooldown_manager.unload_all_cooldowns()
     self.finish_turn()
 
+    '''
     well_rested = affects.AffectWellRested(
         affect_source_actor = self,
         affect_target_actor = self,
@@ -322,6 +323,7 @@ def rest_home(self, line):
         custom_go_away = True
     )
     self.affect_manager.set_affect_object(well_rested)
+    '''
 
 
 @check_not_in_combat
