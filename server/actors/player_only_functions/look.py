@@ -6,6 +6,8 @@ random = random.Random()
 
 def command_map(self, line, return_gmcp = False):
     setting_render_walls = False
+    if self.room == None:
+        return
     room_id = self.room.id
     VIEW_RANGE = 7
     ROOM_AMOUNT = VIEW_RANGE

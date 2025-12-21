@@ -16,10 +16,11 @@ class SETTINGS:
     DEBUG = 'debug'
     PWD = 'password'
     USR = 'username' # not in LIST_SETTINGS
+    EMAIL = 'email'
     AUTO_BATTLER = 'autobattler'
     PROMPT = 'prompt'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, VIEW_ASCII_ART, PVP, RESET, LOGOUT, DEBUG, PWD, USR, PROMPT, #AUTO_BATTLER
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, VIEW_ASCII_ART, PVP, RESET, LOGOUT, DEBUG, PWD, USR, EMAIL, PROMPT, #AUTO_BATTLER
     ]
 
 
@@ -28,14 +29,14 @@ LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = True, view_room = True, view_ascii_art = True, view_map = False, pvp = False, debug = False, prompt = None):
+    def __init__(self, actor, aliases = None, gmcp = True, email = '', view_room = True, view_ascii_art = True, view_map = False, pvp = False, debug = False, prompt = None):
         self.actor = actor
         if aliases == None:
             self.aliases = {}
         else:
             self.aliases = aliases
         self.gmcp = gmcp
-
+        self.email = email
         self.view_room = view_room
         self.view_map = view_map
         self.view_ascii_art = view_ascii_art
@@ -179,6 +180,23 @@ class Settings:
                 username = proto.username
                 #proto.guest = False
                 proto.register_account_changes(username, password)
+
+            case SETTINGS.EMAIL:
+                proto = self.actor.protocol
+                if proto.guest:
+                    proto.actor.sendLine(f'{Color.BAD}You are currently a guest, you need to set a new username before changing your email{Color.NORMAL}')
+                    return
+
+                print(original_line)
+                email = ' '.join(original_line.split()[1:])
+                if email == '':
+                    self.actor.sendLine(f'Your current email is "{Color.GOOD}{self.email}{Color.NORMAL}".')
+                    return
+                self.email = email
+                password = proto.password
+                username = proto.username
+                succ = proto.register_account_changes(username, password)
+                self.actor.sendLine(f'Your email is now "{Color.GOOD}{self.email}{Color.NORMAL}".')
 
 
             case SETTINGS.AUTO_BATTLER:

@@ -1,7 +1,8 @@
 import copy
 import random
+import secrets
 import uuid
-
+import brevo
 import utils
 from actors.player import Player
 from configuration.config import (
@@ -31,6 +32,11 @@ GMCP = b"\xc9"
 MSSP = b"\x46"
 
 
+def generate_tmp_pwd(num_words=4):
+    with open('configuration/words.txt', "r", encoding="utf-8") as f:
+        words = [line.strip() for line in f if line.strip()]
+        return "-".join(secrets.choice(words) for _ in range(num_words))
+
 class Protocol(protocol.Protocol):
     def __init__(self, factory):
         self.factory = factory
@@ -45,6 +51,10 @@ class Protocol(protocol.Protocol):
         self.account = None
         self.username = None
         self.password = None
+
+
+        # for password reset
+        self.tmp_pwd = None
 
         self.tick_since_last_message = self.factory.ticks_passed
 
@@ -128,10 +138,13 @@ class Protocol(protocol.Protocol):
                 self.username = None
                 self.password = None
                 self.sendLine(
-                    f"Type {Color.GOOD} new   {Color.BACK} to register.\nType {Color.GOOD} login {Color.BACK} to log in.\nType {Color.GOOD} guest {Color.NORMAL} to enter as guest."
+                    f"Type {Color.GOOD} new   {Color.BACK} to register.\nType {Color.GOOD} login {Color.BACK} to log in.\nType {Color.GOOD} reset {Color.BACK} to reset your password.\nType {Color.GOOD} guest {Color.NORMAL} to enter as guest."
                 )
 
             case self.LOGIN_USERNAME:
+                self.sendLine(f"Your {Color.GOOD}username{Color.BACK}:")
+
+            case self.RESET_USERNAME:
                 self.sendLine(f"Your {Color.GOOD}username{Color.BACK}:")
 
             case self.LOGIN_PASSWORD:
@@ -230,13 +243,16 @@ class Protocol(protocol.Protocol):
         if self.account == None:
             self.sendLine("Wrong username or password")
             self.change_state(self.LOGIN_OR_REGISTER)
+            self.tmp_pwd = None
             return
 
-        if self.account[2] != line:
+        if self.account[2] != line and self.tmp_pwd != line:
             self.sendLine("Wrong username or password")
             self.change_state(self.LOGIN_OR_REGISTER)
+            self.tmp_pwd = None
             return
 
+        self.tmp_pwd = None
         self.change_state(self.PLAY)
 
     def LOGIN_USERNAME(self, line):
@@ -245,9 +261,34 @@ class Protocol(protocol.Protocol):
         self.change_state(self.LOGIN_PASSWORD)
         return
 
+    def RESET_USERNAME(self, line):
+        self.sendLine("You are about to receive a temporary password on your email")
+        self.tmp_pwd = generate_tmp_pwd()
+
+        self.account = self.factory.db.find_account_from_username(line)
+        self.username = line
+
+
+        actor = self.factory.db.read_actor(self.account[0])
+        if actor == None:
+            return
+
+        email = actor["settings"]["email"]
+        if email == '':
+            return
+
+        brevo.send_reset_email(to = email, pwd = self.tmp_pwd)
+        print(email, self.tmp_pwd)
+
+        self.change_state(self.LOGIN_PASSWORD)
+        return
+
     def LOGIN_OR_REGISTER(self, line):
         if line.lower() == "login".lower():
             self.change_state(self.LOGIN_USERNAME)
+            return
+        if line.lower() == "reset".lower():
+            self.change_state(self.RESET_USERNAME)
             return
         if line.lower() == "new".lower():
             self.change_state(self.REGISTER_USERNAME)
@@ -409,6 +450,7 @@ class Protocol(protocol.Protocol):
                 self.actor.settings_manager.view_map = actor["settings"]["view_map"]
                 self.actor.settings_manager.view_ascii_art = actor["settings"]["view_ascii_art"]
                 self.actor.settings_manager.prompt = actor["settings"]["prompt"]
+                self.actor.settings_manager.email = actor["settings"]["email"]
 
             bonuses = actor["equipment_bonuses"]
 
@@ -571,8 +613,8 @@ class Protocol(protocol.Protocol):
         # utils.logging.debug(self.account[0] + ' -> ' + line)
 
         # if line:  # skip empty lines
-        if "@" in line:
-            line = str(line) + Color.NORMAL
+        #if "@" in line:
+        #    line = str(line) + Color.NORMAL
         self.state(line)
         return
 

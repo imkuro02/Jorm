@@ -5,17 +5,20 @@ from configuration.config import MsgType
 @check_no_empty_line
 @check_not_spamming
 def command_say(self, line):
+    line = line + '@back'
+    print(line)
     self.simple_broadcast(
         f'You say "@cyan{line}@back"',
-        f'{self.pretty_name()} says "@cyan{line}@back"',
+        f'{self.pretty_name()} says "@cyan{line}@back"@normal',
         msg_type = [MsgType.SAY, MsgType.CHAT])
 
 @check_no_empty_line
 @check_not_spamming
 def command_shout(self, line):
+    line = line + '@back'
     self.simple_broadcast(
         f'You shout "@cyan{line}@back"',
-        f'{self.pretty_name()} shouts "@cyan{line}@back" from "{self.room.pretty_name()}"',
+        f'{self.pretty_name()} shouts "@cyan{line}@back" from "{self.room.pretty_name()}"@normal',
         send_to = 'world', msg_type = [MsgType.SHOUT, MsgType.CHAT])
 
 @check_not_spamming
@@ -35,10 +38,10 @@ def command_emote(self, line):
     if target == None:
         target = self
 
-    
-        
-    
-    
+
+
+
+
     perspectives = {
         'you on you':       emotes[emote]['you on you'],
         'you on other':     emotes[emote]['you on other'],
@@ -96,4 +99,3 @@ def command_roll(self, line):
     self.simple_broadcast(
         f'You roll: @green{roll}/{rmax}@normal',
         f'{self.pretty_name()} rolls: @green{roll}/{rmax}@normal')
-    

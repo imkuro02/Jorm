@@ -120,6 +120,7 @@ class Database:
             view_map BOOL NOT NULL,
             view_ascii_art BOOL NOT NULL,
             prompt TEXT NOT NULL,
+            email TEXT NOT NULL,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )''')
 
@@ -448,11 +449,12 @@ class Database:
         my_dict['view_map'] = actor.settings_manager.view_map
         my_dict['view_ascii_art'] = actor.settings_manager.view_ascii_art
         my_dict['prompt'] = actor.settings_manager.prompt
+        my_dict['email'] = actor.settings_manager.email
         self.cursor.execute('''
             INSERT INTO settings (
-                actor_id, gmcp, view_room, view_map, view_ascii_art, prompt
+                actor_id, gmcp, view_room, view_map, view_ascii_art, prompt, email
             ) VALUES (
-                :actor_id, :gmcp, :view_room, :view_map, :view_ascii_art, :prompt
+                :actor_id, :gmcp, :view_room, :view_map, :view_ascii_art, :prompt, :email
             )
         ''', my_dict)
 
@@ -676,21 +678,11 @@ class Database:
                 'view_room': settings[2],
                 'view_map': settings[3],
                 'view_ascii_art': settings[4],
-                'prompt': settings[5]
+                'prompt': settings[5],
+                'email': settings[6]
             }
 
-        #utils.debug_print(my_dict['settings_aliases'])
 
-        my_dict['settings'] = {}
-        #utils.debug_print(settings)
-        if settings != None:
-            my_dict['settings'] = {
-                'gmcp': settings[1],
-                'view_room': settings[2],
-                'view_map': settings[3],
-                'view_ascii_art': settings[4],
-                'prompt': settings[5]
-            }
 
         #utils.debug_print(my_dict['settings_aliases'])
         my_dict['friends'] = []
