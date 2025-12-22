@@ -262,12 +262,22 @@ class Protocol(protocol.Protocol):
         return
 
     def RESET_USERNAME(self, line):
-        self.sendLine("You are about to receive a temporary password on your email")
+        self.sendLine('''
+    You will soon receive a ONE TIME password on your email.
+    Please check your spam folder.
+
+    You will need to change your password after you log in
+    "setting password <new password>"
+
+    This ONE TIME password will not work next time you try to log in.
+            ''')
         self.tmp_pwd = generate_tmp_pwd()
 
         self.account = self.factory.db.find_account_from_username(line)
         self.username = line
 
+        if self.account == None:
+            return
 
         actor = self.factory.db.read_actor(self.account[0])
         if actor == None:

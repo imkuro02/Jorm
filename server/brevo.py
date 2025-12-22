@@ -5,6 +5,7 @@ import utils
 API_KEY = os.getenv("BREVO_API_KEY")
 
 def send_reset_email(to, pwd):
+    print(to)
     response = requests.post(
         "https://api.brevo.com/v3/smtp/email",
         headers={
@@ -13,10 +14,18 @@ def send_reset_email(to, pwd):
             "content-type": "application/json",
         },
         json={
-            "sender": {"name": "Your App", "email": "reset_account@jorm.kurowski.xyz"},
-            "to": [{"email": to}],
+            "sender": {"name": "Jorm", "email": "noreply@jorm.kurowski.xyz"},
+            "to": [
+                        {"email": to}
+                    ],
             "subject": "Jorm Temporary Password",
-            "textContent": f"Hello, your temporary password is:\n\n\n{pwd}\n\n\nPlease change it after you log in!!!"
+            "textContent": f"""Hello, your temporary password is:
+                {pwd}
+
+                You will need to change your password after you log in
+                "setting password [new password]"
+
+                This ONE TIME password will not work next time you try to log in."""
         }
     )
     utils.debug_print(response.status_code, response.json())
