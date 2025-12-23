@@ -31,11 +31,11 @@ LINEMODE = b"\x22"  # Line mode
 GMCP = b"\xc9"
 MSSP = b"\x46"
 
+with open('configuration/words.txt', "r", encoding="utf-8") as f:
+    secret_words = [line.strip() for line in f if line.strip()]
 
 def generate_tmp_pwd(num_words=4):
-    with open('configuration/words.txt', "r", encoding="utf-8") as f:
-        words = [line.strip() for line in f if line.strip()]
-        return "-".join(secrets.choice(words) for _ in range(num_words))
+    return "-".join(secrets.choice(secret_words) for _ in range(num_words))
 
 class Protocol(protocol.Protocol):
     def __init__(self, factory):
@@ -262,30 +262,39 @@ class Protocol(protocol.Protocol):
         return
 
     def RESET_USERNAME(self, line):
-        self.sendLine('''
-    You will soon receive a ONE TIME password on your email.
-    Please check your spam folder.
-
-    You will need to change your password after you log in
-    "setting password <new password>"
-
-    This ONE TIME password will not work next time you try to log in.
-            ''')
-        self.tmp_pwd = generate_tmp_pwd()
-
         self.account = self.factory.db.find_account_from_username(line)
         self.username = line
 
         if self.account == None:
+            self.sendLine('This account does not exist')
+            self.change_state(self.LOGIN_OR_REGISTER)
             return
 
         actor = self.factory.db.read_actor(self.account[0])
         if actor == None:
+            self.sendLine('This account does not exist')
+            self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        email = actor["settings"]["email"]
-        if email == '':
+        if 'email' not in actor['settings']:
+            self.sendLine('This account does not have an email')
+            self.change_state(self.LOGIN_OR_REGISTER)
             return
+
+        email = actor['settings']['email']
+        if email == '':
+            self.sendLine('This account does not have an email')
+            self.change_state(self.LOGIN_OR_REGISTER)
+            return
+
+        self.sendLine(f'''
+{Color.IMPORTANT}You will soon receive a ONE TIME password on your email.
+Please check your spam folder.
+You will need to change your password after you log in
+"setting password <new password>"
+This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
+            '''.strip())
+        self.tmp_pwd = generate_tmp_pwd()
 
         brevo.send_reset_email(to = email, pwd = self.tmp_pwd)
         print(email, self.tmp_pwd)
