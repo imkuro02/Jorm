@@ -183,6 +183,64 @@ def match_word(word: str, l: list, get_score = False):
     else:
         return best_match
 
+def get_matches(line, things):
+    index = 1
+
+    if '.' in line:
+        index = line.split('.')[0]
+        line = line.split('.')[1]
+
+    line = line.strip()
+
+    thing_names = []
+    for thing in things.values():
+        thing_names.append(remove_color(thing.pretty_name()))
+
+
+    if index == 'all':
+        matches = match_word_get_list(line, thing_names)
+        match_objects = []
+        for val in things.values():
+            if line.lower() in remove_color(val.pretty_name()).lower():
+                match_objects.append(val)
+        print(matches)
+        print(match_objects)
+        return match_objects
+
+
+    try:
+        index = int(index)
+    except ValueError:
+        index = 1
+
+    if index == 0:
+        index = 1
+
+
+    # reverse the dictionary so you can search from last order
+    if index <= -1:
+        things_reversed = {}
+        for i in reversed(things):
+            things_reversed[i] = things[i]
+        things = things_reversed
+        # set the index to a positive value again
+        index = abs(index)
+
+
+
+    # get a list of matches
+    matches = match_word_get_list(line, thing_names)
+
+    # loop thru the matches, if the "line" is in the "things" name, add 1 to i, if i == index, then that is the "thing" you are looking for
+    i = 1
+    for val in things.values():
+        #utils.debug_print(index, matches[index-1][0].lower(),'----------', i, val.name)
+
+        #if line.lower() in remove_color(val.name).lower():
+        if line.lower() in remove_color(val.pretty_name()).lower():
+            if i == index:
+                return [val]
+            i += 1
 
 def get_match(line, things):
     index = 1

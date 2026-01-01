@@ -28,7 +28,7 @@ def command_get(self, line):
             self.sendLine('Get what?', sound = Audio.ERROR)
             return
 
-        items_to_get = [item_found]
+        items_to_get = item_found
 
 
     items_pretty_name_before_pickup = []
@@ -64,7 +64,7 @@ def command_drop(self, line):
             self.sendLine('Drop what?', sound = Audio.ERROR)
             return
 
-        items_to_get = [item_found]
+        items_to_get = item_found
 
     items_pretty_name_before_pickup = []
     for item in items_to_get:
@@ -98,7 +98,7 @@ def command_scrap(self, line):
             self.sendLine('Scrap what?', sound = Audio.ERROR)
             return
 
-        items_to_get = [item_found]
+        items_to_get = item_found
 
     items_pretty_name_before_pickup = []
     for item in items_to_get:

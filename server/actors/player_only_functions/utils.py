@@ -81,4 +81,4 @@ def get_item(self, line, search_mode = 'self', inventory = None):
                     continue
                 return self.inventory_manager.items[self.slots_manager.slots[slot]]
 
-    return utils.get_match(line, inventory)
+    return utils.get_matches(line, inventory)
