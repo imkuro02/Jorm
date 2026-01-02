@@ -203,8 +203,8 @@ def get_matches(line, things):
         for val in things.values():
             if line.lower() in remove_color(val.pretty_name()).lower():
                 match_objects.append(val)
-        print(matches)
-        print(match_objects)
+        #print(matches)
+        #print(match_objects)
         return match_objects
 
 

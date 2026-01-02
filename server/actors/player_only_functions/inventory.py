@@ -34,13 +34,15 @@ def command_get(self, line):
     items_pretty_name_before_pickup = []
     for item in items_to_get:
         item_pretty_name_before_pickup = item.pretty_name()
-        items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
+
         if self.inventory_manager.add_item(item):
             self.room.inventory_manager.remove_item(item)
 
         else:
             self.sendLine(f'You can\'t pick up {item.pretty_name()}', sound = Audio.ERROR)
-            return
+            continue
+
+        items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
 
     self.simple_broadcast(
         f'You get {", ".join(items_pretty_name_before_pickup)}',
@@ -69,10 +71,12 @@ def command_drop(self, line):
     items_pretty_name_before_pickup = []
     for item in items_to_get:
         item_pretty_name_before_pickup = item.pretty_name()
-        items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
+
         if not item.can_tinker_with():
             self.sendLine(f'Cannot drop {item.pretty_name()} since its kept or equipped')
             continue
+
+        items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
         self.room.inventory_manager.add_item(item)
         self.inventory_manager.remove_item(item)
 
