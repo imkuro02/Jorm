@@ -239,6 +239,7 @@ def rest_home_request(self, line):
 @check_not_in_party_or_is_party_leader
 @check_no_unfriendlies_present_in_room
 def rest_here_request(self, line):
+    return
     if self.party_manager.party != None:
         for par in self.party_manager.party.participants.values():
             if par == self:

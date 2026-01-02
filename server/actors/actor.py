@@ -757,7 +757,10 @@ class Actor:
         if self.room == None:
             return
         if self.room.combat == None:
-            #utils.debug_print('no combat')
+            for val in self.affect_manager.affects.values():
+                if val.dispellable and val.resisted_by != None:
+                    return
+            self.heal(value = self.stat_manager.stats[StatType.LVL]*3)
             return
         if self != self.room.combat.current_actor:
             #utils.debug_print('not my turn')

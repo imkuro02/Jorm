@@ -295,6 +295,8 @@ class UpdateChecker:
         # self.tick_show_actors()
 
         _map = self.actor.command_map("", return_gmcp=True)
+        if self.protocol == None:
+            return
         self.actor.protocol.send_gmcp(utils.add_color(_map), "MAP")
         #_look = self.actor.command_look("", return_gmcp=True)
         #self.actor.protocol.send_gmcp(utils.add_color(_look), "LOOK_ROOM")

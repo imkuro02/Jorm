@@ -1,12 +1,14 @@
 versions:
   '010126':
-    id: '211225'
-    title: Balance
+    id: '010126'
+    title: Resting and Inventory
     unixtime: 1761899677
     features:
     #- Well rested buff added
     - reworked get, drop and scrap "all" argument
     - the "all." indexing can now filter item names like so "get all.iron"
+    - Rest now / quick rest removed
+    - Instead of resting, you heal from passing a turn / walking around
 versions:
   '211225':
     id: '211225'

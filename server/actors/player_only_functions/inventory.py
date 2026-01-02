@@ -146,7 +146,7 @@ def command_reforge(self, line):
             self.sendLine('Reforge what?', sound = Audio.ERROR)
             return
 
-        items_to_get = [item_found]
+        items_to_get = item_found
 
     items_pretty_name_before_reforge = []
     items_pretty_name_after_reforge = []
@@ -207,6 +207,8 @@ def command_split(self, line):
     if item == None:
         self.sendLine('Split what?')
         return
+
+    item = item[0]
 
     if item.stack <= 1:
         self.sendLine('Can\'t split this')
@@ -307,7 +309,7 @@ def command_keep(self, line):
     if item == None:
         self.sendLine('Keep what?')
         return
-
+    item = item[0]
     self.sendLine(f'Keeping {item.name}' if not item.keep else f'Unkeeping {item.name}')
     item.keep = True
 
@@ -317,7 +319,7 @@ def command_unkeep(self, line):
     if item == None:
         self.sendLine('Unkeep what?')
         return
-
+    item = item[0]
     self.sendLine(f'Keeping {item.name}' if not item.keep else f'Unkeeping {item.name}')
     item.keep = False
 
@@ -326,7 +328,7 @@ def command_identify(self, line):
     if item == None:
         self.sendLine('Identify what?')
         return
-    output = item.identify(identifier = self)
+    output = item[0].identify(identifier = self)
     self.sendLine(output)
 
 '''

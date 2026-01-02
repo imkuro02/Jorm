@@ -11,7 +11,7 @@ def command_equipment(self, line):
             self.sendLine('Equip what?', sound = Audio.ERROR)
             return
 
-
+        item = item[0]
         if item.equiped:
             self.inventory_unequip(item)
         else:
