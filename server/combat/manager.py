@@ -162,13 +162,13 @@ class Combat:
                     if par.status != ActorStatusType.DEAD:
                         one_alive = True
 
-                if one_alive and self.round:
-                    if i.status == ActorStatusType.DEAD:
-                        i.stat_manager.stats[StatType.HP] = 1
-                        i.simple_broadcast(f'You get up again.', f'{i.pretty_name()} gets up again.')
-                        i.status = ActorStatusType.NORMAL
-                        i.affect_manager.unload_all_affects(forced = False)
-                        #i.set_turn()
+                #if one_alive and self.round:
+                #    if i.status == ActorStatusType.DEAD:
+                #        i.stat_manager.stats[StatType.HP] = 1
+                #        i.simple_broadcast(f'You get up again.', f'{i.pretty_name()} gets up again.')
+                #        i.status = ActorStatusType.NORMAL
+                #        i.affect_manager.unload_all_affects(forced = False)
+                #        #i.set_turn()
 
             if i.status != ActorStatusType.DEAD:
                 i.status = ActorStatusType.NORMAL

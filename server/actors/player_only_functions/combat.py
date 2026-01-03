@@ -180,26 +180,6 @@ def command_use(self, line, is_trying = False):
     self.ai.clear_prediction()
     return True
 
-
-
-
-
-
-
-'''
-def command_recall_set(self, line):
-    self.recall_site = self.room.id
-    self.sendLine(self.recall_site)
-
-def command_recall_go(self, line):
-    rooms = self.room.world.rooms
-    if self.recall_site not in rooms:
-        self.sendLine('recall site broked')
-        return
-
-    rooms[self.recall_site].move_actor(self)
-'''
-
 def rest_set(self, line):
     if not self.room.can_be_recall_site:
         self.sendLine('@redThis is not a suitable rest spot.@normal')
@@ -239,7 +219,6 @@ def rest_home_request(self, line):
 @check_not_in_party_or_is_party_leader
 @check_no_unfriendlies_present_in_room
 def rest_here_request(self, line):
-    return
     if self.party_manager.party != None:
         for par in self.party_manager.party.participants.values():
             if par == self:
@@ -248,7 +227,6 @@ def rest_here_request(self, line):
     self.rest_here(line)
 
 def rest_home(self, line):
-
 
     self.sendSound(Audio.BUFF)
     if self.status == ActorStatusType.DEAD:
@@ -329,6 +307,7 @@ def rest_home(self, line):
 
 @check_not_in_combat
 def command_rest(self, line):
+    line = 'home'
     if line == '':
         if self.recall_site not in self.room.world.rooms:
             self.recall_site = 'home'

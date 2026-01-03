@@ -1,7 +1,7 @@
 versions:
   '010126':
     id: '010126'
-    title: Resting and Inventory
+    title: Resting and Inventory and Party
     unixtime: 1761899677
     features:
     #- Well rested buff added
@@ -9,7 +9,7 @@ versions:
     - the "all." indexing can now filter item names like so "get all.iron"
     - Rest now / quick rest removed
     - Instead of resting, you heal from passing a turn / walking around
-versions:
+    - You can now promote others to become party leader with party promote
   '211225':
     id: '211225'
     title: Balance

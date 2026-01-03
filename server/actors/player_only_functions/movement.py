@@ -148,7 +148,8 @@ def command_go(self, line = '', room_id = None):
 
 
     if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
-        self.command_rest('set')
+        #self.command_rest('set')
+        self.rest_set('')
 
 
 

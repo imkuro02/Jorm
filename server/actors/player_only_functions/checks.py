@@ -17,12 +17,12 @@ def check_is_admin(func):
             return
         return func(*args, **kwargs)
     return wrapper
-            
+
 def check_not_spamming(func):
     def wrapper(*args, **kwargs):
         self = args[0] if args else kwargs.get('self')
         self.recently_send_message_count += 100
-        if self.recently_send_message_count >= 1000: 
+        if self.recently_send_message_count >= 1000:
             self.recently_send_message_count = 1500
             return
         else:
@@ -66,8 +66,8 @@ def check_alive(func):
     def wrapper(*args, **kwargs):
         self = args[0] if args else kwargs.get('self')
         if self.status == ActorStatusType.DEAD:
-            self.sendLine(f'@redYou are dead, use "rest home" command to respawn.@normal')
-            return 
+            self.sendLine(f'@redYou are dead, use "rest" command to ressurect.@normal')
+            return
         return func(*args, **kwargs)
     return wrapper
 

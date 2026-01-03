@@ -644,8 +644,8 @@ class Actor:
 
         die_line = random.choice(die_lines)
 
-        tooltip_solo =  f'Type "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect and return to your rest site'
-        tooltip_party = f'Your party leader needs to "{Color.IMPORTANT}rest home{Color.NORMAL}" to ressurect you'
+        tooltip_solo =  f'Type "{Color.IMPORTANT}rest{Color.NORMAL}" to ressurect and return to your rest site'
+        tooltip_party = f'Your party leader needs to "{Color.IMPORTANT}rest{Color.NORMAL}" to ressurect you'
 
         tooltip = tooltip_solo if self.party_manager.party == None else tooltip_party
 
@@ -757,6 +757,8 @@ class Actor:
         if self.room == None:
             return
         if self.room.combat == None:
+            if self.status == ActorStatusType.DEAD:
+                return
             for val in self.affect_manager.affects.values():
                 if val.dispellable and val.resisted_by != None:
                     return

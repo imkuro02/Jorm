@@ -1,13 +1,13 @@
 
-from configuration.config import StatType, DamageType
+from configuration.config import ActorStatusType, StatType, DamageType
 from utils import indent, IndentType
 from combat.combat_event import CombatEvent
 class Damage:
-    def __init__(self, 
+    def __init__(self,
                  damage_taker_actor,
                  damage_source_action,
-                 damage_source_actor, 
-                 damage_value, damage_type, 
+                 damage_source_actor,
+                 damage_value, damage_type,
                  damage_to_stat = StatType.HP,
                  silent = False,
                  add_threat = True,
@@ -20,8 +20,8 @@ class Damage:
 
         # a negative value means the damage has been blocked by armor
         # a positive value means the damage went through armor
-        self.damage_value = damage_value 
-        
+        self.damage_value = damage_value
+
         self.damage_type = damage_type
         self.damage_to_stat = damage_to_stat
         self.silent = silent
@@ -34,7 +34,7 @@ class Damage:
             self.combat_event.add_to_queue(self)
         else:
             self.combat_event.add_to_queue(self)
-            
+
     def run(self):
         self.combat_event.run()
         return self
@@ -42,7 +42,7 @@ class Damage:
     # if the damage is negative, this means that the damage has been blocked by armor or marmor
     # if its positive, assume that the armor is broken and damage is dealt directly to hp / whatever stat
     def calculate(self):
-        
+
         #lvl_taker = self.damage_taker_actor.stat_manager.stats[StatType.LVL]
         #lvl_source = self.damage_taker_actor.stat_manager.stats[StatType.LVL]
         #lvl_diff = lvl_source - lvl_taker
@@ -54,15 +54,18 @@ class Damage:
         #    combat_round = self.damage_taker_actor.room.combat.round
         #    taker_max_hp = self.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
         #    self.damage_value += int(self.damage_value * (0.05 * (combat_round-1)))
-        
+
+        if self.damage_taker_actor.status == ActorStatusType.DEAD:
+            self.damage_value = 0
+
         if self.damage_value <= 0:
             return self
-            
+
         match self.damage_type:
             # meaning the damage was completely cancelled by something
             # the affect should sendLine what exactly happened
             # example: physical damage while ethereal should send "You are ethereal"
-            case DamageType.CANCELLED: 
+            case DamageType.CANCELLED:
                 self.damage_value = 0
                 return self
 
@@ -73,7 +76,7 @@ class Damage:
                     self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] -= self.damage_value
                 else:
                     self.damage_value = -1*self.damage_value
-                    
+
 
             case DamageType.MAGICAL:
                 self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR] -= self.damage_value
@@ -82,12 +85,12 @@ class Damage:
                     self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] -= self.damage_value
                 else:
                     self.damage_value = -1*self.damage_value
-                    
+
 
             case DamageType.PURE:
                 self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] -= self.damage_value
                 pass
-                
+
             case DamageType.HEALING:
                 self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] += self.damage_value
                 return self.damage_value
@@ -104,7 +107,7 @@ class Damage:
 
         #if self.damage_value <= 0:
         #    self.damage_value = 0
-    
+
         #self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] -= self.damage_value
 
         '''
@@ -114,7 +117,7 @@ class Damage:
                     indent(f'You take {self.damage_value} damage', IndentType.MINOR),
                     indent(f'{self.damage_taker_actor.pretty_name()} takes {self.damage_value} damage', IndentType.MINOR)
                     )
-            
+
         if self.damage_to_stat == StatType.MP:
             if not self.silent:
                 self.damage_taker_actor.simple_broadcast(
@@ -126,5 +129,5 @@ class Damage:
 
         #self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
 
-        
+
         return self
