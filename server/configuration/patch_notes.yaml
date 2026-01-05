@@ -4,12 +4,12 @@ versions:
     title: Resting and Inventory and Party
     unixtime: 1761899677
     features:
-    #- Well rested buff added
     - reworked get, drop and scrap "all" argument
     - the "all." indexing can now filter item names like so "get all.iron"
     - Rest now / quick rest removed
     - Instead of resting, you heal from passing a turn / walking around
     - You can now promote others to become party leader with party promote
+    #- Party leadership transfers dungeon room ownership aswell
   '211225':
     id: '211225'
     title: Balance

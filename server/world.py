@@ -46,28 +46,28 @@ class Spawner:
 
         room = WORLD['world'][room_id]
         return room
-    
+
     def respawn_all(self, forced = True):
         '''
         for i in self.spawn_points_items:
             if self.spawn_points_items[i] == None:
                 continue
             if self.spawn_points_items[i] not in self.room.inventory_manager.items.values():
-                self.spawn_points_items[i] = None      
+                self.spawn_points_items[i] = None
 
         for i in self.spawn_points_npcs:
             if self.spawn_points_npcs[i] == None:
                 continue
             if self.spawn_points_npcs[i].room == None:
-                self.spawn_points_npcs[i] = None    
+                self.spawn_points_npcs[i] = None
         '''
-        
+
         for i in self.spawn_points:
-            
+
             roll = 0
             if not self.room.is_player_present():
                 roll = 1 #random.randint(0,100)
-            
+
 
             if roll != 1 and (self.spawn_points[i] in self.room.actors.values() or self.spawn_points[i] in self.room.inventory_manager.items.values()):
                 continue
@@ -76,7 +76,7 @@ class Spawner:
                     #print('unload')
                     s = self.spawn_points[i]
                     self.spawn_points[i] = None
-                    
+
                     s.unload()
                     #self.spawn_points[i] = None
                 except Exception as e:
@@ -88,9 +88,9 @@ class Spawner:
                 #utils.debug_print(self.spawn_points[i])
                 if self.spawn_points[i] != None:
                     continue
-                    
+
                 _selected = random.choice(_list)
-                
+
                 #utils.debug_print(ENEMIES)
                 #utils.debug_print(NPCS[_selected])
                 if _selected in ITEMS:
@@ -98,7 +98,7 @@ class Spawner:
                     self.room.inventory_manager.add_item(item)
                     self.spawn_points[i] = item
                     continue
-                
+
                 if _selected in ENEMIES:
                     #_selected = random.choice(_list)
                     npc = create_npc(self.room,_selected)
@@ -116,8 +116,8 @@ class Spawner:
                     npc = create_npc(self.room,_selected)
                     self.spawn_points[i] = npc
                     continue
-                
-      
+
+
 
 
     def tick(self):
@@ -155,7 +155,7 @@ class Exit:
         direction_name = self.direction.capitalize()
         direction_room_name = self.room.world.rooms[self.to_room_id].pretty_name()
         dir_name_and_room = direction_name #f'"{direction_name}" to {direction_room_name}'
-        
+
         if self.blocked:
             e = self.room.is_enemy_present()
             if e != False:
@@ -182,21 +182,21 @@ class Room:
             #utils.debug_print(_exit)
             if type(_exit).__name__ == 'Exit':
                 _exit_dict = {
-                    'direction': _exit.direction, 
+                    'direction': _exit.direction,
                     'to_room_id': _exit.to_room_id,
-                    'blocked': _exit.blocked, 
+                    'blocked': _exit.blocked,
                     'secret': _exit.secret,
-                    'item_required': _exit.item_required, 
+                    'item_required': _exit.item_required,
                     'item_required_consume': _exit.item_required_consume,
                     'active_time_of_day': _exit.active_time_of_day, }
             else:
                 _exit_dict = {
-                    'direction': _exit['direction'], 
+                    'direction': _exit['direction'],
                     'to_room_id': _exit['to_room_id'],
-                    'blocked': _exit['blocked'], 
+                    'blocked': _exit['blocked'],
                     'secret': _exit['secret'],
-                    'item_required': _exit['item_required'], 
-                    'item_required_consume': _exit['item_required_consume'], 
+                    'item_required': _exit['item_required'],
+                    'item_required_consume': _exit['item_required_consume'],
                     'active_time_of_day': _exit['active_time_of_day'], }
 
             self.exits.append(
@@ -211,7 +211,7 @@ class Room:
                                     active_time_of_day = _exit_dict['active_time_of_day']
                                 )
                             )
-        
+
         self.can_be_recall_site = can_be_recall_site # whether you can rest now / rest set
         self.instanced = instanced        # is this room a private instance?
         self.doorway = doorway            # whether this room is a doorway, can you see thru it?
@@ -236,7 +236,7 @@ class Room:
         #utils.debug_print(self.id)
         if '#' in self.id:
             #utils.debug_print(self.id.split('#')[0])
-            return self.id.split('#')[0] 
+            return self.id.split('#')[0]
         return self.id
 
     def get_active_exits(self):
@@ -270,11 +270,11 @@ class Room:
         for i in self.actors.values():
             if type(i).__name__ == 'Player':
                 return i
-        return False 
+        return False
 
     def get_description(self):
         desc = self.description
-        for i in self.inventory_manager.items.values(): 
+        for i in self.inventory_manager.items.values():
             if i.description_room != None:
                 desc = desc + f' {i.description_room}.'
         return desc
@@ -284,7 +284,7 @@ class Room:
         if not self.is_an_instance():
             if self.spawner != None:
                 self.spawner.tick()
-        
+
         for a in self.actors.values():
             actors[a.id] = a
 
@@ -303,12 +303,12 @@ class Room:
                 items_to_remove.append(i)
         for i in items_to_remove:
             self.inventory_manager.remove_item(i)
-    
+
 
         if self.combat == None:
             return
         self.combat.tick()
-        
+
 
     def join_combat(self, player_participant):
         if self.combat == None:
@@ -369,7 +369,7 @@ class Room:
 
         if players_here and npcs_here:
             self.combat = Combat(self, participants)
-        
+
     def move_actor(self, actor, silent = False, dont_unload_instanced = False):
         actor.room_previous = actor.room.get_real_id()
         self.remove_actor(actor)
@@ -394,9 +394,9 @@ class Room:
 
                     actor.instanced_rooms = []
         else:
-            
+
             if type(actor).__name__ == 'Player':
-                instanced_room_id = self.id+'#'+actor.name
+                instanced_room_id = self.id+'#'+actor.party_manager.get_party_id()
                 if instanced_room_id not in self.world.rooms:
                     self.world.rooms[instanced_room_id] = Room(self.world, instanced_room_id, self.name, self.description, self.from_file, self.exits, self.can_be_recall_site, self.doorway, instanced=False)
                     if type(actor).__name__ == 'Player':
@@ -436,7 +436,7 @@ class GameTime:
         self.MONTHS_PER_YEAR = 12
         self.DAYS_PER_MONTH = self.DAYS_PER_WEEK * self.WEEKS_PER_MONTH  # 28
         self.DAYS_PER_YEAR = self.DAYS_PER_MONTH * self.MONTHS_PER_YEAR  # 336
-        
+
         self.game_date_time = game_date_time
 
         self.WEEKDAYS = ["Moonsday", "Twosday", "Wakesday", "Thornsday", "Firesday", "Starsday", "Endsday"]
@@ -446,7 +446,7 @@ class GameTime:
             "Hollowfall", "Dawnspire", "Gloomtide", "Starcrest"
         ]
 
-        
+
         self.TIME_OF_DAY = {
             'morning' :         False,
             'noon':             False,
@@ -512,7 +512,7 @@ class GameTime:
         _time = self.get_game_time()
         time = f"{_time['second']:02}.{_time['minute']:02}.{_time['hour']:02}.{_time['day']:02}.{_time['month']:02}.{_time['year']:04}"
         return time
-    
+
     def get_game_time_int(self):
         return self.game_date_time
 
@@ -540,7 +540,7 @@ class GameTime:
             "day_name": self.WEEKDAYS[weekday_index],
             "month_name": self.MONTHS[month_index],
             "year": year,
-            
+
             "day": day_of_month,
             "month": month_index,
             "hour": int(hours),
@@ -559,15 +559,15 @@ class World:
     def spawn_boss(self):
         all_mobs = []
         for i in self.rooms:
-            if self.rooms[i].instanced: 
+            if self.rooms[i].instanced:
                 continue
             for x in self.rooms[i].actors:
                 if type(self.rooms[i].actors[x]).__name__ != 'Enemy':
                     continue
                 if self.rooms[i].actors[x].status != ActorStatusType.NORMAL:
-                    continue 
+                    continue
                 all_mobs.append(self.rooms[i].actors[x])
-        
+
         boss_mob = random.choice(all_mobs)
         boss_mob.name = '<!>' + boss_mob.name + '<!>'
         boss_mob.simple_broadcast('',
@@ -593,7 +593,7 @@ class World:
 
         for r in world['world']:
             room = world['world'][r]
-            
+
             if r in self.rooms:
                 players = [actor for actor in self.rooms[r].actors.values() if type(actor).__name__ == "Player"]
                 if len(players) >= 1:
@@ -604,25 +604,25 @@ class World:
                     e.room = None
                 del self.rooms[r]
 
-            self.rooms[r] = Room(self, r, 
-            room['name'], room['description'], 
-            room['from_file'], room['exits'], 
+            self.rooms[r] = Room(self, r,
+            room['name'], room['description'],
+            room['from_file'], room['exits'],
             room['can_be_recall_site'], room['doorway'],
-            room['instanced']) 
+            room['instanced'])
 
     def save_world(self):
         pass
 
     def tick(self):
-        self.game_time.tick() 
+        self.game_time.tick()
         for i in self.rooms_to_unload:
-            to_kick_from_instance = [] 
+            to_kick_from_instance = []
             for x in self.rooms[i].actors.values():
                 to_kick_from_instance.append(x)
             for x in to_kick_from_instance:
                 if type(x).__name__ == 'Player':
                     x.party_manager.party_leave()
-                    
+
 
             for x in self.rooms[i].inventory_manager.items.values():
                 unload(x)
@@ -648,12 +648,12 @@ class World:
                 to_unload.append(x)
             for x in to_unload:
                 unload(x)
-                
+
             #utils.debug_print(self.rooms[i])
             unload(self.rooms[i])
             #utils.debug_print(self.rooms[i])
             del self.rooms[i]
-            
+
         self.rooms_to_unload = []
 
         rooms = []
@@ -665,7 +665,7 @@ class World:
             #    for x in i.actors.values():
             #        utils.debug_print('>', x.name)
             i.tick()
-            
+
 
         utils.unload_fr()
 

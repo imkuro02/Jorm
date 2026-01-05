@@ -1,5 +1,6 @@
 import utils
 from configuration.config import ActorStatusType
+import uuid
 party_commands = {
     'create':   'party_create',    # create a party
     'invite':   'party_invite',    # invite to party
@@ -15,6 +16,7 @@ class Party:
     def __init__(self, actor):
         self.actor = actor
         self.participants = {}
+        self.party_id = str(uuid.uuid4())
         self.invited = {}
         self.add_participant(self.actor)
 
@@ -68,7 +70,7 @@ class PartyManager:
 
     def get_party_id(self):
         if self.party != None:
-            return self.party.actor.id
+            return self.party.party_id#self.party.actor.id
         else:
             # all enemies will get party id enemies
             # as their party id, this is so they dont
@@ -187,7 +189,13 @@ class PartyManager:
         par = utils.get_match(line, self.party.participants)
         if par in self.party.participants.values():
             par.simple_broadcast('You have been promoted to party leader', f'{par.pretty_name()} has been promoted to party leader')
+            transferred_rooms = []
+            for i in self.party.actor.instanced_rooms:
+                transferred_rooms.append(i)
+            self.party.actor.instanced_rooms = []
             self.party.actor = par
+            for i in transferred_rooms:
+                self.party.actor.instanced_rooms.append(i)
         pass
 
     def party_look(self, line):
