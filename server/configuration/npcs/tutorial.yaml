@@ -123,7 +123,7 @@ tutorial_1:
       dialog:
       - line: |
           <npc> says "just go to the south-east corner.
-          Then type "go crossroad" to leave"
+          Then type "@importantgo crossroad@normal" to leave"
     quest_turn_in_failed:
       dialog:
       - line: |
@@ -157,8 +157,7 @@ tutorial_1:
     start_tutorial_1:
       dialog:
       - line: |
-          <npc> says "Simple, go to the Northern wall, crawl into the hole.
-          kill whatever is there, and bring me the corpse"
+          <npc> says "Simple, go to the Northern wall, there is a hole there, kill whatever is there, and bring me the corpse"
       options:
         - line: |
             How do I kill it?
