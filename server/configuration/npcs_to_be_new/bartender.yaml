@@ -1,0 +1,53 @@
+bartender:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc> says "Take a seat, or don't... I don't car..."
+
+    start_shopping:
+      append_to: start
+      options:
+        - line: |
+            ask about wares
+          goto: shopping
+
+    shopping:
+      dialog:
+        - line: |
+            <npc> says "I got plenty to sell!"
+        - line: |
+            <npc> says "What can I get ya?"
+        - line: |
+            <npc> says "Need anything?"
+      options:
+        - line: |
+            purchase 1 Green Potion for 60 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: potion_hp_30
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 60
+        - line: |
+            purchase 1 Red Potion for 60 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: potion_phy_armor_30
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 60
+        - line: |
+            purchase 1 Blue Potion for 60 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: potion_mag_armor_30
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 60

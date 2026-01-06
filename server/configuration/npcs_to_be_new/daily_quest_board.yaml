@@ -1,0 +1,64 @@
+daily_quest_board:
+  tree:
+    start:
+      dialog: 
+      - line: |
+          To your surprise, the creaking wood twists and turns as if to look up at you
+      options:
+        - line: |
+            grab a quest leaflet from the board
+          goto: daily_quest_new
+          quest_check:
+          - id: daily_quest
+            state: not_started
+          quest_start:
+            id: daily_quest
+
+        - line: |
+            grab a quest leaflet from the board
+          goto: daily_quest_new
+          quest_check:
+          - id: daily_quest
+            state: turned_in
+          quest_start:
+            id: daily_quest
+
+        - line: |
+            grab a quest leaflet from the board
+          goto: daily_quest_redo_new
+          quest_check:
+          - id: daily_quest
+            state: in_progress
+          quest_start:
+            id: daily_quest
+
+        - line: |
+            say "I would like to turn in my quest"
+          goto: daily_quest_completed
+          quest_check:
+            - id: daily_quest
+              state: completed
+          quest_turn_in:
+            id: daily_quest
+            reward_practice_points: 1
+       
+    daily_quest_new:
+      dialog:
+        - line: |
+            "Ouch..." (help quests)
+
+    daily_quest_redo_new:
+      dialog:
+        - line: |
+            <npc> twists and turns "You already have a quest... Remember? No matter, this one surely is fit for you..." (help quests)
+
+    daily_quest_completed:
+      dialog:
+        - line: |
+            "Good job..." <npc> murmurs
+
+    bye:
+      dialog:
+        - line: |
+            "Good bye..." <npc> murmurs
+
