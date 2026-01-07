@@ -16,7 +16,7 @@ town_gate_guard_out:
       append_to: start
       options:
         - line: |
-            ask for an escort
+            ask "Can I go out?"
           goto: go_somewhere
           #check_not_in_party_or_is_party_leader: 1
           #teleport_player: overworld/01fc3537-8806-496c-b8b3-9ae828cbe944
@@ -42,7 +42,7 @@ town_gate_guard_out:
         goto: teleported
         check_not_in_party_or_is_party_leader: 1
         teleport_player: overworld/oldworld
-      
+
     teleported:
       dialog:
         - line: |
@@ -66,25 +66,20 @@ town_gate_guard_out:
             ask "How do I unlock more areas?"
           goto: how_to_unlock_areas
 
-    how_to_recall:  
+    how_to_recall:
       dialog:
         - line: |
             <npc> says "You will have to "@tiprest@normal" to return, resting will bring you back to the tavern."
-      options: 
+      options:
         - line: |
             say "Ok"
           goto: start
-      
+
     how_to_unlock_areas:
       dialog:
-        - line: | 
+        - line: |
             <npc> says "Those who live outside of town might help you, if you help them first"
-      options: 
+      options:
         - line: |
             say "Ok"
           goto: start
-
-    
-          
-
-          

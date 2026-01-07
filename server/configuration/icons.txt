@@ -520,3 +520,11 @@ the_well_below_trap
 @yellow  |  |  |'-_| |
 @purple  O@yellow-@purpleO@yellow-@purpleO@yellow-@purpleO@yellow-@purpleO@yellow-@purpleO@yellow-@purpleO
 [end]
+
+[id:town_gate_guard_out]
+@bred  /###\
+@bred  |@yellow-@bred!@yellow-@bred|@bwhite ^
+@bwhite _    @white\ |
+@bwhite(+)@white'-'|@yellow )@white
+@bwhite "@white  : | |
+[end]

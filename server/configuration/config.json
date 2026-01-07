@@ -1,5 +1,5 @@
 {
-    "SHA-256": "d4c5ec0f69d8891e2b1fcf5f7897ee8d9408aded6493b55ca58214916a456294",
+    "SHA-256": "7a371e4e024c87861a53d20285193449738bca63aa9b25573b4d278b6a182ad0",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -440,8 +440,8 @@
                 "swing": 1
             },
             "loot": {
-                "key_tavern_cellar": 10,
                 "rock": 39,
+                "key_tavern_cellar": 39,
                 "summoning_rock": 39,
                 "tattered_cloth": 39,
                 "simple_cloth": 39,
@@ -488,8 +488,8 @@
                 "swing": 1
             },
             "loot": {
-                "key_tavern_cellar": 20,
                 "rock": 39,
+                "key_tavern_cellar": 39,
                 "summoning_rock": 39,
                 "tattered_cloth": 39,
                 "simple_cloth": 39,
@@ -1072,8 +1072,8 @@
                 "swing": 1
             },
             "loot": {
-                "key_tavern_cellar": 10,
                 "rock": 37,
+                "key_tavern_cellar": 37,
                 "summoning_rock": 37,
                 "tattered_cloth": 37,
                 "simple_cloth": 37,
@@ -1773,7 +1773,6 @@
                 "magic_missile": 1
             },
             "loot": {
-                "ant_pheromone": 20,
                 "rock": 31,
                 "summoning_rock": 31,
                 "potion_hp_30": 100,
@@ -2687,7 +2686,6 @@
                 "bite": 3
             },
             "loot": {
-                "ant_pheromone": 20,
                 "rock": 25,
                 "summoning_rock": 25,
                 "potion_hp_30": 100,
