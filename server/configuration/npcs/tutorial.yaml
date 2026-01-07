@@ -123,7 +123,7 @@ tutorial_1:
       dialog:
       - line: |
           <npc> says "just go to the south-east corner.
-          Then type "@importantgo crossroad@normal" to leave"
+          Then type @tip"go crossroad@normal" to leave"
     quest_turn_in_failed:
       dialog:
       - line: |

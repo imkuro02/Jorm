@@ -1,0 +1,90 @@
+town_gate_guard_out:
+  tree:
+    start:
+      dialog:
+      - line: |
+          <npc> says "Going somewhere?"
+      - line: |
+          <npc> says "Remember, I can guide you to your destination, but not back"
+
+    end:
+      dialog:
+      - line: |
+          <npc> says "Farewell"
+
+    start_2:
+      append_to: start
+      options:
+        - line: |
+            ask for an escort
+          goto: go_somewhere
+          #check_not_in_party_or_is_party_leader: 1
+          #teleport_player: overworld/01fc3537-8806-496c-b8b3-9ae828cbe944
+
+       # - line: |
+       #     ask for an escort
+       #   goto: not_teleported
+       #   check_not_in_party_or_is_party_leader: 0
+
+    go_somewhere:
+      dialog:
+      - line: |
+          <npc> says "Where to?"
+      options:
+      - line: |
+          say "Stump Field"
+        goto: teleported
+        check_not_in_party_or_is_party_leader: 1
+        teleport_player: overworld/stump_field
+
+      - line: |
+          say "Old world" (this area is from before debloat update)
+        goto: teleported
+        check_not_in_party_or_is_party_leader: 1
+        teleport_player: overworld/oldworld
+      
+    teleported:
+      dialog:
+        - line: |
+            "Open the gate!" <npc> yells, they light a torch and start marching, you follow.
+
+    not_teleported:
+      dialog:
+        - line: |
+            "Your party leader has to do that" <npc> says
+
+
+
+
+    q_and_a:
+      append_to: start
+      options:
+        - line: |
+            ask "How do I get back?"
+          goto: how_to_recall
+        - line: |
+            ask "How do I unlock more areas?"
+          goto: how_to_unlock_areas
+
+    how_to_recall:  
+      dialog:
+        - line: |
+            <npc> says "You will have to "@tiprest@normal" to return, resting will bring you back to the tavern."
+      options: 
+        - line: |
+            say "Ok"
+          goto: start
+      
+    how_to_unlock_areas:
+      dialog:
+        - line: | 
+            <npc> says "Those who live outside of town might help you, if you help them first"
+      options: 
+        - line: |
+            say "Ok"
+          goto: start
+
+    
+          
+
+          

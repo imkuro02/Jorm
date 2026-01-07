@@ -361,9 +361,9 @@ def configure_ENEMIES(SHEET, ITEMS):
     ENEMIES = {}
     for row in SHEET['enemies']:
         x = SHEET['enemies']
-
         for index in range(0, len(x[row])):
-
+            if bool(x['dont_load'][index]):
+                continue
             ENEMIES[x['npc_id'][index]] = {
                 'npc_id':       x['npc_id'][index],
                 'ai':           x['ai'][index],
@@ -501,6 +501,9 @@ def configure_ENEMIES(SHEET, ITEMS):
                 x['skill_id'][index]: int(x['practice'][index])
             }
 
+            if x['npc_id'][index] not in ENEMIES:
+                continue 
+                
             if x['npc_id'][index] in ENEMY_SKILLS:
                 # concate the previous dict with new a new value
                 ENEMY_SKILLS[x['npc_id'][index]] = ENEMY_SKILLS[x['npc_id'][index]] | d_vals

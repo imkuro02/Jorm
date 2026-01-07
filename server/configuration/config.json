@@ -1,5 +1,5 @@
 {
-    "SHA-256": "c3300c58a4232d3a0c67d66372fa649c1e0b11c58856a78d422fe053d78fb158",
+    "SHA-256": "d4c5ec0f69d8891e2b1fcf5f7897ee8d9408aded6493b55ca58214916a456294",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -45,6 +45,150 @@
                 "all"
             ]
         },
+        "town_gate_guard_out": {
+            "npc_id": "town_gate_guard_out",
+            "ai": "Enemy",
+            "name": "Gate Gaurd",
+            "description": "The guard yawns as you pass by, spear in one hand, they lean against it.",
+            "stats": {
+                "grit": 1,
+                "hp": 1,
+                "mp": 1,
+                "phy_armor": 1,
+                "mag_armor": 1,
+                "flow": 1,
+                "mind": 1,
+                "soul": 1,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": true,
+            "drop_tags": [
+                "none"
+            ]
+        },
+        "town_gate_guard_in": {
+            "npc_id": "town_gate_guard_in",
+            "ai": "Enemy",
+            "name": "Gate Guard",
+            "description": "The guard clutches their spear with both hands, they are jumpy and distressed.",
+            "stats": {
+                "grit": 1,
+                "hp": 1,
+                "mp": 1,
+                "phy_armor": 1,
+                "mag_armor": 1,
+                "flow": 1,
+                "mind": 1,
+                "soul": 1,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": true,
+            "drop_tags": [
+                "none"
+            ]
+        },
+        "tutorial_1": {
+            "npc_id": "tutorial_1",
+            "ai": "Enemy",
+            "name": "Shadowy Figure",
+            "description": "A tall, shadowy figure stands hunched, its crooked back casting an eerie silhouette. Long, spindly fingers twitch and curl, almost unnaturally long. The face is obscured, hidden beneath a cloak or veil, leaving only an unsettling sense of emptiness. Its presence feels like a looming threat, silent and foreboding.",
+            "stats": {
+                "grit": 0,
+                "hp": 1,
+                "mp": 0,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "exp": 0,
+                "lvl": 0
+            },
+            "include_in_daily_quests": false,
+            "skills": {},
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": true,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "daily_quest_board": {
+            "npc_id": "daily_quest_board",
+            "ai": "Enemy",
+            "name": "Talking Quest Board",
+            "description": "A large board sits firmly in the ground. On it, a dozen or so fliers are stapled to the board, a small crack in the shape of two lips appears to be slowly breathing in and out of the wood.",
+            "stats": {
+                "grit": 0,
+                "hp": 10,
+                "mp": 10,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "exp": 0,
+                "lvl": 0
+            },
+            "include_in_daily_quests": false,
+            "skills": {},
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": true,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "skill_portal": {
+            "npc_id": "skill_portal",
+            "ai": "Enemy",
+            "name": "Portal",
+            "description": "A portal",
+            "stats": {
+                "grit": 0,
+                "hp": 1,
+                "mp": 1,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "exp": 0,
+                "lvl": 0
+            },
+            "include_in_daily_quests": false,
+            "skills": {},
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": true,
+            "drop_tags": [
+                "all"
+            ]
+        },
         "shroom": {
             "npc_id": "shroom",
             "ai": "Enemy",
@@ -64,15 +208,13 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "nudge": 1
+                "smite": 1
             },
             "loot": {
                 "shroom_cap": 20,
                 "rock": 39,
                 "summoning_rock": 39,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "soul body 1": 40,
                 "soul head 1": 40,
                 "soul relic 1": 40,
@@ -119,8 +261,6 @@
                 "rock": 39,
                 "summoning_rock": 39,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "flow body 1": 40,
                 "flow head 1": 40,
                 "flow relic 1": 40,
@@ -130,54 +270,6 @@
                 "flow head 3": 80,
                 "flow trinket 3": 80,
                 "flow weapon 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "rat"
-            ]
-        },
-        "big_rat": {
-            "npc_id": "big_rat",
-            "ai": "Enemy",
-            "name": "Large Rat",
-            "description": null,
-            "stats": {
-                "grit": 10,
-                "hp": 60,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 10,
-                "mind": 10,
-                "soul": 10,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {
-                "rock": 39,
-                "summoning_rock": 39,
-                "rat_tail": 39,
-                "rat_tooth": 39,
-                "rat_hide": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "grit body 1": 40,
-                "grit head 1": 40,
-                "grit relic 1": 40,
-                "grit trinket 1": 40,
-                "grit weapon 1": 40,
-                "grit body 3": 80,
-                "grit head 3": 80,
-                "grit trinket 3": 80,
-                "grit weapon 3": 80,
-                "grit weapon alt 3": 80
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -215,8 +307,6 @@
                 "summoning_rock": 39,
                 "shroom_cap": 39,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "mind body 1": 40,
                 "mind head 1": 40,
                 "mind relic 1": 40,
@@ -255,7 +345,7 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "nudge": 1
+                "swing": 1
             },
             "loot": {
                 "simple_bark": 5,
@@ -264,8 +354,6 @@
                 "tree_root": 39,
                 "summoning_rock": 39,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "grit body 1": 40,
                 "grit head 1": 40,
                 "grit relic 1": 40,
@@ -297,22 +385,67 @@
                 "mp": 10,
                 "phy_armor": 0,
                 "mag_armor": 0,
-                "flow": 10,
-                "mind": 5,
+                "flow": 5,
+                "mind": 10,
                 "soul": 0,
                 "exp": 1,
                 "lvl": 1
             },
             "include_in_daily_quests": true,
             "skills": {
-                "nudge": 1
+                "magic_missile": 1
             },
             "loot": {
                 "rock": 39,
                 "summoning_rock": 39,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
+                "mind body 1": 40,
+                "mind head 1": 40,
+                "mind relic 1": 40,
+                "mind trinket 1": 40,
+                "mind weapon 1": 40,
+                "mind body 3": 80,
+                "mind head 3": 80,
+                "mind trinket 3": 80,
+                "mind weapon 3": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "snail"
+            ]
+        },
+        "bar_drunk_0": {
+            "npc_id": "bar_drunk_0",
+            "ai": "Coward",
+            "name": "Drunk",
+            "description": "One beer away from passing out.",
+            "stats": {
+                "grit": 2,
+                "hp": 20,
+                "mp": 20,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 10,
+                "mind": 0,
+                "soul": 0,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "key_tavern_cellar": 10,
+                "rock": 39,
+                "summoning_rock": 39,
+                "tattered_cloth": 39,
+                "simple_cloth": 39,
+                "potion_hp_30": 100,
                 "flow body 1": 40,
                 "flow head 1": 40,
                 "flow relic 1": 40,
@@ -324,12 +457,290 @@
                 "flow weapon 3": 80
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
                 "all",
-                "snail"
+                "humanoid",
+                "tavern"
+            ]
+        },
+        "bar_drunk_1": {
+            "npc_id": "bar_drunk_1",
+            "ai": "Enemy",
+            "name": "Wasted",
+            "description": "Someone take their saddle before they try to ride home!",
+            "stats": {
+                "grit": 2,
+                "hp": 20,
+                "mp": 10,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 15,
+                "mind": 0,
+                "soul": 0,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "key_tavern_cellar": 20,
+                "rock": 39,
+                "summoning_rock": 39,
+                "tattered_cloth": 39,
+                "simple_cloth": 39,
+                "potion_hp_30": 100,
+                "flow body 1": 40,
+                "flow head 1": 40,
+                "flow relic 1": 40,
+                "flow trinket 1": 40,
+                "flow weapon 1": 40,
+                "flow body 3": 80,
+                "flow head 3": 80,
+                "flow trinket 3": 80,
+                "flow weapon 3": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "humanoid",
+                "tavern"
+            ]
+        },
+        "citizen": {
+            "npc_id": "citizen",
+            "ai": "Coward",
+            "name": "Citizen",
+            "description": "A peaceful citizen.",
+            "stats": {
+                "grit": 5,
+                "hp": 20,
+                "mp": 20,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 5,
+                "mind": 5,
+                "soul": 5,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "rock": 39,
+                "summoning_rock": 39,
+                "tattered_cloth": 39,
+                "simple_cloth": 39,
+                "potion_hp_30": 100,
+                "grit body 1": 40,
+                "grit head 1": 40,
+                "grit relic 1": 40,
+                "grit trinket 1": 40,
+                "grit weapon 1": 40,
+                "grit body 3": 80,
+                "grit head 3": 80,
+                "grit trinket 3": 80,
+                "grit weapon 3": 80,
+                "grit weapon alt 3": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "humanoid"
+            ]
+        },
+        "mushroom_kingdom_chef": {
+            "npc_id": "mushroom_kingdom_chef",
+            "ai": "Enemy",
+            "name": "Mushrom Chef",
+            "description": "A stout mushroom with a tall, stained hat stands proudly, its cap tilted at a jaunty angle. One stubby tendril grips a hot, crackling pan that sends up wisps of fragrant steam.",
+            "stats": {
+                "grit": 10,
+                "hp": 30,
+                "mp": 10,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 10,
+                "mind": 10,
+                "soul": 10,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "rock": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "potion_hp_30": 100,
+                "grit body 1": 40,
+                "grit head 1": 40,
+                "grit relic 1": 40,
+                "grit trinket 1": 40,
+                "grit weapon 1": 40,
+                "grit body 3": 80,
+                "grit head 3": 80,
+                "grit trinket 3": 80,
+                "grit weapon 3": 80,
+                "grit weapon alt 3": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "mushroom"
+            ]
+        },
+        "mushroom_kingdom_cook": {
+            "npc_id": "mushroom_kingdom_cook",
+            "ai": "Enemy",
+            "name": "Mushroom Cook",
+            "description": "A nervous, speckled mushroom half the chef’s size scurries behind, juggling ingredients in its tiny hands and trying not to trip over its own cap.",
+            "stats": {
+                "grit": 10,
+                "hp": 30,
+                "mp": 10,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 15,
+                "mind": 10,
+                "soul": 10,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "rock": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "potion_hp_30": 100,
+                "flow body 1": 40,
+                "flow head 1": 40,
+                "flow relic 1": 40,
+                "flow trinket 1": 40,
+                "flow weapon 1": 40,
+                "flow body 3": 80,
+                "flow head 3": 80,
+                "flow trinket 3": 80,
+                "flow weapon 3": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "mushroom"
+            ]
+        },
+        "mushroom_kingdom_jester": {
+            "npc_id": "mushroom_kingdom_jester",
+            "ai": "Enemy",
+            "name": "Mushroom Jester",
+            "description": "A lurching, multicolored mushroom cap bounds into view, its surface a chaotic swirl of reds, purples, and yellows. It is roughly the size of a large dog, though far more animated and unpredictable. Its cap droops and curls in three distinct points, resembling a jester’s hat in both shape and whimsy. Small fungal bulbs hang from each tip, pulsing faintly with bioluminescent light.",
+            "stats": {
+                "grit": 10,
+                "hp": 30,
+                "mp": 10,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 20,
+                "mind": 10,
+                "soul": 10,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "rock": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "potion_hp_30": 100,
+                "flow body 1": 40,
+                "flow head 1": 40,
+                "flow relic 1": 40,
+                "flow trinket 1": 40,
+                "flow weapon 1": 40,
+                "flow body 3": 80,
+                "flow head 3": 80,
+                "flow trinket 3": 80,
+                "flow weapon 3": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "mushroom"
+            ]
+        },
+        "mushroom_kingdom_citizen": {
+            "npc_id": "mushroom_kingdom_citizen",
+            "ai": "Enemy",
+            "name": "Mushroom Citizen",
+            "description": "A short, round mushroom with a beige cap and sleepy eyes waddles along quietly, leaving tiny spore prints in its wake.",
+            "stats": {
+                "grit": 10,
+                "hp": 30,
+                "mp": 10,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 10,
+                "mind": 10,
+                "soul": 10,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "nudge": 1
+            },
+            "loot": {
+                "rock": 39,
+                "summoning_rock": 39,
+                "shroom_cap": 39,
+                "potion_hp_30": 100,
+                "grit body 1": 40,
+                "grit head 1": 40,
+                "grit relic 1": 40,
+                "grit trinket 1": 40,
+                "grit weapon 1": 40,
+                "grit body 3": 80,
+                "grit head 3": 80,
+                "grit trinket 3": 80,
+                "grit weapon 3": 80,
+                "grit weapon alt 3": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "mushroom"
             ]
         },
         "orange_mushroom": {
@@ -359,8 +770,6 @@
                 "summoning_rock": 37,
                 "shroom_cap": 37,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "soul body 1": 50,
                 "soul head 1": 50,
                 "soul relic 1": 50,
@@ -412,8 +821,6 @@
                 "summoning_rock": 37,
                 "green_slime_core": 37,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "mind body 1": 50,
                 "mind head 1": 50,
                 "mind relic 1": 50,
@@ -465,8 +872,6 @@
                 "rock": 37,
                 "summoning_rock": 37,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "flow body 1": 50,
                 "flow head 1": 50,
                 "flow relic 1": 50,
@@ -516,8 +921,6 @@
                 "rock": 37,
                 "summoning_rock": 37,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "grit body 1": 50,
                 "grit head 1": 50,
                 "grit relic 1": 50,
@@ -571,8 +974,6 @@
                 "pig_tail": 37,
                 "pig_leather": 37,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "grit body 1": 50,
                 "grit head 1": 50,
                 "grit relic 1": 50,
@@ -595,6 +996,110 @@
             "drop_tags": [
                 "all",
                 "pig"
+            ]
+        },
+        "fairy_drunk": {
+            "npc_id": "fairy_drunk",
+            "ai": "Enemy",
+            "name": "Drunk fairy",
+            "description": "A tiny humanoid creature, glowing with blue and gold light, sways erratically in the air. Its soft wings flutter rapidly, struggling to keep it aloft as it drifts from side to side. The creature’s movements are jerky and uncoordinated, as if it can barely control its own flight, and its glowing eyes have a dazed, unfocused look.",
+            "stats": {
+                "grit": 10,
+                "hp": 50,
+                "mp": 50,
+                "phy_armor": 0,
+                "mag_armor": 40,
+                "flow": 10,
+                "mind": 10,
+                "soul": 10,
+                "exp": 3,
+                "lvl": 3
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "magic_missile": 1,
+                "nudge": 1
+            },
+            "loot": {
+                "rock": 37,
+                "summoning_rock": 37,
+                "fairy_wings": 37,
+                "fairy_dust": 37,
+                "potion_hp_30": 100,
+                "grit body 1": 50,
+                "grit head 1": 50,
+                "grit relic 1": 50,
+                "grit trinket 1": 50,
+                "grit weapon 1": 50,
+                "grit body 3": 40,
+                "grit head 3": 40,
+                "grit trinket 3": 40,
+                "grit weapon 3": 40,
+                "grit weapon alt 3": 40,
+                "grit body 6": 100,
+                "grit head 6": 100,
+                "grit trinket 6": 100,
+                "grit weapon 6": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "fairy"
+            ]
+        },
+        "bartender": {
+            "npc_id": "bartender",
+            "ai": "Enemy",
+            "name": "Bartender",
+            "description": "The bartender cleans a mug with steady, practiced hands, the cloth moving in slow, deliberate circles. Each motion is smooth and efficient, as if the task is second nature. The mug is turned and tilted with care, the rag gliding over its surface as the bartender’s gaze shifts between the task and the room.",
+            "stats": {
+                "grit": 10,
+                "hp": 50,
+                "mp": 50,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 12,
+                "mind": 10,
+                "soul": 10,
+                "exp": 3,
+                "lvl": 3
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "key_tavern_cellar": 10,
+                "rock": 37,
+                "summoning_rock": 37,
+                "tattered_cloth": 37,
+                "simple_cloth": 37,
+                "potion_hp_30": 100,
+                "flow body 1": 50,
+                "flow head 1": 50,
+                "flow relic 1": 50,
+                "flow trinket 1": 50,
+                "flow weapon 1": 50,
+                "flow body 3": 40,
+                "flow head 3": 40,
+                "flow trinket 3": 40,
+                "flow weapon 3": 40,
+                "flow body 6": 100,
+                "flow head 6": 100,
+                "flow trinket 6": 100,
+                "flow weapon 6": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "humanoid",
+                "tavern"
             ]
         },
         "red_slime": {
@@ -624,8 +1129,6 @@
                 "rock": 34,
                 "summoning_rock": 34,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 1": 65,
                 "grit head 1": 65,
@@ -682,8 +1185,6 @@
                 "summoning_rock": 34,
                 "shroom_cap": 34,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_flow": 60,
                 "flow body 1": 65,
                 "flow head 1": 65,
@@ -739,8 +1240,6 @@
                 "rock": 34,
                 "summoning_rock": 34,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 1": 65,
@@ -797,8 +1296,6 @@
                 "summoning_rock": 34,
                 "shroom_cap": 34,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_soul": 60,
                 "soul body 1": 65,
                 "soul head 1": 65,
@@ -853,8 +1350,6 @@
                 "rock": 34,
                 "summoning_rock": 34,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 1": 65,
                 "grit head 1": 65,
@@ -882,6 +1377,99 @@
             "drop_tags": [
                 "all",
                 "octopus"
+            ]
+        },
+        "ant_larva": {
+            "npc_id": "ant_larva",
+            "ai": "Enemy",
+            "name": "Ant Larva",
+            "description": "A baby sized clear skinned larva.",
+            "stats": {
+                "grit": 20,
+                "hp": 100,
+                "mp": 50,
+                "phy_armor": 20,
+                "mag_armor": 20,
+                "flow": 15,
+                "mind": 10,
+                "soul": 10,
+                "exp": 6,
+                "lvl": 6
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "nudge": 1
+            },
+            "loot": {
+                "ant_antenna": 34,
+                "ant_mandible": 34,
+                "ant_pheromone": 34,
+                "ant_resin": 34,
+                "potion_renew_hp_30": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "ant"
+            ]
+        },
+        "wood_stump_large": {
+            "npc_id": "wood_stump_large",
+            "ai": "Enemy",
+            "name": "Large Wood Stump",
+            "description": "A massive reanimated stump of a once-great tree, its gnarled, dirt-covered roots twisting and thrashing like monstrous tentacles. At the center of its jagged, bark-covered body sits a single, menacing eye, glowing with a fierce, malevolent light. With each deliberate step, the stump groans and creaks, sending splinters of wood into the air. It moves with a terrifying purpose, its roots slamming the ground as it advances, ready to crush anything in its path.",
+            "stats": {
+                "grit": 30,
+                "hp": 150,
+                "mp": 60,
+                "phy_armor": 20,
+                "mag_armor": 20,
+                "flow": 10,
+                "mind": 5,
+                "soul": 5,
+                "exp": 10,
+                "lvl": 7
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "swing": 1
+            },
+            "loot": {
+                "tree_root": 10,
+                "tree_branch": 10,
+                "rock": 33,
+                "simple_bark": 33,
+                "summoning_rock": 33,
+                "potion_hp_30": 100,
+                "blessing_of_grit": 60,
+                "grit body 1": 70,
+                "grit head 1": 70,
+                "grit relic 1": 70,
+                "grit trinket 1": 70,
+                "grit weapon 1": 70,
+                "grit body 3": 60,
+                "grit head 3": 60,
+                "grit trinket 3": 60,
+                "grit weapon 3": 60,
+                "grit weapon alt 3": 60,
+                "grit body 6": 45,
+                "grit head 6": 45,
+                "grit trinket 6": 45,
+                "grit weapon 6": 45,
+                "grit body 9": 80,
+                "grit head 9": 80,
+                "grit trinket 9": 80,
+                "grit weapon 9": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "wood"
             ]
         },
         "evil_eye": {
@@ -913,8 +1501,6 @@
                 "strange_eye": 31,
                 "strange_tail": 31,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_soul": 60,
                 "soul body 3": 70,
                 "soul head 3": 70,
@@ -969,8 +1555,6 @@
                 "tattered_cloth": 31,
                 "simple_cloth": 31,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_flow": 60,
                 "flow body 3": 70,
                 "flow head 3": 70,
@@ -1026,8 +1610,6 @@
                 "summoning_rock": 31,
                 "shroom_cap": 31,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 3": 70,
                 "grit head 3": 70,
@@ -1082,8 +1664,6 @@
                 "rock": 31,
                 "summoning_rock": 31,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 3": 70,
                 "grit head 3": 70,
@@ -1141,8 +1721,6 @@
                 "rock": 31,
                 "summoning_rock": 31,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 3": 70,
@@ -1172,6 +1750,115 @@
                 "skeleton"
             ]
         },
+        "ant_alchemist": {
+            "npc_id": "ant_alchemist",
+            "ai": "Enemy",
+            "name": "Ant Alchemist",
+            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
+            "stats": {
+                "grit": 10,
+                "hp": 100,
+                "mp": 140,
+                "phy_armor": 40,
+                "mag_armor": 40,
+                "flow": 15,
+                "mind": 10,
+                "soul": 25,
+                "exp": 9,
+                "lvl": 9
+            },
+            "include_in_daily_quests": true,
+            "skills": {
+                "cure_light_wounds": 1,
+                "magic_missile": 1
+            },
+            "loot": {
+                "ant_pheromone": 20,
+                "rock": 31,
+                "summoning_rock": 31,
+                "potion_hp_30": 100,
+                "blessing_of_soul": 60,
+                "soul body 3": 70,
+                "soul head 3": 70,
+                "soul trinket 3": 70,
+                "soul weapon 3": 70,
+                "soul body 6": 55,
+                "soul head 6": 55,
+                "soul trinket 6": 55,
+                "soul weapon 6": 55,
+                "soul body 9": 40,
+                "soul head 9": 40,
+                "soul trinket 9": 40,
+                "soul weapon 9": 40,
+                "soul body 12": 100,
+                "soul head 12": 100,
+                "soul trinket 12": 100,
+                "soul weapon 12": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                " ant"
+            ]
+        },
+        "boss_rat": {
+            "npc_id": "boss_rat",
+            "ai": "BossRat",
+            "name": "Rat King",
+            "description": "A grotesque mass of rats tangled together, their bodies fused in a twisted, writhing knot. The rats vary in size, some large and muscular, others smaller and more wiry. Their fur is greasy and matted, clumped together in patches.",
+            "stats": {
+                "grit": 10,
+                "hp": 100,
+                "mp": 100,
+                "phy_armor": 10,
+                "mag_armor": 10,
+                "flow": 10,
+                "mind": 10,
+                "soul": 10,
+                "exp": 15,
+                "lvl": 10
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "bash": 2,
+                "bite": 3
+            },
+            "loot": {
+                "rock": 30,
+                "summoning_rock": 30,
+                "potion_hp_30": 100,
+                "blessing_of_grit": 60,
+                "grit body 3": 75,
+                "grit head 3": 75,
+                "grit trinket 3": 75,
+                "grit weapon 3": 75,
+                "grit weapon alt 3": 75,
+                "grit body 6": 60,
+                "grit head 6": 60,
+                "grit trinket 6": 60,
+                "grit weapon 6": 60,
+                "grit body 9": 45,
+                "grit head 9": 45,
+                "grit trinket 9": 45,
+                "grit weapon 9": 45,
+                "grit body 12": 80,
+                "grit head 12": 80,
+                "grit trinket 12 shield ": 80,
+                "grit trinket 12 sword": 80,
+                "grit weapon 12": 80
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                " rat"
+            ]
+        },
         "mushroom_soldier": {
             "npc_id": "mushroom_soldier",
             "ai": "Enemy",
@@ -1198,8 +1885,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 6": 70,
                 "grit head 6": 70,
@@ -1254,8 +1939,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_flow": 60,
                 "flow body 6": 70,
                 "flow head 6": 70,
@@ -1305,8 +1988,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 6": 70,
@@ -1363,8 +2044,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_soul": 60,
                 "soul body 6": 70,
                 "soul head 6": 70,
@@ -1419,8 +2098,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 6": 70,
                 "grit head 6": 70,
@@ -1478,8 +2155,6 @@
                 "tattered_cloth": 28,
                 "simple_cloth": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 6": 70,
                 "grit head 6": 70,
@@ -1535,8 +2210,6 @@
                 "rock": 28,
                 "summoning_rock": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 6": 70,
                 "grit head 6": 70,
@@ -1590,8 +2263,6 @@
                 "rock": 28,
                 "summoning_rock": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_flow": 60,
                 "flow body 6": 70,
                 "flow head 6": 70,
@@ -1644,8 +2315,6 @@
                 "fairy_wings": 28,
                 "fairy_dust": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 6": 70,
@@ -1674,567 +2343,6 @@
                 "fairy"
             ]
         },
-        "fairy_drunk": {
-            "npc_id": "fairy_drunk",
-            "ai": "Enemy",
-            "name": "Drunk fairy",
-            "description": "A tiny humanoid creature, glowing with blue and gold light, sways erratically in the air. Its soft wings flutter rapidly, struggling to keep it aloft as it drifts from side to side. The creature’s movements are jerky and uncoordinated, as if it can barely control its own flight, and its glowing eyes have a dazed, unfocused look.",
-            "stats": {
-                "grit": 10,
-                "hp": 50,
-                "mp": 50,
-                "phy_armor": 0,
-                "mag_armor": 40,
-                "flow": 10,
-                "mind": 10,
-                "soul": 10,
-                "exp": 3,
-                "lvl": 3
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "magic_missile": 1,
-                "nudge": 1
-            },
-            "loot": {
-                "rock": 37,
-                "summoning_rock": 37,
-                "fairy_wings": 37,
-                "fairy_dust": 37,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "grit body 1": 50,
-                "grit head 1": 50,
-                "grit relic 1": 50,
-                "grit trinket 1": 50,
-                "grit weapon 1": 50,
-                "grit body 3": 40,
-                "grit head 3": 40,
-                "grit trinket 3": 40,
-                "grit weapon 3": 40,
-                "grit weapon alt 3": 40,
-                "grit body 6": 100,
-                "grit head 6": 100,
-                "grit trinket 6": 100,
-                "grit weapon 6": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "fairy"
-            ]
-        },
-        "wood_stump_large": {
-            "npc_id": "wood_stump_large",
-            "ai": "Enemy",
-            "name": "Large Wood Stump",
-            "description": "A massive reanimated stump of a once-great tree, its gnarled, dirt-covered roots twisting and thrashing like monstrous tentacles. At the center of its jagged, bark-covered body sits a single, menacing eye, glowing with a fierce, malevolent light. With each deliberate step, the stump groans and creaks, sending splinters of wood into the air. It moves with a terrifying purpose, its roots slamming the ground as it advances, ready to crush anything in its path.",
-            "stats": {
-                "grit": 30,
-                "hp": 150,
-                "mp": 100,
-                "phy_armor": 20,
-                "mag_armor": 100,
-                "flow": 10,
-                "mind": 5,
-                "soul": 5,
-                "exp": 10,
-                "lvl": 7
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "tree_root": 10,
-                "tree_branch": 10,
-                "rock": 33,
-                "simple_bark": 33,
-                "summoning_rock": 33,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_grit": 60,
-                "grit body 1": 70,
-                "grit head 1": 70,
-                "grit relic 1": 70,
-                "grit trinket 1": 70,
-                "grit weapon 1": 70,
-                "grit body 3": 60,
-                "grit head 3": 60,
-                "grit trinket 3": 60,
-                "grit weapon 3": 60,
-                "grit weapon alt 3": 60,
-                "grit body 6": 45,
-                "grit head 6": 45,
-                "grit trinket 6": 45,
-                "grit weapon 6": 45,
-                "grit body 9": 80,
-                "grit head 9": 80,
-                "grit trinket 9": 80,
-                "grit weapon 9": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "wood"
-            ]
-        },
-        "kerning_trainer": {
-            "npc_id": "kerning_trainer",
-            "ai": "Enemy",
-            "name": "Edge Lord",
-            "description": "None",
-            "stats": {
-                "grit": 10,
-                "hp": 50,
-                "mp": 50,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 10,
-                "mind": -2,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 6
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "rock": 34,
-                "summoning_rock": 34,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_grit": 60,
-                "grit body 1": 65,
-                "grit head 1": 65,
-                "grit relic 1": 65,
-                "grit trinket 1": 65,
-                "grit weapon 1": 65,
-                "grit body 3": 55,
-                "grit head 3": 55,
-                "grit trinket 3": 55,
-                "grit weapon 3": 55,
-                "grit weapon alt 3": 55,
-                "grit body 6": 40,
-                "grit head 6": 40,
-                "grit trinket 6": 40,
-                "grit weapon 6": 40,
-                "grit body 9": 100,
-                "grit head 9": 100,
-                "grit trinket 9": 100,
-                "grit weapon 9": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "bartender": {
-            "npc_id": "bartender",
-            "ai": "Enemy",
-            "name": "Bartender",
-            "description": "The bartender cleans a mug with steady, practiced hands, the cloth moving in slow, deliberate circles. Each motion is smooth and efficient, as if the task is second nature. The mug is turned and tilted with care, the rag gliding over its surface as the bartender’s gaze shifts between the task and the room.",
-            "stats": {
-                "grit": 10,
-                "hp": 50,
-                "mp": 50,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 12,
-                "mind": 10,
-                "soul": 10,
-                "exp": 3,
-                "lvl": 3
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "key_tavern_cellar": 10,
-                "rock": 37,
-                "summoning_rock": 37,
-                "tattered_cloth": 37,
-                "simple_cloth": 37,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "flow body 1": 50,
-                "flow head 1": 50,
-                "flow relic 1": 50,
-                "flow trinket 1": 50,
-                "flow weapon 1": 50,
-                "flow body 3": 40,
-                "flow head 3": 40,
-                "flow trinket 3": 40,
-                "flow weapon 3": 40,
-                "flow body 6": 100,
-                "flow head 6": 100,
-                "flow trinket 6": 100,
-                "flow weapon 6": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "humanoid",
-                "tavern"
-            ]
-        },
-        "bar_drunk_0": {
-            "npc_id": "bar_drunk_0",
-            "ai": "Coward",
-            "name": "Drunk",
-            "description": "One beer away from passing out.",
-            "stats": {
-                "grit": 2,
-                "hp": 20,
-                "mp": 20,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 10,
-                "mind": 0,
-                "soul": 0,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "key_tavern_cellar": 10,
-                "rock": 39,
-                "summoning_rock": 39,
-                "tattered_cloth": 39,
-                "simple_cloth": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "flow body 1": 40,
-                "flow head 1": 40,
-                "flow relic 1": 40,
-                "flow trinket 1": 40,
-                "flow weapon 1": 40,
-                "flow body 3": 80,
-                "flow head 3": 80,
-                "flow trinket 3": 80,
-                "flow weapon 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "humanoid",
-                "tavern"
-            ]
-        },
-        "bar_drunk_1": {
-            "npc_id": "bar_drunk_1",
-            "ai": "Enemy",
-            "name": "Wasted",
-            "description": "Someone take their saddle before they try to ride home!",
-            "stats": {
-                "grit": 2,
-                "hp": 20,
-                "mp": 10,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 15,
-                "mind": 0,
-                "soul": 0,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "key_tavern_cellar": 20,
-                "rock": 39,
-                "summoning_rock": 39,
-                "tattered_cloth": 39,
-                "simple_cloth": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "flow body 1": 40,
-                "flow head 1": 40,
-                "flow relic 1": 40,
-                "flow trinket 1": 40,
-                "flow weapon 1": 40,
-                "flow body 3": 80,
-                "flow head 3": 80,
-                "flow trinket 3": 80,
-                "flow weapon 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "humanoid",
-                "tavern"
-            ]
-        },
-        "tutorial_1": {
-            "npc_id": "tutorial_1",
-            "ai": "Enemy",
-            "name": "Shadowy Figure",
-            "description": "A tall, shadowy figure stands hunched, its crooked back casting an eerie silhouette. Long, spindly fingers twitch and curl, almost unnaturally long. The face is obscured, hidden beneath a cloak or veil, leaving only an unsettling sense of emptiness. Its presence feels like a looming threat, silent and foreboding.",
-            "stats": {
-                "grit": 0,
-                "hp": 1,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 0
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": true,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "boss_rat": {
-            "npc_id": "boss_rat",
-            "ai": "BossRat",
-            "name": "Rat King",
-            "description": "A grotesque mass of rats tangled together, their bodies fused in a twisted, writhing knot. The rats vary in size, some large and muscular, others smaller and more wiry. Their fur is greasy and matted, clumped together in patches.",
-            "stats": {
-                "grit": 10,
-                "hp": 100,
-                "mp": 100,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 15,
-                "mind": 10,
-                "soul": 10,
-                "exp": 15,
-                "lvl": 10
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "bite": 1
-            },
-            "loot": {
-                "rock": 30,
-                "summoning_rock": 30,
-                "rat_tail": 30,
-                "rat_tooth": 30,
-                "rat_hide": 30,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_flow": 60,
-                "flow body 3": 75,
-                "flow head 3": 75,
-                "flow trinket 3": 75,
-                "flow weapon 3": 75,
-                "flow body 6": 60,
-                "flow head 6": 60,
-                "flow trinket 6": 60,
-                "flow weapon 6": 60,
-                "flow body 9": 45,
-                "flow head 9": 45,
-                "flow trinket 9": 45,
-                "flow weapon 9": 45,
-                "flow body 12": 80,
-                "flow head 12": 80,
-                "flow weapon 12": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "rat"
-            ]
-        },
-        "guard_coward": {
-            "npc_id": "guard_coward",
-            "ai": "Coward",
-            "name": "Cowardly Guard",
-            "description": "A short figure covered in leather armor from head to toe, stands hunched over their spear.",
-            "stats": {
-                "grit": 20,
-                "hp": 80,
-                "mp": 80,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 15,
-                "mind": 10,
-                "soul": 10,
-                "exp": 6,
-                "lvl": 6
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "rock": 34,
-                "summoning_rock": 34,
-                "tattered_cloth": 34,
-                "simple_cloth": 34,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_grit": 60,
-                "grit body 1": 65,
-                "grit head 1": 65,
-                "grit relic 1": 65,
-                "grit trinket 1": 65,
-                "grit weapon 1": 65,
-                "grit body 3": 55,
-                "grit head 3": 55,
-                "grit trinket 3": 55,
-                "grit weapon 3": 55,
-                "grit weapon alt 3": 55,
-                "grit body 6": 40,
-                "grit head 6": 40,
-                "grit trinket 6": 40,
-                "grit weapon 6": 40,
-                "grit body 9": 100,
-                "grit head 9": 100,
-                "grit trinket 9": 100,
-                "grit weapon 9": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "humanoid"
-            ]
-        },
-        "citizen": {
-            "npc_id": "citizen",
-            "ai": "Coward",
-            "name": "Citizen",
-            "description": "A peaceful citizen.",
-            "stats": {
-                "grit": 5,
-                "hp": 20,
-                "mp": 20,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 5,
-                "mind": 5,
-                "soul": 5,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "rock": 39,
-                "summoning_rock": 39,
-                "tattered_cloth": 39,
-                "simple_cloth": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "grit body 1": 40,
-                "grit head 1": 40,
-                "grit relic 1": 40,
-                "grit trinket 1": 40,
-                "grit weapon 1": 40,
-                "grit body 3": 80,
-                "grit head 3": 80,
-                "grit trinket 3": 80,
-                "grit weapon 3": 80,
-                "grit weapon alt 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "humanoid"
-            ]
-        },
-        "tavern_cellar_bank_robber": {
-            "npc_id": "tavern_cellar_bank_robber",
-            "ai": "Coward",
-            "name": "Bank Robber",
-            "description": "A hooded figure with a tiny crowbar.",
-            "stats": {
-                "grit": 5,
-                "hp": 20,
-                "mp": 20,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 20,
-                "mind": 5,
-                "soul": 5,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "rock": 39,
-                "summoning_rock": 39,
-                "tattered_cloth": 39,
-                "simple_cloth": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "flow body 1": 40,
-                "flow head 1": 40,
-                "flow relic 1": 40,
-                "flow trinket 1": 40,
-                "flow weapon 1": 40,
-                "flow body 3": 80,
-                "flow head 3": 80,
-                "flow trinket 3": 80,
-                "flow weapon 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "humanoid"
-            ]
-        },
         "mushroom_kingdom_king": {
             "npc_id": "mushroom_kingdom_king",
             "ai": "Enemy",
@@ -2261,8 +2369,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 6": 70,
@@ -2317,8 +2423,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 6": 70,
                 "grit head 6": 70,
@@ -2373,8 +2477,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 6": 70,
                 "grit head 6": 70,
@@ -2429,8 +2531,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_soul": 60,
                 "soul body 6": 70,
                 "soul head 6": 70,
@@ -2452,196 +2552,6 @@
             "combat_loop": {},
             "can_start_fights": false,
             "dont_join_fights": true,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "mushroom"
-            ]
-        },
-        "mushroom_kingdom_chef": {
-            "npc_id": "mushroom_kingdom_chef",
-            "ai": "Enemy",
-            "name": "Mushrom Chef",
-            "description": "A stout mushroom with a tall, stained hat stands proudly, its cap tilted at a jaunty angle. One stubby tendril grips a hot, crackling pan that sends up wisps of fragrant steam.",
-            "stats": {
-                "grit": 10,
-                "hp": 30,
-                "mp": 10,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 10,
-                "mind": 10,
-                "soul": 10,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "rock": 39,
-                "summoning_rock": 39,
-                "shroom_cap": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "grit body 1": 40,
-                "grit head 1": 40,
-                "grit relic 1": 40,
-                "grit trinket 1": 40,
-                "grit weapon 1": 40,
-                "grit body 3": 80,
-                "grit head 3": 80,
-                "grit trinket 3": 80,
-                "grit weapon 3": 80,
-                "grit weapon alt 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "mushroom"
-            ]
-        },
-        "mushroom_kingdom_cook": {
-            "npc_id": "mushroom_kingdom_cook",
-            "ai": "Enemy",
-            "name": "Mushroom Cook",
-            "description": "A nervous, speckled mushroom half the chef’s size scurries behind, juggling ingredients in its tiny hands and trying not to trip over its own cap.",
-            "stats": {
-                "grit": 10,
-                "hp": 30,
-                "mp": 10,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 15,
-                "mind": 10,
-                "soul": 10,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "rock": 39,
-                "summoning_rock": 39,
-                "shroom_cap": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "flow body 1": 40,
-                "flow head 1": 40,
-                "flow relic 1": 40,
-                "flow trinket 1": 40,
-                "flow weapon 1": 40,
-                "flow body 3": 80,
-                "flow head 3": 80,
-                "flow trinket 3": 80,
-                "flow weapon 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "mushroom"
-            ]
-        },
-        "mushroom_kingdom_jester": {
-            "npc_id": "mushroom_kingdom_jester",
-            "ai": "Enemy",
-            "name": "Mushroom Jester",
-            "description": "A lurching, multicolored mushroom cap bounds into view, its surface a chaotic swirl of reds, purples, and yellows. It is roughly the size of a large dog, though far more animated and unpredictable. Its cap droops and curls in three distinct points, resembling a jester’s hat in both shape and whimsy. Small fungal bulbs hang from each tip, pulsing faintly with bioluminescent light.",
-            "stats": {
-                "grit": 10,
-                "hp": 30,
-                "mp": 10,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 20,
-                "mind": 10,
-                "soul": 10,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "swing": 1
-            },
-            "loot": {
-                "rock": 39,
-                "summoning_rock": 39,
-                "shroom_cap": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "flow body 1": 40,
-                "flow head 1": 40,
-                "flow relic 1": 40,
-                "flow trinket 1": 40,
-                "flow weapon 1": 40,
-                "flow body 3": 80,
-                "flow head 3": 80,
-                "flow trinket 3": 80,
-                "flow weapon 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                "mushroom"
-            ]
-        },
-        "mushroom_kingdom_citizen": {
-            "npc_id": "mushroom_kingdom_citizen",
-            "ai": "Enemy",
-            "name": "Mushroom Citizen",
-            "description": "A short, round mushroom with a beige cap and sleepy eyes waddles along quietly, leaving tiny spore prints in its wake.",
-            "stats": {
-                "grit": 10,
-                "hp": 30,
-                "mp": 10,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 10,
-                "mind": 10,
-                "soul": 10,
-                "exp": 1,
-                "lvl": 1
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "nudge": 1
-            },
-            "loot": {
-                "rock": 39,
-                "summoning_rock": 39,
-                "shroom_cap": 39,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "grit body 1": 40,
-                "grit head 1": 40,
-                "grit relic 1": 40,
-                "grit trinket 1": 40,
-                "grit weapon 1": 40,
-                "grit body 3": 80,
-                "grit head 3": 80,
-                "grit trinket 3": 80,
-                "grit weapon 3": 80,
-                "grit weapon alt 3": 80
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
                 "all",
@@ -2674,8 +2584,6 @@
                 "summoning_rock": 28,
                 "shroom_cap": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 6": 70,
@@ -2704,105 +2612,49 @@
                 "mushroom"
             ]
         },
-        "daily_quest_board": {
-            "npc_id": "daily_quest_board",
+        "ant_nurse": {
+            "npc_id": "ant_nurse",
             "ai": "Enemy",
-            "name": "Talking Quest Board",
-            "description": "A large board sits firmly in the ground. On it, a dozen or so fliers are stapled to the board, a small crack in the shape of two lips appears to be slowly breathing in and out of the wood.",
-            "stats": {
-                "grit": 0,
-                "hp": 10,
-                "mp": 10,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 0
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": true,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "ellinia_shop_weapon": {
-            "npc_id": "ellinia_shop_weapon",
-            "ai": "Enemy",
-            "name": "Wand Seller Fairy",
-            "description": "A tiny humanoid creature, glowing with blue and gold light. Its soft wings flutter rapidly, barely making a sound as it hovers in place. The creature’s delicate features are faintly illuminated by its own ethereal glow.",
+            "name": "Ant Nurse",
+            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
             "stats": {
                 "grit": 10,
                 "hp": 150,
-                "mp": 350,
-                "phy_armor": 120,
-                "mag_armor": 80,
+                "mp": 200,
+                "phy_armor": 20,
+                "mag_armor": 20,
                 "flow": 10,
-                "mind": 40,
-                "soul": 10,
+                "mind": 10,
+                "soul": 30,
                 "exp": 12,
                 "lvl": 12
             },
-            "include_in_daily_quests": false,
+            "include_in_daily_quests": true,
             "skills": {
-                "cure_light_wounds": 1,
-                "magic_missile": 1
-            },
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": true,
-            "drop_tags": [
-                "all",
-                "fairy"
-            ]
-        },
-        "mushroom_kingdom_necromancer": {
-            "npc_id": "mushroom_kingdom_necromancer",
-            "ai": "Enemy",
-            "name": "Mushroom Necromancer",
-            "description": "A huge mushroom with a blue cap and gray spots stands in the shadows. Its white stem sways as it gives off clouds of spores. One thick, spongy arm holds a staff made of old bone, covered in strange glowing symbols. Two green eyes glow from under its cap, and its wide, unnatural smile never fades. It moves by hopping, each jump landing with a heavy thud, while dark mist curls around the ground and the dead begin to stir.",
-            "stats": {
-                "grit": 10,
-                "hp": 300,
-                "mp": 600,
-                "phy_armor": 80,
-                "mag_armor": 80,
-                "flow": 10,
-                "mind": 40,
-                "soul": 10,
-                "exp": 20,
-                "lvl": 20
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "magic_missile": 2,
-                "chain_lightning": 2,
-                "cure_light_wounds": 2,
-                "promise": 2
+                "nudge": 1,
+                "cure_light_wounds": 1
             },
             "loot": {
-                "rock": 20,
-                "zombie_skin": 20,
-                "summoning_rock": 20,
-                "tattered_cloth": 20,
-                "simple_cloth": 20,
+                "rock": 28,
+                "summoning_rock": 28,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "translucent scroll": 100,
-                "blessing_of_mind": 60,
-                "mind body 15": 65,
-                "mind head 15": 65,
-                "mind trinket 15": 65,
-                "mind weapon 15": 65
+                "blessing_of_soul": 60,
+                "soul body 6": 70,
+                "soul head 6": 70,
+                "soul trinket 6": 70,
+                "soul weapon 6": 70,
+                "soul body 9": 55,
+                "soul head 9": 55,
+                "soul trinket 9": 55,
+                "soul weapon 9": 55,
+                "soul body 12": 40,
+                "soul head 12": 40,
+                "soul trinket 12": 40,
+                "soul weapon 12": 40,
+                "soul body 15": 100,
+                "soul head 15": 100,
+                "soul trinket 15": 100,
+                "soul weapon 15": 100
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -2810,8 +2662,7 @@
             "no_random_loot": false,
             "drop_tags": [
                 "all",
-                "zombie",
-                "humanoid"
+                " ant"
             ]
         },
         "ant_scout": {
@@ -2840,8 +2691,6 @@
                 "rock": 25,
                 "summoning_rock": 25,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_flow": 60,
                 "flow body 9": 70,
                 "flow head 9": 70,
@@ -2887,8 +2736,6 @@
                 "rock": 25,
                 "summoning_rock": 25,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60,
                 "grit body 9": 70,
                 "grit head 9": 70,
@@ -2940,8 +2787,6 @@
                 "rock": 25,
                 "summoning_rock": 25,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_soul": 60,
                 "soul body 9": 70,
                 "soul head 9": 70,
@@ -2958,155 +2803,6 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                " ant"
-            ]
-        },
-        "ant_larva": {
-            "npc_id": "ant_larva",
-            "ai": "Enemy",
-            "name": "Ant Larva",
-            "description": "A baby sized clear skinned larva.",
-            "stats": {
-                "grit": 20,
-                "hp": 100,
-                "mp": 50,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 15,
-                "mind": 10,
-                "soul": 10,
-                "exp": 6,
-                "lvl": 6
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "nudge": 1
-            },
-            "loot": {
-                "ant_antenna": 34,
-                "ant_mandible": 34,
-                "ant_pheromone": 34,
-                "ant_resin": 34,
-                "potion_renew_hp_30": 100,
-                "potion_renew_phy_armor_30": 100,
-                "potion_renew_mag_armor_30": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "ant"
-            ]
-        },
-        "ant_nurse": {
-            "npc_id": "ant_nurse",
-            "ai": "Enemy",
-            "name": "Ant Nurse",
-            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
-            "stats": {
-                "grit": 10,
-                "hp": 150,
-                "mp": 200,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 10,
-                "mind": 10,
-                "soul": 30,
-                "exp": 12,
-                "lvl": 12
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "nudge": 1,
-                "cure_light_wounds": 1
-            },
-            "loot": {
-                "rock": 28,
-                "summoning_rock": 28,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_soul": 60,
-                "soul body 6": 70,
-                "soul head 6": 70,
-                "soul trinket 6": 70,
-                "soul weapon 6": 70,
-                "soul body 9": 55,
-                "soul head 9": 55,
-                "soul trinket 9": 55,
-                "soul weapon 9": 55,
-                "soul body 12": 40,
-                "soul head 12": 40,
-                "soul trinket 12": 40,
-                "soul weapon 12": 40,
-                "soul body 15": 100,
-                "soul head 15": 100,
-                "soul trinket 15": 100,
-                "soul weapon 15": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                " ant"
-            ]
-        },
-        "ant_alchemist": {
-            "npc_id": "ant_alchemist",
-            "ai": "Enemy",
-            "name": "Ant Alchemist",
-            "description": "A slender humanoid with four long arms, the muscular body is covered by chitin, and the eyes are black and lidless.",
-            "stats": {
-                "grit": 10,
-                "hp": 100,
-                "mp": 140,
-                "phy_armor": 40,
-                "mag_armor": 40,
-                "flow": 15,
-                "mind": 10,
-                "soul": 25,
-                "exp": 9,
-                "lvl": 9
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "cure_light_wounds": 1,
-                "magic_missile": 1
-            },
-            "loot": {
-                "ant_pheromone": 20,
-                "rock": 31,
-                "summoning_rock": 31,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_soul": 60,
-                "soul body 3": 70,
-                "soul head 3": 70,
-                "soul trinket 3": 70,
-                "soul weapon 3": 70,
-                "soul body 6": 55,
-                "soul head 6": 55,
-                "soul trinket 6": 55,
-                "soul weapon 6": 55,
-                "soul body 9": 40,
-                "soul head 9": 40,
-                "soul trinket 9": 40,
-                "soul weapon 9": 40,
-                "soul body 12": 100,
-                "soul head 12": 100,
-                "soul trinket 12": 100,
-                "soul weapon 12": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
@@ -3139,8 +2835,6 @@
                 "rock": 25,
                 "summoning_rock": 25,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "mind body 9": 70,
@@ -3190,8 +2884,6 @@
                 "rock": 25,
                 "summoning_rock": 25,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_flow": 60,
                 "flow body 9": 70,
                 "flow head 9": 70,
@@ -3236,8 +2928,6 @@
                 "rock": 25,
                 "summoning_rock": 25,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_flow": 60,
                 "flow body 9": 70,
                 "flow head 9": 70,
@@ -3254,6 +2944,54 @@
             "no_random_loot": false,
             "drop_tags": [
                 "all"
+            ]
+        },
+        "mushroom_kingdom_necromancer": {
+            "npc_id": "mushroom_kingdom_necromancer",
+            "ai": "Enemy",
+            "name": "Mushroom Necromancer",
+            "description": "A huge mushroom with a blue cap and gray spots stands in the shadows. Its white stem sways as it gives off clouds of spores. One thick, spongy arm holds a staff made of old bone, covered in strange glowing symbols. Two green eyes glow from under its cap, and its wide, unnatural smile never fades. It moves by hopping, each jump landing with a heavy thud, while dark mist curls around the ground and the dead begin to stir.",
+            "stats": {
+                "grit": 10,
+                "hp": 300,
+                "mp": 600,
+                "phy_armor": 80,
+                "mag_armor": 80,
+                "flow": 10,
+                "mind": 40,
+                "soul": 10,
+                "exp": 20,
+                "lvl": 20
+            },
+            "include_in_daily_quests": false,
+            "skills": {
+                "magic_missile": 2,
+                "chain_lightning": 2,
+                "cure_light_wounds": 2,
+                "promise": 2
+            },
+            "loot": {
+                "rock": 20,
+                "zombie_skin": 20,
+                "summoning_rock": 20,
+                "tattered_cloth": 20,
+                "simple_cloth": 20,
+                "potion_hp_30": 100,
+                "translucent scroll": 100,
+                "blessing_of_mind": 60,
+                "mind body 15": 65,
+                "mind head 15": 65,
+                "mind trinket 15": 65,
+                "mind weapon 15": 65
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "zombie",
+                "humanoid"
             ]
         },
         "mushroom_zombie_behemoth": {
@@ -3283,686 +3021,12 @@
                 "rock": 1,
                 "summoning_rock": 1,
                 "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
                 "blessing_of_grit": 60
             },
             "combat_loop": {},
             "can_start_fights": true,
             "dont_join_fights": false,
             "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "skill_portal": {
-            "npc_id": "skill_portal",
-            "ai": "Enemy",
-            "name": "Portal",
-            "description": "A portal",
-            "stats": {
-                "grit": 0,
-                "hp": 1,
-                "mp": 1,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 0
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": true,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "dragon_0": {
-            "npc_id": "dragon_0",
-            "ai": "VoreDragonLesser",
-            "name": "Lesser Dragon",
-            "description": null,
-            "stats": {
-                "grit": 20,
-                "hp": 100,
-                "mp": 100,
-                "phy_armor": 80,
-                "mag_armor": 40,
-                "flow": 15,
-                "mind": 10,
-                "soul": 10,
-                "exp": 9,
-                "lvl": 9
-            },
-            "include_in_daily_quests": true,
-            "skills": {
-                "bite": 1
-            },
-            "loot": {
-                "rock": 31,
-                "summoning_rock": 31,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_grit": 60,
-                "grit body 3": 70,
-                "grit head 3": 70,
-                "grit trinket 3": 70,
-                "grit weapon 3": 70,
-                "grit weapon alt 3": 70,
-                "grit body 6": 55,
-                "grit head 6": 55,
-                "grit trinket 6": 55,
-                "grit weapon 6": 55,
-                "grit body 9": 40,
-                "grit head 9": 40,
-                "grit trinket 9": 40,
-                "grit weapon 9": 40,
-                "grit body 12": 100,
-                "grit head 12": 100,
-                "grit trinket 12 shield ": 100,
-                "grit trinket 12 sword": 100,
-                "grit weapon 12": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "dragon_tooth_0": {
-            "npc_id": "dragon_tooth_0",
-            "ai": "Enemy",
-            "name": "Lesser Dragons Tooth",
-            "description": null,
-            "stats": {
-                "grit": 10,
-                "hp": 50,
-                "mp": 20,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 10,
-                "mind": 15,
-                "soul": 10,
-                "exp": 3,
-                "lvl": 3
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "bite": 1
-            },
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": true,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "dragon_tongue_0": {
-            "npc_id": "dragon_tongue_0",
-            "ai": "Enemy",
-            "name": "Lesser Dragons Tongue",
-            "description": null,
-            "stats": {
-                "grit": 10,
-                "hp": 50,
-                "mp": 200,
-                "phy_armor": 20,
-                "mag_armor": 20,
-                "flow": 10,
-                "mind": 15,
-                "soul": 40,
-                "exp": 3,
-                "lvl": 3
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "cure_light_wounds": 1
-            },
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": true,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "the_well_below_trap": {
-            "npc_id": "the_well_below_trap",
-            "ai": "TheWellBelowTrap",
-            "name": "Barricade",
-            "description": "A barricaded door, water is pushing at the other end",
-            "stats": {
-                "grit": 0,
-                "hp": 100,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 0
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": true,
-            "drop_tags": [
-                "none"
-            ]
-        },
-        "enviroment_rubble": {
-            "npc_id": "enviroment_rubble",
-            "ai": "Enemy",
-            "name": "Rubble",
-            "description": "A giant pile of rubble",
-            "stats": {
-                "grit": 0,
-                "hp": 1,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 0
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": true,
-            "drop_tags": [
-                "none"
-            ]
-        },
-        "loot_chest_grit_6": {
-            "npc_id": "loot_chest_grit_6",
-            "ai": "Enemy",
-            "name": "Iron Chest",
-            "description": "A fat chest of goodies",
-            "stats": {
-                "grit": 0,
-                "hp": 1,
-                "mp": 1,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 6
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {
-                "rock": 34,
-                "summoning_rock": 34,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_grit": 60,
-                "grit body 1": 65,
-                "grit head 1": 65,
-                "grit relic 1": 65,
-                "grit trinket 1": 65,
-                "grit weapon 1": 65,
-                "grit body 3": 55,
-                "grit head 3": 55,
-                "grit trinket 3": 55,
-                "grit weapon 3": 55,
-                "grit weapon alt 3": 55,
-                "grit body 6": 40,
-                "grit head 6": 40,
-                "grit trinket 6": 40,
-                "grit weapon 6": 40,
-                "grit body 9": 100,
-                "grit head 9": 100,
-                "grit trinket 9": 100,
-                "grit weapon 9": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "loot_chest_flow_6": {
-            "npc_id": "loot_chest_flow_6",
-            "ai": "Enemy",
-            "name": "Carved Chest",
-            "description": "A fat chest of goodies",
-            "stats": {
-                "grit": 1,
-                "hp": 1,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 6
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {
-                "rock": 34,
-                "summoning_rock": 34,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_grit": 60,
-                "grit body 1": 65,
-                "grit head 1": 65,
-                "grit relic 1": 65,
-                "grit trinket 1": 65,
-                "grit weapon 1": 65,
-                "grit body 3": 55,
-                "grit head 3": 55,
-                "grit trinket 3": 55,
-                "grit weapon 3": 55,
-                "grit weapon alt 3": 55,
-                "grit body 6": 40,
-                "grit head 6": 40,
-                "grit trinket 6": 40,
-                "grit weapon 6": 40,
-                "grit body 9": 100,
-                "grit head 9": 100,
-                "grit trinket 9": 100,
-                "grit weapon 9": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "loot_chest_mind_6": {
-            "npc_id": "loot_chest_mind_6",
-            "ai": "Enemy",
-            "name": "Runed Chest",
-            "description": "A fat chest of goodies",
-            "stats": {
-                "grit": 0,
-                "hp": 1,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 1,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 6
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {
-                "rock": 34,
-                "summoning_rock": 34,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_flow": 60,
-                "flow body 1": 65,
-                "flow head 1": 65,
-                "flow relic 1": 65,
-                "flow trinket 1": 65,
-                "flow weapon 1": 65,
-                "flow body 3": 55,
-                "flow head 3": 55,
-                "flow trinket 3": 55,
-                "flow weapon 3": 55,
-                "flow body 6": 40,
-                "flow head 6": 40,
-                "flow trinket 6": 40,
-                "flow weapon 6": 40,
-                "flow body 9": 100,
-                "flow head 9": 100,
-                "flow trinket 9": 100,
-                "flow weapon 9": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "loot_chest_soul_6": {
-            "npc_id": "loot_chest_soul_6",
-            "ai": "Enemy",
-            "name": "Gemmed Chest",
-            "description": "A fat chest of goodies",
-            "stats": {
-                "grit": 0,
-                "hp": 1,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 1,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 6
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {
-                "rock": 34,
-                "summoning_rock": 34,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "translucent scroll": 100,
-                "blessing_of_mind": 60,
-                "mind body 1": 65,
-                "mind head 1": 65,
-                "mind relic 1": 65,
-                "mind trinket 1": 65,
-                "mind weapon 1": 65,
-                "mind body 3": 55,
-                "mind head 3": 55,
-                "mind trinket 3": 55,
-                "mind weapon 3": 55,
-                "mind body 6": 40,
-                "mind head 6": 40,
-                "mind trinket 6": 40,
-                "mind weapon 6": 40,
-                "mind body 9": 100,
-                "mind head 9": 100,
-                "mind trinket 9": 100,
-                "mind weapon 9": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "the_well_bellow_rat": {
-            "npc_id": "the_well_bellow_rat",
-            "ai": "Enemy",
-            "name": "Well Rat",
-            "description": "A well rat, it scurries on land, and swims around under water ",
-            "stats": {
-                "grit": 15,
-                "hp": 30,
-                "mp": 20,
-                "phy_armor": 10,
-                "mag_armor": 10,
-                "flow": 20,
-                "mind": 10,
-                "soul": 10,
-                "exp": 3,
-                "lvl": 3
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "nudge": 1
-            },
-            "loot": {
-                "rock": 37,
-                "summoning_rock": 37,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "flow body 1": 50,
-                "flow head 1": 50,
-                "flow relic 1": 50,
-                "flow trinket 1": 50,
-                "flow weapon 1": 50,
-                "flow body 3": 40,
-                "flow head 3": 40,
-                "flow trinket 3": 40,
-                "flow weapon 3": 40,
-                "flow body 6": 100,
-                "flow head 6": 100,
-                "flow trinket 6": 100,
-                "flow weapon 6": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all",
-                " rat"
-            ]
-        },
-        "the_well_bellow_crab": {
-            "npc_id": "the_well_bellow_crab",
-            "ai": "Enemy",
-            "name": "Well Crab",
-            "description": "A well crab, it moves side to side pinching the air at you",
-            "stats": {
-                "grit": 15,
-                "hp": 30,
-                "mp": 0,
-                "phy_armor": 70,
-                "mag_armor": 5,
-                "flow": 10,
-                "mind": 10,
-                "soul": 10,
-                "exp": 4,
-                "lvl": 3
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "slash": 1
-            },
-            "loot": {
-                "rock": 37,
-                "summoning_rock": 37,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "grit body 1": 50,
-                "grit head 1": 50,
-                "grit relic 1": 50,
-                "grit trinket 1": 50,
-                "grit weapon 1": 50,
-                "grit body 3": 40,
-                "grit head 3": 40,
-                "grit trinket 3": 40,
-                "grit weapon 3": 40,
-                "grit weapon alt 3": 40,
-                "grit body 6": 100,
-                "grit head 6": 100,
-                "grit trinket 6": 100,
-                "grit weapon 6": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "the_well_bellow_eel": {
-            "npc_id": "the_well_bellow_eel",
-            "ai": "Enemy",
-            "name": "Well Eel",
-            "description": "A well eel, its like a wet slippery snake",
-            "stats": {
-                "grit": 15,
-                "hp": 30,
-                "mp": 200,
-                "phy_armor": 10,
-                "mag_armor": 80,
-                "flow": 10,
-                "mind": 20,
-                "soul": 10,
-                "exp": 5,
-                "lvl": 3
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "refresh": 1,
-                "magic_missile": 1
-            },
-            "loot": {
-                "rock": 37,
-                "summoning_rock": 37,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "mind body 1": 50,
-                "mind head 1": 50,
-                "mind relic 1": 50,
-                "mind trinket 1": 50,
-                "mind weapon 1": 50,
-                "mind body 3": 40,
-                "mind head 3": 40,
-                "mind trinket 3": 40,
-                "mind weapon 3": 40,
-                "mind body 6": 100,
-                "mind head 6": 100,
-                "mind trinket 6": 100,
-                "mind weapon 6": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "the_well_bellow_quest_giver": {
-            "npc_id": "the_well_bellow_quest_giver",
-            "ai": "Enemy",
-            "name": "Train enthusiast",
-            "description": "A very tall child, they hunch over the well",
-            "stats": {
-                "grit": 0,
-                "hp": 0,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 0
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": true,
-            "drop_tags": [
-                "none"
-            ]
-        },
-        "the_well_bellow_quest_item_enemy": {
-            "npc_id": "the_well_bellow_quest_item_enemy",
-            "ai": "Enemy",
-            "name": "Animated Wet Toy",
-            "description": "A wooden toy train, choo choo",
-            "stats": {
-                "grit": 10,
-                "hp": 50,
-                "mp": 20,
-                "phy_armor": 100,
-                "mag_armor": 50,
-                "flow": 30,
-                "mind": 10,
-                "soul": 10,
-                "exp": 12,
-                "lvl": 6
-            },
-            "include_in_daily_quests": false,
-            "skills": {
-                "swing": 1,
-                "guard": 1
-            },
-            "loot": {
-                "the_well_bellow_quest_item": 1,
-                "rock": 34,
-                "summoning_rock": 34,
-                "potion_hp_30": 100,
-                "potion_phy_armor_30": 100,
-                "potion_mag_armor_30": 100,
-                "blessing_of_flow": 60,
-                "flow body 1": 65,
-                "flow head 1": 65,
-                "flow relic 1": 65,
-                "flow trinket 1": 65,
-                "flow weapon 1": 65,
-                "flow body 3": 55,
-                "flow head 3": 55,
-                "flow trinket 3": 55,
-                "flow weapon 3": 55,
-                "flow body 6": 40,
-                "flow head 6": 40,
-                "flow trinket 6": 40,
-                "flow weapon 6": 40,
-                "flow body 9": 100,
-                "flow head 9": 100,
-                "flow trinket 9": 100,
-                "flow weapon 9": 100
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "victoria_quest_giver_1": {
-            "npc_id": "victoria_quest_giver_1",
-            "ai": "Enemy",
-            "name": "Child",
-            "description": "A small humanoid child, they look dumb and stupid, they drag their heels as they walk in circles",
-            "stats": {
-                "grit": 0,
-                "hp": 1,
-                "mp": 0,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "flow": 0,
-                "mind": 0,
-                "soul": 0,
-                "exp": 0,
-                "lvl": 0
-            },
-            "include_in_daily_quests": false,
-            "skills": {},
-            "loot": {},
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": true,
             "drop_tags": [
                 "all"
             ]
@@ -5323,53 +4387,6 @@
                 ]
             }
         },
-        "summon_portal": {
-            "skill_id": "summon_portal",
-            "name": "Portal",
-            "description": "Summon a temporary portal, once summoned, you will be able to offer it magical items to teleport to your destionation\nMore destinations become available as you practice this skill.\n",
-            "script_to_run": "Portal",
-            "target_others_is_valid": false,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": false,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": true,
-            "practice_cost": 1,
-            "level_req": 3.0,
-            "use_perspectives": {
-                "use_case_name": "use_generic",
-                "you on you": "You concentrate.",
-                "you on other": "You concentrate on #OTHER#.",
-                "user on user": "#USER# concentrates.",
-                "user on you": "#USER# concentrates on you.",
-                "user on other": "#USER# concentrates on #OTHER#.",
-                "you on you fail": "You fail to concentrate.",
-                "you on other fail": "You fail to concentrate on #OTHER#.",
-                "user on user fail": "#USER# fails to concentrate.",
-                "user on you fail": "#USER# fails to concentrate on you.",
-                "user on other fail": "#USER# fails to concentrate on #OTHER#."
-            },
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "levels": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
-                ],
-                "cooldown": [
-                    1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
-                ]
-            }
-        },
         "stealth": {
             "skill_id": "stealth",
             "name": "Stealth",
@@ -6146,7 +5163,7 @@
             "ambience_sfx": null,
             "can_pick_up": true,
             "item_type": "misc",
-            "stack_max_amount": 9999999,
+            "stack_max_amount": 999999,
             "drop_tags": [
                 "none"
             ],
@@ -8210,6 +7227,7 @@
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": [
+                "potion_hp_30",
                 "flow head c1",
                 "mind weapon c1",
                 "mind weapon c1_2",
@@ -8633,81 +7651,6 @@
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
-        "the_well_bellow_key_1": {
-            "premade_id": "the_well_bellow_key_1",
-            "name": "Rusty Well Key",
-            "description": "A very rusty key found in the well below",
-            "description_room": null,
-            "invisible": 0.0,
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "item_type": "misc",
-            "stack_max_amount": 1,
-            "drop_tags": [
-                "none"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 40,
-            "drop_chance_level": 0,
-            "drop_chance_under_bonus": 20,
-            "drop_chance_over_bonus": -1,
-            "drop_chance_range_under": 1,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "the_well_bellow_key_2": {
-            "premade_id": "the_well_bellow_key_2",
-            "name": "Rusty Well Valve",
-            "description": "A very rusty valve found in the well below",
-            "description_room": null,
-            "invisible": 0.0,
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "item_type": "misc",
-            "stack_max_amount": 1,
-            "drop_tags": [
-                "none"
-            ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
-            "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "the_well_bellow_quest_item": {
-            "premade_id": "the_well_bellow_quest_item",
-            "name": "Wet Toy",
-            "description": "A wooden toy train, choo choo",
-            "description_room": null,
-            "invisible": 0.0,
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "item_type": "misc",
-            "stack_max_amount": 1,
-            "drop_tags": [
-                "none"
-            ],
-            "drop_from_random": 0,
-            "drop_chance_base": 0,
-            "drop_chance_level": 0,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 0,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
         "potion_hp_30": {
             "premade_id": "potion_hp_30",
             "name": "Green Potion",
@@ -8745,87 +7688,11 @@
             "drop_chance_range_under": 0,
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "potion_phy_armor_30": {
-            "premade_id": "potion_phy_armor_30",
-            "name": "Red Potion",
-            "description": "A bottle of some red-pinkish liquid.",
-            "description_room": null,
-            "invisible": 0.0,
-            "skills": [
-                "regen_phy_armor_30"
+            "crafting_recipe_ingredients": [
+                {
+                    "shroom_cap": 3
+                }
             ],
-            "use_perspectives": {
-                "use_case_name": "use_potion",
-                "you on you": "You splash the vile liquid on yourself",
-                "you on other": "You splash the vile liquid on #OTHER#",
-                "user on user": "#USER# drinks the vile liquid",
-                "user on you": "#USER# splashes the vile liquid on you",
-                "user on other": "#USER# splashes the vile liquid on #OTHER#",
-                "you on you fail": "You fumble and the vile liquid splashes onto the ground",
-                "you on other fail": "You fumble and the vile liquid splashes onto the ground",
-                "user on user fail": "#USER# fumbles and the vile liquid splashes onto the ground",
-                "user on you fail": "#USER# fumbles and the vile liquid splashes onto the ground",
-                "user on other fail": "#USER# fumbles and the vile liquid splashes onto the ground"
-            },
-            "item_type": "consumable",
-            "ambience": "The potion emits a soft glow",
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "drop_tags": [
-                "all"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 100,
-            "drop_chance_level": 1,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "potion_mag_armor_30": {
-            "premade_id": "potion_mag_armor_30",
-            "name": "Blue Potion",
-            "description": "A bottle of glistering blue liquid.",
-            "description_room": null,
-            "invisible": 0.0,
-            "skills": [
-                "regen_mag_armor_30"
-            ],
-            "use_perspectives": {
-                "use_case_name": "use_potion",
-                "you on you": "You splash the vile liquid on yourself",
-                "you on other": "You splash the vile liquid on #OTHER#",
-                "user on user": "#USER# drinks the vile liquid",
-                "user on you": "#USER# splashes the vile liquid on you",
-                "user on other": "#USER# splashes the vile liquid on #OTHER#",
-                "you on you fail": "You fumble and the vile liquid splashes onto the ground",
-                "you on other fail": "You fumble and the vile liquid splashes onto the ground",
-                "user on user fail": "#USER# fumbles and the vile liquid splashes onto the ground",
-                "user on you fail": "#USER# fumbles and the vile liquid splashes onto the ground",
-                "user on other fail": "#USER# fumbles and the vile liquid splashes onto the ground"
-            },
-            "item_type": "consumable",
-            "ambience": "The potion emits a soft glow",
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "drop_tags": [
-                "all"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 100,
-            "drop_chance_level": 1,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []
         },
         "translucent scroll": {
@@ -9076,86 +7943,6 @@
             "invisible": 0.0,
             "skills": [
                 "renew_hp_30"
-            ],
-            "use_perspectives": {
-                "use_case_name": "use_potion",
-                "you on you": "You splash the vile liquid on yourself",
-                "you on other": "You splash the vile liquid on #OTHER#",
-                "user on user": "#USER# drinks the vile liquid",
-                "user on you": "#USER# splashes the vile liquid on you",
-                "user on other": "#USER# splashes the vile liquid on #OTHER#",
-                "you on you fail": "You fumble and the vile liquid splashes onto the ground",
-                "you on other fail": "You fumble and the vile liquid splashes onto the ground",
-                "user on user fail": "#USER# fumbles and the vile liquid splashes onto the ground",
-                "user on you fail": "#USER# fumbles and the vile liquid splashes onto the ground",
-                "user on other fail": "#USER# fumbles and the vile liquid splashes onto the ground"
-            },
-            "item_type": "consumable",
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "drop_tags": [
-                "ant"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 100,
-            "drop_chance_level": 1,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "potion_renew_phy_armor_30": {
-            "premade_id": "potion_renew_phy_armor_30",
-            "name": "Red Pheromone",
-            "description": "Its a vial of bronze-blue... stuff",
-            "description_room": null,
-            "invisible": 0.0,
-            "skills": [
-                "renew_phy_armor_30"
-            ],
-            "use_perspectives": {
-                "use_case_name": "use_potion",
-                "you on you": "You splash the vile liquid on yourself",
-                "you on other": "You splash the vile liquid on #OTHER#",
-                "user on user": "#USER# drinks the vile liquid",
-                "user on you": "#USER# splashes the vile liquid on you",
-                "user on other": "#USER# splashes the vile liquid on #OTHER#",
-                "you on you fail": "You fumble and the vile liquid splashes onto the ground",
-                "you on other fail": "You fumble and the vile liquid splashes onto the ground",
-                "user on user fail": "#USER# fumbles and the vile liquid splashes onto the ground",
-                "user on you fail": "#USER# fumbles and the vile liquid splashes onto the ground",
-                "user on other fail": "#USER# fumbles and the vile liquid splashes onto the ground"
-            },
-            "item_type": "consumable",
-            "ambience": null,
-            "ambience_sfx": null,
-            "can_pick_up": true,
-            "drop_tags": [
-                "ant"
-            ],
-            "drop_from_random": 1,
-            "drop_chance_base": 100,
-            "drop_chance_level": 1,
-            "drop_chance_under_bonus": 0,
-            "drop_chance_over_bonus": 0,
-            "drop_chance_range_under": 0,
-            "drop_chance_range_over": 100,
-            "drop_chance_stat_filter": "none",
-            "crafting_recipe_ingredients": [],
-            "crafting_ingredient_for": []
-        },
-        "potion_renew_mag_armor_30": {
-            "premade_id": "potion_renew_mag_armor_30",
-            "name": "Blue Pheromone",
-            "description": "Its a vial of bronze-blue... stuff",
-            "description_room": null,
-            "invisible": 0.0,
-            "skills": [
-                "renew_mag_armor_30"
             ],
             "use_perspectives": {
                 "use_case_name": "use_potion",

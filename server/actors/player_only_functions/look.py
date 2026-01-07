@@ -540,7 +540,10 @@ def command_look(self, line, return_gmcp = False, is_glancing = False):
                 continue
             if len(icons) >= 3:
                 continue
-            icons.append(get_icon(i.npc_id).split('\n'))
+            icon = get_icon(i.npc_id)
+            if icon == '':
+                continue
+            icons.append(icon.split('\n'))
 
         max_height = 0
         for i in icons:

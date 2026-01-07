@@ -49,9 +49,9 @@ class ActorStatManager:
         match stat:
             case StatType.GRIT:
                 stat = StatType.GRIT
-                hp_bonus = 8
+                hp_bonus = 4
                 mp_bonus = 0
-                pa_bonus = 0
+                pa_bonus = 2
                 ma_bonus = 0
             case StatType.FLOW:
                 stat = StatType.FLOW
@@ -61,16 +61,16 @@ class ActorStatManager:
                 ma_bonus = 2
             case StatType.MIND:
                 stat = StatType.MIND
-                hp_bonus = 2
+                hp_bonus = 3
                 mp_bonus = 0
                 pa_bonus = 0
-                ma_bonus = 4
+                ma_bonus = 3
             case StatType.SOUL:
                 stat = StatType.SOUL
-                hp_bonus = 2
+                hp_bonus = 3
                 mp_bonus = 0
-                pa_bonus = 4
-                ma_bonus = 0
+                pa_bonus = 1
+                ma_bonus = 2
             case _:
                 hp_bonus = 0
                 mp_bonus = 0
