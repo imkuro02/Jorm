@@ -66,7 +66,7 @@ class Spawner:
 
             roll = 0
             if not self.room.is_player_present():
-                roll = 1 #random.randint(0,100)
+                roll = 0 #random.randint(0,100)
 
 
             if roll != 1 and (self.spawn_points[i] in self.room.actors.values() or self.spawn_points[i] in self.room.inventory_manager.items.values()):
@@ -101,8 +101,14 @@ class Spawner:
 
                 if _selected in ENEMIES:
                     #_selected = random.choice(_list)
+
+                    if self.room.is_player_present():
+                        if ENEMIES[_selected]['can_start_fights']:
+                            continue
+
                     npc = create_npc(self.room,_selected)
                     self.spawn_points[i] = npc
+                    npc.simple_broadcast('',f'{npc.name} has arrived')
                     '''
                     roll = random.randint(0,100)
                     if roll == 1:
@@ -121,7 +127,7 @@ class Spawner:
 
 
     def tick(self):
-        if self.room.world.factory.ticks_passed % (30*120) == 0:
+        if self.room.world.factory.ticks_passed % (30*5) == 0:
             self.respawn_all()
 
 class Exit:

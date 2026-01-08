@@ -19,10 +19,10 @@ def command_map(self, line, return_gmcp = False):
 
     class Art:
         # all
-        GROUND =                    f'{Color.MAP_ROOM} '
+        GROUND =                    f'{Color.MAP_ROOM}+'
         GROUND_UNEXPLORED =         f'{Color.MAP_ROOM}?'
-        NS =                        ' '#f'{Color.MAP_PATH}|'
-        EW =                        ' '#f'{Color.MAP_PATH}-'
+        NS =                        f'{Color.MAP_PATH}|'
+        EW =                        f'{Color.MAP_PATH}-'
         EMPTY =                     f' '
         EMPTYWALL = EMPTY#                f'{Color.MAP_WALL}   '
 
@@ -514,6 +514,8 @@ def command_look(self, line, return_gmcp = False, is_glancing = False):
             #else:
             #    see = see + f'@red{exit_name}@normal, '
 
+        see_exits = '\n'.join(sorted(see_exits.split('\n'))) + '\n'
+        see_exits = see_exits[1::]
         if exit_count == 0:
             see = see + 'You don\'t see any exits\n'
         else:
@@ -640,7 +642,7 @@ def command_look(self, line, return_gmcp = False, is_glancing = False):
         item = self.get_item(line, search_mode = 'room')
         if item == None:
             return
-        look_item(self, item)
+        look_item(self, item[0])
 
 
 def command_glance(self, line):

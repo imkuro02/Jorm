@@ -48,7 +48,8 @@ shortcuts_to_commands = {
     's':    'go south',
     'w':    'go west',
     'u':    'go up',
-    'd':    'go down'
+    'd':    'go down',
+    'r':    'go roam'
 }
 
 # one letter command mapper
