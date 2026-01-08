@@ -1,0 +1,17 @@
+quest_zone_1:
+  name: Kill The Stump
+  description: 
+    in_progress: |
+      The lumberjack from the stump field asked me to kill a large stump.
+      The large stump is on the top of the hill.
+      The hill is north of the lumberjack.
+    completed: |
+      I killed the stump, I should head back and tell them about it.
+    turned_in: |
+      I got a generous reward for my efforts.
+  objectives:
+    Kill the large stump:
+      type: kill_x
+      objective: wood_stump_large
+      completed_at: 1
+      

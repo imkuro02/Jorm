@@ -1,5 +1,5 @@
 {
-    "SHA-256": "7a371e4e024c87861a53d20285193449738bca63aa9b25573b4d278b6a182ad0",
+    "SHA-256": "f09b4c098e7da4b55218fa04d1e1c64d97af9caf21c106b428a59e97f2cd8e78",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3023,6 +3023,47 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "npc_zone_1": {
+            "npc_id": "npc_zone_1",
+            "ai": "Enemy",
+            "name": "Lumberjack",
+            "description": "They rest by a wooden stump, a rusty handaxe by their side.",
+            "stats": {
+                "grit": 1,
+                "hp": 15,
+                "mp": 0,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 1,
+                "mind": 1,
+                "soul": 1,
+                "exp": 0,
+                "lvl": 0
+            },
+            "include_in_daily_quests": false,
+            "skills": {},
+            "loot": {
+                "rock": 40,
+                "summoning_rock": 40,
+                "grit body 1": 60,
+                "grit head 1": 60,
+                "grit relic 1": 60,
+                "grit trinket 1": 60,
+                "grit weapon 1": 60,
+                "grit body 3": 100,
+                "grit head 3": 100,
+                "grit trinket 3": 100,
+                "grit weapon 3": 100,
+                "grit weapon alt 3": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [

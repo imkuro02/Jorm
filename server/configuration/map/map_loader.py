@@ -38,10 +38,10 @@ def load_map():
         if 'id' in json_data:
             new_id = json_data['id']
 
-            
-            if '!' == new_id[0]:
-                new_id = new_id.replace('!','')
-                skip_loading = True
+            if len(new_id) >= 1:
+                if '!' == new_id[0]:
+                    new_id = new_id.replace('!','')
+                    skip_loading = True
 
             new_id = data['from_file']+'/'+new_id
             room_id = new_id

@@ -35,6 +35,9 @@ town_gate_guard_out:
           say "Stump Field"
         goto: teleported
         check_not_in_party_or_is_party_leader: 1
+        quest_check:
+          - id: quest_zone_1
+            state: turned_in
         teleport_player: overworld/stump_field
 
       - line: |
@@ -83,3 +86,64 @@ town_gate_guard_out:
         - line: |
             say "Ok"
           goto: start
+
+
+npc_zone_1:
+  tree:
+      start:
+        dialog:
+        - line: |
+            <npc> says "Can you help me?"
+          quest_check:
+          - id: quest_zone_1
+            state: not_started
+
+        - line: |
+            <npc> says "Not done yet?"
+          quest_check:
+          - id: quest_zone_1
+            state: in_progress
+
+        - line: |
+            <npc> says "Is it done?"
+          quest_check:
+          - id: quest_zone_1
+            state: completed
+
+        - line: |
+            <npc> says "Thank you for the help"
+          quest_check:
+          - id: quest_zone_1
+            state: turned_in
+
+        options:
+          - line: |
+              say "What can I do for you?"
+            goto: start_quest
+            quest_check:
+              - id: quest_zone_1
+                state: not_started
+            quest_start:
+              id: quest_zone_1
+
+          - line: |
+              say "Yes"
+            goto: turn_in_quest
+            quest_turn_in:
+              id: quest_zone_1
+              reward_exp: 25
+
+      end:
+        dialog:
+        - line: |
+            <npc> says "Farewell"
+
+      start_quest:
+        dialog:
+        - line: |
+            <npc> says "This one stump has been causing me trouble.. its on the very top of the hill" and points north
+
+      turn_in_quest:
+        dialog:
+        - line: |
+            <npc> says "wow.. I see, thank you"

@@ -7,10 +7,11 @@
 [end]
 
 [id:shroom]
+
 @white@red ,@white-@red-@white,
 @white@red(@white-@red,_@white_@red)
 @white@yellow |@bwhite^^@yellow|
-@white @yellow ''
+@white @yellow '' 
 [end]
 
 [id:rat]
@@ -81,6 +82,7 @@ big_rat
 [end]
 
 [id:pig]
+
 @bpurple    _,-@yellow|\@bpurple-'-,@yellow7
 @bpurple ?_/   (@yellowx   x@bpurple)
 @bpurple   \@yelloww@bpurple/\@yelloww@bpurple_(@yellowoo@bpurple)

@@ -306,7 +306,7 @@ def create_daily_quest(quest_id, actor):
         'Daily bounty':{
             'type': OBJECTIVE_TYPES.KILL_X,
             'objective': enemy,
-            'completed_at': random.randint(20 + player_level, 20 + (player_level*3))
+            'completed_at': random.randint(1, 1 + (player_level))
             }
         }
 

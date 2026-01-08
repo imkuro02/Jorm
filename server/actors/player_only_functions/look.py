@@ -5,7 +5,7 @@ import random
 random = random.Random()
 
 def command_map(self, line, return_gmcp = False):
-    setting_render_walls = False
+    setting_render_walls = True
     if self.room == None:
         return
     room_id = self.room.id
@@ -109,7 +109,7 @@ def command_map(self, line, return_gmcp = False):
     for r in grid:
         _grid[r] = grid[r]
 
-    for r in range(0,VIEW_RANGE*1):
+    for r in range(0,VIEW_RANGE*2):
         for room_loc in _grid:
             #utils.debug_print(_grid[room_loc])
             if grid[room_loc] == 'PATH':
@@ -220,7 +220,7 @@ def command_map(self, line, return_gmcp = False):
                     walled = True
                     continue
                 '''
-                if not setting_render_walls:
+                if setting_render_walls:
                     if not walled:
                         #if d['n'] not in grid and d['w'] not in grid and d['e'] not in grid and d['s'] not in grid     and d['sw'] not in grid and d['se'] not in grid and d['nw'] not in grid and d['ne'] not in grid:
                         if all(
@@ -320,9 +320,9 @@ def command_map(self, line, return_gmcp = False):
             #utils.debug_print(room)
             # left
             cell = ''
-            if room.doorway:
-                cell += Art.DOOR_L
-            elif 'up' in [x.direction for x in room.exits if not x.secret]:
+            #if room.doorway:
+            #    cell += Art.DOOR_L
+            if 'up' in [x.direction for x in room.exits if not x.secret]:
                 cell += Art.STAIRS_UP
             else:
                 cell += Art.EMPTY
@@ -339,8 +339,8 @@ def command_map(self, line, return_gmcp = False):
                 cell += Art.PLAYER_HERE
             elif room.get_real_id() not in self.explored_rooms:
                 cell += Art.GROUND_UNEXPLORED
-            elif room.doorway:
-                cell += Art.DOOR_M
+            #elif room.doorway:
+            #    cell += Art.DOOR_M
             elif room.can_be_recall_site:
                 cell += Art.RECALL_SITE
             #elif len([ x for x in room.exits if x.direction not in offsets ]) != 0:
@@ -352,9 +352,9 @@ def command_map(self, line, return_gmcp = False):
 
 
             # right
-            if room.doorway:
-                cell += Art.DOOR_R
-            elif 'down' in [x.direction for x in room.exits if not x.secret]:
+            #if room.doorway:
+            #    cell += Art.DOOR_R
+            if 'down' in [x.direction for x in room.exits if not x.secret]:
                 cell += Art.STAIRS_DOWN
             else:
                 cell += Art.EMPTY
