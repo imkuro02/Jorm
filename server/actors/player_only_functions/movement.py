@@ -92,7 +92,7 @@ def command_go(self, line = '', room_id = None):
         for actor in self.room.actors.values():
             if type(actor).__name__ in 'Npc Enemy'.split():
                 yes_npcs = True
-                if actor.can_start_fights:
+                if actor.can_start_fights and actor.status == ActorStatusType.NORMAL:
                     yes_any_can_start_fights = True
                     if highest_can_start_fights_level < actor.stat_manager.stats[StatType.LVL]:
                         highest_can_start_fights_level = actor.stat_manager.stats[StatType.LVL]
@@ -118,7 +118,7 @@ def command_go(self, line = '', room_id = None):
                     self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
                     return
 
-        if direction.blocked and self.room.is_enemy_present():
+        if direction.blocked and self.room.is_enemy_present() and self.room.combat == None:
             self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path', sound=Audio.ERROR)
             return
 

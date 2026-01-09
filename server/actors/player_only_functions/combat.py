@@ -32,6 +32,10 @@ def command_target(self, line):
 @check_your_turn
 @check_alive
 def command_fight(self, line):
+    if self.room.combat != None:
+        self.sendLine('There is already a fight here!')
+        return
+        
     if self.status == ActorStatusType.FIGHTING:
         self.sendLine('You are already fighting! you can "flee" or "pass" or "use <skill>"')
         #if self.ai.predict_use_best_skill(offensive_only = True, for_prediction = False) == False:
