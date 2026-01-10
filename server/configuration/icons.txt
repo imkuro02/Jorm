@@ -538,5 +538,5 @@ the_well_below_trap
 @cyan    /@bblueo@cyan  |
 @yellow   _@cyan|___|@bblueo
 @yellow  |@white   @bblueu@yellow|@bblueu@white|
-@yellow |/ |/ \|@white@white|)
+@yellow |/ |/ \|@white@white|<)
 [end]
