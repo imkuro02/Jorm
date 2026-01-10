@@ -11,7 +11,7 @@
 @white@red ,@white-@red-@white,
 @white@red(@white-@red,_@white_@red)
 @white@yellow |@bwhite^^@yellow|
-@white @yellow '' 
+@white @yellow ''
 [end]
 
 [id:rat]
@@ -529,4 +529,14 @@ the_well_below_trap
 @bwhite _    @white\ |
 @bwhite(+)@white'-'|@yellow )@white
 @bwhite "@white  : | |
+[end]
+
+
+[id:npc_zone_1]
+      @bred,--"
+     @cyan_@bred|@bcyan- -
+@cyan    /@bblueo@cyan  |
+@yellow   _@cyan|___|@bblueo
+@yellow  |@white   @bblueu@yellow|@bblueu@white|
+@yellow |/ |/ \|@white@white|)
 [end]
