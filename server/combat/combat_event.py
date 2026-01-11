@@ -52,8 +52,8 @@ class CombatEvent:
                 if pop.damage_to_stat != StatType.HP:
                     action_text = f'{color}{damage_txt}@normal {color}{DamageType.name[pop.damage_type]}@normal to {color}{StatType.name[pop.damage_to_stat]}@normal from {pop.damage_source_action.name}'
                 if pop.damage_type == DamageType.CANCELLED:
-                    output_self =  f'You cancel {action_text}. '
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} cancels {action_text}'
+                    output_self =  f'You cancel {pop.damage_source_action.name}. '
+                    output_other = f'{pop.damage_taker_actor.pretty_name()} cancels {pop.damage_source_action.name}'
                     sound = Audio.ERROR
                 elif pop.damage_type == DamageType.HEALING:
                     output_self = f'You receive {action_text}.'

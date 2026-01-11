@@ -498,7 +498,25 @@ class Player(Actor):
     def queue_handle(self, line):
         self.queued_lines.append(line)
 
+    def try_to_use(self,line):
+        from skills.manager import get_skills
+        
+        all_words = line.split(' ')
+        print('all words:', all_words)
+
+        id_to_name, name_to_id = get_skills()
+        list_of_skill_names = [skill for skill in name_to_id.keys()]
+
+        for i in range(0,len(all_words)):
+            best_match, best_score = utils.match_word(
+                ' '.join(all_words[i::]), name_to_id.keys(), get_score=True
+            )
+
+            print('matching:', all_words, 'found:', best_match, 'score:', best_score)
+
+
     def handle(self, line):
+        
         # utils.debug_print(line)
         for trans in translations:
             if line.startswith(trans):
@@ -564,8 +582,12 @@ class Player(Actor):
 
                 return
 
+        
+        
+        
         full_line = line
         line = " ".join(line.split()[1::]).strip()
+        
 
         if full_line in shortcuts_to_commands:
             self.handle(shortcuts_to_commands[command])
@@ -580,10 +602,20 @@ class Player(Actor):
             script(line)
             return
 
-        best_match, best_score = utils.match_word(
-            command, commands.keys(), get_score=True
+        sorted_dict = dict(sorted(commands.items(), key=lambda item: len(item[0])))
+        sorted_dict = dict(
+            sorted(commands.items(), key=lambda item: (item[0].startswith('_'), len(item[0])))
         )
-        if best_score < 75:
+
+        best_match, best_score = utils.match_word(
+            command, sorted_dict.keys(), get_score=True
+        )
+
+        
+        if best_score < 90 or command[0]!=best_match[0]:
+            if self.command_use(full_line, silent = True):
+                return
+            
             self.sendLine(
                 f'You wrote "{command}" did you mean "{best_match}"?\nUse "help {best_match}" to learn more about this command.'
             )

@@ -9,6 +9,8 @@ versions:
     - Rest now / quick rest removed
     - Instead of resting, you heal from passing a turn / walking around
     - You can now promote others to become party leader with party promote
+    - You no longer NEED to specify "use" when using skills
+    - You no longer need to seperate skills and targets with "on" or "at"
     #- Party leadership transfers dungeon room ownership aswell
   '211225':
     id: '211225'

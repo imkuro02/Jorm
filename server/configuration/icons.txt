@@ -532,11 +532,35 @@ the_well_below_trap
 [end]
 
 
-[id:npc_zone_1]
+[id:npc_zone_1_]
       @bred,--"
      @cyan_@bred|@bcyan- -
 @cyan    /@bblueo@cyan  |
 @yellow   _@cyan|___|@bblueo
 @yellow  |@white   @bblueu@yellow|@bblueu@white|
 @yellow |/ |/ \|@white@white|<)
+[end]
+
+[id:npc_zone_1_]
+      @bred,--"
+     @cyan_@bred|@bcyan- -
+@cyan    /@bblueo@cyan  |@bblueo
+@yellow   _@cyan|___|@white|
+@yellow  |@white   @bblueu@yellow|@bblueu@white|<)	 
+[end]
+
+[id:npc_zone_1_]
+      @bred,--"
+     @cyan_@bred|@bcyan- -
+@cyan    /@bblueo@cyan  |@bblueo
+@yellow    @cyan|___|@white|
+@bblue     u u @white|<)	 
+[end]
+
+[id:npc_zone_1]
+      @bred,--"
+     @cyan_@bred|@bcyan- -
+@yellow _,@bblueo@cyan/   |@bblueo
+@yellow,' ;@cyan|___|@white|
+@yellow|/\ \@bblueu u @white|<)	 
 [end]

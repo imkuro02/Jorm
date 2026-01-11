@@ -1,5 +1,5 @@
 from actors.player_only_functions.checks import check_no_unfriendlies_present_in_room, check_not_in_party_or_is_party_leader, check_alive, check_no_empty_line, check_no_empty_line, check_your_turn, check_not_in_combat
-from configuration.config import DamageType, ItemType, ActorStatusType, StatType, Audio
+from configuration.config import DamageType, ItemType, ActorStatusType, StatType, Audio, SKILLS
 import utils
 from skills.manager import get_skills, use_skill
 from affects import affects
@@ -81,7 +81,106 @@ def command_use_try(self, line):
     self.command_use(line, is_trying=True)
 
 
+def command_use(self, line, silent = False):
+    _line = line
+    id_to_name, name_to_id = get_skills()
 
+    action = None
+    target = None
+
+    dict_of_actors = {}
+    for i in self.room.actors:
+        dict_of_actors[self.room.actors[i].name] = i
+
+    _action = None
+    _target = None
+
+    line = line.split(' ')
+
+    action_name = None
+
+    for i in range(0,len(line)):
+        best_match, best_score = utils.match_word(
+            ' '.join(line[0:i+1]), name_to_id.keys(), get_score=True
+        )
+
+        #print('skill:', line[0:i+1], 'found:', best_match, 'score:', best_score)
+        if best_score >=89:
+            _action = name_to_id[best_match]
+            action_name = best_match
+            break
+
+    if action_name == None:
+        return False
+    if line[0][0].lower() != action_name[0].lower():
+        return False
+    
+    for i in range(0,len(line)):
+        #' '.join(line[len(line)-i:len(line)]), dict_of_actors, get_score=True
+        if ' '.join(line[len(line)-i:len(line)]).strip() == '':
+            continue
+
+        
+        best_match, best_score = utils.match_word(
+            ' '.join(line[len(line)-i:len(line)]), dict_of_actors.keys(), get_score=True
+        )
+
+        #print('target:', ' '.join(line[len(line)-i:len(line)]), 'found:', best_match, 'score:', best_score)
+        if best_score >=89:
+            _target = utils.get_match(best_match, self.room.actors)
+            break
+
+    if _action == None:
+        if silent: 
+            return False
+        self.sendLine(f'Use what?   - "{line}"')
+        return False
+
+    if _target == None:
+        #if silent: 
+        #    return False
+        
+        if bool(SKILLS[_action]['is_offensive']):
+            for i in self.room.actors.values():
+                if i.party_manager.get_party_id() != self.party_manager.get_party_id():
+                    _target = i
+        else:
+            if bool(SKILLS[_action]['target_self_is_valid']):
+                _target = self
+
+        
+    if _target == None:
+        if silent:
+            return False
+        self.sendLine(f'Use {action_name} on who?')
+        return False
+
+
+    self.ai.prediction_skill = _action
+    self.ai.prediction_target = _target
+
+
+    #utils.debug_print([i for i in self.queued_lines if not i.strip().startswith('try')])
+    if self.room.combat == None:
+        if self.ai.use_prediction():
+            # clear all try commands
+            self.queued_lines = [i for i in self.queued_lines if not i.strip().startswith('try')]
+
+        self.ai.clear_prediction()
+        return True
+
+    if self.room.combat.current_actor == self:
+        if self.ai.use_prediction():
+            # clear all try commands
+            self.queued_lines = [i for i in self.queued_lines if not i.strip().startswith('try')]
+
+        self.ai.clear_prediction()
+        return True
+
+    self.ai.clear_prediction()
+    return True
+
+'''
 def command_use(self, line, is_trying = False):
     _line = line
     is_trying = True
@@ -183,6 +282,7 @@ def command_use(self, line, is_trying = False):
 
     self.ai.clear_prediction()
     return True
+'''
 
 def rest_set(self, line):
     if not self.room.can_be_recall_site:

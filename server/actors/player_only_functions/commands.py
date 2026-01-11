@@ -56,6 +56,7 @@ shortcuts_to_commands = {
 # this sets priority for commands with same starting letter
 one_letter_commands = {
     'i':    'inventory',
+    'in':    'inventory',
     'l':    'look',
     #'w':    'wear',
     #'r':    'remove',
@@ -65,7 +66,7 @@ one_letter_commands = {
     'f':    'fight',
     'p':    'prompt',
     'u':    'use',
-    't':    'trade',
+    't':    'talk'
 }
 
 # command mapper
