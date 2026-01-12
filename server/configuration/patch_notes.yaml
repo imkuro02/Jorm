@@ -14,6 +14,7 @@ versions:
     - Offensive skills with no target argument will target first hostile available
     - Supportive skills with no target argument will target yourself (if possible)
     - Supportive skills that cannot target yourself without a target argument will fail (not spending turn)
+    - Damage text supports multiple damage types in one line now.
     #- Client password censoring and up arrow for history (not done)
     #- Client shows what you sent when you hit enter (not done)
   '010126':
