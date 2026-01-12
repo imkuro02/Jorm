@@ -55,10 +55,10 @@ class ActorStatManager:
                 ma_bonus = 0
             case StatType.FLOW:
                 stat = StatType.FLOW
-                hp_bonus = 2
+                hp_bonus = 3
                 mp_bonus = 0
                 pa_bonus = 2
-                ma_bonus = 2
+                ma_bonus = 1
             case StatType.MIND:
                 stat = StatType.MIND
                 hp_bonus = 3

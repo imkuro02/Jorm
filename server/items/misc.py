@@ -17,6 +17,7 @@ class Item:
         self.inventory_manager = None # the inventory manager of this item
         self.new = True # show if item is newly added to inv
         self.time_on_ground = 0
+        self.ambience = None
         self.ticks_until_ambience = 100
 
         # scenery stuff

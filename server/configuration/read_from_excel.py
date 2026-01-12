@@ -280,8 +280,8 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     'grit':     int(x['grit'][index]),
                     'hp_max':   int(x['hp_max'][index]),
                     #'mp_max':   int(x['mp_max'][index]),
-                    'phy_armor_max':    int(x['phy_armor'][index]),
-                    'mag_armor_max':   int(x['mag_armor'][index]),
+                    'phy_armor_max':    int(x['phy_armor'][index]/10),
+                    'mag_armor_max':    int(x['mag_armor'][index]/10),
                     'flow':     int(x['flow'][index]),
                     'mind':     int(x['mind'][index]),
                     'soul':     int(x['soul'][index]),
@@ -291,8 +291,8 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                     'lvl':      int(x['lvl'][index]),
                     'hp_max':   int(x['rhp_max'][index]),
                     #'mp_max':   int(x['rmp_max'][index]),
-                    'phy_armor_max':    int(x['rphy_armor'][index]),
-                    'mag_armor_max':   int(x['rmag_armor'][index]),
+                    'phy_armor_max':    int(x['rphy_armor'][index]/10),
+                    'mag_armor_max':    int(x['rmag_armor'][index]/10),
                     'grit':     int(x['rgrit'][index]),
                     'flow':     int(x['rflow'][index]),
                     'mind':     int(x['rmind'][index]),
@@ -503,7 +503,7 @@ def configure_ENEMIES(SHEET, ITEMS):
 
             if x['npc_id'][index] not in ENEMIES:
                 continue 
-                
+
             if x['npc_id'][index] in ENEMY_SKILLS:
                 # concate the previous dict with new a new value
                 ENEMY_SKILLS[x['npc_id'][index]] = ENEMY_SKILLS[x['npc_id'][index]] | d_vals

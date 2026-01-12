@@ -79,6 +79,6 @@ def get_item(self, line, search_mode = 'self', inventory = None):
             if 'slot '+line in 'slot '+slot:
                 if self.slots_manager.slots[slot] == None:
                     continue
-                return self.inventory_manager.items[self.slots_manager.slots[slot]]
+                return [self.inventory_manager.items[self.slots_manager.slots[slot]]]
 
     return utils.get_matches(line, inventory)

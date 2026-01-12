@@ -34,6 +34,8 @@ class CombatEvent:
                     color = Color.DAMAGE_MAG
                 case DamageType.PURE:
                     color = Color.DAMAGE_PURE
+
+            '''
             if not pop.silent:
                 #utils.debug_print(pop)
                 if pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'] == 0:
@@ -73,8 +75,89 @@ class CombatEvent:
                     #    sound = Audio.HURT
                 
                 pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
+            '''
+
+            if not pop.silent and pop.damage_type != DamageType.CANCELLED:
+                damage_snapshot2 = {
+                    StatType.HP: pop.damage_taker_actor.stat_manager.stats[StatType.HP],
+                    StatType.PHYARMOR: pop.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR],
+                    StatType.MAGARMOR: pop.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
+                }
+
+                
+                '''
+                summary = {
+                    StatType.HP: pop.damage_snapshot[StatType.HP] - damage_snapshot2[StatType.HP],
+                    StatType.PHYARMOR: pop.damage_snapshot[StatType.PHYARMOR] - damage_snapshot2[StatType.PHYARMOR],
+                    StatType.MAGARMOR: pop.damage_snapshot[StatType.MAGARMOR]- damage_snapshot2[StatType.MAGARMOR]
+                }'''
+
+                summary = {
+                    StatType.HP: damage_snapshot2[StatType.HP] - pop.damage_snapshot[StatType.HP] ,
+                    StatType.PHYARMOR: damage_snapshot2[StatType.PHYARMOR] - pop.damage_snapshot[StatType.PHYARMOR] ,
+                    StatType.MAGARMOR: damage_snapshot2[StatType.MAGARMOR] - pop.damage_snapshot[StatType.MAGARMOR]
+                }
+
+                if summary == pop.damage_snapshot:
+                    return
+
+                def lose_or_gain(val):
+                    if val <= -1:
+                        return Color.BAD+'#L# '
+                    elif val >= 1:
+                        return Color.GOOD+'#G# '
+                    else:
+                        return None
+
+                #output_self = str(summary)
+                output = f'#A# '
+
+                for i in summary:
+                    _hp = lose_or_gain(summary[i])
+                    if _hp != None:
+                        output += f'{_hp}{abs(summary[i])}{Color.BACK} {StatType.name[i]},'
+
+                if '#L#' not in output and '#G#' not in output:
+                    return
+
+                output = f'{output}{Color.NORMAL}'
+                output = f" from {color}{pop.damage_source_action.name}".join(output.rsplit(",", 1))
+                output = " and ".join(output.rsplit(",", 1))
+
+                
+                output_self = output
+                output_other = output
+                
+                output_self = output_self.replace('#A#','You have')
+                output_self = output_self.replace('#G#','healed')
+                output_self = output_self.replace('#L#','lost')
+
+                
+                output_other = output_other.replace('#A#',f'{pop.damage_taker_actor.pretty_name()} has')
+                output_other = output_other.replace('#G#','healed')
+                output_other = output_other.replace('#L#','lost')
 
 
+
+                '''
+                _hp = lose_or_gain(summary[StatType.HP])
+                if _hp != None:
+                    output += f'{_hp}{summary[StatType.HP]}{Color.BACK} {StatType.name[StatType.HP]},'
+
+                _pa = lose_or_gain(summary[StatType.PHYARMOR])
+                if _pa != None:
+                    output += f'{_pa}{summary[StatType.PHYARMOR]}{Color.BACK}PA '
+
+                _ma = lose_or_gain(summary[StatType.MAGARMOR])
+                if _ma != None:
+                    output += f'{_ma}{summary[StatType.MAGARMOR]}{Color.BACK}{Color.MAGARM}MA '
+                '''
+
+
+
+
+                #output = f'{pop.damage_taker_actor.name}  {pop.damage_hp}hp  {pop.damage_pa}pa {pop.damage_ma}ma'
+                pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
         
 
         

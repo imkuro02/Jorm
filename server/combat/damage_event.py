@@ -35,6 +35,12 @@ class Damage:
         else:
             self.combat_event.add_to_queue(self)
 
+        self.damage_snapshot = {
+            StatType.HP: self.damage_taker_actor.stat_manager.stats[StatType.HP],
+            StatType.PHYARMOR: self.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR],
+            StatType.MAGARMOR: self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
+        }
+
     def run(self):
         self.combat_event.run()
         return self
@@ -74,8 +80,10 @@ class Damage:
                 if self.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR] < 0:
                     self.damage_value = -1*self.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
                     self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] -= self.damage_value
+                    self.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR] = 0
                 else:
                     self.damage_value = -1*self.damage_value
+                    #self.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR] = 0
 
 
             case DamageType.MAGICAL:
@@ -83,8 +91,10 @@ class Damage:
                 if self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR] < 0:
                     self.damage_value = -1*self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
                     self.damage_taker_actor.stat_manager.stats[self.damage_to_stat] -= self.damage_value
+                    self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR] = 0
                 else:
                     self.damage_value = -1*self.damage_value
+                    #self.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR] = 0
 
 
             case DamageType.PURE:
