@@ -1,4 +1,21 @@
 versions:
+  '090126':
+    id: '090126'
+    title: New world
+    unixtime: 1761899677
+    features:
+    - Map has been changed, areas are more linear, and use the cyclic dungeon approach
+    - New quest design approach
+    - Combat hotjoining has been disabled
+    - Players can now pass thru blocked exits if the enemies in the room are fighting (distracted)
+    - You can now promote others to become party leader with party promote
+    - You no longer need to specify "use" when using skills
+    - You no longer need to seperate skills and targets with "on" or "at"
+    - Offensive skills with no target argument will target first hostile available
+    - Supportive skills with no target argument will target yourself (if possible)
+    - Supportive skills that cannot target yourself without a target argument will fail (not spending turn)
+    #- Client password censoring and up arrow for history (not done)
+    #- Client shows what you sent when you hit enter (not done)
   '010126':
     id: '010126'
     title: Resting and Inventory and Party
@@ -8,9 +25,6 @@ versions:
     - the "all." indexing can now filter item names like so "get all.iron"
     - Rest now / quick rest removed
     - Instead of resting, you heal from passing a turn / walking around
-    - You can now promote others to become party leader with party promote
-    - You no longer NEED to specify "use" when using skills
-    - You no longer need to seperate skills and targets with "on" or "at"
     #- Party leadership transfers dungeon room ownership aswell
   '211225':
     id: '211225'
