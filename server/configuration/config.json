@@ -1,5 +1,5 @@
 {
-    "SHA-256": "f09b4c098e7da4b55218fa04d1e1c64d97af9caf21c106b428a59e97f2cd8e78",
+    "SHA-256": "5a7bda3822e676e663e1f349cf27923d53f0a7a4f09467dc436c82f1b1a9b4f2",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -345,7 +345,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "swing": 1
+                "swing": 1,
+                "bash": 1
             },
             "loot": {
                 "simple_bark": 5,
@@ -445,6 +446,7 @@
                 "summoning_rock": 39,
                 "tattered_cloth": 39,
                 "simple_cloth": 39,
+                "zone_1_key": 39,
                 "potion_hp_30": 100,
                 "flow body 1": 40,
                 "flow head 1": 40,
@@ -493,6 +495,7 @@
                 "summoning_rock": 39,
                 "tattered_cloth": 39,
                 "simple_cloth": 39,
+                "zone_1_key": 39,
                 "potion_hp_30": 100,
                 "flow body 1": 40,
                 "flow head 1": 40,
@@ -1077,6 +1080,7 @@
                 "summoning_rock": 37,
                 "tattered_cloth": 37,
                 "simple_cloth": 37,
+                "zone_1_key": 37,
                 "potion_hp_30": 100,
                 "flow body 1": 50,
                 "flow head 1": 50,
@@ -1343,7 +1347,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "smite": 1
+                "smite": 1,
+                "cure_light_wounds": 1
             },
             "loot": {
                 "tentacle": 10,
@@ -7678,6 +7683,31 @@
             "stack_max_amount": 9,
             "drop_tags": [
                 "ant"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "zone_1_key": {
+            "premade_id": "zone_1_key",
+            "name": "Weird Key",
+            "description": "A stickey slightly rusted key, it smells like ale.",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "stack_max_amount": 9,
+            "drop_tags": [
+                "tavern"
             ],
             "drop_from_random": 1,
             "drop_chance_base": 40,
