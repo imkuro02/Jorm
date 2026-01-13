@@ -563,7 +563,7 @@ def command_look(self, line, return_gmcp = False, is_glancing = False):
                         t.add_data(icons[column][row])
 
                     except Exception as e:
-                        pass
+                        t.add_data(' ')
 
 
 

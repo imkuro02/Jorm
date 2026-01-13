@@ -141,7 +141,7 @@ npc_zone_1:
       start_quest:
         dialog:
         - line: |
-            <npc> says "This one stump has been causing me trouble.. its on the very top of the hill" and points north
+            <npc> says "This one stump has been causing me trouble.. The large stump is in the most northern part of the stump field." they point down, towards the field south.
 
       turn_in_quest:
         dialog:

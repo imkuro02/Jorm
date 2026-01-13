@@ -3,7 +3,7 @@ quest_zone_1:
   description: 
     in_progress: |
       The lumberjack from the stump field asked me to kill a large stump.
-      The large stump is on the top of the hill.
+      The large stump is in the most northern part of the stump field.
       The hill is north of the lumberjack.
     completed: |
       I killed the stump, I should head back and tell them about it.
