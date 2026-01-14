@@ -39,6 +39,14 @@ town_gate_guard_out:
           - id: quest_zone_1
             state: turned_in
         teleport_player: overworld/stump_field
+      - line: |
+          say "Purple Forest"
+        goto: teleported
+        check_not_in_party_or_is_party_leader: 1
+        quest_check:
+          - id: quest_zone_2
+            state: turned_in
+        teleport_player: overworld/zone_2
 
       - line: |
           say "Old world" (this area is from before debloat update)
@@ -147,3 +155,66 @@ npc_zone_1:
         dialog:
         - line: |
             <npc> says "wow.. I see, thank you"
+
+
+
+
+npc_zone_2:
+  tree:
+      start:
+        dialog:
+        - line: |
+            <npc> says "Can you help me?"
+          quest_check:
+          - id: quest_zone_2
+            state: not_started
+
+        - line: |
+            <npc> says "Not done yet?"
+          quest_check:
+          - id: quest_zone_2
+            state: in_progress
+
+        - line: |
+            <npc> says "Is it done?"
+          quest_check:
+          - id: quest_zone_2
+            state: completed
+
+        - line: |
+            <npc> says "Thank you for the help"
+          quest_check:
+          - id: quest_zone_2
+            state: turned_in
+
+        options:
+          - line: |
+              say "What can I do for you?"
+            goto: start_quest
+            quest_check:
+              - id: quest_zone_2
+                state: not_started
+            quest_start:
+              id: quest_zone_2
+
+          - line: |
+              say "Yes"
+            goto: turn_in_quest
+            quest_turn_in:
+              id: quest_zone_2
+              reward_exp: 200
+
+      end:
+        dialog:
+        - line: |
+            <npc> says "Farewell"
+
+      start_quest:
+        dialog:
+        - line: |
+            <npc> says "Im a scientist, and I need samples, get me some slime cores."
+
+      turn_in_quest:
+        dialog:
+        - line: |
+            <npc> says "Yes, this is what I needed" they pocket the cores "Lets meet again sometime"

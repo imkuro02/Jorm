@@ -1,0 +1,21 @@
+quest_zone_2:
+  name: Slime Samples
+  description: 
+    in_progress: |
+      The lumberjack from the stump field asked me to kill a large stump.
+      The large stump is in the most northern part of the stump field.
+      The hill is north of the lumberjack.
+    completed: |
+      I killed the stump, I should head back and tell them about it.
+    turned_in: |
+      I got a generous reward for my efforts.
+  objectives:
+    Red Samples:
+      type: collect_x
+      objective: red_slime_core
+      completed_at: 1
+    Blue Samples:
+      type: collect_x
+      objective: blue_slime_core
+      completed_at: 1
+      
