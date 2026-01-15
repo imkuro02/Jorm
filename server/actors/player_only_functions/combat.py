@@ -73,6 +73,7 @@ def command_pass_turn(self, line):
     )
     self.finish_turn()
 
+'''
 @check_no_empty_line
 #@check_your_turn
 @check_alive
@@ -81,7 +82,11 @@ def command_use_try(self, line):
     self.command_use(line, is_trying=True)
 
 
-def command_use(self, line, silent = False):
+
+def command_use_item(self, line, silent = False):
+    pass
+
+def command_use_skill(self, line, silent = False):
     _line = line
     id_to_name, name_to_id = get_skills()
 
@@ -179,6 +184,274 @@ def command_use(self, line, silent = False):
 
     self.ai.clear_prediction()
     return True
+    
+
+def use2(self, line, silent = False):
+    line = line.lower()
+    dict_of_actors = {}
+    skill_id_to_name, skill_name_to_id = get_skills()
+
+    item_name_to_id = {}
+    item_id_to_name = {}
+    for item in self.inventory_manager.items.keys():
+        item_name_to_id[self.inventory_manager.items[item].name] = item
+    for item in self.inventory_manager.items.keys():
+        item_id_to_name[item] = self.inventory_manager.items[item].name
+
+    for i in self.room.actors:
+        dict_of_actors[self.room.actors[i].name] = i
+
+    _action = None
+    _target = None
+
+    line = line.split(' ')
+
+    action_name = None
+
+    most_likely_action = ''
+    most_likely_action_score = 0
+
+    for i in range(0,len(line)):
+        # get action as item
+        best_match, best_score = utils.match_word(
+            ' '.join(line[0:i+1]), item_name_to_id.keys(), get_score=True
+        )
+        
+        if best_score >=80:
+            _action = self.inventory_manager.items[item_name_to_id[best_match]]
+            action_name = best_match
+            break
+
+        if most_likely_action_score <= best_score:
+            most_likely_action = best_match
+            most_likely_action_score = best_score
+
+        #get action as skill
+        best_match, best_score = utils.match_word(
+            ' '.join(line[0:i+1]), skill_name_to_id.keys(), get_score=True
+        )
+
+        if best_score >=80:
+            _action = skill_name_to_id[best_match]
+            action_name = best_match
+            break
+
+        if most_likely_action_score <= best_score:
+            most_likely_action = best_match
+            most_likely_action_score = best_score
+
+
+    if action_name == None:
+        if not silent:
+            self.sendLine(f'Couldnt find skill or item to use, did you mean to use "{most_likely_action}"? ({most_likely_action_score}% sure)')
+        return False
+    if line[0][0].lower() != action_name[0].lower():
+        if not silent:
+            self.sendLine(f'Couldnt find skill or item to use, did you mean to use "{most_likely_action}"? ({most_likely_action_score}% sure)')
+        return False
+
+    line = ' '.join(line).replace(best_match.lower(), '', 1).strip().split(' ')
+    line.insert(0,'IDK_AND_IDC!!')
+
+    for i in range(0,len(line)):
+        if ' '.join(line[len(line)-i:len(line)]).strip() == '':
+            continue
+
+        # get target as item
+        best_match, best_score = utils.match_word(
+            ' '.join(line[0:i+1]), item_name_to_id.keys(), get_score=True
+        )
+        
+        if best_score >= 80:
+            _target = self.inventory_manager.items[item_name_to_id[best_match]]
+            break
+
+        # get target as actor
+        best_match, best_score = utils.match_word(
+            ' '.join(line[len(line)-i:len(line)]), dict_of_actors.keys(), get_score=True
+        )
+
+        if best_score >=80:
+            _target = utils.get_match(best_match, self.room.actors)
+            break
+
+    if len(line) <= 2:
+        if _action == None:
+            if silent: 
+                return False
+            self.sendLine(f'Use what?   - "{line}"')
+            return False
+
+        if _target == None:
+            if _action in skill_id_to_name:
+                if bool(SKILLS[_action]['is_offensive']):
+                    for i in self.room.actors.values():
+                        if i.party_manager.get_party_id() != self.party_manager.get_party_id():
+                            _target = i
+                else:
+                    if bool(SKILLS[_action]['target_self_is_valid']):
+                        _target = self
+            else:
+                _target = self
+
+        
+    if _target == None:
+        if silent:
+            return False
+        self.sendLine(f'Use {action_name} on?')
+        return False
+
+
+
+    self.ai.clear_prediction()
+
+    if _action in self.skill_manager.skills:
+        self.ai.prediction_skill = _action
+    else:
+        self.ai.prediction_item = _action
+    
+    self.ai.prediction_target = _target
+
+
+    #utils.debug_print([i for i in self.queued_lines if not i.strip().startswith('try')])
+    if self.room.combat == None:
+        self.ai.use_prediction()
+        self.ai.clear_prediction()
+        return True
+
+    if self.room.combat.current_actor == self:
+        self.ai.use_prediction()
+        self.ai.clear_prediction()
+        return True
+
+    self.ai.clear_prediction()
+    return True
+'''
+
+def use(self, line, silent = False):
+    line = line.lower()
+    dict_of_actors = {}
+    skill_id_to_name, skill_name_to_id = get_skills()
+
+    item_name_to_id = {}
+    item_id_to_name = {}
+    for item in self.inventory_manager.items.keys():
+        item_name_to_id[self.inventory_manager.items[item].name] = item
+    for item in self.inventory_manager.items.keys():
+        item_id_to_name[item] = self.inventory_manager.items[item].name
+
+    for i in self.room.actors:
+        dict_of_actors[self.room.actors[i].name] = i
+
+    _action = None
+    _target = None
+
+    line = line.split(' ')
+
+    action_name = None
+
+    most_likely_action = ''
+    most_likely_action_score = 0
+
+    list_of_skill_names = [skill for skill in skill_name_to_id.keys()]
+    skills_dict = {}
+
+    class FakeSkill:
+        def __init__(self, name):
+            self.name = name
+
+        def pretty_name(self):
+            return self.name
+
+    for skill in list_of_skill_names:
+        skills_dict[skill] = FakeSkill(skill)
+
+
+
+    found_action_with = ''
+    for i in range(0,len(line)):
+        best_match = utils.get_match(' '.join(line[0:i+1]), {**skills_dict, **self.inventory_manager.items})
+        if best_match == None:
+            continue
+        action_name = best_match.name
+        found_action_with = ' '.join(line[0:i+1])
+        _action = best_match
+
+    if action_name == None:
+        if not silent: self.sendLine('Could not find item or skill to use')
+        return False
+    #if line[0][0].lower() != action_name[0].lower():
+    #    if not silent: self.sendLine('Could not find item or skill to use')
+    #    return False
+
+    line = ' '.join(line).replace(found_action_with, '', 1).strip().split(' ')
+    line.insert(0,'IDK_AND_IDC!!')
+
+    for i in range(0,len(line)):
+        if ' '.join(line[len(line)-i:len(line)]).strip() == '':
+            continue
+
+        _l_bozo = line[-i:] # ' '.join(line[len(line)-i:len(line)])
+        best_match = utils.get_match(' '.join(_l_bozo), {**self.room.actors, **self.inventory_manager.items})
+        if best_match == None:
+            continue
+       # action_name = best_match.name
+        _target = best_match
+
+    if len(line) <= 1:
+        if _action == None:
+            if silent: 
+                return False
+            self.sendLine(f'Use what?   - "{line}"')
+            return False
+
+    if _target == None:
+        if _action.name in skill_name_to_id:
+            if bool(SKILLS[skill_name_to_id[_action.name]]['is_offensive']):
+                for i in self.room.actors.values():
+                    if i.party_manager.get_party_id() != self.party_manager.get_party_id():
+                        _target = i
+            else:
+                if bool(SKILLS[_action]['target_self_is_valid']):
+                    _target = self
+        else:
+            _target = self
+
+        
+    if _target == None:
+        if silent:
+            return False
+        self.sendLine(f'Use {action_name} on?')
+        return False
+
+
+
+    self.ai.clear_prediction()
+
+    if _action.name in skill_name_to_id:
+        self.ai.prediction_skill = skill_name_to_id[_action.name]
+    else:
+        self.ai.prediction_item = _action
+    
+    self.ai.prediction_target = _target
+
+
+    #utils.debug_print([i for i in self.queued_lines if not i.strip().startswith('try')])
+    if self.room.combat == None:
+        self.ai.use_prediction()
+        self.ai.clear_prediction()
+        return True
+
+    if self.room.combat.current_actor == self:
+        self.ai.use_prediction()
+        self.ai.clear_prediction()
+        return True
+
+    self.ai.clear_prediction()
+    return True
+
+def command_use(self, line, silent = False):
+    return use(self, line, silent = False)
 
 '''
 def command_use(self, line, is_trying = False):

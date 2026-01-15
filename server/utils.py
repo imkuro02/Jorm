@@ -177,7 +177,8 @@ def match_word(word: str, l: list, get_score = False):
     if not word.strip():
         return l[0]
 
-    best_match, best_score = process.extractOne(word, l)
+    best_match, best_score = process.extractOne(word, l)[:2]
+
     if get_score:
         return best_match, best_score
     else:
@@ -248,6 +249,9 @@ def get_match(line, things):
     if '.' in line:
         index = line.split('.')[0]
         line = line.split('.')[1]
+        print(line)
+        if len(index.split()) >= 2:
+            return None
 
     line = line.strip()
     #index = index.strip()

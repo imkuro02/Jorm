@@ -613,8 +613,9 @@ class Player(Actor):
 
         
         if best_score < 90 or command[0]!=best_match[0]:
-            if self.command_use(full_line, silent = True):
-                return
+            if self.status == ActorStatusType.FIGHTING:
+                if self.command_use(full_line, silent = True):
+                    return
             
             self.sendLine(
                 f'You wrote "{command}" did you mean "{best_match}"?\nUse "help {best_match}" to learn more about this command.'
