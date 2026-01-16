@@ -412,7 +412,7 @@ def use(self, line, silent = False):
                     if i.party_manager.get_party_id() != self.party_manager.get_party_id():
                         _target = i
             else:
-                if bool(SKILLS[_action]['target_self_is_valid']):
+                if bool(SKILLS[skill_name_to_id[_action.name]]['target_self_is_valid']):
                     _target = self
         else:
             _target = self
