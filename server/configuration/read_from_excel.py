@@ -383,6 +383,8 @@ def configure_ENEMIES(SHEET, ITEMS):
                 },
                 'include_in_daily_quests': bool(x['include_in_daily_quests'][index]),
                 'skills': {},       # EMPTY DICT TO STORE SKILLS
+                'on_death_skills_use': None if str(x['on_death_skills_use'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['on_death_skills_use'][index],        
+                'on_start_skills_use': None if str(x['on_start_skills_use'][index]).strip() in ['0', '0.0', '', 'False', 'false'] else x['on_start_skills_use'][index], 
                 'loot': {},         # EMPTY DICT TO STORE LOOT
                 'combat_loop': {},  # EMPTY DICT TO STORE COMBAT LOOP
                 'can_start_fights': bool(x['can_start_fights'][index]),

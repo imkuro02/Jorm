@@ -20,6 +20,8 @@ def create_npc(room, npc_id, spawn_for_lore = False):
     ai =            None
     can_start_fights = False
     dont_join_fights = False
+    on_death_skills_use = None
+    on_start_skills_use = None
 
     #if npc_id not in ENEMIES:
     #    return
@@ -37,6 +39,10 @@ def create_npc(room, npc_id, spawn_for_lore = False):
         ai =        ENEMIES[npc_id]['ai']
         can_start_fights = ENEMIES[npc_id]['can_start_fights']
         dont_join_fights = ENEMIES[npc_id]['dont_join_fights']
+
+        on_death_skills_use = ENEMIES[npc_id]['on_death_skills_use']
+        on_start_skills_use = ENEMIES[npc_id]['on_start_skills_use']
+
         loot = _loot # {}
         '''
         for i in ITEMS:
@@ -81,7 +87,9 @@ def create_npc(room, npc_id, spawn_for_lore = False):
         skills = skills,
         dialog_tree = tree,
         can_start_fights = can_start_fights,
-        dont_join_fights = dont_join_fights
+        dont_join_fights = dont_join_fights,
+        on_death_skills_use = on_death_skills_use,
+        on_start_skills_use = on_start_skills_use
     )
 
     return my_npc
@@ -101,7 +109,9 @@ class Npc(Actor):
         skills = None,
         dialog_tree = None,
         can_start_fights = False,
-        dont_join_fights = True
+        dont_join_fights = True,
+        on_death_skills_use = None,
+        on_start_skills_use = None
     ):
         super().__init__(
             name = name,
@@ -111,6 +121,9 @@ class Npc(Actor):
             room = room,
 
         )
+
+        self.on_death_skills_use = on_death_skills_use
+        self.on_start_skills_use = on_start_skills_use
 
         # this script is responsible for setting the dialog tree aswell as appending append_to
         # probably should be moved sometime into dialog.py
@@ -269,7 +282,7 @@ class Npc(Actor):
             return
 
 
-
+        
         room = self.room
         participants = room.combat.participants.values()
 
@@ -309,7 +322,9 @@ class Enemy(Npc):
         skills = None,
         dialog_tree = None,
         can_start_fights = False,
-        dont_join_fights = True
+        dont_join_fights = True,
+        on_death_skills_use = None,
+        on_start_skills_use = None
     ):
         super().__init__(
             npc_id = npc_id,
@@ -322,7 +337,9 @@ class Enemy(Npc):
             skills = skills,
             dialog_tree = dialog_tree,
             can_start_fights = can_start_fights,
-            dont_join_fights = dont_join_fights
+            dont_join_fights = dont_join_fights,
+            on_death_skills_use = on_death_skills_use,
+            on_start_skills_use = on_start_skills_use
         )
 
 

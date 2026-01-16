@@ -1,5 +1,5 @@
 {
-    "SHA-256": "9a6633500a57ac6a098c7ddaf3f140bb340cdcf936518147b2b17ed2dd176fe3",
+    "SHA-256": "b38295048c54eb61921e15f43b195c0f674c0463cb4775a9b34ca1a4f350ef06",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -22,6 +22,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "tutorial_quest_item_1": 1,
                 "rock": 40,
@@ -66,6 +68,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
@@ -96,6 +100,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
@@ -124,6 +130,8 @@
             },
             "include_in_daily_quests": false,
             "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
@@ -152,6 +160,8 @@
             },
             "include_in_daily_quests": false,
             "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
@@ -180,6 +190,8 @@
             },
             "include_in_daily_quests": false,
             "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {},
             "combat_loop": {},
             "can_start_fights": false,
@@ -210,6 +222,8 @@
             "skills": {
                 "smite": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": "disorient=1",
             "loot": {
                 "shroom_cap": 20,
                 "rock": 39,
@@ -254,6 +268,8 @@
             "skills": {
                 "nudge": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rat_hide": 10,
                 "rat_tooth": 20,
@@ -301,6 +317,8 @@
             "skills": {
                 "nudge": 1
             },
+            "on_death_skills_use": "disorient=1",
+            "on_start_skills_use": null,
             "loot": {
                 "spore_fluff": 10,
                 "rock": 39,
@@ -348,6 +366,8 @@
                 "swing": 1,
                 "bash": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "simple_bark": 5,
                 "tree_branch": 10,
@@ -396,6 +416,8 @@
             "skills": {
                 "magic_missile": 1
             },
+            "on_death_skills_use": "brain_sap=1",
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 39,
                 "summoning_rock": 39,
@@ -440,6 +462,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 39,
                 "key_tavern_cellar": 39,
@@ -488,6 +512,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 39,
                 "key_tavern_cellar": 39,
@@ -536,6 +562,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 39,
                 "summoning_rock": 39,
@@ -583,6 +611,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 39,
                 "summoning_rock": 39,
@@ -629,6 +659,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 39,
                 "summoning_rock": 39,
@@ -674,6 +706,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 39,
                 "summoning_rock": 39,
@@ -719,6 +753,8 @@
             "skills": {
                 "nudge": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 39,
                 "summoning_rock": 39,
@@ -765,6 +801,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "orange_mushroom_cap": 10,
                 "rock": 37,
@@ -816,6 +854,8 @@
                 "magic_missile": 1,
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "green_sludge": 10,
                 "rock": 37,
@@ -866,6 +906,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": "stealth=1",
             "loot": {
                 "spider_silk": 10,
                 "spider_leg": 20,
@@ -917,6 +959,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "stone": 10,
                 "rock": 37,
@@ -967,6 +1011,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "pig_hide": 10,
                 "pig_head": 25,
@@ -1021,6 +1067,8 @@
                 "magic_missile": 1,
                 "nudge": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 37,
                 "summoning_rock": 37,
@@ -1072,6 +1120,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 37,
                 "key_tavern_cellar": 37,
@@ -1124,6 +1174,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "red_sludge": 10,
                 "red_slime_core": 25,
@@ -1180,6 +1232,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "red_mushroom_cap": 10,
                 "rock": 34,
@@ -1235,6 +1289,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "blue_sludge": 10,
                 "blue_slime_core": 25,
@@ -1291,6 +1347,8 @@
             "skills": {
                 "smite": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "blue_mushroom_cap": 10,
                 "rock": 34,
@@ -1347,6 +1405,8 @@
                 "smite": 1,
                 "cure_light_wounds": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "tentacle": 10,
                 "rock": 34,
@@ -1402,6 +1462,8 @@
             "skills": {
                 "nudge": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "ant_antenna": 34,
                 "ant_mandible": 34,
@@ -1438,6 +1500,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "tree_root": 10,
                 "tree_branch": 10,
@@ -1496,6 +1560,8 @@
                 "swing": 1,
                 "smite": 3
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "evil_eye_hide": 10,
                 "rock": 31,
@@ -1551,6 +1617,8 @@
             "skills": {
                 "stab": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 31,
                 "summoning_rock": 31,
@@ -1605,6 +1673,8 @@
                 "swing": 1,
                 "thorns": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "spiky_mushroom_cap": 10,
                 "mushroom_horn": 10,
@@ -1662,6 +1732,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 31,
                 "summoning_rock": 31,
@@ -1719,6 +1791,8 @@
             "skills": {
                 "magic_missile": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 31,
                 "summoning_rock": 31,
@@ -1774,6 +1848,8 @@
                 "cure_light_wounds": 1,
                 "magic_missile": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 31,
                 "summoning_rock": 31,
@@ -1827,6 +1903,8 @@
                 "bash": 2,
                 "bite": 3
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 30,
                 "summoning_rock": 30,
@@ -1881,6 +1959,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -1935,6 +2015,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -1984,6 +2066,8 @@
             "skills": {
                 "magic_missile": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2040,6 +2124,8 @@
                 "cure_light_wounds": 3,
                 "refresh": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2093,6 +2179,8 @@
             "skills": {
                 "bite": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "zombie_skin": 28,
@@ -2149,6 +2237,8 @@
             "skills": {
                 "bite": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "zombie_skin": 20,
                 "rock": 28,
@@ -2206,6 +2296,8 @@
             "skills": {
                 "bite": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "crocodile_scales": 20,
                 "rock": 28,
@@ -2260,6 +2352,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2310,6 +2404,8 @@
                 "cure_light_wounds": 1,
                 "magic_missile": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2365,6 +2461,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2419,6 +2517,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2473,6 +2573,8 @@
             "skills": {
                 "swing": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2527,6 +2629,8 @@
             "skills": {
                 "nudge": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2580,6 +2684,8 @@
             "skills": {
                 "magic_missile": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2635,6 +2741,8 @@
                 "nudge": 1,
                 "cure_light_wounds": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 28,
                 "summoning_rock": 28,
@@ -2687,6 +2795,8 @@
             "skills": {
                 "bite": 3
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 25,
                 "summoning_rock": 25,
@@ -2732,6 +2842,8 @@
                 "bite": 4,
                 "thorns": 3
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 25,
                 "summoning_rock": 25,
@@ -2783,6 +2895,8 @@
                 "cure_light_wounds": 2,
                 "smite": 4
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 25,
                 "summoning_rock": 25,
@@ -2831,6 +2945,8 @@
             "skills": {
                 "stab": 3
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 25,
                 "summoning_rock": 25,
@@ -2880,6 +2996,8 @@
                 "stab": 5,
                 "leech": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 25,
                 "summoning_rock": 25,
@@ -2924,6 +3042,8 @@
                 "stab": 4,
                 "leech": 6
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 25,
                 "summoning_rock": 25,
@@ -2970,6 +3090,8 @@
                 "cure_light_wounds": 2,
                 "promise": 2
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 20,
                 "zombie_skin": 20,
@@ -3016,6 +3138,8 @@
                 "bite": 1,
                 "bash": 1
             },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "mushroom_zombie_behemoth_shield": 20,
                 "rock": 1,
@@ -3050,6 +3174,8 @@
             },
             "include_in_daily_quests": false,
             "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 40,
                 "summoning_rock": 40,
@@ -3091,6 +3217,8 @@
             },
             "include_in_daily_quests": false,
             "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
             "loot": {
                 "rock": 40,
                 "summoning_rock": 40,
@@ -4712,7 +4840,7 @@
                 "user on you fail": "None",
                 "user on other fail": "None"
             },
-            "is_offensive": 0.0,
+            "is_offensive": 1.0,
             "end_turn": false,
             "script_values": {
                 "levels": [

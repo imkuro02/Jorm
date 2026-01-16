@@ -21,11 +21,31 @@ class AI:
         # all AI is set to false, except player AI
 
     def initiative(self):
+        if self.actor.room.combat.round == 1:
+            if self.actor.on_start_skills_use != None:
+                skill, lvl = self.actor.on_start_skills_use.split('=')
+                skill = str(skill).strip('')
+                lvl = int(lvl)
+                self.actor.skill_manager.learn(skill_id = skill, amount = lvl)
+                self.predict_use_best_skill(skill_override = skill)
+                self.use_prediction()
+                self.actor.skill_manager.unlearn(skill_id = skill, amount = lvl)
+                self.clear_prediction()
+
         self.predict_use_best_skill()
         #debug = f'{self.actor.name}, {self.prediction_skill}, {self.prediction_target}'
         #self.actor.simple_broadcast(debug,debug)
 
     def die(self):
+        if self.actor.on_death_skills_use != None:
+            skill, lvl = self.actor.on_death_skills_use.split('=')
+            skill = str(skill).strip('')
+            lvl = int(lvl)
+            self.actor.skill_manager.learn(skill_id = skill, amount = lvl)
+            self.predict_use_best_skill(skill_override = skill)
+            self.use_prediction()
+            self.actor.skill_manager.unlearn(skill_id = skill, amount = lvl)
+            self.clear_prediction()
         pass
 
     def has_prediction(self):
@@ -135,7 +155,7 @@ class AI:
                 return True
 
         if self.prediction_skill != None:
-            if use_skill(self.actor, target, self.prediction_skill):
+            if use_skill(self.actor, target, self.prediction_skill, no_checks = True):
                 used_skill = self.prediction_skill
                 self.clear_prediction()
                 #self.predict_use_best_skill()
@@ -153,7 +173,7 @@ class AI:
 
 
 
-    def predict_use_best_skill(self, offensive_only = False, for_prediction = True):
+    def predict_use_best_skill(self, offensive_only = False, for_prediction = True, skill_override = None):
         self.prediction_target = None
         self.prediction_skill = None
 
@@ -171,6 +191,10 @@ class AI:
         #utils.debug_print(self.actor.name,skills)
         # try to use a skill 5 times, if it fails return false
         # return true if you managed to use a skill
+
+        if skill_override != None:
+            skills = [skill_override]
+
         for i in range(0,20):
 
             if skills == []:
@@ -322,8 +346,10 @@ class PlayerAI(AI):
         #self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         return False
 
-    def initiative(self):
+    def die(self):
+        return
 
+    def initiative(self):
         return
 
     def tick(self):

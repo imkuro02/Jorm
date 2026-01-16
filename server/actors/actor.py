@@ -612,7 +612,7 @@ class Actor:
         pass
 
     def die(self, unload = True):
-        self.status = ActorStatusType.DEAD
+        
 
         if self.room == None:
             utils.debug_print(self.id, self.name, 'CANT DIE BECAUSE THERE IS NO ROOM IM NOT IN A ROOM HELP!?')
@@ -622,6 +622,8 @@ class Actor:
         self.cooldown_manager.unload_all_cooldowns()
 
         self.ai.die()
+
+        self.status = ActorStatusType.DEAD
 
 
 
@@ -664,7 +666,7 @@ class Actor:
                 self.unload()
 
     def unload(self):
-        self.ai.die()
+        #self.ai.die()
 
         try:
             if self.room.combat != None:

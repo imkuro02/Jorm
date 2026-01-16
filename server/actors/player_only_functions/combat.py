@@ -670,6 +670,8 @@ def rest_home(self, line):
     self.cooldown_manager.unload_all_cooldowns()
     self.finish_turn()
 
+    self.status = ActorStatusType.NORMAL
+
     '''
     well_rested = affects.AffectWellRested(
         affect_source_actor = self,
