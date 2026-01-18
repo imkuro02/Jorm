@@ -366,14 +366,14 @@ class Actor:
 
         match type(self).__name__:
             case "Enemy":
-                output = output + f'{Color.NAME_ENEMY}{self.name}{Color.NORMAL}'
+                output = output + f'{Color.NAME_ENEMY}{self.name}{Color.BACK}'
             case "Player":
                 if self.admin:
-                    output = output + f'{Color.NAME_ADMIN}{self.name}{Color.NORMAL}'
+                    output = output + f'{Color.NAME_ADMIN}{self.name}{Color.BACK}'
                 else:
-                    output = output + f'{Color.NAME_PLAYER}{self.name}{Color.NORMAL}'
+                    output = output + f'{Color.NAME_PLAYER}{self.name}{Color.BACK}'
             case "Npc":
-                output = output + f'{Color.NAME_NPC}{self.name}{Color.NORMAL}'
+                output = output + f'{Color.NAME_NPC}{self.name}{Color.BACK}'
 
         #if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
@@ -794,17 +794,30 @@ class Actor:
                 if par.status == ActorStatusType.DEAD:
                     continue
                 if par == self:
-                    output += par.prompt(self)+' '+'You'+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
+                    _prediction = par.ai.get_prediction_string(who_checks=self)
+                    _prompt = par.prompt(self) 
+                    _len = ' '* (len(utils.remove_color(_prompt)) + 1)
+
+                    if _prediction.strip() == '':
+                        output += _prompt+' '+'You'+f' '+_prediction + '\n'
+                    else:
+                        output += _prompt+' '+'You'+f'\n{_len}'+_prediction + '\n'
                 else:
-                    output += par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
+                    _prediction = par.ai.get_prediction_string(who_checks=self)
+                    _prompt = par.prompt(self)
+                    _len = ' '* (len(utils.remove_color(_prompt)) + 1)
+                    if _prediction.strip() == '':
+                        output += _prompt+' '+par.pretty_name()+f' '+_prediction + '\n'
+                    else:
+                        output += _prompt+' '+par.pretty_name()+f'\n{_len}'+_prediction + '\n'
 
             output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)
 
     def set_turn(self):
         if type(self).__name__ != "11Player":
-            output_self = f'{Color.IMPORTANT}Your turn{Color.NORMAL}'
-            output_other = f'{Color.IMPORTANT}{self.pretty_name()}\'s turn{Color.NORMAL}'
+            output_self = f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
+            output_other = f'{Color.COMBAT_TURN}{self.pretty_name()}\'s turn{Color.NORMAL}'
             self.simple_broadcast(output_self,output_other)
             '''
             order = self.room.combat.order

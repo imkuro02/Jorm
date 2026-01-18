@@ -1,4 +1,4 @@
-from configuration.config import ActorStatusType, StatType, DamageType, SKILLS
+from configuration.config import ActorStatusType, StatType, DamageType, SKILLS, Color
 from combat.combat_event import CombatEvent
 from combat.damage_event import Damage
 import random
@@ -259,7 +259,7 @@ class Combat:
                     else:
                         order = order + i.pretty_name() + ' -> '
 
-                order = '\n'+order + f'ROUND {self.round}'
+                order = ('\n'*1)+f'{Color.COMBAT_TURN}ROUND {self.round}...{Color.NORMAL} '+"".join(order.rsplit(" -> ", 1))
                 #par.sendLine(('#'*80)+'\n'+order)
                 par.sendLine(order)
 
@@ -283,6 +283,7 @@ class Combat:
         if show_turns_and_stuff:
             for par in self.participants.values():
                 par.show_prompts(self.participants.values())
+                par.sendLine('')
 
         self.round += 1
         self.next_turn()

@@ -59,6 +59,7 @@ class AI:
         self.prediction_override = prediction_string
 
     def get_prediction_string(self, who_checks):
+        #return ''
         if self.prediction_override != '':
             return self.prediction_override
 

@@ -290,6 +290,8 @@ class Color:
     DAMAGE_MAG =            '@bcyan'
     DAMAGE_HEAL =           '@bgreen'
 
+    COMBAT_TURN =           '@bred'
+
     stat = {
         StatType.HP:        '@bgreen',
         StatType.PHYARMOR:  '@byellow',
