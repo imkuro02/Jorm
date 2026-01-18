@@ -545,7 +545,7 @@ class SkillBash(SkillDamageByGrit):
                 name = 'Stunned', description = 'Unable to act during combat turns',
                 turns = self.script_values['duration'][self.users_skill_level],
                 resisted_by = StatType.PHYARMOR,
-                get_prediction_string_append = 'is stunned!',
+                get_prediction_string_append = 'are stunned!',
                 get_prediction_string_clear = True
             )
             self.other.affect_manager.set_affect_object(stunned_affect)
