@@ -41,6 +41,8 @@ class Skill:
         else:
             return self.get_dmg_value_override
 
+    def pretty_name(self):
+        return self.name
     def use_broadcast(self):
         perspectives = {
             'you on you':       self.use_perspectives['you on you fail'],
@@ -61,6 +63,7 @@ class Skill:
         for perspective in perspectives:
             perspectives[perspective] = perspectives[perspective].replace('#USER#', self.user.pretty_name())
             perspectives[perspective] = perspectives[perspective].replace('#OTHER#', self.other.pretty_name())
+            perspectives[perspective] = perspectives[perspective].replace('#SKILL#', self.pretty_name())
 
         for receiver in self.user.room.actors.values():
             if type(receiver).__name__ != "Player":

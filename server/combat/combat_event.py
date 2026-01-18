@@ -76,6 +76,7 @@ class CombatEvent:
                 
                 pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
             '''
+            
 
             if not pop.silent and pop.damage_type != DamageType.CANCELLED:
                 damage_snapshot2 = {
@@ -83,7 +84,7 @@ class CombatEvent:
                     StatType.PHYARMOR: pop.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR],
                     StatType.MAGARMOR: pop.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
                 }
-
+                
                 
                 '''
                 summary = {
@@ -103,9 +104,9 @@ class CombatEvent:
 
                 def lose_or_gain(val):
                     if val <= -1:
-                        return Color.BAD+'#L# '
+                        return '#L# '+Color.BAD+'-'
                     elif val >= 1:
-                        return Color.GOOD+'#G# '
+                        return '#G# '+Color.GOOD+'+'
                     else:
                         return None
 
@@ -115,20 +116,20 @@ class CombatEvent:
                 for i in summary:
                     _hp = lose_or_gain(summary[i])
                     if _hp != None:
-                        output += f'{_hp}{abs(summary[i])}{Color.BACK} {StatType.name[i]},'
+                        output += f'{_hp}{abs(summary[i])}{Color.BACK} {Color.stat[i]}{StatType.name[i]}{Color.BACK},'
 
                 if '#L#' not in output and '#G#' not in output:
                     return
 
                 output = f'{output}{Color.NORMAL}'
-                output = f" from {color}{pop.damage_source_action.name}".join(output.rsplit(",", 1))
+                output = f" from {pop.damage_source_action.pretty_name()}".join(output.rsplit(",", 1))
                 output = " and ".join(output.rsplit(",", 1))
 
                 
                 output_self = output
                 output_other = output
                 
-                output_self = output_self.replace('#A#','You have')
+                output_self = output_self.replace('#A#',f'You have')
                 output_self = output_self.replace('#G#','healed')
                 output_self = output_self.replace('#L#','lost')
 
@@ -153,9 +154,7 @@ class CombatEvent:
                     output += f'{_ma}{summary[StatType.MAGARMOR]}{Color.BACK}{Color.MAGARM}MA '
                 '''
 
-
-
-
+                sound = Audio.HURT
                 #output = f'{pop.damage_taker_actor.name}  {pop.damage_hp}hp  {pop.damage_pa}pa {pop.damage_ma}ma'
                 pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
         

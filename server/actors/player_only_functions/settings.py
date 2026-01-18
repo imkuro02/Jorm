@@ -29,7 +29,7 @@ LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = True, email = '', view_room = True, view_ascii_art = True, view_map = False, pvp = False, debug = False, prompt = None):
+    def __init__(self, actor, aliases = None, gmcp = True, email = '', view_room = True, view_ascii_art = True, view_map = True, pvp = False, debug = False, prompt = None):
         self.actor = actor
         if aliases == None:
             self.aliases = {}
@@ -48,14 +48,8 @@ class Settings:
         #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
         #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
         self.prompt_default = {
-            '0': '<@green#HP#@bgreenhp @yellow#PHYARM#@byellowpa @cyan#MAGARM#@bcyanma @red#THREAT#@bredth@normal>',
-            '-1': '<@red#HP#@bredhp @yellow#PHYARM#@byellowpa @blue#MAGARM#@bbluema @cyan#MP#@bcyanmp @red#THREAT#@bredth@normal>',
-            '1': 'HP:@bred#HP#@normal MP:@bcyan#MP#@normal (PA:@byellow#PHYARM#@normal/MA:@bblue#MAGARM#@normal) TH:@red#THREAT#@normal >',
-            '2': '<@bred#HP#@normalhp @bcyan#MP#@normalmp @byellow#PHYARM#@normalpa @bblue#MAGARM#@normalma>',
-            '3': '[ @bred#HP#@normal/@bred#LHPMAX#@normal HP| @bred#PHYARM#@normal/@bred#LPHYARMMAX#@normal PA] [ @bcyan#MP#@normal/@bcyan#LMPMAX#@normal MP| @bcyan#MAGARM#@normal/@bcyan#LMAGARMMAX#@normal MA]',
-            '4': '[ @bred#HP%#@normal% HP| @bred#PHYARM%#@normal% PA] [ @bcyan#MP%#@normal% MP| @bcyan#MAGARM%#@normal% MA]',
-            '5': '[ @good#HP#@normal/@good#LHPMAX#@normal HP| @good#PHYARM#@normal/@good#LPHYARMMAX#@normal PA] [ @bad#MP#@normal/@bad#LMPMAX#@normal MP| @bad#MAGARM#@normal/@bad#LMAGARMMAX#@normal MA]',
-            '6': '[ @good#HP%#@normal% HP| @good#PHYARM%#@normal% PA] [ @bad#MP%#@normal% MP| @bad#MAGARM%#@normal% MA]',
+            '0': '<@green#HP#@bgreenL@yellow#PHYARM#@byellowH@cyan#MAGARM#@bcyanW@normal>',
+            '1': '<@green#HP#@bgreenL @yellow#PHYARM#@byellowH @cyan#MAGARM#@bcyanW @red#THREAT#@bredT@normal>'
         }
         if prompt != None:
             self.prompt = prompt

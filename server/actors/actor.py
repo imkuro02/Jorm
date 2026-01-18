@@ -452,12 +452,13 @@ class Actor:
             t = utils.Table(4,1)
             _piss = [StatType.HP, StatType.PHYARMOR, StatType.MAGARMOR, StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL, StatType.LVL]
             for _shit in _piss:
-                t.add_data(StatType.name[_shit]+':')
                 if _shit+'_max' in StatType.name:
+                    t.add_data(f'{StatType.name[_shit]+":"}')
                     t.add_data(f'{self.stat_manager.stats[_shit]}')
                     t.add_data(f'/')
                     t.add_data(f'{self.stat_manager.stats[_shit+"_max"]}')
                 else:
+                    t.add_data(StatType.name[_shit]+':')
                     t.add_data(self.stat_manager.stats[_shit])
                     t.add_data('')
                     t.add_data('')

@@ -38,7 +38,9 @@ class Affect:
         self.custom_go_away = custom_go_away
         self.dispellable = dispellable
 
-
+    def pretty_name(self):
+        return self.name
+    
     def merge_request(self, affect_to_merge):
         return False
 

@@ -28,7 +28,7 @@ class AI:
                 lvl = int(lvl)
                 self.actor.skill_manager.learn(skill_id = skill, amount = lvl)
                 self.predict_use_best_skill(skill_override = skill)
-                self.use_prediction()
+                self.use_prediction(no_checks = True)
                 self.actor.skill_manager.unlearn(skill_id = skill, amount = lvl)
                 self.clear_prediction()
 
@@ -43,7 +43,7 @@ class AI:
             lvl = int(lvl)
             self.actor.skill_manager.learn(skill_id = skill, amount = lvl)
             self.predict_use_best_skill(skill_override = skill)
-            self.use_prediction()
+            self.use_prediction(no_checks = True)
             self.actor.skill_manager.unlearn(skill_id = skill, amount = lvl)
             self.clear_prediction()
         pass
@@ -139,7 +139,7 @@ class AI:
         self.prediction_skill = None
         self.prediction_item = None
 
-    def use_prediction(self):
+    def use_prediction(self, no_checks = False):
         target = self.prediction_target
 
         #if self.prediction_target == self.actor and self.target != None and self.target in self.actor.room.actors.values():
@@ -155,7 +155,7 @@ class AI:
                 return True
 
         if self.prediction_skill != None:
-            if use_skill(self.actor, target, self.prediction_skill, no_checks = True):
+            if use_skill(self.actor, target, self.prediction_skill, no_checks = no_checks):
                 used_skill = self.prediction_skill
                 self.clear_prediction()
                 #self.predict_use_best_skill()
@@ -340,8 +340,8 @@ class PlayerAI(AI):
         super().__init__(actor)
         self.can_use_skills_without_ending_turn = True
 
-    def use_prediction(self):
-        if super().use_prediction():
+    def use_prediction(self, no_checks = False):
+        if super().use_prediction(no_checks = no_checks):
             return True
         #self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         return False
@@ -377,8 +377,8 @@ class PlayerAI(AI):
 
 class EnemyAI(AI):
 
-    def use_prediction(self):
-        if super().use_prediction():
+    def use_prediction(self, no_checks = False):
+        if super().use_prediction(no_checks = no_checks):
             return True
 
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
@@ -415,8 +415,8 @@ class SlimeAI(AI):
             self.use_prediction()
 
 
-    def use_prediction(self):
-        if super().use_prediction():
+    def use_prediction(self, no_checks = False):
+        if super().use_prediction(no_checks = no_checks):
             return True
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         #self.predict_use_best_skill()
@@ -448,8 +448,8 @@ class CowardAI(AI):
 
         self.use_prediction()
 
-    def use_prediction(self):
-        if super().use_prediction():
+    def use_prediction(self, no_checks = False):
+        if super().use_prediction(no_checks = no_checks):
             return True
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         #self.predict_use_best_skill()
@@ -517,8 +517,8 @@ class BossRatAI(AI):
         self.use_prediction()
         return
 
-    def use_prediction(self):
-        if super().use_prediction():
+    def use_prediction(self, no_checks = False):
+        if super().use_prediction(no_checks = no_checks):
             return True
         self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         #self.predict_use_best_skill()

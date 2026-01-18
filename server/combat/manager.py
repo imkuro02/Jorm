@@ -234,6 +234,11 @@ class Combat:
 
 
     def initiative(self):
+
+        show_turns_and_stuff = True
+
+
+
         for i in self.participants.values():
             if i.status != ActorStatusType.DEAD:
                 self.order.append(i)
@@ -242,20 +247,21 @@ class Combat:
         if self.order == []:
             self.combat_over()
             return
+        
+        if show_turns_and_stuff:
+            for par in self.participants.values():
+                if type(par).__name__ != 'Player':
+                    continue
+                order = ''
+                for i in self.order:
+                    if par == i:
+                        order = order + 'YOU' + ' -> '
+                    else:
+                        order = order + i.pretty_name() + ' -> '
 
-        for par in self.participants.values():
-            if type(par).__name__ != 'Player':
-                continue
-            order = ''
-            for i in self.order:
-                if par == i:
-                    order = order + 'YOU' + ' -> '
-                else:
-                    order = order + i.pretty_name() + ' -> '
-
-            order = order + f'ROUND {self.round}'
-            #par.sendLine(('#'*80)+'\n'+order)
-            par.sendLine(order)
+                order = '\n'+order + f'ROUND {self.round}'
+                #par.sendLine(('#'*80)+'\n'+order)
+                par.sendLine(order)
 
 
 
@@ -274,9 +280,9 @@ class Combat:
             par.ai.initiative()
 
             #par.ai.predict_use_best_skill()
-
-        for par in self.participants.values():
-            par.show_prompts(self.participants.values())
+        if show_turns_and_stuff:
+            for par in self.participants.values():
+                par.show_prompts(self.participants.values())
 
         self.round += 1
         self.next_turn()

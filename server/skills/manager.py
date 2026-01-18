@@ -48,8 +48,8 @@ def skill_checks(user, target, skill_id):
         return False
 
     if skill_id in user.cooldown_manager.cooldowns:
-            error(user, f'{skill_name} is on cooldown!')
-            return False
+        error(user, f'{skill_name} is on cooldown!')
+        return False
 
     if utils.get_object_parent(target) == 'Actor':
         # cant target yourself

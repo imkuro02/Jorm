@@ -8,6 +8,7 @@ import configuration.read_from_excel as rfe
 import random
 import utils
 
+
 '''
 ICONS = {}
 ICONS_PATH = 'configuration/icons.yaml'
@@ -75,61 +76,7 @@ class BonusTypes:
     STAT  = 'stat'
     STAT_REQ = 'reqs'
 
-class Color:
-    NORMAL =                '@normal'
-    BACK =                  '@back'
-    ERROR =                 '@bgred'
 
-    GOOD =                  '@bgreen'
-    BAD =                   '@bpurple'
-
-    IMPORTANT =             '@yellow'
-    TOOLTIP =               '@tip'
-    DESCRIPTION =           '@cyan'
-
-    NAME_ADMIN =            '@yellow'
-    NAME_PLAYER =           '@bcyan'
-    NAME_ENEMY =            '@bpurple'
-    NAME_NPC =              '@byellow'
-
-    NAME_ROOM_NORMAL =      '@bwhite'
-    NAME_ROOM_SAFE =        '@bgreen'
-    NAME_ROOM_INSTANCE =    '@bred'
-    DESC_ROOM =             '@cyan'
-
-    NAME_QUEST =            '@bgreen'
-    DESC_QUEST =            '@cyan'
-
-    MAP_PLAYER =            NAME_PLAYER
-    MAP_IMPORTANT =         NORMAL
-    MAP_NORMAL =            NORMAL
-    MAP_WALL =              '@wall'
-    MAP_WALL_INSTANCED =    '@bgpurple'
-    MAP_ROOM =              '@yellow'
-    MAP_PATH =              '@yellow'
-
-    ITEM_KEEP =             '@red'
-    ITEM_EQUIPPED =         '@green'
-    ITEM_TRADING =          '@yellow'
-    ITEM_NEW    =           '@yellow'
-    ITEM_MATERIAL    =      '@byellow'
-
-    DAMAGE_PURE =           '@byellow'
-    DAMAGE_PHY =            '@bred'
-    DAMAGE_MAG =            '@bcyan'
-    DAMAGE_HEAL =           '@bgreen'
-
-    #STAT_HP =               '@bred'
-    #STAT_MP =               '@bcyan'
-    #STAT_PHY_ARM =          '@red'
-    #STAT_MAG_ARM =          '@bblue'
-    #STAT_GRIT =             NORMAL
-    #STAT_FLOW =             NORMAL
-    #STAT_MIND =             NORMAL
-    #STAT_SOUL =             NORMAL
-    #STAT_EXPERIENCE =       NORMAL
-    #STAT_PRACTICE_POINTS =  NORMAL
-    #STAT_BAG_SPACE =        NORMAL
 
 
 class MsgType:
@@ -193,11 +140,11 @@ class ItemType:
     }
 
 class DamageType:
-    PHYSICAL = 'physical'
-    MAGICAL = 'magical'
-    HEALING = 'healing'
-    PURE = 'pure'
-    CANCELLED = 'cancelled' # Cancels all damage
+    PHYSICAL = 'dmg_physical'
+    MAGICAL = 'dmg_magical'
+    HEALING = 'dmg_healing'
+    PURE = 'dmg_pure'
+    CANCELLED = 'dmg_cancelled' # Cancels all damage
     name = {
         PHYSICAL:   'physical damage',
         MAGICAL:    'magical damage',
@@ -274,18 +221,20 @@ class StatType:
     INITIATIVE = 'initiative'
 
     name = {
-        HPMAX:  'Max Health',
-        #MPMAX:  'Max Magicka',
-        HP:     'Health',
-        #MP:     'Magicka',
+        HP:     'Life',
+        HPMAX:  'Max Life',
+
+        PHYARMOR:  'Hold',
+        MAGARMOR:  'Ward',
+
+        PHYARMORMAX:  'Max Hold',
+        MAGARMORMAX: 'Max Ward',
+
         GRIT:   'Grit',
         FLOW:   'Flow',
         MIND:   'Mind',
         SOUL:   'Soul',
-        PHYARMOR:  'Phy Armor',
-        MAGARMOR:  'Mag Armor',
-        PHYARMORMAX:  'Max Phy Armor',
-        MAGARMORMAX: 'Max Mag Armor',
+        
         EXP:    'Experience',
         LVL:    'Level',
         PP:     'Practice Points',
@@ -296,6 +245,67 @@ class StatType:
         THREAT: 'Threat',
         INITIATIVE: 'Initiative'
     }
+
+class Color:
+    NORMAL =                '@normal'
+    BACK =                  '@back'
+    ERROR =                 '@bgred'
+
+    GOOD =                  '@bgreen'
+    BAD =                   '@bpurple'
+
+    IMPORTANT =             '@yellow'
+    TOOLTIP =               '@tip'
+    DESCRIPTION =           '@cyan'
+
+    NAME_ADMIN =            '@bgreen'
+    NAME_PLAYER =           '@bcyan'
+    NAME_ENEMY =            '@yellow'
+    NAME_NPC =              '@byellow'
+
+    NAME_ROOM_NORMAL =      '@bwhite'
+    NAME_ROOM_SAFE =        '@bgreen'
+    NAME_ROOM_INSTANCE =    '@bred'
+    DESC_ROOM =             '@cyan'
+
+    NAME_QUEST =            '@bgreen'
+    DESC_QUEST =            '@cyan'
+
+    MAP_PLAYER =            NAME_PLAYER
+    MAP_IMPORTANT =         NORMAL
+    MAP_NORMAL =            NORMAL
+    MAP_WALL =              '@wall'
+    MAP_WALL_INSTANCED =    '@bgpurple'
+    MAP_ROOM =              '@yellow'
+    MAP_PATH =              '@yellow'
+
+    ITEM_KEEP =             '@red'
+    ITEM_EQUIPPED =         '@green'
+    ITEM_TRADING =          '@yellow'
+    ITEM_NEW    =           '@yellow'
+    ITEM_MATERIAL    =      '@byellow'
+
+    DAMAGE_PURE =           '@byellow'
+    DAMAGE_PHY =            '@bred'
+    DAMAGE_MAG =            '@bcyan'
+    DAMAGE_HEAL =           '@bgreen'
+
+    stat = {
+        StatType.HP:        '@bgreen',
+        StatType.PHYARMOR:  '@byellow',
+        StatType.MAGARMOR:  '@bcyan'
+    }
+    #STAT_HP =               '@bred'
+    #STAT_MP =               '@bcyan'
+    #STAT_PHY_ARM =          '@red'
+    #STAT_MAG_ARM =          '@bblue'
+    #STAT_GRIT =             NORMAL
+    #STAT_FLOW =             NORMAL
+    #STAT_MIND =             NORMAL
+    #STAT_SOUL =             NORMAL
+    #STAT_EXPERIENCE =       NORMAL
+    #STAT_PRACTICE_POINTS =  NORMAL
+    #STAT_BAG_SPACE =        NORMAL
 
 PATCH_NOTES = {}
 PATCH_NOTES_PATH = 'configuration/patch_notes.yaml'
