@@ -380,7 +380,7 @@ focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
-text = "client version: 091225"
+text = "client version: 190126"
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
@@ -395,7 +395,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 metadata/_edit_group_ = true
 
-[node name="output" type="HBoxContainer" parent="canvas/container"]
+[node name="output" type="VBoxContainer" parent="canvas/container"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -403,6 +403,7 @@ size_flags_vertical = 3
 [node name="output" type="RichTextLabel" parent="canvas/container/output"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
@@ -420,7 +421,19 @@ bbcode_enabled = true
 text = "fdsafdsafs"
 selection_enabled = true
 
+[node name="output_combat" type="RichTextLabel" parent="canvas/container/output"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+fit_content = true
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+
 [node name="TextureRect" type="TextureRect" parent="canvas"]
+visible = false
 modulate = Color(1, 1, 1, 0.101961)
 texture_filter = 1
 offset_left = 8.0

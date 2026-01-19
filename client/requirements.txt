@@ -1,0 +1,2 @@
+telnetlib3==2.0.4
+websockets==14.1

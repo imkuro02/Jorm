@@ -12,6 +12,7 @@ var socket = WebSocketPeer.new()
 @onready var SFX_MAN = $sfx_manager
 @onready var LOOK_ROOM = $canvas/container/map_room/look_room
 @onready var ASCIIMAP = $canvas/container/map_room/ascii_map
+@onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
 
 
 
@@ -139,10 +140,13 @@ func parse_value(val: String) -> Variant:
 
 func handle_gmcp(message: String):
 	var parts = message.split(" ", false, 1)
+	var prefix = 'prefix'
+	var dict_string = ''
 	if len(parts) <= 1:
-		return
-	var prefix = parts[0]
-	var dict_string = parts[1]
+		prefix = parts[0]
+	else:
+		prefix = parts[0]
+		dict_string = parts[1]
 	var data_dict = null
 
 	if "{" not in dict_string:
@@ -159,6 +163,11 @@ func handle_gmcp(message: String):
 		#	ACTORS_OUTPUT.set_text("")
 		#	ACTORS_OUTPUT.clear()
 		#	ACTORS_OUTPUT.get_message(dict_string)
+		'OUTPUT_COMBAT':
+			#print('dict_string')
+			#print(dict_string)
+			OUTPUT_COMBAT.clear()
+			OUTPUT_COMBAT.get_message('********************************************************************************\n'+dict_string)
 		'MAP':
 			ASCIIMAP.clear()
 			ASCIIMAP.get_message(dict_string)

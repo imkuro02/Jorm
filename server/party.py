@@ -221,9 +221,9 @@ class PartyManager:
         if not line:
             line = 'look'
 
-        if self.actor.status != ActorStatusType.NORMAL and line != 'look':
-            self.actor.sendLine('You can only do "party" in combat.')
-            return
+        #if self.actor.status != ActorStatusType.NORMAL and line != 'look':
+        #    self.actor.sendLine('You can only do "party" in combat.')
+        #    return
 
         command = line.split()[0]
         line = " ".join(line.split()[1::]).strip()

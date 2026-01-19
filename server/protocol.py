@@ -113,6 +113,7 @@ class Protocol(protocol.Protocol):
             + IAC
             + SE
         )
+
         self.transport.write(packet)
 
     def splash_screen(self):

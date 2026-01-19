@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jorm</title>
+    <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.1/ansi_up.min.js"></script>
+    <link href="https://fonts.cdnfonts.com/css/comic-mono" rel="stylesheet">
+    
+    
+    <style>
+        #volumeButton {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: #443627;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #volumeButton:hover {
+            background: #222;
+        }
+
+        /* Hidden sliders box */
+        #slidersBox {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 80px;
+            left: 80px;
+            background: #443627;
+            border: 10px solid #53443d;
+            padding: 30px;
+            border-radius: 10px;
+            z-index: 9999;
+            text-align: center;
+            width: 300px;
+        }
+
+        /* Style the sliders */
+        .volume-slider {
+            width: 200px;
+        }
+        
+            
+        #startScreen {
+            animation: none !important;
+            opacity: 1; /* make it visible immediately */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #C9B194; /* Background color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        #startButton {
+            padding: 20px 40px;
+            font-size: 32px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            background: #fff;
+            color: #222;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        #startButton:hover {
+            background: #ddd;
+        }
+
+        div {
+            width:99%;
+            opacity: 0;
+            animation: shake 0.0s ease-out forwards, fadeIn 0.0s ease-out forwards;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(2px);
+            }
+            25% {
+                transform: translateX(0px);
+            }
+            50% {
+                transform: translateX(2px);
+            }
+            75% {
+                transform: translateX(1px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                /* opacity: 0; */
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @font-face {
+            /*
+            font-family: 'Comic Mono';
+            src: url('ComicMono.ttf') format('truetype');
+            */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        iframe {
+            width: 200px;
+            height: 250px;
+        }
+        #iframeContainer {
+            border: none;
+            position: fixed;
+            top: 25px;
+            right: 25px;
+        }
+        a {
+            color: cyan;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        input[type="text"] {
+            outline: none;           /* removes the blue glow */
+            border: 1px solid #ccc;  /* optional: customize border */
+            padding: 0.5rem;
+            font-family: 'Comic Mono', monospace;
+            border-radius: 4px;
+        }
+        body {
+            font-family: 'Comic Mono', monospace;
+            color: #fbf1c7;
+            background-color: #C9B194;
+            margin: 0;
+            padding: 10px;
+        }
+        #game {
+            
+            display: flex;
+            flex-direction: column; /* stack items vertically */
+            align-items: center;    /* center items horizontally */
+            
+            
+            font-family: 'Comic Mono', monospace;
+
+        }
+        
+        #inputoutput {
+            font-size: 16px;
+            background-color: black; /*#443627*/;
+            width: 900px;
+            margin:20px;
+            
+            padding:10px;
+            border: 12px solid #53443d;
+            border-radius: 10px; /* Rounded corners inside */
+           
+        }
+        #output {
+            font-family: 'Comic Mono', monospace;
+            height:  calc(100vh - 190px); 
+            /*scroll-behavior: smooth;*/
+            margin-bottom: 10px;
+            overflow-y: auto;
+            
+            color: #fff;
+ 
+            width: 100%;
+            
+
+            white-space: pre-wrap;
+            /* 
+            text-shadow:
+                2px 2px 2px rgba(0,0,0,1); faded long shadow */
+        }
+        #input {
+            width: 100%;
+            
+            height: 48px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    
+    <button id="volumeButton">⚙️</button>
+    
+    <div id = "game">
+        <div id = "inputoutput">
+            <div id="output"></div>
+            <input type="text" id="input" placeholder="Input">
+        </div>
+     
+    </div>
+    <div>Progress bars . . .</div>
+
+
+    <div id="slidersBox">
+        <h3>Adjust Volume</h3>
+        <p>SFX</p>
+        <input type="range" id="slider1" class="volume-slider" min="0" max="1" step="0.01" value="0.25"><br>
+        <p>Music</p>
+        <input type="range" id="slider2" class="volume-slider" min="0" max="1" step="0.01" value="0.05">
+    </div>
+
+      
+    <!-- 
+    <div id="iframeContainer">
+        <iframe src="jorm_audio.html"></iframe>
+    </div>
+    -->
+    <script>
+        const output = document.getElementById('output');
+        const input = document.getElementById('input');
+        const ansi_up = new AnsiUp(); // Create an instance of AnsiUp for ANSI color parsing
+        const maxLines = 1000; // Maximum number of lines allowed in the output
+
+        // Get server hostname
+        const hostname = window.location.hostname;
+        // Connect to the WebSocket server
+        let socket;
+
+        function connectWebSocket(url, fallbackUrl) {
+            socket = new WebSocket(url);
+
+            socket.onerror = (error) => {
+                console.error(`WebSocket error on ${url}:`, error);
+
+                if (url !== fallbackUrl) {
+                    console.log(`Falling back to ${fallbackUrl}`);
+                    connectWebSocket(fallbackUrl,fallbackUrl); // Try fallback
+                } else {
+                    console.error("Both WebSocket connections failed.");
+                }
+            };
+
+            //socket.binaryType = 'arraybuffer';
+
+        // Handle connection open
+        socket.onopen = () => {
+            appendMessage('Connected to WebSocket server.');
+            const IAC  = 0xFF;
+            const WILL = 0xFB;
+            const DO   = 0xFD;
+            const DONT = 0xFE;
+            const GMCP = 0xC9;
+
+            const msg = new Uint8Array([IAC, DO, GMCP]);
+            //const msg = new Uint8Array([IAC, DONT, GMCP]);
+            socket.send(msg);
+        };
+
+        function fixEncoding(mojibakeStr) {
+            // Convert ISO-8859-1 bytes to a Uint8Array
+            const bytes = new Uint8Array([...mojibakeStr].map(c => c.charCodeAt(0)));
+            
+            // Decode as UTF-8
+            return new TextDecoder('utf-8').decode(bytes);
+        }
+
+        // Handle messages from the server
+        socket.onmessage = async (event) => {
+            
+            
+            
+            let result = await displayBlobContent(event.data);
+
+            // ignore the iac will gmcp packet
+            // TEMPORARY,, the client should accept and the server should be able to kno dat
+
+            result = result.replace('\\xff\\xfb\\xc9','');
+            // ignore IAC WILL MSSP
+            // F is x46 but FUCK THIS CLIENT ALREADY!!!@
+            // IT FUCKING THINKS x46 IS THE LETTER F WHY_?
+            result = result.replace('\\xff\\xfbF','');
+            
+
+            // get text without any gmcp data.
+            // this functions handles gmcp stuff
+            let text = extractGmcpData(result);
+            
+            // replace all the other binary slop with different kind of binary slop
+            // because js sucks and i just want to get done with it
+            // this is needed, otherwise ansiup doesnt know how to color the text...
+            text = text.replace(/\\x([0-9A-Fa-f]{2})/g, (match, hex) => {
+                return String.fromCharCode(parseInt(hex, 16));
+            });
+
+            text = fixEncoding(text);
+            
+            /**
+             * If input is a password, change input type to password.  
+             * This hides it using asterisks.
+             * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password
+             * 
+             * If more things should be hidden, consider adding a flag instead of using the message string itself.
+            **/
+            var prev_type = input.type;
+            
+            
+            if (text === "Your \u001b[1;32mpassword\u001b[0m:\n" || 
+                text === "Enter your \u001b[1;32mpassword\u001b[0m:\n" ||
+                text === "Enter \u001b[1;32mpassword\u001b[0m again:\n") {
+                    input.type = "password";
+                    input.value = "";
+                } else {
+                    input.type = "text";
+                }
+
+                if(input.type != prev_type){
+                    input.value = "";
+                }
+
+               
+                appendAnsiMessage(text);
+
+            
+            //});
+        };
+
+        // Handle connection close
+        socket.onclose = () => {
+            appendMessage('Disconnected from WebSocket server.');
+        };
+
+        }
+
+        // Try localhost first, fallback to public URL
+        connectWebSocket("ws://localhost:8002", "wss://jorm.kurowski.xyz:8001");
+        
+        
+        
+
+       
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                // Prevent the default Enter key behavior (like submitting a form, if applicable)
+                event.preventDefault();
+
+                // Send the message only if the input is not empty
+                if (input.value.trim() !== '') {
+                    socket.send(input.value);
+                    input.select();
+                }
+            }
+        });
+
+        // Append plain text message to output
+        function appendMessage(message) {
+            const div = document.createElement('div');
+            // Pattern for matching https://
+            const urlPattern = /(https:\/\/[^\s]+)/g;
+            const parts = message.split(urlPattern);
+            
+            parts.forEach(part => {
+                
+                if (urlPattern.test(part)) {
+                    const link = document.createElement('a');
+                    link.href = part;
+                    // Open links in a new tab
+                    link.target = '_blank';
+                    link.textContent = part;
+                    div.appendChild(link);
+                } else {
+                    div.appendChild(document.createTextNode(part));
+                }
+            });
+
+            output.appendChild(div);
+            maintainLineLimit();
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Append ANSI-colored message to output
+        function appendAnsiMessage(message) {
+            const div = document.createElement('div');
+            // Convert ANSI codes to HTML
+            let htmlMessage = ansi_up.ansi_to_html(message);
+            //console.log(message);
+            // Pattern for matching https://
+            const urlPattern = /(https:\/\/[^\s]+)/g;
+            const parts = htmlMessage.split(urlPattern);
+            parts.forEach(part => {
+                if (urlPattern.test(part)) {
+                    const link = document.createElement('a');
+                    link.href = part;
+                    // Open links in a new tab
+                    link.target = '_blank';
+                    link.innerHTML = part;
+                    div.appendChild(link);
+                } else {
+                    div.innerHTML += part;
+                }
+            });
+
+            output.appendChild(div);
+            maintainLineLimit();
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Maintain the maximum number of lines in the output
+        function maintainLineLimit() {
+            const lines = output.querySelectorAll('div');
+            if (lines.length > maxLines) {
+                output.removeChild(lines[0]); // Remove the topmost line
+            }
+        }
+    </script>
+    <script>
+
+        // Toggle slidersBox on button click
+        volumeButton.addEventListener('click', () => {
+            slidersBox.style.display = (slidersBox.style.display === 'block') ? 'none' : 'block';
+        });
+        
+        const slider1 = document.getElementById('slider1');
+        const slider2 = document.getElementById('slider2');
+
+        let AudioSFXVolume = slider1.value;
+        let AudioMusic = null;
+
+        slider1.addEventListener('input', () => {
+            AudioSFXVolume = slider1.value;
+        });
+
+        slider2.addEventListener('input', () => {
+            AudioMusic.volume = slider2.value;
+        });
+
+        function startRandomAudioPlayer(audioFiles) {
+            if (!audioFiles || audioFiles.length === 0) {
+                console.error("No audio files provided.");
+                return;
+            }
+
+            let currentAudio = null;
+
+            function playRandomAudio() {
+                const randomIndex = Math.floor(Math.random() * audioFiles.length);
+                const selectedAudio = audioFiles[randomIndex];
+
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio = null;
+                }
+
+                currentAudio = new Audio(selectedAudio);
+                currentAudio.volume = slider2.value;
+                currentAudio.play();
+
+                currentAudio.onended = playRandomAudio; // When one finishes, start another
+                AudioMusic = currentAudio;
+            }
+
+            playRandomAudio();
+        }
+
+        // Example usage:
+        const audioList = [
+            'audio/music/7OOO.mp3',
+            'audio/music/0240.mp3',
+            'audio/music/Contrast 100.mp3',
+            'audio/music/Ivory.mp3',
+            'audio/music/N A W A K - FOREST.mp3',
+            'audio/music/N A W A K - SEIZE.mp3',
+            'audio/music/N A W A K - TRIAL.mp3'
+        ];
+        
+        
+
+        function playSound(effect) {
+          let soundSrc = '';
+        
+          soundSrc = effect;
+        
+          if (soundSrc) {
+            const audio = new Audio(soundSrc);
+            audio.volume = AudioSFXVolume;
+            //audio.playbackRate = 0.95 + Math.random() * 0.45;
+            audio.play().catch(error => {
+              console.error('Playback error:', error);
+            });
+            AudioSFX = audio;
+
+          }
+        }
+
+        function extractGmcpData(data) {
+            // Regular expression to match everything from \xff\xfa\xc9 to \xff\xf0
+            
+            const regex = /\\xff\\xfa\\xc9(.*?)\\xff\\xf0/g;
+            
+            let match;
+            let lastIndex = 0;
+            let result = "";
+
+            while ((match = regex.exec(data)) !== null) {
+                const gmcpContent = match[1]; // This is the stuff between \xff\xfa\xc9 and \xff\xf0
+                console.log("Found GMCP data:", gmcpContent);
+
+                // Now split gmcpContent into command and data
+                const splitRegex = /^(\S+)\s+(\{.*\})$/;
+                const parts = gmcpContent.match(splitRegex);
+
+                if (parts) {
+                    const command = parts[1];
+                    let dictString = parts[2];
+
+                    // Replace single quotes with double quotes for JSON parsing
+                    dictString = dictString.replace(/'/g, '"');
+
+                    let dict = {};
+                    try {
+                        dict = JSON.parse(dictString);
+                    } catch (e) {
+                        console.error("Error parsing GMCP JSON:", e);
+                    }
+
+                    // If the command is Client.Media.Play, play the sound
+                    if (command === "Client.Media.Play" && dict.name) {
+                        playSound('audio/sfx/'+dict.name);
+                    }
+                } else {
+                    console.warn("GMCP content didn't match expected format:", gmcpContent);
+                }
+
+                // Keep the data outside GMCP
+                result += data.slice(lastIndex, match.index);
+                lastIndex = regex.lastIndex;
+            }
+
+            result += data.slice(lastIndex);
+
+            return result;
+        }
+
+
+        const displayBlobContent = async (blob) => {
+            // Convert Blob to ArrayBuffer
+            const buffer = await blob.arrayBuffer();
+            const uint8Array = new Uint8Array(buffer);
+
+            let result = '';
+            let hexBuffer = '';
+
+            // Iterate over each byte in the ArrayBuffer
+            uint8Array.forEach(byte => {
+                if (byte >= 32 && byte <= 126) { // Printable ASCII range
+                if (hexBuffer) {
+                    result += `\\x${hexBuffer}`;
+                    hexBuffer = '';
+                }
+                result += String.fromCharCode(byte);
+                } else {
+                //hexBuffer += byte.toString(16).padStart(2, '0');
+                result += "\\x" + byte.toString(16).padStart(2, '0');
+                }
+            });
+
+            // Append any remaining hexadecimal bytes
+            if (hexBuffer) {
+                result += `\\x${hexBuffer}`;
+            }
+
+            //console.log(result);
+            //console.log(result);
+            return result;
+            
+            };
+
+
+        function createStartScreen() {
+            // Create the fullscreen background div
+            const startScreen = document.createElement('div');
+            startScreen.id = 'startScreen';
+
+            // Create the button
+            const button = document.createElement('button');
+            button.id = 'startButton';
+            button.textContent = 'START';
+
+            // Add button into the div
+            startScreen.appendChild(button);
+
+            // Add the div to the body
+            document.body.appendChild(startScreen);
+
+            button.addEventListener('click', function() {
+            // Unlock the audio
+            const unlockAudio = new Audio();
+            unlockAudio.play().catch(() => {});
+
+            // Start playing audio
+            startRandomAudioPlayer(audioList);
+
+            // Remove the entire start screen
+            startScreen.remove();
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', createStartScreen);
+
+    </script>
+</body>
+</html>

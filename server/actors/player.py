@@ -289,15 +289,26 @@ class UpdateChecker:
         )
 
     def tick(self):
-        # return
-        # if self.actor.factory.ticks_passed % 30 != 0:
-        #    return
-        # self.tick_show_actors()
-
-        _map = self.actor.command_map("", return_gmcp=True)
         if self.protocol == None:
             return
+        
+        
+        if self.actor.status != ActorStatusType.FIGHTING:
+            _map = ''
+        else:
+            _map = self.actor.show_prompts(order = None, no_predictions = True, return_gmcp = True)
+            _cur_actor = self.actor.room.combat.current_actor
+            _round = self.actor.room.combat.round 
+            if _cur_actor == self.actor:
+                _map = f'Round {_round}, Your turn\n'+_map
+            else:
+                _map = f'Round {_round}, {_cur_actor.pretty_name()}\' turn\n'+_map
+
+        self.actor.protocol.send_gmcp(utils.add_color(_map), "OUTPUT_COMBAT")
+
+        _map = self.actor.command_map("", return_gmcp=True)
         self.actor.protocol.send_gmcp(utils.add_color(_map), "MAP")
+
         #_look = self.actor.command_look("", return_gmcp=True)
         #self.actor.protocol.send_gmcp(utils.add_color(_look), "LOOK_ROOM")
 
@@ -408,7 +419,7 @@ class Player(Actor):
             self.handle(to_handle)
 
         if self.update_checker != None:
-            if self.factory.ticks_passed % 30 == 0:
+            if self.factory.ticks_passed % 10 == 0:
                 self.update_checker.tick()
 
     def sendSound(self, sfx):

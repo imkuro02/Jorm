@@ -48,8 +48,9 @@ class Settings:
         #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
         #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
         self.prompt_default = {
-            '0': '<@green#HP#@bgreenL@yellow#PHYARM#@byellowH@cyan#MAGARM#@bcyanW@normal>',
-            '1': '<@green#HP#@bgreenL @yellow#PHYARM#@byellowH @cyan#MAGARM#@bcyanW @red#THREAT#@bredT@normal>'
+            '2': '<@green#LIFE#/#LLIFEMAX#@bgreenL@yellow#HOLD#/#LHOLDMAX#@byellowH@cyan#WARD#/#LWARDMAX#@bcyanW@normal>',
+            '1': '<@green#LIFE%#@bgreen% @yellow#HOLD%#@byellow% @cyan#WARD%#@bcyan%@normal>',
+            '0': '<@green#LIFE#@bgreenL@yellow#HOLD#@byellowH@cyan#WARD#@bcyanW@normal>'
         }
         if prompt != None:
             self.prompt = prompt

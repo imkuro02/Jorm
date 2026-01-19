@@ -276,44 +276,44 @@ class Actor:
         justing = 3
         just_space = ' '
         translations = {
-            '#HP#':             str(self.stat_manager.stats[StatType.HP]).rjust(justing, just_space),
-            '#HPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).rjust(justing, just_space),
+            '#LIFE#':             str(self.stat_manager.stats[StatType.HP]).rjust(justing, just_space),
+            '#LIFEMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).rjust(justing, just_space),
 
             #'#MP#':             str(self.stat_manager.stats[StatType.MP]).rjust(justing, just_space),
             #'#MPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).rjust(justing, just_space),
 
-            '#PHYARM#':         str(self.stat_manager.stats[StatType.PHYARMOR]).rjust(justing, just_space),
-            '#PHYARMMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).rjust(justing, just_space),
+            '#HOLD#':         str(self.stat_manager.stats[StatType.PHYARMOR]).rjust(justing, just_space),
+            '#HOLDMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).rjust(justing, just_space),
 
-            '#MAGARM#':         str(self.stat_manager.stats[StatType.MAGARMOR]).rjust(justing, just_space),
-            '#MAGARMMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).rjust(justing, just_space),
+            '#WARD#':         str(self.stat_manager.stats[StatType.MAGARMOR]).rjust(justing, just_space),
+            '#WARDMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).rjust(justing, just_space),
 
             '#THREAT#':         str(self.stat_manager.stats[StatType.THREAT]).rjust(justing, just_space),
             '#LTHREAT#':         str(self.stat_manager.stats[StatType.THREAT]).ljust(justing, just_space),
 
             # int((cur_value / max_value) * 100)
-            '#HP%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing, just_space),
+            '#LIFE%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing, just_space),
             #'#MP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).rjust(justing, just_space),
-            '#PHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing, just_space),
-            '#MAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing, just_space),
+            '#HOLD%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing, just_space),
+            '#WARD%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing, just_space),
 
-            '#LHP#':             str(self.stat_manager.stats[StatType.HP]).ljust(justing, just_space),
-            '#LHPMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).ljust(justing, just_space),
+            '#LLIFE#':             str(self.stat_manager.stats[StatType.HP]).ljust(justing, just_space),
+            '#LLIFEMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).ljust(justing, just_space),
 
             #'#LMP#':             str(self.stat_manager.stats[StatType.MP]).ljust(justing, just_space),
             #'#LMPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).ljust(justing, just_space),
 
-            '#LPHYARM#':         str(self.stat_manager.stats[StatType.PHYARMOR]).ljust(justing, just_space),
-            '#LPHYARMMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).ljust(justing, just_space),
+            '#LHOLD#':         str(self.stat_manager.stats[StatType.PHYARMOR]).ljust(justing, just_space),
+            '#LHOLDMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).ljust(justing, just_space),
 
-            '#LMAGARM#':         str(self.stat_manager.stats[StatType.MAGARMOR]).ljust(justing, just_space),
-            '#LMAGARMMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).ljust(justing, just_space),
+            '#LWARD#':         str(self.stat_manager.stats[StatType.MAGARMOR]).ljust(justing, just_space),
+            '#LWARDMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).ljust(justing, just_space),
 
             # int((cur_value / max_value) * 100)
-            '#LHP%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).ljust(justing, just_space),
+            '#LLIFE%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).ljust(justing, just_space),
             #'#LMP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).ljust(justing, just_space),
-            '#LPHYARM%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing, just_space),
-            '#LMAGARM%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing, just_space),
+            '#LHOLD%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing, just_space),
+            '#LWARD%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing, just_space),
 
             '#GRIT#':             str(self.stat_manager.stats[StatType.GRIT]).rjust(justing, just_space),
             '#FLOW#':             str(self.stat_manager.stats[StatType.FLOW]).rjust(justing, just_space),
@@ -773,10 +773,10 @@ class Actor:
 
         self.room.combat.next_turn()
 
-    def show_prompts(self, order = None):
+    def show_prompts(self, order = None, no_predictions = False, return_gmcp = False):
         # return if received a empty list of orders
-        if order == None:
-            return
+        #if order == None:
+        #    return
 
         if type(self).__name__ == "Player":
             output = ''
@@ -793,25 +793,30 @@ class Actor:
             for par in _list:
                 if par.status == ActorStatusType.DEAD:
                     continue
-                if par == self:
+                
+                _prompt = par.prompt(self)
+                if not no_predictions:
                     _prediction = par.ai.get_prediction_string(who_checks=self)
-                    _prompt = par.prompt(self) 
                     _len = ' '* (len(utils.remove_color(_prompt)) + 1)
+                else:
+                    _prediction = ''
 
+                if par == self:
                     if _prediction.strip() == '':
                         output += _prompt+' '+'You'+f' '+_prediction + '\n'
                     else:
                         output += _prompt+' '+'You'+f'\n{_len}'+_prediction + '\n'
                 else:
-                    _prediction = par.ai.get_prediction_string(who_checks=self)
-                    _prompt = par.prompt(self)
-                    _len = ' '* (len(utils.remove_color(_prompt)) + 1)
                     if _prediction.strip() == '':
                         output += _prompt+' '+par.pretty_name()+f' '+_prediction + '\n'
                     else:
                         output += _prompt+' '+par.pretty_name()+f'\n{_len}'+_prediction + '\n'
 
             output = output[:-1] if output.endswith("\n") else output
+
+            if return_gmcp:
+                return output
+            
             self.sendLine(output)
 
     def get_icon(self, who_checks):
