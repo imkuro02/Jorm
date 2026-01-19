@@ -367,15 +367,17 @@ commands:
       - stats
     description: |
       View your current stats
-      - Health    - Take a wild guess what this does.
-      - Magicka   - Take a WILD guess what this does.
-      - Grit      - Physical damage and max health.
+      - Life      - 4 character lenght name for Health.
+      - Hold      - Physical armor, grants immunity to physical debuffs.
+      - Ward      - Magical armor, grants immunity to magical debuffs.
+      - Grit      - Physical damage and Life.
       - Flow      - Physical damage and initiative.
-      - Mind      - Magical damage and max magicka.
+      - Mind      - Magical damage.
       - Soul      - Pure and Healing damage.
       - Level     - Your current level.
       - Exp       - Your current experience.
       - Practices - Your leftover practice points.
+      - Bag Space - Your max inventory size.
     related:
       - level
       - practice

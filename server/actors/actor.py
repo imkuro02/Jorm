@@ -814,32 +814,46 @@ class Actor:
             output = output[:-1] if output.endswith("\n") else output
             self.sendLine(output)
 
+    def get_icon(self, who_checks):
+        if type(who_checks).__name__ == 'Player':
+            if not who_checks.settings_manager.view_ascii_art:
+                return ''
+
+        if type(self).__name__ != 'Player':
+            _icon = get_icon(self.npc_id)
+            return _icon
+        else:
+            #_icon = get_icon('citizen')
+            _icon = ''
+            return _icon
+
+        return ''
+
     def set_turn(self):
-        if type(self).__name__ != "11Player":
-            output_self = f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
-            output_other = f'{Color.COMBAT_TURN}{self.pretty_name()}\'s turn{Color.NORMAL}'
-            self.simple_broadcast(output_self,output_other)
-            '''
-            order = self.room.combat.order
-            if order == []:
-                output = f'@yellowYour turn.@normal'
-                self.sendLine(output)
-            else:
-                output = f'@yellowYour turn.@normal Turns after yours:'
-                self.sendLine(output)
-                self.show_prompts(self.room.combat.order)
-            '''
-        if type(self).__name__ == "Player":
-            self.sendLine(self.prompt(self))
 
         if self.room == None:
             return
         if self.room.combat == None:
             return
 
+        for par in self.room.combat.participants.values():
+            if type(par).__name__ != 'Player':
+                continue
 
-
-
+            if par == self:
+                _icon = self.get_icon(who_checks = par)
+                if _icon != '': _icon = '\n' + _icon
+                output_self = f'{par.prompt(par)} {Color.COMBAT_TURN}Your turn{Color.NORMAL}{_icon}'
+                par.sendLine(output_self)
+                #self.show_prompts(self.room.combat.participants.values())
+                continue
+            
+            _icon = self.get_icon(who_checks = par)
+            if _icon != '': _icon = '\n' + _icon
+            output_other = f'{self.prompt(par)} {Color.COMBAT_TURN}{self.pretty_name()}\'s turn{Color.NORMAL}{_icon}'
+            par.sendLine(output_other)
+            
+        
         #print(self.room.combat)
 
         self.affect_manager.set_turn()
