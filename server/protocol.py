@@ -467,6 +467,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
             if SETTINGS.ALIAS in self.actor.settings_manager.settings:
                 self.actor.settings_manager.settings[SETTINGS.ALIAS] = ast.literal_eval(actor['settings'][SETTINGS.ALIAS])
+            if SETTINGS.COLOR in self.actor.settings_manager.settings:
+                self.actor.settings_manager.settings[SETTINGS.COLOR] = ast.literal_eval(actor['settings'][SETTINGS.COLOR])
 
             # utils.debug_print(actor['settings'])
             '''if actor["settings"] != {}:

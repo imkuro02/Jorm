@@ -19,8 +19,9 @@ class SETTINGS:
     EMAIL = 'email'
     AUTO_BATTLER = 'autobattler'
     PROMPT = 'prompt'
+    COLOR = 'color'
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, VIEW_ASCII_ART, PVP, RESET, LOGOUT, DEBUG, PWD, USR, EMAIL, PROMPT, #AUTO_BATTLER
+        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, VIEW_ASCII_ART, PVP, RESET, LOGOUT, DEBUG, PWD, USR, EMAIL, PROMPT, COLOR, #AUTO_BATTLER
     ]
 
 
@@ -40,7 +41,51 @@ class Settings:
             SETTINGS.VIEW_ASCII_ART: True,
             SETTINGS.EMAIL: '',
             SETTINGS.PROMPT: '0',
-            SETTINGS.DEBUG: False
+            SETTINGS.DEBUG: False,
+            SETTINGS.COLOR: {
+                '@normal':               '',
+                '@back':                 '',
+                '@error':                '',
+                '@important':            '',
+                '@tooltip':              '',
+                '@description':          '',
+
+                '@name_player':          '',
+                '@name_admin':           '',
+                '@name_enemy':           '',
+                '@name_npc':             '',
+
+                '@room_name':            '',
+                '@room_description':     '',
+                '@room_name_safe':       '',
+                '@room_name_instanced':  '',
+
+                '@quest_name':           '',
+                '@quest_description':    '',
+
+                '@map_player':           '',
+                '@map_important':        '',
+                '@map_normal':           '',
+                '@map_room':             '',
+                '@map_path':             '',
+
+                '@item_keep':            '',
+                '@item_equipped':        '',
+                '@item_trading':         '',
+                '@item_new':             '',
+                '@item_material':        '',
+
+                '@damage_pure':          '',
+                '@damage_physical':      '',
+                '@damage_magical':       '',
+                '@damage_healing':       '',
+                
+                '@combat_turn':          '',
+
+                '@stat_life':            '',
+                '@stat_hold':            '',
+                '@stat_ward':            '',
+            },
         }
 
         #self.prompt_default2 = '[@bred#HP#@normal/@bred#HPMAX#@normal | @bred#PHYARM#@normal/@bred#PHYARMMAX#@normal] [@bcyan#MP#@normal/@bcyan#MPMAX#@normal | @bcyan#MAGARM#@normal/@bcyan#MAGARMMAX#@normal]>'
@@ -80,6 +125,32 @@ class Settings:
                 self.actor.sendLine('All settings reset to default')
                 self.actor.settings_manager = Settings(self.actor)
                 return
+
+            case SETTINGS.COLOR:
+                if len(line) == 1: # view aliases
+                    self.actor.sendLine('View colors')
+                    output = ''
+                    if SETTINGS.COLOR not in self.settings:
+                        self.actor.sendLine('No colors')
+                        return
+                    for alias in self.settings[SETTINGS.ALIAS]:
+                        output += f'{alias} = {self.settings[SETTINGS.ALIAS][alias]}\n'
+                    self.actor.sendLine(output)
+                    return
+                if len(line) == 2: # clear an alias
+                    alias = line[1]
+                    if alias in self.settings[SETTINGS.ALIAS]:
+                        self.actor.sendLine(f'Clear color "{alias}"')
+                        del self.settings[SETTINGS.ALIAS][alias]
+                    return
+                if len(line) >= 3: # set an alias
+                    string = ' '.join(line[2::]).strip()
+                    self.actor.sendLine(f'{alias} = {string}')
+                    if SETTINGS.COLOR not in self.settings:
+                        self.settings[SETTINGS.COLOR] = {}
+                    self.settings[SETTINGS.COLOR][alias] = string
+                    return
+
             case SETTINGS.ALIAS:
                 if len(line) == 1: # view aliases
                     self.actor.sendLine('View aliasses')

@@ -448,7 +448,7 @@ class Actor:
 
         if not is_glancing:
             if self.description != None:
-                output += f'{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n'
+                output += f'{sheet_getter.get_color('@description')}{self.description}{sheet_getter.get_color('@normal')}\n'
 
         output += self.get_character_equipment()
 

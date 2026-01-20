@@ -356,6 +356,16 @@ class Player(Actor):
 
         self.loaded = True
 
+    def get_color(self, color_key):
+        _colors = self.settings_manager.get_value(SETTINGS.COLOR)
+        if color_key not in _colors:
+            _colors = self.settings_manager.defaults[SETTINGS.COLOR]
+        if color_key not in _colors:
+            return '@NO_COLOR_'
+        if _colors[color_key] == '':
+            return f'\x1b[0;45m'
+        return _colors[color_key]
+
     def die(self, unload=False):
         super().die(unload=False)
         lost_exp = int(self.stat_manager.stats[StatType.EXP] * 0.025)
@@ -445,10 +455,10 @@ class Player(Actor):
             # start = time.time()
 
             # this line is responsible for making the length of text 28 chars or smth
-            line = utils.add_line_breaks(line)
+            ###line = utils.add_line_breaks(line)
 
             # utils.debug_print((time.time()-start)*1000)
-            line = utils.add_color(line)
+            ###line = utils.add_color(line)
             # line += f'\n'
 
             # send null byte several times to indicate new line
