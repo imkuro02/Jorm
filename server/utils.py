@@ -8,6 +8,7 @@ import math
 import weakref
 import random
 import traceback
+import copy
 from configuration.config import StatType
 
 def debug_print(*args, **kwargs):
@@ -318,17 +319,30 @@ def print_colors():
         line = line + f'{colors[color_code]} {colors[color_code].replace("@","@.")}  '
     return line
 
-def add_color(line):
+def add_color(line, color_settings = None):
     #return line
     #for color_code in colors:
     #    line = line.replace(color_code, colors[color_code])
     #return line
 
+    _colors = copy.deepcopy(colors)
+    if color_settings != None:
+        for i in _colors:
+            if i not in color_settings:
+                
+                continue
+            if color_settings[i] == '':
+                continue
+            #print(f'color "{i}" in settings')
+            _colors[i] = color_settings[i]
+    #print(_colors)
+
+
     split = line.split('@')
     colors_used = []
     for word in split:
         word = '@'+word
-        for color_code in colors:
+        for color_code in _colors:
             if (color_code in word):
                 colors_used.append(color_code)
 
@@ -339,11 +353,11 @@ def add_color(line):
             else:
                 colors_used[index] = '@normal'
 
-    for color_code in colors:
+    for color_code in _colors:
         line = line.replace(color_code, '@color')
 
     for index, col in enumerate(colors_used):
-        line = line.replace('@color',colors[col],1)
+        line = line.replace('@color',_colors[col],1)
 
     return line
 

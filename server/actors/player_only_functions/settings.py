@@ -44,7 +44,7 @@ class Settings:
             SETTINGS.DEBUG: False,
             SETTINGS.COLOR: {
                 '@normal':               '',
-                '@back':                 '',
+                '@back':                 '\x1b[0;00x',
                 '@error':                '',
                 '@important':            '',
                 '@tooltip':              '',
@@ -99,19 +99,29 @@ class Settings:
 
         self.settings = {}
         
-    def get_value(self, key):
-        if key not in self.settings:
-            return self.defaults[key]
-        else:
-            return self.settings[key]
+   
 
     def true_or_false(self, value):
-        if value in LIST_ON:
+        if value.lower() in LIST_ON:
             return True
-        if value in LIST_OFF:
+        if value.lower() in LIST_OFF:
             return False
         return False
 
+    def true_or_false_or_str(self, value):
+        _value = value
+        if _value.lower() in LIST_ON:
+            return True
+        if _value.lower() in LIST_OFF:
+            return False
+        return value
+
+    def get_value(self, key):
+        if key not in self.settings:
+            val = self.defaults[key]
+        else:
+            val = self.settings[key]
+        return val
 
     def command_settings(self, line):
         original_line = line
@@ -133,17 +143,18 @@ class Settings:
                     if SETTINGS.COLOR not in self.settings:
                         self.actor.sendLine('No colors')
                         return
-                    for alias in self.settings[SETTINGS.ALIAS]:
-                        output += f'{alias} = {self.settings[SETTINGS.ALIAS][alias]}\n'
+                    for alias in self.settings[SETTINGS.COLOR]:
+                        output += f'{alias} = {self.settings[SETTINGS.COLOR][alias]}\n'
                     self.actor.sendLine(output)
                     return
                 if len(line) == 2: # clear an alias
                     alias = line[1]
-                    if alias in self.settings[SETTINGS.ALIAS]:
+                    if alias in self.settings[SETTINGS.COLOR]:
                         self.actor.sendLine(f'Clear color "{alias}"')
-                        del self.settings[SETTINGS.ALIAS][alias]
+                        del self.settings[SETTINGS.COLOR][alias]
                     return
                 if len(line) >= 3: # set an alias
+                    alias = line[1]
                     string = ' '.join(line[2::]).strip()
                     self.actor.sendLine(f'{alias} = {string}')
                     if SETTINGS.COLOR not in self.settings:

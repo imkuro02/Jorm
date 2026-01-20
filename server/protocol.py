@@ -460,16 +460,18 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 if skill not in SKILLS:
                     del self.actor.skill_manager.skills[skill]
 
+
             for _setting in actor["settings"]:
-                self.actor.settings_manager.settings[_setting] = actor["settings"][
-                    _setting
-                ]
+                self.actor.settings_manager.settings[_setting] = self.actor.settings_manager.true_or_false_or_str(actor["settings"][_setting])
+
+                #print(_setting+' '+actor["settings"][_setting]+str(type(actor["settings"][_setting])))
+            
 
             if SETTINGS.ALIAS in self.actor.settings_manager.settings:
                 self.actor.settings_manager.settings[SETTINGS.ALIAS] = ast.literal_eval(actor['settings'][SETTINGS.ALIAS])
             if SETTINGS.COLOR in self.actor.settings_manager.settings:
                 self.actor.settings_manager.settings[SETTINGS.COLOR] = ast.literal_eval(actor['settings'][SETTINGS.COLOR])
-
+            
             # utils.debug_print(actor['settings'])
             '''if actor["settings"] != {}:
                 self.actor.settings_manager.gmcp = actor["settings"]["gmcp"]
@@ -569,6 +571,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         self.actor.new_room_look()
         self.actor.friend_manager.friend_broadcast_login()
         self.actor.finish_turn()
+
+        print(self.actor.settings_manager.settings)
 
     def save_actor(self):
         if self.guest:
