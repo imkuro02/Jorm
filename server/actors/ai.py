@@ -358,6 +358,12 @@ class PlayerAI(AI):
         if not super().tick():
            return
 
+        if self.has_prediction():
+            self.use_prediction()
+            self.clear_prediction()
+
+        return
+        
         if self.actor.settings_manager.autobattler:
             if self.actor.stat_manager.stats[StatType.HP] <= self.actor.stat_manager.stats[StatType.HPMAX]*0.1:
                 self.actor.sendLine(f'Turning off Autobattler; Your HP is below 10%!')

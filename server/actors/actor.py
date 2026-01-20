@@ -15,6 +15,7 @@ import gc
 from utils import REFTRACKER
 from utils import unload
 import random
+from actors.player_only_functions.settings import SETTINGS
 
 class ActorStatManager:
     def __init__(self, actor):
@@ -345,7 +346,11 @@ class Actor:
         #mxp =   self.stat_manager.stats[StatType.MPMAX]
         #return(f'{utils.progress_bar(12,hp,mhp,"@red")}{utils.progress_bar(12,mp,mmp,"@blue")}')
         #return(f'{utils.progress_bar(12,hp,mhp,"@red")}')
-        return self.add_prompt_syntax(actor_that_asked.settings_manager.prompt)
+
+        _prompt = actor_that_asked.settings_manager.get_value(SETTINGS.PROMPT)
+        if _prompt in actor_that_asked.settings_manager.prompt_default:
+            _prompt = actor_that_asked.settings_manager.prompt_default[_prompt]
+        return self.add_prompt_syntax(_prompt)
 
     # only npc class has this
     def get_important_dialog(self, actor_to_compare, return_dict = False):
@@ -437,7 +442,7 @@ class Actor:
 
         if sheet_getter != None:
             if type(sheet_getter).__name__ == 'Player':
-                if sheet_getter.settings_manager.view_ascii_art:
+                if sheet_getter.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
                     if type(self).__name__ != 'Player':
                         output += get_icon(self.npc_id)
 
@@ -821,7 +826,7 @@ class Actor:
 
     def get_icon(self, who_checks):
         if type(who_checks).__name__ == 'Player':
-            if not who_checks.settings_manager.view_ascii_art:
+            if not who_checks.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
                 return ''
 
         if type(self).__name__ != 'Player':

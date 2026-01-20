@@ -17,7 +17,7 @@ from actors.player_only_functions.commands import (
     shortcuts_to_commands,
     translations,
 )
-from actors.player_only_functions.settings import Settings
+from actors.player_only_functions.settings import Settings, SETTINGS
 from configuration.config import ActorStatusType, Color, MsgType, StatType
 from trade import TradeManager
 from utils import unload
@@ -435,7 +435,7 @@ class Player(Actor):
             msg_type = " ".join(_msg_type)
             self.msg_history[len(self.msg_history)] = {"type": msg_type, "line": line}
 
-        if self.settings_manager.debug == False and msg_type == MsgType.DEBUG:
+        if self.settings_manager.get_value(SETTINGS.DEBUG) == False and msg_type == MsgType.DEBUG:
             return
 
         if sound != None:
@@ -552,7 +552,7 @@ class Player(Actor):
 
         # replace with aliases as long as it is not a settings command
         if " " + command + "" not in " settings ":
-            aliases = self.settings_manager.aliases
+            aliases = self.settings_manager.get_value(SETTINGS.ALIAS)
             line = " " + line + " "
             alias_text = line
             for alias in aliases:
@@ -585,7 +585,7 @@ class Player(Actor):
             if ";" in line:
                 lines = line.split(";")
                 for l in lines:
-                    if l.split()[0] in self.settings_manager.aliases:
+                    if l.split()[0] in self.settings_manager.get_value(SETTINGS.ALIAS):
                         self.sendLine("An alias cannot trigger another alias")
                         continue
                     self.queued_lines.append(l)

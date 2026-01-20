@@ -1,5 +1,6 @@
 
 from configuration.config import ActorStatusType, Color, get_icon
+from actors.player_only_functions.settings import SETTINGS
 import utils
 import random
 random = random.Random()
@@ -536,7 +537,7 @@ def command_look(self, line, return_gmcp = False, is_glancing = False):
                 see = see +'\n'
 
         # XD icons
-        if self.settings_manager.view_ascii_art:
+        if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
             icons = []
             for i in room.actors.values():
                 if type(i).__name__ == 'Player':
@@ -756,9 +757,9 @@ def get_nearby_rooms(self, view_range = 1):
 def new_room_look(self):
 
 
-    if self.settings_manager.view_room:
+    if self.settings_manager.get_value(SETTINGS.VIEW_ROOM):
         self.command_look('')
-    if self.settings_manager.view_map:
+    if self.settings_manager.get_value(SETTINGS.VIEW_MAP):
         self.command_map('')
         self.update_checker.tick()
     if self.protocol.enabled_gmcp:

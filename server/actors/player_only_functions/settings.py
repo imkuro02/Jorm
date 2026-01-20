@@ -25,24 +25,23 @@ class SETTINGS:
 
 
 
+
 LIST_ON  = ['on','true','enabled','enable','1']
 LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
-    def __init__(self, actor, aliases = None, gmcp = True, email = '', view_room = True, view_ascii_art = True, view_map = True, pvp = False, debug = False, prompt = None):
+    def __init__(self, actor):
         self.actor = actor
-        if aliases == None:
-            self.aliases = {}
-        else:
-            self.aliases = aliases
-        self.gmcp = gmcp
-        self.email = email
-        self.view_room = view_room
-        self.view_map = view_map
-        self.view_ascii_art = view_ascii_art
-        self.pvp = pvp
-        self.debug = debug
-        self.autobattler = False
+        self.defaults = {
+            SETTINGS.GMCP: True,
+            SETTINGS.ALIAS: {},
+            SETTINGS.VIEW_ROOM: True,
+            SETTINGS.VIEW_MAP: True,
+            SETTINGS.VIEW_ASCII_ART: True,
+            SETTINGS.EMAIL: '',
+            SETTINGS.PROMPT: '0',
+            SETTINGS.DEBUG: False
+        }
 
         #self.prompt_default2 = '[@bred#HP#@normal/@bred#HPMAX#@normal | @bred#PHYARM#@normal/@bred#PHYARMMAX#@normal] [@bcyan#MP#@normal/@bcyan#MPMAX#@normal | @bcyan#MAGARM#@normal/@bcyan#MAGARMMAX#@normal]>'
         #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
@@ -52,10 +51,14 @@ class Settings:
             '1': '<@green#LIFE%#@bgreen% @yellow#HOLD%#@byellow% @cyan#WARD%#@bcyan%@normal>',
             '0': '<@green#LIFE#@bgreenL@yellow#HOLD#@byellowH@cyan#WARD#@bcyanW@normal>'
         }
-        if prompt != None:
-            self.prompt = prompt
+
+        self.settings = {}
+        
+    def get_value(self, key):
+        if key not in self.settings:
+            return self.defaults[key]
         else:
-            self.prompt = self.prompt_default['0']
+            return self.settings[key]
 
     def true_or_false(self, value):
         if value in LIST_ON:
@@ -81,15 +84,19 @@ class Settings:
                 if len(line) == 1: # view aliases
                     self.actor.sendLine('View aliasses')
                     output = ''
-                    for alias in self.aliases:
-                        output += f'{alias} = {self.aliases[alias]}\n'
+                    if SETTINGS.ALIAS not in self.settings:
+                        self.actor.sendLine('No aliases')
+                        return
+
+                    for alias in self.settings[SETTINGS.ALIAS]:
+                        output += f'{alias} = {self.settings[SETTINGS.ALIAS][alias]}\n'
                     self.actor.sendLine(output)
                     return
                 if len(line) == 2: # clear an alias
                     alias = line[1]
-                    if alias in self.aliases:
+                    if alias in self.settings[SETTINGS.ALIAS]:
                         self.actor.sendLine(f'Clear alias "{alias}"')
-                        del self.aliases[alias]
+                        del self.settings[SETTINGS.ALIAS][alias]
                     return
                 if len(line) >= 3: # set an alias
                     alias = line[1]
@@ -99,7 +106,9 @@ class Settings:
 
                     string = ' '.join(line[2::]).strip()
                     self.actor.sendLine(f'{alias} = {string}')
-                    self.aliases[alias] = string
+                    if SETTINGS.ALIAS not in self.settings:
+                        self.settings[SETTINGS.ALIAS] = {}
+                    self.settings[SETTINGS.ALIAS][alias] = string
                     return
 
             case SETTINGS.GMCP:
@@ -107,49 +116,41 @@ class Settings:
                     self.actor.sendLine('GMCP setting needs an argument (on or off?)')
                     return
                 value = line[1]
-                self.gmcp = self.true_or_false(value)
-                self.actor.protocol.enabled_gmcp = self.gmcp
-                self.actor.sendLine(f'GMCP enabled: {self.gmcp}')
+                self.settings[SETTINGS.GMCP] = self.true_or_false(value)
+                self.actor.protocol.enabled_gmcp = self.true_or_false(value)
+                self.actor.sendLine(f'GMCP enabled: {self.true_or_false(value)}')
 
             case SETTINGS.VIEW_MAP:
                 if len(line) == 1:
                     self.actor.sendLine('View Map setting needs an argument (on or off?)')
                     return
                 value = line[1]
-                self.view_map = self.true_or_false(value)
-                self.actor.sendLine(f'View Map enabled: {self.view_map}')
+                self.settings[SETTINGS.VIEW_MAP] = self.true_or_false(value)
+                self.actor.sendLine(f'View Map enabled: {self.settings[SETTINGS.VIEW_MAP]}')
 
             case SETTINGS.VIEW_ASCII_ART:
                 if len(line) == 1:
                     self.actor.sendLine('View Ascii Art setting needs an argument (on or off?)')
                     return
                 value = line[1]
-                self.view_ascii_art = self.true_or_false(value)
-                self.actor.sendLine(f'View Ascii Art enabled: {self.view_ascii_art}')
+                self.settings[SETTINGS.VIEW_ASCII_ART] = self.true_or_false(value)
+                self.actor.sendLine(f'View Ascii Art enabled: {self.settings[SETTINGS.VIEW_ASCII_ART]}')
 
             case SETTINGS.VIEW_ROOM:
                 if len(line) == 1:
                     self.actor.sendLine('View Room setting needs an argument (on or off?)')
                     return
                 value = line[1]
-                self.view_room = self.true_or_false(value)
-                self.actor.sendLine(f'View Room enabled: {self.view_room}')
-
-            case SETTINGS.PVP:
-                if len(line) == 1:
-                    self.actor.sendLine('PVP setting needs an argument (on or off?)')
-                    return
-                value = line[1]
-                self.view_room = self.true_or_false(value)
-                self.actor.sendLine(f'PVP enabled: {self.pvp}')
+                self.settings[SETTINGS.VIEW_ROOM] = self.true_or_false(value)
+                self.actor.sendLine(f'View Room enabled: {self.settings[SETTINGS.VIEW_ROOM]}')
 
             case SETTINGS.DEBUG:
                 if len(line) == 1:
                     self.actor.sendLine('Debug setting needs an argument (on or off?)')
                     return
                 value = line[1]
-                self.debug = self.true_or_false(value)
-                self.actor.sendLine(f'Debug enabled: {self.debug}')
+                self.settings[SETTINGS.DEBUG] = self.true_or_false(value)
+                self.actor.sendLine(f'Debug enabled: {self.settings[SETTINGS.DEBUG]}')
 
             case SETTINGS.LOGOUT:
                 proto = self.actor.protocol
@@ -193,15 +194,6 @@ class Settings:
                 succ = proto.register_account_changes(username, password)
                 self.actor.sendLine(f'Your email is now "{Color.GOOD}{self.email}{Color.NORMAL}".')
 
-
-            case SETTINGS.AUTO_BATTLER:
-                if len(line) == 1:
-                    self.actor.sendLine('Autobattler setting needs an argument (on or off?)')
-                    return
-                value = line[1]
-                self.autobattler = self.true_or_false(value)
-                self.actor.sendLine(f'Autobattler enabled: {self.autobattler}')
-
             case SETTINGS.PROMPT:
                 prompt = ' '.join(original_line.split()[1:])
                 if prompt == ' ' or prompt == '':
@@ -210,7 +202,7 @@ class Settings:
                 if prompt in self.prompt_default:
                     self.prompt = self.prompt_default[prompt]
                 else:
-                    self.prompt = prompt
+                    self.settings[SETTINGS.PROMPT] = prompt
                 #proto.register_account_changes(username, password)
 
 

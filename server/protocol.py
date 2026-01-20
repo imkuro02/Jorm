@@ -5,6 +5,7 @@ import uuid
 import brevo
 import utils
 from actors.player import Player
+from actors.player_only_functions.settings import SETTINGS
 from configuration.config import (
     SKILLS,
     SPLASH_SCREENS,
@@ -18,6 +19,7 @@ from items.equipment import EquipmentBonus
 from items.manager import load_item, save_item
 from quest import OBJECTIVE_TYPES
 from twisted.internet import protocol
+import ast
 
 IAC = b"\xff"  # Interpret as Command
 WILL = b"\xfb"  # Will Perform
@@ -86,7 +88,7 @@ class Protocol(protocol.Protocol):
         # gmcp_data_type = 'Core.Hello'
         # gmcp_data = '{"da": "me", "daa": "nee"}'
         if self.actor != None:
-            if self.actor.settings_manager.debug:
+            if self.actor.settings_manager.get_value(SETTINGS.DEBUG):
                 packet = (
                     ""
                     + "IAC "
@@ -458,19 +460,22 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 if skill not in SKILLS:
                     del self.actor.skill_manager.skills[skill]
 
-            for alias in actor["settings_aliases"]:
-                self.actor.settings_manager.aliases[alias] = actor["settings_aliases"][
-                    alias
+            for _setting in actor["settings"]:
+                self.actor.settings_manager.settings[_setting] = actor["settings"][
+                    _setting
                 ]
 
+            if SETTINGS.ALIAS in self.actor.settings_manager.settings:
+                self.actor.settings_manager.settings[SETTINGS.ALIAS] = ast.literal_eval(actor['settings'][SETTINGS.ALIAS])
+
             # utils.debug_print(actor['settings'])
-            if actor["settings"] != {}:
+            '''if actor["settings"] != {}:
                 self.actor.settings_manager.gmcp = actor["settings"]["gmcp"]
                 self.actor.settings_manager.view_room = actor["settings"]["view_room"]
                 self.actor.settings_manager.view_map = actor["settings"]["view_map"]
                 self.actor.settings_manager.view_ascii_art = actor["settings"]["view_ascii_art"]
                 self.actor.settings_manager.prompt = actor["settings"]["prompt"]
-                self.actor.settings_manager.email = actor["settings"]["email"]
+                self.actor.settings_manager.email = actor["settings"]["email"]'''
 
             bonuses = actor["equipment_bonuses"]
 

@@ -106,22 +106,10 @@ class Database:
         )""")
 
         self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS settings_aliases (
+        CREATE TABLE IF NOT EXISTS settings (
             actor_id TEXT NOT NULL,
             key TEXT NOT NULL,
             value TEXT NOT NULL,
-            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
-        )""")
-
-        self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS settings (
-            actor_id TEXT PRIMARY KEY,
-            gmcp BOOL NOT NULL,
-            view_room BOOL NOT NULL,
-            view_map BOOL NOT NULL,
-            view_ascii_art BOOL NOT NULL,
-            prompt TEXT NOT NULL,
-            email TEXT NOT NULL,
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )""")
 
@@ -473,18 +461,18 @@ class Database:
 
         self.cursor.execute(
             """
-            DELETE FROM settings_aliases WHERE actor_id = ?
+            DELETE FROM settings WHERE actor_id = ?
         """,
             (actor_id,),
         )
 
-        for key in actor.settings_manager.aliases:
-            value = actor.settings_manager.aliases[key]
+        for key in actor.settings_manager.settings:
+            value = actor.settings_manager.settings[key]
             my_dict["key"] = key
-            my_dict["value"] = value
+            my_dict["value"] = str(value)
             self.cursor.execute(
                 """
-                INSERT INTO settings_aliases (
+                INSERT INTO settings (
                     actor_id, key, value
                 ) VALUES (
                     :actor_id, :key, :value
@@ -495,29 +483,6 @@ class Database:
 
         my_dict = {}
         my_dict["actor_id"] = actor_id
-
-        self.cursor.execute(
-            """
-            DELETE FROM settings WHERE actor_id = ?
-        """,
-            (actor_id,),
-        )
-        my_dict["gmcp"] = actor.settings_manager.gmcp
-        my_dict["view_room"] = actor.settings_manager.view_room
-        my_dict["view_map"] = actor.settings_manager.view_map
-        my_dict["view_ascii_art"] = actor.settings_manager.view_ascii_art
-        my_dict["prompt"] = actor.settings_manager.prompt
-        my_dict["email"] = actor.settings_manager.email
-        self.cursor.execute(
-            """
-            INSERT INTO settings (
-                actor_id, gmcp, view_room, view_map, view_ascii_art, prompt, email
-            ) VALUES (
-                :actor_id, :gmcp, :view_room, :view_map, :view_ascii_art, :prompt, :email
-            )
-        """,
-            my_dict,
-        )
 
         # self.cursor.execute('''
         # CREATE TABLE IF NOT EXISTS friend (
@@ -667,21 +632,12 @@ class Database:
 
         self.cursor.execute(
             """
-            SELECT * FROM settings_aliases WHERE actor_id = ?
-        """,
-            (actor_id,),
-        )
-
-        settings_aliases = self.cursor.fetchall()
-
-        self.cursor.execute(
-            """
             SELECT * FROM settings WHERE actor_id = ?
         """,
             (actor_id,),
         )
 
-        settings = self.cursor.fetchone()
+        settings = self.cursor.fetchall()
 
         self.cursor.execute(
             """
@@ -786,24 +742,11 @@ class Database:
                     }
                 }
 
-        my_dict["settings_aliases"] = {}
-        for alias in settings_aliases:
-            # utils.debug_print(alias)
-            my_dict["settings_aliases"][alias[1]] = alias[2]
-
         my_dict["settings"] = {}
-        # utils.debug_print(settings)
-        if settings != None:
-            my_dict["settings"] = {
-                "gmcp": settings[1],
-                "view_room": settings[2],
-                "view_map": settings[3],
-                "view_ascii_art": settings[4],
-                "prompt": settings[5],
-                "email": settings[6],
-            }
+        for alias in settings:
+            # utils.debug_print(alias)
+            my_dict["settings"][alias[1]] = alias[2]
 
-        # utils.debug_print(my_dict['settings_aliases'])
         my_dict["friends"] = []
         if friends != None:
             for friend in friends:
