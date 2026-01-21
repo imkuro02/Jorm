@@ -265,16 +265,19 @@ class Settings:
                     proto.actor.sendLine(f'{Color.BAD}You are currently a guest, you need to set a new username before changing your email{Color.NORMAL}')
                     return
 
-                print(original_line)
+                #print(original_line)
                 email = ' '.join(original_line.split()[1:])
                 if email == '':
-                    self.actor.sendLine(f'Your current email is "{Color.GOOD}{self.email}{Color.NORMAL}".')
+                    if SETTINGS.EMAIL in self.settings:
+                        self.actor.sendLine(f'Your current email is "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".')
+                    else:
+                        self.actor.sendLine(f'You dont have email set, please set your email with "{Color.GOOD}settings email [your@email.com]{Color.NORMAL}".')
                     return
-                self.email = email
+                self.settings[SETTINGS.EMAIL] = email
                 password = proto.password
                 username = proto.username
                 succ = proto.register_account_changes(username, password)
-                self.actor.sendLine(f'Your email is now "{Color.GOOD}{self.email}{Color.NORMAL}".')
+                self.actor.sendLine(f'Your email is now "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".')
 
             case SETTINGS.PROMPT:
                 prompt = ' '.join(original_line.split()[1:])
