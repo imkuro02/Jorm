@@ -9,6 +9,7 @@ import weakref
 import random
 import traceback
 import copy
+from configuration.types import StatType
 
 def debug_print(*args, **kwargs):
     stack = traceback.extract_stack()
@@ -43,7 +44,6 @@ REFTRACKER = RefTracker()
 TOUNLOAD = {}
 
 def calculate_skill_hp_cost(actor, base_value):
-    from configuration.config import StatType
     _cost = int(base_value + (actor.stat_manager.stats[StatType.LVL]*.5))
     return _cost
 
@@ -60,7 +60,6 @@ def calculate_skill_hp_cost(actor, base_value):
     return _cost
 
 def calculate_skill_mp_cost(actor, base_value):
-    from configuration.config import StatType
     return 0
     _cost = int(base_value + (actor.stat_manager.stats[StatType.LVL]*.5))
     return _cost
