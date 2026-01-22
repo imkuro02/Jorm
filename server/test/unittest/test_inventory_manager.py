@@ -1,10 +1,10 @@
-from conftest import DummyItem, make_inventory
+from conftest import make_inventory, make_item
 
 
 def test_add_item_stacks_until_max():
     inv = make_inventory()
-    first = DummyItem("potion", stack=3, stack_max=5)
-    second = DummyItem("potion", stack=4, stack_max=5)
+    first = make_item("potion", stack=3, stack_max=5)
+    second = make_item("potion", stack=4, stack_max=5)
 
     assert inv.add_item(first) is True
     assert inv.add_item(second) is True
@@ -17,8 +17,8 @@ def test_add_item_stacks_until_max():
 
 def test_add_item_respects_limit():
     inv = make_inventory(limit=1)
-    first = DummyItem("apple")
-    second = DummyItem("bread")
+    first = make_item("apple")
+    second = make_item("bread")
 
     assert inv.add_item(first) is True
     assert inv.add_item(second) is False
@@ -26,8 +26,8 @@ def test_add_item_respects_limit():
 
 def test_remove_items_by_id_reduces_stacks():
     inv = make_inventory(limit=5)
-    first = DummyItem("gem", stack=2, stack_max=10)
-    second = DummyItem("gem", stack=3, stack_max=10)
+    first = make_item("gem", stack=2, stack_max=10)
+    second = make_item("gem", stack=3, stack_max=10)
 
     inv.add_item(first, stack_items=False)
     inv.add_item(second, stack_items=False)
