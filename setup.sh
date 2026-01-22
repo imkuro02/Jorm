@@ -1,6 +1,6 @@
 echo Starting whole setup!
 
-(cd server && python3 -m venv env && source env/bin/activate && pip install -r requirements.txt) &&
+(cd server && python3 -m venv env && source env/bin/activate && pip install -e .) &&
 (cd ..) &&
 
 (cd client && python3 -m venv env && source env/bin/activate && pip install -r requirements.txt) &&
