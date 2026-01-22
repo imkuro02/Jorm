@@ -9,7 +9,7 @@ import weakref
 import random
 import traceback
 import copy
-from configuration.config import StatType
+from configuration.types import StatType
 
 def debug_print(*args, **kwargs):
     stack = traceback.extract_stack()

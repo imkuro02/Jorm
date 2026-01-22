@@ -1,0 +1,31 @@
+name: Python Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v7
+      with:
+        python-version-file: server/pyproject.toml
+        enable-cache: true
+
+    - name: Run tests
+      run: |
+        uvx --from . pytest test -v
