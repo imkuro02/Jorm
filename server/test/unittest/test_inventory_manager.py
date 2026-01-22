@@ -11,10 +11,9 @@ def test_add_item_stacks_until_max(inventory_factory, item_factory):
     # Then
     assert first_added is True
     assert second_added is True
-    items = list(inv.items.values())
-    assert len(items) == 2
-    assert items[0].stack == 5
-    assert items[1].stack == 2
+    assert len(inv.items) == 2
+    assert list(inv.items.values())[0].stack == 5
+    assert list(inv.items.values())[1].stack == 2
 
 
 def test_add_item_respects_limit(inventory_factory, item_factory):
@@ -47,6 +46,5 @@ def test_remove_items_by_id_reduces_stacks(inventory_factory, item_factory):
 
     # Then
     assert removed is True
-    remaining = [item for item in inv.items.values() if item.premade_id == "gem"]
-    assert len(remaining) == 1
-    assert remaining[0].stack == 1
+    assert len([item for item in inv.items.values() if item.premade_id == "gem"]) == 1
+    assert [item for item in inv.items.values() if item.premade_id == "gem"][0].stack == 1
