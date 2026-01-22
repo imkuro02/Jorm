@@ -663,9 +663,11 @@ class Actor:
                 sound = sound
                 )
 
-        if self.room.combat != None:
-            if self.room.combat.current_actor == self:
-                self.room.combat.next_turn()
+        # i need a better fix but rn i just wanna push new client man
+        if self.room != None:
+            if self.room.combat != None:
+                if self.room.combat.current_actor == self:
+                    self.room.combat.next_turn()
 
         if type(self).__name__ != "Player":
             if unload:
