@@ -300,7 +300,6 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         self.tmp_pwd = generate_tmp_pwd()
 
         brevo.send_reset_email(to = email, pwd = self.tmp_pwd)
-        print(email, self.tmp_pwd)
 
         self.change_state(self.LOGIN_PASSWORD)
         return
@@ -571,8 +570,6 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         self.actor.new_room_look()
         self.actor.friend_manager.friend_broadcast_login()
         self.actor.finish_turn()
-
-        print(self.actor.settings_manager.settings)
 
     def save_actor(self):
         if self.guest:

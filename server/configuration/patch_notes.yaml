@@ -18,6 +18,7 @@ versions:
     - Skill use text is now standardized (removed flavor text).
     - Some enemies have on combat start skills and on death skills that bypass skill checks.
     - Health, Physical armor, and Magical armor, renamed to Life, Hold and Ward.
+    - Better settings menu
     #- Client password censoring and up arrow for history (not done)
     #- Client shows what you sent when you hit enter (not done)
   '010126':

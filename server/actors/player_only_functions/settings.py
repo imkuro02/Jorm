@@ -1,6 +1,7 @@
-from utils import match_word
+from utils import match_word, Table
 from actors.player_only_functions.checks import check_no_empty_line
 from configuration.config import Color
+import copy
 BANNED_ALIASES = ['settings','help','alias','reset'] # this gets set in actors.player_only_functions.commands
 
 class SETTINGS:
@@ -35,13 +36,14 @@ class Settings:
         self.actor = actor
         self.defaults = {
             SETTINGS.GMCP: True,
-            SETTINGS.ALIAS: {},
             SETTINGS.VIEW_ROOM: True,
             SETTINGS.VIEW_MAP: True,
             SETTINGS.VIEW_ASCII_ART: True,
-            SETTINGS.EMAIL: '',
-            SETTINGS.PROMPT: '0',
             SETTINGS.DEBUG: False,
+
+            SETTINGS.ALIAS: {},
+            SETTINGS.PROMPT: 'p0',
+            SETTINGS.EMAIL: '',
             SETTINGS.COLOR: {
                 '@normal':               '',
                 '@back':                 '\x1b[0;00x',
@@ -92,9 +94,9 @@ class Settings:
         #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
         #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
         self.prompt_default = {
-            '2': '<@green#LIFE#/#LLIFEMAX#@bgreenL@yellow#HOLD#/#LHOLDMAX#@byellowH@cyan#WARD#/#LWARDMAX#@bcyanW@normal>',
-            '1': '<@green#LIFE%#@bgreen% @yellow#HOLD%#@byellow% @cyan#WARD%#@bcyan%@normal>',
-            '0': '<@green#LIFE#@bgreenL@yellow#HOLD#@byellowH@cyan#WARD#@bcyanW@normal>'
+            'p2': '<@green#LIFE#/#LLIFEMAX#@bgreenL@yellow#HOLD#/#LHOLDMAX#@byellowH@cyan#WARD#/#LWARDMAX#@bcyanW@normal>',
+            'p1': '<@green#LIFE%#@bgreen% @yellow#HOLD%#@byellow% @cyan#WARD%#@bcyan%@normal>',
+            'p0': '<@green#LIFE#@bgreenL@yellow#HOLD#@byellowH@cyan#WARD#@bcyanW@normal>'
         }
 
         self.settings = {}
@@ -282,16 +284,54 @@ class Settings:
             case SETTINGS.PROMPT:
                 prompt = ' '.join(original_line.split()[1:])
                 if prompt == ' ' or prompt == '':
-                    self.actor.sendLine(f'Current prompt is: {self.prompt}', color = False)
+                    self.actor.sendLine(f'Current prompt is: "{self.get_value(SETTINGS.PROMPT)}"', color = False)
+                    if self.get_value(SETTINGS.PROMPT) in self.prompt_default:
+                        self.actor.sendLine(f'\nPrompt {self.get_value(SETTINGS.PROMPT)} is a builting prompt\nWhich looks like this:"{self.prompt_default[self.get_value(SETTINGS.PROMPT)]}"', color = False)
                     return
                 if prompt in self.prompt_default:
-                    self.prompt = self.prompt_default[prompt]
+                    self.settings[SETTINGS.PROMPT] = self.defaults[SETTINGS.PROMPT]
                 else:
                     self.settings[SETTINGS.PROMPT] = prompt
                 #proto.register_account_changes(username, password)
 
 
-
-@check_no_empty_line
 def command_settings(self, line):
+    if line == '':
+        output = ''
+
+        s0 = self.settings_manager.defaults
+        s1 = self.settings_manager.settings
+        t = Table(2,1)
+
+        t.add_data('Setting')
+        t.add_data('Value')
+
+        
+        for i in s0:
+            
+            _default = True
+            s = s0
+            col = Color.BAD
+            if i in s1:
+                _default = False
+                s = s1
+                col = Color.GOOD
+
+            
+            
+            t.add_data(i, col = col)
+            if i in [SETTINGS.COLOR, SETTINGS.ALIAS, SETTINGS.EMAIL, SETTINGS.PROMPT]:
+                t.add_data(f'Special')
+                continue
+            t.add_data(s[i])
+   
+
+
+        
+        output = t.get_table() + 'Type "settings [Setting]" to view vlaue of "Special"'
+        self.sendLine(output)
+        return
+
+
+
     self.settings_manager.command_settings(line)
