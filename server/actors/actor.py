@@ -729,10 +729,15 @@ class Actor:
             players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player']
 
         if send_to == 'room_not_party':
-            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player' and actor.party_manager.get_party_id() != self.party_manager.get_party_id()]
+            
+            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player']
+            #players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player' and actor.party_manager.get_party_id() != self.party_manager.get_party_id()]
 
         if send_to == 'room_party':
-            players = [actor for actor in self.room.actors.values() if type(actor).__name__ == 'Player' and  actor.party_manager.get_party_id() == self.party_manager.get_party_id()]
+            if self.party_manager.party == None:
+                players = [self]
+            else:
+                players = self.party_manager.party.participants.values()
 
         #utils.debug_print(players)
         for player in players:
@@ -772,7 +777,7 @@ class Actor:
             for val in self.affect_manager.affects.values():
                 if val.dispellable and val.resisted_by != None:
                     return
-            self.heal(value = self.stat_manager.stats[StatType.LVL]*3)
+            self.heal(value = self.stat_manager.stats[StatType.LVL]*1)
             return
         if self != self.room.combat.current_actor:
             #utils.debug_print('not my turn')

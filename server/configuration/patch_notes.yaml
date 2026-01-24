@@ -1,4 +1,11 @@
 versions:
+  '240126':
+    id: '090126'
+    title: Bugs
+    unixtime: 1761899677
+    features:
+    - All players now count as allies when not in a party
+    - Dispel can no longer be used to grief other players by dispelling their buffs
   '090126':
     id: '090126'
     title: New world
