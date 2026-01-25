@@ -171,10 +171,10 @@ class CombatEvent:
                 pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
 
                 if phy_arm_broke:
-                    output = f'{Color.ERROR}Your {StatType.name[StatType.PHYARMOR]} has broken{Color.NORMAL}'
+                    output = f'{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.PHYARMOR]} has broken{Color.NORMAL}'
                     pop.damage_taker_actor.sendLine(f'{output}', sound = sound, msg_type = [MsgType.COMBAT])
                 if mag_arm_broke:
-                    output = f'{Color.ERROR}Your {StatType.name[StatType.MAGARMOR]} has broken{Color.NORMAL}'
+                    output = f'{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.MAGARMOR]} has broken{Color.NORMAL}'
                     pop.damage_taker_actor.sendLine(f'{output}', sound = sound, msg_type = [MsgType.COMBAT])
                 #if phy_arm_broke:
                 #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.PHYARMOR]}{Color.BACK} has broken'

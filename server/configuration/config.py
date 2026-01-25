@@ -207,6 +207,7 @@ class Color:
     BAD =                   '@bpurple'
 
     IMPORTANT =             '@yellow'
+    
     TOOLTIP =               '@tip'
     DESCRIPTION =           '@cyan'
 
@@ -243,6 +244,7 @@ class Color:
     DAMAGE_HEAL =           '@bgreen'
 
     COMBAT_TURN =           '@bred'
+    COMBAT_IMPORTANT =      '@bgred'
 
     stat = {
         StatType.HP:        '@bgreen',
