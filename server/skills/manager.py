@@ -1,7 +1,7 @@
 import utils
 import random
 
-from configuration.config import SKILLS, DamageType, ActorStatusType, StatType, Audio
+from configuration.config import SKILLS, DamageType, ActorStatusType, StatType, Audio, Color
 import skills.skills
 
 
@@ -106,7 +106,7 @@ def skill_checks(user, target, skill_id):
         hp_cost = hp_cost + int(user.stat_manager.stats[StatType.LVL]*.5)
         if hp_cost > user.stat_manager.stats[StatType.HP]+1:
 
-            error(user, f'You need atleast {hp_cost+1} HP to use {skill_name}')
+            error(user, f'You need atleast {hp_cost+1} {Color.stat[StatType.HP]}{StatType.name[StatType.HP]}{Color.BACK} to use {skill_name}')
             return False
     #if 'mp_cost' in skill['script_values']:
 

@@ -235,7 +235,7 @@ class Combat:
 
     def initiative(self):
 
-        show_turns_and_stuff = True
+        show_turns_and_stuff = False
 
 
 

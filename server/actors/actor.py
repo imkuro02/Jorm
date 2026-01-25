@@ -813,16 +813,18 @@ class Actor:
                 else:
                     _prediction = ''
 
+                new_line = ' '#'\n{_len}'
+
                 if par == self:
                     if _prediction.strip() == '':
                         output += _prompt+' '+'You'+f' '+_prediction + '\n'
                     else:
-                        output += _prompt+' '+'You'+f'\n{_len}'+_prediction + '\n'
+                        output += _prompt+' '+'You'+f'{new_line}'+_prediction + '\n'
                 else:
                     if _prediction.strip() == '':
                         output += _prompt+' '+par.pretty_name()+f' '+_prediction + '\n'
                     else:
-                        output += _prompt+' '+par.pretty_name()+f'\n{_len}'+_prediction + '\n'
+                        output += _prompt+' '+par.pretty_name()+f'{new_line}'+_prediction + '\n'
 
             output = output[:-1] if output.endswith("\n") else output
 

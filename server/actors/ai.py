@@ -87,15 +87,17 @@ class AI:
                 prediction_string = ''
             else:
                 if not self.has_prediction():
-                    prediction_string = 'Idle'
+                    prediction_string = '(idle)'
                 else:
-                    if self.prediction_target == self.actor:
-                        prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]}'
-                    elif self.prediction_target == who_checks:
-                        prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on you'
-                    else:
-                        prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on {self.prediction_target.pretty_name()}'
+                    prediction_string = f'(will use {SKILLS[self.prediction_skill]["name"]})'
 
+                    #if self.prediction_target == self.actor:
+                    #    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]}'
+                    #elif self.prediction_target == who_checks:
+                    #    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on you'
+                    #else:
+                    #    prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]} on {self.prediction_target.pretty_name()}'
+#
             prediction_string = prediction_string + ' '
 
 
@@ -438,7 +440,7 @@ class CowardAI(AI):
         if len(self.actor.room.exits) >= 1:
             stats = self.actor.stat_manager.stats
             roll = (100 - (stats[StatType.HP] / stats[StatType.HPMAX] * 100)) / 5
-            utils.debug_print(roll)
+            #utils.debug_print(roll)
             if roll > random.randint(1,100):
                 #random_dir = random.choice(self.actor.room.exits)
                 self.actor.simple_broadcast('',f'{self.actor.pretty_name()} flees!')

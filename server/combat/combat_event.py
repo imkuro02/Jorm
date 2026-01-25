@@ -138,6 +138,10 @@ class CombatEvent:
                 output_other = output_other.replace('#G#','healed')
                 output_other = output_other.replace('#L#','lost')
 
+                #output_raw = output_other = output_other.replace('#A#',f'')
+                #output_raw = output_other.replace('#G#','healed')
+                #output_raw = output_other.replace('#L#','lost')
+
 
 
                 '''
@@ -157,6 +161,7 @@ class CombatEvent:
                 sound = Audio.HURT
                 #output = f'{pop.damage_taker_actor.name}  {pop.damage_hp}hp  {pop.damage_pa}pa {pop.damage_ma}ma'
                 pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
+
         
 
         
