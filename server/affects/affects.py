@@ -131,16 +131,16 @@ class AffectDelayedAction(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, skills_to_use_objects):
         super().__init__(affect_source_actor, affect_target_actor, name, description, turns, dispellable = False)
         self.skills_to_use_objects = skills_to_use_objects
-        self.get_prediction_string_append = f'will finish in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
+        self.get_prediction_string_append = f'will {self.skills_to_use_objects[0].name} in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
         self.get_prediction_string_clear = True
 
     def set_turn(self):
         super().set_turn()
-        self.get_prediction_string_append = f'will finish in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
+        self.get_prediction_string_append = f'will {self.skills_to_use_objects[0].name} in {self.turns+1} turn{"s" if self.turns > 1 else ""}'
         self.get_prediction_string_clear = True
         self.affect_target_actor.simple_broadcast(
-            f'You are charging an action',
-            f'{self.affect_target_actor.pretty_name()} is charging an action')
+            f'You are Charging {self.skills_to_use_objects[0].name}',
+            f'{self.affect_target_actor.pretty_name()} is Charging {self.skills_to_use_objects[0].name}')
         self.affect_target_actor.finish_turn()
 
     def on_finished(self, silent = False):

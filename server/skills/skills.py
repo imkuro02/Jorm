@@ -123,6 +123,10 @@ class Skill:
             return False
         delay = 0
         delayed_actions = []
+
+        #delay = self.user.stat_manager.stats[StatType.LVL]
+        #delayed_actions = [self]
+
         if 'delay' in skill['script_values']:
             delay = int(self.script_values['delay'][self.users_skill_level])
             delayed_actions = [self]
@@ -130,11 +134,11 @@ class Skill:
             return False
 
         if delayed_actions != []:
-            print('delayed')
+            #print('delayed')
             delayed_actions_affect = affects.AffectDelayedAction(
                 affect_source_actor = self.user,
                 affect_target_actor = self.user,
-                name = 'Charging an action', description = f'Skills will be used when this affliction is over',
+                name = f'Charging {delayed_actions[0].name}', description = f'Skills will be used when this affliction is over',
                 turns = delay-1,
                 skills_to_use_objects = delayed_actions
             )
