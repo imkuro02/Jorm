@@ -6,10 +6,12 @@ from configuration.config import ItemType, EquipmentSlotType, StatType, Audio
 def command_equipment(self, line):
     # if you type equip item, it will wear that item
     if line != '':
-        item = self.get_item(line, search_mode = 'equipable')[0]
+        item = self.get_item(line, search_mode = 'equipable')
         if item == None:
             self.sendLine('Equip what?', sound = Audio.ERROR)
             return
+        
+        item = item[0]
 
         if item.equiped:
             self.inventory_unequip(item)
