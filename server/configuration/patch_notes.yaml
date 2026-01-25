@@ -6,6 +6,8 @@ versions:
     features:
     - All players now count as allies when not in a party
     - Dispel can no longer be used to grief other players by dispelling their buffs
+    - Enemy intentions no longer display target
+    - Armor break notification message (without sound)
   '090126':
     id: '090126'
     title: New world

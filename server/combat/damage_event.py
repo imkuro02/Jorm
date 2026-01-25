@@ -1,7 +1,8 @@
 
-from configuration.config import ActorStatusType, StatType, DamageType
+from configuration.config import ActorStatusType, StatType, DamageType, MsgType, Audio
 from utils import indent, IndentType
 from combat.combat_event import CombatEvent
+import random
 class Damage:
     def __init__(self,
                  damage_taker_actor,
@@ -66,6 +67,21 @@ class Damage:
 
         if self.damage_value <= 0:
             return self
+
+       
+        
+        #if self.damage_type != DamageType.HEALING:
+        #    _flow = int(self.damage_taker_actor.stat_manager.stats[StatType.FLOW])
+        #    _roll = random.randint(0,100)
+        #    if _roll <= _flow:
+        #        self.damage_type = DamageType.CANCELLED
+        #        self.damage_value = 0
+        #        sound = Audio.WALK
+        #        self.damage_taker_actor.simple_broadcast('You dodge', f'{self.damage_taker_actor.pretty_name()} dodges', sound = sound, msg_type = [MsgType.COMBAT])
+        #        return self
+                
+
+        
 
         match self.damage_type:
             # meaning the damage was completely cancelled by something

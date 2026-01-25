@@ -275,28 +275,29 @@ class Actor:
 
     def add_prompt_syntax(self, prompt_syntax):
         justing = 3
-        just_space = ' '
+        no_armor = '   ' # '0'
+        just_space = '_'
         translations = {
-            '#LIFE#':             str(self.stat_manager.stats[StatType.HP]).rjust(justing, just_space),
+            '#LIFE#':             no_armor.rjust(justing, just_space) if self.stat_manager.stats[StatType.HP] == 0 else str(self.stat_manager.stats[StatType.HP]).rjust(justing, just_space),
             '#LIFEMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).rjust(justing, just_space),
 
             #'#MP#':             str(self.stat_manager.stats[StatType.MP]).rjust(justing, just_space),
             #'#MPMAX#':          str(self.stat_manager.stats[StatType.MPMAX]).rjust(justing, just_space),
 
-            '#HOLD#':         str(self.stat_manager.stats[StatType.PHYARMOR]).rjust(justing, just_space),
+            '#HOLD#':         no_armor.rjust(justing, just_space) if self.stat_manager.stats[StatType.PHYARMOR] == 0 else str(self.stat_manager.stats[StatType.PHYARMOR]).rjust(justing, just_space),
             '#HOLDMAX#':      str(self.stat_manager.stats[StatType.PHYARMORMAX]).rjust(justing, just_space),
 
-            '#WARD#':         str(self.stat_manager.stats[StatType.MAGARMOR]).rjust(justing, just_space),
+            '#WARD#':         no_armor.rjust(justing, just_space) if self.stat_manager.stats[StatType.MAGARMOR] == 0 else str(self.stat_manager.stats[StatType.MAGARMOR]).rjust(justing, just_space),
             '#WARDMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).rjust(justing, just_space),
 
             '#THREAT#':         str(self.stat_manager.stats[StatType.THREAT]).rjust(justing, just_space),
             '#LTHREAT#':         str(self.stat_manager.stats[StatType.THREAT]).ljust(justing, just_space),
 
             # int((cur_value / max_value) * 100)
-            '#LIFE%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing, just_space),
+            '#LIFE%#':             str(no_armor if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).rjust(justing, just_space),
             #'#MP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).rjust(justing, just_space),
-            '#HOLD%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing, just_space),
-            '#WARD%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing, just_space),
+            '#HOLD%#':         str(no_armor if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).rjust(justing, just_space),
+            '#WARD%#':         str(no_armor if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).rjust(justing, just_space),
 
             '#LLIFE#':             str(self.stat_manager.stats[StatType.HP]).ljust(justing, just_space),
             '#LLIFEMAX#':          str(self.stat_manager.stats[StatType.HPMAX]).ljust(justing, just_space),
@@ -311,10 +312,10 @@ class Actor:
             '#LWARDMAX#':      str(self.stat_manager.stats[StatType.MAGARMORMAX]).ljust(justing, just_space),
 
             # int((cur_value / max_value) * 100)
-            '#LLIFE%#':             str('0' if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).ljust(justing, just_space),
+            '#LLIFE%#':             str(no_armor if self.stat_manager.stats[StatType.HPMAX] <= 0 else int((self.stat_manager.stats[StatType.HP] / self.stat_manager.stats[StatType.HPMAX]) * 100)).ljust(justing, just_space),
             #'#LMP%#':             str('0' if self.stat_manager.stats[StatType.MPMAX] <= 0 else int((self.stat_manager.stats[StatType.MP] / self.stat_manager.stats[StatType.MPMAX]) * 100)).ljust(justing, just_space),
-            '#LHOLD%#':         str('0' if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing, just_space),
-            '#LWARD%#':         str('0' if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing, just_space),
+            '#LHOLD%#':         str(no_armor if self.stat_manager.stats[StatType.PHYARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.PHYARMOR] / self.stat_manager.stats[StatType.PHYARMORMAX]) * 100)).ljust(justing, just_space),
+            '#LWARD%#':         str(no_armor if self.stat_manager.stats[StatType.MAGARMORMAX] <= 0 else int((self.stat_manager.stats[StatType.MAGARMOR] / self.stat_manager.stats[StatType.MAGARMORMAX]) * 100)).ljust(justing, just_space),
 
             '#GRIT#':             str(self.stat_manager.stats[StatType.GRIT]).rjust(justing, just_space),
             '#FLOW#':             str(self.stat_manager.stats[StatType.FLOW]).rjust(justing, just_space),
@@ -371,14 +372,14 @@ class Actor:
 
         match type(self).__name__:
             case "Enemy":
-                output = output + f'{Color.NAME_ENEMY}{self.name}{Color.BACK}'
+                output = output + f'{Color.NORMAL}{self.name}{Color.BACK}'
             case "Player":
                 if self.admin:
                     output = output + f'{Color.NAME_ADMIN}{self.name}{Color.BACK}'
                 else:
                     output = output + f'{Color.NAME_PLAYER}{self.name}{Color.BACK}'
             case "Npc":
-                output = output + f'{Color.NAME_NPC}{self.name}{Color.BACK}'
+                output = output + f'{Color.NORMAL}{self.name}{Color.BACK}'
 
         #if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
@@ -869,7 +870,7 @@ class Actor:
             
             _icon = self.get_icon(who_checks = par)
             if _icon != '': _icon = '\n' + _icon
-            output_other = f'{self.prompt(par)} {Color.COMBAT_TURN}{self.pretty_name()}\'s turn{Color.NORMAL}{_icon}'
+            output_other = f'{self.prompt(par)} {self.pretty_name()}\'s turn{Color.NORMAL}{_icon}'
             par.sendLine(output_other)
             
         
@@ -880,7 +881,7 @@ class Actor:
         self.inventory_manager.set_turn()
         #self.stat_manager.stats[StatType.THREAT] = int(self.stat_manager.stats[StatType.THREAT]*.90)
 
-    def sendLine(self, line, msg_type = None):
+    def sendLine(self, line, color=True, sound=None, msg_type=None):
         utils.debug_print(f'sendLine called in a object class Npc function? line: {line}')
 
     def sendSound(self, sfx):
