@@ -87,7 +87,7 @@ class AI:
                 prediction_string = ''
             else:
                 if not self.has_prediction():
-                    prediction_string = 'will do nothing'
+                    prediction_string = 'Idle'
                 else:
                     if self.prediction_target == self.actor:
                         prediction_string = f'will use {SKILLS[self.prediction_skill]["name"]}'

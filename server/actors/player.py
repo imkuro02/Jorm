@@ -296,7 +296,7 @@ class UpdateChecker:
         if self.actor.status != ActorStatusType.FIGHTING:
             _map = self.actor.show_prompts(order = self.actor.room.actors.values(), no_predictions = True, return_gmcp = True)
         else:
-            _map = self.actor.show_prompts(order = None, no_predictions = True, return_gmcp = True)
+            _map = self.actor.show_prompts(order = None, no_predictions = False, return_gmcp = True)
             _cur_actor = self.actor.room.combat.current_actor
             _round = self.actor.room.combat.round 
             if _cur_actor == self.actor:
