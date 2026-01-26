@@ -11,7 +11,7 @@ class town_guard_npc(Npc):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print(self.__dict__)
+        #print(self.__dict__)
         self.time_exisiting = 0
         self.actors = len(self.room.actors.values())
 

@@ -957,8 +957,9 @@ class ReforgePlusDamageTypeMinusDamageTypes(AffectReforge):
 
 class ReforgeConvertDamageType(AffectReforge):
     def deal_damage(self, damage_obj):
-        if damage_obj.damage_type == self.reforge_variables["var_a"]:
-            damage_obj.damage_type = self.reforge_variables["var_b"]
+        #print(self.reforge_variables["var_a"],damage_obj.damage_type)
+        if 'dmg_'+self.reforge_variables["var_a"] == damage_obj.damage_type:
+            damage_obj.damage_type = 'dmg_'+self.reforge_variables["var_b"]
         return damage_obj
 
 
