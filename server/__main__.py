@@ -1,12 +1,15 @@
-from twisted.internet import reactor, protocol, ssl, task
-from protocol import Protocol
-from world import World
-from database import Database
-from utils import logging, Table
 import configuration.config as config
+from database.database import Database
+from systems.protocol import Protocol
+from systems.utils import Table, logging
+from systems.world import World
+from twisted.internet import protocol, reactor, ssl, task
+
 config.load()
 import time
-import utils
+
+import systems.utils
+
 
 class ServerFactory(protocol.Factory):
     def __init__(self):
@@ -16,45 +19,44 @@ class ServerFactory(protocol.Factory):
         self.ticks_passed = 0
         self.runtime = time.time()
         self.start = time.time()
-        self.tickrate: int = 30*1
+        self.tickrate: int = 30 * 1
         self.world = World(self)
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)
 
-        logging.info('Server started')
-
+        logging.info("Server started")
 
         # where the actors will be stored for rank command
         self.ranks = {}
 
     def tick(self):
-
         # kick afk users after 16 min, notified at min 15
         to_disconnect = []
         for i in self.protocols:
-            if i.tick_since_last_message == (self.ticks_passed - (30*60*30)):
-                i.sendLine('@yellow!!!@normal You are @redAFK@normal and will be logged out soon @yellow!!!@normal')
-            if i.tick_since_last_message == (self.ticks_passed - (30*60*31)):
+            if i.tick_since_last_message == (self.ticks_passed - (30 * 60 * 30)):
+                i.sendLine(
+                    "@yellow!!!@normal You are @redAFK@normal and will be logged out soon @yellow!!!@normal"
+                )
+            if i.tick_since_last_message == (self.ticks_passed - (30 * 60 * 31)):
                 to_disconnect.append(i)
         for i in to_disconnect:
             i.disconnect()
-            #i.connectionLost('AFK')
-
+            # i.connectionLost('AFK')
 
         self.ticks_passed += 1
         self.world.tick()
-        #for room in self.world.rooms.values():
+        # for room in self.world.rooms.values():
         #    room.tick()
         if self.ticks_passed % (30 * 120) == 0 or self.ticks_passed == 10:
             for i in self.protocols:
                 if i.actor != None:
-                    #self.db.write_actor(i.actor)
+                    # self.db.write_actor(i.actor)
                     i.save_actor()
             self.ranks = self.db.find_all_accounts()
 
         self.runtime = time.time() - self.start
-        #if self.runtime > self.ticks_passed/30:
-        #utils.debug_print(self.ticks_passed, self.runtime, self.ticks_passed/30 , '\r')
+        # if self.runtime > self.ticks_passed/30:
+        # systems.utils.debug_print(self.ticks_passed, self.runtime, self.ticks_passed/30 , '\r')
 
     def buildProtocol(self, addr):
         return Protocol(self)
@@ -64,21 +66,22 @@ class ServerFactory(protocol.Factory):
             if client.username != None:
                 client.sendLine(message)
 
-#for i in config.ICONS:
+
+# for i in config.ICONS:
 #    print('\n\n')
-#    print(utils.add_color(config.ICONS[i]))
+#    print(systems.utils.add_color(config.ICONS[i]))
 #
-if __name__ == '__main__':
+if __name__ == "__main__":
     factory = ServerFactory()
 
-    ssl_context = ssl.DefaultOpenSSLContextFactory('server.key', 'server.crt')
+    ssl_context = ssl.DefaultOpenSSLContextFactory("server.key", "server.crt")
 
     # Listen on SSL port
     reactor.listenSSL(4000, factory, ssl_context)
     # AND NON SSL MUAHHAHA TELNET LETSGOOOO
     reactor.listenTCP(4001, factory)
-    utils.debug_print("Server started on port 4000 with SSL and 4001 non SSL")
+    systems.utils.debug_print("Server started on port 4000 with SSL and 4001 non SSL")
     reactor.run()
 
     factory.world.game_time.save_game_time()
-    utils.debug_print('Exiting...')
+    systems.utils.debug_print("Exiting...")

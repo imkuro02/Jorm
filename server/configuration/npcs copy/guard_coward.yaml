@@ -1,7 +1,0 @@
-guard_coward:
-  tree:
-    start:
-      dialog: 
-        - line: |
-            says "Step away from the gate"
-    

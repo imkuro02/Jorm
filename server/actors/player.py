@@ -3,7 +3,7 @@ import time
 
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands
-import utils
+import systems.utils
 from actors.actor import Actor
 
 # from actors.enemy_ai import AIBasic
@@ -17,10 +17,10 @@ from actors.player_only_functions.commands import (
     shortcuts_to_commands,
     translations,
 )
-from actors.player_only_functions.settings import Settings, SETTINGS
+from actors.player_only_functions.settings import SETTINGS, Settings
 from configuration.config import ActorStatusType, Color, MsgType, StatType
-from trade import TradeManager
-from utils import unload
+from systems.trade import TradeManager
+from systems.utils import unload
 
 
 class FriendManager:
@@ -62,7 +62,7 @@ class FriendManager:
     def friend_list(self):
         self.owner.sendLine("Friend list:")
         accs = []
-        t = utils.Table(2, 3)
+        t = systems.utils.Table(2, 3)
         t.add_data("Name")
         t.add_data("Status")
         online = False
@@ -159,12 +159,12 @@ class UpdateChecker:
 
         output = output[:-1] if output.endswith("\n") else output
         # output = output + self.actor.get_affects(self.actor)
-        output = utils.add_color(output)
+        output = systems.utils.add_color(output)
         # output = {"actors":output}
 
         self.actor.protocol.send_gmcp(output, "Actors")
 
-    '''
+    """
     def tick_show_map(self):
         split = ","
 
@@ -275,13 +275,14 @@ class UpdateChecker:
                 "quest_turn_in": int(quest_turn_in),
             }
 
-        # utils.debug_print(_grid)
+        # systems.utils.debug_print(_grid)
         if self.last_grid == _grid:
             return
         self.last_grid = _grid
         # self.actor.sendLine(str(_grid))
         self.protocol.send_gmcp(_grid, "Map")
-'''
+"""
+
     def tick_send_time(self):
         time = self.actor.room.world.game_time.get_game_time()
         self.actor.protocol.send_gmcp(
@@ -291,26 +292,31 @@ class UpdateChecker:
     def tick(self):
         if self.actor.protocol == None:
             return
-        
-        
-        if self.actor.status != ActorStatusType.FIGHTING:
-            _map = self.actor.show_prompts(order = self.actor.room.actors.values(), no_predictions = True, return_gmcp = True)
-        else:
-            _map = self.actor.show_prompts(order = None, no_predictions = False, return_gmcp = True)
-            _cur_actor = self.actor.room.combat.current_actor
-            _round = self.actor.room.combat.round 
-            if _cur_actor == self.actor:
-                _map = f'Round {_round}, Your turn\n'+_map
-            else:
-                _map = f'Round {_round}, {_cur_actor.pretty_name()}\' turn\n'+_map
 
-        self.actor.protocol.send_gmcp(utils.add_color(_map), "OUTPUT_COMBAT")
+        if self.actor.status != ActorStatusType.FIGHTING:
+            _map = self.actor.show_prompts(
+                order=self.actor.room.actors.values(),
+                no_predictions=True,
+                return_gmcp=True,
+            )
+        else:
+            _map = self.actor.show_prompts(
+                order=None, no_predictions=False, return_gmcp=True
+            )
+            _cur_actor = self.actor.room.combat.current_actor
+            _round = self.actor.room.combat.round
+            if _cur_actor == self.actor:
+                _map = f"Round {_round}, Your turn\n" + _map
+            else:
+                _map = f"Round {_round}, {_cur_actor.pretty_name()}' turn\n" + _map
+
+        self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
 
         _map = self.actor.command_map("", return_gmcp=True)
-        self.actor.protocol.send_gmcp(utils.add_color(_map), "MAP")
+        self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "MAP")
 
-        #_look = self.actor.command_look("", return_gmcp=True)
-        #self.actor.protocol.send_gmcp(utils.add_color(_look), "LOOK_ROOM")
+        # _look = self.actor.command_look("", return_gmcp=True)
+        # self.actor.protocol.send_gmcp(systems.utils.add_color(_look), "LOOK_ROOM")
 
         # self.tick_show_map()
         self.tick_send_time()
@@ -340,9 +346,9 @@ class Player(Actor):
         self.current_dialog = None
 
         # meta data
-        self.date_of_creation = utils.get_unix_timestamp()
-        self.date_of_last_login_previous = utils.get_unix_timestamp()
-        self.date_of_last_login = utils.get_unix_timestamp()
+        self.date_of_creation = systems.utils.get_unix_timestamp()
+        self.date_of_last_login_previous = systems.utils.get_unix_timestamp()
+        self.date_of_last_login = systems.utils.get_unix_timestamp()
         self.time_in_game = 0
         self.explored_rooms = []
 
@@ -435,7 +441,10 @@ class Player(Actor):
             msg_type = " ".join(_msg_type)
             self.msg_history[len(self.msg_history)] = {"type": msg_type, "line": line}
 
-        if self.settings_manager.get_value(SETTINGS.DEBUG) == False and msg_type == MsgType.DEBUG:
+        if (
+            self.settings_manager.get_value(SETTINGS.DEBUG) == False
+            and msg_type == MsgType.DEBUG
+        ):
             return
 
         if sound != None:
@@ -445,10 +454,12 @@ class Player(Actor):
             # start = time.time()
 
             # this line is responsible for making the length of text 28 chars or smth
-            line = utils.add_line_breaks(line)
+            line = systems.utils.add_line_breaks(line)
 
-            # utils.debug_print((time.time()-start)*1000)
-            line = utils.add_color(line, color_settings = self.settings_manager.get_value(SETTINGS.COLOR))
+            # systems.utils.debug_print((time.time()-start)*1000)
+            line = systems.utils.add_color(
+                line, color_settings=self.settings_manager.get_value(SETTINGS.COLOR)
+            )
             # line += f'\n'
 
             # send null byte several times to indicate new line
@@ -509,26 +520,24 @@ class Player(Actor):
     def queue_handle(self, line):
         self.queued_lines.append(line)
 
-    def try_to_use(self,line):
+    def try_to_use(self, line):
         from skills.manager import get_skills
-        
-        all_words = line.split(' ')
-        print('all words:', all_words)
+
+        all_words = line.split(" ")
+        print("all words:", all_words)
 
         id_to_name, name_to_id = get_skills()
         list_of_skill_names = [skill for skill in name_to_id.keys()]
 
-        for i in range(0,len(all_words)):
-            best_match, best_score = utils.match_word(
-                ' '.join(all_words[i::]), name_to_id.keys(), get_score=True
+        for i in range(0, len(all_words)):
+            best_match, best_score = systems.utils.match_word(
+                " ".join(all_words[i::]), name_to_id.keys(), get_score=True
             )
 
-            print('matching:', all_words, 'found:', best_match, 'score:', best_score)
-
+            print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
-        
-        # utils.debug_print(line)
+        # systems.utils.debug_print(line)
         for trans in translations:
             if line.startswith(trans):
                 line = translations[trans] + line[len(trans) :]
@@ -589,16 +598,12 @@ class Player(Actor):
                         self.sendLine("An alias cannot trigger another alias")
                         continue
                     self.queued_lines.append(l)
-                    # utils.debug_print(l)
+                    # systems.utils.debug_print(l)
 
                 return
 
-        
-        
-        
         full_line = line
         line = " ".join(line.split()[1::]).strip()
-        
 
         if full_line in shortcuts_to_commands:
             self.handle(shortcuts_to_commands[command])
@@ -615,19 +620,21 @@ class Player(Actor):
 
         sorted_dict = dict(sorted(commands.items(), key=lambda item: len(item[0])))
         sorted_dict = dict(
-            sorted(commands.items(), key=lambda item: (item[0].startswith('_'), len(item[0])))
+            sorted(
+                commands.items(),
+                key=lambda item: (item[0].startswith("_"), len(item[0])),
+            )
         )
 
-        best_match, best_score = utils.match_word(
+        best_match, best_score = systems.utils.match_word(
             command, sorted_dict.keys(), get_score=True
         )
 
-        
-        if best_score < 90 or command[0]!=best_match[0]:
+        if best_score < 90 or command[0] != best_match[0]:
             if self.status == ActorStatusType.FIGHTING:
-                if self.command_use(full_line, silent = True):
+                if self.command_use(full_line, silent=True):
                     return
-            
+
             self.sendLine(
                 f'You wrote "{command}" did you mean "{best_match}"?\nUse "help {best_match}" to learn more about this command.'
             )

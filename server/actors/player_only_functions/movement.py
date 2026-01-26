@@ -181,7 +181,7 @@ def command_go(self, line = '', room_id = None):
         self.room.move_actor(par, silent = True)
         par.finish_turn(force_cooldown = True)
         par.sendSound(Audio.walk())
-        utils.debug_print(par)
+        systems.utils.debug_print(par)
     '''
 
     # show participants and or yourself the room

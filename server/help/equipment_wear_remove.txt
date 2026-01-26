@@ -1,7 +1,0 @@
-................................................................................
-Title: Equipment, Wear and Remove 
-
-Equipment syntax: "equipment" 
-Wear syntax:      "equipment [item in inventory]" 
-Remove syntax:    "equipment [worn item]" 
-................................................................................

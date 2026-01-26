@@ -1,35 +1,55 @@
-from utils import match_word, Table
+import copy
+
 from actors.player_only_functions.checks import check_no_empty_line
 from configuration.config import Color
-import copy
-BANNED_ALIASES = ['settings','help','alias','reset'] # this gets set in actors.player_only_functions.commands
+from systems.utils import Table, match_word
+
+BANNED_ALIASES = [
+    "settings",
+    "help",
+    "alias",
+    "reset",
+]  # this gets set in actors.player_only_functions.commands
+
 
 class SETTINGS:
-    GMCP = 'gmcp'
-    ALIAS = 'alias'
-    LOOK = 'look'
-    VIEW_ROOM = 'viewroom'
-    VIEW_MAP = 'viewmap'
-    VIEW_ASCII_ART = 'viewasciiart'
-    PVP = 'pvp'
-    RESET = 'reset'
-    LOGOUT = 'logout'
-    DEBUG = 'debug'
-    PWD = 'password'
-    USR = 'username' # not in LIST_SETTINGS
-    EMAIL = 'email'
-    AUTO_BATTLER = 'autobattler'
-    PROMPT = 'prompt'
-    COLOR = 'color'
+    GMCP = "gmcp"
+    ALIAS = "alias"
+    LOOK = "look"
+    VIEW_ROOM = "viewroom"
+    VIEW_MAP = "viewmap"
+    VIEW_ASCII_ART = "viewasciiart"
+    PVP = "pvp"
+    RESET = "reset"
+    LOGOUT = "logout"
+    DEBUG = "debug"
+    PWD = "password"
+    USR = "username"  # not in LIST_SETTINGS
+    EMAIL = "email"
+    AUTO_BATTLER = "autobattler"
+    PROMPT = "prompt"
+    COLOR = "color"
     LIST_SETTINGS = [
-        GMCP, ALIAS, VIEW_ROOM, VIEW_MAP, VIEW_ASCII_ART, PVP, RESET, LOGOUT, DEBUG, PWD, USR, EMAIL, PROMPT, COLOR, #AUTO_BATTLER
+        GMCP,
+        ALIAS,
+        VIEW_ROOM,
+        VIEW_MAP,
+        VIEW_ASCII_ART,
+        PVP,
+        RESET,
+        LOGOUT,
+        DEBUG,
+        PWD,
+        USR,
+        EMAIL,
+        PROMPT,
+        COLOR,  # AUTO_BATTLER
     ]
 
 
+LIST_ON = ["on", "true", "enabled", "enable", "1"]
+LIST_OFF = ["off", "false", "disabled", "disable", "0"]
 
-
-LIST_ON  = ['on','true','enabled','enable','1']
-LIST_OFF = ['off','false','disabled','disable','0']
 
 class Settings:
     def __init__(self, actor):
@@ -40,68 +60,57 @@ class Settings:
             SETTINGS.VIEW_MAP: True,
             SETTINGS.VIEW_ASCII_ART: True,
             SETTINGS.DEBUG: False,
-
             SETTINGS.ALIAS: {},
-            SETTINGS.PROMPT: 'p0',
-            SETTINGS.EMAIL: '',
+            SETTINGS.PROMPT: "p0",
+            SETTINGS.EMAIL: "",
             SETTINGS.COLOR: {
-                '@normal':               '',
-                '@back':                 '\x1b[0;00x',
-                '@error':                '',
-                '@important':            '',
-                '@tooltip':              '',
-                '@description':          '',
-
-                '@name_player':          '',
-                '@name_admin':           '',
-                '@name_enemy':           '',
-                '@name_npc':             '',
-
-                '@room_name':            '',
-                '@room_description':     '',
-                '@room_name_safe':       '',
-                '@room_name_instanced':  '',
-
-                '@quest_name':           '',
-                '@quest_description':    '',
-
-                '@map_player':           '',
-                '@map_important':        '',
-                '@map_normal':           '',
-                '@map_room':             '',
-                '@map_path':             '',
-
-                '@item_keep':            '',
-                '@item_equipped':        '',
-                '@item_trading':         '',
-                '@item_new':             '',
-                '@item_material':        '',
-
-                '@damage_pure':          '',
-                '@damage_physical':      '',
-                '@damage_magical':       '',
-                '@damage_healing':       '',
-                
-                '@combat_turn':          '',
-
-                '@stat_life':            '',
-                '@stat_hold':            '',
-                '@stat_ward':            '',
+                "@normal": "",
+                "@back": "\x1b[0;00x",
+                "@error": "",
+                "@important": "",
+                "@tooltip": "",
+                "@description": "",
+                "@name_player": "",
+                "@name_admin": "",
+                "@name_enemy": "",
+                "@name_npc": "",
+                "@room_name": "",
+                "@room_description": "",
+                "@room_name_safe": "",
+                "@room_name_instanced": "",
+                "@quest_name": "",
+                "@quest_description": "",
+                "@map_player": "",
+                "@map_important": "",
+                "@map_normal": "",
+                "@map_room": "",
+                "@map_path": "",
+                "@item_keep": "",
+                "@item_equipped": "",
+                "@item_trading": "",
+                "@item_new": "",
+                "@item_material": "",
+                "@damage_pure": "",
+                "@damage_physical": "",
+                "@damage_magical": "",
+                "@damage_healing": "",
+                "@combat_turn": "",
+                "@stat_life": "",
+                "@stat_hold": "",
+                "@stat_ward": "",
             },
         }
 
-        #self.prompt_default2 = '[@bred#HP#@normal/@bred#HPMAX#@normal | @bred#PHYARM#@normal/@bred#PHYARMMAX#@normal] [@bcyan#MP#@normal/@bcyan#MPMAX#@normal | @bcyan#MAGARM#@normal/@bcyan#MAGARMMAX#@normal]>'
-        #self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
-        #self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
+        # self.prompt_default2 = '[@bred#HP#@normal/@bred#HPMAX#@normal | @bred#PHYARM#@normal/@bred#PHYARMMAX#@normal] [@bcyan#MP#@normal/@bcyan#MPMAX#@normal | @bcyan#MAGARM#@normal/@bcyan#MAGARMMAX#@normal]>'
+        # self.prompt_default = '[@bred#HP%#@normal% | @bred#PHYARM%#@normal%] [@bcyan#MP%#@normal% | @bcyan#MAGARM%#@normal%]>' + self.prompt_default2
+        # self.prompt_default = '[@bred#HP%#@normal%|@bred#PHYARM%#@normal%] [@bcyan#MP%#@normal%|@bcyan#MAGARM%#@normal%]>'
         self.prompt_default = {
-            'p2': '<@green#LIFE#/#LLIFEMAX#@bgreenL@yellow#HOLD#/#LHOLDMAX#@byellowH@cyan#WARD#/#LWARDMAX#@bcyanW@normal>',
-            'p1': '<@green#LIFE%#@bgreen% @yellow#HOLD%#@byellow% @cyan#WARD%#@bcyan%@normal>',
-            'p0': '<@green#LIFE#@bgreenL@yellow#HOLD#@byellowH@cyan#WARD#@bcyanW@normal>'
+            "p2": "<@green#LIFE#/#LLIFEMAX#@bgreenL@yellow#HOLD#/#LHOLDMAX#@byellowH@cyan#WARD#/#LWARDMAX#@bcyanW@normal>",
+            "p1": "<@green#LIFE%#@bgreen% @yellow#HOLD%#@byellow% @cyan#WARD%#@bcyan%@normal>",
+            "p0": "<@green#LIFE#@bgreenL@yellow#HOLD#@byellowH@cyan#WARD#@bcyanW@normal>",
         }
 
         self.settings = {}
-        
-   
 
     def true_or_false(self, value):
         if value.lower() in LIST_ON:
@@ -131,65 +140,65 @@ class Settings:
 
         command = match_word(line[0], SETTINGS.LIST_SETTINGS)
 
-        #self.actor.sendLine(f'{line}, {command}')
+        # self.actor.sendLine(f'{line}, {command}')
         match command:
             case SETTINGS.RESET:
-                self.actor.sendLine('All settings reset to default')
+                self.actor.sendLine("All settings reset to default")
                 self.actor.settings_manager = Settings(self.actor)
                 return
 
             case SETTINGS.COLOR:
-                if len(line) == 1: # view aliases
-                    self.actor.sendLine('View colors')
-                    output = ''
+                if len(line) == 1:  # view aliases
+                    self.actor.sendLine("View colors")
+                    output = ""
                     if SETTINGS.COLOR not in self.settings:
-                        self.actor.sendLine('No colors')
+                        self.actor.sendLine("No colors")
                         return
                     for alias in self.settings[SETTINGS.COLOR]:
-                        output += f'{alias} = {self.settings[SETTINGS.COLOR][alias]}\n'
+                        output += f"{alias} = {self.settings[SETTINGS.COLOR][alias]}\n"
                     self.actor.sendLine(output)
                     return
-                if len(line) == 2: # clear an alias
+                if len(line) == 2:  # clear an alias
                     alias = line[1]
                     if alias in self.settings[SETTINGS.COLOR]:
                         self.actor.sendLine(f'Clear color "{alias}"')
                         del self.settings[SETTINGS.COLOR][alias]
                     return
-                if len(line) >= 3: # set an alias
+                if len(line) >= 3:  # set an alias
                     alias = line[1]
-                    string = ' '.join(line[2::]).strip()
-                    self.actor.sendLine(f'{alias} = {string}')
+                    string = " ".join(line[2::]).strip()
+                    self.actor.sendLine(f"{alias} = {string}")
                     if SETTINGS.COLOR not in self.settings:
                         self.settings[SETTINGS.COLOR] = {}
                     self.settings[SETTINGS.COLOR][alias] = string
                     return
 
             case SETTINGS.ALIAS:
-                if len(line) == 1: # view aliases
-                    self.actor.sendLine('View aliasses')
-                    output = ''
+                if len(line) == 1:  # view aliases
+                    self.actor.sendLine("View aliasses")
+                    output = ""
                     if SETTINGS.ALIAS not in self.settings:
-                        self.actor.sendLine('No aliases')
+                        self.actor.sendLine("No aliases")
                         return
 
                     for alias in self.settings[SETTINGS.ALIAS]:
-                        output += f'{alias} = {self.settings[SETTINGS.ALIAS][alias]}\n'
+                        output += f"{alias} = {self.settings[SETTINGS.ALIAS][alias]}\n"
                     self.actor.sendLine(output)
                     return
-                if len(line) == 2: # clear an alias
+                if len(line) == 2:  # clear an alias
                     alias = line[1]
                     if alias in self.settings[SETTINGS.ALIAS]:
                         self.actor.sendLine(f'Clear alias "{alias}"')
                         del self.settings[SETTINGS.ALIAS][alias]
                     return
-                if len(line) >= 3: # set an alias
+                if len(line) >= 3:  # set an alias
                     alias = line[1]
                     if alias in BANNED_ALIASES:
-                        self.actor.sendLine(f'You can\'t set {alias} as an alias')
+                        self.actor.sendLine(f"You can't set {alias} as an alias")
                         return
 
-                    string = ' '.join(line[2::]).strip()
-                    self.actor.sendLine(f'{alias} = {string}')
+                    string = " ".join(line[2::]).strip()
+                    self.actor.sendLine(f"{alias} = {string}")
                     if SETTINGS.ALIAS not in self.settings:
                         self.settings[SETTINGS.ALIAS] = {}
                     self.settings[SETTINGS.ALIAS][alias] = string
@@ -197,44 +206,56 @@ class Settings:
 
             case SETTINGS.GMCP:
                 if len(line) == 1:
-                    self.actor.sendLine('GMCP setting needs an argument (on or off?)')
+                    self.actor.sendLine("GMCP setting needs an argument (on or off?)")
                     return
                 value = line[1]
                 self.settings[SETTINGS.GMCP] = self.true_or_false(value)
                 self.actor.protocol.enabled_gmcp = self.true_or_false(value)
-                self.actor.sendLine(f'GMCP enabled: {self.true_or_false(value)}')
+                self.actor.sendLine(f"GMCP enabled: {self.true_or_false(value)}")
 
             case SETTINGS.VIEW_MAP:
                 if len(line) == 1:
-                    self.actor.sendLine('View Map setting needs an argument (on or off?)')
+                    self.actor.sendLine(
+                        "View Map setting needs an argument (on or off?)"
+                    )
                     return
                 value = line[1]
                 self.settings[SETTINGS.VIEW_MAP] = self.true_or_false(value)
-                self.actor.sendLine(f'View Map enabled: {self.settings[SETTINGS.VIEW_MAP]}')
+                self.actor.sendLine(
+                    f"View Map enabled: {self.settings[SETTINGS.VIEW_MAP]}"
+                )
 
             case SETTINGS.VIEW_ASCII_ART:
                 if len(line) == 1:
-                    self.actor.sendLine('View Ascii Art setting needs an argument (on or off?)')
+                    self.actor.sendLine(
+                        "View Ascii Art setting needs an argument (on or off?)"
+                    )
                     return
                 value = line[1]
                 self.settings[SETTINGS.VIEW_ASCII_ART] = self.true_or_false(value)
-                self.actor.sendLine(f'View Ascii Art enabled: {self.settings[SETTINGS.VIEW_ASCII_ART]}')
+                self.actor.sendLine(
+                    f"View Ascii Art enabled: {self.settings[SETTINGS.VIEW_ASCII_ART]}"
+                )
 
             case SETTINGS.VIEW_ROOM:
                 if len(line) == 1:
-                    self.actor.sendLine('View Room setting needs an argument (on or off?)')
+                    self.actor.sendLine(
+                        "View Room setting needs an argument (on or off?)"
+                    )
                     return
                 value = line[1]
                 self.settings[SETTINGS.VIEW_ROOM] = self.true_or_false(value)
-                self.actor.sendLine(f'View Room enabled: {self.settings[SETTINGS.VIEW_ROOM]}')
+                self.actor.sendLine(
+                    f"View Room enabled: {self.settings[SETTINGS.VIEW_ROOM]}"
+                )
 
             case SETTINGS.DEBUG:
                 if len(line) == 1:
-                    self.actor.sendLine('Debug setting needs an argument (on or off?)')
+                    self.actor.sendLine("Debug setting needs an argument (on or off?)")
                     return
                 value = line[1]
                 self.settings[SETTINGS.DEBUG] = self.true_or_false(value)
-                self.actor.sendLine(f'Debug enabled: {self.settings[SETTINGS.DEBUG]}')
+                self.actor.sendLine(f"Debug enabled: {self.settings[SETTINGS.DEBUG]}")
 
             case SETTINGS.LOGOUT:
                 proto = self.actor.protocol
@@ -244,71 +265,87 @@ class Settings:
             case SETTINGS.USR:
                 proto = self.actor.protocol
                 password = proto.password
-                username = ' '.join(original_line.split()[1:])
+                username = " ".join(original_line.split()[1:])
                 succ = proto.register_account_changes(username, password)
                 if succ and proto.guest:
                     proto.guest = False
-                    proto.actor.sendLine(f'{Color.GOOD}This account is no longer a guest account\n{Color.IMPORTANT}REMEMBER: You should set a password with "settings password <new password>"{Color.NORMAL}')
+                    proto.actor.sendLine(
+                        f'{Color.GOOD}This account is no longer a guest account\n{Color.IMPORTANT}REMEMBER: You should set a password with "settings password <new password>"{Color.NORMAL}'
+                    )
 
             case SETTINGS.PWD:
                 proto = self.actor.protocol
                 if proto.guest:
-                    proto.actor.sendLine(f'{Color.BAD}You are currently a guest, you need to set a new username before changing your password{Color.NORMAL}')
+                    proto.actor.sendLine(
+                        f"{Color.BAD}You are currently a guest, you need to set a new username before changing your password{Color.NORMAL}"
+                    )
                     return
 
-                password = ' '.join(original_line.split()[1:])
+                password = " ".join(original_line.split()[1:])
                 username = proto.username
-                #proto.guest = False
+                # proto.guest = False
                 proto.register_account_changes(username, password)
 
             case SETTINGS.EMAIL:
                 proto = self.actor.protocol
                 if proto.guest:
-                    proto.actor.sendLine(f'{Color.BAD}You are currently a guest, you need to set a new username before changing your email{Color.NORMAL}')
+                    proto.actor.sendLine(
+                        f"{Color.BAD}You are currently a guest, you need to set a new username before changing your email{Color.NORMAL}"
+                    )
                     return
 
-                #print(original_line)
-                email = ' '.join(original_line.split()[1:])
-                if email == '':
+                # print(original_line)
+                email = " ".join(original_line.split()[1:])
+                if email == "":
                     if SETTINGS.EMAIL in self.settings:
-                        self.actor.sendLine(f'Your current email is "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".')
+                        self.actor.sendLine(
+                            f'Your current email is "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".'
+                        )
                     else:
-                        self.actor.sendLine(f'You dont have email set, please set your email with "{Color.GOOD}settings email [your@email.com]{Color.NORMAL}".')
+                        self.actor.sendLine(
+                            f'You dont have email set, please set your email with "{Color.GOOD}settings email [your@email.com]{Color.NORMAL}".'
+                        )
                     return
                 self.settings[SETTINGS.EMAIL] = email
                 password = proto.password
                 username = proto.username
                 succ = proto.register_account_changes(username, password)
-                self.actor.sendLine(f'Your email is now "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".')
+                self.actor.sendLine(
+                    f'Your email is now "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".'
+                )
 
             case SETTINGS.PROMPT:
-                prompt = ' '.join(original_line.split()[1:])
-                if prompt == ' ' or prompt == '':
-                    self.actor.sendLine(f'Current prompt is: "{self.get_value(SETTINGS.PROMPT)}"', color = False)
+                prompt = " ".join(original_line.split()[1:])
+                if prompt == " " or prompt == "":
+                    self.actor.sendLine(
+                        f'Current prompt is: "{self.get_value(SETTINGS.PROMPT)}"',
+                        color=False,
+                    )
                     if self.get_value(SETTINGS.PROMPT) in self.prompt_default:
-                        self.actor.sendLine(f'\nPrompt {self.get_value(SETTINGS.PROMPT)} is a builting prompt\nWhich looks like this:"{self.prompt_default[self.get_value(SETTINGS.PROMPT)]}"', color = False)
+                        self.actor.sendLine(
+                            f'\nPrompt {self.get_value(SETTINGS.PROMPT)} is a builting prompt\nWhich looks like this:"{self.prompt_default[self.get_value(SETTINGS.PROMPT)]}"',
+                            color=False,
+                        )
                     return
                 if prompt in self.prompt_default:
                     self.settings[SETTINGS.PROMPT] = self.defaults[SETTINGS.PROMPT]
                 else:
                     self.settings[SETTINGS.PROMPT] = prompt
-                #proto.register_account_changes(username, password)
+                # proto.register_account_changes(username, password)
 
 
 def command_settings(self, line):
-    if line == '':
-        output = ''
+    if line == "":
+        output = ""
 
         s0 = self.settings_manager.defaults
         s1 = self.settings_manager.settings
-        t = Table(2,1)
+        t = Table(2, 1)
 
-        t.add_data('Setting')
-        t.add_data('Value')
+        t.add_data("Setting")
+        t.add_data("Value")
 
-        
         for i in s0:
-            
             _default = True
             s = s0
             col = Color.BAD
@@ -317,21 +354,14 @@ def command_settings(self, line):
                 s = s1
                 col = Color.GOOD
 
-            
-            
-            t.add_data(i, col = col)
+            t.add_data(i, col=col)
             if i in [SETTINGS.COLOR, SETTINGS.ALIAS, SETTINGS.EMAIL, SETTINGS.PROMPT]:
-                t.add_data(f'Special')
+                t.add_data(f"Special")
                 continue
             t.add_data(s[i])
-   
 
-
-        
         output = t.get_table() + 'Type "settings [Setting]" to view vlaue of "Special"'
         self.sendLine(output)
         return
-
-
 
     self.settings_manager.command_settings(line)

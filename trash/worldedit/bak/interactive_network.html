@@ -1,12 +1,12 @@
 <html>
     <head>
         <meta charset="utf-8">
-        
-            <script src="lib/bindings/utils.js"></script>
+
+            <script src="lib/bindings/systems.utils.js"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            
-        
+
+
 <center>
 <h1></h1>
 </center>
@@ -40,24 +40,24 @@
                  float: left;
              }
 
-             
 
-             
 
-             
+
+
+
         </style>
     </head>
 
 
     <body>
         <div class="card" style="width: 100%">
-            
-            
+
+
             <div id="mynetwork" class="card-body"></div>
         </div>
 
-        
-        
+
+
 
         <script type="text/javascript">
 
@@ -77,15 +77,15 @@
                   value : []
               };
 
-              
 
-              
+
+
 
               // This method is responsible for drawing the graph, returns the drawn network
               function drawGraph() {
                   var container = document.getElementById('mynetwork');
 
-                  
+
 
                   // parsing and collecting nodes and edges from the python
                   nodes = new vis.DataSet([{"color": "#97c2fc", "id": 1, "label": 1, "shape": "dot", "size": 10, "value": 10}, {"color": "#97c2fc", "id": 2, "label": 2, "shape": "dot", "size": 10, "value": 20}, {"color": "#97c2fc", "id": 4, "label": 4, "shape": "dot", "size": 10, "value": 40}, {"color": "#97c2fc", "id": 3, "label": 3, "shape": "dot", "size": 10, "value": 30}]);
@@ -102,21 +102,21 @@
 
                   var options = {"nodes": {"borderWidth": 2, "borderWidthSelected": 4, "shape": "dot", "size": 10, "color": {"background": "#00f", "border": "#00f"}}, "edges": {"width": 2, "color": {"highlight": "#ff0000", "inherit": true}, "smooth": {"enabled": true, "type": "continuous"}}, "physics": {"enabled": true, "barnesHut": {"gravitationalConstant": -2000, "springLength": 95}}};
 
-                  
 
 
-                  
+
+
 
                   network = new vis.Network(container, data, options);
 
-                  
-
-                  
-
-                  
 
 
-                  
+
+
+
+
+
+
 
                   return network;
 

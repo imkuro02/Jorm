@@ -1,7 +1,0 @@
-................................................................................
-Title: Pick up
-
-This is not a real command.
-Use "help get" to view how to pick up items.
-PLEASE do not use "pick up" it works but... yea
-................................................................................

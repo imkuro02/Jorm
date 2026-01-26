@@ -1,9 +1,9 @@
-'''
+"""
 import uuid
 from configuration.config import ItemType
 from items.misc import Item
 import random
-from utils import get_object_parent
+from systems.utils import get_object_parent
 class Scenery(Item):
     def __init__(self):
         super().__init__()
@@ -30,7 +30,7 @@ class Scenery(Item):
                 owner = owner.room
 
             if len(owner.actors) >= 1:
-                
+
                 ac = random.choice(list(owner.actors.values()))
                 ac.simple_broadcast(self.ambience, self.ambience, sound = self.ambience_sfx)
-'''
+"""

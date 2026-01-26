@@ -1,9 +1,0 @@
-................................................................................
-Title: Practice
-Syntax: "practice" , "practice [skill name]"  
- 
-You can view the amount of Practice Points you have with "stats" or "practice" 
-
-To practice a skill type "practice [skill name]" 
-All practicable skills have a cost to them
-................................................................................

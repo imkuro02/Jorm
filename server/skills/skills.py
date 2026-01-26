@@ -1,16 +1,35 @@
-from configuration.config import DamageType, StatType, ActorStatusType, StaticRooms
-#import affects.manager as aff_manager
-import affects.affects as affects
-from combat.damage_event import Damage
-from configuration.config import SKILLS
 import random
-import utils
+
+# import affects.manager as aff_manager
+import affects.affects as affects
+import systems.utils
+from combat.damage_event import Damage
+from configuration.config import (
+    SKILLS,
+    ActorStatusType,
+    DamageType,
+    StaticRooms,
+    StatType,
+)
 
 
 class Skill:
-    def __init__(self, skill_id, script_values, user, other, users_skill_level: int, use_perspectives, success = False, silent_use = False, no_cooldown = False, bounce = 0, combat_event = None):
+    def __init__(
+        self,
+        skill_id,
+        script_values,
+        user,
+        other,
+        users_skill_level: int,
+        use_perspectives,
+        success=False,
+        silent_use=False,
+        no_cooldown=False,
+        bounce=0,
+        combat_event=None,
+    ):
         self.skill_id = skill_id
-        self.name = SKILLS[skill_id]['name']
+        self.name = SKILLS[skill_id]["name"]
         self.script_values = script_values
         self.user = user
         self.other = other
@@ -19,23 +38,25 @@ class Skill:
         self.success = success
         self.silent_use = silent_use
         self.no_cooldown = no_cooldown
-        #self.aoe = aoe # area of effect
-        self.bounce = bounce # the amount of times it bounces
+        # self.aoe = aoe # area of effect
+        self.bounce = bounce  # the amount of times it bounces
         self.get_dmg_value_override = None
         self.combat_event = combat_event
 
-    def get_dmg_value(self, stat_type = None):
+    def get_dmg_value(self, stat_type=None):
         if self.get_dmg_value_override == None:
-            if 'crit' not in self.script_values or stat_type == None:
-                dmg = self.script_values['damage'][self.users_skill_level]
+            if "crit" not in self.script_values or stat_type == None:
+                dmg = self.script_values["damage"][self.users_skill_level]
             else:
-                crit_min = int(self.script_values['crit'][self.users_skill_level]*50)
-                crit_max = int(self.script_values['crit'][self.users_skill_level]*100)
+                crit_min = int(self.script_values["crit"][self.users_skill_level] * 50)
+                crit_max = int(self.script_values["crit"][self.users_skill_level] * 100)
                 dmg_stat = int(self.user.stat_manager.stats[stat_type])
-                dmg = self.script_values['damage'][self.users_skill_level] + int(dmg_stat * (random.randint(crit_min,crit_max)/100))
+                dmg = self.script_values["damage"][self.users_skill_level] + int(
+                    dmg_stat * (random.randint(crit_min, crit_max) / 100)
+                )
                 dmg = int(dmg)
 
-            #dmg = dmg + (self.user.stat_manager.stats[StatType.LVL]*2)
+            # dmg = dmg + (self.user.stat_manager.stats[StatType.LVL]*2)
             self.get_dmg_value_override = dmg
             return self.get_dmg_value_override
         else:
@@ -43,57 +64,67 @@ class Skill:
 
     def pretty_name(self):
         return self.name
+
     def use_broadcast(self):
         perspectives = {
-            'you on you':       self.use_perspectives['you on you fail'],
-            'you on other':     self.use_perspectives['you on other fail'],
-            'user on user':     self.use_perspectives['user on user fail'],
-            'user on you':      self.use_perspectives['user on you fail'],
-            'user on other':    self.use_perspectives['user on other fail']
+            "you on you": self.use_perspectives["you on you fail"],
+            "you on other": self.use_perspectives["you on other fail"],
+            "user on user": self.use_perspectives["user on user fail"],
+            "user on you": self.use_perspectives["user on you fail"],
+            "user on other": self.use_perspectives["user on other fail"],
         }
         if self.success:
             perspectives = {
-                'you on you':       self.use_perspectives['you on you'],
-                'you on other':     self.use_perspectives['you on other'],
-                'user on user':     self.use_perspectives['user on user'],
-                'user on you':      self.use_perspectives['user on you'],
-                'user on other':    self.use_perspectives['user on other']
+                "you on you": self.use_perspectives["you on you"],
+                "you on other": self.use_perspectives["you on other"],
+                "user on user": self.use_perspectives["user on user"],
+                "user on you": self.use_perspectives["user on you"],
+                "user on other": self.use_perspectives["user on other"],
             }
 
         for perspective in perspectives:
-            perspectives[perspective] = perspectives[perspective].replace('#USER#', self.user.pretty_name())
-            perspectives[perspective] = perspectives[perspective].replace('#OTHER#', self.other.pretty_name())
-            perspectives[perspective] = perspectives[perspective].replace('#SKILL#', self.pretty_name())
+            perspectives[perspective] = perspectives[perspective].replace(
+                "#USER#", self.user.pretty_name()
+            )
+            perspectives[perspective] = perspectives[perspective].replace(
+                "#OTHER#", self.other.pretty_name()
+            )
+            perspectives[perspective] = perspectives[perspective].replace(
+                "#SKILL#", self.pretty_name()
+            )
 
         for receiver in self.user.room.actors.values():
             if type(receiver).__name__ != "Player":
                 continue
 
             if receiver == self.user and receiver == self.other:
-                receiver.sendLine(perspectives['you on you'])
+                receiver.sendLine(perspectives["you on you"])
                 continue
             if receiver == self.user and receiver != self.other:
-                receiver.sendLine(perspectives['you on other'])
+                receiver.sendLine(perspectives["you on other"])
                 continue
-            if receiver != self.user and receiver != self.other and self.user == self.other:
-                receiver.sendLine(perspectives['user on user'])
+            if (
+                receiver != self.user
+                and receiver != self.other
+                and self.user == self.other
+            ):
+                receiver.sendLine(perspectives["user on user"])
                 continue
             if receiver != self.user and receiver == self.other:
-                receiver.sendLine(perspectives['user on you'])
+                receiver.sendLine(perspectives["user on you"])
                 continue
             if receiver != self.user and receiver != self.other:
-                receiver.sendLine(perspectives['user on other'])
+                receiver.sendLine(perspectives["user on other"])
                 continue
 
     def use(self):
-        #utils.debug_print('aoe:',self.aoe)
+        # systems.utils.debug_print('aoe:',self.aoe)
         if not self.no_cooldown:
-            cool = self.script_values['cooldown'][self.users_skill_level]
+            cool = self.script_values["cooldown"][self.users_skill_level]
             if cool != 0:
                 self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
-            #if cool <= 1:
+            # if cool <= 1:
             #    cool = 2
-
 
         if self.silent_use:
             return
@@ -101,17 +132,18 @@ class Skill:
 
     def pre_use_get_targets(self):
         skill = SKILLS[self.skill_id]
-        targets = [] # make this the first target
+        targets = []  # make this the first target
         for i in self.user.room.actors.values():
             if self.user.status != i.status:
                 continue
             if self.other == i:
                 continue
 
-            if i.party_manager.get_party_id() == self.other.party_manager.get_party_id():
+            if (
+                i.party_manager.get_party_id()
+                == self.other.party_manager.get_party_id()
+            ):
                 targets.append(i)
-
-
 
         random.shuffle(targets)
         targets.append(self.other)
@@ -124,30 +156,31 @@ class Skill:
         delay = 0
         delayed_actions = []
 
-        #delay = self.user.stat_manager.stats[StatType.LVL]
-        #delayed_actions = [self]
+        # delay = self.user.stat_manager.stats[StatType.LVL]
+        # delayed_actions = [self]
 
-        if 'delay' in skill['script_values']:
-            delay = int(self.script_values['delay'][self.users_skill_level])
+        if "delay" in skill["script_values"]:
+            delay = int(self.script_values["delay"][self.users_skill_level])
             delayed_actions = [self]
         else:
             return False
 
         if delayed_actions != []:
-            #print('delayed')
+            # print('delayed')
             delayed_actions_affect = affects.AffectDelayedAction(
-                affect_source_actor = self.user,
-                affect_target_actor = self.user,
-                name = f'Charging {delayed_actions[0].name}', description = f'Skills will be used when this affliction is over',
-                turns = delay-1,
-                skills_to_use_objects = delayed_actions
+                affect_source_actor=self.user,
+                affect_target_actor=self.user,
+                name=f"Charging {delayed_actions[0].name}",
+                description=f"Skills will be used when this affliction is over",
+                turns=delay - 1,
+                skills_to_use_objects=delayed_actions,
             )
             self.user.affect_manager.set_affect_object(delayed_actions_affect)
             self.user.finish_turn()
             return True
         return False
 
-    def pre_use(self, override_bounce_amount = None, no_delay = False):
+    def pre_use(self, override_bounce_amount=None, no_delay=False):
         skill = SKILLS[self.skill_id]
         skill_obj = self.__class__
 
@@ -160,217 +193,248 @@ class Skill:
         targets = self.pre_use_get_targets()
 
         if override_bounce_amount == None:
-            bounce_amount = self.script_values['bounce_amount'][self.users_skill_level] if 'bounce_amount' in self.script_values else 0
+            bounce_amount = (
+                self.script_values["bounce_amount"][self.users_skill_level]
+                if "bounce_amount" in self.script_values
+                else 0
+            )
         else:
             bounce_amount = override_bounce_amount
 
-
-
-        if 'aoe' in self.script_values:
+        if "aoe" in self.script_values:
             current_aoe = 0
             for target in targets:
-
                 _skill_obj = skill_obj(
-                    skill_id = self.skill_id,
-                    script_values = self.script_values,
-                    user = self.user,
-                    other = target,
-                    users_skill_level = self.users_skill_level,
-                    use_perspectives = self.use_perspectives,
-                    success = self.success,
-                    silent_use = self.silent_use ,
-                    #aoe = False,
-                    no_cooldown = self.no_cooldown,
-                    bounce = bounce_amount,
-                    combat_event = self.combat_event
+                    skill_id=self.skill_id,
+                    script_values=self.script_values,
+                    user=self.user,
+                    other=target,
+                    users_skill_level=self.users_skill_level,
+                    use_perspectives=self.use_perspectives,
+                    success=self.success,
+                    silent_use=self.silent_use,
+                    # aoe = False,
+                    no_cooldown=self.no_cooldown,
+                    bounce=bounce_amount,
+                    combat_event=self.combat_event,
                 )
                 _skill_objects.append(_skill_obj)
-                if current_aoe >= self.script_values['aoe'][self.users_skill_level]:
+                if current_aoe >= self.script_values["aoe"][self.users_skill_level]:
                     break
                 current_aoe += 1
 
         else:
             _skill_obj = skill_obj(
-                skill_id = self.skill_id,
-                script_values = self.script_values,
-                user = self.user,
-                other = self.other,
-                users_skill_level = self.users_skill_level,
-                use_perspectives = self.use_perspectives,
-                success = self.success,
-                silent_use = self.silent_use,
-                no_cooldown = self.no_cooldown,
-                #aoe = False,
-                bounce = bounce_amount,
-                combat_event = self.combat_event
+                skill_id=self.skill_id,
+                script_values=self.script_values,
+                user=self.user,
+                other=self.other,
+                users_skill_level=self.users_skill_level,
+                use_perspectives=self.use_perspectives,
+                success=self.success,
+                silent_use=self.silent_use,
+                no_cooldown=self.no_cooldown,
+                # aoe = False,
+                bounce=bounce_amount,
+                combat_event=self.combat_event,
             )
             _skill_objects.append(_skill_obj)
 
-
         # loop for each aoe spawned skill
         for _skill_object in _skill_objects:
-
             _skill_object.silent_use = self.silent_use
-
 
             _skill_object.use()
 
             self.silent_use = True
 
-            #first_object = False
+            # first_object = False
 
-            damage =  0
+            damage = 0
             bounce_loss = 0
 
             if _skill_object.get_dmg_value_override != None:
-                damage =  _skill_object.get_dmg_value_override
-                bounce_loss = int(damage/(_skill_object.bounce+1))
+                damage = _skill_object.get_dmg_value_override
+                bounce_loss = int(damage / (_skill_object.bounce + 1))
 
             # if there are bounces, do that
             while _skill_object.bounce >= 1:
                 _skill_object.silent_use = self.silent_use
                 _skill_object.bounce -= 1
-                if 'bounce_bonus' in self.script_values:
-                    damage = damage + int(damage *  self.script_values['bounce_bonus'][self.users_skill_level])
+                if "bounce_bonus" in self.script_values:
+                    damage = damage + int(
+                        damage
+                        * self.script_values["bounce_bonus"][self.users_skill_level]
+                    )
                 _skill_object.get_dmg_value_override = damage
 
                 targets = self.pre_use_get_targets()
                 if _skill_object.other in targets:
                     targets.remove(_skill_object.other)
 
-
-                #self.user.simple_broadcast(str([[target.name+','+target.status] for target in targets]), str(targets))
+                # self.user.simple_broadcast(str([[target.name+','+target.status] for target in targets]), str(targets))
                 if targets == []:
-                    to_broadcast = '*Fizzles out*'
+                    to_broadcast = "*Fizzles out*"
                     self.user.simple_broadcast(to_broadcast, to_broadcast)
                     break
 
                 _new_target = random.choice(targets)
                 _skill_object.other = _new_target
                 self.other = _new_target
-                #_skill_object.other.combat_event = self.combat_event
-                #self.user.simple_broadcast(_skill_object.bounce,'fjdsbfkdsaf')
-                #to_broadcast =
-                #self.simple_broadcast('')
+                # _skill_object.other.combat_event = self.combat_event
+                # self.user.simple_broadcast(_skill_object.bounce,'fjdsbfkdsaf')
+                # to_broadcast =
+                # self.simple_broadcast('')
 
                 _skill_object.use()
 
 
-
-
-
-
 class SkillDamage(Skill):
-     def use(   self,
-                dmg_flat = 0,
-                dmg_stat_scale = StatType.GRIT,
-                dmg_type = DamageType.PHYSICAL,
-                dmg_to_stat = StatType.HP):
-
+    def use(
+        self,
+        dmg_flat=0,
+        dmg_stat_scale=StatType.GRIT,
+        dmg_type=DamageType.PHYSICAL,
+        dmg_to_stat=StatType.HP,
+    ):
         super().use()
         if self.success:
-
             if dmg_stat_scale == None:
                 dmg = dmg_flat
             else:
-                dmg = self.get_dmg_value(dmg_stat_scale) +dmg_flat
+                dmg = self.get_dmg_value(dmg_stat_scale) + dmg_flat
 
             damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_actor = self.user,
-                damage_source_action = self, combat_event = self.combat_event,
-                damage_value = dmg,
-                damage_type = dmg_type,
-                damage_to_stat = dmg_to_stat
-                )
+                damage_taker_actor=self.other,
+                damage_source_actor=self.user,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_value=dmg,
+                damage_type=dmg_type,
+                damage_to_stat=dmg_to_stat,
+            )
 
             if self.combat_event == None:
                 damage_obj.run()
             # easy way of checking if a skill killed someone
-            #utils.debug_print(f'{damage_obj.damage_taker_actor.name} {damage_obj.damage_taker_actor.status}')
+            # systems.utils.debug_print(f'{damage_obj.damage_taker_actor.name} {damage_obj.damage_taker_actor.status}')
             return damage_obj
+
 
 # XD parent damage skills
 
+
 class SkillDamageByGrit(SkillDamage):
     def use(self):
-        return super().use(dmg_stat_scale = StatType.GRIT, dmg_type = DamageType.PHYSICAL)
+        return super().use(dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL)
+
+
 class SkillDamageByFlow(SkillDamage):
     def use(self):
-        return super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
+        return super().use(dmg_stat_scale=StatType.FLOW, dmg_type=DamageType.PHYSICAL)
+
 
 class SkillDamageByGritFlow(SkillDamage):
     def use(self):
-        if self.user.stat_manager.stats[StatType.GRIT] > self.user.stat_manager.stats[StatType.FLOW]:
-            return super().use(dmg_stat_scale = StatType.GRIT, dmg_type = DamageType.PHYSICAL)
+        if (
+            self.user.stat_manager.stats[StatType.GRIT]
+            > self.user.stat_manager.stats[StatType.FLOW]
+        ):
+            return super().use(
+                dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL
+            )
         else:
-            return super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
+            return super().use(
+                dmg_stat_scale=StatType.FLOW, dmg_type=DamageType.PHYSICAL
+            )
+
 
 class SkillDamageByMind(SkillDamage):
     def use(self):
-        return super().use(dmg_stat_scale = StatType.MIND, dmg_type = DamageType.MAGICAL)
+        return super().use(dmg_stat_scale=StatType.MIND, dmg_type=DamageType.MAGICAL)
+
+
 class SkillDamageBySoul(SkillDamage):
     def use(self):
-        return super().use(dmg_stat_scale = StatType.SOUL, dmg_type = DamageType.PURE)
+        return super().use(dmg_stat_scale=StatType.SOUL, dmg_type=DamageType.PURE)
+
 
 class SkillCureLightWounds(SkillDamage):
     def use(self):
-        return super().use(dmg_stat_scale = StatType.SOUL, dmg_type = DamageType.HEALING)
+        return super().use(dmg_stat_scale=StatType.SOUL, dmg_type=DamageType.HEALING)
+
 
 class SkillCleave(SkillDamage):
     def use(self):
-        damage_obj = super().use(dmg_stat_scale = StatType.GRIT, dmg_type = DamageType.PHYSICAL)
+        damage_obj = super().use(
+            dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL
+        )
         if damage_obj.damage_taker_actor.status == ActorStatusType.DEAD:
-            damage_obj.damage_source_actor.room.combat.order.insert(0, damage_obj.damage_source_actor)
-            damage_obj.damage_source_actor.room.combat.current_actor = damage_obj.damage_source_actor
+            damage_obj.damage_source_actor.room.combat.order.insert(
+                0, damage_obj.damage_source_actor
+            )
+            damage_obj.damage_source_actor.room.combat.current_actor = (
+                damage_obj.damage_source_actor
+            )
             del damage_obj.damage_source_actor.cooldown_manager.cooldowns[self.skill_id]
-            #damage_obj.damage_source_actor.set_turn()
+            # damage_obj.damage_source_actor.set_turn()
+
 
 class SkillRefresh(SkillDamage):
     def use(self):
-        self.get_dmg_value_override = self.get_dmg_value(stat_type = StatType.SOUL)
+        self.get_dmg_value_override = self.get_dmg_value(stat_type=StatType.SOUL)
         for i in self.user.room.actors.values():
             self.other = i
             if i.party_manager.get_party_id() == self.user.party_manager.get_party_id():
-                super().use(dmg_stat_scale = StatType.SOUL, dmg_type = DamageType.HEALING)
+                super().use(dmg_stat_scale=StatType.SOUL, dmg_type=DamageType.HEALING)
                 self.silent_use = True
+
 
 class SkillGuard(Skill):
     def use(self):
         super().use()
         if self.success:
-            power = self.script_values['bonus'][self.users_skill_level]
+            power = self.script_values["bonus"][self.users_skill_level]
             damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self, combat_event = self.combat_event,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stat_manager.stats[StatType.PHYARMORMAX]*power),
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.PHYARMOR
-                )
+                damage_taker_actor=self.other,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_source_actor=self.user,
+                damage_value=int(
+                    self.user.stat_manager.stats[StatType.PHYARMORMAX] * power
+                ),
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.PHYARMOR,
+            )
             if self.combat_event == None:
                 damage_obj.run()
             damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self, combat_event = self.combat_event,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stat_manager.stats[StatType.MAGARMORMAX]*power),
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.MAGARMOR
-                )
+                damage_taker_actor=self.other,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_source_actor=self.user,
+                damage_value=int(
+                    self.user.stat_manager.stats[StatType.MAGARMORMAX] * power
+                ),
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.MAGARMOR,
+            )
             if self.combat_event == None:
                 damage_obj.run()
 
 
 class SkillFinisher(SkillDamageByGritFlow):
-    def pre_use(self, override_bounce_amount = None):
-        super().pre_use(override_bounce_amount = len(self.user.cooldown_manager.cooldowns.values()))
+    def pre_use(self, override_bounce_amount=None):
+        super().pre_use(
+            override_bounce_amount=len(self.user.cooldown_manager.cooldowns.values())
+        )
 
     def use(self):
         return super().use()
 
+
 # XD children of damage skills / damage skills that deal afflictions / interesting damage skills
-'''
+"""
 class SkillWildMagic(Skill):
     def pre_use_get_targets(self):
         skill = SKILLS[self.skill_id]
@@ -445,25 +509,29 @@ class SkillWildMagic(Skill):
 
         damage_obj.run()
         return damage_obj
-'''
+"""
+
 
 class SkillDamageByFlowApplyBleed(SkillDamage):
     def use(self):
-        #super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
+        # super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
         was_blocked = False
         damage_obj = super().use()
-        bleed_damage = int(self.user.stat_manager.stats[StatType.LVL]/2)
+        bleed_damage = int(self.user.stat_manager.stats[StatType.LVL] / 2)
         stunned_affect = affects.AffectBleed(
-            affect_source_actor = self.user,
-            affect_target_actor = self.other,
-            name = 'Bleeding', description = f'Take physical damage each turn',
-            turns = self.script_values['duration'][self.users_skill_level],
-            resisted_by = StatType.PHYARMOR,
-            damage = bleed_damage,
-            #get_prediction_string_append = 'is bleeding'
+            affect_source_actor=self.user,
+            affect_target_actor=self.other,
+            name="Bleeding",
+            description=f"Take physical damage each turn",
+            turns=self.script_values["duration"][self.users_skill_level],
+            resisted_by=StatType.PHYARMOR,
+            damage=bleed_damage,
+            # get_prediction_string_append = 'is bleeding'
         )
         self.other.affect_manager.set_affect_object(stunned_affect)
-'''
+
+
+"""
 class SkillManaFeed(Skill):
     def use(self):
         super().use()
@@ -512,8 +580,8 @@ class SkillManaFeed(Skill):
                         )
                     if self.combat_event == None:
                         damage_obj.run()
-'''
-'''
+"""
+"""
 class SkillBash(SkillDamageByGrit):
     def use(self):
         if self.success:
@@ -524,7 +592,7 @@ class SkillBash(SkillDamageByGrit):
             if self.combat_event == None:
                 damage_obj = super().use()
 
-            utils.debug_print(damage_obj)
+            systems.utils.debug_print(damage_obj)
             if all_armors[damage_obj.damage_taker_actor] > 0:
                 was_blocked = damage_obj.damage_value <= -1
                 if not was_blocked:
@@ -537,22 +605,25 @@ class SkillBash(SkillDamageByGrit):
                         get_prediction_string_clear = True
                     )
                     self.other.affect_manager.set_affect_object(stunned_affect)
-'''
+"""
+
 
 class SkillBash(SkillDamageByGrit):
     def use(self):
         if self.success:
             damage_obj = super().use()
             stunned_affect = affects.AffectStunned(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Stunned', description = 'Unable to act during combat turns',
-                turns = self.script_values['duration'][self.users_skill_level],
-                resisted_by = StatType.PHYARMOR,
-                get_prediction_string_append = 'are stunned!',
-                get_prediction_string_clear = True
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Stunned",
+                description="Unable to act during combat turns",
+                turns=self.script_values["duration"][self.users_skill_level],
+                resisted_by=StatType.PHYARMOR,
+                get_prediction_string_append="are stunned!",
+                get_prediction_string_clear=True,
             )
             self.other.affect_manager.set_affect_object(stunned_affect)
+
 
 class SkillDoubleWhack(SkillDamageByGritFlow):
     def use(self):
@@ -565,85 +636,126 @@ class SkillDoubleWhack(SkillDamageByGritFlow):
             return d
 
 
-
-
-
 # XD skills from consumables
+
 
 class SkillRegenPercentFromPotion(Skill):
     def use(self, power_percent, stat_to_heal):
         super().use()
         if self.success:
             damage_obj = Damage(
-                    damage_taker_actor = self.other,
-                    damage_source_action = self, combat_event = self.combat_event,
-                    damage_source_actor = self.user,
-                    damage_value = int(self.user.stat_manager.stats[stat_to_heal+'_max']*power_percent),
-                    damage_type = DamageType.HEALING,
-                    damage_to_stat = stat_to_heal
-                    )
+                damage_taker_actor=self.other,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_source_actor=self.user,
+                damage_value=int(
+                    self.user.stat_manager.stats[stat_to_heal + "_max"] * power_percent
+                ),
+                damage_type=DamageType.HEALING,
+                damage_to_stat=stat_to_heal,
+            )
             damage_obj.run()
 
+
 class SkillApplyDOT(Skill):
-    def use(self, name = 'DOT', description = 'Damage over time', damage_value = 0, damage_type = DamageType.PURE, damage_to_stat = StatType.HP, turns = 10000):
+    def use(
+        self,
+        name="DOT",
+        description="Damage over time",
+        damage_value=0,
+        damage_type=DamageType.PURE,
+        damage_to_stat=StatType.HP,
+        turns=10000,
+    ):
         super().use()
         if self.success:
             DOT = affects.AffectDOT(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = name,
-                description = description,
-                turns = turns,
-                damage_value = damage_value,
-                damage_type = damage_type,
-                damage_to_stat = damage_to_stat
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name=name,
+                description=description,
+                turns=turns,
+                damage_value=damage_value,
+                damage_type=damage_type,
+                damage_to_stat=damage_to_stat,
             )
             self.other.affect_manager.set_affect_object(DOT)
 
+
 class SkillRegenHP30(SkillRegenPercentFromPotion):
     def use(self):
-        super().use(power_percent = .3, stat_to_heal = StatType.HP)
+        super().use(power_percent=0.3, stat_to_heal=StatType.HP)
+
+
 class SkillRegenPhyArmor30(SkillRegenPercentFromPotion):
     def use(self):
-        super().use(power_percent = .3, stat_to_heal = StatType.PHYARMOR)
+        super().use(power_percent=0.3, stat_to_heal=StatType.PHYARMOR)
+
+
 class SkillRegenMagArmor30(SkillRegenPercentFromPotion):
     def use(self):
-        super().use(power_percent = .3, stat_to_heal = StatType.MAGARMOR)
-'''
+        super().use(power_percent=0.3, stat_to_heal=StatType.MAGARMOR)
+
+
+"""
 class SkillRegenMP30(SkillRegenPercentFromPotion):
     def use(self):
         super().use(power_percent = .3, stat_to_heal = StatType.MP)
-'''
+"""
+
+
 class SkillRenewHP30(SkillApplyDOT):
     def use(self):
-        power_percent = .3
+        power_percent = 0.3
         turns = 3
-        damage_value = int(self.other.stat_manager.stats[StatType.HPMAX]*(power_percent/turns))
+        damage_value = int(
+            self.other.stat_manager.stats[StatType.HPMAX] * (power_percent / turns)
+        )
         super().use(
-                name = 'Renewed',
-                description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns',
-                damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.HP, turns = turns)
+            name="Renewed",
+            description=f"Heal {int(power_percent * 100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns",
+            damage_value=damage_value,
+            damage_type=DamageType.HEALING,
+            damage_to_stat=StatType.HP,
+            turns=turns,
+        )
+
 
 class SkillRenewPhyArmor30(SkillApplyDOT):
     def use(self):
-        power_percent = .3
+        power_percent = 0.3
         turns = 3
-        damage_value = int(self.other.stat_manager.stats[StatType.HPMAX]*(power_percent/turns))
+        damage_value = int(
+            self.other.stat_manager.stats[StatType.HPMAX] * (power_percent / turns)
+        )
         super().use(
-                name = 'Renewed',
-                description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns',
-                damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.HP, turns = turns)
+            name="Renewed",
+            description=f"Heal {int(power_percent * 100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns",
+            damage_value=damage_value,
+            damage_type=DamageType.HEALING,
+            damage_to_stat=StatType.HP,
+            turns=turns,
+        )
+
 
 class SkillRenewMagArmor30(SkillApplyDOT):
     def use(self):
-        power_percent = .3
+        power_percent = 0.3
         turns = 3
-        damage_value = int(self.other.stat_manager.stats[StatType.HPMAX]*(power_percent/turns))
+        damage_value = int(
+            self.other.stat_manager.stats[StatType.HPMAX] * (power_percent / turns)
+        )
         super().use(
-                name = 'Renewed',
-                description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns',
-                damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.HP, turns = turns)
-'''
+            name="Renewed",
+            description=f"Heal {int(power_percent * 100)}% of your {StatType.name[StatType.HPMAX]} over {turns} turns",
+            damage_value=damage_value,
+            damage_type=DamageType.HEALING,
+            damage_to_stat=StatType.HP,
+            turns=turns,
+        )
+
+
+"""
 class SkillRenewMP30(SkillApplyDOT):
     def use(self):
         power_percent = .3
@@ -653,22 +765,24 @@ class SkillRenewMP30(SkillApplyDOT):
                 name = 'Renewed',
                 description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.MPMAX]} over {turns} turns',
                 damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.MP, turns = turns)
-'''
+"""
+
 
 class SkillRefreshingDrink(Skill):
     def use(self):
         super().use()
         if self.success:
-            power = self.script_values['bonus'][self.users_skill_level]
+            power = self.script_values["bonus"][self.users_skill_level]
             damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self, combat_event = self.combat_event,
-                damage_source_actor = self.user,
-                damage_value = int(self.user.stat_manager.stats[StatType.HPMAX]*power),
-                damage_type = DamageType.HEALING
-                )
+                damage_taker_actor=self.other,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_source_actor=self.user,
+                damage_value=int(self.user.stat_manager.stats[StatType.HPMAX] * power),
+                damage_type=DamageType.HEALING,
+            )
             damage_obj.run()
-            '''
+            """
             damage_obj = Damage(
                 damage_taker_actor = self.other,
                 damage_source_action = self, combat_event = self.combat_event,
@@ -678,71 +792,82 @@ class SkillRefreshingDrink(Skill):
                 damage_to_stat = StatType.MP
                 )
             damage_obj.run()
-            '''
-
-
+            """
 
 
 # XD affliction only skills
+
 
 class SkillNightmare(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns = int(self.script_values['duration'][self.users_skill_level])
+            turns = int(self.script_values["duration"][self.users_skill_level])
             affect = affects.AffectNightmare(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Nightmared', description = f'Unable to act until affect wears off, damage will start your turn',
-                turns = turns,
-                get_prediction_string_append = 'is sleeping!',
-                get_prediction_string_clear = True)
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Nightmared",
+                description=f"Unable to act until affect wears off, damage will start your turn",
+                turns=turns,
+                get_prediction_string_append="is sleeping!",
+                get_prediction_string_clear=True,
+            )
             self.other.affect_manager.set_affect_object(affect)
+
 
 class SkillBecomeEthereal(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns = int(self.script_values['duration'][self.users_skill_level])
-            dmg_amp = self.script_values['bonus'][self.users_skill_level]
+            turns = int(self.script_values["duration"][self.users_skill_level])
+            dmg_amp = self.script_values["bonus"][self.users_skill_level]
             ethereal_affect = affects.AffectEthereal(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Ethereal', description = f'You take {int(dmg_amp*100)}% damage from spells, but are immune to physical damage',
-                turns = turns, dmg_amp = dmg_amp)
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Ethereal",
+                description=f"You take {int(dmg_amp * 100)}% damage from spells, but are immune to physical damage",
+                turns=turns,
+                dmg_amp=dmg_amp,
+            )
             self.other.affect_manager.set_affect_object(ethereal_affect)
+
 
 class SkillMageArmor(Skill):
     def use(self):
         super().use()
         if self.success:
             damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self, combat_event = self.combat_event,
-                damage_source_actor = self.user,
-                damage_value = int(self.get_dmg_value(stat_type = StatType.MIND)),
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.MAGARMOR
-                )
+                damage_taker_actor=self.other,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_source_actor=self.user,
+                damage_value=int(self.get_dmg_value(stat_type=StatType.MIND)),
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.MAGARMOR,
+            )
             damage_obj.run()
 
             damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self, combat_event = self.combat_event,
-                damage_source_actor = self.user,
-                damage_value = int(self.get_dmg_value(stat_type = StatType.MIND)),
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.PHYARMOR
-                )
+                damage_taker_actor=self.other,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_source_actor=self.user,
+                damage_value=int(self.get_dmg_value(stat_type=StatType.MIND)),
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.PHYARMOR,
+            )
             damage_obj.run()
 
-            turns = int(self.script_values['duration'][self.users_skill_level])
-            reduction = self.script_values['bonus'][self.users_skill_level]
+            turns = int(self.script_values["duration"][self.users_skill_level])
+            reduction = self.script_values["bonus"][self.users_skill_level]
             ethereal_affect = affects.AffectMageArmor(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Magically protected', description = f'{int(reduction*100)}% of damage is converted to Magicka damage.',
-                turns = turns, reduction = reduction)
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Magically protected",
+                description=f"{int(reduction * 100)}% of damage is converted to Magicka damage.",
+                turns=turns,
+                reduction=reduction,
+            )
             self.other.affect_manager.set_affect_object(ethereal_affect)
 
 
@@ -750,127 +875,155 @@ class SkillMendArmor(Skill):
     def use(self):
         super().use()
         if self.success:
-            #dmg = int((self.get_dmg_value(stat_type = StatType.MIND) + self.get_dmg_value(stat_type = StatType.SOUL)))
-            #dmg = self.get_dmg_value(stat_type = StatType.MIND) + self.get_dmg_value(stat_type = StatType.SOUL)
-            dmg = self.script_values['damage'][self.users_skill_level] + int((self.user.stat_manager.stats[StatType.MIND] + self.user.stat_manager.stats[StatType.SOUL])/2)
-            damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self, combat_event = self.combat_event,
-                damage_source_actor = self.user,
-                damage_value = dmg,
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.MAGARMOR
+            # dmg = int((self.get_dmg_value(stat_type = StatType.MIND) + self.get_dmg_value(stat_type = StatType.SOUL)))
+            # dmg = self.get_dmg_value(stat_type = StatType.MIND) + self.get_dmg_value(stat_type = StatType.SOUL)
+            dmg = self.script_values["damage"][self.users_skill_level] + int(
+                (
+                    self.user.stat_manager.stats[StatType.MIND]
+                    + self.user.stat_manager.stats[StatType.SOUL]
                 )
+                / 2
+            )
+            damage_obj = Damage(
+                damage_taker_actor=self.other,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_source_actor=self.user,
+                damage_value=dmg,
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.MAGARMOR,
+            )
             damage_obj.run()
 
             damage_obj = Damage(
-                damage_taker_actor = self.other,
-                damage_source_action = self, combat_event = self.combat_event,
-                damage_source_actor = self.user,
-                damage_value = dmg,
-                damage_type = DamageType.HEALING,
-                damage_to_stat = StatType.PHYARMOR
-                )
+                damage_taker_actor=self.other,
+                damage_source_action=self,
+                combat_event=self.combat_event,
+                damage_source_actor=self.user,
+                damage_value=dmg,
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.PHYARMOR,
+            )
             damage_obj.run()
+
 
 class SkillDisorient(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns = int(self.script_values['duration'][self.users_skill_level])
-            #reduction = self.script_values['bonus'][self.users_skill_level]
+            turns = int(self.script_values["duration"][self.users_skill_level])
+            # reduction = self.script_values['bonus'][self.users_skill_level]
             _effect = affects.AffectArmorReduceToZero(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Disoriented', description = f'All armor is reduced to 0 momentarily',
-                turns = turns, dispellable = False)
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Disoriented",
+                description=f"All armor is reduced to 0 momentarily",
+                turns=turns,
+                dispellable=False,
+            )
             self.other.affect_manager.set_affect_object(_effect)
+
 
 class SkillDeflectMagic(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns = int(self.script_values['duration'][self.users_skill_level])
+            turns = int(self.script_values["duration"][self.users_skill_level])
             _effect = affects.AffectDeflectMagic(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Deflecting magic', description = f'All magical damage is deflected onto the original caster',
-                turns = turns)
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Deflecting magic",
+                description=f"All magical damage is deflected onto the original caster",
+                turns=turns,
+            )
             self.other.affect_manager.set_affect_object(_effect)
+
 
 class SkillEnrage(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns =         int(self.script_values['duration'][self.users_skill_level])
-            bonus =      self.script_values['bonus'][self.users_skill_level]
+            turns = int(self.script_values["duration"][self.users_skill_level])
+            bonus = self.script_values["bonus"][self.users_skill_level]
             enrage_affect = affects.AffectEnrage(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Enraged', description = f'Grit temporarely increased',
-                turns = turns, bonus = bonus)
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Enraged",
+                description=f"Grit temporarely increased",
+                turns=turns,
+                bonus=bonus,
+            )
             self.user.affect_manager.set_affect_object(enrage_affect)
+
 
 class SkillAdrenaline(Skill):
     def use(self):
         super().use()
         if self.success:
-            turns =         int(self.script_values['duration'][self.users_skill_level])
-            extra_hp =      self.script_values['bonus'][self.users_skill_level]
+            turns = int(self.script_values["duration"][self.users_skill_level])
+            extra_hp = self.script_values["bonus"][self.users_skill_level]
             enrage_affect = affects.AffectAdrenaline(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Surging', description = f'Temporary {int(extra_hp*100)}% Health',
-                turns = turns, extra_hp = extra_hp)
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Surging",
+                description=f"Temporary {int(extra_hp * 100)}% Health",
+                turns=turns,
+                extra_hp=extra_hp,
+            )
             self.user.affect_manager.set_affect_object(enrage_affect)
+
 
 class SkillLeech(Skill):
     def use(self):
         super().use()
         if self.success:
-            leech_power = self.script_values['bonus'][self.users_skill_level]
-            #affect_manager, name, description, turns
+            leech_power = self.script_values["bonus"][self.users_skill_level]
+            # affect_manager, name, description, turns
             leech_affect = affects.Leech(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Leeching',
-                description = f'Convert {int(leech_power*100)}% of physical damage dealt to healing.',
-                turns = int(self.script_values['duration'][self.users_skill_level]),
-                leech_power = leech_power
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Leeching",
+                description=f"Convert {int(leech_power * 100)}% of physical damage dealt to healing.",
+                turns=int(self.script_values["duration"][self.users_skill_level]),
+                leech_power=leech_power,
             )
 
             self.other.affect_manager.set_affect_object(leech_affect)
+
 
 class SkillThorns(Skill):
     def use(self):
         super().use()
         if self.success:
-            damage_reflected_power = self.script_values['bonus'][self.users_skill_level]
+            damage_reflected_power = self.script_values["bonus"][self.users_skill_level]
             thorns_affect = affects.AffectThorns(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Thorny',
-                description = f'Reflect {int(damage_reflected_power*100)}% of physical damage back. ',
-                turns = int(self.script_values['duration'][self.users_skill_level]),
-                damage_reflected_power = damage_reflected_power
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Thorny",
+                description=f"Reflect {int(damage_reflected_power * 100)}% of physical damage back. ",
+                turns=int(self.script_values["duration"][self.users_skill_level]),
+                damage_reflected_power=damage_reflected_power,
             )
             self.other.affect_manager.set_affect_object(thorns_affect)
+
 
 class SkillStealth(Skill):
     def use(self):
         super().use()
         if self.success:
-            damage_bonus = self.script_values['bonus'][self.users_skill_level]
+            damage_bonus = self.script_values["bonus"][self.users_skill_level]
             stealthed_affect = affects.AffectStealth(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Stealthed',
-                description = f'Multiply your next stab by {int(damage_bonus*100)}%',
-                turns = int(self.script_values['duration'][self.users_skill_level]),
-                bonus = damage_bonus
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Stealthed",
+                description=f"Multiply your next stab by {int(damage_bonus * 100)}%",
+                turns=int(self.script_values["duration"][self.users_skill_level]),
+                bonus=damage_bonus,
             )
             self.other.affect_manager.set_affect_object(stealthed_affect)
-'''
+
+
+"""
 class SkillOvercharge(Skill):
     def use(self):
         super().use()
@@ -885,52 +1038,71 @@ class SkillOvercharge(Skill):
                 bonus = damage_bonus
             )
             self.other.affect_manager.set_affect_object(stealthed_affect)
-'''
+"""
 
 # XD boost main stats skills
 
+
 class SkillBoostStat(Skill):
-    def use(self, name_of_boost = 'boosted', stat = StatType.GRIT):
-        #super().use()
+    def use(self, name_of_boost="boosted", stat=StatType.GRIT):
+        # super().use()
         if self.success:
-            turns =         int(self.script_values['duration'][self.users_skill_level])
-            bonus =         self.script_values['bonus'][self.users_skill_level]
-            aff   = affects.AffectBoostStat(
-                    affect_source_actor = self.user,
-                    affect_target_actor = self.other,
-                    name = name_of_boost, description = f'Temporary boost {StatType.name[stat].lower()} by {int(bonus*100)}% (+{int(self.other.stat_manager.stats[stat]*bonus)})',
-                    turns = turns, bonus = bonus, stat=stat)
+            turns = int(self.script_values["duration"][self.users_skill_level])
+            bonus = self.script_values["bonus"][self.users_skill_level]
+            aff = affects.AffectBoostStat(
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name=name_of_boost,
+                description=f"Temporary boost {StatType.name[stat].lower()} by {int(bonus * 100)}% (+{int(self.other.stat_manager.stats[stat] * bonus)})",
+                turns=turns,
+                bonus=bonus,
+                stat=stat,
+            )
             self.other.affect_manager.set_affect_object(aff)
+
+
 class SkillBoostStatGrit(SkillBoostStat):
     def use(self):
         Skill.use(self)
-        super().use(name_of_boost='Grit Blessed',stat=StatType.GRIT)
+        super().use(name_of_boost="Grit Blessed", stat=StatType.GRIT)
+
+
 class SkillBoostStatFlow(SkillBoostStat):
     def use(self):
         Skill.use(self)
-        super().use(name_of_boost='Flow Blessed',stat=StatType.FLOW)
+        super().use(name_of_boost="Flow Blessed", stat=StatType.FLOW)
+
+
 class SkillBoostStatMind(SkillBoostStat):
     def use(self):
         Skill.use(self)
-        super().use(name_of_boost='Mind Blessed',stat=StatType.MIND)
+        super().use(name_of_boost="Mind Blessed", stat=StatType.MIND)
+
+
 class SkillBoostStatSoul(SkillBoostStat):
     def use(self):
         Skill.use(self)
-        super().use(name_of_boost='Soul Blessed',stat=StatType.SOUL)
+        super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL)
+
+
 class SkillBoostStats(SkillBoostStat):
     def use(self):
         Skill.use(self)
-        super().use(name_of_boost='Grit Blessed',stat=StatType.GRIT)
-        super().use(name_of_boost='Flow Blessed',stat=StatType.FLOW)
-        super().use(name_of_boost='Mind Blessed',stat=StatType.MIND)
-        super().use(name_of_boost='Soul Blessed',stat=StatType.SOUL)
+        super().use(name_of_boost="Grit Blessed", stat=StatType.GRIT)
+        super().use(name_of_boost="Flow Blessed", stat=StatType.FLOW)
+        super().use(name_of_boost="Mind Blessed", stat=StatType.MIND)
+        super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL)
+
 
 # XD unique skills
 class SkillDispel(Skill):
     def use(self):
-       super().use()
-       if self.success:
-            is_ally = self.other.party_manager.get_party_id() == self.user.party_manager.get_party_id()
+        super().use()
+        if self.success:
+            is_ally = (
+                self.other.party_manager.get_party_id()
+                == self.user.party_manager.get_party_id()
+            )
             affs = self.other.affect_manager.affects.values()
             to_dispel = []
             if is_ally:
@@ -944,7 +1116,7 @@ class SkillDispel(Skill):
                         to_dispel.append(i)
 
             if to_dispel == []:
-                self.user.sendLine('Nothing to dispel')
+                self.user.sendLine("Nothing to dispel")
                 return
 
             dispel_this = random.choice(to_dispel)
@@ -952,29 +1124,28 @@ class SkillDispel(Skill):
 
             if is_ally:
                 damage_obj = Damage(
-                    damage_taker_actor = self.other,
-                    damage_source_action = self, combat_event = self.combat_event,
-                    damage_source_actor = self.user,
-                    damage_value = int(self.user.stat_manager.stats[StatType.SOUL]),
-                    damage_type = DamageType.HEALING,
-                    )
+                    damage_taker_actor=self.other,
+                    damage_source_action=self,
+                    combat_event=self.combat_event,
+                    damage_source_actor=self.user,
+                    damage_value=int(self.user.stat_manager.stats[StatType.SOUL]),
+                    damage_type=DamageType.HEALING,
+                )
                 damage_obj.run()
             else:
                 damage_obj = Damage(
-                    damage_taker_actor = self.other,
-                    damage_source_action = self, combat_event = self.combat_event,
-                    damage_source_actor = self.user,
-                    damage_value = int(self.user.stat_manager.stats[StatType.MIND]),
-                    damage_type = DamageType.MAGICAL,
-                    )
+                    damage_taker_actor=self.other,
+                    damage_source_action=self,
+                    combat_event=self.combat_event,
+                    damage_source_actor=self.user,
+                    damage_value=int(self.user.stat_manager.stats[StatType.MIND]),
+                    damage_type=DamageType.MAGICAL,
+                )
                 damage_obj.run()
 
 
-
-
-
 class SkillGetPracticePoint(Skill):
-     def use(self):
+    def use(self):
         super().use()
         if self.success:
             self.other.gain_practice_points(1)
@@ -984,46 +1155,62 @@ class SkillPortal(Skill):
     def use(self):
         super().use()
         if self.success:
-            e_id = 'skill_portal'
-            e = utils.create_npc(self.user.room.world.rooms[StaticRooms.LOADING], e_id, spawn_for_lore = True)
+            e_id = "skill_portal"
+            e = systems.utils.create_npc(
+                self.user.room.world.rooms[StaticRooms.LOADING],
+                e_id,
+                spawn_for_lore=True,
+            )
             e.talk_to(self.user)
             e.die()
+
 
 class SkillPromise(Skill):
     def use(self):
         super().use()
         if self.success:
-           # damage_bonus = self.script_values['bonus'][self.users_skill_level]
+            # damage_bonus = self.script_values['bonus'][self.users_skill_level]
             stealthed_affect = affects.AffectPromise(
-                affect_source_actor = self.user,
-                affect_target_actor = self.other,
-                name = 'Promised',
-                description = f'Pause all healing and damage',
-                turns = int(self.script_values['duration'][self.users_skill_level]),
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Promised",
+                description=f"Pause all healing and damage",
+                turns=int(self.script_values["duration"][self.users_skill_level]),
             )
             self.other.affect_manager.set_affect_object(stealthed_affect)
+
+
 class SkillAlchemy(Skill):
     def use(self):
         super().use()
         if self.success:
             failed = False
-            if type(self.other).__name__ != 'Equipment' :
-                failed = 'Only equipment can be alchemized'
-                self.user.simple_broadcast(f'Suddenly, it mends itself again, and you feel like nothing ever happened, '+failed,
-                                        'Suddenly, it mends itself again as if nothing happened')
+            if type(self.other).__name__ != "Equipment":
+                failed = "Only equipment can be alchemized"
+                self.user.simple_broadcast(
+                    f"Suddenly, it mends itself again, and you feel like nothing ever happened, "
+                    + failed,
+                    "Suddenly, it mends itself again as if nothing happened",
+                )
                 return
             if self.other.keep:
-                failed = 'Kept items cannot be alchemized'
-                self.user.simple_broadcast(f'Suddenly, it mends itself again, and you feel like nothing ever happened, '+failed,
-                                        'Suddenly, it mends itself again as if nothing happened')
+                failed = "Kept items cannot be alchemized"
+                self.user.simple_broadcast(
+                    f"Suddenly, it mends itself again, and you feel like nothing ever happened, "
+                    + failed,
+                    "Suddenly, it mends itself again as if nothing happened",
+                )
                 return
             if self.other.equiped:
-                failed = 'Equipped items cannot be alchemized'
-                self.user.simple_broadcast(f'Suddenly, it mends itself again, and you feel like nothing ever happened, '+failed,
-                                        'Suddenly, it mends itself again as if nothing happened')
+                failed = "Equipped items cannot be alchemized"
+                self.user.simple_broadcast(
+                    f"Suddenly, it mends itself again, and you feel like nothing ever happened, "
+                    + failed,
+                    "Suddenly, it mends itself again as if nothing happened",
+                )
                 return
 
             lvl = self.other.stat_manager.reqs[StatType.LVL] * self.other.stack
-            lvl = int(lvl * self.script_values['bonus'][self.users_skill_level])
+            lvl = int(lvl * self.script_values["bonus"][self.users_skill_level])
             self.user.gain_exp(lvl)
             self.user.inventory_manager.remove_item(self.other)
