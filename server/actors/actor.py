@@ -468,14 +468,12 @@ class Actor:
         output = ""
 
         match type(self).__name__:
-            case "Enemy":
-                output = output + f"{Color.NORMAL}{self.name}{Color.BACK}"
             case "Player":
                 if self.admin:
                     output = output + f"{Color.NAME_ADMIN}{self.name}{Color.BACK}"
                 else:
                     output = output + f"{Color.NAME_PLAYER}{self.name}{Color.BACK}"
-            case "Npc":
+            case _:
                 output = output + f"{Color.NORMAL}{self.name}{Color.BACK}"
 
         # if self.status == ActorStatusType.FIGHTING:

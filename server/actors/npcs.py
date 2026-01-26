@@ -5,11 +5,13 @@ import actors.ai
 import systems.utils
 from actors.actor import Actor
 from configuration.config import ENEMIES, ITEMS, NPCS, ActorStatusType, StatType
+from custom import loader as custom_loader
 
 # from custom import loader as custom_loader
 from items.manager import load_item
 from systems.dialog import Dialog
 from systems.quest import OBJECTIVE_TYPES, ObjectiveCountProposal
+from systems.utils import unload
 
 
 def create_npc(room, npc_id, spawn_for_lore=False):
@@ -26,13 +28,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
     on_death_skills_use = None
     on_start_skills_use = None
 
-    # if npc_id not in ENEMIES:
-    #    return
-
     if npc_id in ENEMIES:
-        # names = 'Auxy Niymiae Tanni Rahji Rahj Rahjii Redpot Kuro Christine Adne Ken Thomas Sandra Erling Viktor Wiktor Sam Dan'
-        # old_name_not_used = 'Arr\'zTh-The\'RchEndrough'
-        # name = random.choice(names.split())
         name = systems.utils.generate_name() + " The " + ENEMIES[npc_id]["name"]
         desc = ENEMIES[npc_id]["description"]
         stats = ENEMIES[npc_id]["stats"]
@@ -41,34 +37,11 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         ai = ENEMIES[npc_id]["ai"]
         can_start_fights = ENEMIES[npc_id]["can_start_fights"]
         dont_join_fights = ENEMIES[npc_id]["dont_join_fights"]
-
         on_death_skills_use = ENEMIES[npc_id]["on_death_skills_use"]
         on_start_skills_use = ENEMIES[npc_id]["on_start_skills_use"]
-
         loot = _loot  # {}
-        """
-        for i in ITEMS:
-            if 'requirements' in ITEMS[i]:
-                match abs(ITEMS[i]['requirements']['lvl'] - stats[StatType.LVL]):
-                    case 0:
-                        loot[i] = 0.01
-                    case 1:
-                        loot[i] = 0.009
-                    case 2:
-                        loot[i] = 0.008
-                    case 3:
-                        loot[i] = 0.007
-                    case 5:
-                        loot[i] = 0.006
-                    case 6:
-                        loot[i] = 0.005
-        for i in _loot:
-            loot[i] = _loot[i]
-        """
 
     if npc_id in NPCS:
-        # name =      NPCS[npc_id]['name']
-        # desc =      NPCS[npc_id]['description']
         tree = copy.deepcopy(NPCS[npc_id]["tree"])
 
     npc_class = Enemy
@@ -82,7 +55,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         ai=ai,
         name=name,
         description=desc,
-        room=room,
+        room=room.world.rooms["overworld/loading"],
         stats=stats,
         loot=loot,
         skills=skills,
@@ -93,8 +66,13 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         on_start_skills_use=on_start_skills_use,
     )
 
-    """
     npc_class = custom_loader.compare_replace_npcs(my_npc)
+    my_npc.room.world.rooms["overworld/loading"].move_actor(my_npc)
+    my_npc.unload()
+    unload(my_npc)
+
+    if npc_id in NPCS:
+        tree = copy.deepcopy(NPCS[npc_id]["tree"])
 
     my_npc = npc_class(
         npc_id=npc_id,
@@ -111,7 +89,6 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         on_death_skills_use=on_death_skills_use,
         on_start_skills_use=on_start_skills_use,
     )
-    """
 
     return my_npc
 

@@ -206,6 +206,7 @@ class World:
         systems.utils.debug_print(
             f"loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed / 30)}"
         )
+
         to_del = []
         for r in self.rooms:
             players = [
@@ -222,6 +223,16 @@ class World:
             del self.rooms[d]
 
         world = WORLD
+
+        target_id = "overworld/loading"
+
+        # Only reorder if it exists
+        if target_id in world["world"]:
+            # Remove the target room from the dict
+            target_room = world["world"].pop(target_id)
+
+            # Reinsert it at the beginning
+            world["world"] = {target_id: target_room, **world["world"]}
 
         for r in world["world"]:
             room = world["world"][r]
@@ -255,6 +266,8 @@ class World:
 
             # check if you actually want some other class
             room_class = custom_loader.compare_replace_room(self.rooms[r])
+            self.rooms_to_unload.append(r)
+            self.tick()
 
             # recreate the room regardless
             self.rooms[r] = room_class(
@@ -268,8 +281,6 @@ class World:
                 room["doorway"],
                 room["instanced"],
             )
-
-            print(self.rooms[r])
 
     def save_world(self):
         pass
