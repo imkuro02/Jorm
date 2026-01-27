@@ -1,301 +1,302 @@
 versions:
-  '240126':
-    id: '090126'
-    title: Bugs
+  "240126":
+    id: "240126"
+    title: Bugs and "modding"
     unixtime: 1761899677
     features:
-    - All players now count as allies when not in a party
-    - Dispel can no longer be used to grief other players by dispelling their buffs
-    - Enemy intentions no longer display target
-    - Armor break notification message (without sound)
-  '090126':
-    id: '090126'
+      - All players now count as allies when not in a party
+      - Dispel can no longer be used to grief other players by dispelling their buffs
+      - Enemy intentions no longer display target
+      - Armor break notification message (without sound)
+      - Custom loading of rooms, enemies, and enemy ai (mod support kinda)
+  "090126":
+    id: "090126"
     title: New world
     unixtime: 1761899677
     features:
-    - Map has been changed, areas are more linear, and use the cyclic dungeon approach
-    - New quest design approach
-    - Combat hotjoining has been disabled
-    - Players can now pass thru blocked exits if the enemies in the room are fighting (distracted)
-    - You can now promote others to become party leader with party promote
-    - You no longer need to specify "use" when using skills
-    - You no longer need to seperate skills and targets with "on" or "at"
-    - Offensive skills with no target argument will target first hostile available
-    - Supportive skills with no target argument will target yourself (if possible)
-    - Supportive skills that cannot target yourself without a target argument will fail (not spending turn)
-    - Damage text has been changed.
-    - Skill use text is now standardized (removed flavor text).
-    - Some enemies have on combat start skills and on death skills that bypass skill checks.
-    - Health, Physical armor, and Magical armor, renamed to Life, Hold and Ward.
-    - Better settings menu
+      - Map has been changed, areas are more linear, and use the cyclic dungeon approach
+      - New quest design approach
+      - Combat hotjoining has been disabled
+      - Players can now pass thru blocked exits if the enemies in the room are fighting (distracted)
+      - You can now promote others to become party leader with party promote
+      - You no longer need to specify "use" when using skills
+      - You no longer need to seperate skills and targets with "on" or "at"
+      - Offensive skills with no target argument will target first hostile available
+      - Supportive skills with no target argument will target yourself (if possible)
+      - Supportive skills that cannot target yourself without a target argument will fail (not spending turn)
+      - Damage text has been changed.
+      - Skill use text is now standardized (removed flavor text).
+      - Some enemies have on combat start skills and on death skills that bypass skill checks.
+      - Health, Physical armor, and Magical armor, renamed to Life, Hold and Ward.
+      - Better settings menu
     #- Client password censoring and up arrow for history (not done)
     #- Client shows what you sent when you hit enter (not done)
-  '010126':
-    id: '010126'
+  "010126":
+    id: "010126"
     title: Resting and Inventory and Party
     unixtime: 1761899677
     features:
-    - reworked get, drop and scrap "all" argument
-    - the "all." indexing can now filter item names like so "get all.iron"
-    - Rest now / quick rest removed
-    - Instead of resting, you heal from passing a turn / walking around
+      - reworked get, drop and scrap "all" argument
+      - the "all." indexing can now filter item names like so "get all.iron"
+      - Rest now / quick rest removed
+      - Instead of resting, you heal from passing a turn / walking around
     #- Party leadership transfers dungeon room ownership aswell
-  '211225':
-    id: '211225'
+  "211225":
+    id: "211225"
     title: Balance
     unixtime: 1761899677
     features:
-    #- Well rested buff added
-    - Some afflictions are now dispellable
-    - Afflictions are tagged as buffs, debuffs, or indispellable
-    - Dispel skill added, dispelling enemy buffs and ally debuffs
-    - Skills that grant buffs on enemies are not blocked by armor
-    - Bleed cannot be dispelled with just regular healing anymore
-    - Skills with Bounce or AOE will now target the party of the main target
-  '151225':
-    id: '151225'
+      #- Well rested buff added
+      - Some afflictions are now dispellable
+      - Afflictions are tagged as buffs, debuffs, or indispellable
+      - Dispel skill added, dispelling enemy buffs and ally debuffs
+      - Skills that grant buffs on enemies are not blocked by armor
+      - Bleed cannot be dispelled with just regular healing anymore
+      - Skills with Bounce or AOE will now target the party of the main target
+  "151225":
+    id: "151225"
     title: Balance
     unixtime: 1761899677
     features:
-    - Equipment can no longer boost max health
-    - Afflictions can no longer kill enemies after combat (for example you flee and then the enemy bleeds out)
-    - Some skills have their values changed slightly
-    - Bleed has been buffed, it deals character lvl/2 damage per turn, increasing with each bleed stack
-    - Item reforge afflictions are now "wearing [reforge] [slot]"
-    - Experimental no cooldown skill "brain sap"
-    - Combats with only one alive party will be over on start (essentially cannot start combat in empty rooms)
-  '261125':
-    id: '261125'
+      - Equipment can no longer boost max health
+      - Afflictions can no longer kill enemies after combat (for example you flee and then the enemy bleeds out)
+      - Some skills have their values changed slightly
+      - Bleed has been buffed, it deals character lvl/2 damage per turn, increasing with each bleed stack
+      - Item reforge afflictions are now "wearing [reforge] [slot]"
+      - Experimental no cooldown skill "brain sap"
+      - Combats with only one alive party will be over on start (essentially cannot start combat in empty rooms)
+  "261125":
+    id: "261125"
     title: New map and stat changes
     unixtime: 1761899677
     features:
-    - Keep is now two commands, keep and unkeep.
-    - Fixed all item descriptions
-    - Temporarely removed some items with unfinished names, they would drop from mobs by accident
-      if you see an item "error" it means that that item is temporarely removed, and might
-      be re-added later as an actual usable item
-    - equipment bonus types now include, stat, requirement, skill, reforge and special
-      stat boosts a stat (flat)
-      requirement is a stat requirement (flat)
-      skill boosts a skill level by n
-      reforge applies a special affliction on equip
-      special uses same system as reforge, but these cannot be reforged away, and apply to certain items only
-      special might end up being unused but if i ever want to use it its there
-    - Map has been altered and several areas have been moved around
-    - Fixed a bug where secret up and down exits would render on the minimap
-    - To speed up combat, all damage is increased by a flat amount of your level.
-      If you are level 10, all damage you deal has a bonus of 10 always
-      (Same goes for enemies)
-    - Equipment items now display item level in their name
-    - Your Turn combat prompt will display your stat prompt right afterwards when in combat
-    - Ascii art has been added for all mobs in game
-    - Ascii art can be turned off with settings
-    - Command glance has been added (look without a description)
-    - Command try has been removed, and use works like try USED to work
+      - Keep is now two commands, keep and unkeep.
+      - Fixed all item descriptions
+      - Temporarely removed some items with unfinished names, they would drop from mobs by accident
+        if you see an item "error" it means that that item is temporarely removed, and might
+        be re-added later as an actual usable item
+      - equipment bonus types now include, stat, requirement, skill, reforge and special
+        stat boosts a stat (flat)
+        requirement is a stat requirement (flat)
+        skill boosts a skill level by n
+        reforge applies a special affliction on equip
+        special uses same system as reforge, but these cannot be reforged away, and apply to certain items only
+        special might end up being unused but if i ever want to use it its there
+      - Map has been altered and several areas have been moved around
+      - Fixed a bug where secret up and down exits would render on the minimap
+      - To speed up combat, all damage is increased by a flat amount of your level.
+        If you are level 10, all damage you deal has a bonus of 10 always
+        (Same goes for enemies)
+      - Equipment items now display item level in their name
+      - Your Turn combat prompt will display your stat prompt right afterwards when in combat
+      - Ascii art has been added for all mobs in game
+      - Ascii art can be turned off with settings
+      - Command glance has been added (look without a description)
+      - Command try has been removed, and use works like try USED to work
     # - THIS IS A NOTE FOR MYSELF DELETE TABLE SETTINGS BEFORE PLAYING! "drop table settings;"
-  '171125':
-    id: '171125'
+  "171125":
+    id: "171125"
     title: Skills
     unixtime: 1761899677
     features:
-    - Auto battler removed, and fight no longer auto plays skills
-    - Two new quests from "The Child" by the western town exit
-    - Quests can have unknown objectives
-    - Mana is removed, no skills consume mana
-  '141125':
-    id: '141125'
+      - Auto battler removed, and fight no longer auto plays skills
+      - Two new quests from "The Child" by the western town exit
+      - Quests can have unknown objectives
+      - Mana is removed, no skills consume mana
+  "141125":
+    id: "141125"
     title: Skills
     unixtime: 1761899677
     features:
-    - Skill; Chain lightning added
-    - Skill; Mend Armor added
-    - Enemies never attack by themselves anymore
-    - Enemies that are aggressive and your lvl -3 will show as "in your way"
-    - Enemies that are "in your way" do not allow you to walk in any direction except to the room you came from
-    - Fleeing does not return you to rest spot, it makes you exit current combat
-    - Rest here command cannot be used with npcs present
-  '031125':
-    id: '031125'
+      - Skill; Chain lightning added
+      - Skill; Mend Armor added
+      - Enemies never attack by themselves anymore
+      - Enemies that are aggressive and your lvl -3 will show as "in your way"
+      - Enemies that are "in your way" do not allow you to walk in any direction except to the room you came from
+      - Fleeing does not return you to rest spot, it makes you exit current combat
+      - Rest here command cannot be used with npcs present
+  "031125":
+    id: "031125"
     title: Inventory management, skills, damage, and reforges
     unixtime: 1761899677
     features:
-    - drop all and get all now displays items interacted with in one line
-    - New skill; Nightmare, sleep a target for 3 turns, if target awakes from damage, their turn begins instantly
-    - Now, each time someones turn begins it is announced
-    - Damage received is displayed in a more informative way
-    - Fixed trading with npcs for quests, where you view the dialog of completion even if you didnt hand in item succesfully
-    - Fixed bug where offensive bouncy skills could bounce to an already dead target then continue bouncing
-    - Scan command temporarely disabled due to not working properly in instances
-    - Rest here command is interrupted when npcs are present
-    - --- ADDED REFORGING ---
-    - Reforges are passive afflictions that apply and refresh themselves based on equipment worn
-    - Reforge afflictions currently dont do anything but give description, this will soon change
-    - Reforges cost item level times 10 scrap
-    - Added "help reforge"
-    - Added "help scrap"
-    - Random drop items have a LVL in 100 chance of being already reforged
-    - --- MAP CHANGES ---
-    - One new quest
-    - New dungeon "The well bellow"
-    - Door to ellinia has been removed, Lavoratory is now the main passage during all hours
-    - --- QUEST CHANGES ---
-    - Quests can now reward amounts of items, not just one at a time, this means you can be rewarded with x amount of scrap for a quest
-  '311025':
-    id: '311025'
+      - drop all and get all now displays items interacted with in one line
+      - New skill; Nightmare, sleep a target for 3 turns, if target awakes from damage, their turn begins instantly
+      - Now, each time someones turn begins it is announced
+      - Damage received is displayed in a more informative way
+      - Fixed trading with npcs for quests, where you view the dialog of completion even if you didnt hand in item succesfully
+      - Fixed bug where offensive bouncy skills could bounce to an already dead target then continue bouncing
+      - Scan command temporarely disabled due to not working properly in instances
+      - Rest here command is interrupted when npcs are present
+      - --- ADDED REFORGING ---
+      - Reforges are passive afflictions that apply and refresh themselves based on equipment worn
+      - Reforge afflictions currently dont do anything but give description, this will soon change
+      - Reforges cost item level times 10 scrap
+      - Added "help reforge"
+      - Added "help scrap"
+      - Random drop items have a LVL in 100 chance of being already reforged
+      - --- MAP CHANGES ---
+      - One new quest
+      - New dungeon "The well bellow"
+      - Door to ellinia has been removed, Lavoratory is now the main passage during all hours
+      - --- QUEST CHANGES ---
+      - Quests can now reward amounts of items, not just one at a time, this means you can be rewarded with x amount of scrap for a quest
+  "311025":
+    id: "311025"
     title: More skills!
     unixtime: 1761899677
     features:
-    - --- SKILL CHANGES ---
-    - Slash is now an AOE skill, affecting one primary target and a secondary one
-    - Smite is now an AOE skill affecting up to 5 targets
-    - Stealth double damage only procs on stab
-    - Bless is now an AOE
-    - Bash only stuns if targets physical armor goes under 0 during that attack (so targets without armor, or with already broken armor cannot be stunned)
-    - Mage armor also recovers some magick armor
-    - ---- NEW SKILLS ---
-    - Cleave; deal moderate damage, but if the hit kills, its your turn again
-    - Chain Heal; a healing spell that bounces between targets, the first heal is the most powerful and loses power over bounces
-    - Refresh; an AOE heal for quickly healing whole party
-    - Dirt Throw; remove all armor from target for a few turns
-    - Deflect Magic; all magical damage is reflected to the original targets as pure damage
-    - Overcharge; heal full mp, but at end of duration take damage based on how much mp you spent while overcharged
-    - Finisher; deal low damage but bounce between targets for the amount of skills on cooldown
-    - --- Minor changes
-    - Skill view has been reworked to be nicer to look at
-    - Practicing a skill will increase all other skill practice cost by 1
-    - Practice view has new ui
-    - Default prompt changed (again)
-    - Rest has been reworked, with rest now / home and set (read more in help rest)
-    - Winning a combat enounter now heals you to full, regardless, same for enemies, but enemies also reset cooldowns and afflictions
-    - VoreAI has been temporarely disabled
-    - When a kill doesnt grant exp its no longer displayed as "lost 0 exp"
-    - Re-introduced get all and drop all commands
-    - Skills with a cooldown of 2 or more turns will now notify you when they are off cooldown
-    - You can now craft items without specifying ingredients, this will automatically attempt to craft with whatever is available
-    - Fixed a bug where if for some reason your health is 0 and you are not tagged as dead, then enter combat without any enemies game would crash
-  '221025':
-    id: '221025'
+      - --- SKILL CHANGES ---
+      - Slash is now an AOE skill, affecting one primary target and a secondary one
+      - Smite is now an AOE skill affecting up to 5 targets
+      - Stealth double damage only procs on stab
+      - Bless is now an AOE
+      - Bash only stuns if targets physical armor goes under 0 during that attack (so targets without armor, or with already broken armor cannot be stunned)
+      - Mage armor also recovers some magick armor
+      - ---- NEW SKILLS ---
+      - Cleave; deal moderate damage, but if the hit kills, its your turn again
+      - Chain Heal; a healing spell that bounces between targets, the first heal is the most powerful and loses power over bounces
+      - Refresh; an AOE heal for quickly healing whole party
+      - Dirt Throw; remove all armor from target for a few turns
+      - Deflect Magic; all magical damage is reflected to the original targets as pure damage
+      - Overcharge; heal full mp, but at end of duration take damage based on how much mp you spent while overcharged
+      - Finisher; deal low damage but bounce between targets for the amount of skills on cooldown
+      - --- Minor changes
+      - Skill view has been reworked to be nicer to look at
+      - Practicing a skill will increase all other skill practice cost by 1
+      - Practice view has new ui
+      - Default prompt changed (again)
+      - Rest has been reworked, with rest now / home and set (read more in help rest)
+      - Winning a combat enounter now heals you to full, regardless, same for enemies, but enemies also reset cooldowns and afflictions
+      - VoreAI has been temporarely disabled
+      - When a kill doesnt grant exp its no longer displayed as "lost 0 exp"
+      - Re-introduced get all and drop all commands
+      - Skills with a cooldown of 2 or more turns will now notify you when they are off cooldown
+      - You can now craft items without specifying ingredients, this will automatically attempt to craft with whatever is available
+      - Fixed a bug where if for some reason your health is 0 and you are not tagged as dead, then enter combat without any enemies game would crash
+  "221025":
+    id: "221025"
     title: Friends, map art, settings, and more
     unixtime: 1761218271
     features:
-    - Afk loggout timer increased from 15 min to 30 min
-    - Different wall art for different rooms
-    - Wall art has width of 2 now
-    - Unexplored rooms have a yellow ?
-    - Logging explored rooms, count of all rooms explored appears in rank
-    - Rank command tab 'Cred' has been renamed to 'Quests'
-    - Rank command now shows online status and all characters are now eligable
-    - Rank command can be used with 'rank <player name>' to view a specific players rank status
-    - ---
-    - Some skills can now be used without ending turn, notibly skills that are buffs and or have long cooldowns do not end turn.
-    - Calculator command for simple math equations like "2+2", "256*0.36" "((256-50)*(3*2))*1.2".
-    - Fixed item dropping / getting names for misc not displaying quantity correctly.
-    - ---
-    - Command 'befriend' for adding friends
-    - Command 'unfriend' for unfriending friends
-    - Command 'friends' for viewing friends
-    - Gossip command 'gossip <your message>', a friend only shout alternative
-    - ---
-    - Lore command no longer shows unecessary info, like item drops for enemies that dont drop anything
-    - Looking at / Loring an npc that cannot be in combat will no longer display their stats (they often er just 1)
-    - ---
-    - Ant hill area is now explorable in the jungle
-  '161025':
-    id: '161025'
+      - Afk loggout timer increased from 15 min to 30 min
+      - Different wall art for different rooms
+      - Wall art has width of 2 now
+      - Unexplored rooms have a yellow ?
+      - Logging explored rooms, count of all rooms explored appears in rank
+      - Rank command tab 'Cred' has been renamed to 'Quests'
+      - Rank command now shows online status and all characters are now eligable
+      - Rank command can be used with 'rank <player name>' to view a specific players rank status
+      - ---
+      - Some skills can now be used without ending turn, notibly skills that are buffs and or have long cooldowns do not end turn.
+      - Calculator command for simple math equations like "2+2", "256*0.36" "((256-50)*(3*2))*1.2".
+      - Fixed item dropping / getting names for misc not displaying quantity correctly.
+      - ---
+      - Command 'befriend' for adding friends
+      - Command 'unfriend' for unfriending friends
+      - Command 'friends' for viewing friends
+      - Gossip command 'gossip <your message>', a friend only shout alternative
+      - ---
+      - Lore command no longer shows unecessary info, like item drops for enemies that dont drop anything
+      - Looking at / Loring an npc that cannot be in combat will no longer display their stats (they often er just 1)
+      - ---
+      - Ant hill area is now explorable in the jungle
+  "161025":
+    id: "161025"
     title: Guest accounts
     unixtime: 1760612522
     features:
-    - Guest accounts now exist, on login screen type "guest" to create a temporary account
-    - Guest accounts can be converted to regular accounts, see more with "help guest"
-    - Doorways now render the path to the next room but not room info past doorway
-    - Disabled bleed for FLOW scaling damage (once again)
-    - New beginner skill "Guard" has been added, it has a very long cooldown (so only usable once per fight), regain some armor and magic armor.
-    - Both Phy and Mag armor regenerate to full after all combats.
-  '141025':
-    id: '141025'
+      - Guest accounts now exist, on login screen type "guest" to create a temporary account
+      - Guest accounts can be converted to regular accounts, see more with "help guest"
+      - Doorways now render the path to the next room but not room info past doorway
+      - Disabled bleed for FLOW scaling damage (once again)
+      - New beginner skill "Guard" has been added, it has a very long cooldown (so only usable once per fight), regain some armor and magic armor.
+      - Both Phy and Mag armor regenerate to full after all combats.
+  "141025":
+    id: "141025"
     title: Skills
     unixtime: 1760429687
     features:
-    - Skill critical damage is no longer between 80-100%, its 0-100%.
-    - Most combat skills are no longer practicable, and only obtained through gear.
-    - Magical feed has been reworked; You can now deal damage with magical feed when mana recovered on target exceeds their maximum mana.
-    - Game time now gets saved (FINALLY)
-  '131025':
-    id: '131025'
+      - Skill critical damage is no longer between 80-100%, its 0-100%.
+      - Most combat skills are no longer practicable, and only obtained through gear.
+      - Magical feed has been reworked; You can now deal damage with magical feed when mana recovered on target exceeds their maximum mana.
+      - Game time now gets saved (FINALLY)
+  "131025":
+    id: "131025"
     title: Autobattler, items, map and more
     unixtime: 1760354089
     features:
-    - Autobattler will only attempt to use skills that can be used in combat.
-    - Ingredient items have (M) affix.
-    - Item types have different colors.
-    - Drop tables have been altered a lot.
-    - Map renderer noise of randomized characters.
-    - Most buff skills have been rebalanced to have shorter duration and longer cooldown (usually cooldown is 2 more than duration).
-  '081025':
-    id: '081025'
+      - Autobattler will only attempt to use skills that can be used in combat.
+      - Ingredient items have (M) affix.
+      - Item types have different colors.
+      - Drop tables have been altered a lot.
+      - Map renderer noise of randomized characters.
+      - Most buff skills have been rebalanced to have shorter duration and longer cooldown (usually cooldown is 2 more than duration).
+  "081025":
+    id: "081025"
     title: Debugs and more Bugs
     unixtime: 1759921982
     features:
-    - Ant hill area coming soon
-    - More ant related items that do not drop from anything but ants, including; pheromones, and chitin armor (WIP).
-    - Autobattler setting has made a comeback, now without BUGS, use "set auto on" to enable autobattler, autobattler gets disabled if below 10% HP.
-    - Potions no longer cause potion sickness, this is kind of WIP and will return later.
-    - Instanced rooms no longer crash the game upon logging out after being in one (instanced room bug).
-    - Items with room SFX no longer play SFX after exiting the room they were in (instanced room bug).
-    - Logging out as party leader while in an instanced room with followers kicks followers out of party and teleports them to their rest site.
-  '031025':
-    id: '031025'
+      - Ant hill area coming soon
+      - More ant related items that do not drop from anything but ants, including; pheromones, and chitin armor (WIP).
+      - Autobattler setting has made a comeback, now without BUGS, use "set auto on" to enable autobattler, autobattler gets disabled if below 10% HP.
+      - Potions no longer cause potion sickness, this is kind of WIP and will return later.
+      - Instanced rooms no longer crash the game upon logging out after being in one (instanced room bug).
+      - Items with room SFX no longer play SFX after exiting the room they were in (instanced room bug).
+      - Logging out as party leader while in an instanced room with followers kicks followers out of party and teleports them to their rest site.
+  "031025":
+    id: "031025"
     title: Affects and Items
     unixtime: 1759480978
     features:
-    - Some unfinished items have been removed from the drop tables.
-    - More items have been added along with recipes.
+      - Some unfinished items have been removed from the drop tables.
+      - More items have been added along with recipes.
 
-    - Enrage no longer boosts max hp, instead it makes you deal BONUS damage, receive BONUS damage, and receive negative BONUS health from healing.
+      - Enrage no longer boosts max hp, instead it makes you deal BONUS damage, receive BONUS damage, and receive negative BONUS health from healing.
 
-    - All damage dealt with FLOW as primary stat now has a LVL in 100 chance to cause bleed.
-    - Applying bleed cannot be blocked by armor, and causes PURE damage.
-    - Bleed damage is halved each proc.
-    - Bleed damage cannot exceed the last bleed appliers LVL.
+      - All damage dealt with FLOW as primary stat now has a LVL in 100 chance to cause bleed.
+      - Applying bleed cannot be blocked by armor, and causes PURE damage.
+      - Bleed damage is halved each proc.
+      - Bleed damage cannot exceed the last bleed appliers LVL.
 
-    - Mage armor now displays damage blocked with magically protected affect.
-    - Mage armor only procs if damage is less than current magicka.
-    - Mage armor magicka damage no longer procs further damage.
-    - Magically proteted affects all damage types except for HEALING damage.
+      - Mage armor now displays damage blocked with magically protected affect.
+      - Mage armor only procs if damage is less than current magicka.
+      - Mage armor magicka damage no longer procs further damage.
+      - Magically proteted affects all damage types except for HEALING damage.
 
-    - Fixed bug where some stat boosting skills could boost your stats permanently.
-    - Fixed bug where bleed could crash game under specific conditions; Bleed source actor dies and Bleed target actor is afflicted, then passes turn.
+      - Fixed bug where some stat boosting skills could boost your stats permanently.
+      - Fixed bug where bleed could crash game under specific conditions; Bleed source actor dies and Bleed target actor is afflicted, then passes turn.
 
-    - Afflictions now have a source and target actor, meaning afflictions can proc eachother, aswell as increase threat generation.
-  '300925':
-    id: '300925'
+      - Afflictions now have a source and target actor, meaning afflictions can proc eachother, aswell as increase threat generation.
+  "300925":
+    id: "300925"
     title: UI changes
     unixtime: 1759230956
     features:
-    - Inventory now always has 2 columns, might rework.
-    - More prompt arguments including LVL, GRIT, etc.
-    - disabled text chunkation (wider screen means wider text).
-  '280925':
-    id: '280925'
+      - Inventory now always has 2 columns, might rework.
+      - More prompt arguments including LVL, GRIT, etc.
+      - disabled text chunkation (wider screen means wider text).
+  "280925":
+    id: "280925"
     title: Vore
     unixtime: 1759026240
     features:
-    - Added "Lesser Dragon" enemy.
-      Lesser Dragon can devour players in combat.
-      Being devoured puts you in a custom "dragon mouth room".
-      Lesser Dragon spawns in perion, sharing octopus spawn.
-    - Added Dragon tooth enemy and Dragon Tongue enemy.
-    - GUI map has been replaced with ascii map.
-    - Fixed footsteps not playing when moving.
-    - New room look and map command auto runs when resting.
-    - Teleports now make footstep sound effect.
+      - Added "Lesser Dragon" enemy.
+        Lesser Dragon can devour players in combat.
+        Being devoured puts you in a custom "dragon mouth room".
+        Lesser Dragon spawns in perion, sharing octopus spawn.
+      - Added Dragon tooth enemy and Dragon Tongue enemy.
+      - GUI map has been replaced with ascii map.
+      - Fixed footsteps not playing when moving.
+      - New room look and map command auto runs when resting.
+      - Teleports now make footstep sound effect.
 
-  '220925':
-    id: '220925'
+  "220925":
+    id: "220925"
     title: News!
     unixtime: 1758540482
     features:
-    - Added "news" command, displaying all recent patches
-    - Added a help page for news ("help news")
-    - Added "news alert" when not logged in for a while
-    - removed a trailing 'l' from the end of help command, the l would appear at the end of all helpfiles
+      - Added "news" command, displaying all recent patches
+      - Added a help page for news ("help news")
+      - Added "news alert" when not logged in for a while
+      - removed a trailing 'l' from the end of help command, the l would appear at the end of all helpfiles
