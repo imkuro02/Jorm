@@ -203,9 +203,8 @@ class World:
         )
 
     def reload(self):
-        systems.utils.debug_print(
-            f"loading rooms t:{self.factory.ticks_passed} s:{int(self.factory.ticks_passed / 30)}"
-        )
+        start = time.time()
+        # systems.utils.debug_print(f"Reloading rooms: {time.time()} START")
 
         to_del = []
         for r in self.rooms:
@@ -267,7 +266,7 @@ class World:
             # check if you actually want some other class
             room_class = custom_loader.compare_replace_room(self.rooms[r])
             self.rooms_to_unload.append(r)
-            self.tick()
+            self.unload_rooms()
 
             # recreate the room regardless
             self.rooms[r] = room_class(
@@ -282,11 +281,12 @@ class World:
                 room["instanced"],
             )
 
+        systems.utils.debug_print(f"Reloading rooms: {time.time() - start} DONE")
+
     def save_world(self):
         pass
 
-    def tick(self):
-        self.game_time.tick()
+    def unload_rooms(self):
         for i in self.rooms_to_unload:
             to_kick_from_instance = []
             for x in self.rooms[i].actors.values():
@@ -338,6 +338,10 @@ class World:
             i.tick()
 
         systems.utils.unload_fr()
+
+    def tick(self):
+        self.game_time.tick()
+        self.unload_rooms()
 
 
 from actors import ai

@@ -36,3 +36,8 @@ def compare_replace_npcs(npc):
         if custom_npc.compare_replace(npc):
             return custom_npc
     return type(npc)
+
+
+# def get_available_ai(ai):
+#    AI = load_customs("custom.ai", ai)
+#    return AI
