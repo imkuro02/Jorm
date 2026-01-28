@@ -2,6 +2,7 @@ import random
 
 import systems.utils
 from actors.ai import AI
+from actors.npcs import create_npc
 from configuration.config import ActorStatusType, StaticRooms, StatType
 
 
