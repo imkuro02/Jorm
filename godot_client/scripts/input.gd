@@ -2,6 +2,7 @@ extends LineEdit
 
 var history = []
 var history_line = 0
+@onready var MAIN = $"../../.."
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -13,7 +14,17 @@ func _process(delta):
 	pass
 
 func _input(event):
-	return
+	
+	#print(secret)
+	
+	if 'PLAY' not in MAIN.game_state:
+		history = []
+		return
+		
+	
+		 
+		
+		
 	if Input.is_key_pressed(KEY_UP):
 		if history_line == 0:
 			history_line += 1

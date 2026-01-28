@@ -8,13 +8,13 @@ var socket = WebSocketPeer.new()
 # References to UI nodes
 @onready var INPUT = $canvas/input/input
 @onready var OUTPUT = $canvas/container/output/output
-@onready var DEBUG = $canvas/container/output/debug
+@onready var DEBUG = $canvas/debug
 @onready var SFX_MAN = $sfx_manager
 @onready var LOOK_ROOM = $canvas/container/map_room/look_room
 @onready var ASCIIMAP = $canvas/container/map_room/ascii_map
 @onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
 
-
+var game_state = 'none yet'
 
 const IAC      : int = 255
 const WILL     : int = 251
@@ -94,11 +94,7 @@ func wait_for_connection(sock: WebSocketPeer, timeout: float) -> bool:
 func _on_input_submitted(text: String) -> void:
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN and text.strip_edges() != "":
 		socket.send_text(text.strip_edges())
-		if text.split(" ")[0] in ['say', 'shout']:
-			INPUT.text = text.split(" ")[0] + ' '
-			INPUT.caret_column = INPUT.text.length()
-		else:
-			INPUT.select_all()
+		INPUT.select_all()
 	else:
 		print("Socket not ready or input was empty.")
 
@@ -155,6 +151,15 @@ func handle_gmcp(message: String):
 		data_dict = JSON.parse_string(dict_string.replace("'", '"'))
 
 	match prefix:
+		'GAME_STATE':
+			game_state = dict_string
+			ASCIIMAP.clear()
+			OUTPUT_COMBAT.clear()
+			#OUTPUT.clear()
+			#OUTPUT.append_text("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+			INPUT.secret = 'REGISTER_PASSWORD' in game_state or 'LOGIN_PASSWORD' in game_state
+			INPUT.clear()
+				
 		'Client.Media.Play':
 			var sfx = load("res://audio/sfx/" + data_dict['name'])
 			SFX_MAN.stream = sfx

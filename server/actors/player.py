@@ -537,6 +537,8 @@ class Player(Actor):
             print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
+        if self.settings_manager.get_value(SETTINGS.ECHO):
+            self.sendLine(f'@bblack> {line}@normal')
         # systems.utils.debug_print(line)
         for trans in translations:
             if line.startswith(trans):

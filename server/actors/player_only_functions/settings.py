@@ -29,8 +29,10 @@ class SETTINGS:
     AUTO_BATTLER = "autobattler"
     PROMPT = "prompt"
     COLOR = "color"
+    ECHO = 'echo'
     LIST_SETTINGS = [
         GMCP,
+        ECHO,
         ALIAS,
         VIEW_ROOM,
         VIEW_MAP,
@@ -43,7 +45,7 @@ class SETTINGS:
         USR,
         EMAIL,
         PROMPT,
-        COLOR,  # AUTO_BATTLER
+        COLOR,  
     ]
 
 
@@ -56,6 +58,7 @@ class Settings:
         self.actor = actor
         self.defaults = {
             SETTINGS.GMCP: True,
+            SETTINGS.ECHO: True,
             SETTINGS.VIEW_ROOM: True,
             SETTINGS.VIEW_MAP: True,
             SETTINGS.VIEW_ASCII_ART: True,
@@ -146,6 +149,18 @@ class Settings:
                 self.actor.sendLine("All settings reset to default")
                 self.actor.settings_manager = Settings(self.actor)
                 return
+            
+            case SETTINGS.ECHO:
+                if len(line) == 1:
+                    self.actor.sendLine(
+                        "Echo setting needs an argument (on or off?)"
+                    )
+                    return
+                value = line[1]
+                self.settings[SETTINGS.ECHO] = self.true_or_false(value)
+                self.actor.sendLine(
+                    f"Echo enabled: {self.settings[SETTINGS.ECHO]}"
+                )
 
             case SETTINGS.COLOR:
                 if len(line) == 1:  # view aliases

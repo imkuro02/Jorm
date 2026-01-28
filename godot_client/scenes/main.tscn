@@ -301,15 +301,6 @@ bbcode_enabled = true
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
-[node name="debug" type="RichTextLabel" parent="canvas/HBoxContainer/input_output/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_ckiy7")
-bbcode_enabled = true
-selection_enabled = true
-
 [node name="Panel" type="Panel" parent="canvas/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(224, 0)
@@ -380,7 +371,7 @@ focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
-text = "client version: 190126"
+text = "client version: 280126"
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
@@ -411,16 +402,6 @@ bbcode_enabled = true
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
-[node name="debug" type="RichTextLabel" parent="canvas/container/output"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_ckiy7")
-bbcode_enabled = true
-text = "fdsafdsafs"
-selection_enabled = true
-
 [node name="output_combat" type="RichTextLabel" parent="canvas/container/output"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -443,6 +424,20 @@ offset_bottom = 234.0
 scale = Vector2(4, 4)
 texture = ExtResource("9_2qqwb")
 stretch_mode = 1
+
+[node name="debug" type="RichTextLabel" parent="canvas"]
+visible = false
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 367.0
+offset_bottom = 544.0
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_ckiy7")
+bbcode_enabled = true
+text = "test         
+test"
+selection_enabled = true
 
 [node name="sfx_manager" type="AudioStreamPlayer" parent="."]
 volume_db = -20.292
