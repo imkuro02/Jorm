@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e61e18ddfc62416e080110b03ace989237e34db5c5e2866802164cc045dac1b8",
+    "SHA-256": "5302350f161aae03af55776db9748fb7ed892999bd8a7b5b250c36468be21824",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3192,7 +3192,7 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false,
+            "dont_join_fights": true,
             "no_random_loot": false,
             "drop_tags": [
                 "all"
@@ -3235,7 +3235,93 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "npc_zone_3": {
+            "npc_id": "npc_zone_3",
+            "ai": "Enemy",
+            "name": "Gardener",
+            "description": "The gardener is leaning against the walls of a small shed.",
+            "stats": {
+                "grit": 1,
+                "hp": 15,
+                "mp": 0,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 1,
+                "mind": 1,
+                "soul": 1,
+                "exp": 0,
+                "lvl": 0
+            },
+            "include_in_daily_quests": false,
+            "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "rock": 40,
+                "summoning_rock": 40,
+                "grit body 1": 60,
+                "grit head 1": 60,
+                "grit relic 1": 60,
+                "grit trinket 1": 60,
+                "grit weapon 1": 60,
+                "grit body 3": 100,
+                "grit head 3": 100,
+                "grit trinket 3": 100,
+                "grit weapon 3": 100,
+                "grit weapon alt 3": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "gambling_0": {
+            "npc_id": "gambling_0",
+            "ai": "Enemy",
+            "name": "Gambler",
+            "description": "A tiny figure with a bunch of dice squats on the ground.",
+            "stats": {
+                "grit": 1,
+                "hp": 15,
+                "mp": 0,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "flow": 1,
+                "mind": 1,
+                "soul": 1,
+                "exp": 0,
+                "lvl": 0
+            },
+            "include_in_daily_quests": false,
+            "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "rock": 40,
+                "summoning_rock": 40,
+                "grit body 1": 60,
+                "grit head 1": 60,
+                "grit relic 1": 60,
+                "grit trinket 1": 60,
+                "grit weapon 1": 60,
+                "grit body 3": 100,
+                "grit head 3": 100,
+                "grit trinket 3": 100,
+                "grit weapon 3": 100,
+                "grit weapon alt 3": 100
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
             "no_random_loot": false,
             "drop_tags": [
                 "all"
@@ -4097,7 +4183,7 @@
         },
         "regen_hp_30": {
             "skill_id": "regen_hp_30",
-            "name": "Minor LIFE Regen",
+            "name": "Minor Life Regen",
             "description": "Instantly recover 30% of your Life.\n",
             "script_to_run": "RegenHP30",
             "target_others_is_valid": true,
@@ -4131,7 +4217,7 @@
         },
         "regen_phy_armor_30": {
             "skill_id": "regen_phy_armor_30",
-            "name": "Minor Physique Regen",
+            "name": "Minor Hold Regen",
             "description": "Instantly recover 30% of your Hold.\n",
             "script_to_run": "RegenPhyArmor30",
             "target_others_is_valid": true,
@@ -4165,7 +4251,7 @@
         },
         "regen_mag_armor_30": {
             "skill_id": "regen_mag_armor_30",
-            "name": "Minor Magic Regen",
+            "name": "Minor Ward Regen",
             "description": "Instantly recover 30% of your Ward.\n",
             "script_to_run": "RegenMagArmor30",
             "target_others_is_valid": true,
@@ -4239,7 +4325,7 @@
         },
         "renew_hp_30": {
             "skill_id": "renew_hp_30",
-            "name": "Minor LIFE Renew",
+            "name": "Minor Life Renew",
             "description": "Regenerate 30% of your Life over 3 turns.\n",
             "script_to_run": "RenewHP30",
             "target_others_is_valid": true,
@@ -4273,7 +4359,7 @@
         },
         "renew_phy_armor_30": {
             "skill_id": "renew_phy_armor_30",
-            "name": "Minor Physique Renew",
+            "name": "Minor Hold Renew",
             "description": "Regenerate 30% of your Hold over 3 turns.\n",
             "script_to_run": "RenewPhyArmor30",
             "target_others_is_valid": true,
@@ -4307,7 +4393,7 @@
         },
         "renew_mag_armor_30": {
             "skill_id": "renew_mag_armor_30",
-            "name": "Minor Magic Renew",
+            "name": "Minor Ward Renew",
             "description": "Regenerate 30% of your Ward over 3 turns.\n",
             "script_to_run": "RenewMagArmor30",
             "target_others_is_valid": true,
@@ -7882,6 +7968,56 @@
             "drop_chance_over_bonus": 0,
             "drop_chance_range_under": 0,
             "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "key_zone_3_manor": {
+            "premade_id": "key_zone_3_manor",
+            "name": "Manor Key",
+            "description": "A stickey slightly rusted key, it smells like ale.",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "stack_max_amount": 1,
+            "drop_tags": [
+                "none"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "key_zone_3_manor_shovel": {
+            "premade_id": "key_zone_3_manor_shovel",
+            "name": "Gardener Shovel",
+            "description": "A simple shovel used for gardening, by the gardener.",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "stack_max_amount": 1,
+            "drop_tags": [
+                "none"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []

@@ -1,0 +1,34 @@
+gambling_0:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc> says "You here to make bets?"
+
+    start_bidding:
+      append_to: start
+      options:
+        - line: |
+            make a bet
+          goto: propose_bid
+
+    start_how:
+      append_to: start
+      options:
+        - line: |
+            ask "how does this work?"
+          goto: how
+
+    how:
+      dialog:
+        - line: |
+            <npc> says "Simple, make a bet, I will roll three dice, should two of them be the same number, you win double, should I roll the same number thrice, you win tripple, but should they all be unique, I keep your scrap."
+      options:
+        - line: |
+            make a bet
+          goto: propose_bid
+
+    propose_bid:
+      dialog:
+        - line: |
+            <npc> says "How much scrap do you want to bid?" (type 0 to quit)

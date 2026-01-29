@@ -1,0 +1,15 @@
+quest_zone_3:
+  name: The Shovel
+  description:
+    in_progress: |
+      The Gardener asked me to return their shovel.
+      They said whoever took it has been using it to dig under the Manor Bedroom.
+    completed: |
+      I found the shovel, I should return it to the Gardener
+    turned_in: |
+      I got a generous reward for my efforts.
+  objectives:
+    Get the Shovel:
+      type: collect_x
+      objective: key_zone_3_manor_shovel
+      completed_at: 1

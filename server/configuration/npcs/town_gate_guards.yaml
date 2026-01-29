@@ -2,15 +2,15 @@ town_gate_guard_out:
   tree:
     start:
       dialog:
-      - line: |
-          <npc> says "Going somewhere?"
-      - line: |
-          <npc> says "Remember, I can guide you to your destination, but not back"
+        - line: |
+            <npc> says "Going somewhere?"
+        - line: |
+            <npc> says "Remember, I can guide you to your destination, but not back"
 
     end:
       dialog:
-      - line: |
-          <npc> says "Farewell"
+        - line: |
+            <npc> says "Farewell"
 
     start_2:
       append_to: start
@@ -21,38 +21,46 @@ town_gate_guard_out:
           #check_not_in_party_or_is_party_leader: 1
           #teleport_player: overworld/01fc3537-8806-496c-b8b3-9ae828cbe944
 
-       # - line: |
-       #     ask for an escort
-       #   goto: not_teleported
-       #   check_not_in_party_or_is_party_leader: 0
+        # - line: |
+        #     ask for an escort
+        #   goto: not_teleported
+        #   check_not_in_party_or_is_party_leader: 0
 
     go_somewhere:
       dialog:
-      - line: |
-          <npc> says "Where to?"
+        - line: |
+            <npc> says "Where to?"
       options:
-      - line: |
-          say "Stump Field"
-        goto: teleported
-        check_not_in_party_or_is_party_leader: 1
-        quest_check:
-          - id: quest_zone_1
-            state: turned_in
-        teleport_player: overworld/stump_field
-      - line: |
-          say "Purple Forest"
-        goto: teleported
-        check_not_in_party_or_is_party_leader: 1
-        quest_check:
-          - id: quest_zone_2
-            state: turned_in
-        teleport_player: overworld/zone_2
+        - line: |
+            say "Stump Field"
+          goto: teleported
+          check_not_in_party_or_is_party_leader: 1
+          quest_check:
+            - id: quest_zone_1
+              state: turned_in
+          teleport_player: overworld/stump_field
+        - line: |
+            say "Purple Forest"
+          goto: teleported
+          check_not_in_party_or_is_party_leader: 1
+          quest_check:
+            - id: quest_zone_2
+              state: turned_in
+          teleport_player: overworld/zone_2
+        - line: |
+            say "The Manor"
+          goto: teleported
+          check_not_in_party_or_is_party_leader: 1
+          quest_check:
+            - id: quest_zone_3
+              state: turned_in
+          teleport_player: overworld/zone_3
 
-      - line: |
-          say "Old world" (this area is from before debloat update)
-        goto: teleported
-        check_not_in_party_or_is_party_leader: 1
-        teleport_player: overworld/oldworld
+        - line: |
+            say "Old world" (this area is from before debloat update)
+          goto: teleported
+          check_not_in_party_or_is_party_leader: 1
+          teleport_player: overworld/oldworld
 
     teleported:
       dialog:
@@ -63,9 +71,6 @@ town_gate_guard_out:
       dialog:
         - line: |
             "Your party leader has to do that" <npc> says
-
-
-
 
     q_and_a:
       append_to: start
@@ -95,126 +100,182 @@ town_gate_guard_out:
             say "Ok"
           goto: start
 
-
 npc_zone_1:
   tree:
-      start:
-        dialog:
+    start:
+      dialog:
         - line: |
             <npc> says "Can you help me?"
           quest_check:
-          - id: quest_zone_1
-            state: not_started
+            - id: quest_zone_1
+              state: not_started
 
         - line: |
             <npc> says "Not done yet?"
           quest_check:
-          - id: quest_zone_1
-            state: in_progress
+            - id: quest_zone_1
+              state: in_progress
 
         - line: |
             <npc> says "Is it done?"
           quest_check:
-          - id: quest_zone_1
-            state: completed
+            - id: quest_zone_1
+              state: completed
 
         - line: |
             <npc> says "Thank you for the help"
           quest_check:
-          - id: quest_zone_1
-            state: turned_in
+            - id: quest_zone_1
+              state: turned_in
 
-        options:
-          - line: |
-              say "What can I do for you?"
-            goto: start_quest
-            quest_check:
-              - id: quest_zone_1
-                state: not_started
-            quest_start:
-              id: quest_zone_1
+      options:
+        - line: |
+            say "What can I do for you?"
+          goto: start_quest
+          quest_check:
+            - id: quest_zone_1
+              state: not_started
+          quest_start:
+            id: quest_zone_1
 
-          - line: |
-              say "Yes"
-            goto: turn_in_quest
-            quest_turn_in:
-              id: quest_zone_1
-              reward_exp: 25
+        - line: |
+            say "Yes"
+          goto: turn_in_quest
+          quest_turn_in:
+            id: quest_zone_1
+            reward_exp: 25
 
-      end:
-        dialog:
+    end:
+      dialog:
         - line: |
             <npc> says "Farewell"
 
-      start_quest:
-        dialog:
+    start_quest:
+      dialog:
         - line: |
             <npc> says "This one stump has been causing me trouble.. The large stump is in the most northern part of the stump field." they point down, towards the field south.
 
-      turn_in_quest:
-        dialog:
+    turn_in_quest:
+      dialog:
         - line: |
             <npc> says "wow.. I see, thank you"
 
-
-
-
 npc_zone_2:
   tree:
-      start:
-        dialog:
+    start:
+      dialog:
         - line: |
             <npc> says "Can you help me?"
           quest_check:
-          - id: quest_zone_2
-            state: not_started
+            - id: quest_zone_2
+              state: not_started
 
         - line: |
             <npc> says "Not done yet?"
           quest_check:
-          - id: quest_zone_2
-            state: in_progress
+            - id: quest_zone_2
+              state: in_progress
 
         - line: |
             <npc> says "Is it done?"
           quest_check:
-          - id: quest_zone_2
-            state: completed
+            - id: quest_zone_2
+              state: completed
 
         - line: |
             <npc> says "Thank you for the help"
           quest_check:
-          - id: quest_zone_2
-            state: turned_in
+            - id: quest_zone_2
+              state: turned_in
 
-        options:
-          - line: |
-              say "What can I do for you?"
-            goto: start_quest
-            quest_check:
-              - id: quest_zone_2
-                state: not_started
-            quest_start:
-              id: quest_zone_2
+      options:
+        - line: |
+            say "What can I do for you?"
+          goto: start_quest
+          quest_check:
+            - id: quest_zone_2
+              state: not_started
+          quest_start:
+            id: quest_zone_2
 
-          - line: |
-              say "Yes"
-            goto: turn_in_quest
-            quest_turn_in:
-              id: quest_zone_2
-              reward_exp: 200
+        - line: |
+            say "Yes"
+          goto: turn_in_quest
+          quest_turn_in:
+            id: quest_zone_2
+            reward_exp: 200
 
-      end:
-        dialog:
+    end:
+      dialog:
         - line: |
             <npc> says "Farewell"
 
-      start_quest:
-        dialog:
+    start_quest:
+      dialog:
         - line: |
             <npc> says "Im a scientist, and I need samples, get me some slime cores."
 
-      turn_in_quest:
-        dialog:
+    turn_in_quest:
+      dialog:
         - line: |
             <npc> says "Yes, this is what I needed" they pocket the cores "Lets meet again sometime"
+
+npc_zone_3:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc> says "Can you help me?"
+          quest_check:
+            - id: quest_zone_3
+              state: not_started
+
+        - line: |
+            <npc> says "Not done yet?"
+          quest_check:
+            - id: quest_zone_3
+              state: in_progress
+
+        - line: |
+            <npc> says "Is it done?"
+          quest_check:
+            - id: quest_zone_3
+              state: completed
+
+        - line: |
+            <npc> says "Thank you for the help"
+          quest_check:
+            - id: quest_zone_3
+              state: turned_in
+
+      options:
+        - line: |
+            say "What can I do for you?"
+          goto: start_quest
+          quest_check:
+            - id: quest_zone_3
+              state: not_started
+          quest_start:
+            id: quest_zone_3
+
+        - line: |
+            say "Yes"
+          goto: turn_in_quest
+          quest_turn_in:
+            id: quest_zone_3
+            reward_exp: 200
+
+    end:
+      dialog:
+        - line: |
+            <npc> says "Farewell"
+
+    start_quest:
+      dialog:
+        - line: |
+            <npc> says "Some fools took my dang shovel! they said they will dig around under the bedroom, they never returned."
+
+    turn_in_quest:
+      dialog:
+        - line: |
+            <npc> says "Finally! I can get back to work!"

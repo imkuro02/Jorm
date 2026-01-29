@@ -165,6 +165,8 @@ class Npc(Actor):
         if skills != None:
             self.skill_manager.skills = copy.deepcopy(skills)
 
+        self.dialog_manager = Dialog
+
     def talk_to(self, talker):
         if not super().talk_to(talker):
             return
@@ -173,7 +175,7 @@ class Npc(Actor):
             f"You approach {self.pretty_name()}",
             f"{talker.pretty_name()} approaches {self.pretty_name()}.",
         )
-        talker.current_dialog = Dialog(talker, self, self.dialog_tree)
+        talker.current_dialog = self.dialog_manager(talker, self, self.dialog_tree)
         talker.current_dialog.print_dialog()
         # return True
 

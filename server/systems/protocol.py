@@ -47,7 +47,7 @@ class Protocol(protocol.Protocol):
         self.factory = factory
         self.state: callable = self.LOGIN_OR_REGISTER
 
-        self.enabled_gmcp = True
+        self.enabled_gmcp = False
 
         self.guest = False
 
@@ -84,7 +84,7 @@ class Protocol(protocol.Protocol):
 
     def send_gmcp(self, gmcp_data, gmcp_data_type):
         if not self.enabled_gmcp:
-            #print('no gmcp')
+            # print('no gmcp')
             return
 
         gmcp_data = str(gmcp_data)
@@ -138,7 +138,7 @@ class Protocol(protocol.Protocol):
 
     def change_state(self, state):
         state_name = state.__name__
-        self.send_gmcp(f'{state_name}', 'GAME_STATE')
+        self.send_gmcp(f"{state_name}", "GAME_STATE")
         match state:
             case self.LOGIN_OR_REGISTER:
                 self.id = str(uuid.uuid4())
@@ -668,12 +668,12 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         # if line:  # skip empty lines
         # if "@" in line:
         #    line = str(line) + Color.NORMAL
-        
-        if line == '!':
+
+        if line == "!":
             self.change_state(self.LOGIN_OR_REGISTER)
             return
-        
-        if 'LOGIN' in self.state.__name__ or 'REGISTER' in self.state.__name__:
+
+        if "LOGIN" in self.state.__name__ or "REGISTER" in self.state.__name__:
             self.sendLine('type "!" to return to main menu')
 
         self.state(line)
