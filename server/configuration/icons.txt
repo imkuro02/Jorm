@@ -564,3 +564,11 @@ the_well_below_trap
 @yellow,' ;@cyan|___|@white|
 @yellow|/\ \@bblueu u @white|<)	 
 [end]
+
+[id:gambling_0]
+  @bred,--"
+ @bred|@bcyanO  o
+ @bred/@bcyan'uU
+@bredO@yellow)@white-@yellow(@bred \
+@yellow(_@green$@yellow_)@bredO
+[end]
