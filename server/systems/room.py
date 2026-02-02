@@ -57,20 +57,6 @@ class Spawner:
         return room
 
     def respawn_all(self, forced=True):
-        """
-        for i in self.spawn_points_items:
-            if self.spawn_points_items[i] == None:
-                continue
-            if self.spawn_points_items[i] not in self.room.inventory_manager.items.values():
-                self.spawn_points_items[i] = None
-
-        for i in self.spawn_points_npcs:
-            if self.spawn_points_npcs[i] == None:
-                continue
-            if self.spawn_points_npcs[i].room == None:
-                self.spawn_points_npcs[i] = None
-        """
-
         for i in self.spawn_points:
             roll = 0
             if not self.room.is_player_present():
@@ -211,6 +197,14 @@ class Room:
         instanced,
         no_spawner=False,
     ):
+        self.room = self # this is such utter shit what the fuck
+        # this needs to be here to items can check for actors
+        # in rooms even if the room itself is item owner
+        
+        self.combat_manager_class = Combat  # some rooms might have a custom one
+        self.inventory_manager_class = InventoryManager
+        
+
         self.world = world
         self.id = _id  # id of the room
         self.name = name  # display name
@@ -259,10 +253,10 @@ class Room:
         )
         self.instanced = instanced  # is this room a private instance?
         self.doorway = doorway  # whether this room is a doorway, can you see thru it?
-        self.inventory_manager = InventoryManager(self, limit=20)
+        self.inventory_manager = self.inventory_manager_class(self, limit=20)
         self.inventory_manager.can_pick_up_anything = True
         self.combat = None  # placeholder for combat
-        self.combat_manager_class = Combat  # some rooms might have a custom one
+        
         self.actors = {}  # actors in room dict
 
         self.trigger_manager = TriggerManager(self)

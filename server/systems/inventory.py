@@ -181,8 +181,7 @@ class InventoryManager:
         else:
             return False
 
-        if type(self.owner).__name__ == "Room":
-            item.new = False
+
 
         if stack_items:
             for _i in self.items.values():
@@ -231,7 +230,7 @@ class InventoryManager:
 
         self.items[item.id] = item
 
-        if type(self.owner).__name__ != "Room":
+        if systems.utils.get_object_parent(self.owner) != "Room":
             item.new = True
         else:
             item.new = False

@@ -9,8 +9,18 @@ class rat_cheese(Item):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.trigger_manager.trigger_add('command_get', self.trigger_get)
 
 
-    def before_get(self, *args, **kwargs):
-        print('tertretre')
-        print(args, kwargs)
+    def trigger_get(self, player, line):
+        items = player.get_item(line = line.replace('command_get','').strip(), search_mode='room')
+        if items == None:
+            return False
+        
+        if self in items:
+            for i in self.inventory_manager.owner.room.actors.values():
+                if 'rat' == i.npc_id:
+                    player.sendLine('The rat hisses at you')
+                    return True
+        else:
+            return False

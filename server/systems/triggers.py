@@ -20,3 +20,19 @@ class TriggerManager:
             if i['trigger_action'](player, line):
                 return True # found something that triggered
         return False # did not find anything to trigger
+
+    def trigger_check_surrounding(self, player, line):
+        to_trigger_check = []
+        for i in player.inventory_manager.items.values():
+            to_trigger_check.append(i)
+        for i in player.room.inventory_manager.items.values():
+            to_trigger_check.append(i)
+        for i in player.room.actors.values():
+            to_trigger_check.append(i)
+        to_trigger_check.append(player.room)
+
+        for i in to_trigger_check:
+            triggered = i.trigger_manager.trigger_check(player = player, line = line)
+            if triggered:
+                return True
+        return False

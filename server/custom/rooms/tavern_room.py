@@ -27,6 +27,7 @@ class tavern_combat_manager(Combat):
 
 class tavern_inventory(InventoryManager):
     def add_item(self, item):
+        #print(self.owner.can_pick_up_anything)
         if type(item).__name__ == "Equipment":
             if len(self.owner.actors) >= 1:
                 output = (
@@ -39,6 +40,8 @@ class tavern_inventory(InventoryManager):
         super().add_item(item)
 
 
+#from types import MethodType
+
 class tavern_room(Room):
     @classmethod
     def compare_replace(self, room_object):
@@ -48,10 +51,16 @@ class tavern_room(Room):
         return True
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self.combat_manager_class = tavern_combat_manager
+        self.inventory_manager_class = tavern_inventory
+        super().__init__(*args, **kwargs)
+        
         self.goons = []
-        self.inventory_manager = tavern_inventory(self, limit=20)
+
+        self.inventory_manager = tavern_inventory(self, 20)
+        self.inventory_manager.can_pick_up_anything = True
+
+        
 
     def join_combat(self, player_participant):
         super().join_combat(player_participant)

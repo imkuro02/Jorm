@@ -324,6 +324,7 @@ class UpdateChecker:
 
 class Player(Actor):
     def __init__(self, protocol, name, room, _id=None):
+        self.npc_id = 'player'
         self.loaded = False
         self.protocol = protocol
         self.admin = 0
@@ -563,19 +564,10 @@ class Player(Actor):
         command = line.split()[0]
 
         # stop everything else if a trigger got triggered
-        to_trigger_check = []
-        for i in self.inventory_manager.items.values():
-            to_trigger_check.append(i)
-        for i in self.room.inventory_manager.items.values():
-            to_trigger_check.append(i)
-        for i in self.room.actors.values():
-            to_trigger_check.append(i)
-        to_trigger_check.append(self.room)
+        triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = line)
+        if triggered:
+            return
 
-        for i in to_trigger_check:
-            triggered = i.trigger_manager.trigger_check(player = self, line = line)
-            if triggered:
-                return True
 
         # replace with aliases as long as it is not a settings command
         if " " + command + "" not in " settings ":
@@ -629,10 +621,17 @@ class Player(Actor):
 
         if command in one_letter_commands:
             script = getattr(self, commands[one_letter_commands[command]])
+
+            
+            
             self.last_command_used = one_letter_commands[command]
             self.sendLine(
                 commands[one_letter_commands[command]], msg_type=[MsgType.DEBUG]
             )
+
+            triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'{commands[one_letter_commands[command]]} {line}')
+            if triggered:
+                return
             script(line)
             return
 
@@ -663,6 +662,11 @@ class Player(Actor):
         self.sendLine(
             "Command found: " + str(commands[best_match]), msg_type=[MsgType.DEBUG]
         )
+
+        triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'{commands[best_match]} {line}')
+        if triggered:
+            return
+
         script(line)
 
     def set_turn(self):
