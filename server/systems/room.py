@@ -24,7 +24,7 @@ from custom import loader as custom_loader
 from items.manager import load_item
 from systems.inventory import InventoryManager
 from systems.utils import REFTRACKER, unload
-
+from systems.triggers import TriggerManager
 
 class Spawner:
     def __init__(self, room):
@@ -265,11 +265,17 @@ class Room:
         self.combat_manager_class = Combat  # some rooms might have a custom one
         self.actors = {}  # actors in room dict
 
+        self.trigger_manager = TriggerManager(self)
+
         self.spawner = None
         if not no_spawner:
             self.spawner = Spawner(self)  # spawner
 
+        
+
         REFTRACKER.add_ref(self)
+
+    
 
     def get_wall_data(self):
         wall_data = WORLD["world"][self.get_real_id()]["wall_data"].split(":")

@@ -26,9 +26,11 @@ class gambling_dialog(Dialog):
         self.give_back_money()
         return super().end_dialog()
 
-    def end_dialog(self):
-        pass
-        # return super().end_dialog()
+    def end_dialog(self, forced = 0):
+        if self.current_line != "propose_bid" or forced == 1:
+            self.player.sendLine('END')
+            self.end_gambling()
+            return super().end_dialog()
 
     def give_back_money(self):
         if self.to_gamble != 0:
@@ -43,15 +45,11 @@ class gambling_dialog(Dialog):
         try:
             line = int(line)
         except ValueError:
-            # self.end_dialog()
-            self.end_gambling()
-            super().end_dialog()
+            self.end_dialog(1)
             return False
 
         if line <= 0:
-            # self.end_dialog()
-            self.end_gambling()
-            super().end_dialog()
+            self.end_dialog(1)
             return True
 
         if self.is_gambling:
@@ -161,6 +159,18 @@ class gambling(Npc):
         self.dialog_manager = gambling_dialog
         self.actors = len(self.room.actors.values())
         self.dialogs = {}
+
+        self.trigger_manager.trigger_add(trigger_key = 'gamble', trigger_action = self.trigger_gamble)
+        self.description += '\nYou can "gamble <amount>" to skip the chitchat.'
+
+    def trigger_gamble(self, player, line):
+        if len(line.split())!=2:
+            player.sendLine(f'{self.pretty_name()} says "If you want to gamble, either talk to me, or "gamble <amount>""')
+            return True
+        self.talk_to(player)
+        player.current_dialog.answer('1')
+        player.current_dialog.answer(line.split()[1])
+        return True
 
     def tick(self):
         super().tick()

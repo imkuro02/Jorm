@@ -11,7 +11,7 @@ from configuration.config import (
     get_icon,
 )
 from systems.utils import REFTRACKER, get_object_parent
-
+from systems.triggers import TriggerManager
 
 class Item:
     def __init__(self):
@@ -39,6 +39,8 @@ class Item:
         # crafting
         self.crafting_recipe_ingredients = []
         self.crafting_ingredient_for = []
+
+        self.trigger_manager = TriggerManager(self)
 
         REFTRACKER.add_ref(self)
 

@@ -539,6 +539,7 @@ class Player(Actor):
     def handle(self, line):
         if self.settings_manager.get_value(SETTINGS.ECHO):
             self.sendLine(f'@bblack> {line}@normal')
+
         # systems.utils.debug_print(line)
         for trans in translations:
             if line.startswith(trans):
@@ -560,6 +561,21 @@ class Player(Actor):
                 return
 
         command = line.split()[0]
+
+        # stop everything else if a trigger got triggered
+        to_trigger_check = []
+        for i in self.inventory_manager.items.values():
+            to_trigger_check.append(i)
+        for i in self.room.inventory_manager.items.values():
+            to_trigger_check.append(i)
+        for i in self.room.actors.values():
+            to_trigger_check.append(i)
+        to_trigger_check.append(self.room)
+
+        for i in to_trigger_check:
+            triggered = i.trigger_manager.trigger_check(player = self, line = line)
+            if triggered:
+                return True
 
         # replace with aliases as long as it is not a settings command
         if " " + command + "" not in " settings ":

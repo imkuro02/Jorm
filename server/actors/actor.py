@@ -25,7 +25,7 @@ from systems.inventory import InventoryManager
 from systems.party import PartyManager
 from systems.quest import QuestManager
 from systems.utils import REFTRACKER, unload
-
+from systems.triggers import TriggerManager
 
 class ActorStatManager:
     def __init__(self, actor):
@@ -268,6 +268,8 @@ class Actor:
 
         # for npc char sheet
         self.dont_join_fights = False
+
+        self.trigger_manager = TriggerManager(self)
 
         REFTRACKER.add_ref(self)
 
@@ -546,13 +548,13 @@ class Actor:
                     if type(self).__name__ != "Player":
                         output += get_icon(self.npc_id)
 
-        if not is_glancing:
+        if True: #if not is_glancing:
             if self.description != None:
                 output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"
 
         output += self.get_character_equipment()
 
-        if not self.dont_join_fights:
+        if True: #if not self.dont_join_fights:
             t = systems.utils.Table(4, 1)
             _piss = [
                 StatType.HP,
