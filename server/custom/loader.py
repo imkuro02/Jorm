@@ -22,7 +22,7 @@ def load_customs(path, object):
     return classes
 
 
-def compare_replace_room(room):
+def compare_replace_rooms(room):
     ROOMS = load_customs("custom.rooms", room)
     for custom_room in ROOMS:
         if custom_room.compare_replace(room):
@@ -37,6 +37,12 @@ def compare_replace_npcs(npc):
             return custom_npc
     return type(npc)
 
+def compare_replace_items(item):
+    ITEMS = load_customs("custom.items", item)
+    for custom_item in ITEMS:
+        if custom_item.compare_replace(item):
+            return custom_item
+    return type(item)
 
 # def get_available_ai(ai):
 #    AI = load_customs("custom.ai", ai)

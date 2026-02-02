@@ -264,7 +264,7 @@ class World:
             )
 
             # check if you actually want some other class
-            room_class = custom_loader.compare_replace_room(self.rooms[r])
+            room_class = custom_loader.compare_replace_rooms(self.rooms[r])
             self.rooms_to_unload.append(r)
             self.unload_rooms()
 

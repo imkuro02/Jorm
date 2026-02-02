@@ -1,5 +1,5 @@
 {
-    "SHA-256": "eda40e631cb07fc19706a079f707cfccda87769ad354b904de80dd7d7a1847bc",
+    "SHA-256": "b7e6e11f995b28fb7929f589e7e09f6099529b176556416e79465ade633fa1b5",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -8005,6 +8005,31 @@
             "premade_id": "key_zone_3_manor_shovel",
             "name": "Gardener Shovel",
             "description": "A simple shovel used for gardening, by the gardener.",
+            "description_room": null,
+            "invisible": 0.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "stack_max_amount": 1,
+            "drop_tags": [
+                "none"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "rat_cheese": {
+            "premade_id": "rat_cheese",
+            "name": "Cheese",
+            "description": "A nice wheel of cheese",
             "description_room": null,
             "invisible": 0.0,
             "ambience": null,

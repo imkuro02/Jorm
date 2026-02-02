@@ -52,9 +52,11 @@ def command_get(self, line):
 
         _item_removed_from_room = self.room.inventory_manager.remove_item(item)
         _item_added_to_player = self.inventory_manager.add_item(item)
+        #item.before_get(self)
 
         if not _item_removed_from_room or not _item_added_to_player:
             if _item_removed_from_room:
+                
                 self.room.inventory_manager.add_item(item)
             if _item_removed_from_room:
                 self.inventory_manager.remove_item(item)

@@ -1,4 +1,10 @@
 versions:
+  "020226":
+    id: "020226"
+    title: Triggers
+    unixtime: 1761899677
+    features:
+      - Mobs, Items, and rooms now have "triggers", triggers are key words that will trigger a function
   "240126":
     id: "240126"
     title: Bugs and "modding"
