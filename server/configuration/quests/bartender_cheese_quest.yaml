@@ -1,0 +1,15 @@
+bartender_rat_cheese:
+  name: Get Cheese
+  description: 
+    in_progress: |
+      The bartender needs "Cheese"... Vague and odd.
+    completed: |
+      I got the cheese they have been looking for.
+    turned_in: |
+      I wonder what they need that cheese for.
+  objectives:
+    Get Cheese:
+      type: collect_x
+      objective: rat_cheese
+      completed_at: 1
+      

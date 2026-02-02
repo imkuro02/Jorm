@@ -31,3 +31,54 @@ bartender:
             give_to_npc:
               - item: currency_0
                 amount: 60
+
+
+
+    start_cheese:
+      append_to: start
+      options:
+        - line: |
+            ask about quests
+          goto: cheese_quest_not_started
+          quest_start: 
+            id: bartender_rat_cheese
+          quest_check:
+          - id: bartender_rat_cheese
+            state: not_started
+
+        - line: |
+            ask about quests
+          goto: cheese_quest_in_progress
+          quest_check:
+          - id: bartender_rat_cheese
+            state: in_progress
+
+        - line: |
+            ask about quests
+          goto: cheese_quest_completed
+          quest_turn_in:
+            id: bartender_rat_cheese
+            reward_exp: 4
+            reward:
+              - item: currency_0
+                amount: 25
+          quest_check:
+          - id: bartender_rat_cheese
+            state: completed
+          
+    
+
+    cheese_quest_not_started:
+      dialog:
+        - line: |
+            <npc> says "I've ran out of cheese, can you get me some?"
+
+    cheese_quest_in_progress:
+      dialog:
+        - line: |
+            <npc> says "Cheese.. damn it, cheese"
+
+    cheese_quest_completed:
+      dialog:
+        - line: |
+            <npc> says "MmmmMmm Cheemse..."

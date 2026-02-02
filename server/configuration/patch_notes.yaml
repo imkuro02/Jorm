@@ -5,6 +5,7 @@ versions:
     unixtime: 1761899677
     features:
       - Mobs, Items, and rooms now have "triggers", triggers are key words that will trigger a function
+      - As a test of the trigger system, gambling npc has been added, and a cheese quest has been added.
   "240126":
     id: "240126"
     title: Bugs and "modding"
