@@ -49,6 +49,9 @@ def command_get(self, line):
     items_pretty_name_before_pickup = []
     for item in items_to_get:
         item_pretty_name_before_pickup = item.pretty_name()
+        if not item.can_pick_up:
+            self.sendLine(f'You can\'t pick up {item.pretty_name()}')
+            continue
 
         _item_removed_from_room = self.room.inventory_manager.remove_item(item)
         _item_added_to_player = self.inventory_manager.add_item(item)
@@ -67,6 +70,8 @@ def command_get(self, line):
 
         items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
 
+    if items_pretty_name_before_pickup == []:
+        return
     self.simple_broadcast(
         f"You get {', '.join(items_pretty_name_before_pickup)}",
         f"{self.pretty_name()} gets {', '.join(items_pretty_name_before_pickup)}",

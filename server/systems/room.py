@@ -120,7 +120,7 @@ class Spawner:
                     continue
 
     def tick(self):
-        if self.room.world.factory.ticks_passed % (30 * 5) == 0:
+        if self.room.world.factory.ticks_passed % (30 * 60) == 0:
             self.respawn_all()
 
 
