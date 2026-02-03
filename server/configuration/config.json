@@ -1,5 +1,5 @@
 {
-    "SHA-256": "b7e6e11f995b28fb7929f589e7e09f6099529b176556416e79465ade633fa1b5",
+    "SHA-256": "e79b4096a4ce0f37c33a02743145fc0444243865ac0d650ae5b51c95f8842619",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -288,7 +288,7 @@
                 "flow weapon 3": 80
             },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
@@ -5649,6 +5649,56 @@
             "drop_chance_over_bonus": -1,
             "drop_chance_range_under": 1,
             "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "mug_of_ale": {
+            "premade_id": "mug_of_ale",
+            "name": "Mug of Ale",
+            "description": "A mug of ale, there is foam at the rim.",
+            "description_room": "A mug of ale is here",
+            "invisible": 1.0,
+            "ambience": null,
+            "ambience_sfx": null,
+            "can_pick_up": true,
+            "item_type": "misc",
+            "stack_max_amount": 9,
+            "drop_tags": [
+                "none"
+            ],
+            "drop_from_random": 1,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "crafting_recipe_ingredients": [],
+            "crafting_ingredient_for": []
+        },
+        "scenery_tavern_keg": {
+            "premade_id": "scenery_tavern_keg",
+            "name": "Keg",
+            "description": "A keg of ale, there is a label on the side, \"carlsberg\"",
+            "description_room": "A keg of ale is here",
+            "invisible": 1.0,
+            "ambience": "A drop of ale trickles from the tap of the keg.",
+            "ambience_sfx": null,
+            "can_pick_up": false,
+            "item_type": "misc",
+            "stack_max_amount": 1,
+            "drop_tags": [
+                "none"
+            ],
+            "drop_from_random": 0,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
             "crafting_recipe_ingredients": [],
             "crafting_ingredient_for": []

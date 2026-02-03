@@ -6,7 +6,7 @@ from configuration.config import MsgType
 @check_not_spamming
 def command_say(self, line):
     line = line + '@back'
-    print(line)
+    #print(line)
     self.simple_broadcast(
         f'You say "@cyan{line}@normal"',
         f'{self.pretty_name()} says "@cyan{line}@normal"@normal',

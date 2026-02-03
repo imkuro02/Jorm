@@ -468,7 +468,7 @@ def command_kill(self, line):
 
 def command_export(self, line):
     if line == "":
-        self.sendLine(str(self.room.__dict__))
+        self.sendLine(str(self.room) + '->' + str(self.room.__dict__))
         return
 
     list_of_actors = [actor.name for actor in self.room.actors.values()]
@@ -487,7 +487,8 @@ def command_export(self, line):
             self.sendLine("cant find this item to export")
             return
 
-        self.sendLine(str(items[0].__dict__))
+
+        self.sendLine(str(items[0]) + '->' + str(items[0].__dict__))
         """
         item_dict = item.to_dict()
 
@@ -501,7 +502,7 @@ def command_export(self, line):
     if best_match in list_of_actors:
         actor = self.get_actor(best_match)
         actor_dict = str(actor.__dict__)
-        self.sendLine(actor_dict)
+        self.sendLine(str(actor) + '->' + actor_dict)
 
 
 @check_is_admin

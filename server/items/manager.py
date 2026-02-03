@@ -219,7 +219,7 @@ def load_item(
     ]
     new_item.crafting_ingredient_for = ITEMS[premade_id]["crafting_ingredient_for"]
 
-
+    #new_item.__init__()
     
     
     return new_item
