@@ -17,7 +17,7 @@ def command_say(self, line):
 def command_shout(self, line):
     line = line + '@back'
     self.simple_broadcast(
-        f'You shout "@cyan{line}@back"',
+        f'You shout "@cyan{line}@normal"',
         f'{self.pretty_name()} shouts "@cyan{line}@normal" from "{self.room.pretty_name()}@normal"',
         send_to = 'world', msg_type = [MsgType.SHOUT, MsgType.CHAT])
 
