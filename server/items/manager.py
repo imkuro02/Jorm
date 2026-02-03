@@ -89,8 +89,8 @@ def load_item(
     if item_type == ItemType.MISC:
         new_item = Item()
 
-    if item_type == ItemType.SCENERY:
-        new_item = Scenery()
+    #if item_type == ItemType.SCENERY:
+    #    new_item = Scenery()
 
     if item_type == ItemType.CONSUMABLE:
         new_item = Consumable()
@@ -121,6 +121,11 @@ def load_item(
     # receive its id, and not get a new randomly generated one
 
     item_class = custom_loader.compare_replace_items(new_item)
+
+    #print(item_class == new_item.__class__, new_item.name)
+    #if item_class == new_item.__class__:
+    #    return new_item
+    
     systems.utils.unload(new_item)
 
     premade_id = item_premade_id
@@ -193,8 +198,8 @@ def load_item(
     if item_type == ItemType.MISC:
         new_item = item_class()
 
-    if item_type == ItemType.SCENERY:
-        new_item = item_class()
+    #if item_type == ItemType.SCENERY:
+    #    new_item = item_class()
 
     if item_type == ItemType.CONSUMABLE:
         new_item = item_class()
@@ -219,7 +224,10 @@ def load_item(
     ]
     new_item.crafting_ingredient_for = ITEMS[premade_id]["crafting_ingredient_for"]
 
-    #new_item.__init__()
+    
+    
+    
+    new_item.__init__()
     
     
     return new_item

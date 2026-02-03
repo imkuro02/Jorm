@@ -294,6 +294,8 @@ class EquipmentBonusManager:
 class Equipment(Item):
     def __init__(self):
         super().__init__()
+        if hasattr(self, 'stat_manager'):
+            return
         self.item_type = ItemType.EQUIPMENT
         self.stack_max = 1
 

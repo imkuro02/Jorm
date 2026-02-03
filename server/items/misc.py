@@ -15,10 +15,13 @@ from systems.triggers import TriggerManager
 
 class Item:
     def __init__(self):
+
+        if hasattr(self, 'id'):
+            return
+        
         self.id = str(uuid.uuid4())
         
-        #if hasattr(self,'id'):
-        #    return
+        
 
         self.premade_id = None
         self.item_type = ItemType.MISC
