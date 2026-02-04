@@ -14,7 +14,7 @@ class scenery_tavern_keg(Item):
         self.description += '\nYou can "fill" to fill one mug with ale.'
 
     def trigger_fill(self, player, line):
-        _removed_one_mug = player.inventory_manager.remove_items_by_id(self, 'mug', stack=1)
+        _removed_one_mug = player.inventory_manager.remove_items_by_id(item_premade_id = 'mug', stack = 1)
         if not _removed_one_mug:
             player.sendLine('You don\'t have a mug to fill')
             return True
