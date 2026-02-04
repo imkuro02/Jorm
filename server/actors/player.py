@@ -543,8 +543,8 @@ class Player(Actor):
 
         # systems.utils.debug_print(line)
         for trans in translations:
-            if line.startswith(trans):
-                line = translations[trans] + line[len(trans) :]
+            if line.lower().startswith(trans):
+                line = translations[trans] + line[len(trans) :].lower()
 
         # empty lines are handled as resend last line
 
@@ -562,6 +562,7 @@ class Player(Actor):
                 return
 
         command = line.split()[0]
+        command = command.lower()
 
         # stop everything else if a trigger got triggered
         triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = line)
@@ -598,13 +599,14 @@ class Player(Actor):
             # line = line.strip()
             line = alias_text.strip()
 
-        command = line.split()[0]
+        #command = line.split()[0]
+        #command = command.lower()
 
         if command not in "settings":
             if ";" in line:
                 lines = line.split(";")
                 for l in lines:
-                    if l.split()[0] in self.settings_manager.get_value(SETTINGS.ALIAS):
+                    if l.lower().split()[0] in self.settings_manager.get_value(SETTINGS.ALIAS):
                         self.sendLine("An alias cannot trigger another alias")
                         continue
                     self.queued_lines.append(l)
@@ -615,10 +617,11 @@ class Player(Actor):
         full_line = line
         line = " ".join(line.split()[1::]).strip()
 
-        if full_line in shortcuts_to_commands:
+        if full_line.lower() in shortcuts_to_commands:
             self.handle(shortcuts_to_commands[command])
             return
 
+        command = command.lower()
         if command in one_letter_commands:
             script = getattr(self, commands[one_letter_commands[command]])
 
