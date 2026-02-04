@@ -116,7 +116,12 @@ def command_map(self, line, return_gmcp=False):
             if grid[room_loc] == "PATH":
                 continue
 
+            
+
             room = self.protocol.factory.world.rooms[grid[room_loc]]
+
+            #if room.get_real_id() not in self.explored_rooms:
+            #    continue
 
             # if room.doorway:
             #    continue

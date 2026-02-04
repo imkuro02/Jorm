@@ -179,6 +179,7 @@ actors.player_only_functions.settings.BANNED_ALIASES = ALL_COMMANDS
 '''
 
 translations = {
+    'look at':           'look',
     'talk to ':          'talk ',
     'talk with':         'talk ',
     'speak':             'talk ',
