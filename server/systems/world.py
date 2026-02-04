@@ -299,6 +299,9 @@ class World:
 
             for x in self.rooms[i].inventory_manager.items.values():
                 unload(x)
+
+            unload(self.rooms[i].inventory_manager)
+
             unload(self.rooms[i].inventory_manager.triggerable_manager)
 
             to_unload = []
@@ -339,11 +342,12 @@ class World:
             #        systems.utils.debug_print('>', x.name)
             i.tick()
 
-        systems.utils.unload_fr()
+        
 
     def tick(self):
         self.game_time.tick()
         self.unload_rooms()
+        systems.utils.unload_fr()
 
 
 from actors import ai

@@ -304,10 +304,10 @@ class Npc(Actor):
                 )
                 actor.quest_manager.propose_objective_count_addition(proposal)
 
-        del self.room.actors[self.id]
-        if self.room.combat != None:
-            if self.id in self.room.combat.participants:
-                del self.room.combat.participants[self.id]
+        #del room.actors[self.id]
+        if room.combat != None:
+            if self.id in room.combat.participants:
+                del room.combat.participants[self.id]
 
         super().unload()
 

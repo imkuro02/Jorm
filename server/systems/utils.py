@@ -27,7 +27,20 @@ class RefTracker:
     def add_ref(self, obj):
         self.refs.append(weakref.ref(obj))
 
-    def show_ref_all(self):
+    def show_ref_of_id(self, line):
+        refs = {}
+        for ref in self.refs:
+            obj = ref()  # dereference
+            if obj is not None:
+                if line in type(obj).__name__:
+                    refs[random.randint(0,99999999)]=obj.__dict__
+        return refs
+
+        
+
+    def show_ref_all(self, line = ''):
+        if line != '':
+            return self.show_ref_of_id(line)
         refs = {}
         for ref in self.refs:
             obj = ref()  # dereference
@@ -40,8 +53,9 @@ class RefTracker:
                 pass
                 # systems.utils.debug_print("<collected>")
 
-        debug_print("Ref sum:", refs)
 
+        debug_print("Ref sum:", refs)
+        return refs
 
 REFTRACKER = RefTracker()
 
@@ -83,18 +97,32 @@ def unload_fr():
         try:
             if type(obj_to_unload) == str:
                 continue
+
+            try:
+                obj_to_unload.unload()
+            except Exception as e:
+                debug_print(e)
+
             obj_dict = obj_to_unload.__dict__
             for key in obj_dict:
                 try:
                     obj_dict[key] = None
                 except Exception as e:
-                    systems.utils.debug_print(e)
+                    debug_print(e)
+            _unloaded.append(obj_to_unload)
         except Exception as e:
-            systems.utils.debug_print(e)
-        _unloaded.append(obj_to_unload)
+            debug_print(e)
+        
 
     for i in _unloaded:
         del TOUNLOAD[i]
+
+    # check if any items are without inventory_managers
+    for r in REFTRACKER.refs:
+        if get_object_parent(r) == 'Item':
+            if r.inventory_manager == None:
+                debug_print(f'unloading item since no inventory_manager... {r}')
+                unload(r)
 
 
 def generate_name():

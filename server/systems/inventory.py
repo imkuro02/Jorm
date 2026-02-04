@@ -285,6 +285,7 @@ class InventoryManager:
                     break
 
         for i in to_del:
+            self.items[i].inventory_manager = None
             del self.items[i]
 
         if type(self.owner).__name__ == "Player":
@@ -304,6 +305,7 @@ class InventoryManager:
                         OBJECTIVE_TYPES.COLLECT_X, item.premade_id, -item.stack
                     )
                 )
+            self.items[item.id].inventory_manager = None
             del self.items[item.id]
         if stack >= 1:
             if stack <= self.items[item.id].stack:
@@ -315,6 +317,7 @@ class InventoryManager:
                     )
                 self.items[item.id].stack -= stack
                 if self.items[item.id].stack <= 0:
+                    self.items[item.id].inventory_manager = None
                     del self.items[item.id]
 
     def split_stack(self, item, value):

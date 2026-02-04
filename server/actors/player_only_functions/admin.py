@@ -81,7 +81,14 @@ def command_patch_notes(self, line):
 
 
 def command_show_ref_all(self, line):
-    REFTRACKER.show_ref_all()
+    refs = REFTRACKER.show_ref_all(line)
+    t = systems.utils.Table(2)
+    for r in refs:
+        t.add_data(r,filler='.')
+        t.add_data(refs[r])
+    self.sendLine(t.get_table())
+
+    
 
 
 def command_help(self, line):

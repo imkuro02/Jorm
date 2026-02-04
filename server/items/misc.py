@@ -51,6 +51,9 @@ class Item:
 
         REFTRACKER.add_ref(self)
 
+    def unload(self):
+        systems.utils.unload(self)
+        
     def can_tinker_with(self):
         if self.keep:
             #
