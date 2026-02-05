@@ -1,4 +1,10 @@
 versions:
+  "050226":
+    id: "050226"
+    title: Fireball skill
+    unixtime: 1761899677
+    features:
+      - A new skill has been added, fireball
   "020226":
     id: "020226"
     title: Triggers

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "00d913b79abb4554a256eb1d390fac097fb88af3309c09e40c66a5db5f511030",
+    "SHA-256": "a370f254f611fe821f11918cdc62c693970d57dd1323249ca7f5cb4273267525",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -5418,7 +5418,7 @@
         "fireball": {
             "skill_id": "fireball",
             "name": "Fireball",
-            "description": "Deal magical damage based on your Mind.\nIf you take damage while casting Fireball\nYou will cast fireball on yourself instead.\n",
+            "description": "Deal magical damage based on your Mind.\nIf you take damage while casting Fireball\nYou will cast Fireball on yourself instead.\n",
             "script_to_run": "Fireball",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -5442,7 +5442,7 @@
                 "user on other fail": "none"
             },
             "is_offensive": 1.0,
-            "end_turn": false,
+            "end_turn": true,
             "script_values": {
                 "damage": [
                     10,
