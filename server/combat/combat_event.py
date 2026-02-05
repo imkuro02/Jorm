@@ -28,6 +28,8 @@ class CombatEvent:
         sound = None
 
         for pop in self.popped:
+            
+
             color = Color.ERROR
             match pop.damage_type:
                 case DamageType.HEALING:
@@ -224,12 +226,18 @@ class CombatEvent:
         # pop.damage_taker_actor.stat_manager.hp_mp_clamp_update()
 
     def run(self):
+
+        
+        
         if len(self.queue) == 0:
             self.print()
             return
 
         # get damage_obj first in queue
         damage_obj = self.queue[0]
+
+     
+        
 
         if not damage_obj.dont_proc:
             # before calc on damage_source_actor
@@ -284,6 +292,8 @@ class CombatEvent:
                 damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += (
                     abs(damage_obj.damage_value)
                 )
+
+        
 
         self.pop_from_queue()
 

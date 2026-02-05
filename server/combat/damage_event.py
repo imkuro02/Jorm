@@ -40,7 +40,10 @@ class Damage:
         else:
             self.combat_event.add_to_queue(self)
 
-        self.damage_snapshot = {
+        self.damage_snapshot = self.get_damage_snapshot()
+        
+    def get_damage_snapshot(self):
+        return {
             StatType.HP: self.damage_taker_actor.stat_manager.stats[StatType.HP],
             StatType.PHYARMOR: self.damage_taker_actor.stat_manager.stats[
                 StatType.PHYARMOR
@@ -68,6 +71,8 @@ class Damage:
         #    combat_round = self.damage_taker_actor.room.combat.round
         #    taker_max_hp = self.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
         #    self.damage_value += int(self.damage_value * (0.05 * (combat_round-1)))
+
+        self.damage_snapshot = self.get_damage_snapshot()
 
         if self.damage_taker_actor.status == ActorStatusType.DEAD:
             self.damage_value = 0

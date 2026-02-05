@@ -167,6 +167,25 @@ class AffectDelayedAction(Affect):
         )
         self.affect_target_actor.finish_turn()
 
+    def take_damage_before_calc(self, damage_obj: Damage):
+        if damage_obj.damage_type not in [DamageType.HEALING, DamageType.CANCELLED]:
+            # collect skills to cancel
+            skills_to_cancel = []
+            for i in self.skills_to_use_objects:
+                skills_to_cancel.append(i)
+
+            # reset skills to use on finished 
+            self.skills_to_use_objects = []
+            # finish the charging
+            self.on_finished()
+
+            # run delay use got cancelled on all cancelled skills
+            for i in skills_to_cancel:
+                i.delay_use_got_cancelled()
+            
+        # return the damage object for some reason    
+        return damage_obj
+
     def on_finished(self, silent=False):
         super().on_finished(silent)
         if self.affect_target_actor.status != ActorStatusType.FIGHTING:

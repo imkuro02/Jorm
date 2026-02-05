@@ -117,6 +117,11 @@ class Skill:
                 receiver.sendLine(perspectives["user on other"])
                 continue
 
+    # runs in delay affliction if the affliction gets cancelled
+    def delay_use_got_cancelled(self):
+        pass
+        #self.user.sendLine('delayed use stopped')
+
     def use(self):
         # systems.utils.debug_print('aoe:',self.aoe)
         if not self.no_cooldown:
@@ -635,6 +640,16 @@ class SkillDoubleWhack(SkillDamageByGritFlow):
                     d = super().use()
             return d
 
+class SkillFireball(SkillDamage):
+    def delay_use_got_cancelled(self):
+        self.other = self.user
+        #combat_event = self.combat_event
+        #return self.pre_use(no_delay=True)
+        _dmg_obj = super().use(dmg_stat_scale=StatType.MIND, dmg_type=DamageType.MAGICAL)
+        return _dmg_obj
+
+    def use(self):
+        return super().use(dmg_stat_scale=StatType.MIND, dmg_type=DamageType.MAGICAL)
 
 # XD skills from consumables
 
