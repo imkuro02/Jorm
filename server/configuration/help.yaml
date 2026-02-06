@@ -101,7 +101,6 @@ commands:
       - rest
     description: |
       Instantly recall to your rest site.
-      Heal to full, revive, and dispell all afflictions
 #  rest:
 #    group: combat
 #    syntax:

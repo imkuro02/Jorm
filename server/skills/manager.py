@@ -157,7 +157,7 @@ def use_skill_from_consumable(
     users_skill_level = 0
     use_perspectives = consumable_item.use_perspectives
     success = True  # random.randint(1,100) < skill['script_values']['chance'][users_skill_level]*100
-    silent_use = False
+    silent_use = True
     no_cooldown = True
 
     _skill_obj = skill_obj(

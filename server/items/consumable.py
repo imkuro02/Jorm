@@ -15,6 +15,9 @@ class ConsumableSkillManager:
 class Consumable(Item):
     def __init__(self):
         super().__init__()
+        if hasattr(self, 'use_perspectives'):
+            return
+            
         self.item_type = ItemType.CONSUMABLE
         self.stack_max = 3
 

@@ -15,7 +15,11 @@ class rat(Enemy):
         self.description += '\nYou can "pet" the rat'
 
     def trigger_pet(self, player, line):
-        if line != 'pet':
+        line = line.replace('pet','')
+        if not line:
+            return False
+
+        if player.get_actor(line) != self:
             return False
 
         if self.status != ActorStatusType.NORMAL:

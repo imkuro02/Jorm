@@ -633,6 +633,18 @@ def rest_home(self, line):
     self.sendSound(Audio.BUFF)
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL
+
+
+        self.stat_manager.stats[StatType.HP] = int(
+            1
+        )
+        self.stat_manager.stats[StatType.PHYARMOR] = int(
+           1
+        )
+        self.stat_manager.stats[StatType.MAGARMOR] = int(
+            1
+        )
+        '''
         self.stat_manager.stats[StatType.HP] = int(
             self.stat_manager.stats[StatType.HPMAX]
         )
@@ -643,6 +655,7 @@ def rest_home(self, line):
         self.stat_manager.stats[StatType.MAGARMOR] = int(
             self.stat_manager.stats[StatType.MAGARMORMAX]
         )
+        '''
 
         self.simple_broadcast(None, f"{self.pretty_name()} ressurects")
 
@@ -679,6 +692,7 @@ def rest_home(self, line):
                 "You returned to rest", f"{self.pretty_name()} has returned to rest"
             )
 
+    '''
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
     # self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
     self.stat_manager.stats[StatType.PHYARMOR] = int(
@@ -689,6 +703,7 @@ def rest_home(self, line):
     )
     self.affect_manager.unload_all_affects()
     self.cooldown_manager.unload_all_cooldowns()
+    '''
     self.finish_turn()
 
     self.status = ActorStatusType.NORMAL

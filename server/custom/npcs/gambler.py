@@ -28,7 +28,7 @@ class gambling_dialog(Dialog):
 
     def end_dialog(self, forced = 0):
         if self.current_line != "propose_bid" or forced == 1:
-            self.player.sendLine('END')
+            #self.player.sendLine('END')
             self.end_gambling()
             return super().end_dialog()
 
@@ -176,3 +176,28 @@ class gambling(Npc):
         super().tick()
         for i in self.dialogs.values():
             i.tick()
+
+        self.time_exisiting += 1
+        if self.time_exisiting % (30 * 3) == 0:
+            if self.actors != len(self.room.actors.values()):
+                self.actors = len(self.room.actors.values())
+                
+                actor = random.choice(list(self.room.actors.values()))
+
+                if actor.__class__.__name__ != 'Player':
+                    self.actors = 0
+                    return
+
+                if actor.current_dialog != None:
+                    return
+                
+                if actor.inventory_manager.items == {}:
+                    return
+
+                item = random.choice(list(actor.inventory_manager.items.values()))
+
+                item_name = item.name
+                actor_name = actor.pretty_name()
+                self.simple_broadcast(
+                    "", f'"You wanna bet that {item_name}, {actor_name}?" {self.pretty_name()} asks'
+                )

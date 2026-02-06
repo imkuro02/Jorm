@@ -21,16 +21,56 @@ bartender:
         - line: |
             <npc> says "Need anything?"
       options:
+        #- line: |
+        #    purchase one Green Potion for 60 Scrap
+        #  goto: shopping
+        #  trade:
+        #    give_to_player:
+        #      - item: potion_hp_30
+        #        amount: 1
+        #    give_to_npc:
+        #      - item: currency_0
+        #        amount: 60
         - line: |
-            purchase 1 Green Potion for 60 Scrap
+            purchase one Simple Dinner for 1 Scrap
           goto: shopping
           trade:
             give_to_player:
-              - item: potion_hp_30
+              - item: tavern_food_item_mug_of_ale
                 amount: 1
             give_to_npc:
               - item: currency_0
-                amount: 60
+                amount: 1
+        - line: |
+            purchase one Simple Dinner for 2 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: tavern_food_item_dinner_0
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 2
+        - line: |
+            purchase one Medium Dinner for 4 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: tavern_food_item_dinner_1
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 4
+        - line: |
+            purchase one Heavy Dinner for 6 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: tavern_food_item_dinner_2
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 6
 
 
 

@@ -1,11 +1,19 @@
 versions:
-  "050226":
-    id: "050226"
-    title: Fireball skill
+  "060226":
+    id: "060226"
+    title: Fireball skill, Food and things
     unixtime: 1761899677
     features:
       - A new skill has been added, fireball
       - You can pet the rats now
+      - Added food items, all of them heal a varying amount and can be purchased from the bartender
+      - Dinner bought from bartender is unique and cannot be eaten outdoors
+      - Dinner items despawn outdoors
+      - Resting no longer heals to full but dispells afflictions
+      - All consumable items (potions and scrolls) have been temporarely removed
+      - Keg in the tavern can "fill" your mugs with ale, it can run dry though
+      - Keg filling is instanced, a mug can be empty for one player and full for another
+      - Gambler comments on player inventory items
   "020226":
     id: "020226"
     title: Triggers
