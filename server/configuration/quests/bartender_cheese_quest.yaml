@@ -10,6 +10,6 @@ bartender_rat_cheese:
   objectives:
     Get Cheese:
       type: collect_x
-      objective: rat_cheese
+      objective: food_item_cheese
       completed_at: 1
       
