@@ -11,6 +11,7 @@ versions:
       - Resting is officially only a quicktravel to rest site, no affliction removal etc
       - Sending an empty line sends last line again Fixed
       - Added eat read and drink emotes, this is to fix food items working off of triggers instead of player_functions, so that you dont get an error when attempting to "eat table"
+      - Guard now negates all damage if they receive damage while guarding, and heals all armor for 50% if no damage is sustained hwile guarding.
   "060226":
     id: "060226"
     title: Fireball skill, Food and things

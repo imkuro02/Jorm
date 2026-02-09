@@ -1,5 +1,5 @@
 {
-    "SHA-256": "f2e14190215319cb4ed59296928b2d4131bdf61e7d637abc3a2e22b9ae280973",
+    "SHA-256": "aab36f24a17848226f8e56a534ba61f174c95ffd64576330c26b295f1cb4e4ff",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3284,7 +3284,7 @@
         "guard": {
             "skill_id": "guard",
             "name": "Guard",
-            "description": "Recover BONUS of Hold and Ward.\n",
+            "description": "Raise your guard.\nBecome immune to physical and magical damage for DURATION of turns.\nIf your guard is not disturbed during this duration.\nRecover BONUS of Hold and Ward.\n",
             "script_to_run": "Guard",
             "target_others_is_valid": false,
             "target_item_is_valid": false,
@@ -3314,10 +3314,13 @@
                     1
                 ],
                 "cooldown": [
-                    10
+                    3
                 ],
                 "bonus": [
                     0.5
+                ],
+                "duration": [
+                    0
                 ]
             }
         },

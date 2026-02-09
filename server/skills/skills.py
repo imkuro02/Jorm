@@ -400,6 +400,20 @@ class SkillGuard(Skill):
         super().use()
         if self.success:
             power = self.script_values["bonus"][self.users_skill_level]
+            turns = int(self.script_values["duration"][self.users_skill_level])
+            affect = affects.AffectGuarding(
+                affect_source_actor=self.user,
+                affect_target_actor=self.user,
+                name="Guarding",
+                description=f"Unable to act until affect wears off, damage will start your turn",
+                turns=turns,
+                get_prediction_string_append="is guarding!",
+                get_prediction_string_clear=True,
+                heal_power = power
+            )
+            self.other.affect_manager.set_affect_object(affect)
+            '''
+            power = self.script_values["bonus"][self.users_skill_level]
             damage_obj = Damage(
                 damage_taker_actor=self.other,
                 damage_source_action=self,
@@ -426,6 +440,7 @@ class SkillGuard(Skill):
             )
             if self.combat_event == None:
                 damage_obj.run()
+            '''
 
 
 class SkillFinisher(SkillDamageByGritFlow):

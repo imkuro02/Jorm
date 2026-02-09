@@ -43,6 +43,8 @@ class Affect:
         self.dispellable = dispellable
 
     def pretty_name(self):
+        if self.turns == 0:
+            return f'{self.name}'
         return f'{self.name} x{self.turns}' 
 
     def merge_request(self, affect_to_merge):
@@ -209,6 +211,72 @@ class AffectStunned(Affect):
         )
         self.affect_target_actor.finish_turn()
 
+class AffectGuarding(Affect):
+    def __init__(self, *args, **kwargs):
+        self.heal_power = kwargs['heal_power']
+        del kwargs['heal_power']
+        super().__init__(*args, **kwargs)
+        
+        self.got_hit = False
+
+
+    def set_turn(self):
+        super().set_turn()
+        
+        self.affect_target_actor.simple_broadcast(
+            f"You are guarding and cannot act!",
+            f"{self.affect_target_actor.pretty_name()} is guarding and cannot act!",
+        )
+        self.affect_target_actor.finish_turn()
+
+    def take_damage_before_calc(self, damage_obj: Damage):
+        if (
+            damage_obj.damage_type != DamageType.HEALING
+            and damage_obj.damage_type != DamageType.CANCELLED
+            and damage_obj.damage_type != DamageType.PURE
+        ):
+            damage_obj.damage_type = DamageType.CANCELLED
+            # damage_obj.damage_taker_actor.room.combat.current_actor = damage_obj.damage_taker_actor
+            self.got_hit = True
+            self.on_finished()
+            # damage_obj.damage_taker_actor.set_turn()
+        return damage_obj
+        
+
+    def on_finished(self, silent=False):
+        if self.got_hit:
+            return super().on_finished(silent)
+        else:
+            power = self.heal_power
+            damage_obj1 = Damage(
+                damage_taker_actor=self.affect_target_actor,
+                damage_source_action=self,
+                combat_event=None,
+                damage_source_actor=self.affect_target_actor,
+                damage_value=int(
+                    self.affect_target_actor.stat_manager.stats[StatType.PHYARMORMAX] * power
+                ),
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.PHYARMOR,
+            )
+
+            damage_obj2 = Damage(
+                damage_taker_actor=self.affect_target_actor,
+                damage_source_action=self,
+                combat_event=damage_obj1.combat_event,
+                damage_source_actor=self.affect_target_actor,
+                damage_value=int(
+                    self.affect_target_actor.stat_manager.stats[StatType.MAGARMORMAX] * power
+                ),
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.MAGARMOR,
+                silent = True
+            )
+
+            damage_obj1.run()
+            return super().on_finished(silent)
+
+
 
 class AffectNightmare(Affect):
     def set_turn(self):
@@ -227,6 +295,11 @@ class AffectNightmare(Affect):
             damage_obj.damage_taker_actor.room.combat.order.insert(
                 0, damage_obj.damage_taker_actor
             )
+            
+            # not tried yet
+            damage_obj.damage_taker_actor.ai.predict_use_best_skill()
+            
+            
             # damage_obj.damage_taker_actor.room.combat.current_actor = damage_obj.damage_taker_actor
             self.on_finished()
             # damage_obj.damage_taker_actor.set_turn()
