@@ -9,6 +9,8 @@ versions:
       - Status effects now display their duration on damage proc
       - Enemy class has been removed, and all mobs now use the NPC class. This might cause strange behaviour where players might be able to gaslight rats and slimes into conversation but whatever.
       - Resting is officially only a quicktravel to rest site, no affliction removal etc
+      - Sending an empty line sends last line again Fixed
+      - Added eat read and drink emotes, this is to fix food items working off of triggers instead of player_functions, so that you dont get an error when attempting to "eat table"
   "060226":
     id: "060226"
     title: Fireball skill, Food and things
