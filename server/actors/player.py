@@ -556,10 +556,20 @@ class Player(Actor):
             print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
+        if not line:
+            line = self.last_line_sent
+            if not line:
+                return
+                
         if self.settings_manager.get_value(SETTINGS.ECHO):
             self.sendLine(f'@bblack> {line}@normal')
 
         # systems.utils.debug_print(line)
+
+        triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = line)
+        if triggered:
+            return
+
         for trans in translations:
             if line.lower().startswith(trans):
                 line = translations[trans] + line[len(trans) :].lower()
@@ -574,10 +584,7 @@ class Player(Actor):
             if self.current_dialog.answer(line):
                 return
 
-        if not line:
-            line = self.last_line_sent
-            if not line:
-                return
+        
 
         command = line.split()[0]
         command = command.lower()

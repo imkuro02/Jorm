@@ -44,11 +44,12 @@ def create_npc(room, npc_id, spawn_for_lore=False):
     if npc_id in NPCS:
         tree = copy.deepcopy(NPCS[npc_id]["tree"])
 
-    npc_class = Enemy
-    if npc_id in ENEMIES:
-        npc_class = Enemy
-    if npc_id in NPCS:
-        npc_class = Npc
+    npc_class = Npc
+    #npc_class = Enemy
+    #if npc_id in ENEMIES:
+    #    npc_class = Enemy
+    #if npc_id in NPCS:
+    #    npc_class = Npc
 
     my_npc = npc_class(
         npc_id=npc_id,
@@ -314,7 +315,7 @@ class Npc(Actor):
     def set_turn(self):
         super().set_turn()
 
-
+'''
 class Enemy(Npc):
     def __init__(
         self,
@@ -347,7 +348,7 @@ class Enemy(Npc):
             on_death_skills_use=on_death_skills_use,
             on_start_skills_use=on_start_skills_use,
         )
-
+'''
 
 actors.ai.create_npc = create_npc
 systems.utils.create_npc = create_npc

@@ -33,10 +33,20 @@ def command_emote(self, line):
         self.sendLine(f'Here is a list of emotes: {[e for e in emotes.keys()]}')
         return
     target = None
+    
     if len(line) >= 2:
-        target = self.get_actor(line[1])
+        target_actor = self.get_actor(line[1])
+        target_item = self.get_item(line[1], search_mode = 'self_and_room')
+    
+        if target_item != None:
+            target = target_item[0]
+        if target_actor != None:
+            target = target_actor
+    
     if target == None:
         target = self
+
+    
 
 
 

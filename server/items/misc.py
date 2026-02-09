@@ -10,7 +10,7 @@ from configuration.config import (
     StatType,
     get_icon,
 )
-from systems.utils import REFTRACKER, get_object_parent
+from systems.utils import REFTRACKER, get_object_parent, unload
 from systems.triggers import TriggerManager
 
 class Item:
@@ -52,7 +52,7 @@ class Item:
         REFTRACKER.add_ref(self)
 
     def unload(self):
-        systems.utils.unload(self)
+        unload(self)
         
     def can_tinker_with(self):
         if self.keep:

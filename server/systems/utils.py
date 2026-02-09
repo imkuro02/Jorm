@@ -101,7 +101,7 @@ def unload_fr():
             try:
                 obj_to_unload.unload()
             except Exception as e:
-                debug_print(e)
+                debug_print(f'{e}, {obj_to_unload}')
 
             obj_dict = obj_to_unload.__dict__
             for key in obj_dict:

@@ -1,7 +1,9 @@
 
 from items.misc import Item
-from configuration.config import StatType, ActorStatusType
+from configuration.config import StatType, ActorStatusType, DamageType
 from items.manager import load_item
+from combat.damage_event import Damage
+from combat.combat_event import CombatEvent
 
 class food_item_class(Item):
     @classmethod
@@ -45,16 +47,50 @@ class food_item_class(Item):
                 player.sendLine(f'You can\'t {attempting} {self.name} right now')
                 return True
 
-            if player.stat_manager.stats[StatType.HP] == player.stat_manager.stats[StatType.HPMAX]:
-                player.sendLine(f'You are beyond full.')
-                return True
+            self.new = False
+            player.simple_broadcast(f'You {attempting} the {self.name}', f'{player.pretty_name()} {attempting}s the {self.name}')
+
+            cb = CombatEvent()
+            damage_obj_hp = Damage(
+                damage_taker_actor=player,
+                damage_source_actor=player,
+                damage_source_action=self,
+                combat_event=cb,
+                damage_value=self.heal_value,
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.HP,
+            )
+
+            damage_obj_pa = Damage(
+                damage_taker_actor=player,
+                damage_source_actor=player,
+                damage_source_action=self,
+                combat_event=cb,
+                damage_value=self.heal_value,
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.PHYARMOR,
+                silent = True,
+            )
+
+            damage_obj_ma = Damage(
+                damage_taker_actor=player,
+                damage_source_actor=player,
+                damage_source_action=self,
+                combat_event=cb,
+                damage_value=self.heal_value,
+                damage_type=DamageType.HEALING,
+                damage_to_stat=StatType.MAGARMOR,
+                silent = True,
+            )
+
+            cb.run()
 
             if self.on_consume_remove_stacks_amount != 0:
                 player.inventory_manager.remove_item(self, 1)
             
-            player.simple_broadcast(f'You {attempting} the {self.name}', f'{player.pretty_name()} {attempting}s the {self.name}')
+            if player.stat_manager.stats[StatType.HP] >= player.stat_manager.stats[StatType.HPMAX]:
+                player.sendLine(f'You are beyond full.')
 
-            player.heal(value = self.heal_value)
             if self.item_to_leave_after_consumed != None:
                 item_to_leave_after_consumed = load_item(self.item_to_leave_after_consumed)
                 player.inventory_manager.add_item(item_to_leave_after_consumed)
@@ -170,4 +206,3 @@ class rat_cheese(food_item_class):
                     return True
         else:
             return False
-

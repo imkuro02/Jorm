@@ -103,5 +103,26 @@ emotes = {
         'user on user': '#USER# points at themselves',
         'user on you': '#USER# points at you',
         'user on other': '#USER# points at #OTHER#'
-    }
+    },
+    'read': {
+        'you on you': 'You read something out loud',
+        'you on other': 'You try to read #OTHER# with no success',
+        'user on user': '#USER# reads something outloud',
+        'user on you': '#USER# seems to read you with no success',
+        'user on other': '#USER# tries to read #OTHER# with no success'
+    },
+    'drink': {
+        'you on you': 'You swallow your own spit',
+        'you on other': 'You try to drink #OTHER#.. somehow',
+        'user on user': '#USER# swallows their own spit',
+        'user on you': '#USER# tries to drink you.. somehow',
+        'user on other': '#USER# tries to drink #OTHER#.. somehow'
+    },
+    'eat': {
+        'you on you': 'You chew at the inside of your cheek',
+        'you on other': 'You bite #OTHER#, gently',
+        'user on user': '#USER# chews at the insides of their cheek',
+        'user on you': '#USER# bites you, gently',
+        'user on other': '#USER# bites #OTHER#, gently'
+    },
 }

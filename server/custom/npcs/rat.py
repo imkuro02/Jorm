@@ -1,7 +1,7 @@
-from actors.npcs import Enemy
+from actors.npcs import Npc
 from configuration.config import ActorStatusType
 
-class rat(Enemy):
+class rat(Npc):
     @classmethod
     def compare_replace(self, npc_object):
         if "rat" != npc_object.npc_id.lower():

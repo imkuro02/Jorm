@@ -41,48 +41,6 @@ class CombatEvent:
                 case DamageType.PURE:
                     color = Color.DAMAGE_PURE
 
-            """
-            if not pop.silent:
-                #systems.utils.debug_print(pop)
-                if pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'] == 0:
-                    percentage = 0
-                else:
-                    percentage = int((pop.damage_value / pop.damage_taker_actor.stat_manager.stats[pop.damage_to_stat+'_max'])*100)
-
-                if pop.damage_value < 0:
-                    damage_txt = f'{abs(pop.damage_value)}@back'
-                else:
-                    damage_txt = f'{abs(pop.damage_value)}@back'
-                    #damage_txt = f'{abs(pop.damage_value)} @normal(@back {percentage}% @normal)@back'
-
-
-                action_text = f'{color}{damage_txt}@normal {color}{DamageType.name[pop.damage_type]}@normal from {pop.damage_source_action.name}'
-                if pop.damage_to_stat != StatType.HP:
-                    action_text = f'{color}{damage_txt}@normal {color}{DamageType.name[pop.damage_type]}@normal to {color}{StatType.name[pop.damage_to_stat]}@normal from {pop.damage_source_action.name}'
-                if pop.damage_type == DamageType.CANCELLED:
-                    output_self =  f'You cancel {pop.damage_source_action.name}. '
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} cancels {pop.damage_source_action.name}'
-                    sound = Audio.ERROR
-                elif pop.damage_type == DamageType.HEALING:
-                    output_self = f'You receive {action_text}.'
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} receives {action_text}'
-                    sound = Audio.BUFF
-                elif pop.damage_type == DamageType.PHYSICAL or pop.damage_type == DamageType.MAGICAL or pop.damage_type == DamageType.PURE:
-                    output_self = f'You receive {action_text}. '
-                    output_other = f'{pop.damage_taker_actor.pretty_name()} receives {action_text}'
-                    sound = Audio.HURT
-                    #if pop.damage_value <= 0:
-                    #    output_self = f'You block {action_text}. '
-                    #    output_other = f'{pop.damage_taker_actor.pretty_name()} blocks {action_text}'
-                    #    sound = Audio.ERROR
-                    #else:
-                    #    output_self = f'You lose {action_text}. '
-                    #    output_other = f'{pop.damage_taker_actor.pretty_name()} loses {action_text}'
-                    #    sound = Audio.HURT
-
-                pop.damage_taker_actor.simple_broadcast(output_self, output_other, sound = sound, msg_type = [MsgType.COMBAT])
-            """
-
             if not pop.silent and pop.damage_type != DamageType.CANCELLED:
                 damage_snapshot2 = {
                     StatType.HP: pop.damage_taker_actor.stat_manager.stats[StatType.HP],
@@ -122,7 +80,7 @@ class CombatEvent:
                         return None
 
                 # output_self = str(summary)
-                output = f"#A# "
+                output = f"#A#"
 
                 for i in summary:
                     _hp = lose_or_gain(summary[i])
@@ -149,20 +107,20 @@ class CombatEvent:
                 output = f" from {pop.damage_source_action.pretty_name()}".join(
                     output.rsplit(",", 1)
                 )
-                output = " and ".join(output.rsplit(",", 1))
+                output = " and".join(output.rsplit(",", 1))
 
                 output_self = output
                 output_other = output
 
                 output_self = output_self.replace("#A#", f"You have")
-                output_self = output_self.replace("#G#", "healed")
-                output_self = output_self.replace("#L#", "lost")
+                output_self = output_self.replace("#G#", " healed")
+                output_self = output_self.replace("#L#", " lost")
 
                 output_other = output_other.replace(
                     "#A#", f"{pop.damage_taker_actor.pretty_name()} has"
                 )
-                output_other = output_other.replace("#G#", "healed")
-                output_other = output_other.replace("#L#", "lost")
+                output_other = output_other.replace("#G#", " healed")
+                output_other = output_other.replace("#L#", " lost")
 
                 # output_raw = output_other = output_other.replace('#A#',f'')
                 # output_raw = output_other.replace('#G#','healed')

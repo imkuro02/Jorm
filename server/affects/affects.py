@@ -43,7 +43,7 @@ class Affect:
         self.dispellable = dispellable
 
     def pretty_name(self):
-        return self.name
+        return f'{self.name} x{self.turns}' 
 
     def merge_request(self, affect_to_merge):
         return False

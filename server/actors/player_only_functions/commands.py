@@ -258,6 +258,11 @@ translations = {
     'point at ':        'emote point ',
     'point':            'emote point',
 
+    'eat':              'emote eat',
+    'drink':            'emote drink',
+    'read':             'read',
+
+
     'SEX SFDSFDSFDSF':  'dsdadsad',
 
     'score': 'stats',
