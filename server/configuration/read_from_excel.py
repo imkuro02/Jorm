@@ -200,8 +200,89 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
     systems.utils.debug_print(end - start, "SKILL")
     return SKILLS
 
-
 def configure_ITEMS(SHEET, USE_PERSPECTIVES):
+    start = time.time()
+
+    ITEMS = {}
+    sheets = []
+    for i in SHEET:
+        if ' items_' in ' '+i:
+            sheets.append(i)
+
+    for sheet in sheets:
+        for row in SHEET[sheet]:
+            x = SHEET[sheet]
+            for index in range(0, len(x[row])):
+                if bool(x["dont_load"][index]):
+                    continue
+
+                ITEMS[x["premade_id"][index]] = {}
+                ITEMS[x["premade_id"][index]]['item_type'] = sheet.replace('items_','')
+                for y in x:
+                    value = x[y][index]
+                    #if y == 'can_pick_up':
+                    #    print(str(value), str(value) == 'YES')
+                    match str(value):
+                        case 'YES':
+                            value = True
+                        case 'NO':
+                            value = False
+                        case 'NONE':
+                            value = None
+                        case _:
+                            value = value
+
+                    try:
+                        value = int(value)
+                    except TypeError:
+                        pass
+                    except ValueError:
+                        pass
+
+                    ITEMS[x["premade_id"][index]][y] = value
+
+    for i in ITEMS:
+        ITEMS[i]["crafting_recipe_ingredients"] = []
+        ITEMS[i]["crafting_ingredient_for"] = []
+
+    for row in SHEET["crafting_recipes"]:
+        x = SHEET["crafting_recipes"]
+
+        for index in range(0, len(x[row])):
+            ingredients = {}
+            premade_id = x["premade_id"][index]
+
+            if premade_id not in ITEMS:
+                systems.utils.debug_print(
+                    f'excel loader skipping premade_id "{premade_id}" because this item doesnt exist (shadow error)'
+                )
+                continue
+
+            for i in range(0, 4):
+                i += 1
+                # systems.utils.debug_print(i)
+
+                ingredient = str(x[f"ingredient_{i}"][index])
+                quantity = int(x[f"quantity_{i}"][index])
+
+                if ingredient in "0.0 0".split(" "):
+                    continue
+
+                ingredients[ingredient] = quantity
+                # systems.utils.debug_print(f'ingredient_{i}',ingredient)
+                if premade_id not in ITEMS[ingredient]["crafting_ingredient_for"]:
+                    ITEMS[ingredient]["crafting_ingredient_for"].append(premade_id)
+
+            if ingredients not in ITEMS[premade_id]["crafting_recipe_ingredients"]:
+                ITEMS[premade_id]["crafting_recipe_ingredients"].append(ingredients)
+                # systems.utils.debug_print(f'craft {premade_id} ingredients: ',ingredients)
+
+    end = time.time()
+    systems.utils.debug_print(end - start, "ITEMS")
+
+    return ITEMS
+
+def configure_ITEMS2(SHEET, USE_PERSPECTIVES):
     start = time.time()
     ITEMS = {}
     for row in SHEET["items_misc"]:

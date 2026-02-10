@@ -52,13 +52,24 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
     if item_type == ItemType.EQUIPMENT:
         new_item.new = True
 
-        for key in ITEMS[premade_id]["stats"]:
-            if "hp" in key:
+        for key in ITEMS[premade_id]:
+            if ' stat_' not in ' '+key:
                 continue
-            new_item.stat_manager.stats[key] += ITEMS[premade_id]["stats"][key]
+            if 'hp' in key:
+                continue
 
-        for key in ITEMS[premade_id]["requirements"]:
-            new_item.stat_manager.reqs[key] += ITEMS[premade_id]["requirements"][key]
+            _key = key.replace('stat_','')
+            new_item.stat_manager.stats[_key] += ITEMS[premade_id][key]
+
+        for key in ITEMS[premade_id]:
+            if ' req_' not in ' '+key:
+                continue
+            if 'hp' in key:
+                continue
+
+            _key = key.replace('req_','')
+            new_item.stat_manager.reqs[_key] += ITEMS[premade_id][key]
+
 
         if unique_id == None:
             roll = random.randint(0,2)
@@ -81,6 +92,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
                         type=_type, key=_key, val=val, premade_bonus=True
                     )
                     new_item.manager.add_bonus(boon)
+
         except Exception as e:
             systems.utils.debug_print(f"{premade_id} error on creation {e}")
 
@@ -92,7 +104,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
 
 
     if item_type == ItemType.CONSUMABLE:
-        new_item.skill_manager.skills = ITEMS[premade_id]["skills"]
+        new_item.skill_manager.skills = [ITEMS[premade_id]["skill"]]
         new_item.use_perspectives = ITEMS[premade_id]["use_perspectives"]
 
     new_item.name = ITEMS[premade_id]["name"]
