@@ -20,9 +20,10 @@ class tavern_combat_manager(Combat):
             to_unload.append(i)
 
         for i in to_unload:
-            unload(i)
+            i.unload()
 
         self.room.goons = []
+        
 
 
 class tavern_inventory(InventoryManager):
@@ -51,10 +52,12 @@ class tavern_room(Room):
         return True
 
     def __init__(self, *args, **kwargs):
-        self.combat_manager_class = tavern_combat_manager
+        
         self.inventory_manager_class = tavern_inventory
+
         super().__init__(*args, **kwargs)
         
+        self.combat_manager_class = tavern_combat_manager
         self.goons = []
 
         self.inventory_manager = tavern_inventory(self, 20)
@@ -88,6 +91,7 @@ class tavern_room(Room):
 
     def tick(self):
         super().tick()
+
         if self.world.factory.ticks_passed % (30 * 150) == 0:
             output = f"You hear a loud thud"
             if len(self.actors.values()) <= 0:

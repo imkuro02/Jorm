@@ -1,5 +1,5 @@
 {
-    "SHA-256": "aab36f24a17848226f8e56a534ba61f174c95ffd64576330c26b295f1cb4e4ff",
+    "SHA-256": "ca12be3b23cc5688f3fdac6dec3c143adffa77e362e357fa7c373e8a366054eb",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -12772,8 +12772,8 @@
             ],
             "crafting_ingredient_for": []
         },
-        "Made from the remains of several fallen slimes, this emblem proves you are an expert in slime extermination": {
-            "premade_id": "Made from the remains of several fallen slimes, this emblem proves you are an expert in slime extermination",
+        "broken_id_1": {
+            "premade_id": "broken_id_1",
             "name": "Slime slayer emblem",
             "description": "Crafted from the remains of several fallen slimes, this emblem is proof of your expertise in slime extermination",
             "description_room": null,

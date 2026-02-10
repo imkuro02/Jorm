@@ -3,6 +3,23 @@ import inspect
 import pkgutil
 
 
+def load_customs_all(path):
+    classes = []
+
+    package_name = path
+    package = importlib.import_module(package_name)
+
+    # Iterate over all modules in custom/rooms
+    for _, module_name, _ in pkgutil.iter_modules(package.__path__):
+        full_module_name = f"{package_name}.{module_name}"
+        module = importlib.import_module(full_module_name)
+
+        # Find all classes in the module
+        for _, obj in inspect.getmembers(module, inspect.isclass):
+            classes.append(obj)
+
+    return classes
+
 def load_customs(path, object):
     classes = []
 

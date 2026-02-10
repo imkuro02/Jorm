@@ -784,32 +784,36 @@ class Actor:
 
     def unload(self):
         # self.ai.die()
+        silent = True
 
         try:
             if self.room.combat != None:
                 if self in self.room.combat.participants.values():
                     del self.room.combat.participants[self.id]
         except Exception as e:
-            systems.utils.debug_print(
-                self, "could not remove from room combat participants while unloading"
-            )
-            systems.utils.debug_print(e)
+            if not silent:
+                systems.utils.debug_print(
+                    self, "could not remove from room combat participants while unloading"
+                )
+                systems.utils.debug_print(e)
 
         try:
             del self.room.actors[self.id]
         except Exception as e:
-            systems.utils.debug_print(
-                self, "could not remove from room actors while unloading"
-            )
-            systems.utils.debug_print(e)
+            if not silent:
+                systems.utils.debug_print(
+                    self, "could not remove from room actors while unloading"
+                )
+                systems.utils.debug_print(e)
 
         try:
             self.room = None
         except Exception as e:
-            systems.utils.debug_print(
-                self, "could not set room to none while unloading"
-            )
-            systems.utils.debug_print(e)
+            if not silent:
+                systems.utils.debug_print(
+                    self, "could not set room to none while unloading"
+                )
+                systems.utils.debug_print(e)
 
         for i in self.inventory_manager.items.values():
             unload(i)

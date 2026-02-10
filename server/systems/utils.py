@@ -90,6 +90,7 @@ def unload(obj_to_unload):
 
 
 def unload_fr():
+    silent = True
     global TOUNLOAD  # <-- This is important
 
     _unloaded = []
@@ -101,17 +102,20 @@ def unload_fr():
             try:
                 obj_to_unload.unload()
             except Exception as e:
-                debug_print(f'{e}, {obj_to_unload}')
+                if not silent:
+                    debug_print(f'{e}, {obj_to_unload}')
 
             obj_dict = obj_to_unload.__dict__
             for key in obj_dict:
                 try:
                     obj_dict[key] = None
                 except Exception as e:
-                    debug_print(e)
+                    if not silent:
+                        debug_print(e)
             _unloaded.append(obj_to_unload)
         except Exception as e:
-            debug_print(e)
+            if not silent:
+                debug_print(e)
         
 
     for i in _unloaded:
