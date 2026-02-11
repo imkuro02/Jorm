@@ -310,6 +310,7 @@ def command_inventory(self, line):
                 output = output + f" ({Color.ITEM_TRADING}T{Color.NORMAL})"
 
         t.add_data(output)
+        self.inventory_manager.items[i].new = False
 
     """
     free_slot_amount = self.inventory_manager.limit - len(self.inventory_manager.items)
@@ -542,7 +543,10 @@ def command_craft(self, line):
         recipe_to_use = item_crafting_recipes[0]
         # systems.utils.debug_print('recipe', to_find)
         for ingredient_id in recipe_to_use:
-            ingredients_to_use.append(self.get_item(ITEMS[ingredient_id]["name"]))
+            _i = self.get_item(ITEMS[ingredient_id]["name"])
+            if _i == None:
+                continue
+            ingredients_to_use.append(_i[0])
 
     # systems.utils.debug_print(ingredients_to_use)
     for item in range(0, len(ingredients)):

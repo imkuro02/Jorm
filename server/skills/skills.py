@@ -21,7 +21,7 @@ class Skill:
         user,
         other,
         users_skill_level: int,
-        use_perspectives,
+        name = None,
         success=False,
         silent_use=False,
         no_cooldown=False,
@@ -29,12 +29,13 @@ class Skill:
         combat_event=None,
     ):
         self.skill_id = skill_id
-        self.name = SKILLS[skill_id]["name"]
+        self.name = name
+        if self.name == None:
+            self.name = SKILLS[skill_id]["name"]
         self.script_values = script_values
         self.user = user
         self.other = other
         self.users_skill_level = users_skill_level
-        self.use_perspectives = use_perspectives
         self.success = success
         self.silent_use = silent_use
         self.no_cooldown = no_cooldown
@@ -66,21 +67,17 @@ class Skill:
         return self.name
 
     def use_broadcast(self):
+
+
+
         perspectives = {
-            "you on you": self.use_perspectives["you on you fail"],
-            "you on other": self.use_perspectives["you on other fail"],
-            "user on user": self.use_perspectives["user on user fail"],
-            "user on you": self.use_perspectives["user on you fail"],
-            "user on other": self.use_perspectives["user on other fail"],
+            "you on you":       'You used #SKILL#',
+            "you on other":     'You used #SKILL# on #OTHER#',
+            "user on user":     '#USER# used #SKILL#',
+            "user on you":      '#USER# used #SKILL# on you',
+            "user on other":    '#USER# used #SKILL# on #OTHER#',
         }
-        if self.success:
-            perspectives = {
-                "you on you": self.use_perspectives["you on you"],
-                "you on other": self.use_perspectives["you on other"],
-                "user on user": self.use_perspectives["user on user"],
-                "user on you": self.use_perspectives["user on you"],
-                "user on other": self.use_perspectives["user on other"],
-            }
+       
 
         for perspective in perspectives:
             perspectives[perspective] = perspectives[perspective].replace(
@@ -211,11 +208,11 @@ class Skill:
             for target in targets:
                 _skill_obj = skill_obj(
                     skill_id=self.skill_id,
+                    name = self.name,
                     script_values=self.script_values,
                     user=self.user,
                     other=target,
                     users_skill_level=self.users_skill_level,
-                    use_perspectives=self.use_perspectives,
                     success=self.success,
                     silent_use=self.silent_use,
                     # aoe = False,
@@ -231,11 +228,11 @@ class Skill:
         else:
             _skill_obj = skill_obj(
                 skill_id=self.skill_id,
+                name = self.name,
                 script_values=self.script_values,
                 user=self.user,
                 other=self.other,
                 users_skill_level=self.users_skill_level,
-                use_perspectives=self.use_perspectives,
                 success=self.success,
                 silent_use=self.silent_use,
                 no_cooldown=self.no_cooldown,
@@ -684,7 +681,10 @@ class SkillRegenPercentFromPotion(Skill):
                 damage_type=DamageType.HEALING,
                 damage_to_stat=stat_to_heal,
             )
-            damage_obj.run()
+
+            
+
+            return damage_obj
 
 
 class SkillApplyDOT(Skill):
@@ -710,6 +710,20 @@ class SkillApplyDOT(Skill):
                 damage_to_stat=damage_to_stat,
             )
             self.other.affect_manager.set_affect_object(DOT)
+
+class SkillPercentAllHeal(SkillRegenPercentFromPotion):
+    def use(self):
+        self.silent_use = True
+        power_percent = (self.users_skill_level/100)
+        
+        dmg_1 = super().use(power_percent = power_percent, stat_to_heal = StatType.HP)
+        self.combat_event = dmg_1.combat_event
+        dmg_2 = super().use(power_percent = power_percent, stat_to_heal = StatType.PHYARMOR)
+        dmg_3 = super().use(power_percent = power_percent, stat_to_heal = StatType.MAGARMOR)
+        dmg_2.silent = True
+        dmg_3.silent = True
+
+        self.combat_event.run()
 
 
 class SkillRegenHP30(SkillRegenPercentFromPotion):
@@ -784,18 +798,6 @@ class SkillRenewMagArmor30(SkillApplyDOT):
             turns=turns,
         )
 
-
-"""
-class SkillRenewMP30(SkillApplyDOT):
-    def use(self):
-        power_percent = .3
-        turns = 3
-        damage_value = int(self.other.stat_manager.stats[StatType.MPMAX]*(power_percent/turns))
-        super().use(
-                name = 'Renewed',
-                description = f'Heal {int(power_percent*100)}% of your {StatType.name[StatType.MPMAX]} over {turns} turns',
-                damage_value = damage_value, damage_type = DamageType.HEALING, damage_to_stat = StatType.MP, turns = turns)
-"""
 
 
 class SkillRefreshingDrink(Skill):

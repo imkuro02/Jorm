@@ -1,4 +1,15 @@
 versions:
+  "110226":
+    id: "110226"
+    title: Item and loading fixes
+    unixtime: 1761899677
+    features:
+      - Excel config file has changed a lot
+      - Easier item loading system
+      - Consumable items have been enabled again
+      - Consumable items do not use "use" command rather a trigger (like eat, drink or read)
+      - Consumable items cannot be used on others anymore
+      - All food items are no longer "custom" items but regular consumable items
   "090226":
     id: "090226"
     title: Fireball skill, Food and things

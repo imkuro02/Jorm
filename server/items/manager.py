@@ -5,12 +5,9 @@ import uuid
 
 import systems.utils
 from configuration.config import ITEMS, EquipmentSlotType, ItemType, StatType
-from items.consumable import Consumable
-from items.equipment import Equipment, EquipmentBonus
-from items.error import ErrorItem
 
 # from items.scenery import Scenery
-from items.misc import Item
+
 
 random = random.Random()
 
@@ -70,11 +67,11 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
             _key = key.replace('req_','')
             new_item.stat_manager.reqs[_key] += ITEMS[premade_id][key]
 
-
-        if unique_id == None:
-            roll = random.randint(0,2)
-            if roll == 1:
-                new_item.reforge()
+        if not max_stats:
+            if unique_id == None:
+                roll = random.randint(0,2)
+                if roll == 1:
+                    new_item.reforge()
                 
         if unique_id == None:
             unique_id = new_item.id
@@ -99,13 +96,16 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
         new_item.new = False
         new_item.slot = ITEMS[premade_id]["slot"]
 
-        
-
-
-
     if item_type == ItemType.CONSUMABLE:
-        new_item.skill_manager.skills = [ITEMS[premade_id]["skill"]]
-        new_item.use_perspectives = ITEMS[premade_id]["use_perspectives"]
+
+        new_item.skill_id = ITEMS[premade_id]["skill"]
+        new_item.skill_level = ITEMS[premade_id]["skill_level"]
+
+        new_item.item_del_on_use = ITEMS[premade_id]["del_on_use"]
+        new_item.item_add_on_use = ITEMS[premade_id]["add_on_use"]
+
+        new_item.trigger_manager.trigger_add(ITEMS[premade_id]['triggers'],     new_item.trigger_consume)
+      
 
     new_item.name = ITEMS[premade_id]["name"]
     new_item.description = ITEMS[premade_id]["description"]
@@ -356,3 +356,8 @@ def load_item2(
 
 def save_item(item):
     return item.to_dict()
+
+from items.consumable import Consumable
+from items.equipment import Equipment, EquipmentBonus
+from items.error import ErrorItem
+from items.misc import Item

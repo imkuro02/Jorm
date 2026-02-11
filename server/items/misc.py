@@ -180,11 +180,11 @@ class Item:
         }
         return my_dict
 
-    def identify(self, identifier=None, is_glancing=False):
+    def identify(self, identifier=None):
         output = f"{self.pretty_name()}\n"
         # output += get_icon(self.premade_id)
-        if not is_glancing:
-            output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"
+
+        output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"
 
         if self.crafting_ingredient_for != []:
             output += "\n"

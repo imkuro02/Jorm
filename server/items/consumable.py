@@ -4,37 +4,27 @@ from configuration.config import SKILLS, ItemType
 from items.misc import Item
 from skills.manager import get_skills, use_skill_from_consumable
 from systems.utils import get_object_parent
-
-
-class ConsumableSkillManager:
-    def __init__(self, item):
-        self.item = item
-        self.skills = []
-
+from items.manager import load_item
 
 class Consumable(Item):
     def __init__(self):
         super().__init__()
-        if hasattr(self, 'use_perspectives'):
+        if hasattr(self, 'skill_id'):
             return
+
+        self.skill_id = None
+        self.skill_level = 0
             
         self.item_type = ItemType.CONSUMABLE
         self.stack_max = 3
 
-        self.skill_manager = ConsumableSkillManager(self)
+        # if true, delete one stack when consumed
+        self.item_del_on_use = True
+        # if not none, add one of premade_id item to inv
+        self.item_add_on_use = None
 
-        self.use_perspectives = {
-            "you on you": "no use perspective, check Consumable Class",
-            "you on other": "no use perspective, check Consumable Class",
-            "user on user": "no use perspective, check Consumable Class",
-            "user on you": "no use perspective, check Consumable Class",
-            "user on other": "no use perspective, check Consumable Class",
-            "you on you fail": "no use perspective, check Consumable Class",
-            "you on other fail": "no use perspective, check Consumable Class",
-            "user on user fail": "no use perspective, check Consumable Class",
-            "user on you fail": "no use perspective, check Consumable Class",
-            "user on other fail": "no use perspective, check Consumable Class",
-        }
+        
+
 
     def to_dict(self):
         my_dict = {"skills": self.skill_manager.skills} | super().to_dict()
@@ -42,12 +32,34 @@ class Consumable(Item):
         return my_dict
 
     def identify(self, identifier=None):
+        return super().identify()
         output = super().identify()
 
         id_to_name, name_to_id = get_skills()
-        output += f"Contents: {[id_to_name[skill_id] for skill_id in self.skill_manager.skills]}"
-        # output += f'Contents: {self.skill_manager.skills}'
+        output += f"Contents: {id_to_name[self.skill_id]}"
         return output
+
+    def trigger_consume(self, player, line):
+        if len(line.split())<=1:
+            return False
+
+        old_line = line
+        items = player.get_item(line = line.replace('eat','').replace('drink','').replace('read','').strip(), search_mode='self')
+        
+        if items == None:
+            return False
+            
+
+        if items[0] == self:
+            attempting_var = 'can_'+old_line.split()[0]
+            attempting = old_line.split()[0]
+
+            self.new = False
+            player.simple_broadcast(f'You {attempting} the {self.name}', f'{player.pretty_name()} {attempting}s the {self.name}')
+
+            self.use(player, player)
+            player.finish_turn()
+            return True
 
     def use(self, user, target):
         if get_object_parent(target) != "Actor":
@@ -56,26 +68,20 @@ class Consumable(Item):
 
         # do these checks if the user is attempting to use the item on something else
         if user is not target:
-            if user.room.combat == None:
-                user.sendLine("You can't use items on others out of combat")
-                return
+            return
 
-            if user not in user.room.combat.participants.values():
-                user.sendLine(
-                    f"You can't use items on others while you are not in combat"
-                )
-                return
+        use_skill_from_consumable(
+            user = user, target = user, skill_id = self.skill_id, skill_level = self.skill_level, consumable_item = self
+        )
 
-            if target not in user.room.combat.participants.values():
-                user.sendLine(
-                    f"You can't use items on others while they are not fighting"
-                )
-                return
+        #user.inventory_manager.remove_item(self, stack=1)
 
-        first_skill = True
-        for skill in self.skill_manager.skills:
-            use_skill_from_consumable(
-                user=user, target=target, skill_id=skill, consumable_item=self
-            )
-        user.inventory_manager.remove_item(self, stack=1)
+
+        if self.item_del_on_use != 0:
+            user.inventory_manager.remove_item(self, 1)
+
+        if self.item_add_on_use != None:
+            item_add_on_use = load_item(self.item_add_on_use)
+            user.inventory_manager.add_item(item_add_on_use)
+
         return True

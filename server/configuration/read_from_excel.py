@@ -24,7 +24,7 @@ def read_from_ods_file():
     SHEET = {}
     # ORDER MATTERS
     start = time.time()
-    SHEET["use_perspectives"] = read_ods(file_path, "use_perspectives")
+    #SHEET["use_perspectives"] = read_ods(file_path, "use_perspectives")
     SHEET["items_consumable"] = read_ods(file_path, "items_consumable")
     SHEET["skill_script_values"] = pd.read_excel(
         file_path, sheet_name="skill_script_values"
@@ -138,30 +138,7 @@ def configure_skill_script_values(SHEET):
     systems.utils.debug_print(end - start, "SKILL_SCRIPT_VALUES")
     return SKILL_SCRIPT_VALUES
 
-
-def configure_USE_PERSPECTIVES(SHEET):
-    start = time.time()
-    USE_PERSPECTIVES = {}
-    for row in SHEET["use_perspectives"]:
-        x = SHEET["use_perspectives"]
-        for index in range(0, len(x[row])):
-            if x["use_case_id"][index] in USE_PERSPECTIVES:
-                # concate the previous dict with new a new value
-                USE_PERSPECTIVES[x["use_case_id"][index]] = USE_PERSPECTIVES[
-                    x["use_case_id"][index]
-                ] | {x["key"][index]: x["value"][index]}
-            else:
-                # create a fresh dict
-                USE_PERSPECTIVES[x["use_case_id"][index]] = {
-                    "use_case_name": x["use_case_name"][index],
-                    x["key"][index]: x["value"][index],
-                }
-    end = time.time()
-    systems.utils.debug_print(end - start, "USE_PERSPECTIVES")
-    return USE_PERSPECTIVES
-
-
-def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
+def configure_SKILLS(SHEET, SKILL_SCRIPT_VALUES):
     start = time.time()
     SKILLS = {}
     for row in SHEET["skills"]:
@@ -185,7 +162,6 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
                 "can_be_practiced": bool(x["can_be_practiced"][index]),
                 "practice_cost": int(x["practice_cost"][index]),
                 "level_req": x["level_req"][index],
-                "use_perspectives": USE_PERSPECTIVES[x["use_perspectives"][index]],
                 #'weight_low_hp_ally':       x['weight_low_hp_ally'][index],
                 #'weight_high_hp_ally':      x['weight_high_hp_ally'][index],
                 #'weight_low_hp_enemy':      x['weight_low_hp_enemy'][index],
@@ -200,7 +176,7 @@ def configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES):
     systems.utils.debug_print(end - start, "SKILL")
     return SKILLS
 
-def configure_ITEMS(SHEET, USE_PERSPECTIVES):
+def configure_ITEMS(SHEET):
     start = time.time()
 
     ITEMS = {}
@@ -220,8 +196,16 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                 ITEMS[x["premade_id"][index]]['item_type'] = sheet.replace('items_','')
                 for y in x:
                     value = x[y][index]
-                    #if y == 'can_pick_up':
-                    #    print(str(value), str(value) == 'YES')
+                    #if y == 'can_eat':
+                    #    print(x["premade_id"][index], str(value), str(value) == 'YES')
+
+                    try:
+                        value = int(value)
+                    except TypeError:
+                        pass
+                    except ValueError:
+                        pass
+
                     match str(value):
                         case 'YES':
                             value = True
@@ -232,12 +216,7 @@ def configure_ITEMS(SHEET, USE_PERSPECTIVES):
                         case _:
                             value = value
 
-                    try:
-                        value = int(value)
-                    except TypeError:
-                        pass
-                    except ValueError:
-                        pass
+                   
 
                     ITEMS[x["premade_id"][index]][y] = value
 
@@ -535,21 +514,22 @@ def configure_ENEMIES(SHEET, ITEMS):
     for e in ENEMIES:
         if ENEMIES[e]["no_random_loot"]:
             continue
+
         loot = {}
         for i in ITEMS:
             if "drop_from_random" in ITEMS[i]:
                 similar_tags = False
-                for item_tag in ITEMS[i]["drop_tags"]:
+                for item_tag in ITEMS[i]["drop_tags"].split(','):
                     for enem_tag in ENEMIES[e]["drop_tags"]:
                         if item_tag == enem_tag:
                             similar_tags = True
-                            break
+                            
 
                 if not similar_tags:
                     continue
 
                 # if its 0 then will not drop from mobs normally
-                if ITEMS[i]["drop_from_random"] == 0:
+                if ITEMS[i]["drop_from_random"] == False:
                     continue
 
                 highest_enemy_stat = {"stat": "grit", "val": -10000}
@@ -668,9 +648,9 @@ def configure_ENEMIES(SHEET, ITEMS):
 def load_from_excel():
     SHEET = read_from_ods_file()
     SKILL_SCRIPT_VALUES = configure_skill_script_values(SHEET)
-    USE_PERSPECTIVES = configure_USE_PERSPECTIVES(SHEET)
-    SKILLS = configure_SKILLS(SHEET, USE_PERSPECTIVES, SKILL_SCRIPT_VALUES)
-    ITEMS = configure_ITEMS(SHEET, USE_PERSPECTIVES)
+    #USE_PERSPECTIVES = configure_USE_PERSPECTIVES(SHEET)
+    SKILLS = configure_SKILLS(SHEET, SKILL_SCRIPT_VALUES)
+    ITEMS = configure_ITEMS(SHEET)
     ENEMIES = configure_ENEMIES(SHEET, ITEMS)
     EQUIPMENT_REFORGES = configure_equipment_reforges(SHEET)
 

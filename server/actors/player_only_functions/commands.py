@@ -13,7 +13,7 @@ from actors.player_only_functions.charging_mini_game import (
     command_charging_mini_game_toggle
 )
 
-from actors.player_only_functions.look import command_look, command_glance, command_map, new_room_look, command_scan, get_nearby_rooms
+from actors.player_only_functions.look import command_look, command_map, new_room_look, command_scan, get_nearby_rooms
 
 from actors.player_only_functions.equip import (
     command_equipment, inventory_equip, inventory_unequip
@@ -92,7 +92,6 @@ commands = {
     #'setcall':  'command_recall_set',
     #'gocall':   'command_recall_go',
     'look':     'command_look',
-    'glance':   'command_glance',
     #'scan':     'command_scan',              # disabled due to not working properly with instances
     'map':      'command_map',
     '_forcebuild': 'command_force_build',
@@ -134,24 +133,24 @@ commands = {
     'rest':     'command_rest',
     'party':    'command_party',
 
-    'respec':   'command_respec',
-    'prompt':   'command_send_prompt',
+    'respec':    'command_respec',
+    'prompt':    'command_send_prompt',
 
-    'settings': 'command_settings',
+    'settings':  'command_settings',
 
-    'time':     'command_get_time',
-    '_timeset': 'command_set_time',
+    'time':      'command_get_time',
+    '_timeset':  'command_set_time',
 
-    'pray':     'command_charging_mini_game_toggle',
+    'pray':      'command_charging_mini_game_toggle',
 
-    'news':     'command_patch_notes',
+    'news':      'command_patch_notes',
     '_teleport': 'command_teleport',
-    'online':   'command_online',
+    'online':    'command_online',
     '_kick':     'command_kick',
     '_admin':    'command_grant_admin',
-    '_refs':    'command_show_ref_all',
+    '_refs':     'command_show_ref_all',
 
-    '_dict':        'command_export',
+    '_dict':     'command_export',
     '_item':     'command_load_item',
     '_npcs':     'command_load_npcs',
     '_mexp':     'command_gain_exp',
@@ -260,7 +259,7 @@ translations = {
 
     'eat':              'emote eat',
     'drink':            'emote drink',
-    'read':             'read',
+    'read':             'emote read',
 
 
     'SEX SFDSFDSFDSF':  'dsdadsad',

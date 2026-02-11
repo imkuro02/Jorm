@@ -345,7 +345,7 @@ def use2(self, line, silent = False):
     return True
 """
 
-
+@check_alive
 def use(self, line, silent=False):
     line = line.lower()
     dict_of_actors = {}
@@ -387,7 +387,8 @@ def use(self, line, silent=False):
     found_action_with = ""
     for i in range(0, len(line)):
         best_match = systems.utils.get_match(
-            " ".join(line[0 : i + 1]), {**skills_dict, **self.inventory_manager.items}
+            #" ".join(line[0 : i + 1]), {**skills_dict, **self.inventory_manager.items}
+            " ".join(line[0 : i + 1]), skills_dict
         )
         if best_match == None:
             continue
@@ -397,6 +398,7 @@ def use(self, line, silent=False):
 
     if action_name == None:
         if not silent:
+            #self.sendLine("Could not find skill to use")
             self.sendLine("Could not find item or skill to use")
         return False
     # if line[0][0].lower() != action_name[0].lower():
@@ -412,7 +414,8 @@ def use(self, line, silent=False):
 
         _l_bozo = line[-i:]  # ' '.join(line[len(line)-i:len(line)])
         best_match = systems.utils.get_match(
-            " ".join(_l_bozo), {**self.room.actors, **self.inventory_manager.items}
+            #" ".join(_l_bozo), {**self.room.actors, **self.inventory_manager.items}
+            " ".join(_l_bozo), self.room.actors
         )
         if best_match == None:
             continue
@@ -451,12 +454,11 @@ def use(self, line, silent=False):
 
     if _action.name in skill_name_to_id:
         self.ai.prediction_skill = skill_name_to_id[_action.name]
-    else:
-        self.ai.prediction_item = _action
+    #else:
+    #    self.ai.prediction_item = _action
 
     self.ai.prediction_target = _target
 
-    # systems.utils.debug_print([i for i in self.queued_lines if not i.strip().startswith('try')])
     if self.room.combat == None:
         self.ai.use_prediction()
         self.ai.clear_prediction()
@@ -469,7 +471,6 @@ def use(self, line, silent=False):
 
     self.ai.clear_prediction()
     return True
-
 
 def command_use(self, line, silent=False):
     return use(self, line, silent=False)

@@ -140,7 +140,7 @@ def skill_checks(user, target, skill_id):
 
 
 def use_skill_from_consumable(
-    user: "Actor", target: "Actor", skill_id: str, consumable_item
+    user: "Actor", target: "Actor", skill_id: str, skill_level: int, consumable_item
 ):
     if skill_id not in SKILLS:
         return False
@@ -154,25 +154,25 @@ def use_skill_from_consumable(
         )
         return False
 
-    users_skill_level = 0
-    use_perspectives = consumable_item.use_perspectives
+    users_skill_level = skill_level
     success = True  # random.randint(1,100) < skill['script_values']['chance'][users_skill_level]*100
     silent_use = True
     no_cooldown = True
 
     _skill_obj = skill_obj(
-        skill_id=skill_id,
+        skill_id = skill_id,
         script_values=skill["script_values"],
-        user=user,
-        other=target,
-        users_skill_level=users_skill_level,
-        use_perspectives=use_perspectives,
-        success=success,
-        silent_use=silent_use,
+        user = user,
+        other = target,
+        users_skill_level = users_skill_level,
+        success = success,
+        silent_use = silent_use,
+        no_cooldown = no_cooldown,
         # aoe = skill['aoe'],
         # bounce = skill['bounce']
     )
-
+    _skill_obj.name = consumable_item.name
+    #print(_skill_obj.pretty_name())
     _skill_obj.pre_use()
     del _skill_obj
     return True
@@ -207,7 +207,7 @@ def use_skill(user, target, skill_id, no_checks=False):
             )
             return False
 
-        use_perspectives = skill["use_perspectives"]
+
 
         success = True  # random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
         silent_use = False
@@ -219,7 +219,7 @@ def use_skill(user, target, skill_id, no_checks=False):
             user=user,
             other=target,
             users_skill_level=users_skill_level,
-            use_perspectives=use_perspectives,
+
             success=success,
             silent_use=silent_use,
             # aoe = skill['aoe'],
@@ -229,57 +229,4 @@ def use_skill(user, target, skill_id, no_checks=False):
         _skill_obj.pre_use()
         del _skill_obj
         return True
-
-        """
-        if skill['aoe']:
-            targets = []
-
-            for i in user.room.actors.values():
-                if user.status != i.status:
-                    continue
-                if not skill['is_offensive']:
-                    if i.party_manager.get_party_id() == user.party_manager.get_party_id():
-                        targets.append(i)
-                else:
-                    if i.party_manager.get_party_id() != user.party_manager.get_party_id():
-                        targets.append(i)
-
-            for target in targets:
-                _skill_obj = skill_obj(
-                    skill_id = skill_id,
-                    script_values = skill['script_values'],
-                    user = user,
-                    other = target,
-                    users_skill_level = users_skill_level,
-                    use_perspectives = use_perspectives,
-                    success = success,
-                    silent_use = silent_use,
-                    aoe = skill['aoe'],
-                    bounce = skill['bounce']
-                )
-
-                _skill_obj.use()
-                del _skill_obj
-                #silent_use = True
-
-            return True
-        else:
-            _skill_obj = skill_obj(
-                skill_id = skill_id,
-                script_values = skill['script_values'],
-                user = user,
-                other = target,
-                users_skill_level = users_skill_level,
-                use_perspectives = use_perspectives,
-                success = success,
-                silent_use = silent_use,
-                aoe = skill['aoe'],
-                bounce = skill['bounce']
-            )
-
-            _skill_obj.use()
-            del _skill_obj
-            return True
-        """
-
     return False
