@@ -545,51 +545,11 @@ class Equipment(Item):
 
         return item
 
-    # called at start of turn
-
-    def use_skill(self, skill_id, triggered_by_damage_obj=None):
-        skill_id = skill_id
-        skill = SKILLS[skill_id]
-        try:
-            skill_obj = getattr(skills.skills, f"Skill{skill['script_to_run']}")
-        except AttributeError:
-            self.inventory_manager.simple_broadcast(
-                f"@redscript_to_run:{skill['script_to_run']} is not a valid skill object in skills.py@normal",
-                f"@redscript_to_run:{skill['script_to_run']} is not a valid skill object in skills.py@normal",
-            )
-            return False
-
-        use_perspectives = skill["use_perspectives"]
-        success = True  # random.randint(1,100) < (skill['script_values']['chance'][users_skill_level]*100)
-        silent_use = True
-        no_cooldown = True
-
-        _skill_obj = skill_obj(
-            skill_id=skill_id,
-            script_values=skill["script_values"],
-            user=self.inventory_manager.owner,
-            other=self.inventory_manager.owner,
-            users_skill_level=0,
-            use_perspectives=use_perspectives,
-            success=success,
-            silent_use=silent_use,
-            no_cooldown=no_cooldown,
-            combat_event=triggered_by_damage_obj.combat_event,
-        )
-
-        # systems.utils.debug_print('aaa',triggered_by_damage_obj.combat_event == _skill_obj.combat_event)
-
-        _skill_obj.pre_use()
-        del _skill_obj
-
     def get_reforge_id(self):
         for i in self.manager.bonuses.values():
             if i.type == BonusTypes.REFORGE:
                 return i.key
         return None
-
-    def set_turn(self):
-        pass
 
     # called at end of turn
     def finish_turn(self):
@@ -659,22 +619,3 @@ class Equipment(Item):
                     reforge_variables=EQUIPMENT_REFORGES[reforge_id]["vars"],
                 )
                 self.inventory_manager.owner.affect_manager.set_affect_object(aff)
-
-    # called whenever hp updates in any way
-    def take_damage_before_calc(self, damage_obj):
-        return damage_obj
-
-    def take_damage_after_calc(self, damage_obj):
-        return damage_obj
-
-    def deal_damage(self, damage_obj):
-        return damage_obj
-
-    def dealt_damage(self, damage_obj):
-        # if self.stack >= 10:
-        #    self.inventory_manager.owner.simple_broadcast(f'You are carrying so much of {self.name} it deals extra damage!','')
-        return damage_obj
-
-    # called when exp is gained
-    def gain_exp(self, exp):
-        return exp

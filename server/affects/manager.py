@@ -19,11 +19,6 @@ class AffectsManager:
                 aff_to_delete.append(aff)
                 continue
 
-            if not aff.custom_go_away:
-                # self.actor.sendLine(f'not custom go away of affects true: {aff.name}')
-                aff_to_delete.append(aff)
-                continue
-
         for aff in aff_to_delete:
             aff.on_finished(silent)
 

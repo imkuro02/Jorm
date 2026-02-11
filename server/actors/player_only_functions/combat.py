@@ -709,16 +709,6 @@ def rest_home(self, line):
 
     self.status = ActorStatusType.NORMAL
 
-    """
-    well_rested = affects.AffectWellRested(
-        affect_source_actor = self,
-        affect_target_actor = self,
-        name = 'Rested', description = f'You take half damage round 1',
-        turns = 0 + int(self.stat_manager.stats[StatType.LVL] * 15),
-        custom_go_away = True
-    )
-    self.affect_manager.set_affect_object(well_rested)
-    """
 
 
 @check_not_in_combat

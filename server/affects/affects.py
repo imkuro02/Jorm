@@ -16,7 +16,6 @@ class Affect:
         resisted_by=None,
         get_prediction_string_append=None,
         get_prediction_string_clear=False,
-        custom_go_away=False,
         dispellable=True,
     ):
         self.affect_target_actor = affect_target_actor
@@ -37,9 +36,6 @@ class Affect:
         self.get_prediction_string_clear = get_prediction_string_clear
         self.turns = turns
 
-        # if custom_go_away is true, the affliction only vanishes when "rest home"
-        # not on death, on rest now, or anything else
-        self.custom_go_away = custom_go_away
         self.dispellable = dispellable
 
     def pretty_name(self):
@@ -115,7 +111,6 @@ class Affect:
 
     def dealt_damage(self, damage_obj):
         return damage_obj
-
 
 class AffectWellRested(Affect):
     def set_turn(self):
@@ -920,7 +915,6 @@ class AffectReforge(Affect):
         )
         self.source_item = source_item
         self.reforge_variables = reforge_variables
-
         # need to double check if afflictions get messed up when unequipping shit
         # during "practice" and "skills" commands
         # import random

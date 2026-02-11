@@ -1,5 +1,5 @@
 import random
-
+from combat.combat_event import CombatEvent
 # import affects.manager as aff_manager
 import affects.affects as affects
 import systems.utils
@@ -314,6 +314,7 @@ class SkillDamage(Skill):
                 damage_value=dmg,
                 damage_type=dmg_type,
                 damage_to_stat=dmg_to_stat,
+
             )
 
             if self.combat_event == None:
@@ -645,11 +646,10 @@ class SkillBash(SkillDamageByGrit):
 class SkillDoubleWhack(SkillDamageByGritFlow):
     def use(self):
         if self.success:
-            if self.combat_event == None:
-                d = super().use()
+
+            d = super().use()
             if self.other.status != ActorStatusType.DEAD:
-                if self.combat_event == None:
-                    d = super().use()
+                d = super().use()
             return d
 
 class SkillFireball(SkillDamage):
@@ -665,6 +665,26 @@ class SkillFireball(SkillDamage):
 
 # XD skills from consumables
 
+class SkillFlatHeal(SkillDamage):
+    def use(self, power, stat_to_heal):
+        super().use(
+            dmg_flat=power,
+            dmg_stat_scale=None,
+            dmg_type=DamageType.HEALING,
+            dmg_to_stat=stat_to_heal
+            )
+        
+class SkillFlatHealHP(SkillFlatHeal):
+    def use(self):
+        super().use(power = self.users_skill_level, stat_to_heal = StatType.HP)
+
+class SkillFlatHealPA(SkillFlatHeal):
+    def use(self):
+        super().use(power = self.users_skill_level, stat_to_heal = StatType.PHYARMOR)
+
+class SkillFlatHealMA(SkillFlatHeal):
+    def use(self):
+        super().use(power = self.users_skill_level, stat_to_heal = StatType.MAGARMOR)
 
 class SkillRegenPercentFromPotion(Skill):
     def use(self, power_percent, stat_to_heal):

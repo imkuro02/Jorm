@@ -244,8 +244,6 @@ class Item:
         return damage_obj
 
     def dealt_damage(self, damage_obj):
-        # if self.stack >= 10:
-        #    self.inventory_manager.owner.simple_broadcast(f'You are carrying so much of {self.name} it deals extra damage!','')
         return damage_obj
 
     # called when exp is gained

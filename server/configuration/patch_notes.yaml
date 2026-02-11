@@ -10,6 +10,7 @@ versions:
       - Consumable items do not use "use" command rather a trigger (like eat, drink or read)
       - Consumable items cannot be used on others anymore
       - All food items are no longer "custom" items but regular consumable items
+      - How damage gets applied and sent as output has changed (idk if good or not)
   "090226":
     id: "090226"
     title: Fireball skill, Food and things

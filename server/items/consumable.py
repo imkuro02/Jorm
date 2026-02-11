@@ -9,11 +9,12 @@ from items.manager import load_item
 class Consumable(Item):
     def __init__(self):
         super().__init__()
-        if hasattr(self, 'skill_id'):
+        if hasattr(self, 'skills'):
             return
 
-        self.skill_id = None
-        self.skill_level = 0
+        #self.skill_id = None
+        #self.skill_level = 0
+        self.skills = {}
             
         self.item_type = ItemType.CONSUMABLE
         self.stack_max = 3
@@ -23,7 +24,20 @@ class Consumable(Item):
         # if not none, add one of premade_id item to inv
         self.item_add_on_use = None
 
-        
+    def identify(self, identifier=None):
+        output = super().identify()
+
+        id_to_name, name_to_id = get_skills()
+        output += f"Contents: {self.skills}"
+        if self.trigger_manager.triggers != {}:
+            output2 = ''
+            for i in self.trigger_manager.triggers:
+                if self.trigger_manager.triggers[i]['trigger_action'].__name__ == 'trigger_consume':
+                    output2 += f'{i} '
+
+            if output2 != '':
+                output +='\nCan be consumed with: '+output2
+        return output
 
 
     def to_dict(self):
@@ -31,13 +45,6 @@ class Consumable(Item):
 
         return my_dict
 
-    def identify(self, identifier=None):
-        return super().identify()
-        output = super().identify()
-
-        id_to_name, name_to_id = get_skills()
-        output += f"Contents: {id_to_name[self.skill_id]}"
-        return output
 
     def trigger_consume(self, player, line):
         if len(line.split())<=1:
@@ -69,10 +76,13 @@ class Consumable(Item):
         # do these checks if the user is attempting to use the item on something else
         if user is not target:
             return
-
-        use_skill_from_consumable(
-            user = user, target = user, skill_id = self.skill_id, skill_level = self.skill_level, consumable_item = self
-        )
+        
+        combat_event = CombatEvent()
+        for skill in self.skills.values():
+            use_skill_from_consumable(
+                user = user, target = user, skill_id = skill['skill_id'], skill_level = skill['skill_lv'], consumable_item = self, combat_event = combat_event
+            )
+        combat_event.run()
 
         #user.inventory_manager.remove_item(self, stack=1)
 
@@ -85,3 +95,5 @@ class Consumable(Item):
             user.inventory_manager.add_item(item_add_on_use)
 
         return True
+
+from combat.combat_event import CombatEvent

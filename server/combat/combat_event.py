@@ -15,6 +15,8 @@ class CombatEvent:
         self.popped = []
 
     def add_to_queue(self, damage_event):
+        if self.queue != []:
+            damage_event.silent = True
         self.queue.append(damage_event)
 
     def pop_from_queue(self):

@@ -140,7 +140,7 @@ def skill_checks(user, target, skill_id):
 
 
 def use_skill_from_consumable(
-    user: "Actor", target: "Actor", skill_id: str, skill_level: int, consumable_item
+    user: "Actor", target: "Actor", skill_id: str, skill_level: int, consumable_item, combat_event
 ):
     if skill_id not in SKILLS:
         return False
@@ -170,15 +170,20 @@ def use_skill_from_consumable(
         no_cooldown = no_cooldown,
         # aoe = skill['aoe'],
         # bounce = skill['bounce']
+        combat_event = combat_event,
     )
     _skill_obj.name = consumable_item.name
     #print(_skill_obj.pretty_name())
     _skill_obj.pre_use()
+
+    if combat_event == None:
+        _skill_obj.combat_event.run()
+
     del _skill_obj
     return True
 
 
-def use_skill(user, target, skill_id, no_checks=False):
+def use_skill(user, target, skill_id, no_checks=False, combat_event = None):
     if skill_id not in SKILLS:
         return False
     skill = SKILLS[skill_id]
@@ -224,9 +229,15 @@ def use_skill(user, target, skill_id, no_checks=False):
             silent_use=silent_use,
             # aoe = skill['aoe'],
             # bounce = skill['bounce']
+            combat_event = combat_event,
         )
 
         _skill_obj.pre_use()
+
+        if combat_event != None:
+            _skill_obj.combat_event.run()
+
         del _skill_obj
+        
         return True
     return False

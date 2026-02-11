@@ -6,9 +6,6 @@ import uuid
 import systems.utils
 from configuration.config import ITEMS, EquipmentSlotType, ItemType, StatType
 
-# from items.scenery import Scenery
-
-
 random = random.Random()
 
 from custom import loader as custom_loader
@@ -98,8 +95,12 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
 
     if item_type == ItemType.CONSUMABLE:
 
-        new_item.skill_id = ITEMS[premade_id]["skill"]
-        new_item.skill_level = ITEMS[premade_id]["skill_level"]
+        #new_item.skill_id = ITEMS[premade_id]["skill"]
+        #new_item.skill_level = ITEMS[premade_id]["skill_level"]
+
+        for skills in ITEMS[premade_id]["skills"].split(';'):
+            _skill_id, _skill_lv = skills.split('=')
+            new_item.skills[_skill_id] = {'skill_id': str(_skill_id), 'skill_lv': int(_skill_lv)}
 
         new_item.item_del_on_use = ITEMS[premade_id]["del_on_use"]
         new_item.item_add_on_use = ITEMS[premade_id]["add_on_use"]

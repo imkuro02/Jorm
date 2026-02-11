@@ -33,6 +33,7 @@ def read_from_ods_file():
     SHEET["items_equipment"] = read_ods(file_path, "items_equipment")
     SHEET["equipment_reforges"] = read_ods(file_path, "equipment_reforges")
     SHEET["items_misc"] = read_ods(file_path, "items_misc")
+    #SHEET["items_healing_consumable"] = read_ods(file_path, "items_healing_consumable")
     SHEET["enemy_skills"] = read_ods(file_path, "enemy_skills")
     SHEET["loot"] = read_ods(file_path, "loot")
     SHEET["enemies"] = read_ods(file_path, "enemies")
@@ -192,6 +193,7 @@ def configure_ITEMS(SHEET):
                 if bool(x["dont_load"][index]):
                     continue
 
+                #print(x["premade_id"][index])
                 ITEMS[x["premade_id"][index]] = {}
                 ITEMS[x["premade_id"][index]]['item_type'] = sheet.replace('items_','')
                 for y in x:
