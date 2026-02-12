@@ -15,8 +15,9 @@ class CombatEvent:
         self.popped = []
 
     def add_to_queue(self, damage_event):
-        if self.queue != [] and self.queue == []:
-            damage_event.silent = True
+        if self.queue != []:
+            if self.queue[0].damage_source_actor == damage_event.damage_source_actor and self.queue[0].damage_taker_actor == damage_event.damage_taker_actor:
+                damage_event.silent = True
         self.queue.append(damage_event)
 
     def pop_from_queue(self):

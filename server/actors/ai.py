@@ -37,7 +37,14 @@ class AI:
                 self.actor.skill_manager.unlearn(skill_id=skill, amount=lvl)
                 self.clear_prediction()
 
+        
+        
         self.predict_use_best_skill()
+
+        #roll = random.choice([0,1])
+        #if roll == 0:
+        #    self.clear_prediction()
+        
         # debug = f'{self.actor.name}, {self.prediction_skill}, {self.prediction_target}'
         # self.actor.simple_broadcast(debug,debug)
 
@@ -93,7 +100,7 @@ class AI:
                 prediction_string = ""
             else:
                 if not self.has_prediction():
-                    prediction_string = "(idle)"
+                    prediction_string = ""
                 else:
                     prediction_string = (
                         f"(will use {SKILLS[self.prediction_skill]['name']})"

@@ -498,20 +498,21 @@ class SkillFlatHeal(SkillDamage):
             dmg_flat=power,
             dmg_stat_scale=None,
             dmg_type=dmg_type,
-            dmg_to_stat=stat_to_heal
+            dmg_to_stat=stat_to_heal,
+            
             )
         
 class SkillFlatHealHP(SkillFlatHeal):
     def use(self):
-        super().use(power = self.users_skill_level, stat_to_heal = StatType.HP)
+        return super().use(power = self.users_skill_level, stat_to_heal = StatType.HP)
 
 class SkillFlatHealPA(SkillFlatHeal):
     def use(self):
-        super().use(power = self.users_skill_level, stat_to_heal = StatType.PHYARMOR)
+        return super().use(power = self.users_skill_level, stat_to_heal = StatType.PHYARMOR)
 
 class SkillFlatHealMA(SkillFlatHeal):
     def use(self):
-        super().use(power = self.users_skill_level, stat_to_heal = StatType.MAGARMOR)
+        return super().use(power = self.users_skill_level, stat_to_heal = StatType.MAGARMOR)
 
 class SkillRegenPercentFromPotion(Skill):
     def use(self, power_percent, stat_to_heal):

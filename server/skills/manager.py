@@ -139,7 +139,7 @@ def skill_checks(user, target, skill_id):
 
 
 def use_skill_from_consumable(
-    user: "Actor", target: "Actor", skill_id: str, skill_level: int, consumable_item, combat_event
+    user: "Actor", target: "Actor", skill_id: str, skill_level: int, consumable_item, combat_event = None,
 ):
     if skill_id not in SKILLS:
         return False

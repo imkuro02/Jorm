@@ -233,7 +233,7 @@ class Combat:
         self.turn += 1
 
     def initiative(self):
-        show_turns_and_stuff = False
+        show_turns_and_stuff = True
 
         for i in self.participants.values():
             if i.status != ActorStatusType.DEAD:
