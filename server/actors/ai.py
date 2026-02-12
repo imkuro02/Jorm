@@ -51,6 +51,7 @@ class AI:
             self.use_prediction(no_checks=True)
             self.actor.skill_manager.unlearn(skill_id=skill, amount=lvl)
             self.clear_prediction()
+            
         pass
 
     def has_prediction(self):

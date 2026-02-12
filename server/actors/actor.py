@@ -738,9 +738,11 @@ class Actor:
         self.affect_manager.unload_all_affects(silent=True, forced=False)
         self.cooldown_manager.unload_all_cooldowns()
 
+        
+        self.status = ActorStatusType.DEAD
+
         self.ai.die()
 
-        self.status = ActorStatusType.DEAD
 
         sound = Audio.ENEMY_DEATH
 

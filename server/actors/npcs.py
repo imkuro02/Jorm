@@ -290,6 +290,7 @@ class Npc(Actor):
 
         room = self.room
         participants = room.combat.participants.values()
+        
 
         super().die(unload=False)
 

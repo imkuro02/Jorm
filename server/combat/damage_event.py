@@ -2,8 +2,7 @@ import random
 
 from combat.combat_event import CombatEvent
 from configuration.config import ActorStatusType, Audio, DamageType, MsgType, StatType
-from systems.utils import IndentType, indent
-
+from systems.utils import IndentType, indent, debug_print
 
 class Damage:
     def __init__(
@@ -52,6 +51,9 @@ class Damage:
                 StatType.MAGARMOR
             ],
         }
+           
+
+       
 
     def run(self):
         self.combat_event.run()
@@ -60,6 +62,7 @@ class Damage:
     # if the damage is negative, this means that the damage has been blocked by armor or marmor
     # if its positive, assume that the armor is broken and damage is dealt directly to hp / whatever stat
     def calculate(self):
+        
         # lvl_taker = self.damage_taker_actor.stat_manager.stats[StatType.LVL]
         # lvl_source = self.damage_taker_actor.stat_manager.stats[StatType.LVL]
         # lvl_diff = lvl_source - lvl_taker
@@ -74,8 +77,8 @@ class Damage:
 
         self.damage_snapshot = self.get_damage_snapshot()
 
-        if self.damage_taker_actor.status == ActorStatusType.DEAD:
-            self.damage_value = 0
+        #if self.damage_taker_actor.status == ActorStatusType.DEAD:
+        #    self.damage_value = 0
 
         if self.damage_value <= 0:
             return self

@@ -8,7 +8,7 @@ from actors.actor import Actor
 
 # from actors.enemy_ai import AIBasic
 from actors.ai import EnemyAI, PlayerAI
-from actors.player_only_functions.charging_mini_game import ChargingMiniGame
+#from actors.player_only_functions.charging_mini_game import ChargingMiniGame
 
 # import commands maps
 from actors.player_only_functions.commands import (
@@ -356,7 +356,7 @@ class Player(Actor):
         self.settings_manager = Settings(self)
         self.ai = PlayerAI(self)
 
-        self.charging_mini_game = ChargingMiniGame(self)
+        #self.charging_mini_game = ChargingMiniGame(self)
 
         self.update_checker = UpdateChecker(self)
         self.friend_manager = FriendManager(self)
@@ -414,8 +414,8 @@ class Player(Actor):
         if self.ai != None:
             self.ai.tick()
 
-        if self.charging_mini_game != None:
-            self.charging_mini_game.tick()
+        #if self.charging_mini_game != None:
+        #    self.charging_mini_game.tick()
 
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
@@ -704,7 +704,7 @@ class Player(Actor):
 
     def finish_turn(self, force_cooldown=False):
         self.trade_manager.trade_stop(silent=True)
-        self.charging_mini_game.stop()
+        #self.charging_mini_game.stop()
         super().finish_turn(force_cooldown=force_cooldown)
         # self.sendLine(self.prompt(self))
 

@@ -9,9 +9,9 @@ from actors.player_only_functions.combat import (
     command_use, command_rest, rest_set, rest_here, rest_home, rest_home_request, rest_here_request, command_party,
 )
 
-from actors.player_only_functions.charging_mini_game import (
-    command_charging_mini_game_toggle
-)
+#from actors.player_only_functions.charging_mini_game import (
+#    command_charging_mini_game_toggle
+#)
 
 from actors.player_only_functions.look import command_look, command_map, new_room_look, command_scan, get_nearby_rooms
 
@@ -141,7 +141,7 @@ commands = {
     'time':      'command_get_time',
     '_timeset':  'command_set_time',
 
-    'pray':      'command_charging_mini_game_toggle',
+    #'pray':      'command_charging_mini_game_toggle',
 
     'news':      'command_patch_notes',
     '_teleport': 'command_teleport',

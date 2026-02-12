@@ -79,6 +79,7 @@ class ChargingMiniGame:
         self.owner.sendLine('@good'+random.choice(self.LINES_SUCCESS)+'@normal')
         self.ticks_passed = 0
         
+        
 
     def stop(self):
         if not self.charging:
