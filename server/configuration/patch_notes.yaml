@@ -10,6 +10,7 @@ versions:
       - Leech procs on bleed which is funny
       - Did a bandaid fix for damage_events, if they somehow break the game they get discarded and ignored
       - Removed praying minigame
+      - Deflect magic no longer crashes the game if you are deflecting a dying enemies skill
   "110226":
     id: "110226"
     title: Item and loading fixes
