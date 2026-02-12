@@ -6,7 +6,7 @@ versions:
     features:
       - Removed a bunch of broken and outdated skills (like enrage)
       - Added a server debug function that runs on startup to check for missing or broken skill configs
-      - Fixed thorns crashing the game if you are bleeding and the enemy who applied bleed has disabled
+      - Fixed thorns crashing the game if you are bleeding and the enemy who applied bleed has unloaded
       - Leech procs on bleed which is funny
       - Did a bandaid fix for damage_events, if they somehow break the game they get discarded and ignored
       - Removed praying minigame
