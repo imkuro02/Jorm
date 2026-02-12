@@ -1,4 +1,11 @@
 versions:
+  "120226":
+    id: "120226"
+    title: Cleanup
+    unixtime: 1761899677
+    features:
+      - Removed a bunch of broken and outdated skills (like enrage)
+      - Added a server debug function that runs on startup to check for missing or broken skill configs
   "110226":
     id: "110226"
     title: Item and loading fixes

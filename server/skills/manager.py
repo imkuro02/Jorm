@@ -11,7 +11,6 @@ from configuration.config import (
     StatType,
 )
 
-
 def get_skills():
     name_to_id = {}
     id_to_name = {}
@@ -117,7 +116,7 @@ def skill_checks(user, target, skill_id):
     if "hp_cost" in skill["script_values"]:
         hp_cost = skill["script_values"]["hp_cost"][users_skill_level]
         hp_cost = hp_cost + int(user.stat_manager.stats[StatType.LVL] * 0.5)
-        if hp_cost > user.stat_manager.stats[StatType.HP] + 1:
+        if hp_cost >= user.stat_manager.stats[StatType.HP] + 1:
             error(
                 user,
                 f"You need atleast {hp_cost + 1} {Color.stat[StatType.HP]}{StatType.name[StatType.HP]}{Color.BACK} to use {skill_name}",
@@ -234,10 +233,21 @@ def use_skill(user, target, skill_id, no_checks=False, combat_event = None):
 
         _skill_obj.pre_use()
 
-        if combat_event != None:
+        if _skill_obj.combat_event != None:
             _skill_obj.combat_event.run()
 
         del _skill_obj
         
         return True
     return False
+
+def check_for_broken_skills():
+    for skill in SKILLS:
+        try:
+            skill_obj = getattr(skills.skills, f"Skill{SKILLS[skill]['script_to_run']}")
+        except AttributeError:
+            systems.utils.debug_print(systems.utils.add_color(
+                f"@redskill_id:{SKILLS[skill]['skill_id']} script_to_run:{SKILLS[skill]['script_to_run']} is not a valid skill object in skills.py@normal")
+            )
+    
+

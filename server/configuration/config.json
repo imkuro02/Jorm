@@ -1,5 +1,5 @@
 {
-    "SHA-256": "acc73b1c2a964228cbed8d6e3ce098c49bcf28ebc099338ff70efe98036327f0",
+    "SHA-256": "43972b43dec099fbff808fd8534e25d14c9e83716152248282c8a157d1dfeb87",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3936,49 +3936,6 @@
                 ]
             }
         },
-        "enrage": {
-            "skill_id": "enrage",
-            "name": "Enrage",
-            "description": "Amplify your Grit by BONUS.\n",
-            "script_to_run": "Enrage",
-            "target_others_is_valid": false,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": true,
-            "practice_cost": 1,
-            "level_req": 6.0,
-            "is_offensive": 0.0,
-            "end_turn": false,
-            "script_values": {
-                "bonus": [
-                    0.1,
-                    0.2,
-                    0.3
-                ],
-                "hp_cost": [
-                    15,
-                    30,
-                    60
-                ],
-                "duration": [
-                    5,
-                    5,
-                    5
-                ],
-                "cooldown": [
-                    7,
-                    7,
-                    7
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
-                ]
-            }
-        },
         "leech": {
             "skill_id": "leech",
             "name": "Leech",
@@ -4057,159 +4014,6 @@
                     1,
                     2,
                     3
-                ]
-            }
-        },
-        "regen_hp_30": {
-            "skill_id": "regen_hp_30",
-            "name": "Minor Life Regen",
-            "description": "Instantly recover 30% of your Life.\n",
-            "script_to_run": "RegenHP30",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "cooldown": [
-                    1
-                ]
-            }
-        },
-        "regen_phy_armor_30": {
-            "skill_id": "regen_phy_armor_30",
-            "name": "Minor Hold Regen",
-            "description": "Instantly recover 30% of your Hold.\n",
-            "script_to_run": "RegenPhyArmor30",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "cooldown": [
-                    1
-                ]
-            }
-        },
-        "regen_mag_armor_30": {
-            "skill_id": "regen_mag_armor_30",
-            "name": "Minor Ward Regen",
-            "description": "Instantly recover 30% of your Ward.\n",
-            "script_to_run": "RegenMagArmor30",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "cooldown": [
-                    1
-                ]
-            }
-        },
-        "beer_stein_chug": {
-            "skill_id": "beer_stein_chug",
-            "name": "Chug",
-            "description": "Instantly recover 30% of your Life, Hold and Ward.\n",
-            "script_to_run": "RefreshingDrink",
-            "target_others_is_valid": false,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "bonus": [
-                    0.2
-                ],
-                "cooldown": [
-                    10
-                ],
-                "levels": [
-                    1
-                ]
-            }
-        },
-        "renew_hp_30": {
-            "skill_id": "renew_hp_30",
-            "name": "Minor Life Renew",
-            "description": "Regenerate 30% of your Life over 3 turns.\n",
-            "script_to_run": "RenewHP30",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "cooldown": [
-                    1
-                ]
-            }
-        },
-        "renew_phy_armor_30": {
-            "skill_id": "renew_phy_armor_30",
-            "name": "Minor Hold Renew",
-            "description": "Regenerate 30% of your Hold over 3 turns.\n",
-            "script_to_run": "RenewPhyArmor30",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "cooldown": [
-                    1
-                ]
-            }
-        },
-        "renew_mag_armor_30": {
-            "skill_id": "renew_mag_armor_30",
-            "name": "Minor Ward Renew",
-            "description": "Regenerate 30% of your Ward over 3 turns.\n",
-            "script_to_run": "RenewMagArmor30",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": true,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "cooldown": [
-                    1
                 ]
             }
         },
@@ -5006,30 +4810,6 @@
                 ]
             }
         },
-        "percent_all_heal": {
-            "skill_id": "percent_all_heal",
-            "name": "Regenerate",
-            "description": "Instantly recover x% of your Life, Hold and Ward.\n",
-            "script_to_run": "PercentAllHeal",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": false,
-            "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 0.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "levels": [
-                    1
-                ],
-                "cooldown": [
-                    1
-                ]
-            }
-        },
         "flat_heal_hp": {
             "skill_id": "flat_heal_hp",
             "name": "Heal Life",
@@ -5101,6 +4881,33 @@
                     1
                 ]
             }
+        },
+        "beer_stein_chug": {
+            "skill_id": "beer_stein_chug",
+            "name": "Chug",
+            "description": "beer_stein_chug",
+            "script_to_run": "RefreshingDrink",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 0.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "bonus": [
+                    0.2
+                ],
+                "cooldown": [
+                    10
+                ],
+                "levels": [
+                    1
+                ]
+            }
         }
     },
     "items": {
@@ -5136,7 +4943,7 @@
             "dont_load": 0,
             "premade_id": "potion_hp_30",
             "name": "Green Potion",
-            "skills": "flat_heal_hp=30;flat_heal_pa=32;flat_heal_ma=30",
+            "skills": "flat_heal_hp=30;flat_heal_pa=30;flat_heal_ma=30",
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "drink",
@@ -5329,7 +5136,7 @@
             "dont_load": 0,
             "premade_id": "potion_renew_hp_30",
             "name": "Green Pheromone",
-            "skills": "percent_all_heal=30",
+            "skills": "flat_heal_hp=30;flat_heal_pa=30;flat_heal_ma=30",
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "drink",
@@ -5356,7 +5163,7 @@
             "dont_load": 0,
             "premade_id": "food_item_cheese",
             "name": "Cheese",
-            "skills": "percent_all_heal=5",
+            "skills": "flat_heal_hp=10;flat_heal_pa=10;flat_heal_ma=10",
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "eat",
@@ -5383,7 +5190,7 @@
             "dont_load": 0,
             "premade_id": "tavern_food_item_dinner_0",
             "name": "Light Dinner",
-            "skills": "percent_all_heal=20",
+            "skills": "flat_heal_hp=20;flat_heal_pa=20;flat_heal_ma=20",
             "del_on_use": true,
             "add_on_use": "empty_plate",
             "triggers": "eat",
@@ -5410,7 +5217,7 @@
             "dont_load": 0,
             "premade_id": "tavern_food_item_dinner_1",
             "name": "Medium Dinner",
-            "skills": "percent_all_heal=40",
+            "skills": "flat_heal_hp=40;flat_heal_pa=40;flat_heal_ma=40",
             "del_on_use": true,
             "add_on_use": "empty_plate",
             "triggers": "eat",
@@ -5437,7 +5244,7 @@
             "dont_load": 0,
             "premade_id": "tavern_food_item_dinner_2",
             "name": "Heavy Dinner",
-            "skills": "percent_all_heal=60",
+            "skills": "flat_heal_hp=60;flat_heal_pa=60;flat_heal_ma=60",
             "del_on_use": true,
             "add_on_use": "empty_plate",
             "triggers": "eat",
@@ -5464,7 +5271,7 @@
             "dont_load": 0,
             "premade_id": "tavern_food_item_mug_of_ale",
             "name": "Mug of Ale",
-            "skills": "percent_all_heal=10",
+            "skills": "flat_heal_hp=10;flat_heal_pa=10;flat_heal_ma=10",
             "del_on_use": true,
             "add_on_use": "mug",
             "triggers": "drink",

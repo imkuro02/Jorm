@@ -165,25 +165,23 @@ class CombatEvent:
                 #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.MAGARMOR]}{Color.BACK} has broken'
                 #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MsgType.COMBAT])
 
-        actors = []
-        actors = [pop.damage_taker_actor]
-        # if pop.damage_taker_actor.room != None:
-        # for actor in pop.damage_taker_actor.room.actors.values():
-        #    actors.append(actor)
-        for actor in actors:
-            if actor.status == ActorStatusType.DEAD:
-                continue
+            actors = []
+            actors = [pop.damage_taker_actor]
+            # if pop.damage_taker_actor.room != None:
+            # for actor in pop.damage_taker_actor.room.actors.values():
+            #    actors.append(actor)
+            for actor in actors:
+                if actor.status == ActorStatusType.DEAD:
+                    continue
 
-            # do not clamp if actor is unloaded
-            # if actor.stat_manager == None:
-            #    systems.utils.debug_print(f'{actor} was unloaded but somehow took damage (probably a heal tick)')
-            #    systems.utils.debug_print(f'{actor.name} was unloaded but somehow took damage (probably a heal tick)')
-            #    continue
+                # do not clamp if actor is unloaded
+                # if actor.stat_manager == None:
+                #    systems.utils.debug_print(f'{actor} was unloaded but somehow took damage (probably a heal tick)')
+                #    systems.utils.debug_print(f'{actor.name} was unloaded but somehow took damage (probably a heal tick)')
+                #    continue
 
-            actor.stat_manager.hp_mp_clamp_update()
+                actor.stat_manager.hp_mp_clamp_update()
 
-        # pop.damage_source_actor.stat_manager.hp_mp_clamp_update()
-        # pop.damage_taker_actor.stat_manager.hp_mp_clamp_update()
 
     def run(self):
 

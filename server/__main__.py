@@ -81,6 +81,10 @@ if __name__ == "__main__":
     # AND NON SSL MUAHHAHA TELNET LETSGOOOO
     reactor.listenTCP(4001, factory)
     systems.utils.debug_print("Server started on port 4000 with SSL and 4001 non SSL")
+
+    from skills.manager import check_for_broken_skills
+    check_for_broken_skills()
+
     reactor.run()
 
     factory.world.game_time.save_game_time()

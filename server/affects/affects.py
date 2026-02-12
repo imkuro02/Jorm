@@ -3,7 +3,7 @@ import random
 import systems.utils
 from combat.damage_event import Damage
 from configuration.config import ActorStatusType, DamageType, StatType
-
+from combat.combat_event import CombatEvent
 
 class Affect:
     def __init__(
@@ -385,6 +385,7 @@ class AffectArmorReduceToZero(Affect):
         description,
         turns,
         dispellable=False,
+        resisted_by=None
     ):
         super().__init__(
             affect_source_actor,
@@ -393,6 +394,7 @@ class AffectArmorReduceToZero(Affect):
             description,
             turns,
             dispellable=dispellable,
+            resisted_by=resisted_by,
         )
         self.armor = 0
         self.marmor = 0
@@ -404,6 +406,7 @@ class AffectArmorReduceToZero(Affect):
         self.marmor = self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR]
         self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = 0
 
+        combat_event = CombatEvent()
         damage_obj = Damage(
             damage_source_actor=self.affect_source_actor,
             damage_taker_actor=self.affect_target_actor,
@@ -412,9 +415,10 @@ class AffectArmorReduceToZero(Affect):
             damage_type=DamageType.PURE,
             damage_to_stat=StatType.PHYARMOR,
             dont_proc=True,
+            combat_event = combat_event,
         )
 
-        damage_obj.run()
+        #damage_obj.run()
 
         damage_obj = Damage(
             damage_source_actor=self.affect_source_actor,
@@ -424,9 +428,11 @@ class AffectArmorReduceToZero(Affect):
             damage_type=DamageType.PURE,
             damage_to_stat=StatType.MAGARMOR,
             dont_proc=True,
+            combat_event = combat_event,
         )
 
-        damage_obj.run()
+        #damage_obj.run()
+        combat_event.run()
 
     def on_finished(self, silent=False):
         if self.affect_target_actor.status == ActorStatusType.DEAD:
@@ -434,6 +440,8 @@ class AffectArmorReduceToZero(Affect):
 
         self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] += self.armor
         self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] += self.marmor
+
+        combat_event = CombatEvent()
         damage_obj = Damage(
             damage_source_actor=self.affect_source_actor,
             damage_taker_actor=self.affect_target_actor,
@@ -442,9 +450,10 @@ class AffectArmorReduceToZero(Affect):
             damage_type=DamageType.HEALING,
             damage_to_stat=StatType.PHYARMOR,
             dont_proc=True,
+            combat_event = combat_event,
         )
 
-        damage_obj.run()
+        #damage_obj.run()
 
         damage_obj = Damage(
             damage_source_actor=self.affect_source_actor,
@@ -454,9 +463,11 @@ class AffectArmorReduceToZero(Affect):
             damage_type=DamageType.HEALING,
             damage_to_stat=StatType.MAGARMOR,
             dont_proc=True,
+            combat_event = combat_event,
         )
 
-        damage_obj.run()
+        #damage_obj.run()
+        combat_event.run()
         return super().on_finished(silent)
 
 
@@ -545,140 +556,6 @@ class AffectEthereal(Affect):
                 f"{damage_obj.damage_source_actor.pretty_name()} cannot deal damage since they are ethereal",
             )
         return damage_obj
-
-
-"""
-class AffectMageArmor(Affect):
-    def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, reduction):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns)
-        self.reduction = reduction
-
-    def take_damage_before_calc(self, damage_obj: 'Damage'):
-        match damage_obj.damage_type:
-            case DamageType.CANCELLED:
-                return damage_obj
-            case DamageType.HEALING:
-                return damage_obj
-            case DamageType.PURE:
-                return damage_obj
-            case _:
-
-                if damage_obj.damage_value < 0:
-                    return damage_obj
-
-                if damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP] <= damage_obj.damage_value:
-                    return damage_obj
-
-                #hp_dmg = round(damage_obj.damage_value*(1 - self.reduction))
-                mp_dmg = round(damage_obj.damage_value*self.reduction)
-                hp_dmg = damage_obj.damage_value - mp_dmg
-
-                #systems.utils.debug_print(damage_obj.damage_value, hp_dmg, mp_dmg)
-                damage_obj.damage_value = hp_dmg
-
-                #damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP] -= mp_dmg
-                #if damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP] <= 0:
-                #    hp_dmg += abs(damage_obj.damage_taker_actor.stat_manager.stats[StatType.MP])
-                #damage_obj.damage_value = hp_dmg
-
-                damage_obj2 = Damage(
-                    damage_source_actor = self.affect_source_actor,
-                    damage_taker_actor = self.affect_target_actor,
-                    damage_source_action = self,
-                    damage_value = mp_dmg,
-                    damage_type = DamageType.PURE,
-                    damage_to_stat = StatType.MP,
-                    dont_proc = True,
-                    combat_event=damage_obj.combat_event
-                )
-                #damage_obj2.run()
-
-
-
-                return damage_obj
-
-        return damage_obj
-"""
-
-
-class AffectEnrage(Affect):
-    def __init__(
-        self, affect_source_actor, affect_target_actor, name, description, turns, bonus
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
-        self._stats = self.affect_target_actor.stat_manager.stats
-
-        self.bonus = bonus
-
-        self.bonus_grit = 0  # int(stats[StatType.GRIT] * bonus)
-        # self.bonus_armor = 0 #extra_armor
-
-    """
-    def take_damage_before_calc(self, damage_obj: Damage):
-        if damage_obj.damage_type != DamageType.CANCELLED:
-            #systems.utils.debug_print(self.bonus)
-            if damage_obj.damage_type == DamageType.HEALING:
-                damage_obj.damage_value = damage_obj.damage_value-(damage_obj.damage_value*self.bonus)
-            else:
-                damage_obj.damage_value = damage_obj.damage_value+(damage_obj.damage_value*self.bonus)
-            damage_obj.damage_value = int(damage_obj.damage_value)
-        return damage_obj
-    """
-
-    def on_applied(self):
-        super().on_applied()
-        self.bonus_grit = int(self._stats[StatType.GRIT] * self.bonus)
-        # self.bonus_armor = -int(self._stats[StatType.PHYARMOR] * self.bonus)
-        # self.bonus_marmor = -int(self._stats[StatType.MAGARMOR] * self.bonus)
-        # self.affect_target_actor.stat_manager.stats[StatType.GRIT] += self.bonus_grit
-        self.affect_target_actor.stat_manager.gain_stat_points(
-            StatType.GRIT, self.bonus_grit
-        )
-        # self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] += self.bonus_armor
-        # self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] += self.bonus_marmor
-
-    def on_finished(self, silent=False):
-        # self.affect_target_actor.stat_manager.stats[StatType.GRIT] -= self.bonus_grit
-        self.affect_target_actor.stat_manager.gain_stat_points(
-            StatType.GRIT, -self.bonus_grit
-        )
-        self.affect_target_actor.stat_manager.hp_mp_clamp_update()
-        # self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] -= self.bonus_armor
-        # self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] -= self.bonus_marmor
-        return super().on_finished(silent)
-
-
-class AffectAdrenaline(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        extra_hp,
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
-        self.extra_hp = extra_hp
-        self.hp = 0
-
-    def on_applied(self):
-        super().on_applied()
-        self.hp = int(
-            self.affect_target_actor.stat_manager.stats[StatType.HPMAX] * self.extra_hp
-        )
-        self.affect_target_actor.stat_manager.stats[StatType.HPMAX] += self.hp
-        self.affect_target_actor.stat_manager.stats[StatType.HP] += self.hp
-
-    def on_finished(self, silent=False):
-        self.affect_target_actor.stat_manager.stats[StatType.HPMAX] -= self.hp
-        self.affect_target_actor.stat_manager.stats[StatType.HP] -= self.hp
-        self.affect_target_actor.stat_manager.hp_mp_clamp_update()
-        return super().on_finished(silent)
 
 
 class AffectBoostStat(Affect):
