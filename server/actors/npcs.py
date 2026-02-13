@@ -167,6 +167,7 @@ class Npc(Actor):
             self.skill_manager.skills = copy.deepcopy(skills)
 
         self.dialog_manager = Dialog
+        #self.following_actor = None
 
     def talk_to(self, talker):
         if not super().talk_to(talker):
@@ -243,6 +244,12 @@ class Npc(Actor):
         # try:
         if self.ai != None:
             self.ai.tick()
+
+        #if self.following_actor != None:
+        #    if self.following_actor.room != None:
+        #        if self.room != self.following_actor.room:
+        #            self.following_actor.room.move_actor(self)
+        
         # except Exception as e:
         #    systems.utils.debug_print(self.name, e)
 

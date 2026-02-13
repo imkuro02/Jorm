@@ -767,6 +767,35 @@ class AffectPromise(Affect):
 
         return damage_obj
 
+class AffectSummoner(Affect):
+    def __init__(self, *args, **kwargs):
+        self.summoned_actor = kwargs['summoned_actor']
+        del kwargs['summoned_actor']
+        super().__init__(*args, **kwargs)
+        
+    def summon_checks(self):
+        if self.summoned_actor == None:
+            return False
+        if self.summoned_actor.status == ActorStatusType.DEAD:
+            return False
+        if self.summoned_actor.room == None:
+            return False
+        return True
+
+    def set_turn(self):
+        super().set_turn()
+        if not self.summon_checks():
+            return
+
+        if self.summoned_actor.room != self.affect_target_actor.room:
+            self.affect_target_actor.room.move_actor(self.summoned_actor)
+
+    def on_finished(self,silent=False):
+        super().on_finished(silent=silent)
+        if not self.summon_checks():
+            return
+        self.summoned_actor.die()
+        
 
 # XD Reforges
 

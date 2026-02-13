@@ -12,7 +12,6 @@ from configuration.config import (
     StatType,
 )
 
-
 class Skill:
     def __init__(
         self,
@@ -872,3 +871,44 @@ class SkillPromise(Skill):
                 turns=int(self.script_values["duration"][self.users_skill_level]),
             )
             self.other.affect_manager.set_affect_object(stealthed_affect)
+
+# XD Summon
+
+class SkillSummon(Skill):
+    def get_party_id(self):
+        return self.user.party_manager.get_party_id()
+
+    def use(self, npc_summon_id):
+        super().use()
+        from actors.npcs import create_npc
+        e = create_npc(self.user.room, npc_summon_id)
+
+       
+
+        e.party_manager.get_party_id = self.get_party_id
+        e.name = e.name.replace('The','The Summoned')
+        e.loot = {}
+        e.stat_manager.stats[StatType.EXP] = 0
+        e.npc_id = f'summoned_{e.npc_id}'
+
+        turns = int(self.script_values["duration"][self.users_skill_level])
+        affect = affects.AffectSummoner(
+            affect_source_actor=self.user,
+            affect_target_actor=self.other,
+            name="Summoner",
+            description=f"You have summoned someone or something.",
+            turns = turns,
+            dispellable = False,
+            summoned_actor = e,
+        )
+        self.other.affect_manager.set_affect_object(affect)
+
+        if self.user.status == ActorStatusType.FIGHTING:
+            self.user.room.combat.add_participant(e)
+
+class SkillSummonRat(SkillSummon):
+    def use(self):
+        super().use('rat')
+        
+
+        

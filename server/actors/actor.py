@@ -477,6 +477,7 @@ class Actor:
                     output = output + f"{Color.NAME_PLAYER}{self.name}{Color.BACK}"
             case _:
                 output = output + f"{Color.NORMAL}{self.name}{Color.BACK}"
+                
 
         # if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'

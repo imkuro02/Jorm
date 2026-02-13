@@ -1,5 +1,5 @@
 {
-    "SHA-256": "9573a67f1034d24529dc6dc7ea4a72993d6dce8b19e2ae25d01a2c4fc7eb1a29",
+    "SHA-256": "27ad191bd26ce4f8858769aa2448d163ca2e2cdf6322b4eae8ab32e15792e834",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3479,7 +3479,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 2.0,
+            "level_req": 3.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -3522,7 +3522,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 2.0,
+            "level_req": 3.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -3570,7 +3570,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 2.0,
+            "level_req": 0.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -3613,7 +3613,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 2.0,
+            "level_req": 0.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -3656,7 +3656,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 2.0,
+            "level_req": 0.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -3818,7 +3818,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 4.0,
+            "level_req": 0.0,
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
@@ -4478,7 +4478,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 6.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -4549,7 +4549,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 6.0,
             "is_offensive": 1.0,
             "end_turn": false,
             "script_values": {
@@ -4587,7 +4587,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 6.0,
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
@@ -4611,7 +4611,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 9.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -4717,7 +4717,7 @@
         "beer_stein_chug": {
             "skill_id": "beer_stein_chug",
             "name": "Chug",
-            "description": "beer_stein_chug",
+            "description": "Instantly recover 30% of your Life, Hold and Ward.\n",
             "script_to_run": "RefreshingDrink",
             "target_others_is_valid": false,
             "target_item_is_valid": false,
@@ -4734,6 +4734,33 @@
                     0.2
                 ],
                 "cooldown": [
+                    10
+                ],
+                "levels": [
+                    1
+                ]
+            }
+        },
+        "summon_rat": {
+            "skill_id": "summon_rat",
+            "name": "Summon Rat",
+            "description": "Summon a Rat to fight for you.\n",
+            "script_to_run": "SummonRat",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 0.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "cooldown": [
+                    10
+                ],
+                "duration": [
                     10
                 ],
                 "levels": [
