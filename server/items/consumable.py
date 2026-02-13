@@ -17,7 +17,7 @@ class Consumable(Item):
         self.skills = {}
             
         self.item_type = ItemType.CONSUMABLE
-        self.stack_max = 3
+        self.stack_max = 1
 
         # if true, delete one stack when consumed
         self.item_del_on_use = True

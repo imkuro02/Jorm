@@ -52,7 +52,7 @@ class Skill:
             if "crit" not in self.script_values or stat_type == None:
                 dmg = self.script_values["damage"][self.users_skill_level]
             else:
-                crit_min = int(self.script_values["crit"][self.users_skill_level] * 50)
+                crit_min = 0 #int(self.script_values["crit"][self.users_skill_level] * 50)
                 crit_max = int(self.script_values["crit"][self.users_skill_level] * 100)
                 dmg_stat = int(self.user.stat_manager.stats[stat_type])
                 dmg = self.script_values["damage"][self.users_skill_level] + int(

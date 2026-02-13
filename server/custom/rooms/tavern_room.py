@@ -91,7 +91,7 @@ class tavern_room(Room):
 
     def tick(self):
         super().tick()
-
+        return
         if self.world.factory.ticks_passed % (30 * 150) == 0:
             output = f"You hear a loud thud"
             if len(self.actors.values()) <= 0:
