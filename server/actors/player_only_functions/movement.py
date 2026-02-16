@@ -29,19 +29,21 @@ def command_flee(self, line):
     #    return
 
     self.simple_broadcast('You flee!', f'{self.pretty_name()} flees!', sound = Audio.BUFF)
-    self.status = ActorStatusType.NORMAL
-    if self.party_manager.party != None:
-        if self.party_manager.party.actor == self:
-            for par in self.party_manager.party.participants.values():
 
-                if par == self:
-                    continue
-                # if dead, they get ressed afterwards so dont need to set status to normal
-                # if fighting, set to normal otherwise combat will continue even without being there
-                if par.status == ActorStatusType.FIGHTING:
-                    par.status = ActorStatusType.NORMAL
-                par.sendLine('You flee too!')
-                #par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
+    for par in self.room.combat.participants.values():
+
+        if par.party_manager.get_party_id() != self.party_manager.get_party_id():
+            continue
+
+        if par == self:
+            continue
+        # if dead, they get ressed afterwards so dont need to set status to normal
+        # if fighting, set to normal otherwise combat will continue even without being there
+        if par.status == ActorStatusType.FIGHTING:
+            par.status = ActorStatusType.NORMAL
+
+        par.sendLine('You flee too!')
+        #par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
 
 
 

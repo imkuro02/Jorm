@@ -356,6 +356,8 @@ class Player(Actor):
         self.settings_manager = Settings(self)
         self.ai = PlayerAI(self)
 
+        self.reset_stats_after_combat = False
+
         #self.charging_mini_game = ChargingMiniGame(self)
 
         self.update_checker = UpdateChecker(self)
@@ -430,23 +432,7 @@ class Player(Actor):
                 self.update_checker.tick()
 
         
-        if self.status == ActorStatusType.NORMAL:
-            if self.factory.ticks_passed % (30 * 60) == 0:
-                self.finish_turn(force_cooldown=True)
-
-            if self.factory.ticks_passed % (30 * 10) == 0:
-                if self.room == None:
-                    return
-                if self.room.combat == None:
-                    if self.status == ActorStatusType.DEAD:
-                        return
-                    for val in self.affect_manager.affects.values():
-                        if val.dispellable and val.resisted_by != None:
-                            return
-                    #self.heal(value=self.stat_manager.stats[StatType.LVL] * 1)
-                    self.heal(value = 1, heal_armor = False, heal_marmor = False)
-                    self.heal(value = 10, heal_hp = False)
-                    return
+        
 
     def sendSound(self, sfx):
         self.protocol.send_gmcp({"name": sfx}, "Client.Media.Play")

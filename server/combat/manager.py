@@ -148,17 +148,17 @@ class Combat:
             return
 
         participants = self.participants.values()
+        
         for i in participants:
+            if i.status != ActorStatusType.DEAD and i.reset_stats_after_combat == True:
+                i.stat_manager.stats[StatType.HP] = 9999999999999
+                # i.heal(value = 99999)
+                i.cooldown_manager.unload_all_cooldowns()
+                i.affect_manager.unload_all_affects()
+                i.heal(value=99999)
             if type(i).__name__ == "Player":
                 i.sendLine("@yellowCombat over!@normal")
-                # i.heal(value = 99999)
-            else:
-                if i.status != ActorStatusType.DEAD:
-                    i.stat_manager.stats[StatType.HP] = 9999999999999
-                    # i.heal(value = 99999)
-                    i.cooldown_manager.unload_all_cooldowns()
-                    i.affect_manager.unload_all_affects()
-                    i.heal(value=99999)
+
 
             if i.party_manager.party != None:
                 one_alive = False

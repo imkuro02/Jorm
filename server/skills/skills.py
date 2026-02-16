@@ -890,6 +890,7 @@ class SkillSummon(Skill):
         e.loot = {}
         e.stat_manager.stats[StatType.EXP] = 0
         e.npc_id = f'summoned_{e.npc_id}'
+        e.reset_stats_after_combat = False
 
         turns = int(self.script_values["duration"][self.users_skill_level])
         affect = affects.AffectSummoner(
@@ -897,7 +898,7 @@ class SkillSummon(Skill):
             affect_target_actor=self.other,
             name="Summoner",
             description=f"You have summoned someone or something.",
-            turns = turns,
+            turns = turns*100,
             dispellable = False,
             summoned_actor = e,
         )

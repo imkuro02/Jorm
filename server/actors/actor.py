@@ -265,11 +265,12 @@ class Actor:
             self.room.move_actor(self, silent=True)
 
         self.set_base_threat()
+        self.trigger_manager = TriggerManager(self)
 
         # for npc char sheet
-        self.dont_join_fights = False
-
-        self.trigger_manager = TriggerManager(self)
+        self.dont_join_fights = False           # whether to block players from moving
+        self.reset_stats_after_combat = True    # whether to heal to full after combat and reset cooldowns + affs
+        
 
         REFTRACKER.add_ref(self)
 
@@ -697,29 +698,24 @@ class Actor:
         self.set_base_threat()
 
     def tick(self):
-        """
-        if self.status == ActorStatusType.NORMAL:
-            self.cooldown_manager.unload_all_cooldowns()
-            if self.factory.ticks_passed % 30 == 0:
-                if not self.room.is_an_instance():
-                    self.heal(value = self.stat_manager.stats[StatType.LVL])
+       if self.status == ActorStatusType.NORMAL:
+            if self.factory.ticks_passed % (30 * 60) == 0:
+                self.finish_turn(force_cooldown=True)
 
-        """
-        pass
-
-    """
-    def deal_damage(self, damage_obj: Damage):
-        damage_obj = self.affect_manager.deal_damage(damage_obj)
-        damage_obj = damage_obj.damage_taker_actor.take_damage(damage_obj)
-        damage_obj.calculate()
-        self.affect_manager.dealt_damage(damage_obj)
-        self.stat_manager.stats[StatType.THREAT] += damage_obj.damage_value
-        return damage_obj
-
-    def take_damage(self, damage_obj: Damage):
-        damage_obj = self.affect_manager.take_damage(damage_obj)
-        return damage_obj
-    """
+            if self.factory.ticks_passed % (30 * 10) == 0:
+                if self.room == None:
+                    return
+                if self.room.combat == None:
+                    if self.status == ActorStatusType.DEAD:
+                        return
+                    for val in self.affect_manager.affects.values():
+                        if val.dispellable and val.resisted_by != None:
+                            return
+                    #self.heal(value=self.stat_manager.stats[StatType.LVL] * 1)
+                    self.heal(value = 1, heal_armor = False, heal_marmor = False)
+                    self.heal(value = 10, heal_hp = False)
+                    return
+        
 
     def gain_exp(self, exp):
         pass
