@@ -914,8 +914,6 @@ class SkillTargetItem(Skill):
         self.use()
 
 class SkillNecromancerRessurect(SkillTargetItem):
-    def get_party_id(self):
-        return self.user.party_manager.get_party_id()
 
     def use(self):
         super().use()
@@ -928,16 +926,60 @@ class SkillNecromancerRessurect(SkillTargetItem):
             from actors.npcs import create_npc
             e = create_npc(self.user.room, self.other.corpse_npc_id)
         
-            e.party_manager.get_party_id = self.get_party_id
+            #e.party_manager.get_party_id = self.get_party_id
             
             e.name = self.other.corpse_npc_name.replace('The','The ressurected')
             e.loot = {}
             e.stat_manager.stats[StatType.EXP] = 0
             e.npc_id = f'summoned_{e.npc_id}'
             e.reset_stats_after_combat = False
+
             from actors.ai import EnemyAI
             e.ai = EnemyAI(e)
             e.dialog_tree = None
+
+            self.summoned_actor = e
+
+            def trigger_rename(self, player, line):
+                line = line.replace('rename','',1)
+                
+                if player != self.player_that_ressurected_me:
+                    return False
+                
+                if ' to ' not in line:
+                    player.sendLine(f'Rename {self.name} to what?')
+                    return False
+
+                _split = line.split(' to ')
+                target = _split[0]
+                new_name = _split[1]
+
+                tar = player.get_actor(target)
+
+                if tar != self:
+                    return False
+
+                player.sendLine(f'You rename {self.name} to "{new_name}"')
+                self.name = new_name
+                return True
+
+            from types import MethodType
+
+            self.summoned_actor.party_manager.get_party_id = MethodType(
+                type(self.user.party_manager).get_party_id,  # unbound function
+                self.user.party_manager                      # bind to USER manager
+            )
+
+            self.summoned_actor.trigger_rename = MethodType(
+                trigger_rename,       # unbound function
+                self.summoned_actor   # bind to SUMMONED ACTOR manager
+            )
+
+            self.summoned_actor.player_that_ressurected_me = self.user
+            # add trigger key
+            self.summoned_actor.trigger_manager.trigger_add('rename', self.summoned_actor.trigger_rename)
+            self.summoned_actor.description += f'\nThey have been ressurected by {self.user.name} and are under their control.'
+            self.summoned_actor.description += f'\nCan be renamed with "rename <name> to <new name>".'
 
             #turns = int(self.script_values["duration"][self.users_skill_level])
             affect = affects.AffectSummoner(
