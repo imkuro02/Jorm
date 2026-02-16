@@ -28,7 +28,7 @@ class tavern_combat_manager(Combat):
 
 class tavern_inventory(InventoryManager):
     def add_item(self, item):
-        #print(self.owner.can_pick_up_anything)
+        #print(self.can_pick_up_anything)
         if type(item).__name__ == "Equipment":
             if len(self.owner.actors) >= 1:
                 output = (
@@ -38,7 +38,7 @@ class tavern_inventory(InventoryManager):
                 first_actor = next(iter(self.owner.actors.values()))
                 first_actor.simple_broadcast(output, output)
             return True
-        super().add_item(item)
+        return super().add_item(item)
 
 
 #from types import MethodType
@@ -56,6 +56,7 @@ class tavern_room(Room):
         self.inventory_manager_class = tavern_inventory
 
         super().__init__(*args, **kwargs)
+
         
         self.combat_manager_class = tavern_combat_manager
         self.goons = []

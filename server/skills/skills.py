@@ -882,9 +882,7 @@ class SkillSummon(Skill):
         super().use()
         from actors.npcs import create_npc
         e = create_npc(self.user.room, npc_summon_id)
-
        
-
         e.party_manager.get_party_id = self.get_party_id
         e.name = e.name.replace('The','The Summoned')
         e.loot = {}
@@ -911,5 +909,48 @@ class SkillSummonRat(SkillSummon):
     def use(self):
         super().use('rat')
         
+class SkillTargetItem(Skill):
+    def pre_use(self):
+        self.use()
 
+class SkillNecromancerRessurect(SkillTargetItem):
+    def get_party_id(self):
+        return self.user.party_manager.get_party_id()
+
+    def use(self):
+        super().use()
+        if hasattr(self.other, 'corpse_npc_id'):
+            #self.user.sendLine(f'{self.other.corpse_npc_id}')
+            self.other.inventory_manager.remove_item(self.other)
+
+            self.user.simple_broadcast(f'You ressurect {self.other.corpse_npc_name}',f'{self.user.pretty_name()} ressurects {self.other.corpse_npc_name}')
+
+            from actors.npcs import create_npc
+            e = create_npc(self.user.room, self.other.corpse_npc_id)
         
+            e.party_manager.get_party_id = self.get_party_id
+            
+            e.name = self.other.corpse_npc_name.replace('The','The ressurected')
+            e.loot = {}
+            e.stat_manager.stats[StatType.EXP] = 0
+            e.npc_id = f'summoned_{e.npc_id}'
+            e.reset_stats_after_combat = False
+            from actors.ai import EnemyAI
+            e.ai = EnemyAI(e)
+            e.dialog_tree = None
+
+            #turns = int(self.script_values["duration"][self.users_skill_level])
+            affect = affects.AffectSummoner(
+                affect_source_actor=self.user,
+                affect_target_actor=self.user,
+                name="Summoner",
+                description=f"You have summoned someone or something.",
+                turns = 999,
+                dispellable = False,
+                summoned_actor = e,
+            )
+            self.user.affect_manager.set_affect_object(affect)
+
+            if self.user.status == ActorStatusType.FIGHTING:
+                self.user.room.combat.add_participant(e)
+

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "27ad191bd26ce4f8858769aa2448d163ca2e2cdf6322b4eae8ab32e15792e834",
+    "SHA-256": "221a15fde515fcd33d0a02dc8029775c715693173c6c3f45ab644c7c45ff7c99",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3399,6 +3399,30 @@
         }
     },
     "skills": {
+        "debug_skill": {
+            "skill_id": "debug_skill",
+            "name": "Debug",
+            "description": "Debug skill, it does whatever i feel like\n",
+            "script_to_run": "Debug",
+            "target_others_is_valid": true,
+            "target_item_is_valid": true,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": -1.0,
+            "is_offensive": 1.0,
+            "end_turn": false,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "cooldown": [
+                    0
+                ]
+            }
+        },
         "swing": {
             "skill_id": "swing",
             "name": "Swing",
@@ -4765,6 +4789,30 @@
                 ],
                 "levels": [
                     1
+                ]
+            }
+        },
+        "necromancer_ressurect": {
+            "skill_id": "necromancer_ressurect",
+            "name": "Necromancy",
+            "description": "Ressurect the corpse of a fallen enemy to fight for you.\n",
+            "script_to_run": "NecromancerRessurect",
+            "target_others_is_valid": false,
+            "target_item_is_valid": true,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 3,
+            "level_req": 3.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "cooldown": [
+                    0
                 ]
             }
         }

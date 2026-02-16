@@ -785,14 +785,13 @@ class AffectSummoner(Affect):
     def set_turn(self):
         super().set_turn()
         if not self.summon_checks():
+            self.on_finished()
             return
 
         if self.summoned_actor.room != self.affect_target_actor.room:
-            self.affect_target_actor.room.move_actor(self.summoned_actor)
+            self.affect_target_actor.room.move_actor(self.summoned_actor, silent = True)
             self.summoned_actor.finish_turn(force_cooldown = True)
 
-        if self.summoned_actor.status == ActorStatusType.DEAD:
-            super().on_finished(silent=False)
 
 
     def on_finished(self,silent=False):

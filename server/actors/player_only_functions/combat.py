@@ -415,12 +415,15 @@ def use(self, line, silent=False):
         _l_bozo = line[-i:]  # ' '.join(line[len(line)-i:len(line)])
         best_match = systems.utils.get_match(
             #" ".join(_l_bozo), {**self.room.actors, **self.inventory_manager.items}
-            " ".join(_l_bozo), self.room.actors
+            #" ".join(_l_bozo), self.room.actors
+            " ".join(_l_bozo), {**self.room.actors, **self.inventory_manager.items, **self.room.inventory_manager.items}
         )
         if best_match == None:
             continue
         # action_name = best_match.name
         _target = best_match
+
+    systems.utils.debug_print(_target)
 
     if len(line) <= 1:
         if _action == None:
@@ -449,6 +452,8 @@ def use(self, line, silent=False):
             return False
         self.sendLine(f"Use {action_name} on?")
         return False
+
+    systems.utils.debug_print(_target.id)
 
     self.ai.clear_prediction()
 

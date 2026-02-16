@@ -9,6 +9,7 @@ from custom import loader as custom_loader
 
 # from custom import loader as custom_loader
 from items.manager import load_item
+from items.misc import Item
 from systems.dialog import Dialog
 from systems.quest import OBJECTIVE_TYPES, ObjectiveCountProposal
 from systems.utils import unload
@@ -284,6 +285,26 @@ class Npc(Actor):
                 )
                 room.inventory_manager.add_item(new_item)
 
+    def drop_corpse(self):
+        # dont drop a corpse if npc_id is not valid
+        if self.npc_id not in ENEMIES:
+            return
+
+        corpse = Item()
+        corpse.name = f'Corpse of {self.name}'
+        corpse.description = f'Corpse of {self.name}'
+        corpse.stack_max = 1
+        corpse.keep = False
+        corpse.can_pick_up = False
+        
+        corpse.invisible = False
+        corpse.premade_id = 'corpse_premade_id_dont_use_ever'
+
+        corpse.corpse_npc_name = self.name
+        corpse.corpse_npc_id = self.npc_id
+        
+        self.room.inventory_manager.add_item(corpse)
+
     def die(self):
         if self.room == None:
             super().die()
@@ -317,6 +338,8 @@ class Npc(Actor):
         if room.combat != None:
             if self.id in room.combat.participants:
                 del room.combat.participants[self.id]
+
+        self.drop_corpse()
 
         super().unload()
 

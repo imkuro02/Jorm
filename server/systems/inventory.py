@@ -179,6 +179,7 @@ class InventoryManager:
         if item.can_pick_up or self.can_pick_up_anything:
             pass
         else:
+            systems.utils.debug_print(f'{self.name} cant pick up {item.name}')
             return False
 
 

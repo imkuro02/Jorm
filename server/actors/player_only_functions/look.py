@@ -564,9 +564,12 @@ def command_look(self, line, return_gmcp=False):
                 if i.invisible:
                     continue
 
+                #if i.can_pick_up:
+                see_items = see_items + f"{i.pretty_name()} is here" + "\n"
+
                 # see_items = see_items + f'   {i.pretty_name()}' + '\n'
-                if i.can_pick_up:
-                    see_items = see_items + f"{i.pretty_name()} is here" + "\n"
+                #if i.can_pick_up:
+                #    see_items = see_items + f"{i.pretty_name()} is here" + "\n"
                 # else:
                 #    see_items = see_items + f'   {i.description}' + '\n'
 

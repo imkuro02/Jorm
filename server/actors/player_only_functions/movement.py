@@ -32,6 +32,7 @@ def command_flee(self, line):
 
     for par in self.room.combat.participants.values():
 
+
         if par.party_manager.get_party_id() != self.party_manager.get_party_id():
             continue
 
@@ -41,7 +42,6 @@ def command_flee(self, line):
         # if fighting, set to normal otherwise combat will continue even without being there
         if par.status == ActorStatusType.FIGHTING:
             par.status = ActorStatusType.NORMAL
-
         par.sendLine('You flee too!')
         #par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
 
@@ -186,6 +186,19 @@ def command_go(self, line = '', room_id = None):
         systems.utils.debug_print(par)
     '''
 
+    
+
+    # finish turns
+    self.finish_turn(force_cooldown = True)
+    if self.party_manager.party != None:
+        if self.party_manager.party.actor == self:
+            for par in self.party_manager.party.participants.values():
+                if par == self:
+                    continue
+                #if par.room != old_room:
+                #    continue
+                par.finish_turn(force_cooldown = True)
+
     # show participants and or yourself the room
     if self.party_manager.party != None:
         if self.party_manager.party.actor == self:
@@ -199,14 +212,3 @@ def command_go(self, line = '', room_id = None):
         self.new_room_look()
         if self.room.get_real_id() not in self.explored_rooms:
             self.explored_rooms.append(self.room.get_real_id())
-
-    # finish turns
-    self.finish_turn(force_cooldown = True)
-    if self.party_manager.party != None:
-        if self.party_manager.party.actor == self:
-            for par in self.party_manager.party.participants.values():
-                if par == self:
-                    continue
-                #if par.room != old_room:
-                #    continue
-                par.finish_turn(force_cooldown = True)
