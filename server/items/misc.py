@@ -249,3 +249,6 @@ class Item:
     # called when exp is gained
     def gain_exp(self, exp):
         return exp
+
+    def join_combat(self):
+        return 

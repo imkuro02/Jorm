@@ -114,6 +114,14 @@ class TriggerableManager:
         self.reset_triggered()
         return exp
 
+    def join_combat(self):
+        for item in self.get_items_sorted():
+            if item.premade_id in self.triggered:
+                continue
+            item.join_combat()
+            self.add_triggered(item)
+        self.reset_triggered()
+
 
 #               proposal = ObjectiveCountProposal(OBJECTIVE_TYPES.KILL_X, self.npc_id, 1)
 #                owner.quest_manager.propose_objective_count_addition(proposal)
@@ -147,6 +155,9 @@ class InventoryManager:
 
     def gain_exp(self, exp):
         return self.triggerable_manager.gain_exp(exp)
+
+    def join_combat(self):
+        return self.triggerable_manager.join_combat()
 
     def get_item_by_premade_id(self, item_id):
         for i in self.items.values():

@@ -1,10 +1,12 @@
 versions:
-  "130226":
-    id: "130226"
-    title: Summons
+  "170226":
+    id: "170226"
+    title: Necromancy
     unixtime: 1761899677
     features:
-      - A summon rat skill has been added for testing
+      - New skill "Necromancy"
+      - Necromancy can be used on "corpses", when used, it will ressurect the create to fight for you
+      - Minor movement fixes related to necromancy and minion following behaviour
   "120226":
     id: "120226"
     title: Cleanup

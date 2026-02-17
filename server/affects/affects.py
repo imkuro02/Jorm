@@ -112,6 +112,9 @@ class Affect:
     def dealt_damage(self, damage_obj):
         return damage_obj
 
+    def join_combat(self):
+        pass
+
 class AffectWellRested(Affect):
     def set_turn(self):
         # only count if not dead and not in combat
@@ -800,6 +803,13 @@ class AffectSummoner(Affect):
             return
         self.summoned_actor.die()
         
+    def join_combat(self):
+        if self.affect_target_actor.room.combat == None:
+            return
+        if self.summoned_actor.room != self.affect_target_actor.room:
+            return
+            
+        self.affect_target_actor.room.join_combat(self.summoned_actor)
 
 # XD Reforges
 

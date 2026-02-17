@@ -423,7 +423,7 @@ def use(self, line, silent=False):
         # action_name = best_match.name
         _target = best_match
 
-    systems.utils.debug_print(_target)
+    #systems.utils.debug_print(_target)
 
     if len(line) <= 1:
         if _action == None:
@@ -453,7 +453,7 @@ def use(self, line, silent=False):
         self.sendLine(f"Use {action_name} on?")
         return False
 
-    systems.utils.debug_print(_target.id)
+    #systems.utils.debug_print(_target.id)
 
     self.ai.clear_prediction()
 
@@ -663,6 +663,8 @@ def rest_home(self, line):
         )
         '''
 
+        self.affect_manager.unload_all_affects()
+        self.cooldown_manager.unload_all_cooldowns()
         self.simple_broadcast(None, f"{self.pretty_name()} ressurects")
 
         # tp home

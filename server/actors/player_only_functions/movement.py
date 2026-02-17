@@ -110,15 +110,16 @@ def command_go(self, line = '', room_id = None):
                 roll = 1
             #if self.room.world.game_time.TIME_OF_DAY['night']:
             #    roll = random.randint(0,2)
-
-            if roll == 1:
-                if self.party_manager.party != None:
-                    if self.party_manager.party.actor == self:
+            #print(self.room.is_enemy_present())
+            if self.room.is_enemy_present() != False:
+                if roll == 1:
+                    if self.party_manager.party != None:
+                        if self.party_manager.party.actor == self:
+                            self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
+                            return
+                    else:
                         self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
                         return
-                else:
-                    self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
-                    return
 
         if direction.blocked and self.room.is_enemy_present() and self.room.combat == None:
             self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path', sound=Audio.ERROR)

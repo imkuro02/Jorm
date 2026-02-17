@@ -88,3 +88,7 @@ class AffectsManager:
         for aff in self.get_all_afflictions().values():
             damage_obj = aff.dealt_damage(damage_obj)
         return damage_obj
+
+    def join_combat(self):
+        for aff in self.get_all_afflictions().values():
+            aff.join_combat()

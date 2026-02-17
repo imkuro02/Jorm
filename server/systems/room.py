@@ -308,7 +308,7 @@ class Room:
 
     def is_enemy_present(self):
         for i in self.actors.values():
-            if type(i).__name__ != "Player":
+            if i.party_manager.get_party_id() == "party id enemies":
                 return i
         return False
 
@@ -354,23 +354,25 @@ class Room:
             return
         self.combat.tick()
 
-    def join_combat(self, player_participant):
+    def join_combat(self, participant):
+        
+
         if self.combat == None:
             participants = {}
             npcs_here = False
             players_here = False
             for i in self.actors.values():
                 # systems.utils.debug_print(i)
-                if i == player_participant:
+                if i == participant:
                     participants[i.id] = i
                     players_here = True
 
                     ### PARTY CODE - invite entire party to the fight
-                    if player_participant.party_manager.party != None:
+                    if participant.party_manager.party != None:
                         for par in (
-                            player_participant.party_manager.party.participants.values()
+                            participant.party_manager.party.participants.values()
                         ):
-                            if par == player_participant:
+                            if par == participant:
                                 continue
                             if par.room != self:
                                 continue
@@ -379,17 +381,22 @@ class Room:
                     ### PARTY CODE
 
                 # participants[i.id] = i
-                if type(i).__name__ != "Player":
+                #if type(i).__name__ != "Player":
+                #    if i.dont_join_fights:
+                #        continue
+                #    participants[i.id] = i
+                if i.party_manager.get_party_id() != 'party id players':
                     if i.dont_join_fights:
                         continue
                     participants[i.id] = i
-                
 
             # if players_here and npcs_here:
             self.combat = self.combat_manager_class(self, participants)
+            participant.join_combat()
             self.combat.initiative()
+            
         else:
-            self.combat.add_participant(player_participant)
+            self.combat.add_participant(participant)
 
     def new_combat(self):
         if self.combat != None:

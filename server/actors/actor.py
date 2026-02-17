@@ -1025,7 +1025,12 @@ class Actor:
         self.inventory_manager.set_turn()
         # self.stat_manager.stats[StatType.THREAT] = int(self.stat_manager.stats[StatType.THREAT]*.90)
 
+    def join_combat(self):
+        self.affect_manager.join_combat()
+        self.inventory_manager.set_turn()
+
     def sendLine(self, line, color=True, sound=None, msg_type=None):
+        return
         systems.utils.debug_print(
             f"sendLine called in a object class Npc function? line: {line}"
         )

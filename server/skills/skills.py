@@ -12,6 +12,8 @@ from configuration.config import (
     StatType,
 )
 
+
+
 class Skill:
     def __init__(
         self,
@@ -436,7 +438,7 @@ class SkillDamageByFlowApplyBleed(SkillDamage):
             affect_target_actor=self.other,
             name="Bleeding",
             description=f"Take physical damage each turn",
-            turns=self.script_values["duration"][self.users_skill_level],
+            turns=3, # self.script_values["duration"][self.users_skill_level],
             resisted_by=StatType.PHYARMOR,
             damage=bleed_damage,
             # get_prediction_string_append = 'is bleeding'
@@ -529,8 +531,6 @@ class SkillRegenPercentFromPotion(Skill):
                 damage_to_stat=stat_to_heal,
             )
 
-            
-
             return damage_obj
 
 
@@ -585,8 +585,6 @@ class SkillRefreshingDrink(Skill):
             
 
 # XD affliction only skills
-
-
 class SkillNightmare(Skill):
     def use(self):
         super().use()
@@ -873,7 +871,8 @@ class SkillPromise(Skill):
             self.other.affect_manager.set_affect_object(stealthed_affect)
 
 # XD Summon
-
+# testing stuff here
+'''
 class SkillSummon(Skill):
     def get_party_id(self):
         return self.user.party_manager.get_party_id()
@@ -908,37 +907,69 @@ class SkillSummon(Skill):
 class SkillSummonRat(SkillSummon):
     def use(self):
         super().use('rat')
-        
+'''
+
 class SkillTargetItem(Skill):
     def pre_use(self):
         self.use()
 
 class SkillNecromancerRessurect(SkillTargetItem):
-
     def use(self):
+        from actors.ai import EnemyAI
+        from types import MethodType
+        from actors.npcs import create_npc
         super().use()
         if hasattr(self.other, 'corpse_npc_id'):
-            #self.user.sendLine(f'{self.other.corpse_npc_id}')
+
+            # remove corpse item on ground
             self.other.inventory_manager.remove_item(self.other)
 
+            # sendLine
             self.user.simple_broadcast(f'You ressurect {self.other.corpse_npc_name}',f'{self.user.pretty_name()} ressurects {self.other.corpse_npc_name}')
 
-            from actors.npcs import create_npc
+            # create npc object
             e = create_npc(self.user.room, self.other.corpse_npc_id)
-        
-            #e.party_manager.get_party_id = self.get_party_id
-            
+     
+            # set values        
             e.name = self.other.corpse_npc_name.replace('The','The ressurected')
             e.loot = {}
             e.stat_manager.stats[StatType.EXP] = 0
             e.npc_id = f'summoned_{e.npc_id}'
             e.reset_stats_after_combat = False
-
-            from actors.ai import EnemyAI
             e.ai = EnemyAI(e)
             e.dialog_tree = None
+            e.can_start_fights = False
 
-            self.summoned_actor = e
+            e.stat_manager.stats[StatType.HPMAX] =       int(e.stat_manager.stats[StatType.HPMAX]/3) + self.user.stat_manager.stats[StatType.SOUL]
+            e.stat_manager.stats[StatType.PHYARMORMAX] = int(e.stat_manager.stats[StatType.PHYARMORMAX]/3) + self.user.stat_manager.stats[StatType.SOUL]
+            e.stat_manager.stats[StatType.MAGARMORMAX] = int(e.stat_manager.stats[StatType.MAGARMORMAX]/3) + self.user.stat_manager.stats[StatType.SOUL]
+
+            e.stat_manager.stats[StatType.HP] =      e.stat_manager.stats[StatType.HPMAX]
+            e.stat_manager.stats[StatType.PHYARMOR] = e.stat_manager.stats[StatType.PHYARMORMAX]
+            e.stat_manager.stats[StatType.MAGARMOR] = e.stat_manager.stats[StatType.MAGARMORMAX]
+
+            #e.stat_manager.hp_mp_clamp_update()
+
+            # triggers
+            def trigger_dismiss(self, player, line):
+                line = line.replace('dismiss','',1)
+                
+                if player != self.player_that_ressurected_me:
+                    return False
+
+                target = line
+
+                tar = player.get_actor(target)
+
+                if tar != self:
+                    return False
+
+                player.simple_broadcast(
+                    f'You dismiss {self.name}',
+                    f'{player.pretty_name()} dismisses {self.name}')
+
+                self.die()
+                return True
 
             def trigger_rename(self, player, line):
                 line = line.replace('rename','',1)
@@ -959,38 +990,55 @@ class SkillNecromancerRessurect(SkillTargetItem):
                 if tar != self:
                     return False
 
-                player.sendLine(f'You rename {self.name} to "{new_name}"')
+                player.simple_broadcast(
+                    f'You rename {self.name} to "{new_name}"',
+                    f'{player.pretty_name()} renames {self.name} to "{new_name}"')
+
                 self.name = new_name
                 return True
 
-            from types import MethodType
-
-            self.summoned_actor.party_manager.get_party_id = MethodType(
+            
+            # link get_party_id to master party id
+            e.party_manager.get_party_id = MethodType(
                 type(self.user.party_manager).get_party_id,  # unbound function
-                self.user.party_manager                      # bind to USER manager
+                self.user.party_manager                      # bind to USER party manager
             )
 
-            self.summoned_actor.trigger_rename = MethodType(
+            # link triggers 
+            e.trigger_rename = MethodType(
                 trigger_rename,       # unbound function
-                self.summoned_actor   # bind to SUMMONED ACTOR manager
+                e   # bind to SUMMONED ACTOR 
             )
 
-            self.summoned_actor.player_that_ressurected_me = self.user
-            # add trigger key
-            self.summoned_actor.trigger_manager.trigger_add('rename', self.summoned_actor.trigger_rename)
-            self.summoned_actor.description += f'\nThey have been ressurected by {self.user.name} and are under their control.'
-            self.summoned_actor.description += f'\nCan be renamed with "rename <name> to <new name>".'
+            e.trigger_dismiss = MethodType(
+                trigger_dismiss,      # unbound function
+                e   # bind to SUMMONED ACTOR 
+            )
 
-            #turns = int(self.script_values["duration"][self.users_skill_level])
+            # honestly forgor wat this do
+            e.player_that_ressurected_me = self.user
+            
+            # add trigger keys
+            e.trigger_manager.trigger_add('rename', e.trigger_rename)
+            e.trigger_manager.trigger_add('dismiss', e.trigger_dismiss)
+
+            # add trigger descriptions
+            e.description += f'\nRessurected by {self.user.name}'
+            e.description += f'\nCan be renamed with "rename <name> to <new name>".'
+            e.description += f'\nCan be dismissed with "dismiss <name>".'
+
+            # create aff
             affect = affects.AffectSummoner(
                 affect_source_actor=self.user,
                 affect_target_actor=self.user,
-                name="Summoner",
+                name="Necrobound",
                 description=f"You have summoned someone or something.",
-                turns = 999,
+                turns = self.user.stat_manager.stats[StatType.SOUL],
                 dispellable = False,
                 summoned_actor = e,
             )
+
+            # set aff on player
             self.user.affect_manager.set_affect_object(affect)
 
             if self.user.status == ActorStatusType.FIGHTING:
