@@ -146,7 +146,7 @@ class ActorStatManager:
 class SkillManager:
     def __init__(self, actor):
         self.actor = actor
-        self.skills = {"swing": 1, "guard": 1}
+        self.skills = {"strike": 1, "guard": 1}
 
     def delete_skills_at_0(self):
         to_del = []

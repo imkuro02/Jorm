@@ -1,4 +1,13 @@
 versions:
+  "180226":
+    id: "180226"
+    title: Strike
+    unixtime: 1761899677
+    features:
+      - New skill "Strike"
+      - Strike replaces the default Swing skill
+      - Strike scales off of highest main stat and deals appropriate damage according to highest stat.
+      - Swing has been disabled and will be removed (eventually)
   "170226":
     id: "170226"
     title: Necromancy

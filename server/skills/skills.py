@@ -395,6 +395,42 @@ class SkillRefresh(SkillDamage):
                 super().use(dmg_stat_scale=StatType.SOUL, dmg_type=DamageType.HEALING)
                 self.silent_use = True
 
+class SkillStrike(SkillDamage):
+    def use(self):
+        
+        highest_stat = StatType.GRIT
+        dmg_type = DamageType.PHYSICAL
+        prefix = 'Heavy'
+
+        for i in [StatType.GRIT, StatType.FLOW, StatType.MIND, StatType.SOUL]:
+            if self.user.stat_manager.stats[i] > self.user.stat_manager.stats[highest_stat]:
+                highest_stat = i
+
+        match highest_stat:
+            case StatType.GRIT:
+                highest_stat = StatType.GRIT
+                dmg_type = DamageType.PHYSICAL
+                prefix = 'Heavy'
+            case StatType.FLOW:
+                highest_stat = StatType.FLOW
+                dmg_type = DamageType.PHYSICAL
+                prefix = 'Quick'
+            case StatType.MIND:
+                highest_stat = StatType.MIND
+                dmg_type = DamageType.MAGICAL
+                prefix = 'Mindful'
+            case StatType.SOUL:
+                highest_stat = StatType.SOUL
+                dmg_type = DamageType.MAGICAL
+                prefix = 'Sacred'
+
+        self.name = f'{prefix} {self.name}'
+
+        #super().use()
+        return super().use(
+            dmg_stat_scale=highest_stat, dmg_type=dmg_type
+        )
+
 
 class SkillGuard(Skill):
     def use(self):
@@ -406,7 +442,7 @@ class SkillGuard(Skill):
                 affect_source_actor=self.user,
                 affect_target_actor=self.user,
                 name="Guarding",
-                description=f"Unable to act until affect wears off, damage will start your turn",
+                description=f"Guarding from physical and magical damage",
                 turns=turns,
                 get_prediction_string_append="is guarding!",
                 get_prediction_string_clear=True,
