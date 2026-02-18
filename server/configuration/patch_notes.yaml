@@ -8,6 +8,8 @@ versions:
       - Strike replaces the default Swing skill
       - Strike scales off of highest main stat and deals appropriate damage according to highest stat.
       - Swing has been disabled and will be removed (eventually)
+      - Removed crafting command
+      - Fixed "look" bug not displaying error when it cant find anything to look at 
   "170226":
     id: "170226"
     title: Necromancy
