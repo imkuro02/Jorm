@@ -221,7 +221,7 @@ def configure_ITEMS(SHEET):
                    
 
                     ITEMS[x["premade_id"][index]][y] = value
-
+    """
     for i in ITEMS:
         ITEMS[i]["crafting_recipe_ingredients"] = []
         ITEMS[i]["crafting_ingredient_for"] = []
@@ -257,7 +257,8 @@ def configure_ITEMS(SHEET):
             if ingredients not in ITEMS[premade_id]["crafting_recipe_ingredients"]:
                 ITEMS[premade_id]["crafting_recipe_ingredients"].append(ingredients)
                 # systems.utils.debug_print(f'craft {premade_id} ingredients: ',ingredients)
-
+    """
+    
     end = time.time()
     systems.utils.debug_print(end - start, "ITEMS")
 

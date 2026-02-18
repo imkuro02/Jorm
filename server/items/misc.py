@@ -143,8 +143,8 @@ class Item:
                 output = output + f" ({Color.ITEM_KEEP}K{Color.NORMAL})"
             if self.new:
                 output = output + f" ({Color.ITEM_NEW}N{Color.NORMAL})"
-            if self.crafting_ingredient_for != []:
-                output = output + f" ({Color.ITEM_MATERIAL}M{Color.NORMAL})"
+            #if self.crafting_ingredient_for != []:
+            #    output = output + f" ({Color.ITEM_MATERIAL}M{Color.NORMAL})"
         else:
             if self.stack != 1:
                 output = output + f" x{self.stack}"
@@ -152,8 +152,8 @@ class Item:
                 output = output + f" ({Color.ITEM_KEEP}K{Color.NORMAL})"
             if self.new:
                 output = output + f" ({Color.ITEM_NEW}N{Color.NORMAL})"
-            if self.crafting_ingredient_for != []:
-                output = output + f" ({Color.ITEM_MATERIAL}M{Color.NORMAL})"
+            #if self.crafting_ingredient_for != []:
+            #    output = output + f" ({Color.ITEM_MATERIAL}M{Color.NORMAL})"
 
         return output
 
@@ -186,6 +186,7 @@ class Item:
 
         output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"
 
+        """
         if self.crafting_ingredient_for != []:
             output += "\n"
             output += f"Ingredient for: "
@@ -204,6 +205,7 @@ class Item:
                 # output = output + str(recipe) + '\n'
             # output = output[:-2]
             output += "\n"
+        """
 
         self.new = False
 

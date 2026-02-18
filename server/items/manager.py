@@ -120,10 +120,10 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
 
     new_item.premade_id = ITEMS[premade_id]["premade_id"]
 
-    new_item.crafting_recipe_ingredients = ITEMS[premade_id][
-        "crafting_recipe_ingredients"
-    ]
-    new_item.crafting_ingredient_for = ITEMS[premade_id]["crafting_ingredient_for"]
+    #new_item.crafting_recipe_ingredients = ITEMS[premade_id][
+    #    "crafting_recipe_ingredients"
+    #]
+    #new_item.crafting_ingredient_for = ITEMS[premade_id]["crafting_ingredient_for"]
 
     
     

@@ -612,12 +612,14 @@ def command_look(self, line, return_gmcp=False):
     if look_at in list_of_actors:
         actor = self.get_actor(line)
         if actor == None:
+            self.sendLine('Look at?')
             return
         look_actor(actor)
 
     if look_at in list_of_items:
         item = self.get_item(line, search_mode="room")
         if item == None:
+            self.sendLine('Look at?')
             return
         look_item(self, item[0])
 

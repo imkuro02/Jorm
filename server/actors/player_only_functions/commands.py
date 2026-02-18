@@ -109,7 +109,7 @@ commands = {
     'inventory':'command_inventory',
     'sort':     'command_sort',
     'split':    'command_split',
-    'craft':    'command_craft',
+#    'craft':    'command_craft',
     'reforge':  'command_reforge',
     'skills':   'command_skills',
     'affects':  'command_affects',
