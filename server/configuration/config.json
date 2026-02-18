@@ -1,5 +1,5 @@
 {
-    "SHA-256": "fd76caf967b2d40e2aef07b0b5ad00c68c0221ffdb64041a96348b0de2a80c57",
+    "SHA-256": "eea7e218f95074e9b94e728ec50df8648613cabc00cf896ce67b165d89108fae",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3402,7 +3402,7 @@
         "strike": {
             "skill_id": "strike",
             "name": "Strike",
-            "description": "Deal damage based on all of your main stats combined.\nDamage type is determined by your highest stat between GRIT+FLOW and MIND+SOUL.\n",
+            "description": "Deal damage based on your highest main stat.\nDamage type is determined by your highest stat between GRIT, FLOW, MIND or SOUL.\n",
             "script_to_run": "Strike",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -3604,7 +3604,7 @@
         "stab": {
             "skill_id": "stab",
             "name": "Stab",
-            "description": "Deal physical damage based on your Flow.Applies Bleeding for DURATION of turns.\n",
+            "description": "Deal physical damage based on your Flow.\nApplies Bleeding for DURATION of turns.\n",
             "script_to_run": "DamageByFlowApplyBleed",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -3638,9 +3638,9 @@
                     3
                 ],
                 "duration": [
-                    10,
-                    10,
-                    10
+                    3,
+                    3,
+                    3
                 ]
             }
         },
