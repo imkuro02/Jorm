@@ -57,7 +57,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         ai=ai,
         name=name,
         description=desc,
-        room=room.world.rooms["overworld/loading"],
+        room=room,#room.world.rooms["overworld/loading"],
         stats=stats,
         loot=loot,
         skills=skills,
@@ -69,7 +69,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
     )
 
     npc_class = custom_loader.compare_replace_npcs(my_npc)
-    my_npc.room.world.rooms["overworld/loading"].move_actor(my_npc)
+    my_npc.room.world.rooms["overworld/loading"].move_actor(my_npc, silent=True)
     my_npc.unload()
     unload(my_npc)
 

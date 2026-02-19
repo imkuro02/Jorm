@@ -57,7 +57,9 @@ class Spawner:
         return room
 
     def respawn_all(self, forced=True):
+        
         for i in self.spawn_points:
+            
             roll = 0
             if not self.room.is_player_present():
                 roll = 0  # random.randint(0,100)
@@ -120,7 +122,7 @@ class Spawner:
                     continue
 
     def tick(self):
-        if self.room.world.factory.ticks_passed % (30 * 60) == 0:
+        if self.room.world.factory.ticks_passed % (30 * 60 * 5) == 0:
             self.respawn_all()
 
 
@@ -344,9 +346,14 @@ class Room:
             if self.spawner != None:
                 if i in self.spawner.spawn_points.values():
                     continue
-            i.time_on_ground += 1
-            if i.time_on_ground >= 30 * 120:
+
+            if i.time_on_ground == None:
                 items_to_remove.append(i)
+            else:
+                i.time_on_ground += 1
+                if i.time_on_ground >= 30 * 120:
+                    items_to_remove.append(i)
+
         for i in items_to_remove:
             self.inventory_manager.remove_item(i)
 

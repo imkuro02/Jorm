@@ -230,13 +230,18 @@ def command_map(self, line, return_gmcp=False):
                             for d in directions.values()
                         ):
                             cell = Art.EMPTYWALL * PATH_WIDTH
-                            # random.seed(self.room.id + loc)
-                            # _string = ',.;:-_¨\'"^~`+%&#'+(' '*100)
 
-                            # a = _string[random.randint(0,len(_string)-1)]
-                            # b = _string[random.randint(0,len(_string)-1)]
-                            # c = _string[random.randint(0,len(_string)-1)]
-                            # cell = a+b+c
+                            show_noise = False
+                            if show_noise:
+                                random.seed(self.room.id + loc)
+                                _string = ',.;:-_¨\'"^~`+%&#'#+(' '*100)
+
+                                a = _string[random.randint(0,len(_string)-1)]
+                                b = _string[random.randint(0,len(_string)-1)]
+                                #c = _string[random.randint(0,len(_string)-1)]
+                                cell = a+b
+
+
                             t.add_data("@normal" + cell)
                             walled = True
                             continue
