@@ -95,7 +95,7 @@ class Damage:
 
         match self.damage_type:
             # meaning the damage was completely cancelled by something
-            # the affect should sendLine what exactly happened
+            # the affect should send_line what exactly happened
             # example: physical damage while ethereal should send "You are ethereal"
             case DamageType.CANCELLED:
                 self.damage_value = 0

@@ -19,7 +19,7 @@ class rat_cheese(Consumable):
         if self in items:
             for i in self.inventory_manager.owner.room.actors.values():
                 if 'rat' == i.npc_id:
-                    player.sendLine(f'{i.pretty_name()} hisses at you')
+                    player.send_line(f'{i.pretty_name()} hisses at you')
                     return True
         else:
             return False

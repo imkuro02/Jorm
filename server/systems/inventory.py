@@ -290,7 +290,7 @@ class InventoryManager:
                     continue
 
                 if stacks_removed > stack:
-                    self.owner.sendLine("Too much of item got removed contact admin")
+                    self.owner.send_line("Too much of item got removed contact admin")
                     break
 
                 if stacks_removed == stack:

@@ -30,7 +30,7 @@ def error(user, err):
         # if user.settings_manager.autobattler:
         #    if user.status == ActorStatusType.FIGHTING:
         #        return
-        user.sendLine(err)
+        user.send_line(err)
         user.sendSound(Audio.ERROR)
     else:
         systems.utils.debug_print(err)
@@ -188,17 +188,17 @@ def use_skill(user, target, skill_id, no_checks=False, combat_event = None):
     skill = SKILLS[skill_id]
 
     if skill_id not in user.skill_manager.skills:
-        user.sendLine(f"You do not know {skill['name']}")
+        user.send_line(f"You do not know {skill['name']}")
         return False
 
     if user.skill_manager.skills[skill_id] <= 0:
-        user.sendLine(f"You do not know {skill['name']}")
+        user.send_line(f"You do not know {skill['name']}")
         return False
 
     users_skill_level = get_user_skill_level_as_index(user, skill_id)
 
     if users_skill_level == -1:
-        user.sendLine(f"You are not high enough level to use {skill['name']}")
+        user.send_line(f"You are not high enough level to use {skill['name']}")
         return False
 
     if skill_checks(user, target, skill_id) or no_checks:

@@ -40,11 +40,11 @@ class food_item_class(Item):
             attempting_var = 'can_'+old_line.split()[0]
             attempting = old_line.split()[0]
             if not getattr(self, attempting_var):
-                player.sendLine(f'You can\'t {attempting} {self.name}') 
+                player.send_line(f'You can\'t {attempting} {self.name}') 
                 return True
             
             if player.status == ActorStatusType.DEAD:
-                player.sendLine(f'You can\'t {attempting} {self.name} right now')
+                player.send_line(f'You can\'t {attempting} {self.name} right now')
                 return True
 
             self.new = False
@@ -89,7 +89,7 @@ class food_item_class(Item):
                 player.inventory_manager.remove_item(self, 1)
             
             if player.stat_manager.stats[StatType.HP] >= player.stat_manager.stats[StatType.HPMAX]:
-                player.sendLine(f'You are beyond full.')
+                player.send_line(f'You are beyond full.')
 
             if self.item_to_leave_after_consumed != None:
                 item_to_leave_after_consumed = load_item(self.item_to_leave_after_consumed)
@@ -123,9 +123,9 @@ class food_item_cannot_leave_tavern_class(food_item_class):
                     player.inventory_manager.remove_item(i)
                     if food_thrown_out_yet == False:
                         if i.can_eat:
-                            player.sendLine(f'You food goes cold and you throw it away')
+                            player.send_line(f'You food goes cold and you throw it away')
                         elif i.can_drink:
-                            player.sendLine(f'You drink spills as you leave and you throw it away')
+                            player.send_line(f'You drink spills as you leave and you throw it away')
                     food_thrown_out_yet = True
             return False
         
@@ -202,7 +202,7 @@ class rat_cheese(food_item_class):
         if self in items:
             for i in self.inventory_manager.owner.room.actors.values():
                 if 'rat' == i.npc_id:
-                    player.sendLine(f'{i.pretty_name()} hisses at you')
+                    player.send_line(f'{i.pretty_name()} hisses at you')
                     return True
         else:
             return False

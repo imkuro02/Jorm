@@ -99,29 +99,29 @@ class Skill:
                 continue
 
             if receiver == self.user and receiver == self.other:
-                receiver.sendLine(perspectives["you on you"])
+                receiver.send_line(perspectives["you on you"])
                 continue
             if receiver == self.user and receiver != self.other:
-                receiver.sendLine(perspectives["you on other"])
+                receiver.send_line(perspectives["you on other"])
                 continue
             if (
                 receiver != self.user
                 and receiver != self.other
                 and self.user == self.other
             ):
-                receiver.sendLine(perspectives["user on user"])
+                receiver.send_line(perspectives["user on user"])
                 continue
             if receiver != self.user and receiver == self.other:
-                receiver.sendLine(perspectives["user on you"])
+                receiver.send_line(perspectives["user on you"])
                 continue
             if receiver != self.user and receiver != self.other:
-                receiver.sendLine(perspectives["user on other"])
+                receiver.send_line(perspectives["user on other"])
                 continue
 
     # runs in delay affliction if the affliction gets cancelled
     def delay_use_got_cancelled(self):
         pass
-        #self.user.sendLine('delayed use stopped')
+        #self.user.send_line('delayed use stopped')
 
     def use(self):
         # systems.utils.debug_print('aoe:',self.aoe)
@@ -845,7 +845,7 @@ class SkillDispel(Skill):
                         to_dispel.append(i)
 
             if to_dispel == []:
-                self.user.sendLine("Nothing to dispel")
+                self.user.send_line("Nothing to dispel")
                 return
 
             dispel_this = random.choice(to_dispel)
@@ -960,7 +960,7 @@ class SkillNecromancerRessurect(SkillTargetItem):
             # remove corpse item on ground
             self.other.inventory_manager.remove_item(self.other)
 
-            # sendLine
+            # send_line
             self.user.simple_broadcast(f'You ressurect {self.other.corpse_npc_name}',f'{self.user.pretty_name()} ressurects {self.other.corpse_npc_name}')
 
             # create npc object
@@ -1014,7 +1014,7 @@ class SkillNecromancerRessurect(SkillTargetItem):
                     return False
                 
                 if ' to ' not in line:
-                    player.sendLine(f'Rename {self.name} to what?')
+                    player.send_line(f'Rename {self.name} to what?')
                     return False
 
                 _split = line.split(' to ')

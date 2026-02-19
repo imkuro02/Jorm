@@ -15,7 +15,7 @@ class Dialog:
 
     def send_output(self, output):
         # output = output.replace('<npc>',self.npc.pretty_name().replace('<player>',self.player.pretty_name()))
-        self.player.sendLine(
+        self.player.send_line(
             output.replace("<npc>", self.npc.pretty_name()).replace(
                 "<player>", self.player.pretty_name()
             )
@@ -252,7 +252,7 @@ class Dialog:
             output_line = output_line.replace("<npc>", self.npc.pretty_name()).replace(
                 "<player>", self.player.pretty_name()
             )
-            self.player.sendLine(output_line.strip())
+            self.player.send_line(output_line.strip())
         if output_line_room_party != None:
             output_line_room_party = output_line_room_party.replace(
                 "<npc>", self.npc.pretty_name()
@@ -269,7 +269,7 @@ class Dialog:
                 output_line_room_not_party.strip().strip(),
                 send_to="room_not_party",
             )
-        # self.player.sendLine(f'{output}')
+        # self.player.send_line(f'{output}')
         # ####################################################
 
         # if this is the end, or there is only one option
@@ -302,7 +302,7 @@ class Dialog:
             return False
 
         # ####################################################
-        # self.player.sendLine('You '+answer['line'])
+        # self.player.send_line('You '+answer['line'])
 
         output_line = None
         output_line_room_party = None
@@ -324,7 +324,7 @@ class Dialog:
             output_line = output_line.replace("<npc>", self.npc.pretty_name()).replace(
                 "<player>", self.player.pretty_name()
             )
-            self.player.sendLine(output_line.strip())
+            self.player.send_line(output_line.strip())
         if output_line_room_party != None:
             output_line_room_party = output_line_room_party.replace(
                 "<npc>", self.npc.pretty_name()
@@ -361,7 +361,7 @@ class Dialog:
                         escape = True
 
             if escape:
-                self.player.sendLine(
+                self.player.send_line(
                     "You either lack items to give or item slots to receive."
                 )
                 self.end_dialog()
@@ -373,10 +373,10 @@ class Dialog:
                         i["item"], i["amount"]
                     )
                     if not removed:
-                        self.player.sendLine("Could not remove items requested")
+                        self.player.send_line("Could not remove items requested")
                         self.end_dialog()
                         return True
-                self.player.sendLine(f"You give away the items requested")
+                self.player.send_line(f"You give away the items requested")
 
             if "give_to_player" in answer["trade"]:
                 for i in answer["trade"]["give_to_player"]:
@@ -385,7 +385,7 @@ class Dialog:
                         continue
                     item.stack = i["amount"]
                     self.player.inventory_manager.add_item(item, stack_items=False)
-                    self.player.sendLine(f"You got: {item.pretty_name()}")
+                    self.player.send_line(f"You got: {item.pretty_name()}")
 
         if "quest_objective_count_proposal" in answer:
             # self.print_dialog()
@@ -405,7 +405,7 @@ class Dialog:
                     len(answer["reward"])
                     > self.player.inventory_manager.get_amount_of_free_item_slots()
                 ):
-                    self.player.sendLine("You need more space in your inventory")
+                    self.player.send_line("You need more space in your inventory")
                     self.end_dialog()
                     return True
 
@@ -414,11 +414,11 @@ class Dialog:
                 answer["quest_turn_in"]["id"]
             )
             if turned_in_successfully:
-                self.player.sendLine(
+                self.player.send_line(
                     f"{Color.GOOD}Quest turned in{Color.NORMAL}: {self.player.quest_manager.quests[answer['quest_turn_in']['id']].name}"
                 )
             else:
-                self.player.sendLine(
+                self.player.send_line(
                     f"{Color.BAD}Quest failed to turn in{Color.NORMAL}: {self.player.quest_manager.quests[answer['quest_turn_in']['id']].name}"
                 )
                 self.end_dialog()
@@ -432,17 +432,17 @@ class Dialog:
                         continue
                     item.stack = item_id["amount"]
                     self.player.inventory_manager.add_item(item, stack_items=False)
-                    self.player.sendLine(f"You got: {item.pretty_name()}")
+                    self.player.send_line(f"You got: {item.pretty_name()}")
 
             if "reward_exp" in answer:
                 self.player.stat_manager.stats[StatType.EXP] += answer["reward_exp"]
-                self.player.sendLine(f"You got: {answer['reward_exp']} Experience")
+                self.player.send_line(f"You got: {answer['reward_exp']} Experience")
 
             if "reward_practice_points" in answer:
                 self.player.stat_manager.stats[StatType.PP] += answer[
                     "reward_practice_points"
                 ]
-                self.player.sendLine(
+                self.player.send_line(
                     f"You got: {answer['reward_practice_points']} Practice point"
                     + ("s" if answer["reward_practice_points"] >= 2 else "")
                 )

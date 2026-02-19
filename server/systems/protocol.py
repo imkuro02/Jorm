@@ -65,8 +65,8 @@ class Protocol(protocol.Protocol):
         self.id = str(uuid.uuid4())
 
     def clear_screen(self):
-        self.sendLine("\x1b[0m")
-        self.sendLine("\u001b[2J")
+        self.send_line("\x1b[0m")
+        self.send_line("\u001b[2J")
 
     def start_mssp(self):
         self.transport.write(IAC + WILL + MSSP)
@@ -134,7 +134,7 @@ class Protocol(protocol.Protocol):
             f"#ONLINE#", f"{Color.IMPORTANT}{len(self.factory.protocols)}{Color.BACK}"
         )
         splash = f"{Color.NORMAL}{splash}{Color.NORMAL}"
-        self.sendLine(splash)
+        self.send_line(splash)
 
     def change_state(self, state):
         state_name = state.__name__
@@ -145,35 +145,35 @@ class Protocol(protocol.Protocol):
                 self.account = None
                 self.username = None
                 self.password = None
-                self.sendLine(
+                self.send_line(
                     f"Type {Color.GOOD} new   {Color.BACK} to register.\nType {Color.GOOD} login {Color.BACK} to log in.\nType {Color.GOOD} reset {Color.BACK} to reset your password.\nType {Color.GOOD} guest {Color.NORMAL} to enter as guest."
                 )
 
             case self.LOGIN_USERNAME:
-                self.sendLine(f"Your {Color.GOOD}username{Color.BACK}:")
+                self.send_line(f"Your {Color.GOOD}username{Color.BACK}:")
 
             case self.RESET_USERNAME:
-                self.sendLine(f"Your {Color.GOOD}username{Color.BACK}:")
+                self.send_line(f"Your {Color.GOOD}username{Color.BACK}:")
 
             case self.LOGIN_PASSWORD:
-                self.sendLine(f"Your {Color.GOOD}password{Color.BACK}:")
+                self.send_line(f"Your {Color.GOOD}password{Color.BACK}:")
 
             case self.REGISTER_USERNAME:
-                self.sendLine(
+                self.send_line(
                     "Please use a unique username, not linking your Jorm account to anything private."
                 )
-                self.sendLine(
+                self.send_line(
                     "Please use a unique password, only for Jorm. Never share it."
                 )
-                self.sendLine(
+                self.send_line(
                     f"Creating new account. enter your {Color.GOOD}username{Color.BACK}:"
                 )
 
             case self.REGISTER_PASSWORD1:
-                self.sendLine(f"Enter your {Color.GOOD}password{Color.BACK}:")
+                self.send_line(f"Enter your {Color.GOOD}password{Color.BACK}:")
 
             case self.REGISTER_PASSWORD2:
-                self.sendLine(f"Enter {Color.GOOD}password{Color.BACK} again:")
+                self.send_line(f"Enter {Color.GOOD}password{Color.BACK} again:")
 
             case self.PLAY:
                 self.account = self.factory.db.find_account_from_username(self.username)
@@ -207,17 +207,17 @@ class Protocol(protocol.Protocol):
     def REGISTER_USERNAME(self, line):
         self.account = self.factory.db.find_account_from_username(line)
         if self.account != None:
-            self.sendLine("This username is already taken")
+            self.send_line("This username is already taken")
             self.change_state(self.REGISTER_USERNAME)
             return
 
         if len(line) >= 21 or len(line) <= 3:
-            self.sendLine("Username must be between 4 and 20 characters long")
+            self.send_line("Username must be between 4 and 20 characters long")
             self.change_state(self.REGISTER_USERNAME)
             return
 
         if not line.isalnum():
-            self.sendLine("Username can only contain letters and numbers")
+            self.send_line("Username can only contain letters and numbers")
             self.change_state(self.REGISTER_USERNAME)
             return
 
@@ -226,7 +226,7 @@ class Protocol(protocol.Protocol):
 
     def REGISTER_PASSWORD1(self, line):
         if len(line) < 6:
-            self.sendLine("Your password must be a minimum of 6 character")
+            self.send_line("Your password must be a minimum of 6 character")
             self.change_state(self.REGISTER_PASSWORD1)
             return
 
@@ -235,27 +235,27 @@ class Protocol(protocol.Protocol):
 
     def REGISTER_PASSWORD2(self, line):
         if line != self.password:
-            self.sendLine("Passwords do not match")
+            self.send_line("Passwords do not match")
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
         self.factory.db.create_new_account(self.id, self.username, self.password)
-        # self.sendLine('Account created! you can now log in!')
+        # self.send_line('Account created! you can now log in!')
         # self.change_state(self.LOGIN_OR_REGISTER)
 
-        self.sendLine("Account created! logging in!")
+        self.send_line("Account created! logging in!")
         self.change_state(self.PLAY)
 
     def LOGIN_PASSWORD(self, line):
         self.password = line
         if self.account == None:
-            self.sendLine("Wrong username or password")
+            self.send_line("Wrong username or password")
             self.change_state(self.LOGIN_OR_REGISTER)
             self.tmp_pwd = None
             return
 
         if self.account[2] != line and self.tmp_pwd != line:
-            self.sendLine("Wrong username or password")
+            self.send_line("Wrong username or password")
             self.change_state(self.LOGIN_OR_REGISTER)
             self.tmp_pwd = None
             return
@@ -274,28 +274,28 @@ class Protocol(protocol.Protocol):
         self.username = line
 
         if self.account == None:
-            self.sendLine("This account does not exist")
+            self.send_line("This account does not exist")
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
         actor = self.factory.db.read_actor(self.account[0])
         if actor == None:
-            self.sendLine("This account does not exist")
+            self.send_line("This account does not exist")
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
         if "email" not in actor["settings"]:
-            self.sendLine("This account does not have an email")
+            self.send_line("This account does not have an email")
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
         email = actor["settings"]["email"]
         if email == "":
-            self.sendLine("This account does not have an email")
+            self.send_line("This account does not have an email")
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        self.sendLine(
+        self.send_line(
             f"""
 {Color.IMPORTANT}You will soon receive a ONE TIME password on your email.
 Please check your spam folder.
@@ -336,15 +336,15 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
     def register_account_changes(self, username, password):
         if len(password) < 6:
-            self.sendLine("Your password must be a minimum of 6 character")
+            self.send_line("Your password must be a minimum of 6 character")
             return False
 
         if password.startswith(" ") or password.endswith(" "):
-            self.sendLine("Your password cannot start or end with a whitespace")
+            self.send_line("Your password cannot start or end with a whitespace")
             return
 
         if "  " in password:
-            self.sendLine(
+            self.send_line(
                 'Yes this is a stupid rule but: Your password cannot include multiple whitespaces in a row... "  " not good'
             )
             return False
@@ -352,17 +352,17 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         account = self.factory.db.find_account_from_username(username)
         # systems.utils.debug_print(self.account)
         if account != None and account[0] != self.id:
-            self.sendLine("This username is already taken")
+            self.send_line("This username is already taken")
             return False
 
         self.account = account
 
         if len(username) >= 21 or len(username) <= 3:
-            self.sendLine("Username must be between 4 and 20 characters long")
+            self.send_line("Username must be between 4 and 20 characters long")
             return False
 
         if not username.isalnum():
-            self.sendLine("Username can only contain letters and numbers")
+            self.send_line("Username can only contain letters and numbers")
             return False
 
         self.username = username
@@ -371,7 +371,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
             self.actor.name = self.username
         self.factory.db.create_new_account(self.id, username, password)
         _alert = f"{Color.BAD}[{Color.IMPORTANT}!{Color.BAD}]{Color.BACK}"
-        self.sendLine(
+        self.send_line(
             f'{Color.GOOD}Account information updated\n{_alert}   Your login username is: "{Color.IMPORTANT}{self.username}{Color.BACK}"   {_alert}{Color.NORMAL}'
         )
         # Your password is: "{Color.IMPORTANT}{'*'*len(self.password)}{Color.BACK}"
@@ -581,7 +581,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         # disable / enable ascii map depending on gmcp settings
         self.actor.settings_manager.settings[SETTINGS.VIEW_MAP] = not self.enabled_gmcp
         # self.actor.settings_manager.view_room = not self.enabled_gmcp
-        self.sendLine(
+        self.send_line(
             "You are now in JORM! ascii map has been turned "
             + (
                 "on"
@@ -674,11 +674,11 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
             return
 
         if "LOGIN" in self.state.__name__ or "REGISTER" in self.state.__name__:
-            self.sendLine('type "!" to return to main menu')
+            self.send_line('type "!" to return to main menu')
 
         self.state(line)
         return
 
-    def sendLine(self, line):
+    def send_line(self, line):
         line = systems.utils.add_color(line)
         self.transport.write(f"{line}\n".encode("utf-8"))

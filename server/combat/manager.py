@@ -34,7 +34,7 @@ class Combat:
 
         for p in self.room.actors.values():
             if type(p).__name__ == "Player":
-                p.sendLine("@tipA fight has started!@back")
+                p.send_line("@tipA fight has started!@back")
 
     def unload(self):
         for p in self.participants.values():
@@ -157,7 +157,7 @@ class Combat:
                 i.affect_manager.unload_all_affects()
                 i.heal(value=99999)
             if type(i).__name__ == "Player":
-                i.sendLine("@yellowCombat over!@normal")
+                i.send_line("@yellowCombat over!@normal")
 
 
             if i.party_manager.party != None:
@@ -263,8 +263,8 @@ class Combat:
                     + f"{Color.COMBAT_TURN}ROUND {self.round}...{Color.NORMAL} "
                     + "".join(order.rsplit(" -> ", 1))
                 )
-                # par.sendLine(('#'*80)+'\n'+order)
-                par.sendLine(order)
+                # par.send_line(('#'*80)+'\n'+order)
+                par.send_line(order)
 
         for i in self.order:
             if i.room != self.room:
@@ -284,7 +284,7 @@ class Combat:
         if show_turns_and_stuff:
             for par in self.participants.values():
                 par.show_prompts(self.participants.values())
-                par.sendLine("")
+                par.send_line("")
 
         self.round += 1
         self.next_turn()

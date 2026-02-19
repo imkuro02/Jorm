@@ -127,7 +127,7 @@ class GameTime:
             time = int(line)
             self.game_date_time = time
         except Exception as e:
-            self.sendLine(f"Cant set time: {e}")
+            self.send_line(f"Cant set time: {e}")
 
     def get_game_time_compact_str(self):
         _time = self.get_game_time()

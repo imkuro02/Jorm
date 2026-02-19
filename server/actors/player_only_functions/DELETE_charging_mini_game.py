@@ -69,14 +69,14 @@ class ChargingMiniGame:
         self.tick_since_prayer_end = 0
     
     def fail(self):
-        self.owner.sendLine('@bad'+random.choice(self.LINES_FAIL)+'@normal')
+        self.owner.send_line('@bad'+random.choice(self.LINES_FAIL)+'@normal')
         #self.ticks_passed = - self.ticks_for_charge
         self.ticks_passed = 0
         self.charges -= 0
 
     def success(self):
         self.charges += 1
-        self.owner.sendLine('@good'+random.choice(self.LINES_SUCCESS)+'@normal')
+        self.owner.send_line('@good'+random.choice(self.LINES_SUCCESS)+'@normal')
         self.ticks_passed = 0
         
         
@@ -85,7 +85,7 @@ class ChargingMiniGame:
         if not self.charging:
             return
         self.tick_since_prayer_end = self.owner.factory.ticks_passed
-        #self.owner.sendLine('You stop charging')
+        #self.owner.send_line('You stop charging')
         self.owner.simple_broadcast(self.LINES_STOP[self.line_id][0],self.LINES_STOP[self.line_id][1].replace('#USER#',self.owner.pretty_name()))
         self.charging = False
         if self.charges <= 0:
@@ -111,16 +111,16 @@ class ChargingMiniGame:
                 new_item = load_item(item)
 
                 if self.owner.inventory_manager.add_item(new_item):   
-                    self.owner.sendLine(f'You get rewarded with {new_item.name} (1 in {loot[item]} chance)')
+                    self.owner.send_line(f'You get rewarded with {new_item.name} (1 in {loot[item]} chance)')
                 else:
-                    self.owner.sendLine(f'Your inventory is full, {new_item.name} has been dropped on the ground')
+                    self.owner.send_line(f'Your inventory is full, {new_item.name} has been dropped on the ground')
                     self.owner.room.inventory_manager.add_item(new_item)
            
     def start(self):
         if self.tick_since_prayer_end + (30*3) - self.owner.factory.ticks_passed >= 0:
-            self.owner.sendLine('You just prayed and need a moment to reflect')
+            self.owner.send_line('You just prayed and need a moment to reflect')
             return
-        #self.owner.sendLine('You begin to charge')
+        #self.owner.send_line('You begin to charge')
         self.line_id = random.randint(0,len(self.LINES_START)-1)
         self.owner.simple_broadcast(self.LINES_START[self.line_id][0],self.LINES_START[self.line_id][1].replace('#USER#',self.owner.pretty_name()))
         self.charging = True

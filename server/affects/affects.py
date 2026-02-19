@@ -1016,9 +1016,9 @@ class ReforgeRandomTargetBonus(AffectReforge):
             list(self.affect_target_actor.room.combat.participants.values())
         )
         if self.target == self.affect_target_actor:
-            self.affect_target_actor.sendLine(f"You are your own target")
+            self.affect_target_actor.send_line(f"You are your own target")
         else:
-            self.affect_target_actor.sendLine(
+            self.affect_target_actor.send_line(
                 f"Your target is {self.target.pretty_name()}"
             )
 

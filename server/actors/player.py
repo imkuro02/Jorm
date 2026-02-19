@@ -37,15 +37,15 @@ class FriendManager:
     def friend_add(self, friend_to_add_username, silent=False):
         found = self.find_actor_id_from_actor_name(friend_to_add_username)
         if found == None:
-            self.owner.sendLine("Cannot add friend, they do not exist")
+            self.owner.send_line("Cannot add friend, they do not exist")
             return
         if found[0] in self.friends:
-            self.owner.sendLine("Cannot add friend, already befriended")
+            self.owner.send_line("Cannot add friend, already befriended")
             return
         if found[0] == self.owner.id:
-            self.owner.sendLine("Cannot add friend, kinda sad you tried")
+            self.owner.send_line("Cannot add friend, kinda sad you tried")
             return
-        self.owner.sendLine(f"{str(found[1])} added as your friend!")
+        self.owner.send_line(f"{str(found[1])} added as your friend!")
         self.friends.append(found[0])
 
     def friend_remove(self, friend_to_remove_username, silent=False):
@@ -53,14 +53,14 @@ class FriendManager:
         if found != None:
             if found[0] in self.friends:
                 self.friends.remove(found[0])
-                self.owner.sendLine("removed 1 friend")
+                self.owner.send_line("removed 1 friend")
             else:
-                self.owner.sendLine(
+                self.owner.send_line(
                     "Cannot remove friend, either they are not your friend or do not exist"
                 )
 
     def friend_list(self):
-        self.owner.sendLine("Friend list:")
+        self.owner.send_line("Friend list:")
         accs = []
         t = systems.utils.Table(2, 3)
         t.add_data("Name")
@@ -97,7 +97,7 @@ class FriendManager:
             t.add_data(f"{status}", col)
 
         output = t.get_table()
-        self.owner.sendLine(output)
+        self.owner.send_line(output)
 
     def friend_broadcast_login(self):
         for prot in self.owner.room.world.factory.protocols:
@@ -105,7 +105,7 @@ class FriendManager:
                 continue
             if prot.actor.id in self.friends:
                 if self.owner.id in prot.actor.friend_manager.friends:
-                    prot.actor.sendLine(
+                    prot.actor.send_line(
                         f"Your friend {self.owner.pretty_name()} has logged in",
                         msg_type=[MsgType.GOSSIP],
                     )
@@ -116,13 +116,13 @@ class FriendManager:
                 continue
             if prot.actor.id in self.friends:
                 if self.owner.id in prot.actor.friend_manager.friends:
-                    prot.actor.sendLine(
+                    prot.actor.send_line(
                         f"Your friend {self.owner.pretty_name()} has logged out",
                         msg_type=[MsgType.GOSSIP],
                     )
 
     def friend_broadcast(self, line):
-        self.owner.sendLine(
+        self.owner.send_line(
             f'You gossip "@important{line}@normal"',
             msg_type=[MsgType.CHAT, MsgType.GOSSIP],
         )
@@ -131,7 +131,7 @@ class FriendManager:
                 continue
             if prot.actor.id in self.friends:
                 if self.owner.id in prot.actor.friend_manager.friends:
-                    prot.actor.sendLine(
+                    prot.actor.send_line(
                         f'{self.owner.pretty_name()} gossips "@important{line}@normal"',
                         msg_type=[MsgType.CHAT, MsgType.GOSSIP],
                     )
@@ -279,7 +279,7 @@ class UpdateChecker:
         if self.last_grid == _grid:
             return
         self.last_grid = _grid
-        # self.actor.sendLine(str(_grid))
+        # self.actor.send_line(str(_grid))
         self.protocol.send_gmcp(_grid, "Map")
 """
 
@@ -437,7 +437,7 @@ class Player(Actor):
     def sendSound(self, sfx):
         self.protocol.send_gmcp({"name": sfx}, "Client.Media.Play")
 
-    def sendLine(self, line, color=True, sound=None, msg_type=None):
+    def send_line(self, line, color=True, sound=None, msg_type=None):
         # if self.last_line_received == line:
         #   return
 
@@ -483,11 +483,11 @@ class Player(Actor):
         if self.stat_manager.stats[StatType.EXP] == 0:
             self.stat_manager.stats[StatType.EXP] = 0
         if exp < 0:
-            self.sendLine(
+            self.send_line(
                 f"You lost: {Color.BAD}" + str(abs(exp)) + f" experience{Color.BACK}"
             )
         if exp > 0:
-            self.sendLine(
+            self.send_line(
                 f"You got: {Color.GOOD}" + str(abs(exp)) + f" experience{Color.BACK}"
             )
 
@@ -498,26 +498,26 @@ class Player(Actor):
 
         if pp < 0:
             if abs(pp) >= 2:
-                self.sendLine(
+                self.send_line(
                     f"You lost: {Color.BAD}"
                     + str(abs(pp))
                     + f" Practice points{Color.BACK}"
                 )
             else:
-                self.sendLine(
+                self.send_line(
                     f"You lost: {Color.BAD}"
                     + str(abs(pp))
                     + f" Practice point{Color.BACK}"
                 )
         if pp > 0:
             if abs(pp) >= 2:
-                self.sendLine(
+                self.send_line(
                     f"You got: {Color.GOOD}"
                     + str(abs(pp))
                     + f" Practice points{Color.BACK}"
                 )
             else:
-                self.sendLine(
+                self.send_line(
                     f"You got: {Color.GOOD}"
                     + str(abs(pp))
                     + f" Practice point{Color.BACK}"
@@ -549,7 +549,7 @@ class Player(Actor):
                 return
                 
         if self.settings_manager.get_value(SETTINGS.ECHO):
-            self.sendLine(f'@bblack> {line}@normal')
+            self.send_line(f'@bblack> {line}@normal')
 
         # systems.utils.debug_print(line)
 
@@ -619,7 +619,7 @@ class Player(Actor):
                 lines = line.split(";")
                 for l in lines:
                     if l.lower().split()[0] in self.settings_manager.get_value(SETTINGS.ALIAS):
-                        self.sendLine("An alias cannot trigger another alias")
+                        self.send_line("An alias cannot trigger another alias")
                         continue
                     self.queued_lines.append(l)
                     # systems.utils.debug_print(l)
@@ -640,7 +640,7 @@ class Player(Actor):
             
             
             self.last_command_used = one_letter_commands[command]
-            self.sendLine(
+            self.send_line(
                 commands[one_letter_commands[command]], msg_type=[MsgType.DEBUG]
             )
 
@@ -667,14 +667,14 @@ class Player(Actor):
                 if self.command_use(full_line, silent=True):
                     return
 
-            self.sendLine(
+            self.send_line(
                 f'You wrote "{command}" did you mean "{best_match}"?\nUse "help {best_match}" to learn more about this command.'
             )
             return
 
         script = getattr(self, commands[best_match])
         self.last_command_used = best_match
-        self.sendLine(
+        self.send_line(
             "Command found: " + str(commands[best_match]), msg_type=[MsgType.DEBUG]
         )
 
@@ -686,13 +686,13 @@ class Player(Actor):
 
     def set_turn(self):
         super().set_turn()
-        # self.sendLine(self.prompt(self))
+        # self.send_line(self.prompt(self))
 
     def finish_turn(self, force_cooldown=False):
         self.trade_manager.trade_stop(silent=True)
         #self.charging_mini_game.stop()
         super().finish_turn(force_cooldown=force_cooldown)
-        # self.sendLine(self.prompt(self))
+        # self.send_line(self.prompt(self))
 
 
 # Compile all player functions

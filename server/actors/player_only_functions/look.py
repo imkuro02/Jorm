@@ -8,7 +8,7 @@ random = random.Random()
 
 
 def command_map(self, line, return_gmcp=False):
-    setting_render_walls = True
+    setting_render_walls = self.settings_manager.get_value('viewmapwalls')
     if self.room == None:
         return
     room_id = self.room.id
@@ -359,7 +359,7 @@ def command_map(self, line, return_gmcp=False):
                 cell += Art.EMPTY
 
             t.add_data(cell)
-            # self.sendLine(t.get_table()+'\n\n\n-----------\n\n\n')
+            # self.send_line(t.get_table()+'\n\n\n-----------\n\n\n')
 
     # empty space stripper
     """
@@ -415,7 +415,7 @@ def command_map(self, line, return_gmcp=False):
     combined_output = t.get_table()  # pad_lines_to_be_map_width(t.get_table())
 
     if not return_gmcp:
-        self.sendLine("<Map Start>\n" + combined_output + "<Map End>")
+        self.send_line("<Map Start>\n" + combined_output + "<Map End>")
     else:
         return combined_output
 
@@ -470,10 +470,10 @@ def command_scan(self, line):
                     see = see + "" + direction_name + " from here"
                 see = see + "\n"
     if see == "":
-        self.sendLine("You scan your surroundings but see no one")
+        self.send_line("You scan your surroundings but see no one")
         return
 
-    self.sendLine(f"You scan your surroundings and see: \n{see[:-1:]}")
+    self.send_line(f"You scan your surroundings and see: \n{see[:-1:]}")
 
 
 def command_look(self, line, return_gmcp=False):
@@ -577,19 +577,19 @@ def command_look(self, line, return_gmcp=False):
                 see = see + "" + see_items
 
         if not return_gmcp:
-            self.sendLine(see)
+            self.send_line(see)
         else:
             return see
-        # self.sendLine(see)
+        # self.send_line(see)
 
     def look_actor(actor):
         sheet = actor.get_character_sheet(sheet_getter=self)
-        self.sendLine(f"You are looking at {sheet}")
+        self.send_line(f"You are looking at {sheet}")
         return
 
     def look_item(identifier, item):
         output = item.identify(identifier=identifier)
-        identifier.sendLine("You look at: " + output)
+        identifier.send_line("You look at: " + output)
         return
 
     if self.room == None:
@@ -603,7 +603,7 @@ def command_look(self, line, return_gmcp=False):
 
     look_at = systems.utils.match_word(line, whole_list)
     # print(line,look_at,whole_list)
-    # self.sendLine(look_at)
+    # self.send_line(look_at)
 
     if line == "":
         see = look_room(self, self.room.id)
@@ -612,14 +612,14 @@ def command_look(self, line, return_gmcp=False):
     if look_at in list_of_actors:
         actor = self.get_actor(line)
         if actor == None:
-            self.sendLine('Look at?')
+            self.send_line('Look at?')
             return
         look_actor(actor)
 
     if look_at in list_of_items:
         item = self.get_item(line, search_mode="room")
         if item == None:
-            self.sendLine('Look at?')
+            self.send_line('Look at?')
             return
         look_item(self, item[0])
 

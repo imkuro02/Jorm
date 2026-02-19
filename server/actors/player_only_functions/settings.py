@@ -18,6 +18,7 @@ class SETTINGS:
     LOOK = "look"
     VIEW_ROOM = "viewroom"
     VIEW_MAP = "viewmap"
+    VIEW_MAP_WALLS = 'viewmapwalls'
     VIEW_ASCII_ART = "viewasciiart"
     PVP = "pvp"
     RESET = "reset"
@@ -36,6 +37,7 @@ class SETTINGS:
         ALIAS,
         VIEW_ROOM,
         VIEW_MAP,
+        VIEW_MAP_WALLS,
         VIEW_ASCII_ART,
         PVP,
         RESET,
@@ -61,6 +63,7 @@ class Settings:
             SETTINGS.ECHO: True,
             SETTINGS.VIEW_ROOM: True,
             SETTINGS.VIEW_MAP: True,
+            SETTINGS.VIEW_MAP_WALLS: True,
             SETTINGS.VIEW_ASCII_ART: True,
             SETTINGS.DEBUG: False,
             SETTINGS.ALIAS: {},
@@ -143,46 +146,46 @@ class Settings:
 
         command = match_word(line[0], SETTINGS.LIST_SETTINGS)
 
-        # self.actor.sendLine(f'{line}, {command}')
+        # self.actor.send_line(f'{line}, {command}')
         match command:
             case SETTINGS.RESET:
-                self.actor.sendLine("All settings reset to default")
+                self.actor.send_line("All settings reset to default")
                 self.actor.settings_manager = Settings(self.actor)
                 return
             
             case SETTINGS.ECHO:
                 if len(line) == 1:
-                    self.actor.sendLine(
+                    self.actor.send_line(
                         "Echo setting needs an argument (on or off?)"
                     )
                     return
                 value = line[1]
                 self.settings[SETTINGS.ECHO] = self.true_or_false(value)
-                self.actor.sendLine(
+                self.actor.send_line(
                     f"Echo enabled: {self.settings[SETTINGS.ECHO]}"
                 )
 
             case SETTINGS.COLOR:
                 if len(line) == 1:  # view aliases
-                    self.actor.sendLine("View colors")
+                    self.actor.send_line("View colors")
                     output = ""
                     if SETTINGS.COLOR not in self.settings:
-                        self.actor.sendLine("No colors")
+                        self.actor.send_line("No colors")
                         return
                     for alias in self.settings[SETTINGS.COLOR]:
                         output += f"{alias} = {self.settings[SETTINGS.COLOR][alias]}\n"
-                    self.actor.sendLine(output)
+                    self.actor.send_line(output)
                     return
                 if len(line) == 2:  # clear an alias
                     alias = line[1]
                     if alias in self.settings[SETTINGS.COLOR]:
-                        self.actor.sendLine(f'Clear color "{alias}"')
+                        self.actor.send_line(f'Clear color "{alias}"')
                         del self.settings[SETTINGS.COLOR][alias]
                     return
                 if len(line) >= 3:  # set an alias
                     alias = line[1]
                     string = " ".join(line[2::]).strip()
-                    self.actor.sendLine(f"{alias} = {string}")
+                    self.actor.send_line(f"{alias} = {string}")
                     if SETTINGS.COLOR not in self.settings:
                         self.settings[SETTINGS.COLOR] = {}
                     self.settings[SETTINGS.COLOR][alias] = string
@@ -190,30 +193,30 @@ class Settings:
 
             case SETTINGS.ALIAS:
                 if len(line) == 1:  # view aliases
-                    self.actor.sendLine("View aliasses")
+                    self.actor.send_line("View aliasses")
                     output = ""
                     if SETTINGS.ALIAS not in self.settings:
-                        self.actor.sendLine("No aliases")
+                        self.actor.send_line("No aliases")
                         return
 
                     for alias in self.settings[SETTINGS.ALIAS]:
                         output += f"{alias} = {self.settings[SETTINGS.ALIAS][alias]}\n"
-                    self.actor.sendLine(output)
+                    self.actor.send_line(output)
                     return
                 if len(line) == 2:  # clear an alias
                     alias = line[1]
                     if alias in self.settings[SETTINGS.ALIAS]:
-                        self.actor.sendLine(f'Clear alias "{alias}"')
+                        self.actor.send_line(f'Clear alias "{alias}"')
                         del self.settings[SETTINGS.ALIAS][alias]
                     return
                 if len(line) >= 3:  # set an alias
                     alias = line[1]
                     if alias in BANNED_ALIASES:
-                        self.actor.sendLine(f"You can't set {alias} as an alias")
+                        self.actor.send_line(f"You can't set {alias} as an alias")
                         return
 
                     string = " ".join(line[2::]).strip()
-                    self.actor.sendLine(f"{alias} = {string}")
+                    self.actor.send_line(f"{alias} = {string}")
                     if SETTINGS.ALIAS not in self.settings:
                         self.settings[SETTINGS.ALIAS] = {}
                     self.settings[SETTINGS.ALIAS][alias] = string
@@ -221,56 +224,68 @@ class Settings:
 
             case SETTINGS.GMCP:
                 if len(line) == 1:
-                    self.actor.sendLine("GMCP setting needs an argument (on or off?)")
+                    self.actor.send_line("GMCP setting needs an argument (on or off?)")
                     return
                 value = line[1]
                 self.settings[SETTINGS.GMCP] = self.true_or_false(value)
                 self.actor.protocol.enabled_gmcp = self.true_or_false(value)
-                self.actor.sendLine(f"GMCP enabled: {self.true_or_false(value)}")
+                self.actor.send_line(f"GMCP enabled: {self.true_or_false(value)}")
 
             case SETTINGS.VIEW_MAP:
                 if len(line) == 1:
-                    self.actor.sendLine(
+                    self.actor.send_line(
                         "View Map setting needs an argument (on or off?)"
                     )
                     return
                 value = line[1]
                 self.settings[SETTINGS.VIEW_MAP] = self.true_or_false(value)
-                self.actor.sendLine(
+                self.actor.send_line(
                     f"View Map enabled: {self.settings[SETTINGS.VIEW_MAP]}"
+                )
+
+            case SETTINGS.VIEW_MAP_WALLS:
+                if len(line) == 1:
+                    self.actor.send_line(
+                        "View Map Walls setting needs an argument (on or off?)"
+                    )
+                    return
+                value = line[1]
+                self.settings[SETTINGS.VIEW_MAP_WALLS] = self.true_or_false(value)
+                self.actor.send_line(
+                    f"View Map Walls enabled: {self.settings[SETTINGS.VIEW_MAP_WALLS]}"
                 )
 
             case SETTINGS.VIEW_ASCII_ART:
                 if len(line) == 1:
-                    self.actor.sendLine(
+                    self.actor.send_line(
                         "View Ascii Art setting needs an argument (on or off?)"
                     )
                     return
                 value = line[1]
                 self.settings[SETTINGS.VIEW_ASCII_ART] = self.true_or_false(value)
-                self.actor.sendLine(
+                self.actor.send_line(
                     f"View Ascii Art enabled: {self.settings[SETTINGS.VIEW_ASCII_ART]}"
                 )
 
             case SETTINGS.VIEW_ROOM:
                 if len(line) == 1:
-                    self.actor.sendLine(
+                    self.actor.send_line(
                         "View Room setting needs an argument (on or off?)"
                     )
                     return
                 value = line[1]
                 self.settings[SETTINGS.VIEW_ROOM] = self.true_or_false(value)
-                self.actor.sendLine(
+                self.actor.send_line(
                     f"View Room enabled: {self.settings[SETTINGS.VIEW_ROOM]}"
                 )
 
             case SETTINGS.DEBUG:
                 if len(line) == 1:
-                    self.actor.sendLine("Debug setting needs an argument (on or off?)")
+                    self.actor.send_line("Debug setting needs an argument (on or off?)")
                     return
                 value = line[1]
                 self.settings[SETTINGS.DEBUG] = self.true_or_false(value)
-                self.actor.sendLine(f"Debug enabled: {self.settings[SETTINGS.DEBUG]}")
+                self.actor.send_line(f"Debug enabled: {self.settings[SETTINGS.DEBUG]}")
 
             case SETTINGS.LOGOUT:
                 proto = self.actor.protocol
@@ -284,14 +299,14 @@ class Settings:
                 succ = proto.register_account_changes(username, password)
                 if succ and proto.guest:
                     proto.guest = False
-                    proto.actor.sendLine(
+                    proto.actor.send_line(
                         f'{Color.GOOD}This account is no longer a guest account\n{Color.IMPORTANT}REMEMBER: You should set a password with "settings password <new password>"{Color.NORMAL}'
                     )
 
             case SETTINGS.PWD:
                 proto = self.actor.protocol
                 if proto.guest:
-                    proto.actor.sendLine(
+                    proto.actor.send_line(
                         f"{Color.BAD}You are currently a guest, you need to set a new username before changing your password{Color.NORMAL}"
                     )
                     return
@@ -304,7 +319,7 @@ class Settings:
             case SETTINGS.EMAIL:
                 proto = self.actor.protocol
                 if proto.guest:
-                    proto.actor.sendLine(
+                    proto.actor.send_line(
                         f"{Color.BAD}You are currently a guest, you need to set a new username before changing your email{Color.NORMAL}"
                     )
                     return
@@ -313,11 +328,11 @@ class Settings:
                 email = " ".join(original_line.split()[1:])
                 if email == "":
                     if SETTINGS.EMAIL in self.settings:
-                        self.actor.sendLine(
+                        self.actor.send_line(
                             f'Your current email is "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".'
                         )
                     else:
-                        self.actor.sendLine(
+                        self.actor.send_line(
                             f'You dont have email set, please set your email with "{Color.GOOD}settings email [your@email.com]{Color.NORMAL}".'
                         )
                     return
@@ -325,19 +340,19 @@ class Settings:
                 password = proto.password
                 username = proto.username
                 succ = proto.register_account_changes(username, password)
-                self.actor.sendLine(
+                self.actor.send_line(
                     f'Your email is now "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".'
                 )
 
             case SETTINGS.PROMPT:
                 prompt = " ".join(original_line.split()[1:])
                 if prompt == " " or prompt == "":
-                    self.actor.sendLine(
+                    self.actor.send_line(
                         f'Current prompt is: "{self.get_value(SETTINGS.PROMPT)}"',
                         color=False,
                     )
                     if self.get_value(SETTINGS.PROMPT) in self.prompt_default:
-                        self.actor.sendLine(
+                        self.actor.send_line(
                             f'\nPrompt {self.get_value(SETTINGS.PROMPT)} is a builting prompt\nWhich looks like this:"{self.prompt_default[self.get_value(SETTINGS.PROMPT)]}"',
                             color=False,
                         )
@@ -376,7 +391,7 @@ def command_settings(self, line):
             t.add_data(s[i])
 
         output = t.get_table() + 'Type "settings [Setting]" to view vlaue of "Special"'
-        self.sendLine(output)
+        self.send_line(output)
         return
 
     self.settings_manager.command_settings(line)

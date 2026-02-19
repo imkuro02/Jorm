@@ -6,11 +6,11 @@ import random
 @check_your_turn
 @check_alive
 def command_flee(self, line):
-    #self.sendLine('@redFleeing is temporarely disabled in game sorry...@normal')
+    #self.send_line('@redFleeing is temporarely disabled in game sorry...@normal')
     #return
 
     if self.room.combat == None:
-        self.sendLine('You are not in combat, you don\'t need to flee')
+        self.send_line('You are not in combat, you don\'t need to flee')
         return
     #self.simple_broadcast(
     #    None,
@@ -25,7 +25,7 @@ def command_flee(self, line):
     #)
 
     #if self.status != ActorStatusType.FIGHTING:
-    #    self.sendLine('You must be fighting to flee!')
+    #    self.send_line('You must be fighting to flee!')
     #    return
 
     self.simple_broadcast('You flee!', f'{self.pretty_name()} flees!', sound = Audio.BUFF)
@@ -42,7 +42,7 @@ def command_flee(self, line):
         # if fighting, set to normal otherwise combat will continue even without being there
         if par.status == ActorStatusType.FIGHTING:
             par.status = ActorStatusType.NORMAL
-        par.sendLine('You flee too!')
+        par.send_line('You flee too!')
         #par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
 
 
@@ -58,7 +58,7 @@ def command_go(self, line = '', room_id = None):
     world = self.protocol.factory.world
     if room_id == None:
         if line == '':
-            self.sendLine('Go where?')
+            self.send_line('Go where?')
             return
 
         direction = None
@@ -115,24 +115,24 @@ def command_go(self, line = '', room_id = None):
                 if roll == 1:
                     if self.party_manager.party != None:
                         if self.party_manager.party.actor == self:
-                            self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
+                            self.send_line(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
                             return
                     else:
-                        self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
+                        self.send_line(f'{self.room.is_enemy_present().pretty_name()} is in the way', sound=Audio.ERROR) #self.command_fight('')
                         return
 
         if direction.blocked and self.room.is_enemy_present() and self.room.combat == None:
-            self.sendLine(f'{self.room.is_enemy_present().pretty_name()} is blocking the path', sound=Audio.ERROR)
+            self.send_line(f'{self.room.is_enemy_present().pretty_name()} is blocking the path', sound=Audio.ERROR)
             return
 
         if direction.item_required != None:
             item = self.inventory_manager.get_item_by_premade_id(direction.item_required)
             if item == None:
-                self.sendLine(f'You need {ITEMS[direction.item_required]["name"]}',sound=Audio.ERROR)
+                self.send_line(f'You need {ITEMS[direction.item_required]["name"]}',sound=Audio.ERROR)
                 return
             else:
                 if direction.item_required_consume == True:
-                    self.sendLine(f'{item.name} crumbles to dust')
+                    self.send_line(f'{item.name} crumbles to dust')
                     self.inventory_manager.remove_item(item,1)
 
 
@@ -167,7 +167,7 @@ def command_go(self, line = '', room_id = None):
                     continue
                 #par.command_go(line)
                 self.room.move_actor(par, silent = True)
-                #par.sendLine(f'You follow {self.pretty_name()}', sound = Audio.walk())
+                #par.send_line(f'You follow {self.pretty_name()}', sound = Audio.walk())
                 #par.finish_turn(force_cooldown = True)
                 par.sendSound(Audio.walk())
 

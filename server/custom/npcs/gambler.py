@@ -28,7 +28,7 @@ class gambling_dialog(Dialog):
 
     def end_dialog(self, forced = 0):
         if self.current_line != "propose_bid" or forced == 1:
-            #self.player.sendLine('END')
+            #self.player.send_line('END')
             self.end_gambling()
             return super().end_dialog()
 
@@ -165,7 +165,7 @@ class gambling(Npc):
 
     def trigger_gamble(self, player, line):
         if len(line.split())!=2:
-            player.sendLine(f'{self.pretty_name()} says "If you want to gamble, either talk to me, or "gamble <amount>""')
+            player.send_line(f'{self.pretty_name()} says "If you want to gamble, either talk to me, or "gamble <amount>""')
             return True
         self.talk_to(player)
         player.current_dialog.answer('1')

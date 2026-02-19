@@ -188,7 +188,7 @@ class CooldownManager:
             del self.cooldowns[cooldown]
             if cooldown in self.long_cooldowns:
                 del self.long_cooldowns[cooldown]
-                self.actor.sendLine(
+                self.actor.send_line(
                     f"{Color.GOOD}{SKILLS[cooldown]['name']} is ready{Color.NORMAL}"
                 )
 
@@ -460,10 +460,10 @@ class Actor:
 
     def talk_to(self, talker):
         if talker.current_dialog != None:
-            talker.sendLine("You are already conversing")
+            talker.send_line("You are already conversing")
             return False
         if self.dialog_tree == None:
-            talker.sendLine("There is nothing to talk about")
+            talker.send_line("There is nothing to talk about")
             return False
         return True  # return true if no errors
 
@@ -878,7 +878,7 @@ class Actor:
             if player == self:
                 if line_self == None:
                     continue
-                player.sendLine(f"{line_self}", msg_type=msg_type)
+                player.send_line(f"{line_self}", msg_type=msg_type)
                 if sound != None:
                     player.sendSound(sound)
             else:
@@ -886,7 +886,7 @@ class Actor:
                     continue
                 if sound != None:
                     player.sendSound(sound)
-                player.sendLine(f"{line_others}", msg_type=msg_type)
+                player.send_line(f"{line_others}", msg_type=msg_type)
 
     def finish_turn(self, force_cooldown=False):
         # force_cooldown forces timers to go down for affects and skills
@@ -920,7 +920,7 @@ class Actor:
         if type(self).__name__ == "Player":
             output = ""
             # output = f'@yellowYour turn.@normal'
-            # self.sendLine(output)
+            # self.send_line(output)
             par = self
 
             # output = par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
@@ -974,7 +974,7 @@ class Actor:
             if return_gmcp:
                 return output
 
-            self.sendLine(output)
+            self.send_line(output)
 
     def get_icon(self, who_checks):
         if type(who_checks).__name__ == "Player":
@@ -1006,7 +1006,7 @@ class Actor:
                 if _icon != "":
                     _icon = "\n" + _icon
                 output_self = f"{par.prompt(par)} {Color.COMBAT_TURN}Your turn{Color.NORMAL}{_icon}"
-                par.sendLine(output_self)
+                par.send_line(output_self)
                 # self.show_prompts(self.room.combat.participants.values())
                 continue
 
@@ -1016,7 +1016,7 @@ class Actor:
             output_other = (
                 f"{self.prompt(par)} {self.pretty_name()}'s turn{Color.NORMAL}{_icon}"
             )
-            par.sendLine(output_other)
+            par.send_line(output_other)
 
         # print(self.room.combat)
 
@@ -1029,10 +1029,10 @@ class Actor:
         self.affect_manager.join_combat()
         self.inventory_manager.set_turn()
 
-    def sendLine(self, line, color=True, sound=None, msg_type=None):
+    def send_line(self, line, color=True, sound=None, msg_type=None):
         return
         systems.utils.debug_print(
-            f"sendLine called in a object class Npc function? line: {line}"
+            f"send_line called in a object class Npc function? line: {line}"
         )
 
     def sendSound(self, sfx):

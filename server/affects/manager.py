@@ -15,7 +15,7 @@ class AffectsManager:
         aff_to_delete = []
         for aff in self.get_all_afflictions().values():
             if forced == True:
-                # self.actor.sendLine(f'forced unload of affects true: {aff.name}')
+                # self.actor.send_line(f'forced unload of affects true: {aff.name}')
                 aff_to_delete.append(aff)
                 continue
 

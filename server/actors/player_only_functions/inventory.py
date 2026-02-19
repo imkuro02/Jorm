@@ -41,7 +41,7 @@ def command_get(self, line):
     item_found = self.get_item(line, search_mode="room")
     if line != "all":
         if item_found == None:
-            self.sendLine("Get what?", sound=Audio.ERROR)
+            self.send_line("Get what?", sound=Audio.ERROR)
             return
 
         items_to_get = item_found
@@ -50,7 +50,7 @@ def command_get(self, line):
     for item in items_to_get:
         item_pretty_name_before_pickup = item.pretty_name()
         if not item.can_pick_up:
-            self.sendLine(f'You can\'t pick up {item.pretty_name()}')
+            self.send_line(f'You can\'t pick up {item.pretty_name()}')
             continue
 
         _item_removed_from_room = self.room.inventory_manager.remove_item(item)
@@ -65,7 +65,7 @@ def command_get(self, line):
                 self.inventory_manager.remove_item(item)
 
         else:
-            self.sendLine(f"You can't pick up {item.pretty_name()}", sound=Audio.ERROR)
+            self.send_line(f"You can't pick up {item.pretty_name()}", sound=Audio.ERROR)
             continue
 
         items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
@@ -91,7 +91,7 @@ def command_drop(self, line):
     item_found = self.get_item(line)
     if line != "all":
         if item_found == None:
-            self.sendLine("Drop what?", sound=Audio.ERROR)
+            self.send_line("Drop what?", sound=Audio.ERROR)
             return
 
         items_to_get = item_found
@@ -101,7 +101,7 @@ def command_drop(self, line):
         item_pretty_name_before_pickup = item.pretty_name()
 
         if not item.can_tinker_with():
-            self.sendLine(
+            self.send_line(
                 f"Cannot drop {item.pretty_name()} since its kept or equipped"
             )
             continue
@@ -129,7 +129,7 @@ def command_scrap(self, line):
     item_found = self.get_item(line)
     if line != "all":
         if item_found == None:
-            self.sendLine("Scrap what?", sound=Audio.ERROR)
+            self.send_line("Scrap what?", sound=Audio.ERROR)
             return
 
         items_to_get = item_found
@@ -139,7 +139,7 @@ def command_scrap(self, line):
         item_pretty_name_before_pickup = item.pretty_name()
 
         if not item.can_tinker_with():
-            self.sendLine(
+            self.send_line(
                 f"Cannot scrap {item.pretty_name()} since its kept or equipped"
             )
             continue
@@ -164,7 +164,7 @@ def command_scrap(self, line):
 @check_alive
 def command_reforge(self, line):
     if line == "all":
-        self.sendLine("WHAT AN AWFUL IDEA!! NO!")
+        self.send_line("WHAT AN AWFUL IDEA!! NO!")
         return
 
     items_to_get = []
@@ -175,7 +175,7 @@ def command_reforge(self, line):
     item_found = self.get_item(line)
     if line != "all":
         if item_found == None:
-            self.sendLine("Reforge what?", sound=Audio.ERROR)
+            self.send_line("Reforge what?", sound=Audio.ERROR)
             return
 
         items_to_get = item_found
@@ -186,7 +186,7 @@ def command_reforge(self, line):
         item_pretty_name_before_reforge = item.pretty_name()
 
         if not item.can_tinker_with():
-            self.sendLine(
+            self.send_line(
                 f"Cannot reforge {item.pretty_name()} since its kept or equipped"
             )
             continue
@@ -205,7 +205,7 @@ def command_reforge(self, line):
         if not self.inventory_manager.remove_items_by_id(
             "currency_0", stack=reforge_cost
         ):
-            self.sendLine(
+            self.send_line(
                 f"You need atleast {reforge_cost} of {ITEMS[reforge_currency]['name']} to reforge this item."
             )
             return
@@ -226,12 +226,12 @@ def command_reforge(self, line):
 @check_not_trading
 def command_split(self, line):
     if self.inventory_manager.get_amount_of_free_item_slots() <= 0:
-        self.sendLine("You don't have enough inventory space")
+        self.send_line("You don't have enough inventory space")
         return
 
     all_words = line.split(" ")
     if len(all_words) <= 1:
-        self.sendLine('Command "split" needs an item, and a value')
+        self.send_line('Command "split" needs an item, and a value')
         return
 
     value = 0
@@ -244,13 +244,13 @@ def command_split(self, line):
     item = self.get_item(" ".join(all_words))
 
     if item == None:
-        self.sendLine("Split what?")
+        self.send_line("Split what?")
         return
 
     item = item[0]
 
     if item.stack <= 1:
-        self.sendLine("Can't split this")
+        self.send_line("Can't split this")
         return
 
     self.inventory_manager.split_stack(item, value)
@@ -275,7 +275,7 @@ def command_sort(self, line):
 
     sorted_items = dict(sorted(self.inventory_manager.items.items(), key=get_name))
     self.inventory_manager.items = sorted_items
-    self.sendLine("You sort your inventory")
+    self.send_line("You sort your inventory")
 
     # raise kept
     for key in reversed(list(self.inventory_manager.items.keys())):
@@ -320,7 +320,7 @@ def command_inventory(self, line):
             num+=1
     """
 
-    self.sendLine(
+    self.send_line(
         f"You carry ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n"
         + t.get_table()
     )
@@ -337,7 +337,7 @@ def command_inventory(self, line):
             if self.inventory_manager.items[i].keep:      output = output + f' @red(K)@normal'
             output = output + '\n'
 
-    self.sendLine(output)
+    self.send_line(output)
     """
 
 
@@ -345,10 +345,10 @@ def command_inventory(self, line):
 def command_keep(self, line):
     item = self.get_item(line, search_mode="unkept")
     if item == None:
-        self.sendLine("Keep what?")
+        self.send_line("Keep what?")
         return
     item = item[0]
-    self.sendLine(f"Keeping {item.name}" if not item.keep else f"Unkeeping {item.name}")
+    self.send_line(f"Keeping {item.name}" if not item.keep else f"Unkeeping {item.name}")
     item.keep = True
 
 
@@ -356,20 +356,20 @@ def command_keep(self, line):
 def command_unkeep(self, line):
     item = self.get_item(line, search_mode="kept")
     if item == None:
-        self.sendLine("Unkeep what?")
+        self.send_line("Unkeep what?")
         return
     item = item[0]
-    self.sendLine(f"Keeping {item.name}" if not item.keep else f"Unkeeping {item.name}")
+    self.send_line(f"Keeping {item.name}" if not item.keep else f"Unkeeping {item.name}")
     item.keep = False
 
 
 def command_identify(self, line):
     item = self.get_item(line)
     if item == None:
-        self.sendLine("Identify what?")
+        self.send_line("Identify what?")
         return
     output = item[0].identify(identifier=self)
-    self.sendLine(output)
+    self.send_line(output)
 
 
 """
@@ -385,7 +385,7 @@ def command_identify(self, line):
     if item == None:
         return
     output = item.identify()
-    self.sendLine(output)
+    self.send_line(output)
 
 
 @check_no_empty_line
@@ -395,7 +395,7 @@ def command_get(self, line):
     item = self.get_item(line, search_mode = 'room')
 
     if item == None:
-        self.sendLine('Get what?')
+        self.send_line('Get what?')
         return
 
     self.inventory_add_item(item)
@@ -411,16 +411,16 @@ def command_get(self, line):
 def command_drop(self, line):
     item = self.get_item(line, search_mode = 'unkept')
     if item == None:
-        self.sendLine(f'Drop what?')
+        self.send_line(f'Drop what?')
         return
 
     if item.keep == True:
-        self.sendLine(f'{item.name} is keept')
+        self.send_line(f'{item.name} is keept')
         return
 
     if item.item_type == ItemType.EQUIPMENT:
         if item.equiped:
-            self.sendLine(f'You can\'t drop worn items')
+            self.send_line(f'You can\'t drop worn items')
             return
 
     self.simple_broadcast(
@@ -445,7 +445,7 @@ def command_inventory(self, line):
             if self.inventory[i].keep:      output = output + f' @red(K)@normal'
             output = output + '\n'
 
-    self.sendLine(output)
+    self.send_line(output)
     return
     #output += f'{StatType.name[StatType.MONEY]}: {self.stat_manager.stats[StatType.MONEY]}\n'
     if line != 'all':
@@ -459,7 +459,7 @@ def command_inventory(self, line):
         for i in inv:
             output += f'{inv[i]} x {i}\n'
 
-        self.sendLine(output)
+        self.send_line(output)
         return
     else:
         for i in self.inventory:
@@ -473,20 +473,20 @@ def command_inventory(self, line):
                 if self.inventory[i].keep:      output = output + f' @red(K)@normal'
                 output = output + '\n'
 
-        self.sendLine(output)
+        self.send_line(output)
         return
 
 @check_no_empty_line
 def command_keep(self, line):
     item = self.get_item(line)
     if item == None:
-        self.sendLine('Keep what?')
+        self.send_line('Keep what?')
     item.keep = not item.keep
     if item.keep:
-        self.sendLine(f'Keeping {item.name}')
+        self.send_line(f'Keeping {item.name}')
         self.raise_item(item.id)
     else:
-        self.sendLine(f'Unkeeping {item.name}')
+        self.send_line(f'Unkeeping {item.name}')
         self.lower_item(item.id)
 """
 
@@ -511,7 +511,7 @@ def lower_item(self, item_id):
 @check_not_trading
 def command_craft(self, line):
     if self.inventory_manager.get_amount_of_free_item_slots() < 1:
-        self.sendLine("You need atleast one empty inventory space to craft")
+        self.send_line("You need atleast one empty inventory space to craft")
         return
 
     line = line.replace("from", ",").replace("and", ",").replace("with", ",")
@@ -524,14 +524,14 @@ def command_craft(self, line):
     to_find = systems.utils.match_word(item_to_craft, list_of_items)
 
     if to_find not in list_of_items:
-        self.sendLine("Can't craft that")
+        self.send_line("Can't craft that")
         return
 
     item_id = LORE["items"][to_find]["premade_id"]
     item_crafting_recipes = LORE["items"][to_find]["crafting_recipe_ingredients"]
 
     if len(item_crafting_recipes) == 0:
-        self.sendLine("Can't craft that")
+        self.send_line("Can't craft that")
         return
 
     recipe_to_use = None
@@ -553,7 +553,7 @@ def command_craft(self, line):
         ingredients_to_use.append(self.get_item(ingredients[item]))
 
     if None in ingredients_to_use:
-        self.sendLine("You are lacking some materials")
+        self.send_line("You are lacking some materials")
         return
 
     if ingredients != []:
@@ -575,16 +575,16 @@ def command_craft(self, line):
             recipe_to_use = recipe
 
     if recipe_to_use == None:
-        self.sendLine("Recipe not found, maybe ingredients were in the wrong order?")
+        self.send_line("Recipe not found, maybe ingredients were in the wrong order?")
         return
 
     for index in range(0, len(recipe_to_use)):
         if ingredients_to_use[index].stack < list(recipe_to_use.values())[index]:
-            self.sendLine(f"Not enough {ingredients_to_use[index].name}")
+            self.send_line(f"Not enough {ingredients_to_use[index].name}")
             return
 
         if not ingredients_to_use[index].can_tinker_with():
-            self.sendLine("Cannot craft with kept or equipped items")
+            self.send_line("Cannot craft with kept or equipped items")
             return
 
     output = ""
@@ -604,4 +604,4 @@ def command_craft(self, line):
     # systems.utils.debug_print(self.inventory_manager.add_item(item))
     self.inventory_manager.add_item(item)
     output = f"You craft {item.name} using: " + output[:-2]
-    self.sendLine(output)
+    self.send_line(output)

@@ -102,7 +102,7 @@ class tavern_room(Room):
         if self.world.factory.ticks_passed % (30 * 1) == 0:
             for i in self.actors.values():
                 if i.status == ActorStatusType.DEAD and self.combat == None:
-                    i.sendLine(
+                    i.send_line(
                         "A patron helps you back up on your feet, and hey!\nThey hand you a Mug"
                     )
                     i.inventory_manager.add_item(load_item("mug"))

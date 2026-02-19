@@ -476,6 +476,7 @@ commands:
       debug        - toggle debug (dont)
       viewroom     - toggle to automatically view rooms with 'look' command when moving
       viewmap      - toggle to automatically view ascii map with 'map' command when moving
+      viewmapwalls - toggle to view "wall" characters on the map
       viewasciiart - toggle to automatically view ascii art with 'look' command when looking
       logout       - will log you out of the game and close the connection.
       autobattler  - toggle to automatically use skills during combat.

@@ -448,7 +448,7 @@ class Room:
                 if type(actor).__name__ == "Player":
                     for i in actor.instanced_rooms:
                         if i in actor.room.world.rooms:
-                            actor.sendLine(
+                            actor.send_line(
                                 f"instanced room: {i} deleted", msg_type=[MsgType.DEBUG]
                             )
                             self.world.rooms_to_unload.append(i)

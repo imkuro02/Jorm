@@ -7,7 +7,7 @@ def get_actor(self, line):
 
     # Return if you cant find a target
     if not isinstance(target, Actor):
-        self.sendLine(f"Could not find your target {target}")
+        self.send_line(f"Could not find your target {target}")
         return None
 
     return target

@@ -4,6 +4,13 @@ versions:
     title: Strike
     unixtime: 1761899677
     features:
+      - sendLine function renamed to send_line (big deal)
+      - viewmapwalls setting added 
+  "180226":
+    id: "180226"
+    title: Strike
+    unixtime: 1761899677
+    features:
       - New skill "Strike"
       - Strike replaces the default Swing skill
       - Strike scales off of highest main stat and deals appropriate damage according to highest stat.

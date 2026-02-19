@@ -14,7 +14,7 @@ def command_equipment(self, line):
     if line != "":
         item = self.get_item(line, search_mode="equipable")
         if item == None:
-            self.sendLine("Equip what?", sound=Audio.ERROR)
+            self.send_line("Equip what?", sound=Audio.ERROR)
             return
 
         item = item[0]
@@ -45,7 +45,7 @@ def command_equipment(self, line):
         else:
             output = output + f'{EquipmentSlotType.name[i] + ":":<12} {self.inventory_manager.items[self.slots_manager.slots[i]].name}\n'
     """
-    self.sendLine(output)
+    self.send_line(output)
 
 
 def inventory_equip(self, item, forced=False):
@@ -54,7 +54,7 @@ def inventory_equip(self, item, forced=False):
         for stat_name in item.stat_manager.reqs:
             if self.stat_manager.stats[stat_name] < item.stat_manager.reqs[stat_name]:
                 if not forced:
-                    self.sendLine(
+                    self.send_line(
                         f"@redYou do not meet the requirements of {item.stat_manager.reqs[stat_name]} {StatType.name[stat_name]}@normal",
                         sound=Audio.ERROR,
                     )

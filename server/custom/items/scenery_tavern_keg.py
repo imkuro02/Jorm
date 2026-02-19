@@ -23,16 +23,16 @@ class scenery_tavern_keg(Item):
 
     def trigger_fill(self, player, line):
         if player.id not in self.ale_volume:
-            #player.sendLine('new player')
+            #player.send_line('new player')
             self.ale_volume[player.id] = 3
 
         if self.ale_volume[player.id] <= 0:
-            player.sendLine('The keg seems empty for now')
+            player.send_line('The keg seems empty for now')
             return True
             
         _removed_one_mug = player.inventory_manager.remove_items_by_id(item_premade_id = 'mug', stack = 1)
         if not _removed_one_mug:
-            player.sendLine('You don\'t have a mug to fill')
+            player.send_line('You don\'t have a mug to fill')
             return True
         
         player.simple_broadcast('You fill a mug of ale',f'{player.pretty_name()} fills a mug of ale')

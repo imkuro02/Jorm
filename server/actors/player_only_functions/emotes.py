@@ -30,7 +30,7 @@ def command_emote(self, line):
     if len(line) >= 1:
         emote = line[0]
     if emote not in emotes:
-        self.sendLine(f'Here is a list of emotes: {[e for e in emotes.keys()]}')
+        self.send_line(f'Here is a list of emotes: {[e for e in emotes.keys()]}')
         return
     target = None
     
@@ -69,19 +69,19 @@ def command_emote(self, line):
             continue
 
         if receiver == self and receiver == target:
-            receiver.sendLine(perspectives['you on you'])
+            receiver.send_line(perspectives['you on you'])
             continue
         if receiver == self and receiver != target:
-            receiver.sendLine(perspectives['you on other'])
+            receiver.send_line(perspectives['you on other'])
             continue
         if receiver != self and receiver != target and self == target:
-            receiver.sendLine(perspectives['user on user'])
+            receiver.send_line(perspectives['user on user'])
             continue
         if receiver != self and receiver == target:
-            receiver.sendLine(perspectives['user on you'])
+            receiver.send_line(perspectives['user on you'])
             continue
         if receiver != self and receiver != target:
-            receiver.sendLine(perspectives['user on other'])
+            receiver.send_line(perspectives['user on other'])
             continue
     return
 
@@ -96,13 +96,13 @@ def command_roll(self, line):
             line = int(line)
             rmax = line
         except Exception as e:
-            self.sendLine('The roll argument must be an intiger')
+            self.send_line('The roll argument must be an intiger')
             return
     else:
         rmax = 100
 
     if rmax <= 0:
-        self.sendLine('The roll argument must be 1 or higher')
+        self.send_line('The roll argument must be 1 or higher')
         return
 
     roll = random.randint(rmin,rmax)

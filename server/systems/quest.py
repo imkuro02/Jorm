@@ -44,10 +44,10 @@ class QuestManager:
     def drop(self, quest_name):
         quest_id = self.get_quest_id_from_quest_name(quest_name)
         if quest_id == None:
-            self.actor.sendLine("Drop what quest?")
+            self.actor.send_line("Drop what quest?")
             return
 
-        self.actor.sendLine(f"You drop {self.quests[quest_id].name}")
+        self.actor.send_line(f"You drop {self.quests[quest_id].name}")
         del self.quests[quest_id]
 
     def check_quest_state(self, quest_id):
@@ -57,7 +57,7 @@ class QuestManager:
 
     def turn_in_quest(self, quest_id):
         if quest_id not in self.quests:
-            self.actor.sendLine("You can't turn in a quest you dont have")
+            self.actor.send_line("You can't turn in a quest you dont have")
             return False
 
         proposal = ObjectiveCountProposal(
@@ -102,7 +102,7 @@ class QuestManager:
         if quest_id in self.quests:
             if quest_id != "daily_quest":
                 if not silent:
-                    self.actor.sendLine("You already have this quest")
+                    self.actor.send_line("You already have this quest")
                 return False
             else:
                 # remove daily_quest so it can be re-added
@@ -110,7 +110,7 @@ class QuestManager:
 
         quest = create_quest(quest_id, self.actor)
         if quest == None:
-            self.actor.sendLine(
+            self.actor.send_line(
                 f'{Color.BAD}Error starting quest{Color.NORMAL}: "{quest_id}"'
             )
             return False
@@ -121,7 +121,7 @@ class QuestManager:
 
         self.quests[quest_id] = quest
         if silent == False:
-            self.actor.sendLine(f"{Color.GOOD}New quest{Color.NORMAL}: {quest.name}")
+            self.actor.send_line(f"{Color.GOOD}New quest{Color.NORMAL}: {quest.name}")
             # self.view(quest.name)
         self.actor.inventory_manager.count_quest_items()
 
@@ -129,18 +129,18 @@ class QuestManager:
 
     def view(self, quest_name):
         if len(self.quests) == 0:
-            self.actor.sendLine("You got no quests")
+            self.actor.send_line("You got no quests")
             return
 
         quest_id = self.get_quest_id_from_quest_name(quest_name)
         if quest_id == None:
-            self.sendLine("View what quest?")
+            self.send_line("View what quest?")
             return
 
         quest_view = self.quests[quest_id].view()
-        self.actor.sendLine(quest_view)
+        self.actor.send_line(quest_view)
         # for objective in self.quests[quest_id].objectives.values():
-        #    self.actor.sendLine(objective.__dict__)
+        #    self.actor.send_line(objective.__dict__)
 
     def check_for_quest_completion(self, quest_id):
         if quest_id not in self.quests:
@@ -293,7 +293,7 @@ class Quest:
             ):
                 # this is buggy cuz it displays quest completed BEFORE stuff actually happnes
                 # like before loot is displayed as picked up for example
-                self.quest_manager.actor.sendLine(
+                self.quest_manager.actor.send_line(
                     f"{Color.GOOD}{QUESTS[objective.quest_id]['name']}{Color.BACK}: {objective.name} completed{Color.NORMAL}"
                 )
             if proposal_accepted:

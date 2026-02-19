@@ -34,7 +34,7 @@ class ServerFactory(protocol.Factory):
         to_disconnect = []
         for i in self.protocols:
             if i.tick_since_last_message == (self.ticks_passed - (30 * 60 * 30)):
-                i.sendLine(
+                i.send_line(
                     "@yellow!!!@normal You are @redAFK@normal and will be logged out soon @yellow!!!@normal"
                 )
             if i.tick_since_last_message == (self.ticks_passed - (30 * 60 * 31)):
@@ -64,7 +64,7 @@ class ServerFactory(protocol.Factory):
     def broadcast(self, message):
         for client in self.protocols:
             if client.username != None:
-                client.sendLine(message)
+                client.send_line(message)
 
 
 # for i in config.ICONS:

@@ -25,7 +25,7 @@ class Party:
     def add_participant(self, participant):
         # self.actor.simple_broadcast('You join the party', f'{participant.pretty_name()} joins the party', send_to = 'room_party')
         # for par in self.participants.values():
-        #    par.sendLine(f'{participant.pretty_name()} joins the party')
+        #    par.send_line(f'{participant.pretty_name()} joins the party')
 
         self.participants[participant.id] = participant
         participant.party_manager.party = self
@@ -47,7 +47,7 @@ class Party:
             send_to="room_party",
         )
         # for par in self.participants.values():
-        #    par.sendLine(f'{participant.pretty_name()} leaves the party')
+        #    par.send_line(f'{participant.pretty_name()} leaves the party')
 
         if participant == self.actor:
             to_remove = []
@@ -67,7 +67,7 @@ class Party:
             participant.protocol.factory.world.rooms[
                 participant.recall_site
             ].move_actor(participant)
-            participant.sendLine("You were in an instance and have been kicked out")
+            participant.send_line("You were in an instance and have been kicked out")
 
 
 class PartyManager:
@@ -98,39 +98,39 @@ class PartyManager:
 
     def party_create(self, line):
         if self.party != None:
-            self.actor.sendLine("You are already in a party")
+            self.actor.send_line("You are already in a party")
         self.party = Party(self.actor)
-        self.actor.sendLine("You create a party")
+        self.actor.send_line("You create a party")
         self.clear_invites()
 
     def party_invite(self, line):
         if self.party == None:
-            self.actor.sendLine("You are not in a party")
+            self.actor.send_line("You are not in a party")
             return
         if self.party.actor != self.actor:
-            self.actor.sendLine("You are not the leader")
+            self.actor.send_line("You are not the leader")
             return
         invited = self.actor.get_actor(line)
 
         if invited == None:
-            self.actor.sendLine("Invite who?")
+            self.actor.send_line("Invite who?")
             return
         if invited.party_manager.party != None:
-            self.actor.sendLine(f"{invited.pretty_name()} is already in a party")
+            self.actor.send_line(f"{invited.pretty_name()} is already in a party")
             return
         if invited == self.actor:
-            self.actor.sendLine("You can't invite yourself")
+            self.actor.send_line("You can't invite yourself")
             return
         if self.party in invited.party_manager.invitations:
-            self.actor.sendLine(f"{invited.pretty_name()} already invited.")
+            self.actor.send_line(f"{invited.pretty_name()} already invited.")
             return
         # lazy way of making sure its a player you are inviting
         if type(invited).__name__ != "Player":
-            self.actor.sendLine(f"{invited.pretty_name()} cannot be invited")
+            self.actor.send_line(f"{invited.pretty_name()} cannot be invited")
             return
         invited.party_manager.invitations.append(self.party)
-        self.actor.sendLine(f"{invited.pretty_name()} invited")
-        invited.sendLine(
+        self.actor.send_line(f"{invited.pretty_name()} invited")
+        invited.send_line(
             f'{self.actor.pretty_name()} invited you to their party, "party join {self.actor.pretty_name()}" to accept'
         )
 
@@ -138,7 +138,7 @@ class PartyManager:
 
     def party_join(self, line):
         if self.party != None:
-            self.actor.sendLine("You are already in a party")
+            self.actor.send_line("You are already in a party")
             return
 
         inviter = self.actor.get_actor(line)
@@ -152,19 +152,19 @@ class PartyManager:
 
     def party_kick(self, line):
         if self.party == None:
-            self.actor.sendLine("You are not in a party")
+            self.actor.send_line("You are not in a party")
             return
         if self.party.actor != self.actor:
-            self.actor.sendLine("You are not the leader")
+            self.actor.send_line("You are not the leader")
             return
         best_match, best_score = systems.utils.match_word(
             line, [par.name for par in self.party.participants.values()], get_score=True
         )
         if best_score < 75:
-            self.actor.sendLine("Kick who from party?")
+            self.actor.send_line("Kick who from party?")
             return
         if best_match == self.actor.name:
-            self.actor.sendLine("You kick yourself in the butt!")
+            self.actor.send_line("You kick yourself in the butt!")
             return
         par = systems.utils.get_match(line, self.party.participants)
         if par in self.party.participants.values():
@@ -176,27 +176,27 @@ class PartyManager:
 
     def party_leave(self, line=""):
         if self.party == None:
-            self.actor.sendLine("You are not in a party")
+            self.actor.send_line("You are not in a party")
             return
         self.party.remove_participant(self.actor)
-        # self.actor.sendLine('You left the party')
+        # self.actor.send_line('You left the party')
         self.clear_invites()
 
     def party_leader(self, line):
         if self.party == None:
-            self.actor.sendLine("You are not in a party")
+            self.actor.send_line("You are not in a party")
             return
         if self.party.actor != self.actor:
-            self.actor.sendLine("You are not the leader")
+            self.actor.send_line("You are not the leader")
             return
         best_match, best_score = systems.utils.match_word(
             line, [par.name for par in self.party.participants.values()], get_score=True
         )
         if best_score < 75:
-            self.actor.sendLine("Promote who to party leader?")
+            self.actor.send_line("Promote who to party leader?")
             return
         if best_match == self.actor.name:
-            self.actor.sendLine("You are the party leader now... Good job...")
+            self.actor.send_line("You are the party leader now... Good job...")
             return
         par = systems.utils.get_match(line, self.party.participants)
         if par in self.party.participants.values():
@@ -215,7 +215,7 @@ class PartyManager:
 
     def party_look(self, line):
         if self.party == None:
-            self.actor.sendLine("You are not in a party")
+            self.actor.send_line("You are not in a party")
             self.actor.command_send_prompt("")
             return
 
@@ -229,7 +229,7 @@ class PartyManager:
             t.add_data(i.prompt(self.actor))
         output = t.get_table()
         # output = self.get_party_id() + output
-        self.actor.sendLine(output)
+        self.actor.send_line(output)
 
     def handle_party_message(self, line):
         # empty lines are handled as resend last line
@@ -237,7 +237,7 @@ class PartyManager:
             line = "look"
 
         # if self.actor.status != ActorStatusType.NORMAL and line != 'look':
-        #    self.actor.sendLine('You can only do "party" in combat.')
+        #    self.actor.send_line('You can only do "party" in combat.')
         #    return
 
         command = line.split()[0]
@@ -247,7 +247,7 @@ class PartyManager:
             command, party_commands.keys(), get_score=True
         )
         if best_score < 75:
-            self.actor.sendLine(
+            self.actor.send_line(
                 f'You wrote "{command}" did you mean "{best_match}"?\nUse "help party" to learn more about this command.'
             )
             return

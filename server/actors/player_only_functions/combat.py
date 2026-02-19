@@ -26,22 +26,22 @@ def command_target(self, line):
 
     if line in 'c none clear 0 stop noone'.split():
         self.ai.target = None
-        self.sendLine('Target cleared')
+        self.send_line('Target cleared')
         return
 
     if line == '':
         if self.ai.target != None:
-            self.sendLine(f'Target is: {self.ai.target.pretty_name()}')
+            self.send_line(f'Target is: {self.ai.target.pretty_name()}')
         else:
-            self.sendLine(f'You have no target')
+            self.send_line(f'You have no target')
         return
 
     if target == None:
-        self.sendLine('Target unclear!')
+        self.send_line('Target unclear!')
         return
 
     self.ai.target = target
-    self.sendLine(f'Targetting: {self.ai.target.pretty_name()}')
+    self.send_line(f'Targetting: {self.ai.target.pretty_name()}')
 """
 
 
@@ -49,11 +49,11 @@ def command_target(self, line):
 @check_alive
 def command_fight(self, line):
     if self.room.combat != None:
-        self.sendLine("There is already a fight here!")
+        self.send_line("There is already a fight here!")
         return
 
     if self.status == ActorStatusType.FIGHTING:
-        self.sendLine(
+        self.send_line(
             'You are already fighting! you can "flee" or "pass" or "use <skill>"'
         )
         # if self.ai.predict_use_best_skill(offensive_only = True, for_prediction = False) == False:
@@ -69,7 +69,7 @@ def command_fight(self, line):
         if self.party_manager.party.actor == self:
             self.room.join_combat(self)
         else:
-            self.sendLine("You are not the party leader")
+            self.send_line("You are not the party leader")
 
     # self.ai.clear_prediction()
 
@@ -155,7 +155,7 @@ def command_use_skill(self, line, silent = False):
     if _action == None:
         if silent:
             return False
-        self.sendLine(f'Use what?   - "{line}"')
+        self.send_line(f'Use what?   - "{line}"')
         return False
 
     if _target == None:
@@ -174,7 +174,7 @@ def command_use_skill(self, line, silent = False):
     if _target == None:
         if silent:
             return False
-        self.sendLine(f'Use {action_name} on who?')
+        self.send_line(f'Use {action_name} on who?')
         return False
 
 
@@ -260,11 +260,11 @@ def use2(self, line, silent = False):
 
     if action_name == None:
         if not silent:
-            self.sendLine(f'Couldnt find skill or item to use, did you mean to use "{most_likely_action}"? ({most_likely_action_score}% sure)')
+            self.send_line(f'Couldnt find skill or item to use, did you mean to use "{most_likely_action}"? ({most_likely_action_score}% sure)')
         return False
     if line[0][0].lower() != action_name[0].lower():
         if not silent:
-            self.sendLine(f'Couldnt find skill or item to use, did you mean to use "{most_likely_action}"? ({most_likely_action_score}% sure)')
+            self.send_line(f'Couldnt find skill or item to use, did you mean to use "{most_likely_action}"? ({most_likely_action_score}% sure)')
         return False
 
     line = ' '.join(line).replace(best_match.lower(), '', 1).strip().split(' ')
@@ -296,7 +296,7 @@ def use2(self, line, silent = False):
         if _action == None:
             if silent:
                 return False
-            self.sendLine(f'Use what?   - "{line}"')
+            self.send_line(f'Use what?   - "{line}"')
             return False
 
         if _target == None:
@@ -315,7 +315,7 @@ def use2(self, line, silent = False):
     if _target == None:
         if silent:
             return False
-        self.sendLine(f'Use {action_name} on?')
+        self.send_line(f'Use {action_name} on?')
         return False
 
 
@@ -398,11 +398,11 @@ def use(self, line, silent=False):
 
     if action_name == None:
         if not silent:
-            #self.sendLine("Could not find skill to use")
-            self.sendLine("Could not find item or skill to use")
+            #self.send_line("Could not find skill to use")
+            self.send_line("Could not find item or skill to use")
         return False
     # if line[0][0].lower() != action_name[0].lower():
-    #    if not silent: self.sendLine('Could not find item or skill to use')
+    #    if not silent: self.send_line('Could not find item or skill to use')
     #    return False
 
     line = " ".join(line).replace(found_action_with, "", 1).strip().split(" ")
@@ -429,7 +429,7 @@ def use(self, line, silent=False):
         if _action == None:
             if silent:
                 return False
-            self.sendLine(f'Use what?   - "{line}"')
+            self.send_line(f'Use what?   - "{line}"')
             return False
 
     if _target == None:
@@ -450,7 +450,7 @@ def use(self, line, silent=False):
     if _target == None:
         if silent:
             return False
-        self.sendLine(f"Use {action_name} on?")
+        self.send_line(f"Use {action_name} on?")
         return False
 
     #systems.utils.debug_print(_target.id)
@@ -487,7 +487,7 @@ def command_use(self, line, is_trying = False):
     is_trying = True
 
     if line.endswith((' on', ' at')):
-        self.sendLine('Use on who?')
+        self.send_line('Use on who?')
         return False
 
     id_to_name, name_to_id = get_skills()
@@ -524,7 +524,7 @@ def command_use(self, line, is_trying = False):
         action = systems.utils.get_match(action, {**skills_dict, **self.inventory_manager.items})
         target = systems.utils.get_match(target, {**self.room.actors, **self.inventory_manager.items})
 
-    #self.sendLine(action.name)
+    #self.send_line(action.name)
 
     _action = None
     _target = None
@@ -539,11 +539,11 @@ def command_use(self, line, is_trying = False):
         _target = target
 
     if _action == None:
-        self.sendLine(f'Use what?   - "{line}"')
+        self.send_line(f'Use what?   - "{line}"')
         return False
 
     if _target == None:
-        self.sendLine(f'On who?     - "{line}"')
+        self.send_line(f'On who?     - "{line}"')
         return False
 
 
@@ -561,7 +561,7 @@ def command_use(self, line, is_trying = False):
     if not is_trying:
         if self.room.combat != None:
             if self.room.combat.current_actor != self:
-                self.sendLine('> Use command queued! <')
+                self.send_line('> Use command queued! <')
                 return True
 
     #systems.utils.debug_print([i for i in self.queued_lines if not i.strip().startswith('try')])
@@ -588,10 +588,10 @@ def command_use(self, line, is_trying = False):
 
 def rest_set(self, line):
     if not self.room.can_be_recall_site:
-        self.sendLine("@redThis is not a suitable rest spot.@normal")
+        self.send_line("@redThis is not a suitable rest spot.@normal")
         return
     self.recall_site = self.room.id
-    self.sendLine(f"@green{self.room.name} is now your rest spot.@normal")
+    self.send_line(f"@green{self.room.name} is now your rest spot.@normal")
 
 
 @check_alive
@@ -729,7 +729,7 @@ def command_rest(self, line):
         output += f"Your resting spot is {self.room.world.rooms[self.recall_site].pretty_name()}"
         if self.status == ActorStatusType.DEAD:
             output += f'\nYou need to use "rest home" to ressurect'
-        self.sendLine(output)
+        self.send_line(output)
         return
 
     if line.lower() in "set":

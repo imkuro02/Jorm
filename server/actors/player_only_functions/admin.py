@@ -32,7 +32,7 @@ def get_any_new_patches(self):
         unix_last_login = int(self.date_of_last_login_previous)
         is_new = unix_version > unix_last_login
         if is_new:
-            self.sendLine(
+            self.send_line(
                 f'{Color.IMPORTANT}You have unread news! type "news" to view what you have missed, "help news" to see more!{Color.NORMAL}'
             )
             return True
@@ -53,7 +53,7 @@ def command_patch_notes(self, line):
         output += f'Reading "{_title}", patch id: {_id}\nFeatures:\n'
         for i in v["features"]:
             output += f"- {i}\n"
-        self.sendLine(output)
+        self.send_line(output)
         return
 
     t = systems.utils.Table(3, 3)
@@ -77,7 +77,7 @@ def command_patch_notes(self, line):
         t.add_data(i["id"], col)
         t.add_data(i["title"], col)
 
-    self.sendLine(t.get_table())
+    self.send_line(t.get_table())
 
 
 def command_show_ref_all(self, line):
@@ -86,7 +86,7 @@ def command_show_ref_all(self, line):
     for r in refs:
         t.add_data(r,filler='.')
         t.add_data(refs[r])
-    self.sendLine(t.get_table())
+    self.send_line(t.get_table())
 
     
 
@@ -133,18 +133,18 @@ def command_help(self, line):
                 for i in related:
                     output = output + "" + i + " "
 
-    self.sendLine(output)
+    self.send_line(output)
 
 
 def command_get_time(self, line):
     if line == "0":
-        self.sendLine("Unix time is: " + str(systems.utils.get_unix_timestamp()))
+        self.send_line("Unix time is: " + str(systems.utils.get_unix_timestamp()))
     elif line == "1":
-        self.sendLine(str(self.room.world.game_time.get_game_time_int()))
+        self.send_line(str(self.room.world.game_time.get_game_time_int()))
     elif line == "2":
-        self.sendLine(str(self.room.world.game_time.get_game_time_compact_str()))
+        self.send_line(str(self.room.world.game_time.get_game_time_compact_str()))
     elif line == "3":
-        self.sendLine(str(self.room.world.game_time.TIME_OF_DAY))
+        self.send_line(str(self.room.world.game_time.TIME_OF_DAY))
     else:
         game_date_time = self.room.world.game_time.get_game_time()
         day_name = game_date_time["day_name"]
@@ -160,7 +160,7 @@ def command_get_time(self, line):
             if self.room.world.game_time.TIME_OF_DAY[i]:
                 time_of_day_label = i
         output = f"The date is {day:02}/{month + 1:02}/{year:04}, its a {day_name} of {month_name}. It is {time_of_day_label} {hour:02}:{minute:02}."
-        self.sendLine(output)
+        self.send_line(output)
 
 
 @check_is_admin
@@ -168,7 +168,7 @@ def command_set_time(self, line):
     try:
         self.room.world.game_time.set_game_time(line)
     except Exception as e:
-        self.sendLine(f"Cant set time: {e}")
+        self.send_line(f"Cant set time: {e}")
 
 
 """
@@ -179,7 +179,7 @@ def command_help(self, line):
         output = f'@redNo command found, here are all commands you can use help on@normal\n'
         for i in file_text:
             output += f'{i}\n'
-        self.sendLine(output)
+        self.send_line(output)
         return
 
     best_match = systems.utils.match_word(line, files)
@@ -188,7 +188,7 @@ def command_help(self, line):
         content = content.replace(' "',' @yellow"')
         content = content.replace('" ','"@normal ')
 
-    self.sendLine(content)
+    self.send_line(content)
 """
 
 
@@ -214,10 +214,10 @@ def command_history(self, line):
             maximum -= 1
         if maximum == 0:
             break
-    self.sendLine("<History Start>")
+    self.send_line("<History Start>")
     for i in reversed(messages):
-        self.sendLine(i, msg_type=None)
-    self.sendLine("<History End>")
+        self.send_line(i, msg_type=None)
+    self.send_line("<History End>")
 
 
 def command_ranks(self, line):
@@ -279,12 +279,12 @@ def command_ranks(self, line):
         t.add_data(f"{online}", col)
 
     output = t.get_table()
-    self.sendLine(output)
+    self.send_line(output)
 
 
 def command_send_prompt(self, line):
     if line == "":
-        self.sendLine(self.prompt(self))
+        self.send_line(self.prompt(self))
     else:
         actor = None
         list_of_actors = [actor.name for actor in self.room.actors.values()]
@@ -294,10 +294,10 @@ def command_send_prompt(self, line):
             actor = self.get_actor(line)
 
         if actor == None:
-            self.sendLine("Pormpt who?")
+            self.send_line("Pormpt who?")
             return
 
-        self.sendLine(f"Prompt for {actor.pretty_name()}:\n{actor.prompt(self)}")
+        self.send_line(f"Prompt for {actor.pretty_name()}:\n{actor.prompt(self)}")
 
 
 @check_is_admin
@@ -312,32 +312,32 @@ def command_gain_exp(self, exp):
 @check_is_admin
 def command_bonus(self, line):
     if line == "":
-        self.sendLine("check help admin for syntax")
+        self.send_line("check help admin for syntax")
         return
 
     if len(line.split(",")) != 4:
-        self.sendLine("check help admin for syntax")
+        self.send_line("check help admin for syntax")
         return
 
     item_name, _type, key, val = line.split(",")
     item = self.get_item(item_name)
 
     if item == None:
-        self.sendLine("Bonus what? (cant find item)")
+        self.send_line("Bonus what? (cant find item)")
         return
 
     if item.item_type != ItemType.EQUIPMENT:
-        self.sendLine("Cant bonus a non equipable item")
+        self.send_line("Cant bonus a non equipable item")
         return
 
     if item.equiped:
-        self.sendLine("Cant bonus a currently equipped item")
+        self.send_line("Cant bonus a currently equipped item")
         return
 
     try:
         val = int(val)
     except ValueError:
-        self.sendLine("Value is not an intiger")
+        self.send_line("Value is not an intiger")
         return
 
     from items.equipment import EquipmentBonus
@@ -352,7 +352,7 @@ def command_sethp(self, line):
         line = int(line)
         self.stat_manager.stats[StatType.HP] = line
     except Exception as e:
-        self.sendLine(str(e))
+        self.send_line(str(e))
 
 
 """
@@ -387,51 +387,51 @@ def command_update_item(self, line):
 
         if stat in 'name':
             self.inventory_manager.items[item_id].name = str(value)
-            self.sendLine('@greenUpdated@normal')
+            self.send_line('@greenUpdated@normal')
             return
 
         if stat in 'description':
             self.inventory_manager.items[item_id].description = str(value)
-            self.sendLine('@greenUpdated@normal')
+            self.send_line('@greenUpdated@normal')
             return
 
         if self.inventory_manager.items[item_id].item_type == ItemType.CONSUMABLE:
             if stat in 'skills':
                 if value not in SKILLS:
-                    self.sendLine('@redNot a valid skill_id@normal')
+                    self.send_line('@redNot a valid skill_id@normal')
                     return
                 if str(value).lower() == 'none':
                     self.inventory_manager.items[item_id].skill_manager.skills = []
                 else:
                     self.inventory_manager.items[item_id].skill_manager.skills.append(value)
-                self.sendLine('@greenUpdated@normal')
+                self.send_line('@greenUpdated@normal')
                 return
 
         if self.inventory_manager.items[item_id].item_type == ItemType.EQUIPMENT:
             if self.inventory_manager.items[item_id].equiped:
-                self.sendLine(f'command_update_item: dont update items while they are worn!!!')
+                self.send_line(f'command_update_item: dont update items while they are worn!!!')
                 return
 
             if stat in 'slot':
                 self.inventory_manager.items[item_id].slot = getattr(EquipmentSlotType, value)
-                self.sendLine('@greenUpdated@normal')
+                self.send_line('@greenUpdated@normal')
                 return
 
 
             if str(stat) in self.inventory_manager.items[item_id].stat_manager.stats:
                 self.inventory_manager.items[str(item_id)].stat_manager.stats[str(stat)] = int(value)
-                self.sendLine('@greenUpdated@normal')
+                self.send_line('@greenUpdated@normal')
                 return
 
             if stat[0] == 'r':
                 #systems.utils.debug_print(stat, stat[1::])
                 if str(stat[1::]) in self.inventory_manager.items[item_id].stat_manager.reqs:
                     self.inventory_manager.items[str(item_id)].stat_manager.reqs[str(stat[1::])] = int(value)
-                    self.sendLine('@greenUpdated@normal')
+                    self.send_line('@greenUpdated@normal')
                     return
 
     except Exception as e:
-        self.sendLine(f'something went wrong with updating the item: {e}')
+        self.send_line(f'something went wrong with updating the item: {e}')
 """
 
 
@@ -440,7 +440,7 @@ def command_update_item(self, line):
 def command_load_item(self, line):
     data = config.ITEMS
     if line not in data:
-        self.sendLine(f"{line} is not a premade item")
+        self.send_line(f"{line} is not a premade item")
         return
     item = items.load_item(line)
     if item.premade_id == "currency_0":
@@ -468,14 +468,14 @@ def command_load_npcs(self, line):
 def command_kill(self, line):
     actor = self.get_actor(line)
     if actor == None:
-        self.sendLine("Kill who?")
+        self.send_line("Kill who?")
         return
     actor.die()
 
 
 def command_export(self, line):
     if line == "":
-        self.sendLine(str(self.room) + '->' + str(self.room.__dict__))
+        self.send_line(str(self.room) + '->' + str(self.room.__dict__))
         return
 
     list_of_actors = [actor.name for actor in self.room.actors.values()]
@@ -491,30 +491,30 @@ def command_export(self, line):
     if best_match in list_of_inventory:
         items = self.get_item(best_match)
         if items == None:
-            self.sendLine("cant find this item to export")
+            self.send_line("cant find this item to export")
             return
 
 
-        self.sendLine(str(items[0]) + '->' + str(items[0].__dict__))
+        self.send_line(str(items[0]) + '->' + str(items[0].__dict__))
         """
         item_dict = item.to_dict()
 
         del item_dict['id']
         item_dict = {item_dict['name'].lower(): item_dict}
         yaml_text = yaml.dump(item_dict, default_flow_style=False)
-        self.sendLine(yaml_text, color = False)
+        self.send_line(yaml_text, color = False)
         """
 
     # export actor
     if best_match in list_of_actors:
         actor = self.get_actor(best_match)
         actor_dict = str(actor.__dict__)
-        self.sendLine(str(actor) + '->' + actor_dict)
+        self.send_line(str(actor) + '->' + actor_dict)
 
 
 @check_is_admin
 def command_reload_config(self, line):
-    # self.sendLine(StaticRooms.LOADING)
+    # self.send_line(StaticRooms.LOADING)
 
     # import configuration.config as config
     self.room.world.reload()
@@ -534,9 +534,9 @@ def command_teleport(self, line):
     if user != None:
         # user.room.move_actor(self)
         self.command_go(line="", room_id=user.room.id)
-        self.sendLine(f"You teleport to {user.pretty_name()}")
+        self.send_line(f"You teleport to {user.pretty_name()}")
     else:
-        self.sendLine(f'Cant find "{line}"')
+        self.send_line(f'Cant find "{line}"')
 
 
 @check_not_in_combat
@@ -551,7 +551,7 @@ def command_kick(self, line):
             break
     if user != None:
         user.protocol.disconnect()
-        self.sendLine(f"{user.pretty_name()} kicked")
+        self.send_line(f"{user.pretty_name()} kicked")
 
 
 def command_online(self, line):
@@ -564,7 +564,7 @@ def command_online(self, line):
         user = proto.actor
         t.add_data(user.pretty_name())
     output = t.get_table()
-    self.sendLine(output)
+    self.send_line(output)
 
 
 # sql to create first admin
@@ -575,7 +575,7 @@ def command_grant_admin(self, line):
         name, admin_level = [item.strip('"') for item in line.split()]
         admin_level = int(admin_level)
     except ValueError:
-        self.sendLine('Wrong syntax (admin "username" "admin_level")')
+        self.send_line('Wrong syntax (admin "username" "admin_level")')
         return
 
     for proto in self.protocol.factory.protocols:
@@ -607,9 +607,9 @@ def command_quest(self, line="list"):
             else:
                 t.add_data("")
         if count == 0:
-            self.sendLine("You got no quests")
+            self.send_line("You got no quests")
             return
-        self.sendLine(t.get_table())
+        self.send_line(t.get_table())
         return  # show all quests
 
     if command.lower() in "all":
@@ -628,13 +628,13 @@ def command_quest(self, line="list"):
                 t.add_data("")
             count += 1
         if count == 0:
-            self.sendLine("You got no quests")
+            self.send_line("You got no quests")
             return
-        self.sendLine(t.get_table())
+        self.send_line(t.get_table())
         return
 
     if len(lines) < 2:
-        self.sendLine("Too few arguments")
+        self.send_line("Too few arguments")
         return
     quest_name = " ".join(lines[1:])
 
@@ -694,7 +694,7 @@ def command_force_build(self, line):
             else:
                 t.add_data(temp_slots_manager[slot]["name"])
 
-        self.sendLine(
+        self.send_line(
             f"Due to your level this eq has been set on you:\n {t.get_table()}"
         )
 
@@ -763,14 +763,14 @@ def command_lore(self, line):
                 t.add_data("---")
             else:
                 t.add_data(temp_slots_manager[slot]["name"])
-        self.sendLine(f"Best in slot equipment for your level:\n{t.get_table()}")
+        self.send_line(f"Best in slot equipment for your level:\n{t.get_table()}")
         return
 
     whole_list = list_of_enemies + list_of_items + list_of_rooms + list_of_skills
 
     to_find = systems.utils.match_word(line, whole_list)
 
-    # self.sendLine(to_find)
+    # self.send_line(to_find)
 
     if to_find in list_of_enemies:
         e_id = LORE["enemies"][to_find]["npc_id"]
@@ -821,7 +821,7 @@ def command_lore(self, line):
             output += f"{Color.IMPORTANT}Potential drops{Color.NORMAL}:\n"
             output += output_loot_drops + "\n" + "\n"
 
-        self.sendLine(output.strip())
+        self.send_line(output.strip())
 
         e.die()
         return
@@ -850,7 +850,7 @@ def command_lore(self, line):
                 t.add_data(i[1])
             output = output + t.get_table()
 
-        self.sendLine(output)
+        self.send_line(output)
         return
 
     if to_find in list_of_rooms:
@@ -878,7 +878,7 @@ def command_lore(self, line):
                 item_count += 1
         if item_count != 0:
             output += t.get_table()
-            self.sendLine(output)
+            self.send_line(output)
 
     return
 
@@ -929,12 +929,12 @@ def command_calculator(self, line):
     allowed_chars = allowed_chars_nums + allowed_chars_special + allowed_chars_math
 
     if line == "":
-        self.sendLine(f'Only these characters are allowed: "{allowed_chars}"')
+        self.send_line(f'Only these characters are allowed: "{allowed_chars}"')
         return
 
     for i in line:
         if i not in allowed_chars:
-            self.sendLine(f'Only these characters are allowed: "{allowed_chars}"')
+            self.send_line(f'Only these characters are allowed: "{allowed_chars}"')
             return
 
     try:
@@ -959,4 +959,4 @@ def command_calculator(self, line):
         else:
             _line = _line + color + l
 
-    self.sendLine(f"{_line}  {Color.NORMAL}=  {answer}")
+    self.send_line(f"{_line}  {Color.NORMAL}=  {answer}")

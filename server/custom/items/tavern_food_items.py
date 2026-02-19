@@ -15,7 +15,7 @@ class food_that_cannot_leave_tavern(Consumable):
         if player.room.__class__.__name__ == 'tavern_room':
             return False
             
-        player.sendLine(f'The bartender takes {self.pretty_name()} away as you leave')
+        player.send_line(f'The bartender takes {self.pretty_name()} away as you leave')
         player.inventory_manager.remove_item(self)
 
         return False

@@ -13,9 +13,9 @@ from skills.manager import get_skills, get_user_skill_level_as_index
 @check_not_in_combat
 def command_name_change(self, line):
     if len(line) < 3:
-        self.sendLine(f'{Color.NORMAL}Name is too short{Color.NORMAL}')
+        self.send_line(f'{Color.NORMAL}Name is too short{Color.NORMAL}')
         return
-    self.sendLine(f'Name changed from "{self.name}" to "{line}"')
+    self.send_line(f'Name changed from "{self.name}" to "{line}"')
     self.name = line
 """
 
@@ -27,7 +27,7 @@ def command_level_up(self, stat):
 
     exp_needed = self.get_exp_needed_to_level()
     if self.get_exp_needed_to_level() > self.stat_manager.stats[StatType.EXP]:
-        self.sendLine(
+        self.send_line(
             f"You need {exp_needed - self.stat_manager.stats[StatType.EXP]}EXP to level up"
         )
         return
@@ -42,7 +42,7 @@ def command_level_up(self, stat):
         case "soul":
             stat = StatType.SOUL
         case _:
-            self.sendLine("You can only level up Grit, Flow, Mind and Soul")
+            self.send_line("You can only level up Grit, Flow, Mind and Soul")
             return
 
     increase_by = 1
@@ -60,7 +60,7 @@ def command_level_up(self, stat):
     # self.stat_manager.stats['armor'] += round(self.stat_manager.stats['dex']*.4)
     # self.stat_manager.stats['marmor'] += round(self.stat_manager.stats['dex']*.4)
 
-    self.sendLine(
+    self.send_line(
         f"{Color.GOOD}{stat} {self.stat_manager.stats[stat] - increase_by} -> {self.stat_manager.stats[stat]}. {Color.NORMAL}"
     )
 
@@ -162,7 +162,7 @@ def command_practice(self, line):
         output += f"You are Level {Color.IMPORTANT}{self.stat_manager.stats[StatType.LVL]}{Color.NORMAL}.\n"
         output += f"You have {Color.IMPORTANT}{self.stat_manager.stats[StatType.PP]}{Color.NORMAL} practice points left.\n"
 
-        self.sendLine(t.get_table() + output)
+        self.send_line(t.get_table() + output)
 
     else:
         id_to_name, name_to_id = get_skills()
@@ -185,7 +185,7 @@ def command_practice(self, line):
                 self.skill_manager.skills[skill_id]
                 >= SKILLS[skill_id]["script_values"]["levels"][-1]
             ):
-                self.sendLine(f"{skill_name} is already max level")
+                self.send_line(f"{skill_name} is already max level")
                 for item in equips:
                     self.inventory_equip(item, forced=True)
                 return
@@ -210,15 +210,15 @@ def command_practice(self, line):
             self.inventory_equip(item, forced=True)
 
         if skill_id not in SKILLS.keys():
-            self.sendLine(f"{Color.BAD}This skill does not exist{Color.NORMAL}")
+            self.send_line(f"{Color.BAD}This skill does not exist{Color.NORMAL}")
             return
 
         if not SKILLS[skill_id]["can_be_practiced"]:
-            self.sendLine(f"{Color.BAD}{skill_name} cannot be practiced{Color.NORMAL}")
+            self.send_line(f"{Color.BAD}{skill_name} cannot be practiced{Color.NORMAL}")
             return
 
         if self.stat_manager.stats[StatType.LVL] < SKILLS[skill_id]["level_req"]:
-            self.sendLine(
+            self.send_line(
                 f"{Color.BAD}You are not high enough level to practice {skill_name}{Color.NORMAL}"
             )
             return
@@ -229,9 +229,9 @@ def command_practice(self, line):
 
         # if skill_id in self.skill_manager.skills:
         #    if self.skill_manager.skills[skill_id] >= 1:
-        #        self.sendLine(f'{skill_name} is learned.')
+        #        self.send_line(f'{skill_name} is learned.')
         #    else:
-        #        self.sendLine(f'{skill_name} is forgotten.')
+        #        self.send_line(f'{skill_name} is forgotten.')
         #    return
 
         # pp_to_spend = #new_prac_level - current_prac_level
@@ -241,32 +241,32 @@ def command_practice(self, line):
             new_prac_level = 1
 
         if pp_to_spend <= 0:
-            self.sendLine(
+            self.send_line(
                 f"{Color.BAD}You can't spend negative amount of Practice Points{Color.NORMAL}"
             )
             return
 
         # if pp_to_spend < minimum_practice_req and current_prac_level == 0:
-        #    self.sendLine(f'@redYou must practice {skill_name} to a minium of {minimum_practice_req}@normal')
+        #    self.send_line(f'@redYou must practice {skill_name} to a minium of {minimum_practice_req}@normal')
         #    return
 
         # if new_prac_level > SKILLS[skill_id]['script_values']['levels'][-1]:
-        #    self.sendLine(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]["script_values"]["levels"][-1]}@normal')
+        #    self.send_line(f'@redYou can\'t practice {skill_name} beyond level {SKILLS[skill_id]["script_values"]["levels"][-1]}@normal')
         #    return
 
         if pp_to_spend > self.stat_manager.stats[StatType.PP]:
-            self.sendLine(
+            self.send_line(
                 f"{Color.BAD}You don't have enough Practice Points{Color.NORMAL}"
             )
             return
 
         self.stat_manager.stats[StatType.PP] -= pp_to_spend
         if pp_to_spend == 1:
-            self.sendLine(
+            self.send_line(
                 f'{Color.GOOD}You spend {pp_to_spend} Practice Point on "{skill_name}"{Color.NORMAL}'
             )
         else:
-            self.sendLine(
+            self.send_line(
                 f'{Color.GOOD}You spend {pp_to_spend} Practice Points on "{skill_name}"{Color.NORMAL}'
             )
         self.skill_manager.skills[skill_id] = new_prac_level
@@ -436,10 +436,10 @@ def command_skills(self, line):
 
             output += t.get_table()
 
-        self.sendLine(output + extra_info.strip())
+        self.send_line(output + extra_info.strip())
     else:
         if len(self.skill_manager.skills) == 0:
-            self.sendLine("You do not know any skills...")
+            self.send_line("You do not know any skills...")
             return
 
         t = systems.utils.Table(3, spaces=2)
@@ -499,7 +499,7 @@ def command_skills(self, line):
                 cur_lvl = f"{Color.BAD}{cur_lvl}{Color.NORMAL}"
 
             t.add_data(f"{cur_lvl} {diff}")
-        self.sendLine(t.get_table())
+        self.send_line(t.get_table())
 
 
 @check_not_in_combat
@@ -508,11 +508,11 @@ def command_respec(self, line):
     Player = type(self)
     # for i in self.slots_manager.slots.values():
     #    if i != None:
-    #        self.sendLine('@redYou must unequip everything to respec@normal')
+    #        self.send_line('@redYou must unequip everything to respec@normal')
     #        return
 
     if not self.room.can_be_recall_site:
-        self.sendLine(f"{Color.BAD}It is not safe to respec here{Color.BACK}")
+        self.send_line(f"{Color.BAD}It is not safe to respec here{Color.BACK}")
         self.sendSound(Audio.ERROR)
         return
 
@@ -530,7 +530,7 @@ def command_respec(self, line):
     del temp_player
 
     self.stat_manager.stats[StatType.EXP] = exp
-    self.sendLine(
+    self.send_line(
         f"{Color.GOOD}You have reset your stats, experience is kept{Color.NORMAL}"
     )
 
@@ -540,7 +540,7 @@ def command_respec(self, line):
 
 def command_stats(self, line):
     output = f"You are {self.get_character_sheet()}"
-    self.sendLine(output)
+    self.send_line(output)
 
 
 # @check_alive
@@ -552,11 +552,11 @@ def command_affects(self, line):
         target = self.get_actor(line)
 
     if target == None:
-        self.sendLine("Check the afflictions of who?")
+        self.send_line("Check the afflictions of who?")
         return
 
     output = self.get_affects(target)
-    self.sendLine(output)
+    self.send_line(output)
 
 
 def get_exp_needed_to_level(self):

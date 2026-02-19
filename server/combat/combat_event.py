@@ -149,12 +149,12 @@ class CombatEvent:
 
                 if phy_arm_broke:
                     output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.PHYARMOR]} has broken{Color.NORMAL}"
-                    pop.damage_taker_actor.sendLine(
+                    pop.damage_taker_actor.send_line(
                         f"{output}", sound=sound, msg_type=[MsgType.COMBAT]
                     )
                 if mag_arm_broke:
                     output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.MAGARMOR]} has broken{Color.NORMAL}"
-                    pop.damage_taker_actor.sendLine(
+                    pop.damage_taker_actor.send_line(
                         f"{output}", sound=sound, msg_type=[MsgType.COMBAT]
                     )
                 # if phy_arm_broke:
