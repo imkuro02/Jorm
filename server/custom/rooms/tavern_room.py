@@ -23,25 +23,6 @@ class tavern_combat_manager(Combat):
             i.unload()
 
         self.room.goons = []
-        
-
-
-class tavern_inventory(InventoryManager):
-    def add_item(self, item):
-        #print(self.can_pick_up_anything)
-        if type(item).__name__ == "Equipment":
-            if len(self.owner.actors) >= 1:
-                output = (
-                    f"The moment you let go of {item.name}, someone grabs it and runs"
-                )
-
-                first_actor = next(iter(self.owner.actors.values()))
-                first_actor.simple_broadcast(output, output)
-            return True
-        return super().add_item(item)
-
-
-#from types import MethodType
 
 class tavern_room(Room):
     @classmethod
@@ -53,7 +34,6 @@ class tavern_room(Room):
 
     def __init__(self, *args, **kwargs):
         
-        self.inventory_manager_class = tavern_inventory
 
         super().__init__(*args, **kwargs)
 
@@ -61,8 +41,7 @@ class tavern_room(Room):
         self.combat_manager_class = tavern_combat_manager
         self.goons = []
 
-        self.inventory_manager = tavern_inventory(self, 20)
-        self.inventory_manager.can_pick_up_anything = True
+
 
         
 

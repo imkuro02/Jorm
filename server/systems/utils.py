@@ -123,9 +123,11 @@ def unload_fr():
 
     # check if any items are without inventory_managers
     for r in REFTRACKER.refs:
-        if get_object_parent(r) == 'Item':
-            if r.inventory_manager == None:
-                debug_print(f'unloading item since no inventory_manager... {r}')
+        if get_object_parent(r()) == 'Item':
+            if r in TOUNLOAD:
+                continue
+            if r().inventory_manager == None:
+                #debug_print(f'unloading item since no inventory_manager... {r}{r().premade_id}')
                 unload(r)
 
 

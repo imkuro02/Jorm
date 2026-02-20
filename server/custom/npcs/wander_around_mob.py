@@ -1,5 +1,5 @@
 from actors.npcs import Npc
-from configuration.config import ActorStatusType
+from configuration.config import ActorStatusType, ENEMIES
 from items.misc import Item
 from configuration.config import Color
 class wander_around_mob(Npc):
@@ -33,11 +33,13 @@ class wander_around_mob(Npc):
     def despawn_footprints(self):
         for i in self.footprints:
             i.inventory_manager.remove_item(i) 
+            i.unload()
         self.footprints = []
 
     def despawn_pre_footprints(self):
         for i in self.pre_footprints:
             i.inventory_manager.remove_item(i) 
+            i.unload()
         self.pre_footprints = []
 
     def spawn_footprints(self, dir):
@@ -65,8 +67,9 @@ class wander_around_mob(Npc):
                 br = f'{Color.BAD}The footprints leading {dir} dry up and the trail goes cold.{Color.BACK}'
                 i.simple_broadcast(br,br)
                 break
-                
+
             self.footprints[0].inventory_manager.remove_item(self.footprints[0])
+            self.footprints[0].unload()
             self.footprints.pop(0)
 
         self.despawn_pre_footprints()
@@ -90,6 +93,7 @@ class wander_around_mob(Npc):
 
         if len(self.pre_footprints)-1>=1:
             self.pre_footprints[0].inventory_manager.remove_item(self.pre_footprints[0])
+            self.pre_footprints[0].unload()
             self.pre_footprints.pop(0)
 
 

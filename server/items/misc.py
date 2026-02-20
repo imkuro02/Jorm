@@ -52,6 +52,11 @@ class Item:
         REFTRACKER.add_ref(self)
 
     def unload(self):
+        #self.name = None
+        if self.inventory_manager == None:
+            return
+        if self in self.inventory_manager.items.values():
+            self.inventory_manager.remove_item(self)
         unload(self)
         
     def can_tinker_with(self):

@@ -297,8 +297,11 @@ class World:
                 if type(x).__name__ == "Player":
                     x.party_manager.party_leave()
 
+            to_unload = []
             for x in self.rooms[i].inventory_manager.items.values():
-                unload(x)
+                to_unload.append(x)
+            for x in to_unload:
+                x.unload()
 
             unload(self.rooms[i].inventory_manager)
 

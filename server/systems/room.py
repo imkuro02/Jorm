@@ -57,72 +57,86 @@ class Spawner:
         return room
 
     def respawn_all(self, forced=True):
-        
-        for i in self.spawn_points:
-            
-            roll = 0
-            if not self.room.is_player_present():
-                roll = 0  # random.randint(0,100)
 
-            if roll != 1 and (
-                self.spawn_points[i] in self.room.actors.values()
-                or self.spawn_points[i] in self.room.inventory_manager.items.values()
-            ):
+            
+        for i in self.spawn_points:
+            s = self.spawn_points[i]
+
+            if s == None:
                 continue
-            else:
-                try:
-                    # print('unload')
-                    s = self.spawn_points[i]
+
+            if systems.utils.get_object_parent(s) == 'Item':
+                if s not in self.room.inventory_manager.items.values():
                     self.spawn_points[i] = None
 
-                    s.unload()
-                    # self.spawn_points[i] = None
-                except Exception as e:
-                    pass  # systems.utils.debug_print(e)
+            if s.name == None:
+                self.spawn_points[i] = None
+                
+            
+
+            
+            
+          
+                    
+            
+        
 
         # return
         if "spawner" in self.room_dict:
             for i, _list in enumerate(self.room_dict["spawner"]):
-                # systems.utils.debug_print(self.spawn_points[i])
+                
+                
+                #if self.room.id == 'overworld/ddc67c0f-17be-47ca-9c01-ab323b9a0725':
+                #    try:
+                #        print(self.spawn_points[i].inventory_manager.owner.id)
+                #    except Exception as e:
+                #        pass
+
+                
+
+                _selected = random.choice(_list)
+                #if self.room.id == 'overworld/ddc67c0f-17be-47ca-9c01-ab323b9a0725':
+                #    print(i,_list)
+
                 if self.spawn_points[i] != None:
                     continue
 
-                _selected = random.choice(_list)
-
-                # systems.utils.debug_print(ENEMIES)
-                # systems.utils.debug_print(NPCS[_selected])
                 if _selected in ITEMS:
                     item = load_item(_selected)
-                    self.room.inventory_manager.add_item(item)
                     self.spawn_points[i] = item
+                    added = self.room.inventory_manager.add_item(item)
+                    for ac in self.room.actors.values():
+                        br = f"{item.name} appears"
+                        ac.simple_broadcast(br,br)
+                        break
+
+                if self.spawn_points[i] != None:
                     continue
 
                 if _selected in ENEMIES:
-                    # _selected = random.choice(_list)
-
-                    if self.room.is_player_present():
-                        if ENEMIES[_selected]["can_start_fights"]:
-                            continue
-
+                    #if self.room.id == 'overworld/ddc67c0f-17be-47ca-9c01-ab323b9a0725':
+                    #    print(i,_list)
                     npc = create_npc(self.room, _selected)
                     self.spawn_points[i] = npc
                     npc.simple_broadcast("", f"{npc.name} has arrived")
-                    """
-                    roll = random.randint(0,100)
-                    if roll == 1:
-                        npc.simple_broadcast('',f'{npc.name} has spawned', send_to = 'world')
-                    continue
-                    """
-                    continue
 
-                if _selected in NPCS:
-                    # _selected = random.choice(_list)
-                    npc = create_npc(self.room, _selected)
-                    self.spawn_points[i] = npc
-                    continue
+                
+                    
+
+
 
     def tick(self):
-        if self.room.world.factory.ticks_passed % (30 * 60 * 5) == 0:
+        #if self.room.world.factory.ticks_passed % (30 * 1 * 1) == 0:
+        #    self.respawn_all()
+
+        #time = self.room.world.game_time.get_game_time()
+        #print(time)
+        
+        if self.room.world.factory.ticks_passed % (30 * 1 * 1) == 3:
+            for i in self.room.actors.values():
+                #br = 'RESPAWN TIME'
+                #i.simple_broadcast(br,br)
+                break
             self.respawn_all()
 
 
@@ -340,6 +354,7 @@ class Room:
             e.tick()
 
         # remove items that have been on the ground for too long
+        '''
         items_to_remove = []
         for i in self.inventory_manager.items.values():
             i.tick()
@@ -356,6 +371,7 @@ class Room:
 
         for i in items_to_remove:
             self.inventory_manager.remove_item(i)
+        '''
 
         if self.combat == None:
             return

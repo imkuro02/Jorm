@@ -953,7 +953,8 @@ class SkillNecromancerRessurect(SkillTargetItem):
     def use(self):
         from actors.ai import EnemyAI
         from types import MethodType
-        from actors.npcs import create_npc
+        from actors.npcs import Npc
+        from configuration.config import ENEMIES
         super().use()
         if hasattr(self.other, 'corpse_npc_id'):
 
@@ -963,18 +964,25 @@ class SkillNecromancerRessurect(SkillTargetItem):
             # send_line
             self.user.simple_broadcast(f'You ressurect {self.other.corpse_npc_name}',f'{self.user.pretty_name()} ressurects {self.other.corpse_npc_name}')
 
-            # create npc object
-            e = create_npc(self.user.room, self.other.corpse_npc_id)
-     
-            # set values        
-            e.name = self.other.corpse_npc_name.replace('The','The ressurected')
-            e.loot = {}
-            e.stat_manager.stats[StatType.EXP] = 0
-            e.npc_id = f'summoned_{e.npc_id}'
-            e.reset_stats_after_combat = False
-            e.ai = EnemyAI(e)
-            e.dialog_tree = None
-            e.can_start_fights = False
+            npc_class = Npc
+            npc_id = self.other.corpse_npc_id
+            e = npc_class(
+                npc_id = f'summoned_{npc_id}',
+                ai = EnemyAI,
+                name = self.other.corpse_npc_name.replace('The','The ressurected'),
+                description = ENEMIES[npc_id]["description"],
+                room = self.user.room,
+                stats = ENEMIES[npc_id]["stats"],
+                loot = {},
+                skills = ENEMIES[npc_id]["skills"],
+                dialog_tree = None,
+                can_start_fights = True,
+                dont_join_fights = False,
+                on_death_skills_use = ENEMIES[npc_id]["on_death_skills_use"],
+                on_start_skills_use = ENEMIES[npc_id]["on_start_skills_use"],
+            )
+
+            #self.user.room.move_actor(e, silent=True)
 
             e.stat_manager.stats[StatType.HPMAX] =       int(e.stat_manager.stats[StatType.HPMAX]/3) + self.user.stat_manager.stats[StatType.SOUL]
             e.stat_manager.stats[StatType.PHYARMORMAX] = int(e.stat_manager.stats[StatType.PHYARMORMAX]/3) + self.user.stat_manager.stats[StatType.SOUL]
@@ -984,7 +992,7 @@ class SkillNecromancerRessurect(SkillTargetItem):
             e.stat_manager.stats[StatType.PHYARMOR] = e.stat_manager.stats[StatType.PHYARMORMAX]
             e.stat_manager.stats[StatType.MAGARMOR] = e.stat_manager.stats[StatType.MAGARMORMAX]
 
-            #e.stat_manager.hp_mp_clamp_update()
+            e.reset_stats_after_combat = False
 
             # triggers
             def trigger_dismiss(self, player, line):

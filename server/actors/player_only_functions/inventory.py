@@ -146,6 +146,7 @@ def command_scrap(self, line):
 
         items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
         self.inventory_manager.remove_item(item)
+        #item.unload()
         scrap = items.load_item("currency_0")
         scrap.stack = item.stack
         if item.item_type == ItemType.EQUIPMENT:
