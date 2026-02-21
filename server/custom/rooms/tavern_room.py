@@ -2,7 +2,8 @@ import random
 
 from actors.npcs import create_npc
 from combat.manager import Combat
-from configuration.config import ActorStatusType, StatType
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.stat_type import StatType
 from items.manager import load_item
 from systems.inventory import InventoryManager
 from systems.room import Room

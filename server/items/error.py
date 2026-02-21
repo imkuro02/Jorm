@@ -1,4 +1,6 @@
-from configuration.config import ItemType, EquipmentSlotType, StatType
+from configuration.constants.item_type import ItemType
+#from configuration.constants.equipment_slot_type import EquipmentSlotType
+#from configuration.constants.stat_type import StatType
 from items.misc import Item
 
 class ErrorItem(Item):

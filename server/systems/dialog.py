@@ -1,6 +1,7 @@
 import random
 
-from configuration.config import Color, StatType
+from configuration.constants.color import Color
+from configuration.constants.stat_type import StatType
 from items.manager import load_item
 from systems.quest import QUEST_STATE_TYPES, ObjectiveCountProposal
 

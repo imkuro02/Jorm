@@ -1,5 +1,5 @@
 import systems.utils
-from configuration.config import ItemType
+from configuration.constants.item_type import ItemType
 
 trade_commands = {
     "with": "trade_request",  # request / acccept a trade

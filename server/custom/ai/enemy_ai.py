@@ -3,8 +3,9 @@ import random
 import systems.utils
 from actors.ai import AI
 from actors.npcs import create_npc
-from configuration.config import ActorStatusType, StaticRooms, StatType
-
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.room_constant import RoomConstant
+from configuration.constants.stat_type import StatType
 
 class SlimeAI(AI):
     def tick(self):
@@ -57,7 +58,7 @@ class CowardAI(AI):
                 world = self.actor.room.world
                 self.actor.status = ActorStatusType.NORMAL
 
-                world.rooms[StaticRooms.LOADING].move_actor(self.actor, silent=True)
+                world.rooms[RoomConstant.LOADING].move_actor(self.actor, silent=True)
                 self.die()
                 self.actor.finish_turn()
                 return

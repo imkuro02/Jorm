@@ -4,8 +4,8 @@ import random
 import uuid
 
 import systems.utils
-from configuration.config import ITEMS, EquipmentSlotType, ItemType, StatType
-
+from configuration.config import ITEMS
+from configuration.constants.item_type import ItemType
 random = random.Random()
 
 from custom import loader as custom_loader

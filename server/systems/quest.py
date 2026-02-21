@@ -1,7 +1,10 @@
 import random
 
 import systems.utils
-from configuration.config import ENEMIES, ITEMS, NPCS, QUESTS, Color, StatType
+from configuration.config import ENEMIES, ITEMS, NPCS, QUESTS
+from configuration.constants.color import Color
+from configuration.constants.stat_type import StatType
+
 from items.manager import load_item
 
 

@@ -1,7 +1,7 @@
 import uuid
 
 import systems.utils
-from configuration.config import ActorStatusType
+from configuration.constants.actor_status_type import ActorStatusType
 
 party_commands = {
     "create": "party_create",  # create a party

@@ -1,8 +1,9 @@
-import random
-
 from combat.combat_event import CombatEvent
-from configuration.config import ActorStatusType, Audio, DamageType, MsgType, StatType
-from systems.utils import IndentType, indent, debug_print
+#from configuration.constants.actor_status_type import ActorStatusType
+#from configuration.constants.audio import Audio
+from configuration.constants.damage_type import DamageType
+#from configuration.constants.message_type import MessageType
+from configuration.constants.stat_type import StatType
 
 class Damage:
     def __init__(

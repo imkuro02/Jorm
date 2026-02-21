@@ -2,8 +2,9 @@ import random
 
 import systems.utils
 from actors.player_only_functions.settings import SETTINGS
-from configuration.config import ActorStatusType, Color, get_icon
-
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.color import Color
+from configuration.config import get_icon
 random = random.Random()
 
 

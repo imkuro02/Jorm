@@ -2,14 +2,14 @@ import random
 
 import skills.skills
 import systems.utils
-from configuration.config import (
-    SKILLS,
-    ActorStatusType,
-    Audio,
-    Color,
-    DamageType,
-    StatType,
-)
+from configuration.config import SKILLS
+
+
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.audio import Audio
+from configuration.constants.color import Color
+from configuration.constants.stat_type import StatType
+
 
 def get_skills():
     name_to_id = {}

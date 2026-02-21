@@ -14,12 +14,12 @@ from configuration.config import (
     LORE,
     PATCH_NOTES,
     SKILLS,
-    Color,
-    EquipmentSlotType,
-    ItemType,
-    StaticRooms,
-    StatType,
 )
+from configuration.constants.color import Color
+#from configuration.constants.equipment_slot_type import EquipmentSlotType
+from configuration.constants.item_type import ItemType
+from configuration.constants.room_constant import RoomConstant
+from configuration.constants.stat_type import StatType
 from items.manager import load_item
 from systems.utils import REFTRACKER
 
@@ -514,7 +514,7 @@ def command_export(self, line):
 
 @check_is_admin
 def command_reload_config(self, line):
-    # self.send_line(StaticRooms.LOADING)
+    # self.send_line(RoomConstant.LOADING)
 
     # import configuration.config as config
     self.room.world.reload()
@@ -775,7 +775,7 @@ def command_lore(self, line):
     if to_find in list_of_enemies:
         e_id = LORE["enemies"][to_find]["npc_id"]
         e = create_npc(
-            self.room.world.rooms[StaticRooms.LOADING], e_id, spawn_for_lore=True
+            self.room.world.rooms[RoomConstant.LOADING], e_id, spawn_for_lore=True
         )
         if e == None:
             return

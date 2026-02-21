@@ -2,11 +2,13 @@ import systems.utils
 from actors.player_only_functions.checks import check_alive, check_not_in_combat
 from configuration.config import (
     SKILLS,
-    Audio,
-    Color,
-    SkillScriptValuesToNames,
-    StatType,
 )
+
+from configuration.constants.audio import Audio
+from configuration.constants.color import Color
+from configuration.constants.stat_type import StatType
+from configuration.constants.skill_script_values_to_names import SkillScriptValuesToNames
+
 from skills.manager import get_skills, get_user_skill_level_as_index
 
 """

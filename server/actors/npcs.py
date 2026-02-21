@@ -4,7 +4,9 @@ import random
 import actors.ai
 import systems.utils
 from actors.actor import Actor
-from configuration.config import ENEMIES, ITEMS, NPCS, ActorStatusType, StatType
+from configuration.config import ENEMIES, ITEMS, NPCS
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.stat_type import StatType
 from custom import loader as custom_loader
 
 # from custom import loader as custom_loader

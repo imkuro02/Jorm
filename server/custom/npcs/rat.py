@@ -1,5 +1,5 @@
 from actors.npcs import Npc
-from configuration.config import ActorStatusType
+from configuration.constants.actor_status_type import ActorStatusType
 
 class rat(Npc):
     @classmethod

@@ -1,49 +1,18 @@
 import systems.utils
 from actors.player_only_functions.checks import (
     check_alive,
-    check_no_empty_line,
     check_no_unfriendlies_present_in_room,
     check_not_in_combat,
     check_not_in_party_or_is_party_leader,
     check_your_turn,
 )
-from affects import affects
-from configuration.config import (
-    SKILLS,
-    ActorStatusType,
-    Audio,
-    DamageType,
-    ItemType,
-    StatType,
-)
-from skills.manager import get_skills, use_skill
+from configuration.config import SKILLS
 
-"""
-def command_target(self, line):
-    list_of_actors = [actor.name for actor in self.room.actors.values()]
-    list_of_items = [systems.utils.remove_color(item.name) for item in self.inventory_manager.items.values()]
-    target = systems.utils.get_match(line, {**self.room.actors, **self.inventory_manager.items})
+from skills.manager import get_skills
 
-    if line in 'c none clear 0 stop noone'.split():
-        self.ai.target = None
-        self.send_line('Target cleared')
-        return
-
-    if line == '':
-        if self.ai.target != None:
-            self.send_line(f'Target is: {self.ai.target.pretty_name()}')
-        else:
-            self.send_line(f'You have no target')
-        return
-
-    if target == None:
-        self.send_line('Target unclear!')
-        return
-
-    self.ai.target = target
-    self.send_line(f'Targetting: {self.ai.target.pretty_name()}')
-"""
-
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.audio import Audio
+from configuration.constants.stat_type import StatType
 
 @check_your_turn
 @check_alive

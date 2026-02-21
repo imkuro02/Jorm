@@ -1,5 +1,5 @@
 
-from configuration.config import ActorStatusType
+from configuration.constants.actor_status_type import ActorStatusType
 
 
 def check_is_admin(func):

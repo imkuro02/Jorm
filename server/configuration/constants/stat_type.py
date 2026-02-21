@@ -1,3 +1,4 @@
+
 class StatType:
     HPMAX =     'hp_max'
     #MPMAX =     'mp_max'

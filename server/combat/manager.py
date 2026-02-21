@@ -3,7 +3,11 @@ import random
 import systems.utils
 from combat.combat_event import CombatEvent
 from combat.damage_event import Damage
-from configuration.config import SKILLS, ActorStatusType, Color, DamageType, StatType
+from configuration.config import SKILLS
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.color import Color
+#from configuration.constants.damage_type import DamageType
+from configuration.constants.stat_type import StatType
 from systems.utils import unload
 
 

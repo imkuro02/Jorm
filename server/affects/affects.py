@@ -2,8 +2,10 @@ import random
 
 import systems.utils
 from combat.damage_event import Damage
-from configuration.config import ActorStatusType, DamageType, StatType
 from combat.combat_event import CombatEvent
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.damage_type import DamageType
+from configuration.constants.stat_type import StatType
 
 class Affect:
     def __init__(

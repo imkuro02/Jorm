@@ -1,5 +1,6 @@
 import systems.utils
-from configuration.config import ActorStatusType, ItemType
+from configuration.constants.actor_status_type import ActorStatusType
+#from configuration.constants.item_type import ItemType
 from items.manager import load_item
 from systems.quest import OBJECTIVE_TYPES, ObjectiveCountProposal
 

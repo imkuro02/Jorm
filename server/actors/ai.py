@@ -2,7 +2,11 @@ import random
 
 import systems.utils
 from affects.affects import Affect
-from configuration.config import SKILLS, ActorStatusType, MsgType, StaticRooms, StatType
+from configuration.config import SKILLS
+from configuration.constants.actor_status_type import ActorStatusType
+#from configuration.constants.message_type import MessageType
+#from configuration.constants.room_constant import RoomConstant
+from configuration.constants.stat_type import StatType
 from custom import loader
 from skills.manager import get_user_skill_level_as_index, use_skill
 from systems.utils import REFTRACKER
@@ -279,14 +283,14 @@ class AI:
 
         allies, enemies = self.get_targets()
         skills = self.get_skills()
-        self.actor.send_line('use_best_skill, will use these skills ' + str(skills), msg_type = [MsgType.DEBUG])
+        self.actor.send_line('use_best_skill, will use these skills ' + str(skills), msg_type = [MessageType.DEBUG])
 
         # try to use a skill 5 times, if it fails return false
         # return true if you managed to use a skill
         for i in range(0,20):
 
             if skills == []:
-                self.actor.send_line('no valid skills!!', msg_type = [MsgType.DEBUG])
+                self.actor.send_line('no valid skills!!', msg_type = [MessageType.DEBUG])
                 break
 
             skill_to_use = random.choice(skills)
@@ -294,12 +298,12 @@ class AI:
             targets = []
 
             if 'swing' == skill_to_use and i<15:
-                self.actor.send_line('cant swing', msg_type = [MsgType.DEBUG])
+                self.actor.send_line('cant swing', msg_type = [MessageType.DEBUG])
                 continue
 
             if i>=15:
                 skill_to_use = 'swing'
-                self.actor.send_line('will swing', msg_type = [MsgType.DEBUG])
+                self.actor.send_line('will swing', msg_type = [MessageType.DEBUG])
 
             if offensive_only:
                 if not SKILLS[skill_to_use]['is_offensive']:
@@ -311,7 +315,7 @@ class AI:
                 targets = allies
 
             if targets == []:
-                self.actor.send_line('no targets', msg_type = [MsgType.DEBUG])
+                self.actor.send_line('no targets', msg_type = [MessageType.DEBUG])
                 continue
 
             #target = random.choice(targets)
@@ -325,10 +329,10 @@ class AI:
                 return True
             else:
                 skills.remove(skill_to_use)
-                self.actor.send_line(f'Skill failed: s:{skill_to_use} t:{target.name} ts:{targets}', msg_type = [MsgType.DEBUG])
+                self.actor.send_line(f'Skill failed: s:{skill_to_use} t:{target.name} ts:{targets}', msg_type = [MessageType.DEBUG])
 
-            self.actor.send_line('Didnt exit skill properly', msg_type = [MsgType.DEBUG])
-            self.actor.send_line(f's:{skill_to_use} t:{target.name} ts:{targets}', msg_type = [MsgType.DEBUG])
+            self.actor.send_line('Didnt exit skill properly', msg_type = [MessageType.DEBUG])
+            self.actor.send_line(f's:{skill_to_use} t:{target.name} ts:{targets}', msg_type = [MessageType.DEBUG])
 
             #skills.remove(skill_to_use)
 

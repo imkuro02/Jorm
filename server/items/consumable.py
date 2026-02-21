@@ -1,6 +1,7 @@
 import uuid
 
-from configuration.config import SKILLS, ItemType
+from configuration.config import SKILLS
+from configuration.constants.item_type import ItemType
 from items.misc import Item
 from skills.manager import get_skills, use_skill_from_consumable
 from systems.utils import get_object_parent

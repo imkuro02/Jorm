@@ -11,12 +11,13 @@ from actors.player_only_functions.settings import SETTINGS
 from configuration.config import (
     SKILLS,
     SPLASH_SCREENS,
-    ActorStatusType,
-    Color,
-    ItemType,
-    StaticRooms,
-    StatType,
 )
+#from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.color import Color
+from configuration.constants.item_type import ItemType
+from configuration.constants.room_constant import RoomConstant
+#from configuration.constants.stat_type import StatType
+
 from items.equipment import EquipmentBonus
 from items.manager import load_item, save_item
 from systems.quest import OBJECTIVE_TYPES
@@ -34,7 +35,7 @@ LINEMODE = b"\x22"  # Line mode
 GMCP = b"\xc9"
 MSSP = b"\x46"
 
-with open("configuration/words.txt", "r", encoding="utf-8") as f:
+with open("configuration/text_files/words.txt", "r", encoding="utf-8") as f:
     secret_words = [line.strip() for line in f if line.strip()]
 
 
@@ -406,14 +407,14 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 self,
                 _id=None,
                 name=self.username,
-                room=self.factory.world.rooms[StaticRooms.LOADING],
+                room=self.factory.world.rooms[RoomConstant.LOADING],
             )
         else:  # load an existing actor
             self.actor = Player(
                 self,
                 _id=actor["actor_id"],
                 name=actor["actor_name"],
-                room=self.factory.world.rooms[StaticRooms.LOADING],
+                room=self.factory.world.rooms[RoomConstant.LOADING],
             )
             self.actor.recall_site = actor["actor_recall_site"]
             self.actor.date_of_creation = actor["meta_data"]["date_of_creation"]
@@ -570,11 +571,11 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         if actor == None:
             self.save_actor()
-            self.actor.recall_site = StaticRooms.TUTORIAL
+            self.actor.recall_site = RoomConstant.TUTORIAL
         else:
             if self.actor.recall_site not in self.actor.room.world.rooms:
                 self.save_actor()
-                self.actor.recall_site = StaticRooms.TUTORIAL
+                self.actor.recall_site = RoomConstant.TUTORIAL
 
         self.actor.room.world.rooms[self.actor.recall_site].move_actor(self.actor)
 
@@ -619,8 +620,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         )
         self.actor.friend_manager.friend_broadcast_logout()
         # teleport player to loading to remove them safely
-        self.factory.world.rooms[StaticRooms.LOADING].move_actor(self.actor)
-        # del self.factory.world.rooms[StaticRooms.LOADING].actors[self.actor.id]
+        self.factory.world.rooms[RoomConstant.LOADING].move_actor(self.actor)
+        # del self.factory.world.rooms[RoomConstant.LOADING].actors[self.actor.id]
         # remove player from combat
         # del self.actor.room.actors[self.actor.id]
         # self.actor.room = None

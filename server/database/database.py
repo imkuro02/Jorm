@@ -1,9 +1,7 @@
-import json
 import sqlite3
 
 import systems.utils
-from configuration.config import ItemType
-
+from configuration.constants.item_type import ItemType
 
 class Database:
     def __init__(self):

@@ -1,5 +1,8 @@
 from actors.player_only_functions.checks import check_not_in_party, check_not_in_party_or_is_party_leader, check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
-from configuration.config import ActorStatusType, Audio, ITEMS, StatType
+from configuration.config import ITEMS
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.audio import Audio
+from configuration.constants.stat_type import StatType
 from affects.affects import Affect
 import random
 @check_not_in_party_or_is_party_leader

@@ -16,11 +16,10 @@ from configuration.config import (
     ITEMS,
     NPCS,
     WORLD,
-    ActorStatusType,
-    Audio,
-    MsgType,
-    StatType,
 )
+
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.stat_type import StatType
 from custom import loader as custom_loader
 from items.manager import load_item
 from systems.inventory import InventoryManager

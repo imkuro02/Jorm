@@ -18,7 +18,10 @@ from actors.player_only_functions.commands import (
     translations,
 )
 from actors.player_only_functions.settings import SETTINGS, Settings
-from configuration.config import ActorStatusType, Color, MsgType, StatType
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.color import Color
+from configuration.constants.message_type import MessageType
+from configuration.constants.stat_type import StatType
 from systems.trade import TradeManager
 from systems.utils import unload
 
@@ -107,7 +110,7 @@ class FriendManager:
                 if self.owner.id in prot.actor.friend_manager.friends:
                     prot.actor.send_line(
                         f"Your friend {self.owner.pretty_name()} has logged in",
-                        msg_type=[MsgType.GOSSIP],
+                        msg_type=[MessageType.GOSSIP],
                     )
 
     def friend_broadcast_logout(self):
@@ -118,13 +121,13 @@ class FriendManager:
                 if self.owner.id in prot.actor.friend_manager.friends:
                     prot.actor.send_line(
                         f"Your friend {self.owner.pretty_name()} has logged out",
-                        msg_type=[MsgType.GOSSIP],
+                        msg_type=[MessageType.GOSSIP],
                     )
 
     def friend_broadcast(self, line):
         self.owner.send_line(
             f'You gossip "@important{line}@normal"',
-            msg_type=[MsgType.CHAT, MsgType.GOSSIP],
+            msg_type=[MessageType.CHAT, MessageType.GOSSIP],
         )
         for prot in self.owner.room.world.factory.protocols:
             if prot.actor == None:
@@ -133,7 +136,7 @@ class FriendManager:
                 if self.owner.id in prot.actor.friend_manager.friends:
                     prot.actor.send_line(
                         f'{self.owner.pretty_name()} gossips "@important{line}@normal"',
-                        msg_type=[MsgType.CHAT, MsgType.GOSSIP],
+                        msg_type=[MessageType.CHAT, MessageType.GOSSIP],
                     )
 
 
@@ -449,7 +452,7 @@ class Player(Actor):
 
         if (
             self.settings_manager.get_value(SETTINGS.DEBUG) == False
-            and msg_type == MsgType.DEBUG
+            and msg_type == MessageType.DEBUG
         ):
             return
 
@@ -641,7 +644,7 @@ class Player(Actor):
             
             self.last_command_used = one_letter_commands[command]
             self.send_line(
-                commands[one_letter_commands[command]], msg_type=[MsgType.DEBUG]
+                commands[one_letter_commands[command]], msg_type=[MessageType.DEBUG]
             )
 
             triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'{commands[one_letter_commands[command]]} {line}')
@@ -675,7 +678,7 @@ class Player(Actor):
         script = getattr(self, commands[best_match])
         self.last_command_used = best_match
         self.send_line(
-            "Command found: " + str(commands[best_match]), msg_type=[MsgType.DEBUG]
+            "Command found: " + str(commands[best_match]), msg_type=[MessageType.DEBUG]
         )
 
         triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'{commands[best_match]} {line}')

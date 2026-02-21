@@ -10,7 +10,7 @@ import time
 import traceback
 import weakref
 
-from configuration.types import StatType
+from configuration.constants.stat_type import StatType
 from fuzzywuzzy import process
 
 

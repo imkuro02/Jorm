@@ -1,13 +1,10 @@
 import systems.utils
-from configuration.config import (
-    ActorStatusType,
-    Audio,
-    Color,
-    DamageType,
-    MsgType,
-    StatType,
-)
-
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.audio import Audio
+from configuration.constants.color import Color
+from configuration.constants.damage_type import DamageType
+from configuration.constants.message_type import MessageType
+from configuration.constants.stat_type import StatType
 
 class CombatEvent:
     def __init__(self):
@@ -144,25 +141,25 @@ class CombatEvent:
                 sound = Audio.HURT
                 # output = f'{pop.damage_taker_actor.name}  {pop.damage_hp}hp  {pop.damage_pa}pa {pop.damage_ma}ma'
                 pop.damage_taker_actor.simple_broadcast(
-                    output_self, output_other, sound=sound, msg_type=[MsgType.COMBAT]
+                    output_self, output_other, sound=sound, msg_type=[MessageType.COMBAT]
                 )
 
                 if phy_arm_broke:
                     output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.PHYARMOR]} has broken{Color.NORMAL}"
                     pop.damage_taker_actor.send_line(
-                        f"{output}", sound=sound, msg_type=[MsgType.COMBAT]
+                        f"{output}", sound=sound, msg_type=[MessageType.COMBAT]
                     )
                 if mag_arm_broke:
                     output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.MAGARMOR]} has broken{Color.NORMAL}"
                     pop.damage_taker_actor.send_line(
-                        f"{output}", sound=sound, msg_type=[MsgType.COMBAT]
+                        f"{output}", sound=sound, msg_type=[MessageType.COMBAT]
                     )
                 # if phy_arm_broke:
                 #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.PHYARMOR]}{Color.BACK} has broken'
-                #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MsgType.COMBAT])
+                #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MessageType.COMBAT])
                 # if mag_arm_broke:
                 #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.MAGARMOR]}{Color.BACK} has broken'
-                #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MsgType.COMBAT])
+                #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MessageType.COMBAT])
 
             actors = []
             actors = [pop.damage_taker_actor]

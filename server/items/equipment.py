@@ -1,22 +1,19 @@
 import random
 
 import affects.affects as affects
-import skills.skills
 import systems.utils
 from configuration.config import (
     EQUIPMENT_REFORGES,
-    SKILLS,
-    ActorStatusType,
-    BonusTypes,
-    Color,
-    DamageType,
-    EquipmentSlotType,
-    ItemType,
-    StatType,
+    SKILLS
 )
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.color import Color
+from configuration.constants.equipment_slot_type import EquipmentSlotType
+from configuration.constants.item_type import ItemType
+from configuration.constants.stat_type import StatType
+from configuration.constants.bonus_type import BonusType
 from items.misc import Item
 from systems.utils import Table
-
 
 class EquipSkillManager:
     def __init__(self, item):
@@ -90,37 +87,37 @@ class EquipmentBonusManager:
 
     def check_if_valid(self, bonus):
         if (
-            bonus.type != BonusTypes.REFORGE
-            and bonus.type != BonusTypes.SPECIAL
-            and bonus.type != BonusTypes.SKILL_LEVEL
-            and bonus.type != BonusTypes.STAT
-            and bonus.type != BonusTypes.STAT_REQ
+            bonus.type != BonusType.REFORGE
+            and bonus.type != BonusType.SPECIAL
+            and bonus.type != BonusType.SKILL_LEVEL
+            and bonus.type != BonusType.STAT
+            and bonus.type != BonusType.STAT_REQ
         ):
             systems.utils.debug_print("def check_if_valid(self, bonus) not of type")
             return False
 
-        if bonus.type == BonusTypes.SKILL_LEVEL:
+        if bonus.type == BonusType.SKILL_LEVEL:
             if bonus.key not in SKILLS:
                 systems.utils.debug_print(
                     "def check_if_valid(self, bonus) not in skills"
                 )
                 return False
 
-        if bonus.type == BonusTypes.REFORGE:
+        if bonus.type == BonusType.REFORGE:
             if bonus.key not in EQUIPMENT_REFORGES:
                 systems.utils.debug_print(
                     f"{bonus.key} def check_if_valid(self, bonus) not in "
                 )
                 return False
 
-        if bonus.type == BonusTypes.SPECIAL:
+        if bonus.type == BonusType.SPECIAL:
             if bonus.key not in EQUIPMENT_REFORGES:
                 systems.utils.debug_print(
                     f"{bonus.key} def check_if_valid(self, bonus) not in "
                 )
                 return False
 
-        if bonus.type == BonusTypes.STAT:
+        if bonus.type == BonusType.STAT:
             if bonus.key not in StatType.name:
                 systems.utils.debug_print(
                     "def check_if_valid(self, bonus) not in stats"
@@ -133,7 +130,7 @@ class EquipmentBonusManager:
         # systems.utils.debug_print(bonus.__dict__, bonus.type == 'reforge')
         # systems.utils.debug_print(EQUIPMENT_REFORGES[bonus.key])
         match bonus.type:
-            case BonusTypes.REFORGE | BonusTypes.SPECIAL:
+            case BonusType.REFORGE | BonusType.SPECIAL:
                 if (
                     EQUIPMENT_REFORGES[bonus.key]["affliction_to_create"]
                     == "StatBonusPerItemLevel"
@@ -145,13 +142,13 @@ class EquipmentBonusManager:
                     # self.item.stat_manager.reqs[stat] -= _bonus
                     self.item.stat_manager.stats[stat] -= _bonus
 
-            case BonusTypes.SKILL_LEVEL:
+            case BonusType.SKILL_LEVEL:
                 # if bonus.key in SKILLS:
                 #    self.item.skill_manager.learn(bonus.key, bonus.val)
                 #    return
                 pass
 
-            case BonusTypes.STAT:
+            case BonusType.STAT:
                 if bonus.key in [
                     StatType.HPMAX,
                     StatType.GRIT,
@@ -164,7 +161,7 @@ class EquipmentBonusManager:
                 ]:
                     self.item.stat_manager.stats[bonus.key] -= bonus.val
 
-            case BonusTypes.STAT_REQ:
+            case BonusType.STAT_REQ:
                 if bonus.key in [
                     StatType.HPMAX,
                     StatType.GRIT,
@@ -222,7 +219,7 @@ class EquipmentBonusManager:
         if recursive:
             to_del = []
             for bon in self.bonuses.values():
-                if bon.type == BonusTypes.REFORGE:
+                if bon.type == BonusType.REFORGE:
                     to_del.append(bon)
 
             for bon in to_del:
@@ -230,7 +227,7 @@ class EquipmentBonusManager:
                 # systems.utils.debug_print('temp removing reforge', bon)
 
         match bonus.type:
-            case BonusTypes.REFORGE | BonusTypes.SPECIAL:
+            case BonusType.REFORGE | BonusType.SPECIAL:
                 if (
                     EQUIPMENT_REFORGES[bonus.key]["affliction_to_create"]
                     == "StatBonusPerItemLevel"
@@ -242,11 +239,11 @@ class EquipmentBonusManager:
                     # self.item.stat_manager.reqs[stat] += _bonus
                     self.item.stat_manager.stats[stat] += _bonus
 
-            case BonusTypes.SKILL_LEVEL:
+            case BonusType.SKILL_LEVEL:
                 if bonus.key in SKILLS:
                     self.item.skill_manager.learn(bonus.key, bonus.val)
 
-            case BonusTypes.STAT:
+            case BonusType.STAT:
                 if bonus.key in [
                     StatType.HPMAX,
                     StatType.GRIT,
@@ -259,7 +256,7 @@ class EquipmentBonusManager:
                 ]:
                     self.item.stat_manager.stats[bonus.key] += bonus.val
 
-            case BonusTypes.STAT_REQ:
+            case BonusType.STAT_REQ:
                 if bonus.key in [
                     StatType.HPMAX,
                     StatType.GRIT,
@@ -387,21 +384,21 @@ class Equipment(Item):
             for bonus in self.manager.bonuses.values():
                 col = f"{Color.GOOD}+" if bonus.val >= 1 else f"{Color.BAD}"
                 match bonus.type:
-                    case BonusTypes.REFORGE:
+                    case BonusType.REFORGE:
                         output += f'+ {Color.TOOLTIP}Reforged: "{Color.IMPORTANT}{EQUIPMENT_REFORGES[bonus.key]["name"]}{Color.TOOLTIP}"{Color.NORMAL}\n'
                         output += f"  {EQUIPMENT_REFORGES[bonus.key]['description']}\n"
 
-                    case BonusTypes.SPECIAL:
+                    case BonusType.SPECIAL:
                         # output += f'{Color.TOOLTIP}Special: "{Color.IMPORTANT}{EQUIPMENT_REFORGES[bonus.key]["name"]}{Color.TOOLTIP}"{Color.NORMAL}\n'
                         output += f"+ {EQUIPMENT_REFORGES[bonus.key]['description']}\n"
 
-                    case BonusTypes.SKILL_LEVEL:
+                    case BonusType.SKILL_LEVEL:
                         output += f"+ Skill {SKILLS[bonus.key]['name']} {col}{bonus.val}{Color.BACK}\n"
 
-                    case BonusTypes.STAT:
+                    case BonusType.STAT:
                         output += f"+ Stat {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n"
 
-                    case BonusTypes.STAT_REQ:
+                    case BonusType.STAT_REQ:
                         output += f"+ Required {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n"
 
         if self.equiped == False:
@@ -498,7 +495,7 @@ class Equipment(Item):
         item = self
         to_del = []
         for bon in item.manager.bonuses.values():
-            if bon.type == BonusTypes.REFORGE:
+            if bon.type == BonusType.REFORGE:
                 to_del.append(bon)
 
         for bon in to_del:
@@ -539,7 +536,7 @@ class Equipment(Item):
 
         if rolled_reforge != None:
             new_bonus = EquipmentBonus(
-                type=BonusTypes.REFORGE, key=rolled_reforge, val=1, premade_bonus=False
+                type=BonusType.REFORGE, key=rolled_reforge, val=1, premade_bonus=False
             )
             item.manager.add_bonus(new_bonus)
 
@@ -547,7 +544,7 @@ class Equipment(Item):
 
     def get_reforge_id(self):
         for i in self.manager.bonuses.values():
-            if i.type == BonusTypes.REFORGE:
+            if i.type == BonusType.REFORGE:
                 return i.key
         return None
 
@@ -566,7 +563,7 @@ class Equipment(Item):
         reforges_to_apply = []
 
         for i in self.manager.bonuses.values():
-            if i.type == BonusTypes.SPECIAL:
+            if i.type == BonusType.SPECIAL:
                 # systems.utils.debug_print(f'>>{i.key}')
                 reforges_to_apply.append(i.key)
         reforges_to_apply.append(self.get_reforge_id())

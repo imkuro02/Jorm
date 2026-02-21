@@ -10,14 +10,14 @@ from affects.manager import AffectsManager
 from combat.damage_event import Damage
 from configuration.config import (
     SKILLS,
-    ActorStatusType,
-    Audio,
-    Color,
-    DamageType,
-    EquipmentSlotType,
-    StatType,
     get_icon,
 )
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.audio import Audio
+from configuration.constants.color import Color
+from configuration.constants.damage_type import DamageType
+from configuration.constants.equipment_slot_type import EquipmentSlotType
+from configuration.constants.stat_type import StatType
 from items.manager import Item
 from skills.manager import use_skill
 from systems.dialog import Dialog

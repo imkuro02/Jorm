@@ -4,12 +4,13 @@ import uuid
 from configuration.config import (
     EQUIPMENT_REFORGES,
     ITEMS,
-    BonusTypes,
-    Color,
-    ItemType,
-    StatType,
     get_icon,
 )
+from configuration.constants.color import Color
+from configuration.constants.item_type import ItemType
+from configuration.constants.stat_type import StatType
+
+from configuration.constants.bonus_type import BonusType
 from systems.utils import REFTRACKER, get_object_parent, unload
 from systems.triggers import TriggerManager
 

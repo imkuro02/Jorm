@@ -1,7 +1,8 @@
 from actors.npcs import Npc
-from configuration.config import ActorStatusType, ENEMIES
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.color import Color
 from items.misc import Item
-from configuration.config import Color
+
 class wander_around_mob(Npc):
     @classmethod
     def compare_replace(self, npc_object):

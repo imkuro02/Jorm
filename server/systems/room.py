@@ -15,11 +15,10 @@ from configuration.config import (
     ITEMS,
     NPCS,
     WORLD,
-    ActorStatusType,
-    Audio,
-    MsgType,
-    StatType,
 )
+
+from configuration.constants.audio import Audio
+from configuration.constants.message_type import MessageType
 from custom import loader as custom_loader
 from items.manager import load_item
 from systems.inventory import InventoryManager
@@ -58,7 +57,6 @@ class Spawner:
 
     def respawn_all(self, forced=True):
 
-            
         for i in self.spawn_points:
             s = self.spawn_points[i]
 
@@ -71,14 +69,7 @@ class Spawner:
 
             if s.name == None:
                 self.spawn_points[i] = None
-                
-            
 
-            
-            
-          
-                    
-            
         
 
         # return
@@ -126,16 +117,11 @@ class Spawner:
 
 
     def tick(self):
-        #if self.room.world.factory.ticks_passed % (30 * 1 * 1) == 0:
-        #    self.respawn_all()
-
-        #time = self.room.world.game_time.get_game_time()
-        #print(time)
+        if self.room.is_player_present():
+            return
         
         if self.room.world.factory.ticks_passed % (30 * 1 * 1) == 3:
             for i in self.room.actors.values():
-                #br = 'RESPAWN TIME'
-                #i.simple_broadcast(br,br)
                 break
             self.respawn_all()
 
@@ -354,7 +340,6 @@ class Room:
             e.tick()
 
         # remove items that have been on the ground for too long
-        '''
         items_to_remove = []
         for i in self.inventory_manager.items.values():
             i.tick()
@@ -366,12 +351,11 @@ class Room:
                 items_to_remove.append(i)
             else:
                 i.time_on_ground += 1
-                if i.time_on_ground >= 30 * 120:
+                if i.time_on_ground >= (30 * 60 * 5):
                     items_to_remove.append(i)
 
         for i in items_to_remove:
             self.inventory_manager.remove_item(i)
-        '''
 
         if self.combat == None:
             return
@@ -472,7 +456,7 @@ class Room:
                     for i in actor.instanced_rooms:
                         if i in actor.room.world.rooms:
                             actor.send_line(
-                                f"instanced room: {i} deleted", msg_type=[MsgType.DEBUG]
+                                f"instanced room: {i} deleted", msg_type=[MessageType.DEBUG]
                             )
                             self.world.rooms_to_unload.append(i)
 

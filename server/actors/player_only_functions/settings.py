@@ -1,7 +1,4 @@
-import copy
-
-from actors.player_only_functions.checks import check_no_empty_line
-from configuration.config import Color
+from configuration.constants.color import Color
 from systems.utils import Table, match_word
 
 BANNED_ALIASES = [

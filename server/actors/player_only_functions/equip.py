@@ -4,8 +4,10 @@ from actors.player_only_functions.checks import (
     check_not_in_combat,
     check_not_trading,
 )
-from configuration.config import Audio, EquipmentSlotType, ItemType, StatType
-
+from configuration.constants.audio import Audio
+#from configuration.constants.equipment_slot_type import EquipmentSlotType
+#from configuration.constants.item_type import ItemType
+from configuration.constants.stat_type import StatType
 
 @check_not_in_combat
 @check_not_trading

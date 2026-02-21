@@ -1,18 +1,15 @@
 import random
 from combat.combat_event import CombatEvent
-# import affects.manager as aff_manager
 import affects.affects as affects
 import systems.utils
 from combat.damage_event import Damage
-from configuration.config import (
-    SKILLS,
-    ActorStatusType,
-    DamageType,
-    StaticRooms,
-    StatType,
-)
+from configuration.config import SKILLS
 
 
+from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.damage_type import DamageType
+from configuration.constants.room_constant import RoomConstant
+from configuration.constants.stat_type import StatType
 
 class Skill:
     def __init__(
@@ -884,7 +881,7 @@ class SkillPortal(Skill):
         if self.success:
             e_id = "skill_portal"
             e = systems.utils.create_npc(
-                self.user.room.world.rooms[StaticRooms.LOADING],
+                self.user.room.world.rooms[RoomConstant.LOADING],
                 e_id,
                 spawn_for_lore=True,
             )

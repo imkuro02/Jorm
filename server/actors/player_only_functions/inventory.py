@@ -10,15 +10,16 @@ from actors.player_only_functions.checks import (
     check_not_trading,
 )
 from configuration.config import (
-    EQUIPMENT_REFORGES,
     ITEMS,
     LORE,
-    Audio,
-    Color,
-    ItemType,
-    StatType,
 )
-from items.equipment import BonusTypes, EquipmentBonus
+
+from configuration.constants.audio import Audio
+from configuration.constants.color import Color
+from configuration.constants.item_type import ItemType
+from configuration.constants.stat_type import StatType
+
+
 
 
 @check_no_empty_line
