@@ -253,3 +253,8 @@ func _process(_delta):
 		print("WebSocket closed. Code: %d. Clean: %s" % [code, code != -1])
 		OUTPUT.get_message("\n\n<--!-->\tYou have been disconnected! refresh the page to reconnect!\t<--!-->")
 		set_process(false)
+
+
+func _on_navigation_meta_clicked(meta):
+	socket.send_text(meta.strip_edges())
+	print("URL clicked:", meta)

@@ -1,3 +1,4 @@
+import systems
 class TriggerManager:
     def __init__(self, trigger_owner):
         self.trigger_owner = trigger_owner
@@ -32,7 +33,10 @@ class TriggerManager:
         to_trigger_check.append(player.room)
 
         for i in to_trigger_check:
-            triggered = i.trigger_manager.trigger_check(player = player, line = line)
-            if triggered:
-                return True
+            try:
+                triggered = i.trigger_manager.trigger_check(player = player, line = line)
+                if triggered:
+                    return True
+            except Exception as e:
+                systems.utils.debug_print(e)
         return False

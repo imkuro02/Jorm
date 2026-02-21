@@ -122,3 +122,4 @@ func add_ansi_text(ansi_text: String) -> String:
 		output += wrapped
 
 	return output
+
