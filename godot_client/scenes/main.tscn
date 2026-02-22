@@ -387,17 +387,17 @@ script = ExtResource("3_gkcnj")
 metadata/_edit_group_ = true
 
 [node name="navigation" type="RichTextLabel" parent="canvas/container/map_room"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_font_sizes/normal_font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
-text = "[url=down]D[/url] [url=north]N[/url] [url=up]U[/url] 
-[url=west]W[/url] [url=south]S[/url] [url=east]E[/url]
- "
+text = "[url=down][D][/url][url=north][N][/url][url=up][U][/url]
+[url=west][W][/url][url=south][S][/url][url=east][E][/url]
+"
 fit_content = true
+meta_underlined = false
 script = ExtResource("3_gkcnj")
 
 [node name="output" type="VBoxContainer" parent="canvas/container"]
@@ -413,6 +413,7 @@ focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
+meta_underlined = false
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
@@ -542,3 +543,4 @@ position = Vector2(48, 56)
 texture = ExtResource("7_1kjrd")
 
 [connection signal="meta_clicked" from="canvas/container/map_room/navigation" to="." method="_on_navigation_meta_clicked"]
+[connection signal="meta_clicked" from="canvas/container/output/output" to="." method="_on_output_meta_clicked"]

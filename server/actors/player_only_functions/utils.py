@@ -3,6 +3,9 @@ from configuration.constants.item_type import ItemType
 
 
 def get_actor(self, line):
+    if line in self.room.actors:
+        return self.room.actor[line]
+    
     return systems.utils.get_match(line, self.room.actors)
 
     # Return if you cant find a target
@@ -85,4 +88,8 @@ def get_item(self, line, search_mode="self", inventory=None):
                     continue
                 return [self.inventory_manager.items[self.slots_manager.slots[slot]]]
 
+    # return item if id is input
+    if line in inventory:
+        return [inventory[line]]
+    
     return systems.utils.get_matches(line, inventory)

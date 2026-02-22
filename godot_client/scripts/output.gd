@@ -116,9 +116,9 @@ func add_ansi_text(ansi_text: String) -> String:
 	if remaining != "":
 		var wrapped := remaining
 		if current_fg != "":
-			wrapped = "[color=%s]%s[/color]" % [current_fg, wrapped]
+			wrapped = "[color=%s]%s[/color][/url]" % [current_fg, wrapped]
 		if current_bg != "":
-			wrapped = "[bgcolor=%s]%s[/bgcolor]" % [current_bg, wrapped]
+			wrapped = "[bgcolor=%s]%s[/bgcolor][/url]" % [current_bg, wrapped]
 		output += wrapped
 
 	return output

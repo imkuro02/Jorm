@@ -65,6 +65,8 @@ func try_connect_in_order(urls: Array) -> void:
 			OUTPUT.get_message("Connected to: %s\n" % url)
 			await get_tree().create_timer(1.0).timeout
 			socket.send(PackedByteArray([IAC, DO, GMCP]))
+			await get_tree().create_timer(1.0).timeout
+			socket.send_text("please enable godot4 features")
 			connected = true
 			break
 		else:
@@ -256,5 +258,10 @@ func _process(_delta):
 
 
 func _on_navigation_meta_clicked(meta):
+	socket.send_text(meta.strip_edges())
+	print("URL clicked:", meta)
+
+
+func _on_output_meta_clicked(meta):
 	socket.send_text(meta.strip_edges())
 	print("URL clicked:", meta)

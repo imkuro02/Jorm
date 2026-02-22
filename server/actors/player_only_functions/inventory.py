@@ -311,6 +311,11 @@ def command_inventory(self, line):
             ):
                 output = output + f" ({Color.ITEM_TRADING}T{Color.NORMAL})"
 
+        #if self.protocol.enabled_godot:
+        #    url = f'Identify {self.inventory_manager.items[i].pretty_name()}:identify {self.inventory_manager.items[i].id}'
+
+            
+            output = f'[url={url}]{output}[/url]'
         t.add_data(output)
         self.inventory_manager.items[i].new = False
 

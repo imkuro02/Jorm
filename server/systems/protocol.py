@@ -48,7 +48,8 @@ class Protocol(protocol.Protocol):
         self.factory = factory
         self.state: callable = self.LOGIN_OR_REGISTER
 
-        self.enabled_gmcp = False
+        self.enabled_gmcp  = False
+        self.enabled_godot = False
 
         self.guest = False
 
@@ -661,6 +662,11 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         # decode and process input data
         line = data.decode("utf-8", errors="ignore").strip()
+
+        if line == 'please enable godot4 features':
+            self.enabled_godot = True
+            self.send_line('Godot features enabled, enjoy!')
+            return
 
         # log account unique ID and what message was sent
         # if self.state == self.PLAY:
