@@ -1,11 +1,11 @@
 from configuration.constants.stat_type import StatType
 class Color:
-    NORMAL = "@normal"
-    BACK = "@back"
-    ERROR = "@bgred"
+    NORMAL =    "@normal"
+    BACK =      "@back"
+    ERROR =     "@bgred"
 
-    GOOD = "@bgreen"
-    BAD = "@bpurple"
+    GOOD =      "@bgreen"
+    BAD =       "@bpurple"
 
     IMPORTANT = "@yellow"
 
@@ -14,7 +14,7 @@ class Color:
 
     NAME_ADMIN = "@bgreen"
     NAME_PLAYER = "@bcyan"
-    NAME_ENEMY = "@yellow"
+    #NAME_ENEMY = "@yellow"
     NAME_NPC = "@byellow"
 
     NAME_ROOM_NORMAL = "@bwhite"
