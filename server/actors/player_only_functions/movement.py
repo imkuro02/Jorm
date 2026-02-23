@@ -95,7 +95,7 @@ def command_go(self, line = '', room_id = None):
         yes_any_can_start_fights = False
         highest_can_start_fights_level = 0
         for actor in self.room.actors.values():
-            if type(actor).__name__ in 'Npc Enemy'.split():
+            if type(actor).__name__ in 'Npc Enemy'.split() and actor.party_manager.get_party_id() == 'party id enemies':
                 yes_npcs = True
                 if actor.can_start_fights and actor.status == ActorStatusType.NORMAL:
                     yes_any_can_start_fights = True
