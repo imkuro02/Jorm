@@ -29,7 +29,12 @@ class Consumable(Item):
         output = super().identify()
 
         id_to_name, name_to_id = get_skills()
-        output += f"Contents: {self.skills}"
+        
+        skills_to_use = ''
+        for s in self.skills:
+            skills_to_use += f'{SKILLS[s]["name"]} {self.skills[s]["skill_lv"]}\n'
+        
+        output += f"Contents:\n{skills_to_use}"
         if self.trigger_manager.triggers != {}:
             output2 = ''
             for i in self.trigger_manager.triggers:
@@ -37,7 +42,7 @@ class Consumable(Item):
                     output2 += f'{i} '
 
             if output2 != '':
-                output +='\nCan be consumed with: '+output2
+                output +='Can be consumed with: '+output2
         return output
 
 

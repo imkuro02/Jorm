@@ -825,10 +825,12 @@ class SkillDispel(Skill):
     def use(self):
         super().use()
         if self.success:
-            is_ally = (
-                self.other.party_manager.get_party_id()
-                == self.user.party_manager.get_party_id()
-            )
+            #is_ally = (
+            #    self.other.party_manager.get_party_id()
+            #    == self.user.party_manager.get_party_id()
+            #)
+            is_ally = self.other.party_manager.get_is_friendly(self.user)
+            
             affs = self.other.affect_manager.affects.values()
             to_dispel = []
             if is_ally:

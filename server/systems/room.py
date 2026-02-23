@@ -19,6 +19,7 @@ from configuration.config import (
 
 from configuration.constants.audio import Audio
 from configuration.constants.message_type import MessageType
+from configuration.constants.faction_type import FactionType
 from custom import loader as custom_loader
 from items.manager import load_item
 from systems.inventory import InventoryManager
@@ -310,7 +311,7 @@ class Room:
 
     def is_enemy_present(self):
         for i in self.actors.values():
-            if i.party_manager.get_party_id() == "party id enemies":
+            if i.party_manager.get_party_id() == FactionType.ENEMY:
                 return i
         return False
 
@@ -392,7 +393,7 @@ class Room:
                 #    if i.dont_join_fights:
                 #        continue
                 #    participants[i.id] = i
-                if i.party_manager.get_party_id() != 'party id players':
+                if i.party_manager.get_faction_id() == FactionType.ENEMY and i.party_manager.get_faction_id() == FactionType.ENEMY:
                     if i.dont_join_fights:
                         continue
                     participants[i.id] = i

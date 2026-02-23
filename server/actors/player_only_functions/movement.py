@@ -1,6 +1,7 @@
 from actors.player_only_functions.checks import check_not_in_party, check_not_in_party_or_is_party_leader, check_your_turn, check_alive, check_no_empty_line, check_not_in_combat
 from configuration.config import ITEMS
 from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.faction_type import FactionType
 from configuration.constants.audio import Audio
 from configuration.constants.stat_type import StatType
 from affects.affects import Affect
@@ -95,7 +96,9 @@ def command_go(self, line = '', room_id = None):
         yes_any_can_start_fights = False
         highest_can_start_fights_level = 0
         for actor in self.room.actors.values():
-            if type(actor).__name__ in 'Npc Enemy'.split() and actor.party_manager.get_party_id() == 'party id enemies':
+            if actor.party_manager.get_faction_id() != FactionType.ENEMY:
+                continue
+            if not actor.party_manager.get_is_friendly(self):
                 yes_npcs = True
                 if actor.can_start_fights and actor.status == ActorStatusType.NORMAL:
                     yes_any_can_start_fights = True

@@ -2,7 +2,7 @@ import uuid
 
 import systems.utils
 from configuration.constants.actor_status_type import ActorStatusType
-
+from configuration.constants.faction_type import FactionType
 party_commands = {
     "create": "party_create",  # create a party
     "invite": "party_invite",  # invite to party
@@ -76,6 +76,19 @@ class PartyManager:
         self.party = None
         self.invitations = []
 
+    def get_is_friendly(self, who_to_check):
+        if who_to_check.party_manager.get_party_id() == who_to_check.party_manager.get_party_id():
+            return True
+        if who_to_check.party_manager.get_faction_id() == who_to_check.party_manager.get_faction_id():
+            return True
+        return False
+    
+    def get_faction_id(self):
+        if type(self.actor).__name__ != "Player":
+            return FactionType.ENEMY
+        if type(self.actor).__name__ == "Player":
+            return FactionType.PLAYER 
+            
     def get_party_id(self):
         if self.party != None:
             return self.party.party_id  # self.party.actor.id
@@ -88,10 +101,10 @@ class PartyManager:
             # that is so pvp functions as expected
             # when not in party
             if type(self.actor).__name__ != "Player":
-                return "party id enemies"
+                return FactionType.ENEMY
             if type(self.actor).__name__ == "Player":
                 # return 'party id players' #self.actor.id #'party id players'
-                return "party id players"  # self.actor.id
+                return FactionType.PLAYER # self.actor.id
 
     def clear_invites(self):
         self.invitations = []
