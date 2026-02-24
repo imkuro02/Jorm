@@ -956,7 +956,6 @@ class SkillNecromancerRessurect(SkillTargetItem):
         from configuration.config import ENEMIES
         super().use()
         if hasattr(self.other, 'corpse_npc_id'):
-
             # remove corpse item on ground
             self.other.inventory_manager.remove_item(self.other)
 
@@ -1086,4 +1085,8 @@ class SkillNecromancerRessurect(SkillTargetItem):
 
             if self.user.status == ActorStatusType.FIGHTING:
                 self.user.room.combat.add_participant(e)
+
+        else:
+            self.user.send_line('...Nothing happens')
+            del self.user.cooldown_manager.cooldowns[self.skill_id]
 

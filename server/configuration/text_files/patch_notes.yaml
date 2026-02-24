@@ -1,7 +1,15 @@
 versions:
-  "180226":
-    id: "180226"
-    title: Strike
+  "240226":
+    id: "240226"
+    title: Patch
+    unixtime: 1761899677
+    features:
+      - Consumable items no longer display skills.__dict__ in description
+      - Necromancy skill on fail does not go on cooldown
+      - Added "factions" for players and npcs (helps with figuring out whether target is hostile)
+  "190226":
+    id: "190226"
+    title: Patch
     unixtime: 1761899677
     features:
       - sendLine function renamed to send_line (big deal)
