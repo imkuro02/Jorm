@@ -67,7 +67,7 @@ def command_go(self, line = '', room_id = None):
 
         direction = None
 
-        exits = self.room.get_active_exits()
+        exits = self.room.get_active_exits(self)
         for _exit in exits:
             if ' '+line.lower() in ' '+_exit.direction.lower():
                 room_obj = _exit.get_room_obj()

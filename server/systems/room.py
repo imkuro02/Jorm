@@ -121,7 +121,7 @@ class Spawner:
         if self.room.is_player_present():
             return
         
-        if self.room.world.factory.ticks_passed % (30 * 1 * 1) == 3:
+        if self.room.world.factory.ticks_passed % (30 * 60 * 3) == 3:
             for i in self.room.actors.values():
                 break
             self.respawn_all()
@@ -138,6 +138,7 @@ class Exit:
         item_required=None,
         item_required_consume=False,
         active_time_of_day=None,
+        active_quest_state=None,
     ):
         self.room = room
         self.direction = direction
@@ -147,8 +148,20 @@ class Exit:
         self.item_required = item_required
         self.item_required_consume = item_required_consume
         self.active_time_of_day = active_time_of_day
+        self.active_quest_state = active_quest_state
 
-    def is_active(self):
+    def is_active(self, player):
+        if self.active_quest_state == None:
+            return True
+
+        quests = self.active_quest_state.split(',')
+        for quest in quests:
+            _quest, _state = quest.split('=')
+            if player.quest_manager.check_quest_state(_quest) != _state:
+                return False
+
+        return True
+
         if self.active_time_of_day == None:
             return True
         if self.active_time_of_day not in self.room.world.game_time.TIME_OF_DAY:
@@ -226,6 +239,7 @@ class Room:
                     "item_required": _exit.item_required,
                     "item_required_consume": _exit.item_required_consume,
                     "active_time_of_day": _exit.active_time_of_day,
+                    "active_quest_state": _exit.active_quest_state,
                 }
             else:
                 _exit_dict = {
@@ -236,6 +250,7 @@ class Room:
                     "item_required": _exit["item_required"],
                     "item_required_consume": _exit["item_required_consume"],
                     "active_time_of_day": _exit["active_time_of_day"],
+                    "active_quest_state": _exit["active_quest_state"],
                 }
 
             self.exits.append(
@@ -248,6 +263,7 @@ class Room:
                     item_required=_exit_dict["item_required"],
                     item_required_consume=_exit_dict["item_required_consume"],
                     active_time_of_day=_exit_dict["active_time_of_day"],
+                    active_quest_state=_exit_dict["active_quest_state"],
                 )
             )
 
@@ -288,10 +304,10 @@ class Room:
             return self.id.split("#")[0]
         return self.id
 
-    def get_active_exits(self):
+    def get_active_exits(self, player):
         active_exits = []
         for i in self.exits:
-            if i.is_active():
+            if i.is_active(player):
                 active_exits.append(i)
         return active_exits
 

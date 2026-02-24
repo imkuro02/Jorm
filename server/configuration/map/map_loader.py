@@ -116,6 +116,7 @@ def load_map():
                 "item_required": None,
                 "item_required_consume": False,
                 "active_time_of_day": None,
+                "active_quest_state": None,
             }
 
             if "secret" in json_data:
@@ -130,6 +131,8 @@ def load_map():
                 new_exit["item_required_consume"] = json_data["item_required_consume"]
             if "active_time_of_day" in json_data:
                 new_exit["active_time_of_day"] = json_data["active_time_of_day"]
+            if "active_quest_state" in json_data:
+                new_exit["active_quest_state"] = json_data["active_quest_state"]
 
             nodes[edge_data["source"]]["exits"].append(new_exit)
 

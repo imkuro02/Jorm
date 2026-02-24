@@ -77,6 +77,11 @@ const edgeActiveTimeOfDay = document.createElement("input");
 edgeGroup.appendChild(edgeActiveTimeOfDay);
 edgeGroup.appendChild(br());
 
+edgeGroup.appendChild(label('active_quest_state'));
+edgeGroup.appendChild(br());
+const edgeActiveQuestState = document.createElement("input");
+edgeGroup.appendChild(edgeActiveQuestState);
+edgeGroup.appendChild(br());
 
 
 edgeFormContainer.appendChild(edgeGroup);
@@ -133,6 +138,12 @@ function guiEdgeSetSelectedEdge(edge){
             edgeActiveTimeOfDay.value = '';
         }
 
+        if (typeof data['active_quest_state'] !== "undefined"){
+            edgeActiveQuestState.value = data['active_quest_state'];
+        } else {
+            edgeActiveQuestState.value = '';
+        }
+
     }
 }
 
@@ -145,7 +156,8 @@ function edge_save_json() {
         'item_required_consume': edgeItemRequiredConsumeInput.checked,
         'secret': edgeSecretInput.checked,
         'blocked': edgeBlockedInput.checked,
-        'active_time_of_day': edgeActiveTimeOfDay.value
+        'active_time_of_day': edgeActiveTimeOfDay.value,
+        'active_quest_state': edgeActiveQuestState.value
         
     };
 
