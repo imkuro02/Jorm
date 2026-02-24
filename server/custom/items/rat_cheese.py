@@ -14,9 +14,10 @@ class rat_cheese(Consumable):
     def trigger_get(self, player, line):
         items = player.get_item(line = line.replace('command_get','').strip(), search_mode='room')
         if items == None:
-            return False
+            items = []
         
-        if self in items:
+        
+        if self in items or line.replace('command_get','').strip().lower() == 'all':
             for i in self.inventory_manager.owner.room.actors.values():
                 if 'rat' == i.npc_id:
                     player.send_line(f'{i.pretty_name()} hisses at you')

@@ -26,7 +26,7 @@ class Consumable(Item):
         self.item_add_on_use = None
 
     def identify(self, identifier=None):
-        output = super().identify()
+        output = super().identify(identifier)
 
         id_to_name, name_to_id = get_skills()
         

@@ -154,17 +154,21 @@ class UpdateChecker:
 
         output = "Entities:\n"
         _list = self.actor.room.actors.values()
-
+        
         for par in _list:
             if par == self.actor:
                 continue
-            output = output + par.pretty_name() + "\n" + par.prompt(self) + "\n"
+            output = output + par.pretty_name(self) + "\n" + par.prompt(self) + "\n"
 
         output = output[:-1] if output.endswith("\n") else output
         # output = output + self.actor.get_affects(self.actor)
-        output = systems.utils.add_color(output)
+        
         # output = {"actors":output}
 
+        
+
+
+        output = systems.utils.add_color(output)
         self.actor.protocol.send_gmcp(output, "Actors")
 
     """
@@ -312,6 +316,7 @@ class UpdateChecker:
                 _map = f"Round {_round}, Your turn\n" + _map
             else:
                 _map = f"Round {_round}, {_cur_actor.pretty_name()}' turn\n" + _map
+        _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
 
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
 

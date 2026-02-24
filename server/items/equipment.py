@@ -328,7 +328,7 @@ class Equipment(Item):
         self.stat_manager.stats[stat] = value
 
     def identify(self, identifier=None):
-        output = super().identify()
+        output = super().identify(identifier)
         output += f"{Color.TOOLTIP}Equipment slot:{Color.NORMAL} {EquipmentSlotType.name[self.slot]}\n"
         output += f"{Color.TOOLTIP}Requirements to equip:{Color.NORMAL}\n"
         t = Table(2, 3)

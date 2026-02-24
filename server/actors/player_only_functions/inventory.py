@@ -51,9 +51,9 @@ def command_get(self, line):
 
     items_pretty_name_before_pickup = []
     for item in items_to_get:
-        item_pretty_name_before_pickup = item.pretty_name()
+        item_pretty_name_before_pickup = item.pretty_name(self)
         if not item.can_pick_up:
-            self.send_line(f'You can\'t pick up {item.pretty_name()}')
+            self.send_line(f'You can\'t pick up {item.pretty_name(self)}')
             continue
 
         _item_removed_from_room = self.room.inventory_manager.remove_item(item)
@@ -68,7 +68,7 @@ def command_get(self, line):
                 self.inventory_manager.remove_item(item)
 
         else:
-            self.send_line(f"You can't pick up {item.pretty_name()}", sound=Audio.ERROR)
+            self.send_line(f"You can't pick up {item.pretty_name(self)}", sound=Audio.ERROR)
             continue
 
         items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
@@ -77,7 +77,7 @@ def command_get(self, line):
         return
     self.simple_broadcast(
         f"You get {', '.join(items_pretty_name_before_pickup)}",
-        f"{self.pretty_name()} gets {', '.join(items_pretty_name_before_pickup)}",
+        f"{self.pretty_name(self)} gets {', '.join(items_pretty_name_before_pickup)}",
     )
 
 
@@ -100,12 +100,13 @@ def command_drop(self, line):
         items_to_get = item_found
 
     items_pretty_name_before_pickup = []
+    items_pretty_name_after = []
     for item in items_to_get:
-        item_pretty_name_before_pickup = item.pretty_name()
+        item_pretty_name_before_pickup = item.pretty_name(self)
 
         if not item.can_tinker_with():
             self.send_line(
-                f"Cannot drop {item.pretty_name()} since its kept or equipped"
+                f"Cannot drop {item.pretty_name(self)} since its kept or equipped"
             )
             continue
 
@@ -113,9 +114,11 @@ def command_drop(self, line):
         self.inventory_manager.remove_item(item)
         self.room.inventory_manager.add_item(item)
 
+        items_pretty_name_after.append(item.pretty_name(self))
+
     self.simple_broadcast(
-        f"You drop {', '.join(items_pretty_name_before_pickup)}",
-        f"{self.pretty_name()} drops {', '.join(items_pretty_name_before_pickup)}",
+        f"You drop {', '.join(items_pretty_name_after)}",
+        f"{self.pretty_name(self)} drops {', '.join(items_pretty_name_after)}",
     )
 
 
@@ -139,11 +142,11 @@ def command_scrap(self, line):
 
     items_pretty_name_before_pickup = []
     for item in items_to_get:
-        item_pretty_name_before_pickup = item.pretty_name()
+        item_pretty_name_before_pickup = item.pretty_name(self)
 
         if not item.can_tinker_with():
             self.send_line(
-                f"Cannot scrap {item.pretty_name()} since its kept or equipped"
+                f"Cannot scrap {item.pretty_name(self)} since its kept or equipped"
             )
             continue
 
@@ -158,7 +161,7 @@ def command_scrap(self, line):
 
     self.simple_broadcast(
         f"You scrap {', '.join(items_pretty_name_before_pickup)}",
-        f"{self.pretty_name()} scraps {', '.join(items_pretty_name_before_pickup)}",
+        f"{self.pretty_name(self)} scraps {', '.join(items_pretty_name_before_pickup)}",
     )
 
 
@@ -187,11 +190,11 @@ def command_reforge(self, line):
     items_pretty_name_before_reforge = []
     items_pretty_name_after_reforge = []
     for item in items_to_get:
-        item_pretty_name_before_reforge = item.pretty_name()
+        item_pretty_name_before_reforge = item.pretty_name(self)
 
         if not item.can_tinker_with():
             self.send_line(
-                f"Cannot reforge {item.pretty_name()} since its kept or equipped"
+                f"Cannot reforge {item.pretty_name(self)} since its kept or equipped"
             )
             continue
 
@@ -216,14 +219,14 @@ def command_reforge(self, line):
 
         item = item.reforge()
 
-        items_pretty_name_after_reforge.append(item.pretty_name())
+        items_pretty_name_after_reforge.append(item.pretty_name(self))
 
     if items_pretty_name_before_reforge == []:
         return
 
     self.simple_broadcast(
         f"You reforge {', '.join(items_pretty_name_before_reforge)} into {', '.join(items_pretty_name_after_reforge)}, you spent {reforge_cost} {ITEMS[reforge_currency]['name']}",
-        f"{self.pretty_name()} reforge {', '.join(items_pretty_name_before_reforge)} into {', '.join(items_pretty_name_after_reforge)}, they spent {reforge_cost} {ITEMS[reforge_currency]['name']}",
+        f"{self.pretty_name(self)} reforge {', '.join(items_pretty_name_before_reforge)} into {', '.join(items_pretty_name_after_reforge)}, they spent {reforge_cost} {ITEMS[reforge_currency]['name']}",
     )
 
 
@@ -303,7 +306,7 @@ def command_inventory(self, line):
 
     num = 1
     for i in self.inventory_manager.items:
-        output = f"{num:2}. " + self.inventory_manager.items[i].pretty_name()
+        output = f"{num:2}. " + self.inventory_manager.items[i].pretty_name(self)
         num += 1
 
         if self.trade_manager.trade != None:
@@ -317,7 +320,8 @@ def command_inventory(self, line):
         #    url = f'Identify {self.inventory_manager.items[i].pretty_name()}:identify {self.inventory_manager.items[i].id}'
 
             
-            output = f'[url={url}]{output}[/url]'
+        #    output = f'[url={url}]{output}[/url]'
+
         t.add_data(output)
         self.inventory_manager.items[i].new = False
 
@@ -357,8 +361,8 @@ def command_keep(self, line):
         self.send_line("Keep what?")
         return
     item = item[0]
-    self.send_line(f"Keeping {item.name}" if not item.keep else f"Unkeeping {item.name}")
     item.keep = True
+    self.send_line(f"Keeping {item.pretty_name(self)}" if not item.keep else f"Unkeeping {item.pretty_name(self)}")
 
 
 @check_not_trading
@@ -368,8 +372,8 @@ def command_unkeep(self, line):
         self.send_line("Unkeep what?")
         return
     item = item[0]
-    self.send_line(f"Keeping {item.name}" if not item.keep else f"Unkeeping {item.name}")
     item.keep = False
+    self.send_line(f"Keeping {item.pretty_name(self)}" if not item.keep else f"Unkeeping {item.pretty_name(self)}")
 
 
 def command_identify(self, line):

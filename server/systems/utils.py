@@ -400,6 +400,59 @@ def add_color(line, color_settings=None):
 
     return line
 
+def add_godot_url_fight_etc(object, identifier, output):
+    from configuration.constants.actor_status_type import ActorStatusType
+    if identifier != None:
+        if identifier.protocol.enabled_godot:
+            spaces = 5
+            _o = ''
+            _o += f'[url=look]{"Look ":<{spaces}}[/url]'
+            _o += f'[url=map]{"Map ":<{spaces}}[/url]'
+            if identifier.status == ActorStatusType.FIGHTING:
+                _o += f'[url=flee]{"Flee  ":<{spaces}}[/url]'
+            else:
+                _o += f'[url=fight]{"Fight ":<{spaces}}[/url]'
+            _o += f'[url=inventory]{"Inventory ":<{spaces}}[/url]'
+            _o += f'[url=equipment]{"Equipment ":<{spaces}}[/url]'
+            _o += f'[url=stats]{"Stats ":<{spaces}}[/url]'
+            _o += f'[url=get all]{"Get-All ":<{spaces}}[/url]'
+            return output + '\n' + _o  
+
+    return output
+
+def add_godot_url(object, identifier, output):
+    if identifier != None:
+        if identifier.protocol.enabled_godot:
+            url = ''
+            url += f'Identify {object.name}->identify {object.id},'
+
+            if object.keep:
+                url += f'Unkeep {object.name}->unkeep {object.id},'
+            else:
+                url += f'Keep {object.name}->keep {object.id},'
+
+            if hasattr(object, 'equiped'):
+                if object.equiped:
+                    url += f'Unequip {object.name}->equip {object.id},'
+                else:
+                    url += f'Equip {object.name}->equip {object.id},'
+                url += f'Reforge {object.name}->reforge {object.id},'
+
+            if object in identifier.inventory_manager.items.values():
+                url += f'Drop {object.name}->drop {object.id},'
+            else:
+                url += f'Get {object.name}->get {object.id},'
+            
+            for i in object.trigger_manager.triggers:
+                if ' command_' not in ' '+i:
+                    url += f'{i.capitalize()} {object.name}->{i} {object.id},'   
+
+            url += f'Scrap {object.name}->scrap {object.id},'
+
+            output = f'[url={url}]{output}[/url]'
+            #print(output)
+            return output
+    return output
 
 class Table:
     def __init__(self, columns=0, spaces=5):
@@ -425,8 +478,15 @@ class Table:
         i = 0
         for elem in self.data:
             # systems.utils.debug_print(widths[i], len(elem['val']))
-            if widths[i] < len(remove_color(elem["val"])) + self.SPACE:
-                widths[i] = len(remove_color(elem["val"])) + self.SPACE
+            elem_raw = remove_color(elem["val"])
+
+            # remove url tag when calculating len
+            pattern = r'\[url=[^\]]*\]'
+            elem_raw = re.sub(pattern, '[url]', elem_raw)
+
+
+            if widths[i] < len(elem_raw) + self.SPACE:
+                widths[i] = len(elem_raw) + self.SPACE
             # systems.utils.debug_print(index)
             # systems.utils.debug_print(i,index,elem,widths[index])
             i += 1
@@ -504,7 +564,7 @@ import re
 
 
 #  usually use 80
-def chunkate(input_string, max_width=800):
+def chunkate(input_string, max_width=800*3):
     # Regex to match a color code (e.g., @red, @green, etc.) or a word
     color_code_regex = r"@[\w]+"
 
@@ -572,7 +632,7 @@ def chunkate(input_string, max_width=800):
     return output
 
 
-def add_line_breaks(input_string, max_width=100):
+def add_line_breaks(input_string, max_width=10000):
     output = ""
     lines = input_string.split("\n")
     for l in lines:

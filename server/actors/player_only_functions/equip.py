@@ -95,7 +95,7 @@ def inventory_equip(self, item, forced=False):
         if not forced:
             self.sendSound(Audio.ITEM_GET)
             self.simple_broadcast(
-                f"You equip {item.name}", f"{self.pretty_name()} equips {item.name}"
+                f"You equip {item.name}", f"{self.pretty_name(self)} equips {item.pretty_name(self)}"
             )
             self.stat_manager.hp_mp_clamp_update()
 
@@ -133,5 +133,5 @@ def inventory_unequip(self, item, silent=False):
         self.stat_manager.hp_mp_clamp_update()
         self.sendSound(Audio.ITEM_GET)
         self.simple_broadcast(
-            f"You unequip {item.name}", f"{self.pretty_name()} unequips {item.name}"
+            f"You unequip {item.name}", f"{self.pretty_name(self)} unequips {item.pretty_name(self)}"
         )

@@ -13,6 +13,7 @@ var socket = WebSocketPeer.new()
 @onready var LOOK_ROOM = $canvas/container/map_room/look_room
 @onready var ASCIIMAP = $canvas/container/map_room/ascii_map
 @onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
+@onready var MOUSE_CLICK_OPTIONS = $canvas/mouse_click_options
 
 var game_state = 'none yet'
 
@@ -65,8 +66,8 @@ func try_connect_in_order(urls: Array) -> void:
 			OUTPUT.get_message("Connected to: %s\n" % url)
 			await get_tree().create_timer(1.0).timeout
 			socket.send(PackedByteArray([IAC, DO, GMCP]))
-			await get_tree().create_timer(1.0).timeout
-			socket.send_text("please enable godot4 features")
+			await get_tree().create_timer(0.2).timeout
+			socket.send(PackedByteArray([IAC, SB, GMCP, "godot on", IAC, SE]))
 			connected = true
 			break
 		else:
@@ -256,12 +257,38 @@ func _process(_delta):
 		OUTPUT.get_message("\n\n<--!-->\tYou have been disconnected! refresh the page to reconnect!\t<--!-->")
 		set_process(false)
 
-
+func handle_meta_clicked(meta):
+	print(meta)
+	if ',' in meta:
+		var output := []
+		var entries = meta.split(",")
+		for entry in entries:
+			if "->" in entry:
+				var parts = entry.split("->", false, 2)
+				var url = parts[1].strip_edges()
+				var text = parts[0].strip_edges()
+				output.append("[url=%s]%s[/url]\n" % [url, text])
+				MOUSE_CLICK_OPTIONS.text = "".join(output)
+				#MOUSE_CLICK_OPTIONS.text = output
+	else:
+		socket.send_text(meta.strip_edges())
+		print("URL clicked:", meta)
+	
 func _on_navigation_meta_clicked(meta):
-	socket.send_text(meta.strip_edges())
-	print("URL clicked:", meta)
-
+	handle_meta_clicked(meta)
+	#socket.send_text(meta.strip_edges())
+	#print("URL clicked:", meta)
 
 func _on_output_meta_clicked(meta):
-	socket.send_text(meta.strip_edges())
-	print("URL clicked:", meta)
+	handle_meta_clicked(meta)
+	#socket.send_text(meta.strip_edges())
+	#print("URL clicked:", meta)
+
+func _on_mouse_click_options_meta_clicked(meta):
+	handle_meta_clicked(meta)
+	#socket.send_text(meta.strip_edges())
+	#print("URL clicked:", meta)
+
+
+func _on_output_combat_meta_clicked(meta):
+	handle_meta_clicked(meta)

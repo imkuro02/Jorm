@@ -34,6 +34,7 @@ ECHO = b"\x01"  # Echo
 LINEMODE = b"\x22"  # Line mode
 GMCP = b"\xc9"
 MSSP = b"\x46"
+GODOT = b"\xc9"
 
 with open("configuration/text_files/words.txt", "r", encoding="utf-8") as f:
     secret_words = [line.strip() for line in f if line.strip()]
@@ -643,8 +644,12 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
     # override
     def dataReceived(self, data):
         self.tick_since_last_message = self.factory.ticks_passed
-
-        # interrupt
+        
+        if data == b'\xff\xfa\xc9\x00\xff\xf0':
+            self.enabled_godot = True
+            self.send_line('Godot features enabled, enjoy!')
+            return
+        
         if data == b"\xff\xf4\xff\xfd\x06":
             self.disconnect()
             return
@@ -656,17 +661,20 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 self.send_mssp()
             if data == IAC + DO + GMCP:
                 self.enabled_gmcp = True
+                self.send_line(f'GMCP features enabled, enjoy!')
             if data == IAC + DONT + GMCP:
                 self.enabled_gmcp = False
+                self.send_line(f'GMCP features disabled, enjoy!')
             return
 
+        
         # decode and process input data
         line = data.decode("utf-8", errors="ignore").strip()
 
-        if line == 'please enable godot4 features':
-            self.enabled_godot = True
-            self.send_line('Godot features enabled, enjoy!')
-            return
+        #if line == 'please enable godot4 features':
+        #    self.enabled_godot = True
+        #    self.send_line('Godot features enabled, enjoy!')
+        #    return
 
         # log account unique ID and what message was sent
         # if self.state == self.PLAY:

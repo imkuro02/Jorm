@@ -11,7 +11,7 @@ from configuration.constants.item_type import ItemType
 from configuration.constants.stat_type import StatType
 
 from configuration.constants.bonus_type import BonusType
-from systems.utils import REFTRACKER, get_object_parent, unload
+from systems.utils import REFTRACKER, get_object_parent, unload, add_godot_url
 from systems.triggers import TriggerManager
 
 class Item:
@@ -92,7 +92,7 @@ class Item:
                     self.ambience, self.ambience, sound=self.ambience_sfx
                 )
 
-    def pretty_name(self, rank_only=False):
+    def pretty_name(self, identifier = None, rank_only=False):
         def get_article(word):  # chatGPT
             vowels = "aeiou"
             if word == "":
@@ -161,6 +161,8 @@ class Item:
             #if self.crafting_ingredient_for != []:
             #    output = output + f" ({Color.ITEM_MATERIAL}M{Color.NORMAL})"
 
+        output = add_godot_url(self, identifier, output)
+            
         return output
 
     def to_dict(self):
@@ -187,7 +189,7 @@ class Item:
         return my_dict
 
     def identify(self, identifier=None):
-        output = f"{self.pretty_name()}\n"
+        output = f"{self.pretty_name(identifier)}\n"
         # output += get_icon(self.premade_id)
 
         output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"

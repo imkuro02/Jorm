@@ -467,7 +467,7 @@ class Actor:
             return False
         return True  # return true if no errors
 
-    def pretty_name(self):
+    def pretty_name(self, identifier = None):
         output = ""
 
         match type(self).__name__:

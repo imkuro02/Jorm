@@ -412,7 +412,7 @@ size_flags_vertical = 3
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-bbcode_enabled = true
+text = "fdsafdsa"
 meta_underlined = false
 selection_enabled = true
 script = ExtResource("3_gkcnj")
@@ -453,6 +453,19 @@ bbcode_enabled = true
 text = "test         
 test"
 selection_enabled = true
+
+[node name="mouse_click_options" type="RichTextLabel" parent="canvas"]
+clip_contents = false
+offset_left = 56.0
+offset_top = 176.0
+offset_right = 193.0
+offset_bottom = 200.0
+bbcode_enabled = true
+text = "lorem ipsum man"
+fit_content = true
+autowrap_mode = 0
+meta_underlined = false
+script = ExtResource("3_gkcnj")
 
 [node name="sfx_manager" type="AudioStreamPlayer" parent="."]
 volume_db = -20.292
@@ -544,3 +557,5 @@ texture = ExtResource("7_1kjrd")
 
 [connection signal="meta_clicked" from="canvas/container/map_room/navigation" to="." method="_on_navigation_meta_clicked"]
 [connection signal="meta_clicked" from="canvas/container/output/output" to="." method="_on_output_meta_clicked"]
+[connection signal="meta_clicked" from="canvas/container/output/output_combat" to="." method="_on_output_combat_meta_clicked"]
+[connection signal="meta_clicked" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_clicked"]
