@@ -834,8 +834,74 @@ class Actor:
         # if refs != []:
         #    systems.utils.debug_print(f'could not unload {self}:    {refs}')
 
+    def pretty_broadcast(self,
+        line_self = '', line_others = '', 
+        send_to="room", sound=None, msg_type=None,
+        list_pretty_name_objects = [],
+    ):
+        if self.room == None:
+                return
+
+        if send_to == "world":
+            players = [
+                proto.actor for proto in self.factory.protocols if proto.actor != None
+            ]
+
+        if send_to == "room":
+            players = [
+                actor
+                for actor in self.room.actors.values()
+                if type(actor).__name__ == "Player"
+            ]
+
+        if send_to == "room_not_party":
+            players = []
+
+            for i in self.room.actors.values():
+                if type(i).__name__ != "Player":
+                    continue
+                if i == self:
+                    continue
+                if self.party_manager.party != None:
+                    if i in self.party_manager.party.participants.values():
+                        continue
+                players.append(i)
+
+        if send_to == "room_party":
+            if self.party_manager.party == None:
+                players = [self]
+            else:
+                players = self.party_manager.party.participants.values()
+
+
+        for player in players:
+            if player == self:
+                if line_self == None:
+                    continue
+
+                custom_line = line_self
+                for obj in list_pretty_name_objects:
+                    custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
+                player.send_line(f"{custom_line}", msg_type=msg_type)
+
+                if sound != None:
+                    player.sendSound(sound)
+            else:
+                if line_others == None:
+                    continue
+
+                if sound != None:
+                    player.sendSound(sound)
+                
+                custom_line = line_others
+                for obj in list_pretty_name_objects:
+                    custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
+                player.send_line(f"{custom_line}", msg_type=msg_type)
+
     def simple_broadcast(
-        self, line_self, line_others, send_to="room", sound=None, msg_type=None
+        self, 
+        line_self = '', line_others = '', 
+        send_to="room", sound=None, msg_type=None
     ):
         if self.room == None:
             return

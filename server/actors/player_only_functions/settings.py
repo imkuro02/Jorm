@@ -11,6 +11,7 @@ BANNED_ALIASES = [
 
 class SETTINGS:
     GMCP = "gmcp"
+    GODOT = "GODOT"
     ALIAS = "alias"
     LOOK = "look"
     VIEW_ROOM = "viewroom"
@@ -30,6 +31,7 @@ class SETTINGS:
     ECHO = 'echo'
     LIST_SETTINGS = [
         GMCP,
+        GODOT,
         ECHO,
         ALIAS,
         VIEW_ROOM,
@@ -57,6 +59,7 @@ class Settings:
         self.actor = actor
         self.defaults = {
             SETTINGS.GMCP: True,
+            SETTINGS.GODOT: False,
             SETTINGS.ECHO: True,
             SETTINGS.VIEW_ROOM: True,
             SETTINGS.VIEW_MAP: True,
@@ -227,6 +230,15 @@ class Settings:
                 self.settings[SETTINGS.GMCP] = self.true_or_false(value)
                 self.actor.protocol.enabled_gmcp = self.true_or_false(value)
                 self.actor.send_line(f"GMCP enabled: {self.true_or_false(value)}")
+
+            case SETTINGS.GODOT:
+                if len(line) == 1:
+                    self.actor.send_line("GODOT setting needs an argument (on or off?)")
+                    return
+                value = line[1]
+                self.settings[SETTINGS.GODOT] = self.true_or_false(value)
+                self.actor.protocol.enabled_godot = self.true_or_false(value)
+                self.actor.send_line(f"GODOT enabled: {self.true_or_false(value)}")
 
             case SETTINGS.VIEW_MAP:
                 if len(line) == 1:

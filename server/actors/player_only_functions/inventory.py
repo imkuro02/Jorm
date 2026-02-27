@@ -75,9 +75,12 @@ def command_get(self, line):
 
     if items_pretty_name_before_pickup == []:
         return
-    self.simple_broadcast(
-        f"You get {', '.join(items_pretty_name_before_pickup)}",
-        f"{self.pretty_name(self)} gets {', '.join(items_pretty_name_before_pickup)}",
+
+    list_pretty_name_objects = [*items_to_get,*[self]]
+    self.pretty_broadcast(
+        line_self =     f"You gey {', '.join(str(obj.id) for obj in items_to_get)}",
+        line_others =   f"{self.id} gets {', '.join(str(obj.id) for obj in items_to_get)}",
+        list_pretty_name_objects =  list_pretty_name_objects  
     )
 
 
@@ -116,9 +119,11 @@ def command_drop(self, line):
 
         items_pretty_name_after.append(item.pretty_name(self))
 
-    self.simple_broadcast(
-        f"You drop {', '.join(items_pretty_name_after)}",
-        f"{self.pretty_name(self)} drops {', '.join(items_pretty_name_after)}",
+    list_pretty_name_objects = [*items_to_get,*[self]]
+    self.pretty_broadcast(
+        line_self =     f"You drop {', '.join(str(obj.id) for obj in items_to_get)}",
+        line_others =   f"{self.id} drops {', '.join(str(obj.id) for obj in items_to_get)}",
+        list_pretty_name_objects =  list_pretty_name_objects  
     )
 
 
