@@ -316,6 +316,7 @@ def use2(self, line, silent = False):
 
 @check_alive
 def use(self, line, silent=False):
+    
     line = line.lower()
     dict_of_actors = {}
     skill_id_to_name, skill_name_to_id = get_skills()

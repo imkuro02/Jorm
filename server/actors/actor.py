@@ -479,7 +479,7 @@ class Actor:
             case _:
                 output = output + f"{Color.NORMAL}{self.name}{Color.BACK}"
                 
-
+        output = systems.utils.add_godot_url_actors(self, identifier, output)
         # if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
         # output = output + f'{self.party_manager.get_party_id()}'

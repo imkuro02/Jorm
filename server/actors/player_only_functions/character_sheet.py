@@ -141,7 +141,10 @@ def command_practice(self, line):
                 f"{'' if skill_level <= 0 else f'{Color.GOOD}Practice Level{Color.NORMAL} {Color.IMPORTANT}{skill_level}{Color.NORMAL}:'}",
                 col=col,
             )
-            t.add_data(f"{skill_name}", col=col, filler=".")
+            
+            _skill_pretty_name = systems.utils.add_godot_url_skill_pretty_name(identifier = self, skill_id = skill_id)
+            t.add_data(f"{_skill_pretty_name}", col=col, filler=".")
+            
             t.add_data(
                 f" Costs {skill_cost} PP"
                 if skill_level < skill_max_level
@@ -480,7 +483,9 @@ def command_skills(self, line):
 
             diff = cur_lvl - nat_lvl
 
-            t.add_data(id_to_name[skill_id])
+            _skill_pretty_name = systems.utils.add_godot_url_skill_pretty_name(identifier = self, skill_id = skill_id)
+            t.add_data(_skill_pretty_name)
+
             if skill_id not in self.cooldown_manager.cooldowns and diff >= 0:
                 t.add_data("Ready", Color.GOOD)
             elif skill_id in self.cooldown_manager.cooldowns and diff >= 0:

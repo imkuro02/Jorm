@@ -112,6 +112,7 @@ class PartyManager:
     def party_create(self, line):
         if self.party != None:
             self.actor.send_line("You are already in a party")
+            return
         self.party = Party(self.actor)
         self.actor.send_line("You create a party")
         self.clear_invites()

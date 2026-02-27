@@ -489,7 +489,7 @@ def command_look(self, line, return_gmcp=False):
         if room_id == self.room.id:
             see = f"You are in {room.pretty_name()}\n"
         else:
-            see = f"You look at {room.pretty_name()}\n"
+            see = f"You look at {room.pretty_name(identifier = self)}\n"
         # see += draw_local_area(self, room_id)
         
         see = see + f"{Color.DESCRIPTION}{room.get_description()}{Color.NORMAL}\n"
@@ -523,7 +523,7 @@ def command_look(self, line, return_gmcp=False):
             if i == self:
                 pass
             else:
-                see = see + "" + i.pretty_name() + " is here"
+                see = see + "" + i.pretty_name(identifier = self) + " is here"
                 if i.status == ActorStatusType.DEAD:
                     see = see + f" and is dead"
                 if i.status == ActorStatusType.FIGHTING:
@@ -571,7 +571,7 @@ def command_look(self, line, return_gmcp=False):
                     continue
 
                 #if i.can_pick_up:
-                see_items = see_items + f"{i.pretty_name()} is here" + "\n"
+                see_items = see_items + f"{i.pretty_name(identifier = self)} is here" + "\n"
 
                 # see_items = see_items + f'   {i.pretty_name()}' + '\n'
                 #if i.can_pick_up:

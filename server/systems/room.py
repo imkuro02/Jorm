@@ -450,18 +450,20 @@ class Room:
 
         if not silent and actor.room != self:
             if actor.party_manager.party == None:
-                actor.simple_broadcast(
+                actor.pretty_broadcast(
                     "",
-                    f"{actor.pretty_name()} leaves",
+                    f"{actor.id} leaves",
                     send_to="room_not_party",
                     sound=Audio.walk(),
+                    list_pretty_name_objects = [actor]
                 )
             else:
-                actor.simple_broadcast(
+                actor.pretty_broadcast(
                     "",
-                    f"{actor.pretty_name()} and their party leaves",
+                    f"{actor.id} and their party leaves",
                     send_to="room_not_party",
                     sound=Audio.walk(),
+                    list_pretty_name_objects = [actor]
                 )
 
         actor.room = self
@@ -503,18 +505,20 @@ class Room:
 
         if not silent:
             if actor.party_manager.party == None:
-                actor.simple_broadcast(
+                actor.pretty_broadcast(
                     "",
-                    f"{actor.pretty_name()} arrives",
+                    f"{actor.id} arrives",
                     send_to="room_not_party",
                     sound=Audio.walk(),
+                    list_pretty_name_objects = [actor]
                 )
             else:
-                actor.simple_broadcast(
+                actor.pretty_broadcast(
                     "",
-                    f"{actor.pretty_name()} and their party arrives",
+                    f"{actor.id} and their party arrives",
                     send_to="room_not_party",
                     sound=Audio.walk(),
+                    list_pretty_name_objects = [actor]
                 )
 
     def remove_actor(self, actor):

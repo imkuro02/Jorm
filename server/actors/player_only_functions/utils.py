@@ -4,7 +4,7 @@ from configuration.constants.item_type import ItemType
 
 def get_actor(self, line):
     if line in self.room.actors:
-        return self.room.actor[line]
+        return self.room.actors[line]
     
     return systems.utils.get_match(line, self.room.actors)
 

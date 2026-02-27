@@ -11,7 +11,7 @@ from configuration.constants.item_type import ItemType
 from configuration.constants.stat_type import StatType
 
 from configuration.constants.bonus_type import BonusType
-from systems.utils import REFTRACKER, get_object_parent, unload, add_godot_url
+from systems.utils import REFTRACKER, get_object_parent, unload, add_godot_url_items
 from systems.triggers import TriggerManager
 
 class Item:
@@ -161,7 +161,7 @@ class Item:
             #if self.crafting_ingredient_for != []:
             #    output = output + f" ({Color.ITEM_MATERIAL}M{Color.NORMAL})"
 
-        output = add_godot_url(self, identifier, output)
+        output = add_godot_url_items(self, identifier, output)
             
         return output
 

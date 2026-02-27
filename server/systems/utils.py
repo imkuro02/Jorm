@@ -400,6 +400,20 @@ def add_color(line, color_settings=None):
 
     return line
 
+def add_godot_url_skill_pretty_name(identifier, skill_id):
+    from configuration.config import SKILLS
+    _skill_name = SKILLS[skill_id]['name']
+    _skill_id = skill_id
+    output = _skill_name
+    if identifier != None:
+        if identifier.protocol.enabled_godot:
+            url = ''
+            url += f'Use {_skill_name}->use {_skill_name},'
+            url += f'Practice {_skill_name}->practice {_skill_name},'
+            url += f'Skill {_skill_name}->Skill {_skill_name},'
+            output = f'[url={url}]{output}[/url]'
+    return output
+
 def add_godot_url_fight_etc(object, identifier, output):
     from configuration.constants.actor_status_type import ActorStatusType
     if identifier != None:
@@ -412,15 +426,26 @@ def add_godot_url_fight_etc(object, identifier, output):
                 _o += f'[url=flee]{"Flee  ":<{spaces}}[/url]'
             else:
                 _o += f'[url=fight]{"Fight ":<{spaces}}[/url]'
+
             _o += f'[url=inventory]{"Inventory ":<{spaces}}[/url]'
             _o += f'[url=equipment]{"Equipment ":<{spaces}}[/url]'
-            _o += f'[url=stats]{"Stats ":<{spaces}}[/url]'
             _o += f'[url=get all]{"Get-All ":<{spaces}}[/url]'
+
+            _o += f'[url=practice]{"Practice ":<{spaces}}[/url]'
+            _o += f'[url=skills]{"Skills ":<{spaces}}[/url]'
+            _o += f'[url=stats]{"Stats ":<{spaces}}[/url]'
+
+            __o = ''
+            __o += f'Level Grit->level grit,'
+            __o += f'Level Flow->level flow,'
+            __o += f'Level Mind->level mind,'
+            __o += f'Level Soul->level soul,'
+            _o += f'[url={__o}{"Level-Up ":<{spaces}}[/url]'
             return output + '\n' + _o  
 
     return output
 
-def add_godot_url(object, identifier, output):
+def add_godot_url_items(object, identifier, output):
     if identifier != None:
         if identifier.protocol.enabled_godot:
             url = ''
@@ -448,6 +473,20 @@ def add_godot_url(object, identifier, output):
                     url += f'{i.capitalize()} {object.name}->{i} {object.id},'   
 
             url += f'Scrap {object.name}->scrap {object.id},'
+
+            output = f'[url={url}]{output}[/url]'
+            #print(output)
+            return output
+    return output
+
+def add_godot_url_actors(object, identifier, output):
+    if identifier != None:
+        if identifier.protocol.enabled_godot:
+            url = ''
+            url += f'Look {object.name}->look {object.id},'
+            if type(object).__name__ == 'Player':
+                url += f'Party-Invite {object.name}->party invite {object.id},'
+            
 
             output = f'[url={url}]{output}[/url]'
             #print(output)
