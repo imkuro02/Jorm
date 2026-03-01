@@ -268,8 +268,10 @@ func handle_meta_clicked(meta):
 				var url = parts[1].strip_edges()
 				var text = parts[0].strip_edges()
 				output.append("[url=%s]%s[/url]\n" % [url, text])
-				MOUSE_CLICK_OPTIONS.text = "".join(output)
-				#MOUSE_CLICK_OPTIONS.text = output
+				#MOUSE_CLICK_OPTIONS.text = "".join(output)
+		OUTPUT.append_text("<OPTIONS START>\n")
+		OUTPUT.append_text("".join(output))
+		OUTPUT.append_text("<OPTIONS END>\n")
 	else:
 		socket.send_text(meta.strip_edges())
 		print("URL clicked:", meta)
