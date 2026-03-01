@@ -39,7 +39,7 @@ def command_equipment(self, line):
 
         return
 
-    output = f"You are wearing:\n{self.get_character_equipment(hide_empty=False)}\n"
+    output = f"You are wearing:\n{self.get_character_equipment(identifier = self, hide_empty=False)}\n"
     """
     for i in self.slots_manager.slots:
         if None == self.slots_manager.slots[i]:
@@ -94,8 +94,13 @@ def inventory_equip(self, item, forced=False):
 
         if not forced:
             self.sendSound(Audio.ITEM_GET)
-            self.simple_broadcast(
-                f"You equip {item.name}", f"{self.pretty_name(self)} equips {item.pretty_name(self)}"
+            #self.simple_broadcast(
+            #    f"You equip {item.name}", f"{self.pretty_name(self)} equips {item.pretty_name(self)}"
+            #)
+            self.pretty_broadcast(
+                line_self =     f"You equip {item.id}",
+                line_others =   f"{self.id} equips {item.id}",
+                list_pretty_name_objects = [self, item]  
             )
             self.stat_manager.hp_mp_clamp_update()
 
@@ -132,6 +137,8 @@ def inventory_unequip(self, item, silent=False):
 
         self.stat_manager.hp_mp_clamp_update()
         self.sendSound(Audio.ITEM_GET)
-        self.simple_broadcast(
-            f"You unequip {item.name}", f"{self.pretty_name(self)} unequips {item.pretty_name(self)}"
-        )
+        self.pretty_broadcast(
+                line_self =     f"You equip {item.id}",
+                line_others =   f"{self.id} equips {item.id}",
+                list_pretty_name_objects = [self, item]  
+            )

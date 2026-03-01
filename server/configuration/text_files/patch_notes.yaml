@@ -7,18 +7,18 @@ versions:
       - Consumable items no longer display skills.__dict__ in description
       - Necromancy skill on fail does not go on cooldown
       - Added "factions" for players and npcs (helps with figuring out whether target is hostile)
-      - Added quest requirement for exits (some room can only be entered on quest completion)
-      - Added basic mouse controls
+      - Added quest requirement for exits (some rooms can only be entered on quest completion)
+      - <!!!> Added basic mouse controls <!!!>
       - NESW + U and D movement
-      - Full item support
-      - remaining ->
-      - items on ground
-      - actors
-      - skills
-      - stuff like skill practicing
-      - leveling up (stats)
-      - party
-      - quest
+      - Full item support (items on ground, in inventory, equipped items etc)
+      - Item trading partially done but for now ignored
+      - Actors (mobs and players)
+      - Skills
+      - NOT DONE targetting
+      - KINDA stuff like skill practicing
+      - NOT DONE leveling up (stats)
+      - NOT DONE party
+      - NOT DONE quest
   "190226":
     id: "190226"
     title: Patch

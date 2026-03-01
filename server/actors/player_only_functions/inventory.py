@@ -78,7 +78,7 @@ def command_get(self, line):
 
     list_pretty_name_objects = [*items_to_get,*[self]]
     self.pretty_broadcast(
-        line_self =     f"You gey {', '.join(str(obj.id) for obj in items_to_get)}",
+        line_self =     f"You get {', '.join(str(obj.id) for obj in items_to_get)}",
         line_others =   f"{self.id} gets {', '.join(str(obj.id) for obj in items_to_get)}",
         list_pretty_name_objects =  list_pretty_name_objects  
     )

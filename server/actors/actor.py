@@ -521,7 +521,7 @@ class Actor:
             output = output + t.get_table()
         return output
 
-    def get_character_equipment(self, hide_empty=True):
+    def get_character_equipment(self, identifier = None, hide_empty=True):
         t = systems.utils.Table(2, spaces=1)
         for i in self.slots_manager.slots:
             if None == self.slots_manager.slots[i]:
@@ -535,7 +535,7 @@ class Actor:
                 t.add_data(
                     self.inventory_manager.items[
                         self.slots_manager.slots[i]
-                    ].pretty_name(rank_only=True)
+                    ].pretty_name(identifier = identifier, rank_only=True)
                 )
         output = t.get_table()
         return output

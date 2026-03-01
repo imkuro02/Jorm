@@ -614,7 +614,20 @@ def command_look(self, line, return_gmcp=False):
     if line == "":
         see = look_room(self, self.room.id)
         return see
-
+    
+    # this is here for "look [id of entity]"
+    #if look_at not in list_of_actors and look_at not in list_of_items:
+    thing = self.get_actor(line)
+    if thing != None:
+        look_actor(thing)
+        return
+    
+    thing = self.get_item(line, search_mode="room")
+    if thing != None:
+        look_item(self, thing[0])
+        return
+        
+    '''
     if look_at in list_of_actors:
         actor = self.get_actor(line)
         if actor == None:
@@ -628,6 +641,8 @@ def command_look(self, line, return_gmcp=False):
             self.send_line('Look at?')
             return
         look_item(self, item[0])
+    '''
+        
 
 def get_nearby_rooms(self, view_range=1):
     split = ","

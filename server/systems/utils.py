@@ -449,30 +449,40 @@ def add_godot_url_items(object, identifier, output):
     if identifier != None:
         if identifier.protocol.enabled_godot:
             url = ''
-            url += f'Identify {object.name}->identify {object.id},'
-
-            if object.keep:
-                url += f'Unkeep {object.name}->unkeep {object.id},'
-            else:
-                url += f'Keep {object.name}->keep {object.id},'
-
-            if hasattr(object, 'equiped'):
-                if object.equiped:
-                    url += f'Unequip {object.name}->equip {object.id},'
+            if object in identifier.inventory_manager.items.values() or object in identifier.room.inventory_manager.items.values():
+                if object in identifier.inventory_manager.items.values():
+                    url += f'Identify {object.name}->identify {object.id},'
                 else:
-                    url += f'Equip {object.name}->equip {object.id},'
-                url += f'Reforge {object.name}->reforge {object.id},'
+                    url += f'Look {object.name}->look {object.id},'
 
-            if object in identifier.inventory_manager.items.values():
-                url += f'Drop {object.name}->drop {object.id},'
+                #if object in identifier.inventory_manager.items.values():
+                #    if identifier.trade_manager.trade != None:
+                #        url += f'Trade-Offer {object.name}->trade offer {object.id},'
+
+                if object.keep:
+                    url += f'Unkeep {object.name}->unkeep {object.id},'
+                else:
+                    url += f'Keep {object.name}->keep {object.id},'
+
+                if hasattr(object, 'equiped'):
+                    if object.equiped:
+                        url += f'Unequip {object.name}->equip {object.id},'
+                    else:
+                        url += f'Equip {object.name}->equip {object.id},'
+                    url += f'Reforge {object.name}->reforge {object.id},'
+
+                if object in identifier.inventory_manager.items.values():
+                    url += f'Drop {object.name}->drop {object.id},'
+                else:
+                    url += f'Get {object.name}->get {object.id},'
+                
+                for i in object.trigger_manager.triggers:
+                    if ' command_' not in ' '+i:
+                        url += f'{i.capitalize()} {object.name}->{i} {object.id},'   
+
+                url += f'Scrap {object.name}->scrap {object.id},'
             else:
-                url += f'Get {object.name}->get {object.id},'
-            
-            for i in object.trigger_manager.triggers:
-                if ' command_' not in ' '+i:
-                    url += f'{i.capitalize()} {object.name}->{i} {object.id},'   
-
-            url += f'Scrap {object.name}->scrap {object.id},'
+                url += f'Lore {object.name}->lore {object.name},'
 
             output = f'[url={url}]{output}[/url]'
             #print(output)
@@ -516,12 +526,9 @@ class Table:
 
         i = 0
         for elem in self.data:
-            # systems.utils.debug_print(widths[i], len(elem['val']))
             elem_raw = remove_color(elem["val"])
-
-            # remove url tag when calculating len
-            pattern = r'\[url=[^\]]*\]'
-            elem_raw = re.sub(pattern, '[url]', elem_raw)
+            pattern = r'\[url(?:=[^\]]*)?\](.*?)\[/url\]'
+            elem_raw = re.sub(pattern, r'\1', elem_raw)
 
 
             if widths[i] < len(elem_raw) + self.SPACE:
@@ -536,13 +543,27 @@ class Table:
         output = ""
         i = 0
         index = 0
+
         for elem in self.data:
+            elem_raw = remove_color(elem["val"])
+            pattern = r'\[url(?:=[^\]]*)?\](.*?)\[/url\]'
+            elem_raw = re.sub(pattern, r'\1', elem_raw)
+
+            #if 'Strike' in elem_raw:
+            #    print(elem_raw)
+
             # systems.utils.debug_print(i,index,elem,widths[i])
-            tmp_output = f"{remove_color(elem['val']):<{widths[i]}}"
+            #tmp_output = f"{remove_color(elem['val']):<{widths[i]}}"
+            tmp_output = f"{elem_raw:<{widths[i]}}"
             tmp_output = tmp_output.replace(
-                remove_color(elem["val"]), elem["col"] + elem["val"] + f"@normal"
+                elem_raw, elem["col"] + elem["val"] + f"@normal"
             )
-            # output += add_color(tmp_output)
+
+            #tmp_output = f"{remove_color(elem['val']):<{widths[i]}}"
+            #tmp_output = tmp_output.replace(
+            #    remove_color(elem["val"]), elem["col"] + elem["val"] + f"@normal"
+            #)
+
             tmp_output = tmp_output.rstrip().ljust(len(tmp_output), elem["fil"])
 
             output += tmp_output
