@@ -13,7 +13,7 @@ var socket = WebSocketPeer.new()
 @onready var LOOK_ROOM = $canvas/container/map_room/look_room
 @onready var ASCIIMAP = $canvas/container/map_room/ascii_map
 @onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
-@onready var MOUSE_CLICK_OPTIONS = $canvas/mouse_click_options
+@onready var MOUSE_CLICK_OPTIONS = $canvas/container/output/mouse_click_options
 
 var game_state = 'none yet'
 
@@ -259,6 +259,8 @@ func _process(_delta):
 
 func handle_meta_clicked(meta):
 	print(meta)
+	if not Input.is_key_pressed(KEY_CTRL):
+		MOUSE_CLICK_OPTIONS.text = ""
 	if ',' in meta:
 		var output := []
 		var entries = meta.split(",")
@@ -268,10 +270,10 @@ func handle_meta_clicked(meta):
 				var url = parts[1].strip_edges()
 				var text = parts[0].strip_edges()
 				output.append("[url=%s]%s[/url]\n" % [url, text])
-				#MOUSE_CLICK_OPTIONS.text = "".join(output)
-		OUTPUT.append_text("<OPTIONS START>\n")
-		OUTPUT.append_text("".join(output))
-		OUTPUT.append_text("<OPTIONS END>\n")
+		MOUSE_CLICK_OPTIONS.text = "".join(output)
+		#OUTPUT.append_text("<OPTIONS START>\n")
+		#OUTPUT.append_text("".join(output))
+		#OUTPUT.append_text("<OPTIONS END>\n")
 	else:
 		socket.send_text(meta.strip_edges())
 		print("URL clicked:", meta)
