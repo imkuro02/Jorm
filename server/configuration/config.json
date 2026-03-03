@@ -1,5 +1,5 @@
 {
-    "SHA-256": "9de462584cb1966ce521d94777a7d22ea39c24c7f00e28913380e06003c3a2cc",
+    "SHA-256": "e380b1a22c21022508e9b056efdc6fd8fc8462f99431bc7ee96c7fadda0228d7",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -14719,7 +14719,7 @@
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "description_room": "Someone has carved something into the table",
-            "invisible": false,
+            "invisible": true,
             "ambience_sfx": null,
             "ambience": null,
             "can_pick_up": false,
@@ -14807,7 +14807,7 @@
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "description_room": "A large marble statue shadows over you",
-            "invisible": false,
+            "invisible": true,
             "ambience_sfx": null,
             "ambience": null,
             "can_pick_up": false,

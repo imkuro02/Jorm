@@ -3,6 +3,10 @@ from configuration.constants.item_type import ItemType
 
 
 def get_actor(self, line):
+
+    if line in 'self myself me'.split():
+        return self
+         
     if line in self.room.actors:
         return self.room.actors[line]
     

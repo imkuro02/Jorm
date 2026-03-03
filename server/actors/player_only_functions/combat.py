@@ -479,7 +479,8 @@ def command_target(self, line, slinet = False):
         self.send_line(f'Target set to {tar.pretty_name(self)}')
         return tar
 
-    systems.utils.debug_print('what the fuck cant find SHIT BOY')
+    self.ai.target = None
+    self.send_line('Target unset')
     return None
 """
 def command_use(self, line, is_trying = False):
