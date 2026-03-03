@@ -14,7 +14,7 @@ versions:
       - Item trading partially done but for now ignored
       - Actors (mobs and players)
       - Skills
-      - NOT DONE targetting
+      - Target command and targetting
       - KINDA stuff like skill practicing
       - NOT DONE leveling up (stats)
       - NOT DONE party

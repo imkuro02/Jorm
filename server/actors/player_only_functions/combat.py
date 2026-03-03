@@ -401,6 +401,10 @@ def use(self, line, silent=False):
             self.send_line(f'Use what?   - "{line}"')
             return False
 
+    if self.ai.target != None:
+        if self.ai.target.id not in {**self.room.actors, **self.inventory_manager.items, **self.room.inventory_manager.items}:
+            self.ai.target = None
+
     if _target == None and self.ai.target == None:
         if _action.name in skill_name_to_id:
             if bool(SKILLS[skill_name_to_id[_action.name]]["is_offensive"]):

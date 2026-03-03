@@ -450,6 +450,7 @@ def add_godot_url_items(object, identifier, output):
         if identifier.protocol.enabled_godot:
             url = ''
             if object in identifier.inventory_manager.items.values() or object in identifier.room.inventory_manager.items.values():
+                url += f'Target {object.name}->target {object.id},'
                 if object in identifier.inventory_manager.items.values():
                     url += f'Identify {object.name}->identify {object.id},'
                 else:
@@ -493,6 +494,7 @@ def add_godot_url_actors(object, identifier, output):
     if identifier != None:
         if identifier.protocol.enabled_godot:
             url = ''
+            url += f'Target {object.name}->target {object.id},'
             url += f'Look {object.name}->look {object.id},'
             if type(object).__name__ == 'Player':
                 url += f'Party-Invite {object.name}->party invite {object.id},'

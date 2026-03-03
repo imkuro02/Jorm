@@ -83,6 +83,25 @@ commands:
       - items
       - inventory
       - look
+  target:
+    group: combat
+    syntax:
+      - target <actor|item>
+    description: |
+     Target an actor or an item in your inventory or on the ground.
+     Setting a target means that all skill usage without specifying a target will   
+     attempt to use the skill on your target.
+
+     For example:
+     "target kuro" followed up by "use strike" will attempt to use strike on kuro
+     If your target is kuro, and you type "use strike on shadow" shadow will become the priority
+     And your target will still remain for the next skill use.
+
+     Your target will be reset if for some reason your target cannot be found.
+    related:
+      - use
+      - skills
+      - items
   #try:
   #  group: combat
   #  syntax:
