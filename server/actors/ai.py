@@ -369,6 +369,7 @@ class PlayerAI(AI):
     def __init__(self, actor):
         super().__init__(actor)
         self.can_use_skills_without_ending_turn = True
+        self.target = None
 
     def use_prediction(self, no_checks=False):
         if super().use_prediction(no_checks=no_checks):

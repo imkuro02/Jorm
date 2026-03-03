@@ -393,7 +393,6 @@ def use(self, line, silent=False):
         # action_name = best_match.name
         _target = best_match
 
-    #systems.utils.debug_print(_target)
 
     if len(line) <= 1:
         if _action == None:
@@ -402,7 +401,7 @@ def use(self, line, silent=False):
             self.send_line(f'Use what?   - "{line}"')
             return False
 
-    if _target == None:
+    if _target == None and self.ai.target == None:
         if _action.name in skill_name_to_id:
             if bool(SKILLS[skill_name_to_id[_action.name]]["is_offensive"]):
                 for i in self.room.actors.values():
@@ -417,11 +416,18 @@ def use(self, line, silent=False):
         else:
             _target = self
 
+    
+    if _target == None and self.ai.target == None:
+        _target = self
+
+    if self.ai.target != None and _target == None:
+        _target = self.ai.target
+
     if _target == None:
         if silent:
             return False
         self.send_line(f"Use {action_name} on?")
-        return False
+        return True
 
     #systems.utils.debug_print(_target.id)
 
@@ -450,7 +456,27 @@ def use(self, line, silent=False):
 def command_use(self, line, silent=False):
     return use(self, line, silent=False)
 
+def command_target(self, line, slinet = False):
+    if line == '':
+        self.ai.target = None
+        self.send_line('Target unset')
+        return None
 
+    tar = self.get_actor(line)
+    if tar != None:
+        self.ai.target = tar
+        self.send_line(f'Target set to {tar.pretty_name(self)}')
+        return tar
+
+    tar = self.get_item(line, search_mode = "self_and_room")
+    if tar != None:
+        tar = tar[0]
+        self.ai.target = tar
+        self.send_line(f'Target set to {tar.pretty_name(self)}')
+        return tar
+
+    systems.utils.debug_print('what the fuck cant find SHIT BOY')
+    return None
 """
 def command_use(self, line, is_trying = False):
     _line = line
