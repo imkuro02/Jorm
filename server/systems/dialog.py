@@ -99,7 +99,7 @@ class Dialog:
             # this might get messy
             # godot urls for dialog are added here
             if "line" in option:
-                if self.player.settings_manager.get_value('GODOT'):
+                if self.player.protocol.enabled_godot:
                     dic["line"] = f'[url={i}]'+option["line"].replace('\n','[/url]\n')
                 else:
                     dic["line"] = option["line"]

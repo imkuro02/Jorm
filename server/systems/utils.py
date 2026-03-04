@@ -461,10 +461,7 @@ def add_godot_url_items(object, identifier, output):
                     else:
                         url += f'Equip {object.name}->equip {object.id},'
                         url += f'Reforge {object.name}->reforge {object.id},'
-                if object.keep:
-                    url += f'Unkeep {object.name}->unkeep {object.id},'
-                else:
-                    url += f'Keep {object.name}->keep {object.id},'
+                
                 if object.can_tinker_with():
                     url += f'Drop {object.name}->drop {object.id},'
                     url += f'Scrap {object.name}->scrap {object.id},'
