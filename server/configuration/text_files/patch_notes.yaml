@@ -1,4 +1,18 @@
 versions:
+  "030426":
+    id: "030426"
+    title: Patch + mouse controls part 2
+    unixtime: 1761899677
+    features:
+      - Tutorial pc mentions swing instead of strike
+      - Wrong option in npc dialog kicks you out of dialog
+      - Make highlighted text in description clickable
+      - Fix up urls for items in inv / on ground
+      - A emtpy mug -> An empty mug
+      - Bartender shop dialogue sells wrong items
+      - Reset target inbetween fight
+      - Daily quest board is NOT daily
+      - Need some precautions for teleporting to "old world"
   "240226":
     id: "240226"
     title: Patch + mouse controls
