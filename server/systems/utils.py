@@ -449,6 +449,41 @@ def add_godot_url_items(object, identifier, output):
     if identifier != None:
         if identifier.protocol.enabled_godot:
             url = ''
+            if object in identifier.inventory_manager.items.values():
+                url += f'Identify {object.name}->identify {object.id},'
+                if object.keep:
+                    url += f'Unkeep {object.name}->unkeep {object.id},'
+                else:
+                    url += f'Keep {object.name}->keep {object.id},'
+                if hasattr(object, 'equiped'):
+                    if object.equiped:
+                        url += f'Unequip {object.name}->equip {object.id},'
+                    else:
+                        url += f'Equip {object.name}->equip {object.id},'
+                        url += f'Reforge {object.name}->reforge {object.id},'
+                if object.keep:
+                    url += f'Unkeep {object.name}->unkeep {object.id},'
+                else:
+                    url += f'Keep {object.name}->keep {object.id},'
+                if object.can_tinker_with():
+                    url += f'Drop {object.name}->drop {object.id},'
+                    url += f'Scrap {object.name}->scrap {object.id},'
+
+                for i in object.trigger_manager.triggers:
+                    if ' command_' not in ' '+i:
+                        url += f'{i.capitalize()} {object.name}->{i} {object.id},'   
+                        
+            if object in identifier.room.inventory_manager.items.values():
+                url += f'Look {object.name}->look {object.id},'
+                if object.can_pick_up:
+                    url += f'Get {object.name}->get {object.id},'
+
+            url += f'Lore {object.name}->lore {object.name},'
+
+
+            output = f'[url={url}]{output}[/url]'
+    return output
+    '''
             if object in identifier.inventory_manager.items.values() or object in identifier.room.inventory_manager.items.values():
                 url += f'Target {object.name}->target {object.id},'
                 if object in identifier.inventory_manager.items.values():
@@ -489,6 +524,7 @@ def add_godot_url_items(object, identifier, output):
             #print(output)
             return output
     return output
+    '''
 
 def add_godot_url_actors(object, identifier, output):
     if identifier != None:
@@ -496,6 +532,8 @@ def add_godot_url_actors(object, identifier, output):
             url = ''
             url += f'Target {object.name}->target {object.id},'
             url += f'Look {object.name}->look {object.id},'
+            if object.dialog_tree != None:
+                url += f'Talk {object.name}->talk {object.id},'
             if type(object).__name__ == 'Player':
                 url += f'Party-Invite {object.name}->party invite {object.id},'
             

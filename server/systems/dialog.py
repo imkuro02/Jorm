@@ -96,8 +96,14 @@ class Dialog:
 
             dic["index"] = i
 
+            # this might get messy
+            # godot urls for dialog are added here
             if "line" in option:
-                dic["line"] = option["line"]
+                if self.player.settings_manager.get_value('GODOT'):
+                    dic["line"] = f'[url={i}]'+option["line"].replace('\n','[/url]\n')
+                else:
+                    dic["line"] = option["line"]
+
             if "line_room_party" in option:
                 dic["line_room_party"] = option["line_room_party"]
             if "line_room_not_party" in option:
@@ -284,10 +290,23 @@ class Dialog:
         try:
             line = int(line)
         except ValueError:
-            line = 0
+            line = -1
+
+        options = self.get_valid_options()
+        #self.player.send_line(f'{line <= len(options) and line >= 1}')
+        if line == 0 or line == -1:
+            self.end_dialog()
+            self.player.send_line(f'You stop talking to {self.npc.pretty_name(identifier = self.player)}')
+            return True
+
+        if not(line <= len(options) and line >= 1):
+            self.player.send_line(f'Type a valid number between 0 and {len(self.get_valid_options())}\nTyping 0 will end the conversation\nYou can leave dialog with any non numerical command')
+            return True
+
+        
 
         answer = None
-        options = self.get_valid_options()
+        
 
         for index, option in enumerate(options):
             if line == option["index"]:

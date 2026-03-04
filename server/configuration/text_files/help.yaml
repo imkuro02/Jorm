@@ -517,7 +517,7 @@ commands:
       @goodArguments@normal
       Arguements are what follows after your alias command
 
-      Example alias: "settings alias boom use bash on #0#; use swing on #0#"
+      Example alias: "settings alias boom use bash on #0#; use strike on #0#"
 
       #number# will be replaced with the words after your alias
       typing "boom kuro" will replace all "#0#" with "kuro"
