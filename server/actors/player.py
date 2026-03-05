@@ -316,11 +316,14 @@ class UpdateChecker:
                 _map = f"Round {_round}, Your turn\n" + _map
             else:
                 _map = f"Round {_round}, {_cur_actor.pretty_name()}' turn\n" + _map
-        _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
 
+        _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
 
-        _map = self.actor.command_map("", return_gmcp=True)
+        if self.actor.status == ActorStatusType.FIGHTING:
+            _map = 'test'
+        else:
+            _map = self.actor.command_map("", return_gmcp=True)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "MAP")
 
         # _look = self.actor.command_look("", return_gmcp=True)
