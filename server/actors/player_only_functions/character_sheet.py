@@ -277,7 +277,7 @@ def command_practice(self, line):
         self.skill_manager.skills[skill_id] = new_prac_level
 
 
-def command_skills(self, line):
+def command_skills(self, line, return_gmcp = False):
     id_to_name, name_to_id = get_skills()
     if len(line) > 0:
         skill_name = systems.utils.match_word(
@@ -506,7 +506,11 @@ def command_skills(self, line):
                 cur_lvl = f"{Color.BAD}{cur_lvl}{Color.NORMAL}"
 
             t.add_data(f"{cur_lvl} {diff}")
-        self.send_line(t.get_table())
+        
+        if return_gmcp:
+            return t.get_table()
+        else:
+            self.send_line(t.get_table())
 
 
 @check_not_in_combat

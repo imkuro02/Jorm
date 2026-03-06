@@ -321,9 +321,9 @@ class UpdateChecker:
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
 
         if self.actor.status == ActorStatusType.FIGHTING:
-            _map = 'test'
+            _map = self.actor.command_skills('', return_gmcp = True)
         else:
-            _map = self.actor.command_map("", return_gmcp=True)
+            _map = self.actor.command_map("", return_gmcp = True)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "MAP")
 
         # _look = self.actor.command_look("", return_gmcp=True)
