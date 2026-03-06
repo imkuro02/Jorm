@@ -50,6 +50,7 @@ def command_get(self, line):
         items_to_get = item_found
 
     items_pretty_name_before_pickup = []
+    items_gotten = []
     for item in items_to_get:
         item_pretty_name_before_pickup = item.pretty_name(self)
         if not item.can_pick_up:
@@ -72,14 +73,15 @@ def command_get(self, line):
             continue
 
         items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
+        items_gotten.append(item)
 
     if items_pretty_name_before_pickup == []:
         return
 
-    list_pretty_name_objects = [*items_to_get,*[self]]
+    list_pretty_name_objects = [*items_gotten,*[self]]
     self.pretty_broadcast(
-        line_self =     f"You get {', '.join(str(obj.id) for obj in items_to_get)}",
-        line_others =   f"{self.id} gets {', '.join(str(obj.id) for obj in items_to_get)}",
+        line_self =     f"You get {', '.join(str(obj.id) for obj in items_gotten)}",
+        line_others =   f"{self.id} gets {', '.join(str(obj.id) for obj in items_gotten)}",
         list_pretty_name_objects =  list_pretty_name_objects  
     )
 
