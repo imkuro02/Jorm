@@ -20,6 +20,9 @@ class Affect:
         get_prediction_string_clear=False,
         dispellable=True,
     ):
+        # used for pretty_name and pretty_broadcast 
+        self.id = 'affect_id-'+name
+        
         self.affect_target_actor = affect_target_actor
         self.affect_source_actor = affect_source_actor
 
@@ -40,7 +43,7 @@ class Affect:
 
         self.dispellable = dispellable
 
-    def pretty_name(self):
+    def pretty_name(self, identifier = None):
         if self.turns == 0:
             return f'{self.name}'
         return f'{self.name} x{self.turns}' 

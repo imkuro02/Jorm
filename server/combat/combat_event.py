@@ -102,7 +102,7 @@ class CombatEvent:
                 # if mag_arm_broke:
                 #    output += f'{Color.stat[StatType.MAGARMOR]}{StatType.name[StatType.MAGARMOR]}{Color.BACK} {Color.COMBAT_TURN}BROKE{Color.BACK},'
                 output = f"{output}{Color.NORMAL}"
-                output = f" from {pop.damage_source_action.pretty_name()}".join(
+                output = f" from {pop.damage_source_action.id}".join(
                     output.rsplit(",", 1)
                 )
                 output = " and".join(output.rsplit(",", 1))
@@ -115,7 +115,7 @@ class CombatEvent:
                 output_self = output_self.replace("#L#", " lost")
 
                 output_other = output_other.replace(
-                    "#A#", f"{pop.damage_taker_actor.pretty_name()} has"
+                    "#A#", f"{pop.damage_taker_actor.id} has"
                 )
                 output_other = output_other.replace("#G#", " healed")
                 output_other = output_other.replace("#L#", " lost")
@@ -140,8 +140,9 @@ class CombatEvent:
 
                 sound = Audio.HURT
                 # output = f'{pop.damage_taker_actor.name}  {pop.damage_hp}hp  {pop.damage_pa}pa {pop.damage_ma}ma'
-                pop.damage_taker_actor.simple_broadcast(
-                    output_self, output_other, sound=sound, msg_type=[MessageType.COMBAT]
+                list_pretty_name_objects = [pop.damage_taker_actor, pop.damage_source_actor, pop.damage_source_action]
+                pop.damage_taker_actor.pretty_broadcast(
+                    output_self, output_other, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = list_pretty_name_objects
                 )
 
                 if phy_arm_broke:

@@ -27,6 +27,10 @@ class Skill:
         combat_event=None,
     ):
         self.skill_id = skill_id
+        
+        # used for pretty_name and pretty_broadcast 
+        self.id = 'skill_id-'+skill_id
+
         self.name = name
         if self.name == None:
             self.name = SKILLS[skill_id]["name"]
