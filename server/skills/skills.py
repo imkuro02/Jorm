@@ -64,8 +64,8 @@ class Skill:
         else:
             return self.get_dmg_value_override
 
-    def pretty_name(self):
-        return self.name
+    def pretty_name(self, identifier = None):
+        return systems.utils.add_godot_url_skill_pretty_name(identifier, self.skill_id)
 
     def use_broadcast(self):
 
@@ -79,7 +79,7 @@ class Skill:
             "user on other":    '#USER# used #SKILL# on #OTHER#',
         }
        
-
+        '''
         for perspective in perspectives:
             perspectives[perspective] = perspectives[perspective].replace(
                 "#USER#", self.user.pretty_name()
@@ -90,30 +90,44 @@ class Skill:
             perspectives[perspective] = perspectives[perspective].replace(
                 "#SKILL#", self.pretty_name()
             )
+        '''
 
         for receiver in self.user.room.actors.values():
             if type(receiver).__name__ != "Player":
                 continue
 
+            _line_to_send = ''
+
             if receiver == self.user and receiver == self.other:
-                receiver.send_line(perspectives["you on you"])
-                continue
+                _line_to_send = perspectives["you on you"]
+                
             if receiver == self.user and receiver != self.other:
-                receiver.send_line(perspectives["you on other"])
-                continue
+                _line_to_send = perspectives["you on other"]
+                
             if (
                 receiver != self.user
                 and receiver != self.other
                 and self.user == self.other
             ):
-                receiver.send_line(perspectives["user on user"])
-                continue
+                _line_to_send = perspectives["user on user"]
+                
             if receiver != self.user and receiver == self.other:
-                receiver.send_line(perspectives["user on you"])
-                continue
+                _line_to_send = perspectives["user on you"]
+                
             if receiver != self.user and receiver != self.other:
-                receiver.send_line(perspectives["user on other"])
-                continue
+                _line_to_send = perspectives["user on other"]
+                
+            
+            _line_to_send = _line_to_send.replace("#USER#", self.user.id)
+            _line_to_send = _line_to_send.replace("#OTHER#", self.other.id)
+            _line_to_send = _line_to_send.replace("#SKILL#", self.pretty_name(receiver))
+
+            list_pretty_name_objects = [self.user, self.other]
+            receiver.pretty_broadcast(
+                line_self = _line_to_send,
+                line_others = None,
+                list_pretty_name_objects =  list_pretty_name_objects  
+            )
 
     # runs in delay affliction if the affliction gets cancelled
     def delay_use_got_cancelled(self):
