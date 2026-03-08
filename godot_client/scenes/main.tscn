@@ -552,6 +552,7 @@ texture_filter = 1
 position = Vector2(48, 56)
 texture = ExtResource("7_1kjrd")
 
+[connection signal="meta_clicked" from="canvas/container/map_room/ascii_map" to="." method="_on_ascii_map_meta_clicked"]
 [connection signal="meta_clicked" from="canvas/container/map_room/navigation" to="." method="_on_navigation_meta_clicked"]
 [connection signal="meta_clicked" from="canvas/container/output/output" to="." method="_on_output_meta_clicked"]
 [connection signal="meta_clicked" from="canvas/container/output/mouse_click_options" to="." method="_on_mouse_click_options_meta_clicked"]

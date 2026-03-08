@@ -297,3 +297,7 @@ func _on_mouse_click_options_meta_clicked(meta):
 func _on_output_combat_meta_clicked(meta):
 	handle_meta_clicked(meta)
 	
+
+
+func _on_ascii_map_meta_clicked(meta):
+	handle_meta_clicked(meta)
