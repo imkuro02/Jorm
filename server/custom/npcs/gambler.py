@@ -1,9 +1,11 @@
 import random
-
+import os
+import json
 from actors.npcs import Npc
 from items.manager import load_item
 from systems.dialog import Dialog
 
+EARNINGS_DATA_LOCATION = 'database/gambling_earnings.json'
 
 class gambling_dialog(Dialog):
     def __init__(self, *args, **kwargs):
@@ -32,11 +34,29 @@ class gambling_dialog(Dialog):
             self.end_gambling()
             return super().end_dialog()
 
+    def save_earnings(self):
+        filename = EARNINGS_DATA_LOCATION
+        if not os.path.exists(filename):
+            # create file with default content
+            with open(filename, "w") as f:
+                json.dump({"from_file": str(__file__), "earnings": 0}, f)
+
+        # now read the file
+        with open(filename, "r") as f:
+            earnings_data = json.load(f)
+
+        earnings_data['earnings'] = self.npc.earnings
+
+        with open(filename, "w") as f:
+            json.dump(earnings_data, f, indent=4)
+
     def give_back_money(self):
         if self.to_gamble != 0:
             new_item = load_item("currency_0")
             new_item.stack = self.to_gamble
             self.player.inventory_manager.add_item(new_item, forced=True)
+            self.npc.earnings -= self.to_gamble
+            self.save_earnings()
 
     def answer(self, line):
         if self.current_line != "propose_bid":
@@ -83,6 +103,8 @@ class gambling_dialog(Dialog):
             f"{self.player.pretty_name()} bids {self.to_gamble} scrap",
         )
         self.is_gambling = True
+        self.npc.earnings += self.to_gamble
+        self.save_earnings()
         return True
 
     def tick(self):
@@ -160,6 +182,20 @@ class gambling(Npc):
         self.actors = len(self.room.actors.values())
         self.dialogs = {}
 
+        self.original_description = self.description
+
+        filename = EARNINGS_DATA_LOCATION
+        if not os.path.exists(filename):
+            # create file with default content
+            with open(filename, "w") as f:
+                json.dump({"from_file": str(__file__), "earnings": 0}, f)
+
+        # now read the file
+        with open(filename, "r") as f:
+            earnings_data = json.load(f)
+
+        self.earnings = earnings_data['earnings']
+
         self.trigger_manager.trigger_add(trigger_key = 'gamble', trigger_action = self.trigger_gamble)
         self.description += '\nYou can "gamble <amount>" to skip the chitchat.'
 
@@ -173,12 +209,14 @@ class gambling(Npc):
         return True
 
     def tick(self):
+        
         super().tick()
         for i in self.dialogs.values():
             i.tick()
 
         self.time_exisiting += 1
         if self.time_exisiting % (30 * 3) == 0:
+            self.description = f'{self.original_description} They have {"made" if self.earnings >= 0 else "lost"} {abs(self.earnings)} scrap so far.'
             if self.actors != len(self.room.actors.values()):
                 self.actors = len(self.room.actors.values())
                 
