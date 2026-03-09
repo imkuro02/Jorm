@@ -84,6 +84,12 @@ if __name__ == "__main__":
 
     from skills.manager import check_for_broken_skills
     check_for_broken_skills()
+    from configuration.config import check_for_broken_icons
+    check_for_broken_icons()
+    from configuration.config import check_for_not_spawnable_enemies
+    check_for_not_spawnable_enemies()
+    from configuration.config import check_for_not_droppable_or_spawnable_items
+    check_for_not_droppable_or_spawnable_items()
 
     reactor.run()
 

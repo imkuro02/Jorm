@@ -11,6 +11,7 @@ versions:
       - Wandering undead outside of the manor blocks you from going away
       - The shack east of stumpfield is only accessible after quest completion
       - Gambler npc now displays their earnings in description
+      - Disorient skill now alerts you that your armor is broken
   "030326":
     id: "030326"
     title: Patch + mouse controls part 2

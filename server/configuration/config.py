@@ -49,6 +49,51 @@ def get_icon(icon_id):
 
     return icon_art
 
+def check_for_broken_icons():
+    _e = ENEMIES
+    _i = ICONS
+
+    for i in _i:
+        if i not in _e:
+            systems.utils.debug_print(f'"{i}" not in ENEMIES')
+
+    for e in _e:
+        if e not in _i:
+            systems.utils.debug_print(f'"{e}" not in ICONS')
+
+def check_for_not_spawnable_enemies():
+    _e = ENEMIES 
+    for e in _e:
+        #print(e)
+        enemy_not_spawnable = True
+        for spawner in WORLD['world'].values():
+            for spawn_spot in spawner["spawner"]:
+                #print(spawn_spot)
+                if e in spawn_spot:
+                    enemy_not_spawnable = False
+        if enemy_not_spawnable:
+            systems.utils.debug_print(f'"{e}" does not spawn anywhere on map')
+
+def check_for_not_droppable_or_spawnable_items():
+    _e = ENEMIES
+    _i = ITEMS
+
+    
+    for i in _i:
+        loot_not_droppable = True
+        for e in _e:
+            if i in _e[e]['loot']:
+                loot_not_droppable = False
+
+        for spawner in WORLD['world'].values():
+            for spawn_spot in spawner["spawner"]:
+                if i in spawn_spot:
+                    loot_not_droppable = False
+
+        if loot_not_droppable:
+            systems.utils.debug_print(f'"{i}" is not droppable from any enemies, nor spawns in any rooms')
+
+
 PATCH_NOTES = {}
 PATCH_NOTES_PATH = "configuration/text_files/patch_notes.yaml"
 with open(PATCH_NOTES_PATH, "r") as file:

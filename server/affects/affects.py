@@ -411,9 +411,9 @@ class AffectArmorReduceToZero(Affect):
     def on_applied(self):
         super().on_applied()
         self.armor = self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR]
-        self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = 0
+        #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = 0
         self.marmor = self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR]
-        self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = 0
+        #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] = 0
 
         combat_event = CombatEvent()
         damage_obj = Damage(
@@ -447,8 +447,8 @@ class AffectArmorReduceToZero(Affect):
         if self.affect_target_actor.status == ActorStatusType.DEAD:
             return super().on_finished(silent)
 
-        self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] += self.armor
-        self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] += self.marmor
+        #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] += self.armor
+        #self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR] += self.marmor
 
         combat_event = CombatEvent()
         damage_obj = Damage(
