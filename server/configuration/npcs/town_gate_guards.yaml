@@ -17,7 +17,7 @@ town_gate_guard_out:
       options:
         - line: |
             ask "Can I go out?"
-          goto: go_somewhere
+          goto: go_ofcourse
           #check_not_in_party_or_is_party_leader: 1
           #teleport_player: overworld/01fc3537-8806-496c-b8b3-9ae828cbe944
 
@@ -25,6 +25,16 @@ town_gate_guard_out:
         #     ask for an escort
         #   goto: not_teleported
         #   check_not_in_party_or_is_party_leader: 0
+
+    # this is temporary dialog to remove quick teleports
+    go_ofcourse:
+      dialog:
+        - line: |
+            <npc> says "Im not stopping you, am I?"
+      options:
+        - line: |
+            say "Ok"
+          goto: start
 
     go_somewhere:
       dialog:

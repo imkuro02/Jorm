@@ -28,8 +28,8 @@ class wander_around_mob(Npc):
         if player.status == ActorStatusType.DEAD:
             return False
 
-        player.send_line(f'You cannot do that while {self.pretty_name()} is here')
-        return False
+        player.send_line(f'You cannot do that while {self.pretty_name(identifier = player)} is here')
+        return True
 
     def despawn_footprints(self):
         for i in self.footprints:
@@ -99,6 +99,8 @@ class wander_around_mob(Npc):
 
 
     def wander(self, warning = False):
+        #if self.room.is_player_present():
+        #    return
         _exits = self.room.exits
         exits = {}
         for i in _exits:

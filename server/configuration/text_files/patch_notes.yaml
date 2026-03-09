@@ -1,6 +1,17 @@
 versions:
-  "030426":
-    id: "030426"
+  "090326":
+    id: "090326"
+    title: Map
+    unixtime: 1761899677
+    features:
+      - Removed some redundant areas
+      - Gate Keeper NPC no longer teleports you (at all)
+      - Rat king can be found in purple forest
+      - Rat kings rat summons no longer drop exp or loot
+      - Wandering undead outside of the manor blocks you from going away
+      - The shack east of stumpfield is only accessible after quest completion
+  "030326":
+    id: "030326"
     title: Patch + mouse controls part 2
     unixtime: 1761899677
     features:

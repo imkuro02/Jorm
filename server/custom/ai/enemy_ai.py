@@ -129,6 +129,8 @@ class BossRatAI(AI):
             for i in range(0, random.randint(1, 3)):
                 rat = create_npc(self.actor.room, "rat")
                 rat.room.join_combat(rat)
+                rat.stat_manager.stats[StatType.EXP] = 0
+                rat.loot = {}
             self.actor.finish_turn()
             return
 
