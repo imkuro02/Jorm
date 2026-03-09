@@ -35,6 +35,21 @@ class Dialog:
         i = 1
         for option in self.dialog_tree[self.current_line]["options"]:
             dic = {}
+            if "player_has_astleast_x_of_item_id_check" in option:
+                this_option_is_good = True
+                for item_check in option['player_has_astleast_x_of_item_id_check']:
+                    item_id = item_check['item']
+                    item_amount = item_check['amount']
+                    if item_amount == 0:
+                        if self.player.inventory_manager.get_stacks_of_premade_id(item_id) != 0:
+                            this_option_is_good = False
+                    else:
+                        if not item_amount <= self.player.inventory_manager.get_stacks_of_premade_id(item_id):
+                            this_option_is_good = False
+
+                if not this_option_is_good:
+                    continue
+
             if "quest_check" in option:
                 this_option_is_good = True
                 for check in option["quest_check"]:
@@ -171,6 +186,21 @@ class Dialog:
         available_dialogs = []
         for option in self.dialog_tree[self.current_line]["dialog"]:
             dic = {}
+            if "player_has_astleast_x_of_item_id_check" in option:
+                this_option_is_good = True
+                for item_check in option['player_has_astleast_x_of_item_id_check']:
+                    item_id = item_check['item']
+                    item_amount = item_check['amount']
+                    if item_amount == 0:
+                        if self.player.inventory_manager.get_stacks_of_premade_id(item_id) != 0:
+                            this_option_is_good = False
+                    else:
+                        if not item_amount <= self.player.inventory_manager.get_stacks_of_premade_id(item_id):
+                            this_option_is_good = False
+
+                if not this_option_is_good:
+                    continue
+
             if "quest_check" in option:
                 this_option_is_good = True
                 for check in option["quest_check"]:

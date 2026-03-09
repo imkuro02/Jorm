@@ -4,6 +4,34 @@ bartender:
       dialog:
         - line: |
             <npc> says "Take a seat, or don't... I don't car..."
+          player_has_astleast_x_of_item_id_check:
+            - item: key_tavern_cellar
+              amount: 0
+
+        - line: |
+            <npc> says "Oh hey, you found that old thing?" they point at the Tavern Key
+          player_has_astleast_x_of_item_id_check:
+            - item: key_tavern_cellar
+              amount: 1
+
+      options:
+        - line: | 
+            ask about Tavern Key
+          player_has_astleast_x_of_item_id_check:
+            - item: key_tavern_cellar
+              amount: 1
+          goto: dont_worry
+
+    dont_worry:
+      dialog:
+        - line: |
+            <npc> says "Ah that old thing? its to my old place up north, I havent been there in a while"
+      options:
+        - line: |
+            Ok
+          goto: start
+
+
 
     start_shopping:
       append_to: start

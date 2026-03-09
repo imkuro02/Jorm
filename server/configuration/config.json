@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e380b1a22c21022508e9b056efdc6fd8fc8462f99431bc7ee96c7fadda0228d7",
+    "SHA-256": "08adff689344e13ce6a940fe7cac426b8ab0ed5cee46a4df8ac02dcdad06e109",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -1852,6 +1852,7 @@
                 "grit weapon 9 bone": 100,
                 "grit weapon alt 3": 70,
                 "rock": 31,
+                "key_tavern_cellar": 31,
                 "summoning_rock": 31
             },
             "combat_loop": {},
@@ -1912,6 +1913,7 @@
                 "mind weapon 6": 55,
                 "mind weapon 9": 40,
                 "rock": 31,
+                "key_tavern_cellar": 31,
                 "summoning_rock": 31
             },
             "combat_loop": {},
@@ -2516,6 +2518,7 @@
                 "flow weapon 6": 70,
                 "flow weapon 9": 55,
                 "rock": 28,
+                "key_tavern_cellar": 28,
                 "summoning_rock": 28
             },
             "combat_loop": {},
@@ -14533,7 +14536,7 @@
             "premade_id": "key_tavern_cellar",
             "name": "Tavern Key",
             "stack_max_amount": 9,
-            "drop_tags": "tavern",
+            "drop_tags": "tavern,skeleton",
             "drop_from_random": true,
             "drop_chance_base": 40,
             "drop_chance_level": 0,

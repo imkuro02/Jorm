@@ -12,6 +12,8 @@ versions:
       - The shack east of stumpfield is only accessible after quest completion
       - Gambler npc now displays their earnings in description
       - Disorient skill now alerts you that your armor is broken
+      - Tavern key is used for trapdoor in manor
+      - Tavern key added to skeleton drop table
   "030326":
     id: "030326"
     title: Patch + mouse controls part 2
