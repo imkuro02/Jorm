@@ -55,7 +55,9 @@ class Item:
     def unload(self):
         #self.name = None
         if self.inventory_manager == None:
+            unload(self)
             return
+            
         if self in self.inventory_manager.items.values():
             self.inventory_manager.remove_item(self)
         unload(self)

@@ -22,7 +22,7 @@ class ServerFactory(protocol.Factory):
         
         self.runtime = time.time()
         self.start = time.time()
-        self.tickrate: int = 30 * 1
+        self.tickrate: int = 30 * 3000
         self.world = World(self)
         
 

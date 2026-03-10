@@ -32,21 +32,18 @@ class wander_around_mob(Npc):
         return True
 
     def despawn_footprints(self):
-        return
         for i in self.footprints:
             i.inventory_manager.remove_item(i) 
             i.unload()
         self.footprints = []
 
     def despawn_pre_footprints(self):
-        return
         for i in self.pre_footprints:
             i.inventory_manager.remove_item(i) 
             i.unload()
         self.pre_footprints = []
 
     def spawn_footprints(self, dir):
-        return
         corpse = Item()
         corpse.name = f'Footprints'
         corpse.description = f'There is a set of footprints leading {dir.lower()}, you wonder who they belong to.'
@@ -81,7 +78,6 @@ class wander_around_mob(Npc):
         
 
     def spawn_pre_footprints(self, _exit):
-        return
         corpse = Item()
         corpse.name = _exit.direction
         corpse.description = f'{Color.BAD}There is something approaching from {_exit.direction}{Color.BACK}'

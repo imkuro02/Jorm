@@ -87,6 +87,7 @@ def calculate_skill_mp_cost(actor, base_value):
 
 
 def unload(obj_to_unload):
+    #debug_print('added', obj_to_unload)
     TOUNLOAD[obj_to_unload] = 0
 
 
@@ -99,7 +100,6 @@ def unload_fr():
         try:
             if type(obj_to_unload) == str:
                 continue
-
             try:
                 obj_to_unload.unload()
             except Exception as e:
@@ -113,6 +113,7 @@ def unload_fr():
                 except Exception as e:
                     if not silent:
                         debug_print(e)
+
             _unloaded.append(obj_to_unload)
         except Exception as e:
             if not silent:
@@ -125,12 +126,18 @@ def unload_fr():
     # check if any items are without inventory_managers
     for r in REFTRACKER.refs:
         if get_object_parent(r()) == 'Item':
-            if r in TOUNLOAD:
+            if r() in TOUNLOAD:
                 continue
+                
             if r().inventory_manager == None:
-                #debug_print(f'unloading item since no inventory_manager... {r}{r().premade_id}')
-                unload(r)
+                if not silent:
+                    debug_print(f'unloading item since no inventory_manager... {r}{r().premade_id}')
+                unload(r())
 
+    debug_print(len(TOUNLOAD),len(REFTRACKER.refs))
+    #debug_print()
+
+    
 
 def generate_name():
     names = [
