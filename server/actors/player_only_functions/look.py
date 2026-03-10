@@ -13,7 +13,7 @@ def command_map(self, line, return_gmcp=False):
     if self.room == None:
         return
     room_id = self.room.id
-    VIEW_RANGE = 3
+    VIEW_RANGE = 7
     ROOM_AMOUNT = VIEW_RANGE
     PATH_AMOUNT = VIEW_RANGE
     ROOM_WIDTH = 3
@@ -261,12 +261,13 @@ def command_map(self, line, return_gmcp=False):
                                 if int(cell[2]) >= int(w_prio):
                                     cell = [w_col, w_char, w_prio]
 
-                    cell = f"{cell[0]}{cell[1]}"
+                    #cell = f"{cell[0]}{cell[1]}"
 
                     if _y % 2 != 0:
-                        cell = cell * ROOM_WIDTH
+                        cell = f"{cell[0]}{cell[1]*ROOM_WIDTH}"
+
                     else:
-                        cell = cell * PATH_WIDTH
+                        cell = f"{cell[0]}{cell[1]*PATH_WIDTH}"
 
                     if not walled:
                         for _dir in directions:
@@ -654,8 +655,8 @@ def get_nearby_rooms(self, view_range=1):
         "west": [-1, 0, 0],
         "south": [0, 1, 0],
         "east": [1, 0, 0],
-        "up": [0, 0, 1],
-        "down": [0, 0, -1],
+    #    "up": [0, 0, 1],
+    #    "down": [0, 0, -1],
     }
     room_id = self.room.id
     VIEW_RANGE = view_range
