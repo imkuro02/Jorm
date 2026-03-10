@@ -111,7 +111,7 @@ def command_map(self, line, return_gmcp=False):
     for r in grid:
         _grid[r] = grid[r]
 
-    for r in range(0, VIEW_RANGE * 2):
+    for r in range(0, VIEW_RANGE * 1):
         for room_loc in _grid:
             # systems.utils.debug_print(_grid[room_loc])
             if grid[room_loc] == "PATH":

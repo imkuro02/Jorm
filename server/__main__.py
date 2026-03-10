@@ -13,16 +13,18 @@ import systems.utils
 
 class ServerFactory(protocol.Factory):
     def __init__(self):
+        self.ticks_passed = 0
+        self.delayed_functions = DelayedFunctionsManager(factory = self)
         self.protocols = set()
         
 
         self.db = Database()
-        self.ticks_passed = 0
+        
         self.runtime = time.time()
         self.start = time.time()
         self.tickrate: int = 30 * 1
         self.world = World(self)
-        self.delayed_functions = DelayedFunctionsManager(factory = self)
+        
 
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)

@@ -2,6 +2,7 @@ import copy
 import uuid
 
 class FUNC_TAGS:
+    ALL = 'all'
     MOVEMENT = 'movement'
 
 class DelayedFunctionsManager:
@@ -27,7 +28,7 @@ class DelayedFunctionsManager:
             if func['caller'] != caller:
                 continue
 
-            if func['tag'] != tag:
+            if func['tag'] != tag and tag != FUNC_TAGS.ALL:
                 continue
 
             del self.functions[func['id']] 

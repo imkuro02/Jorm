@@ -786,6 +786,7 @@ class Actor:
                 self.unload()
 
     def unload(self):
+        self.room.world.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
         # self.ai.die()
         silent = True
 
@@ -832,6 +833,7 @@ class Actor:
         for i in to_unload:
             unload(i)
 
+        
         unload(self)
 
         # refs = gc.get_referrers(self)
