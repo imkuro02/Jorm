@@ -13,7 +13,7 @@ def command_map(self, line, return_gmcp=False):
     if self.room == None:
         return
     room_id = self.room.id
-    VIEW_RANGE = 7
+    VIEW_RANGE = 3
     ROOM_AMOUNT = VIEW_RANGE
     PATH_AMOUNT = VIEW_RANGE
     ROOM_WIDTH = 3
