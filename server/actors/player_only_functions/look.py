@@ -57,8 +57,8 @@ def command_map(self, line, return_gmcp=False):
         #'right': [ 2  ,  0 ],
         # up and down need to FUCK OFF
         # otherwise they mess up and override other rooms they are on top of or under of
-        "up": [0, 0 + 1000],
-        "down": [0, 0 + 1000],
+        #"up": [0, 0 + 1000],
+        #"down": [0, 0 + 1000],
     }
 
     offsets_path = {
@@ -70,8 +70,8 @@ def command_map(self, line, return_gmcp=False):
         #'right': [ 1  ,  0 ],
         # up and down need to FUCK OFF
         # otherwise they mess up and override other rooms they are on top of or under of
-        "up": [0, 0 + 1000],
-        "down": [0, 0 + 1000],
+        #"up": [0, 0 + 1000],
+        #"down": [0, 0 + 1000],
     }
 
     t = systems.utils.Table((VIEW_RANGE * 2) + 1, 0)
@@ -95,6 +95,9 @@ def command_map(self, line, return_gmcp=False):
         y = 0
         x += offsets[_exit.direction][1] + VIEW_RANGE
         y += offsets[_exit.direction][0] + VIEW_RANGE
+
+        
+
         _loc = f"{x},{y}"
 
         if _loc not in grid:
@@ -111,8 +114,15 @@ def command_map(self, line, return_gmcp=False):
     for r in grid:
         _grid[r] = grid[r]
 
+    already_checked = []
     for r in range(0, VIEW_RANGE * 1):
         for room_loc in _grid:
+            
+            if room_loc in already_checked:
+                continue
+            else:
+                already_checked.append(room_loc)
+
             # systems.utils.debug_print(_grid[room_loc])
             if grid[room_loc] == "PATH":
                 continue
@@ -129,6 +139,8 @@ def command_map(self, line, return_gmcp=False):
 
             _x = int(room_loc.split(",")[0])
             _y = int(room_loc.split(",")[1])
+
+            
 
             for _exit in room.get_active_exits(self):
                 if _exit.direction not in offsets:
@@ -147,6 +159,13 @@ def command_map(self, line, return_gmcp=False):
                 y = _y
                 x += offsets[_exit.direction][1]
                 y += offsets[_exit.direction][0]
+
+                #print(x, y)
+                #if x < 0 or x > VIEW_RANGE*2:
+                #    continue
+                #if y < 0 or y > VIEW_RANGE*2:
+                #    continue
+                
                 _loc = f"{x},{y}"
 
                 # if _loc not in grid:
@@ -162,6 +181,7 @@ def command_map(self, line, return_gmcp=False):
 
                 x += -offsets_path[_exit.direction][1]
                 y += -offsets_path[_exit.direction][0]
+                
                 _loc = f"{x},{y}"
 
                 # if not room.doorway:
@@ -655,8 +675,8 @@ def get_nearby_rooms(self, view_range=1):
         "west": [-1, 0, 0],
         "south": [0, 1, 0],
         "east": [1, 0, 0],
-    #    "up": [0, 0, 1],
-    #    "down": [0, 0, -1],
+        "up": [0, 0, 1],
+        "down": [0, 0, -1],
     }
     room_id = self.room.id
     VIEW_RANGE = view_range
