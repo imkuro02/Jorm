@@ -4,7 +4,7 @@ from systems.protocol import Protocol
 from systems.utils import Table, logging
 from systems.world import World
 from twisted.internet import protocol, reactor, ssl, task
-
+from systems.delayed_functions import DelayedFunctionsManager
 config.load()
 import time
 
@@ -14,6 +14,7 @@ import systems.utils
 class ServerFactory(protocol.Factory):
     def __init__(self):
         self.protocols = set()
+        
 
         self.db = Database()
         self.ticks_passed = 0
@@ -21,6 +22,8 @@ class ServerFactory(protocol.Factory):
         self.start = time.time()
         self.tickrate: int = 30 * 1
         self.world = World(self)
+        self.delayed_functions = DelayedFunctionsManager(factory = self)
+
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)
 
@@ -29,6 +32,7 @@ class ServerFactory(protocol.Factory):
         # where the actors will be stored for rank command
         self.ranks = {}
 
+        
     def tick(self):
         # kick afk users after 16 min, notified at min 15
         to_disconnect = []
@@ -53,6 +57,8 @@ class ServerFactory(protocol.Factory):
                     # self.db.write_actor(i.actor)
                     i.save_actor()
             self.ranks = self.db.find_all_accounts()
+
+        self.delayed_functions.tick()
 
         self.runtime = time.time() - self.start
         # if self.runtime > self.ticks_passed/30:

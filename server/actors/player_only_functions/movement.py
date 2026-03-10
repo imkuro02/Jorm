@@ -51,13 +51,89 @@ def command_flee(self, line):
 
 
 
+def move_party_leader(self, room_id):
+    old_room = self.room
+    new_room = room_id
+    world = self.room.world
 
+    self.simple_broadcast(None,f'You follow {self.pretty_name()}', send_to = 'room_party', sound = Audio.walk())
+
+    world.rooms[new_room].move_actor(self)
+    self.sendSound(Audio.walk())
+
+
+    if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
+        #self.command_rest('set')
+        self.rest_set('')
+
+
+
+
+    # move party members
+    if self.party_manager.party != None:
+        if self.party_manager.party.actor == self:
+            for par in self.party_manager.party.participants.values():
+                if par == self:
+                    continue
+                if par.room != old_room:
+                    continue
+                #par.command_go(line)
+                self.room.move_actor(par, silent = True)
+                #par.send_line(f'You follow {self.pretty_name()}', sound = Audio.walk())
+                #par.finish_turn(force_cooldown = True)
+                par.sendSound(Audio.walk())
+
+
+    # move followers (currently moves EVERYTHING)
+    '''
+    potential_followers = old_room.actors.copy()
+
+    for par in potential_followers.values():
+        if par == self:
+            continue
+        if par.room != old_room:
+            continue
+        self.room.move_actor(par, silent = True)
+        par.finish_turn(force_cooldown = True)
+        par.sendSound(Audio.walk())
+        systems.utils.debug_print(par)
+    '''
+
+    
+
+    # finish turns
+    self.finish_turn(force_cooldown = True)
+    if self.party_manager.party != None:
+        if self.party_manager.party.actor == self:
+            for par in self.party_manager.party.participants.values():
+                if par == self:
+                    continue
+                #if par.room != old_room:
+                #    continue
+                par.finish_turn(force_cooldown = True)
+
+    # show participants and or yourself the room
+    if self.party_manager.party != None:
+        if self.party_manager.party.actor == self:
+            for par in self.party_manager.party.participants.values():
+                if par == self:
+                    par.new_room_look()
+                if par.room.get_real_id() not in par.explored_rooms:
+                    par.explored_rooms.append(self.room.get_real_id())
+
+    else:
+        self.new_room_look()
+        if self.room.get_real_id() not in self.explored_rooms:
+            self.explored_rooms.append(self.room.get_real_id())
 
 
 @check_not_in_combat
 @check_alive
 @check_not_in_party_or_is_party_leader
 def command_go(self, line = '', room_id = None):
+    if self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'movement') >= 1:
+        self.send_line('Traveling Cancelled')
+
     #if room_id is not none, skip checks, this means that its probably a teleport
     world = self.protocol.factory.world
     if room_id == None:
@@ -149,73 +225,30 @@ def command_go(self, line = '', room_id = None):
         old_room = self.room
         new_room = room_id
 
-
-    self.simple_broadcast(None,f'You follow {self.pretty_name()}', send_to = 'room_party', sound = Audio.walk())
-
-    world.rooms[new_room].move_actor(self)
-    self.sendSound(Audio.walk())
-
-
-    if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
-        #self.command_rest('set')
-        self.rest_set('')
-
-
-
-
-    # move party members
-    if self.party_manager.party != None:
-        if self.party_manager.party.actor == self:
-            for par in self.party_manager.party.participants.values():
-                if par == self:
-                    continue
-                if par.room != old_room:
-                    continue
-                #par.command_go(line)
-                self.room.move_actor(par, silent = True)
-                #par.send_line(f'You follow {self.pretty_name()}', sound = Audio.walk())
-                #par.finish_turn(force_cooldown = True)
-                par.sendSound(Audio.walk())
-
-
-    # move followers (currently moves EVERYTHING)
-    '''
-    potential_followers = old_room.actors.copy()
-
-    for par in potential_followers.values():
-        if par == self:
-            continue
-        if par.room != old_room:
-            continue
-        self.room.move_actor(par, silent = True)
-        par.finish_turn(force_cooldown = True)
-        par.sendSound(Audio.walk())
-        systems.utils.debug_print(par)
-    '''
+    if direction.is_one_way_exit():
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'movement', delay = 30*0,
+            func=lambda: self.send_line('Traveling somewhere with no return...'),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'movement', delay = 30*1,
+            func=lambda: self.send_line('3...'),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'movement', delay = 30*2,
+            func=lambda: self.send_line('2...'),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'movement', delay = 30*3,
+            func=lambda: self.send_line('1...'),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'movement', delay = 30*4,
+            func=lambda: self.move_party_leader(room_id=new_room),
+        )
+    else:
+        self.move_party_leader(room_id = new_room)
 
     
-
-    # finish turns
-    self.finish_turn(force_cooldown = True)
-    if self.party_manager.party != None:
-        if self.party_manager.party.actor == self:
-            for par in self.party_manager.party.participants.values():
-                if par == self:
-                    continue
-                #if par.room != old_room:
-                #    continue
-                par.finish_turn(force_cooldown = True)
-
-    # show participants and or yourself the room
-    if self.party_manager.party != None:
-        if self.party_manager.party.actor == self:
-            for par in self.party_manager.party.participants.values():
-                if par == self:
-                    par.new_room_look()
-                if par.room.get_real_id() not in par.explored_rooms:
-                    par.explored_rooms.append(self.room.get_real_id())
-
-    else:
-        self.new_room_look()
-        if self.room.get_real_id() not in self.explored_rooms:
-            self.explored_rooms.append(self.room.get_real_id())
+    
+    

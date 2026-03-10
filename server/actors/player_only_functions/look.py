@@ -504,7 +504,10 @@ def command_look(self, line, return_gmcp=False):
                 continue
             # if _exit.blocked and self.room.is_enemy_present():
             #    continue
-            see_exits = see_exits + f"You can go {_exit.pretty_direction()}\n"
+            see_exits = see_exits + f"You can go {_exit.pretty_direction()}"
+            if _exit.is_one_way_exit():
+                see_exits = see_exits + '. You cannot return'
+            see_exits = see_exits + '\n'
             exit_count += 1
             # else:
             #    see = see + f'@red{exit_name}@normal, '

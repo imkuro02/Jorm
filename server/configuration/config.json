@@ -1,5 +1,5 @@
 {
-    "SHA-256": "08adff689344e13ce6a940fe7cac426b8ab0ed5cee46a4df8ac02dcdad06e109",
+    "SHA-256": "661a0877c7cf4851e7048c67aba01704cd0b7ed372dac4f224ee0cfc4147824f",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -1558,7 +1558,7 @@
             "description": "A massive reanimated stump of a once-great tree, its gnarled, dirt-covered roots twisting and thrashing like monstrous tentacles. At the center of its jagged, bark-covered body sits a single, menacing eye, glowing with a fierce, malevolent light. With each deliberate step, the stump groans and creaks, sending splinters of wood into the air. It moves with a terrifying purpose, its roots slamming the ground as it advances, ready to crush anything in its path.",
             "stats": {
                 "grit": 30,
-                "hp": 150,
+                "hp": 30,
                 "mp": 60,
                 "phy_armor": 20,
                 "mag_armor": 20,

@@ -150,6 +150,14 @@ class Exit:
         self.active_time_of_day = active_time_of_day
         self.active_quest_state = active_quest_state
 
+    def is_one_way_exit(self):
+        can_return = False
+        for new_room_exit in self.get_room_obj().exits:
+            if new_room_exit.to_room_id == self.room.get_real_id():
+                can_return = True
+        # return true if one_way, return false otherwsie
+        return not can_return
+        
     def is_active(self, player):
         if self.active_quest_state == None:
             return True

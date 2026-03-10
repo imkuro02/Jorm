@@ -14,6 +14,7 @@ versions:
       - Disorient skill now alerts you that your armor is broken
       - Tavern key is used for trapdoor in manor
       - Tavern key added to skeleton drop table
+      - Travel delay on one way exits
   "030326":
     id: "030326"
     title: Patch + mouse controls part 2
