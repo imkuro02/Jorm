@@ -95,35 +95,6 @@ def unload_fr():
     silent = True
     global TOUNLOAD  # <-- This is important
 
-    _unloaded = []
-    for obj_to_unload in TOUNLOAD:
-        try:
-            if type(obj_to_unload) == str:
-                continue
-            try:
-                obj_to_unload.unload()
-            except Exception as e:
-                if not silent:
-                    debug_print(f'{e}, {obj_to_unload}')
-
-            obj_dict = obj_to_unload.__dict__
-            for key in obj_dict:
-                try:
-                    obj_dict[key] = None
-                except Exception as e:
-                    if not silent:
-                        debug_print(e)
-
-            _unloaded.append(obj_to_unload)
-        except Exception as e:
-            if not silent:
-                debug_print(e)
-        
-
-    for i in _unloaded:
-        del TOUNLOAD[i]
-
-    # check if any items are without inventory_managers
     for r in REFTRACKER.refs:
         if get_object_parent(r()) == 'Item':
             if r() in TOUNLOAD:
@@ -134,7 +105,52 @@ def unload_fr():
                     debug_print(f'unloading item since no inventory_manager... {r}{r().premade_id}')
                 unload(r())
 
-    debug_print(len(TOUNLOAD),len(REFTRACKER.refs))
+    _unloaded = []
+    for obj_to_unload in TOUNLOAD:
+        try:
+            if type(obj_to_unload) == str:
+                continue
+
+            try:
+                obj_to_unload.unload()
+            except Exception as e:
+                if not silent:
+                    debug_print(f'{e}, {obj_to_unload}')
+
+            obj_dict = obj_to_unload.__dict__
+
+            for key in obj_dict:
+                try:
+                    obj_dict[key] = None
+                except Exception as e:
+                    if not silent:
+                        debug_print(e)
+
+            _unloaded.append(obj_to_unload)
+
+        except Exception as e:
+            if not silent:
+                debug_print(e)
+        
+
+    for i in _unloaded:
+        del TOUNLOAD[i]
+
+    # check if any items are without inventory_managers
+    
+
+    if not silent:
+        tmp = []
+        for r in TOUNLOAD:
+            if type(r) != str:
+                tmp.append(type(r))
+        
+        debug_print(len(TOUNLOAD),len(REFTRACKER.refs))
+        if len(REFTRACKER.refs) > 1750:
+            debug_print(REFTRACKER.refs[1750])
+
+    REFTRACKER.refs[:] = [r for r in REFTRACKER.refs if r() is not None]
+    #print(tmp)
     #debug_print()
 
     
