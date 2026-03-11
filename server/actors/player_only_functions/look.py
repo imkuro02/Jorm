@@ -7,8 +7,229 @@ from configuration.constants.color import Color
 from configuration.config import get_icon
 random = random.Random()
 
+from collections import deque
+def command_map(self, line, return_gmcp = False):
+    setting_render_walls = self.settings_manager.get_value('viewmapwalls')
+    if self.room == None:
+        return
+    room_id = self.room.id
+    
+    
+    #GRID_SIZE = 15*1
+    GRID_SIZE_X = 3*7*1
+    GRID_SIZE_Y = 3*5*1
+    GRID_CENTER_X = GRID_SIZE_X // 2
+    GRID_CENTER_Y = GRID_SIZE_Y // 2
 
-def command_map(self, line, return_gmcp=False):
+    DEPTH = GRID_SIZE_X // 2
+
+    rooms = self.room.world.rooms
+    start_room = self.room
+
+    queue = deque()
+    queue.append((start_room, 0, 0, 0, 0))  # room, x, y, z, depth
+
+    visited = set([start_room])
+    coords = {start_room: (0, 0, 0, 0)}
+
+    offsets = {
+        "north":    (0, -1, 0),
+        "west":     (-1, 0, 0),
+        "south":    (0, 1, 0),
+        "east":     (1, 0, 0),
+    }
+
+    while queue:
+        room, x, y, z, depth = queue.popleft()
+
+        if depth >= DEPTH:
+            continue
+
+        if room.doorway and room != start_room:
+            continue
+
+        for _exit in rooms[room.id].exits:
+            
+            
+            next_room = rooms[_exit.to_room_id]
+
+            if next_room.get_real_id() not in self.explored_rooms:
+                continue
+
+
+            if next_room in visited:
+                continue
+
+            if _exit.direction not in offsets:
+                continue
+
+            if _exit.secret:
+                continue
+
+            dx, dy, dz = offsets[_exit.direction]
+
+            nx = x + dx
+            ny = y + dy
+            nz = z + dz
+
+            visited.add(next_room)
+            coords[next_room] = (nx, ny, nz, depth+1)
+
+            queue.append((next_room, nx, ny, nz, depth+1))
+        
+        
+    grid = [[" " for _ in range(GRID_SIZE_X)] for _ in range(GRID_SIZE_Y)]
+   
+    for room in coords:
+        x, y, z, depth = coords[room]
+        gx = (x*3) + GRID_CENTER_X
+        gy = (y*3) + GRID_CENTER_Y
+        if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
+            if room.get_real_id() == start_room.get_real_id():
+                grid[gy][gx] = "@bcyan"   
+            else:
+                grid[gy][gx] = "@yellow"
+
+            has_up = False
+            has_down = False
+            for _exit in room.exits:
+                if _exit.direction == 'up':
+                    has_up = True
+                if _exit.direction == 'down':
+                    has_down = True
+
+            #cell = f'{depth}'
+            if room.get_real_id() == start_room.get_real_id():
+                cell = '@'
+            else:
+                cell = 'O'
+            if has_up:
+                cell = '<'
+            if has_down:
+                cell = '>'
+            if has_down and has_up:
+                cell = 'x'
+
+
+            grid[gy][gx] += cell
+                
+            
+            for _exit in room.exits:
+                if _exit.direction in offsets:
+                    _offset_gx = offsets[_exit.direction][0]
+                    _offset_gy = offsets[_exit.direction][1]
+                    _gx = _offset_gx + gx
+                    _gy = _offset_gy + gy
+                    if not _exit.is_active(self):
+                        continue
+                    if _exit.secret:
+                        continue
+                    if 0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y:
+                        if _offset_gx != 0:
+                            grid[_gy][_gx] = "@bblack-"
+                        else:
+                            grid[_gy][_gx] = "@bblack|"
+    '''
+    for room in coords:
+        x, y, z = coords[room]
+        gx = (x*3) + GRID_CENTER_X
+        gy = (y*3) + GRID_CENTER_Y
+        if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
+            color, texture, priority = room.get_wall_data()
+
+            _gx = gx + 1
+            _gy = gy + 0
+            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                continue
+            if grid[_gy][_gx] == " ":
+                grid[_gy][_gx] = f"{color}{texture}"
+                grid[_gy-1][_gx] = f"{color}{texture}"
+                grid[_gy+1][_gx] = f"{color}{texture}"
+            
+            _gx = gx + 0
+            _gy = gy + 1
+            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                continue
+            if grid[_gy][_gx] == " ":
+                grid[_gy][_gx] = f"{color}{texture}"
+                grid[_gy][_gx-1] = f"{color}{texture}"
+                grid[_gy][_gx+1] = f"{color}{texture}"
+
+            _gx = gx - 1
+            _gy = gy - 0
+            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                continue
+            if grid[_gy][_gx] == " ":
+                grid[_gy][_gx] = f"{color}{texture}"
+                grid[_gy-1][_gx] = f"{color}{texture}"
+                grid[_gy+1][_gx] = f"{color}{texture}"
+            
+            _gx = gx - 0
+            _gy = gy - 1
+            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                continue
+            if grid[_gy][_gx] == " ":
+                grid[_gy][_gx] = f"{color}{texture}"
+                grid[_gy][_gx-1] = f"{color}{texture}"
+                grid[_gy][_gx+1] = f"{color}{texture}"
+
+            _gx = gx - 3
+            _gy = gy - 3
+            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                continue
+            if grid[_gy][_gx] == " ":
+                grid[_gy+2][_gx+2] = f"{color}{texture}"
+
+
+            _gx = gx - 3
+            _gy = gy + 3
+            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                continue
+            if grid[_gy][_gx] == " ":
+                grid[_gy-2][_gx+2] = f"{color}{texture}"
+
+
+            _gx = gx + 3
+            _gy = gy + 3
+            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                continue
+            if grid[_gy][_gx] == " ":
+                grid[_gy-2][_gx-2] = f"{color}{texture}"
+
+
+            _gx = gx + 3
+            _gy = gy - 3
+            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                continue
+            if grid[_gy][_gx] == " ":
+                grid[_gy+2][_gx-2] = f"{color}{texture}"
+    '''
+            
+    
+    _map = ''
+    for y in grid:
+        for x in y:
+            _map += ''.join(x)
+        _map += '\n'
+    #_map = grid
+
+    #_map = coords
+
+    col = '@bblack'
+    tex = '#'
+    #col, tex, pri = start_room.get_wall_data()
+    #if tex == ' ':
+    #    tex = '.'
+    #split_map = _map.split('\n')
+    _map = f'{col}{tex*(GRID_SIZE_X+2)}\n{col}{tex*1}{_map.replace("\n",f"{col}{tex*1}\n{col}{tex*1}")}{col}{tex*(GRID_SIZE_X+1)}'
+
+    _map = _map + '@normal'
+    if return_gmcp:
+        return str(_map)
+    else:
+        self.send_line(str(_map))
+
+def command_map2(self, line, return_gmcp=False):
     setting_render_walls = self.settings_manager.get_value('viewmapwalls')
     if self.room == None:
         return
