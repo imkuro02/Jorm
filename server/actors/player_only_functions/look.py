@@ -16,8 +16,8 @@ def command_map(self, line, return_gmcp = False):
     
     
     #GRID_SIZE = 15*1
-    GRID_SIZE_X = 3*7*1
-    GRID_SIZE_Y = 3*5*1
+    GRID_SIZE_X = 3*5
+    GRID_SIZE_Y = 3*5
     GRID_CENTER_X = GRID_SIZE_X // 2
     GRID_CENTER_Y = GRID_SIZE_Y // 2
 
@@ -72,10 +72,13 @@ def command_map(self, line, return_gmcp = False):
             ny = y + dy
             nz = z + dz
 
-            visited.add(next_room)
-            coords[next_room] = (nx, ny, nz, depth+1)
 
-            queue.append((next_room, nx, ny, nz, depth+1))
+
+            
+            if (nx, ny, nz, depth+1) not in coords.values():
+                visited.add(next_room)
+                coords[next_room] = (nx, ny, nz, depth+1)
+                queue.append((next_room, nx, ny, nz, depth+1))
         
         
     grid = [[" " for _ in range(GRID_SIZE_X)] for _ in range(GRID_SIZE_Y)]
@@ -85,10 +88,10 @@ def command_map(self, line, return_gmcp = False):
         gx = (x*3) + GRID_CENTER_X
         gy = (y*3) + GRID_CENTER_Y
         if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
-            if room.get_real_id() == start_room.get_real_id():
+            if (x, y, z) == (0, 0, 0):
                 grid[gy][gx] = "@bcyan"   
             else:
-                grid[gy][gx] = "@yellow"
+                grid[gy][gx] = "@bblack"
 
             has_up = False
             has_down = False
@@ -99,7 +102,7 @@ def command_map(self, line, return_gmcp = False):
                     has_down = True
 
             #cell = f'{depth}'
-            if room.get_real_id() == start_room.get_real_id():
+            if (x, y, z) == (0, 0, 0):
                 cell = '@'
             else:
                 cell = 'O'
@@ -112,6 +115,22 @@ def command_map(self, line, return_gmcp = False):
 
 
             grid[gy][gx] += cell
+
+            color, texture, priority = room.get_wall_data()
+            wall = f'{color}{texture}'
+
+            grid[gy-1][gx-1] = wall
+            grid[gy+1][gx+1] = wall
+
+            grid[gy-1][gx+1] = wall
+            grid[gy+1][gx-1] = wall
+
+
+            grid[gy][gx+1] = wall
+            grid[gy][gx-1] = wall
+
+            grid[gy+1][gx] = wall
+            grid[gy-1][gx] = wall
                 
             
             for _exit in room.exits:
@@ -131,7 +150,7 @@ def command_map(self, line, return_gmcp = False):
                             grid[_gy][_gx] = "@bblack|"
     '''
     for room in coords:
-        x, y, z = coords[room]
+        x, y, z, d= coords[room]
         gx = (x*3) + GRID_CENTER_X
         gy = (y*3) + GRID_CENTER_Y
         if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
@@ -139,71 +158,64 @@ def command_map(self, line, return_gmcp = False):
 
             _gx = gx + 1
             _gy = gy + 0
-            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                continue
-            if grid[_gy][_gx] == " ":
-                grid[_gy][_gx] = f"{color}{texture}"
-                grid[_gy-1][_gx] = f"{color}{texture}"
-                grid[_gy+1][_gx] = f"{color}{texture}"
+            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                if grid[_gy][_gx] == " ":
+                    grid[_gy][_gx] = f"{color}{texture}"
+                    grid[_gy-1][_gx] = f"{color}{texture}"
+                    grid[_gy+1][_gx] = f"{color}{texture}"
             
             _gx = gx + 0
             _gy = gy + 1
-            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                continue
-            if grid[_gy][_gx] == " ":
-                grid[_gy][_gx] = f"{color}{texture}"
-                grid[_gy][_gx-1] = f"{color}{texture}"
-                grid[_gy][_gx+1] = f"{color}{texture}"
+            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                if grid[_gy][_gx] == " ":
+                    grid[_gy][_gx] = f"{color}{texture}"
+                    grid[_gy][_gx-1] = f"{color}{texture}"
+                    grid[_gy][_gx+1] = f"{color}{texture}"
 
             _gx = gx - 1
             _gy = gy - 0
-            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                continue
-            if grid[_gy][_gx] == " ":
-                grid[_gy][_gx] = f"{color}{texture}"
-                grid[_gy-1][_gx] = f"{color}{texture}"
-                grid[_gy+1][_gx] = f"{color}{texture}"
-            
+            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                if grid[_gy][_gx] == " ":
+                    grid[_gy][_gx] = f"{color}{texture}"
+                    grid[_gy-1][_gx] = f"{color}{texture}"
+                    grid[_gy+1][_gx] = f"{color}{texture}"
+                
             _gx = gx - 0
             _gy = gy - 1
-            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                continue
-            if grid[_gy][_gx] == " ":
-                grid[_gy][_gx] = f"{color}{texture}"
-                grid[_gy][_gx-1] = f"{color}{texture}"
-                grid[_gy][_gx+1] = f"{color}{texture}"
+            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                if grid[_gy][_gx] == " ":
+                    grid[_gy][_gx] = f"{color}{texture}"
+                    grid[_gy][_gx-1] = f"{color}{texture}"
+                    grid[_gy][_gx+1] = f"{color}{texture}"
 
             _gx = gx - 3
             _gy = gy - 3
-            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                continue
-            if grid[_gy][_gx] == " ":
-                grid[_gy+2][_gx+2] = f"{color}{texture}"
+            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                if grid[_gy][_gx] == " ":
+                    grid[_gy+2][_gx+2] = f"{color}{texture}"
 
 
             _gx = gx - 3
             _gy = gy + 3
-            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                continue
-            if grid[_gy][_gx] == " ":
-                grid[_gy-2][_gx+2] = f"{color}{texture}"
+            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                if grid[_gy][_gx] == " ":
+                    grid[_gy-2][_gx+2] = f"{color}{texture}"
 
 
             _gx = gx + 3
             _gy = gy + 3
-            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                continue
-            if grid[_gy][_gx] == " ":
-                grid[_gy-2][_gx-2] = f"{color}{texture}"
+            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                if grid[_gy][_gx] == " ":
+                    grid[_gy-2][_gx-2] = f"{color}{texture}"
 
 
             _gx = gx + 3
             _gy = gy - 3
-            if not(0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                continue
-            if grid[_gy][_gx] == " ":
-                grid[_gy+2][_gx-2] = f"{color}{texture}"
+            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
+                if grid[_gy][_gx] == " ":
+                    grid[_gy+2][_gx-2] = f"{color}{texture}"
     '''
+    
             
     
     _map = ''
@@ -221,7 +233,13 @@ def command_map(self, line, return_gmcp = False):
     #if tex == ' ':
     #    tex = '.'
     #split_map = _map.split('\n')
-    _map = f'{col}{tex*(GRID_SIZE_X+2)}\n{col}{tex*1}{_map.replace("\n",f"{col}{tex*1}\n{col}{tex*1}")}{col}{tex*(GRID_SIZE_X+1)}'
+    #_map = f'{col}{tex*(GRID_SIZE_X+2)}\n{col}{tex*1}{_map.replace("\n",f"{col}{tex*1}\n{col}{tex*1}")}{col}{tex*(GRID_SIZE_X+1)}'
+    
+    #__map = _map.split('\n')
+    #_map = []
+    #for i in __map:
+    #    _map.append(f'')
+    #_map = f'{col}{tex*(GRID_SIZE_X+2)}' + '\n' + _map +'\n' + f'{col}{tex*(GRID_SIZE_X+2)}' 
 
     _map = _map + '@normal'
     if return_gmcp:
