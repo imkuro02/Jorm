@@ -259,45 +259,50 @@ func _process(_delta):
 
 func handle_meta_clicked(meta):
 	print(meta)
-	if not Input.is_key_pressed(KEY_CTRL):
-		MOUSE_CLICK_OPTIONS.text = ""
-	if ',' in meta:
-		var output := []
-		var entries = meta.split(",")
-		for entry in entries:
-			if "->" in entry:
-				var parts = entry.split("->", false, 2)
-				var url = parts[1].strip_edges()
-				var text = parts[0].strip_edges()
-				output.append("[url=%s]%s[/url]\n" % [url, text])
-		#MOUSE_CLICK_OPTIONS.text = "".join(output)
-		#OUTPUT.append_text("<OPTIONS START>\n")
-		OUTPUT.append_text("".join(output))
-		#OUTPUT.append_text("<OPTIONS END>\n")
+	if Input.is_key_pressed(KEY_CTRL):
+		if ',' in meta:
+			var output := []
+			var entries = meta.split(",")
+			for entry in entries:
+				if "->" in entry:
+					var parts = entry.split("->", false, 2)
+					var url = parts[1].strip_edges()
+					var text = parts[0].strip_edges()
+					output.append("%s" % [url])
+					var o = "".join(output)
+					socket.send_text(o.strip_edges())
+					break
+		else:
+			socket.send_text(meta.strip_edges())
 	else:
-		socket.send_text(meta.strip_edges())
-		print("URL clicked:", meta)
+		if ',' in meta:
+			var output := []
+			var entries = meta.split(",")
+			for entry in entries:
+				if "->" in entry:
+					var parts = entry.split("->", false, 2)
+					var url = parts[1].strip_edges()
+					var text = parts[0].strip_edges()
+					output.append("[url=%s]%s[/url]\n" % [url, text])
+			#MOUSE_CLICK_OPTIONS.text = "".join(output)
+			#OUTPUT.append_text("<OPTIONS START>\n")
+			OUTPUT.append_text("".join(output))
+			#OUTPUT.append_text("<OPTIONS END>\n")
+		else:
+			socket.send_text(meta.strip_edges())
 	
 func _on_navigation_meta_clicked(meta):
 	handle_meta_clicked(meta)
-	#socket.send_text(meta.strip_edges())
-	#print("URL clicked:", meta)
 
 func _on_output_meta_clicked(meta):
 	handle_meta_clicked(meta)
-	#socket.send_text(meta.strip_edges())
-	#print("URL clicked:", meta)
 
 func _on_mouse_click_options_meta_clicked(meta):
 	handle_meta_clicked(meta)
-	#socket.send_text(meta.strip_edges())
-	#print("URL clicked:", meta)
-
 
 func _on_output_combat_meta_clicked(meta):
 	handle_meta_clicked(meta)
-	
-
 
 func _on_ascii_map_meta_clicked(meta):
 	handle_meta_clicked(meta)
+
