@@ -232,15 +232,15 @@ def command_go(self, line = '', room_id = None):
         )
         self.factory.delayed_functions.add_delayed_function(
             caller = self, tag = 'movement', delay = 30*1,
-            func=lambda: self.send_line('3...'),
+            func=lambda: self.send_line('3...', sound = Audio.walk()),
         )
         self.factory.delayed_functions.add_delayed_function(
             caller = self, tag = 'movement', delay = 30*2,
-            func=lambda: self.send_line('2...'),
+            func=lambda: self.send_line('2...', sound = Audio.walk()),
         )
         self.factory.delayed_functions.add_delayed_function(
             caller = self, tag = 'movement', delay = 30*3,
-            func=lambda: self.send_line('1...'),
+            func=lambda: self.send_line('1...', sound = Audio.walk()),
         )
         self.factory.delayed_functions.add_delayed_function(
             caller = self, tag = 'movement', delay = 30*4,

@@ -1,4 +1,11 @@
 versions:
+  "150326":
+    id: "150326"
+    title: QOL
+    unixtime: 1761899677
+    features:
+      - Added CTRL clicking in client (will use top option instantly)
+      - Walking into no return room SFX
   "090326":
     id: "090326"
     title: Map
