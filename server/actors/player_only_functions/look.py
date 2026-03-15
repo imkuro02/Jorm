@@ -16,12 +16,12 @@ def command_map(self, line, return_gmcp = False):
     
     
     #GRID_SIZE = 15*1
-    GRID_SIZE_X = 3*5
+    GRID_SIZE_X = 3*11
     GRID_SIZE_Y = 3*5
     GRID_CENTER_X = GRID_SIZE_X // 2
     GRID_CENTER_Y = GRID_SIZE_Y // 2
 
-    DEPTH = GRID_SIZE_X // 2
+    DEPTH = GRID_SIZE_X // 1
 
     rooms = self.room.world.rooms
     start_room = self.room
@@ -239,7 +239,7 @@ def command_map(self, line, return_gmcp = False):
     #_map = []
     #for i in __map:
     #    _map.append(f'')
-    #_map = f'{col}{tex*(GRID_SIZE_X+2)}' + '\n' + _map +'\n' + f'{col}{tex*(GRID_SIZE_X+2)}' 
+    _map = f'{col}{tex*(GRID_SIZE_X+2)}' + '\n' + _map + f'{col}{tex*(GRID_SIZE_X+2)}' 
 
     _map = _map + '@normal'
     if return_gmcp:
