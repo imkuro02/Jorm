@@ -10,6 +10,7 @@ versions:
       - Fixed scrap overflowing into a "None xNone" item (wth does that mean?)
       - Fixed reforge buffs being applied in reverse (now they apply in the order of equipment list)
       - Buffed afk healing from 1hp per 3 seconds to 10hp every second (healing does not work if debuffed)
+      - Practicing no longer raises the cost of a skill
   "090326":
     id: "090326"
     title: Map

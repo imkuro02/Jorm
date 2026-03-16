@@ -24,6 +24,10 @@ def command_name_change(self, line):
 
 @check_not_in_combat
 def command_level_up(self, stat):
+    if self.stat_manager.stats[StatType.LVL] >= 15:
+        self.send_line('You are max level!')
+        return
+
     stat = stat.replace("up", "").strip()  # cant trust nobody
     stat = stat.lower().capitalize()
 
@@ -108,6 +112,7 @@ def command_practice(self, line):
                 self.inventory_unequip(item, silent=True)
             # systems.utils.debug_print(self.skill_manager.skills)
             ##
+            '''
             skill_cost = (
                 SKILLS[skill_id]["practice_cost"]
                 + (sum(self.skill_manager.skills.values()))
@@ -118,6 +123,8 @@ def command_practice(self, line):
                 )
                 - 2
             )  # -2 since you start with two skills
+            '''
+            skill_cost = SKILLS[skill_id]['practice_cost']
             if skill_cost <= 0:
                 skill_cost = 1
             ##
@@ -197,6 +204,7 @@ def command_practice(self, line):
 
         # systems.utils.debug_print(self.skill_manager.skills)
         ##
+        '''
         pp_to_spend = (
             SKILLS[skill_id]["practice_cost"]
             + (sum(self.skill_manager.skills.values()))
@@ -207,6 +215,8 @@ def command_practice(self, line):
             )
             - 2
         )  # -2 since you start with two skills
+        '''
+        pp_to_spend =  SKILLS[skill_id]["practice_cost"]
         if pp_to_spend <= 0:
             pp_to_spend = 1
         ##
