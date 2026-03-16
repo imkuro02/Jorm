@@ -60,6 +60,7 @@ class Item:
             
         if self in self.inventory_manager.items.values():
             self.inventory_manager.remove_item(self)
+            
         unload(self)
         
     def can_tinker_with(self):

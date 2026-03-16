@@ -18,11 +18,17 @@ class TriggerableManager:
             for item_id in self.actor.slots_manager.slots.values()
             if item_id != None
         ]
+        sorted_equipment_ids = reversed(sorted_equipment_ids)
+        
         sorted_items = []
         for item_id in sorted_equipment_ids:
             sorted_items.append(self.inventory.items[item_id])
         for item in unsorted_items:
+            
             item_id = item.id
+            if item_id == None:
+                print(item.__dict__)
+
             if item_id in sorted_items:
                 continue
             sorted_items.append(self.inventory.items[item_id])

@@ -6,6 +6,10 @@ versions:
     features:
       - Added CTRL clicking in client (will use top option instantly)
       - Walking into no return room SFX
+      - Fixed stab skill not scaling with FLOW
+      - Fixed scrap overflowing into a "None xNone" item (wth does that mean?)
+      - Fixed reforge buffs being applied in reverse (now they apply in the order of equipment list)
+      - Buffed afk healing from 1hp per 3 seconds to 10hp every second (healing does not work if debuffed)
   "090326":
     id: "090326"
     title: Map

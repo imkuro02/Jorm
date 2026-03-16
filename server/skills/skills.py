@@ -478,7 +478,7 @@ class SkillFinisher(SkillDamageByGritFlow):
 
 # XD children of damage skills / damage skills that deal afflictions / interesting damage skills
 
-class SkillDamageByFlowApplyBleed(SkillDamage):
+class SkillDamageByFlowApplyBleed(SkillDamageByFlow):
     def use(self):
         # super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
         was_blocked = False

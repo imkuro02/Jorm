@@ -444,7 +444,7 @@ def command_load_item(self, line):
         return
     item = items.load_item(line)
     if item.premade_id == "currency_0":
-        item.stack = 999999999999
+        item.stack = 999
     self.inventory_manager.add_item(item)
 
 

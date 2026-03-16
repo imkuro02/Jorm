@@ -31,18 +31,18 @@ class ActorStatManager:
     def __init__(self, actor):
         self.actor = actor
         self.stats = {
-            StatType.HPMAX: 30,
-            StatType.HP: 30,
+            StatType.HPMAX: 30 * 1,
+            StatType.HP: 30 * 1,
             # StatType.MPMAX:     0,
             # StatType.MP:        0,
             StatType.PHYARMOR: 0,
             StatType.PHYARMORMAX: 0,
             StatType.MAGARMOR: 0,
             StatType.MAGARMORMAX: 0,
-            StatType.GRIT: 10,
-            StatType.FLOW: 10,
-            StatType.MIND: 10,
-            StatType.SOUL: 10,
+            StatType.GRIT: 10 * 1,
+            StatType.FLOW: 10 * 1,
+            StatType.MIND: 10 * 1,
+            StatType.SOUL: 10 * 1,
             StatType.INVSLOTS: 0,
             StatType.LVL: 1,
             StatType.EXP: 0,
@@ -703,20 +703,24 @@ class Actor:
 
     def tick(self):
        if self.status == ActorStatusType.NORMAL:
+            # every 60 seconds, one affliction tick passes
             if self.factory.ticks_passed % (30 * 60) == 0:
                 self.finish_turn(force_cooldown=True)
 
-            if self.factory.ticks_passed % (30 * 10) == 0:
+            # every 1 second, one heal tick passes
+            if self.factory.ticks_passed % (30 * 1) == 0:
                 if self.room == None:
                     return
                 if self.room.combat == None:
                     if self.status == ActorStatusType.DEAD:
                         return
+
+                    # if any debuffs then dont heal
                     for val in self.affect_manager.affects.values():
                         if val.dispellable and val.resisted_by != None:
                             return
                     #self.heal(value=self.stat_manager.stats[StatType.LVL] * 1)
-                    self.heal(value = 1, heal_armor = False, heal_marmor = False)
+                    self.heal(value = 10, heal_armor = False, heal_marmor = False)
                     self.heal(value = 10, heal_hp = False)
                     return
         
