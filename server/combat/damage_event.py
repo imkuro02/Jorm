@@ -94,6 +94,20 @@ class Damage:
         #        self.damage_taker_actor.simple_broadcast('You dodge', f'{self.damage_taker_actor.pretty_name()} dodges', sound = sound, msg_type = [MsgType.COMBAT])
         #        return self
 
+        '''
+        if self.damage_taker_actor != None and self.damage_source_actor != None:
+            lvl_source =    self.damage_source_actor.stat_manager.stats[StatType.LVL]
+            lvl_taker =     self.damage_taker_actor.stat_manager.stats[StatType.LVL]
+            diff = (lvl_taker - lvl_source) / 10
+            if diff > 0:
+                diff += 1
+                #self.damage_source_actor.simple_broadcast(f'lower level multiplier {diff}',f' lower level multiplier {diff}')
+                self.damage_value = int(diff*self.damage_value)
+        '''
+
+        #if self.damage_taker_actor.room.combat != None:
+        #    self.damage_value += 1*self.damage_taker_actor.room.combat.round
+
         match self.damage_type:
             # meaning the damage was completely cancelled by something
             # the affect should send_line what exactly happened
