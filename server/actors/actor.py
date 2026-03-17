@@ -274,6 +274,20 @@ class Actor:
 
         REFTRACKER.add_ref(self)
 
+    def add_to_combat_history(self):
+        if self.status != ActorStatusType.FIGHTING:
+            return False
+        if self.room.combat == None:
+            return False
+        self.room.combat.combat_history.add_to_combat_history(self)
+
+    def fetch_combat_history(self):
+        if self.status != ActorStatusType.FIGHTING:
+            return []
+        if self.room.combat == None:
+            return []
+        return self.room.combat.combat_history.fetch_combat_history()
+
     def add_prompt_syntax(self, prompt_syntax):
         justing = 3
         no_armor = "   "  # '0'

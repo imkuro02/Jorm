@@ -9,10 +9,37 @@ from configuration.constants.color import Color
 #from configuration.constants.damage_type import DamageType
 from configuration.constants.stat_type import StatType
 from systems.utils import unload
+from systems.utils import REFTRACKER, unload
+from copy import deepcopy
 
+class CombatHistoryPacket:
+    def __init__(self, actor):
+        REFTRACKER.add_ref(self)
+        self.actor_id =     actor.id
+        self.combat =           actor.room.combat
+        self.skill_id =        actor.ai.prediction_skill
+        self.item_id =         actor.ai.prediction_item
+        self.target_id =       actor.ai.prediction_target.id
+        self.round =        deepcopy(int(self.combat.round))
+
+class CombatHistory:
+    def __init__(self, combat):
+        self.combat = combat
+        self.history = []
+
+    def add_to_combat_history(self, actor):
+        print('appended')
+        self.history.append(CombatHistoryPacket(actor))
+        #msg = str(self.history)
+        #self.combat.current_actor.simple_broadcast(msg,msg)
+
+    def fetch_combat_history(self):
+        print('fetched', len(self.history))
+        return self.history
 
 class Combat:
     def __init__(self, room, participants):
+        REFTRACKER.add_ref(self)
         self.room = room
         self.participants = participants
         self.order = []
@@ -21,6 +48,7 @@ class Combat:
         self.round = 1
         self.turn = 0
         self.combat_active = True
+        self.combat_history = CombatHistory(self)
 
         # reset threat
         for p in self.participants.values():
@@ -40,10 +68,16 @@ class Combat:
             if type(p).__name__ == "Player":
                 p.send_line("@tipA fight has started!@back")
 
+    def add_to_combat_history(self, actor):
+        self.combat_history.add_to_combat_history(actor)
+
     def unload(self):
         for p in self.participants.values():
             p.ai.clear_prediction()
         self.room.combat = None
+        for i in self.combat_history.history:
+            unload(i)
+        unload(self.combat_history)
         unload(self)
 
     def add_participant(self, participant):

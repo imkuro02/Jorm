@@ -178,6 +178,7 @@ class AI:
 
         if self.prediction_item != None:
             if self.prediction_item.use(self.actor, target):
+                self.actor.add_to_combat_history()
                 self.clear_prediction()
                 # self.predict_use_best_skill()
                 self.actor.finish_turn()
@@ -187,6 +188,8 @@ class AI:
             if use_skill(
                 self.actor, target, self.prediction_skill, no_checks=no_checks
             ):
+                self.actor.add_to_combat_history()
+
                 used_skill = self.prediction_skill
                 self.clear_prediction()
                 # self.predict_use_best_skill()
@@ -196,6 +199,8 @@ class AI:
                     self.predict_use_best_skill()
                 else:
                     self.actor.finish_turn()
+
+                
                 return True
 
         # debug = f'skill {self.prediction_skill}, target {self.prediction_target}'
