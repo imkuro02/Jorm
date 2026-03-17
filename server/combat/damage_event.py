@@ -93,16 +93,154 @@ class Damage:
         #        sound = Audio.WALK
         #        self.damage_taker_actor.simple_broadcast('You dodge', f'{self.damage_taker_actor.pretty_name()} dodges', sound = sound, msg_type = [MsgType.COMBAT])
         #        return self
+        
+        '''
+        if self.damage_taker_actor != None and self.damage_source_actor != None and self.dont_proc == False:
+            source = self.damage_source_actor
+            taker = self.damage_taker_actor
+            stats_source =    self.damage_source_actor.stat_manager.stats
+            stats_taker =     self.damage_taker_actor.stat_manager.stats
+            
+            s_ego = 0
+            t_ego = 0
+            if type(source).__name__ == 'Player':
+                s_ego = bool(source.settings_manager.get_value('ego'))
+            if type(taker).__name__ == 'Player':
+                t_ego = bool(taker.settings_manager.get_value('ego'))
+            
+            ego = False
+            if s_ego == 1:
+                ego = True
+            if t_ego == 1:
+                ego = True
+
+            if type(source).__name__ == 'Player' and type(taker).__name__ == 'Player':
+                ego = False
+            
+            if ego:
+                #source_all = stats_source[StatType.HPMAX] + stats_source[StatType.PHYARMORMAX] + stats_source[StatType.MAGARMORMAX]
+                #source_all -= (stats_source[StatType.GRIT] + stats_source[StatType.FLOW] + stats_source[StatType.MIND] + stats_source[StatType.SOUL])/4
+                #taker_all =  stats_taker[StatType.HPMAX] + stats_taker[StatType.PHYARMORMAX] + stats_taker[StatType.MAGARMORMAX]
+                #taker_all -= (stats_taker[StatType.GRIT] + stats_taker[StatType.FLOW] + stats_taker[StatType.MIND] + stats_taker[StatType.SOUL])/4
+                source_lvl = stats_source[StatType.LVL]
+                taker_lvl = stats_taker[StatType.LVL]
+
+                if source_lvl > taker_lvl:
+                    self.damage_value = self.damage_value - int(self.damage_value * (0.05 * (source_lvl - taker_lvl)))
+                if source_lvl < taker_lvl:
+                    self.damage_value = self.damage_value + int(self.damage_value * (0.05 * (taker_lvl - source_lvl)))
+        '''
 
         '''
-        if self.damage_taker_actor != None and self.damage_source_actor != None:
+        if self.damage_taker_actor != None and self.damage_source_actor != None and self.dont_proc == False:
+            source = self.damage_source_actor
+            taker = self.damage_taker_actor
+            stats_source =    self.damage_source_actor.stat_manager.stats
+            stats_taker =     self.damage_taker_actor.stat_manager.stats
+            
+            s_ego = 1
+            t_ego = 1
+            if type(source).__name__ == 'Player':
+                s_ego = float(source.settings_manager.get_value('ego'))
+            if type(taker).__name__ == 'Player':
+                t_ego = float(taker.settings_manager.get_value('ego'))
+            
+            ego = False
+            if s_ego == 0:
+                ego = True
+            if t_ego == 0:
+                ego = True
+
+            if type(source).__name__ == 'Player' and type(taker).__name__ == 'Player':
+                ego = False
+            
+            if ego:
+                #source_all = stats_source[StatType.HPMAX] + stats_source[StatType.PHYARMORMAX] + stats_source[StatType.MAGARMORMAX]
+                #source_all -= (stats_source[StatType.GRIT] + stats_source[StatType.FLOW] + stats_source[StatType.MIND] + stats_source[StatType.SOUL])/4
+                #taker_all =  stats_taker[StatType.HPMAX] + stats_taker[StatType.PHYARMORMAX] + stats_taker[StatType.MAGARMORMAX]
+                #taker_all -= (stats_taker[StatType.GRIT] + stats_taker[StatType.FLOW] + stats_taker[StatType.MIND] + stats_taker[StatType.SOUL])/4
+                source_all = (stats_source[StatType.LVL]*10) + 30
+                taker_all = (stats_taker[StatType.LVL]*10) + 30
+
+                damage_percentage = self.damage_value / ((taker_all+source_all)/2)
+                if damage_percentage <= 0.15:
+                    damage_percentage = 0.15
+                if damage_percentage >= 0.9:
+                    damage_percentage = 0.9
+                self.damage_value = int(taker_all*damage_percentage)
+
+        '''
+        if self.damage_taker_actor != None and self.damage_source_actor != None and self.dont_proc == False:
+            source = self.damage_source_actor
+            taker = self.damage_taker_actor
+
+
+            if type(source).__name__ == 'Player':
+                ego = float(source.settings_manager.get_value('ego'))
+                ego_damage = (self.damage_value / ego)
+                ego_damage = int(ego_damage)
+                new_damage = ego_damage
+                self.damage_value = new_damage
+
+            if type(taker).__name__ == 'Player':
+                ego = float(taker.settings_manager.get_value('ego'))
+                
+                ego_damage = (self.damage_value * (ego)) - self.damage_value
+                ego_damage = int(ego_damage)
+                new_damage = ego_damage
+                damage = Damage(
+                    add_threat = False,
+                    dont_proc = True,
+                    damage_taker_actor = self.damage_taker_actor,
+                    damage_source_actor = self.damage_source_actor,
+                    damage_source_action = self.damage_source_action,
+                    damage_value = new_damage,
+                    damage_type = self.damage_type,
+                    damage_to_stat = self.damage_to_stat,
+                    combat_event = self.combat_event,
+                    silent = True,
+                    )
+
+        '''
+        if self.damage_taker_actor != None and self.damage_source_actor != None and self.dont_proc == False:
             lvl_source =    self.damage_source_actor.stat_manager.stats[StatType.LVL]
             lvl_taker =     self.damage_taker_actor.stat_manager.stats[StatType.LVL]
             diff = (lvl_taker - lvl_source) / 10
+            msg = f'diff is {diff}'
+            self.damage_source_actor.simple_broadcast(msg,msg)
+            if diff < 0:
+                if diff < 0.9:
+                    new_damage = int(self.damage_value - (self.damage_value*0.9))
+                else:
+                    new_damage = int(self.damage_value - (self.damage_value*abs(diff)))
+                #new_damage = int(self.damage_value - abs(diff*1.5))
+                #new_damage = int(diff*(self.damage_value+diff))-self.damage_value
+                #if self.damage_value * 0.1 > new_damage:
+                #    new_damage = int(self.damage_value * 0.05)
+
+                self.damage_value = new_damage
+                pass
+
             if diff > 0:
-                diff += 1
-                #self.damage_source_actor.simple_broadcast(f'lower level multiplier {diff}',f' lower level multiplier {diff}')
-                self.damage_value = int(diff*self.damage_value)
+                diff = diff * 3
+                bonus_dmg = int(diff*(self.damage_value+diff))-self.damage_value
+                msg = f'rolled {self.damage_value}, adding {diff} which is {bonus_dmg}'
+                self.damage_source_actor.simple_broadcast(msg,msg)
+                #self.damage_value = int(diff*self.damage_value)
+                damage = Damage(
+                    add_threat = False,
+                    dont_proc = True,
+                    damage_taker_actor = self.damage_taker_actor,
+                    damage_source_actor = self.damage_source_actor,
+                    damage_source_action = self.damage_source_action,
+                    damage_value = bonus_dmg,
+                    damage_type = self.damage_type,
+                    damage_to_stat = self.damage_to_stat,
+                    combat_event = self.combat_event,
+                    silent = True,
+                )
+                #damage.run()
+
         '''
 
         #if self.damage_taker_actor.room.combat != None:

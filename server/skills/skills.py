@@ -850,6 +850,7 @@ class SkillDispel(Skill):
             is_ally = self.other.party_manager.get_is_friendly(self.user)
             
             affs = self.other.affect_manager.affects.values()
+            print(is_ally, affs)
             to_dispel = []
             if is_ally:
                 for i in affs:

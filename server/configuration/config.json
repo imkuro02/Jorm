@@ -261,7 +261,9 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "nudge": 1
+                "nudge": 1,
+                "thorns": 1,
+                "leech": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,

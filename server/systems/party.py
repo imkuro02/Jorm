@@ -77,9 +77,9 @@ class PartyManager:
         self.invitations = []
 
     def get_is_friendly(self, who_to_check):
-        if who_to_check.party_manager.get_party_id() == who_to_check.party_manager.get_party_id():
+        if self.actor.party_manager.get_party_id() == who_to_check.party_manager.get_party_id():
             return True
-        if who_to_check.party_manager.get_faction_id() == who_to_check.party_manager.get_faction_id():
+        if self.actor.party_manager.get_faction_id() == who_to_check.party_manager.get_faction_id():
             return True
         return False
     

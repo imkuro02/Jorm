@@ -13,6 +13,7 @@ class SETTINGS:
     GMCP = "gmcp"
     GODOT = "GODOT"
     ALIAS = "alias"
+    EGO = 'ego'
     LOOK = "look"
     VIEW_ROOM = "viewroom"
     VIEW_MAP = "viewmap"
@@ -34,6 +35,7 @@ class SETTINGS:
         GODOT,
         ECHO,
         ALIAS,
+        EGO,
         VIEW_ROOM,
         VIEW_MAP,
         VIEW_MAP_WALLS,
@@ -67,6 +69,7 @@ class Settings:
             SETTINGS.VIEW_ASCII_ART: True,
             SETTINGS.DEBUG: False,
             SETTINGS.ALIAS: {},
+            SETTINGS.EGO: 1,
             SETTINGS.PROMPT: "p0",
             SETTINGS.EMAIL: "",
             SETTINGS.COLOR: {
@@ -221,6 +224,15 @@ class Settings:
                         self.settings[SETTINGS.ALIAS] = {}
                     self.settings[SETTINGS.ALIAS][alias] = string
                     return
+            
+            case SETTINGS.EGO:
+                try:
+                    value = line[1]
+                    value = float(value)
+                    self.actor.send_line(f"Ego: {value}")
+                    self.settings[SETTINGS.EGO] = value
+                except (ValueError, IndexError):
+                    self.actor.send_line(f"Ego: {self.get_value(SETTINGS.EGO)}")
 
             case SETTINGS.GMCP:
                 if len(line) == 1:

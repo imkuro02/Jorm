@@ -476,6 +476,7 @@ class Actor:
                     output = output + f"{Color.NAME_ADMIN}{self.name}{Color.BACK}"
                 else:
                     output = output + f"{Color.NAME_PLAYER}{self.name}{Color.BACK}"
+                #output = output + f' (ego{self.settings_manager.get_value("ego")})'
             case _:
                 output = output + f"{Color.NORMAL}{self.name}{Color.BACK}"
 
