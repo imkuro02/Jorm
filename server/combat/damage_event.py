@@ -185,7 +185,9 @@ class Damage:
             if type(taker).__name__ == 'Player':
                 ego = float(taker.settings_manager.get_value('ego'))
                 
-                ego_damage = (self.damage_value * (ego)) - self.damage_value
+                ego_damage = int(self.damage_value * (ego)) #- self.damage_value
+                self.damage_value = ego_damage
+                '''
                 ego_damage = int(ego_damage)
                 new_damage = ego_damage
                 damage = Damage(
@@ -200,6 +202,7 @@ class Damage:
                     combat_event = self.combat_event,
                     silent = True,
                     )
+                '''
 
         '''
         if self.damage_taker_actor != None and self.damage_source_actor != None and self.dont_proc == False:

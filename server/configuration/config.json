@@ -1,5 +1,5 @@
 {
-    "SHA-256": "f150c89c0ab803ffe44d8cb5f24282e9377ea308435db2d7befbd23ecde5f6c1",
+    "SHA-256": "1da216885f97596d9d26ff73892287badd5a5f65347cfa593c1f0de8294224c7",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -261,9 +261,7 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "nudge": 1,
-                "thorns": 1,
-                "leech": 1
+                "bite": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -862,7 +860,7 @@
             "include_in_daily_quests": true,
             "skills": {
                 "magic_missile": 1,
-                "strike": 1
+                "slime_apply_cooldown": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -1196,7 +1194,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "strike": 1
+                "strike": 1,
+                "slime_apply_cooldown": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -1319,7 +1318,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "strike": 1
+                "strike": 1,
+                "slime_apply_cooldown": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -4424,8 +4424,8 @@
         "bite": {
             "skill_id": "bite",
             "name": "Bite",
-            "description": "Deal physical damage based on\nHighest stat between Grit and Flow.\n",
-            "script_to_run": "DamageByGritFlow",
+            "description": "Deal physical damage based on\nHighest stat between Grit and Flow.\nDeals +1 flat bonus damage for each time bite has been used in current combat.\n",
+            "script_to_run": "Bite",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
             "target_self_is_valid": false,
@@ -4456,6 +4456,30 @@
                     1,
                     2,
                     3
+                ]
+            }
+        },
+        "slime_apply_cooldown": {
+            "skill_id": "slime_apply_cooldown",
+            "name": "Schlormp",
+            "description": "Apply 1 cooldown at random per 10% magic armor the target is missing.\n",
+            "script_to_run": "SlimeApplyCooldown",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1
+                ],
+                "cooldown": [
+                    2
                 ]
             }
         },

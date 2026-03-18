@@ -101,6 +101,10 @@ class wander_around_mob(Npc):
     def wander(self, warning = False):
         #if self.room.is_player_present():
         #    return
+        for actor in self.room.actors.values():
+            if not actor.party_manager.get_is_friendly(self):
+                return
+
         _exits = self.room.exits
         exits = {}
         for i in _exits:

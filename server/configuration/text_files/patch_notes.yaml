@@ -11,6 +11,11 @@ versions:
       - Fixed reforge buffs being applied in reverse (now they apply in the order of equipment list)
       - Buffed afk healing from 1hp per 3 seconds to 10hp every second (healing does not work if debuffed)
       - Practicing no longer raises the cost of a skill
+      - Added ego mechanic, ego is a value the player themselves can set between 1-10, default is 1, for each raise the damage received increases while damage dealt decreases, ego can be set whenever, and is there to nerf higher level players so they can participate in combats with lower level players
+      - Added combat history, combat history is a background system players wont interact with directly, combat history is here to monitor what skills got used when, so that other skills can check history and have different effects based on that 
+      - Bite receives a +1 flat damage bonus per bite used in a combat
+      - All slimes now have a new ability that adds to your cooldown dependant on missing magic armor (the skill is called Schlormp)
+      - Wandering enemy in manor area now no longer leaves the the room if a player is present (used to leave mid combat lol)
   "090326":
     id: "090326"
     title: Map

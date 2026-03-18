@@ -10,6 +10,7 @@ from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.damage_type import DamageType
 from configuration.constants.room_constant import RoomConstant
 from configuration.constants.stat_type import StatType
+from configuration.constants.message_type import MessageType
 
 class Skill:
     def __init__(
@@ -356,17 +357,17 @@ class SkillDamageByFlow(SkillDamage):
 
 
 class SkillDamageByGritFlow(SkillDamage):
-    def use(self):
+    def use(self, dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL, dmg_flat = 0):
         if (
             self.user.stat_manager.stats[StatType.GRIT]
             > self.user.stat_manager.stats[StatType.FLOW]
         ):
             return super().use(
-                dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL
+                dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL, dmg_flat = dmg_flat
             )
         else:
             return super().use(
-                dmg_stat_scale=StatType.FLOW, dmg_type=DamageType.PHYSICAL
+                dmg_stat_scale=StatType.FLOW, dmg_type=DamageType.PHYSICAL, dmg_flat = dmg_flat
             )
 
 
@@ -385,53 +386,8 @@ class SkillCureLightWounds(SkillDamage):
         return super().use(dmg_stat_scale=StatType.SOUL, dmg_type=DamageType.HEALING)
 
 
-class SkillCleave(SkillDamage):
-    
-    def use(self):
-        class CustomAffect(affects.Affect):
-            def dealt_damage(self, damage_obj):
-                #print(damage_obj.damage_taker_actor.stat_manager.stats[StatType.HP], damage_obj.damage_taker_actor.status)
-                if damage_obj.damage_taker_actor.stat_manager.stats[StatType.HP] <= 0:
-                    damage_obj.damage_source_actor.room.combat.order.insert(
-                        0, damage_obj.damage_source_actor
-                    )
-                    damage_obj.damage_source_actor.room.combat.current_actor = (
-                        damage_obj.damage_source_actor
-                    )
-                    del damage_obj.damage_source_actor.cooldown_manager.cooldowns['cleave']
 
-        aff = CustomAffect(affect_source_actor=self.user, affect_target_actor=self.user, 
-                          name = 'Cleaving', description = 'Get a free turn on kill with cleave', turns = 0, resisted_by= None, dispellable = False)
 
-        #print('should be applied innit?')
-        self.user.affect_manager.set_affect_object(aff)
-
-        history = self.user.fetch_combat_history()
-
-        bonus = 0
-        for packet in history:
-            print(packet.__dict__, self.user.room.combat.round)
-            if packet.round != self.user.room.combat.round:
-                #print(packet.skill, packet.round, self.user.room.combat.round)
-                continue
-            if packet.actor_id != self.user.id:
-                continue
-            
-            if packet.skill_id == 'cleave':
-                print('+1')
-                bonus += 1
-            
-        damage_obj = super().use(
-            dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL, dmg_flat = bonus*10
-        )
-
-        damage_obj = super().use(
-            dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL
-        )
-        
-            
-        
-        
 
 
 class SkillRefresh(SkillDamage):
@@ -546,6 +502,56 @@ class SkillBash(SkillDamageByGrit):
             )
             self.other.affect_manager.set_affect_object(stunned_affect)
 
+
+class SkillCleave(SkillDamage):
+    
+    def use(self):
+        class CustomAffect(affects.Affect):
+            def dealt_damage(self, damage_obj):
+                #print(damage_obj.damage_taker_actor.stat_manager.stats[StatType.HP], damage_obj.damage_taker_actor.status)
+                if damage_obj.damage_taker_actor.stat_manager.stats[StatType.HP] <= 0:
+                    damage_obj.damage_source_actor.room.combat.order.insert(
+                        0, damage_obj.damage_source_actor
+                    )
+                    damage_obj.damage_source_actor.room.combat.current_actor = (
+                        damage_obj.damage_source_actor
+                    )
+                    del damage_obj.damage_source_actor.cooldown_manager.cooldowns['cleave']
+
+        aff = CustomAffect(affect_source_actor=self.user, affect_target_actor=self.user, 
+                          name = 'Cleaving', description = 'Get a free turn on kill with cleave', turns = 0, resisted_by= None, dispellable = False)
+
+        #print('should be applied innit?')
+        self.user.affect_manager.set_affect_object(aff)
+
+
+        damage_obj = super().use(
+            dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL
+        )
+        
+
+            
+class SkillBite(SkillDamageByGritFlow):
+    def use(self):
+        # apply flat damage for all bites used this combat
+        history = self.user.fetch_combat_history()
+
+        bonus = 0
+        for packet in history:
+            #print(packet.__dict__, self.user.room.combat.round)
+            #if packet.round != self.user.room.combat.round:
+                #print(packet.skill, packet.round, self.user.room.combat.round)
+            #    continue
+            #if packet.actor_id != self.user.id:
+            #    continue
+            
+            if packet.skill_id == 'bite':
+                bonus += 1
+            
+        super().use(dmg_flat = bonus)
+        #damage_obj = super().use(
+        #    dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL, dmg_flat = bonus * 1
+        #)
 
 class SkillDoubleWhack(SkillDamageByGritFlow):
     def use(self):
@@ -872,6 +878,29 @@ class SkillBoostStats(SkillBoostStat):
 
 
 # XD unique skills
+class SkillSlimeApplyCooldown(Skill):
+    def use(self):
+        super().use()
+        if self.success:
+            armor_percentage = self.other.stat_manager.stats[StatType.MAGARMOR] / self.other.stat_manager.stats[StatType.MAGARMORMAX]
+
+            amount = 10 - (10 * armor_percentage)
+            amount = int(amount) 
+            while amount > 0:
+                skill_id = random.choice(list(self.other.skill_manager.skills.keys()))
+                amount -= 1
+
+                x = 1
+                if skill_id not in self.other.cooldown_manager.cooldowns:
+                    x = 2
+
+                self.other.cooldown_manager.add_cooldown(skill_id, x)
+                msg_s = f'Your {SKILLS[skill_id]["name"]} is slimed'
+                msg_o = f'{self.other.id}\'s {SKILLS[skill_id]["name"]} is slimed'
+                list_pretty_name_objects = [self.other]
+                self.other.pretty_broadcast(msg_s, msg_o, msg_type=[MessageType.COMBAT], list_pretty_name_objects = list_pretty_name_objects)
+
+                
 class SkillDispel(Skill):
     def use(self):
         super().use()

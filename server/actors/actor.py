@@ -179,9 +179,12 @@ class CooldownManager:
         self.cooldowns = {}
 
     def add_cooldown(self, cooldown, turns):
-        self.cooldowns[cooldown] = turns
+        if cooldown not in self.cooldowns:
+            self.cooldowns[cooldown] = turns
+        else:
+            self.cooldowns[cooldown] += turns
         if turns >= 2:
-            self.long_cooldowns[cooldown] = turns
+            self.long_cooldowns[cooldown] = 1
 
     def remove_cooldown(self, cooldown):
         if cooldown in self.cooldowns:

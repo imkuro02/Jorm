@@ -28,13 +28,13 @@ class CombatHistory:
         self.history = []
 
     def add_to_combat_history(self, actor):
-        print('appended')
+        #print('appended')
         self.history.append(CombatHistoryPacket(actor))
         #msg = str(self.history)
         #self.combat.current_actor.simple_broadcast(msg,msg)
 
     def fetch_combat_history(self):
-        print('fetched', len(self.history))
+        #print('fetched', len(self.history))
         return self.history
 
 class Combat:

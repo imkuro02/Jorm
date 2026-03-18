@@ -229,6 +229,12 @@ class Settings:
                 try:
                     value = line[1]
                     value = float(value)
+                    if value < 1:
+                        self.actor.send_line('You cannot set your ego below 1 ("set ego 1" is default)')
+                        return
+                    if value > 10:
+                        self.actor.send_line('You cannot set your ego above 10 ("set ego 1" is default)')
+                        return
                     self.actor.send_line(f"Ego: {value}")
                     self.settings[SETTINGS.EGO] = value
                 except (ValueError, IndexError):
