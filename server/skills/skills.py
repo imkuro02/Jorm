@@ -265,6 +265,7 @@ class Skill:
         # loop for each aoe spawned skill
         for _skill_object in _skill_objects:
             _skill_object.silent_use = self.silent_use
+            _skill_object.no_cooldown = self.silent_use
 
             _skill_object.use()
 
@@ -282,6 +283,7 @@ class Skill:
             # if there are bounces, do that
             while _skill_object.bounce >= 1:
                 _skill_object.silent_use = self.silent_use
+                _skill_object.no_cooldown = self.silent_use
                 _skill_object.bounce -= 1
                 if "bounce_bonus" in self.script_values:
                     damage = damage + int(
