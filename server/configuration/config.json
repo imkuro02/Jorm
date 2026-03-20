@@ -1,5 +1,5 @@
 {
-    "SHA-256": "0c8a47471e16b009cabf95a4375b78e6a0a617f9515fc9aebe64221a2557c07f",
+    "SHA-256": "1424de1a5a49d1c69b12d2d4130b5584bd3a9abc6283f25501f468d784a86327",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -304,7 +304,7 @@
                 "bash": 1
             },
             "on_death_skills_use": null,
-            "on_start_skills_use": null,
+            "on_start_skills_use": "guard=1",
             "loot": {
                 "simple_bark": 5,
                 "tree_branch": 10,
@@ -717,10 +717,11 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "strike": 1
+                "strike": 1,
+                "guard": 1
             },
             "on_death_skills_use": null,
-            "on_start_skills_use": null,
+            "on_start_skills_use": "guard=1",
             "loot": {
                 "stone": 10,
                 "potion_remove_armor": 100,

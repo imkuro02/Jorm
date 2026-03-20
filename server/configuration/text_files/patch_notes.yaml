@@ -1,4 +1,11 @@
 versions:
+  "200326":
+    id: "200326"
+    title: Enemies
+    unixtime: 1761899677
+    features:
+      - wood stump and wandering rock enemies use guard on turn 1
+      - wandering rock has guard in their skills list
   "150326":
     id: "150326"
     title: QOL
