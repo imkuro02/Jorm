@@ -546,7 +546,7 @@ class SkillBite(SkillDamageByGritFlow):
             #    continue
             
             if packet.skill_id == 'bite':
-                bonus += 1
+                bonus += 2
             
         super().use(dmg_flat = bonus)
         #damage_obj = super().use(

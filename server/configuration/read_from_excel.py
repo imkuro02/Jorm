@@ -512,6 +512,8 @@ def configure_ENEMIES(SHEET, ITEMS):
                 LOOT[x["npc_id"][index]] = {x["item_id"][index]: d_vals}
 
     for loot_table in LOOT:
+        if loot_table not in ENEMIES:
+            continue
         ENEMIES[loot_table]["loot"] = LOOT[loot_table]
 
     for e in ENEMIES:
