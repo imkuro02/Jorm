@@ -371,7 +371,7 @@ focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
-text = "client version: 280126"
+text = "client version: 210326"
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
