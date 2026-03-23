@@ -4,19 +4,27 @@ versions:
     title: Enemy overhaul
     unixtime: 1761899677
     features:
+      - The player starts at level 0, meaning they can level up a total of 15 times before reaching max level
+      - Enemy Life, Hold and Ward gets 100% bonus per player in combat, the affliction itself is hidden
+      - _dict command no longer displays explored rooms nor mesage history (its all just spam anyway)
+
       - wood stump and wandering rock enemies use guard on turn 1
       - wandering rock has guard in their skills list
+      
       - TODO
       - Enemy that disables healing in combat
       - Enemy that dies in x turns, damage received reduces damage dealing for some time
       - Enemy that regenerates armor per health damage received, but loses all armor next turn
       - Enemy tag that dies upon all other enemies being dead
-      - Enemy that explodes in x turns
+      
       - Enemy that gets an extra turn based on missing health
       - Enemy that has maximum 10 health but never receives more than 1 damage
       - Enemy that does not get aggressie unless they take 20% of health damage in one round
       - Enemy that blocks every other turn, damaging them while they block will deal damage back
       - Enemy that spawns thorns minions
+
+      - DONE
+      - Spore is now detonationg. Enemy that explodes in x turns
   "150326":
     id: "150326"
     title: QOL

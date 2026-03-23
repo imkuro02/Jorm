@@ -43,10 +43,10 @@ tutorial_1:
               state: completed
           quest_turn_in:
             id: tutorial_1
-            reward_exp: 4
+            reward_exp: 3
             reward:
               - item: currency_0
-                amount: 150
+                amount: 15
 
         - line: |
             ask "What can you teach me?"

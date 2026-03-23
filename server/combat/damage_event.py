@@ -174,7 +174,6 @@ class Damage:
             source = self.damage_source_actor
             taker = self.damage_taker_actor
 
-
             if type(source).__name__ == 'Player':
                 ego = float(source.settings_manager.get_value('ego'))
                 ego_damage = (self.damage_value / ego)

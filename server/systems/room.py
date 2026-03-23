@@ -387,8 +387,6 @@ class Room:
         self.combat.tick()
 
     def join_combat(self, participant):
-        
-
         if self.combat == None:
             participants = {}
             npcs_here = False
@@ -424,7 +422,8 @@ class Room:
 
             # if players_here and npcs_here:
             self.combat = self.combat_manager_class(self, participants)
-            participant.join_combat()
+            
+            #participant.join_combat()
             self.combat.initiative()
             
         else:

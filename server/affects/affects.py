@@ -19,6 +19,7 @@ class Affect:
         get_prediction_string_append=None,
         get_prediction_string_clear=False,
         dispellable=True,
+        hidden = False,
     ):
         # used for pretty_name and pretty_broadcast 
         self.id = 'affect_id-'+name
@@ -42,6 +43,7 @@ class Affect:
         self.turns = turns
 
         self.dispellable = dispellable
+        self.hidden = hidden
 
     def pretty_name(self, identifier = None):
         if self.turns == 0:
@@ -81,6 +83,10 @@ class Affect:
 
         if silent:
             return
+
+        if self.hidden:
+            return
+
         self.affect_manager.actor.simple_broadcast(
             f"You are {self.name}",
             f"{self.affect_manager.actor.pretty_name()} is {self.name}",
@@ -88,7 +94,7 @@ class Affect:
 
     # called when effect is over
     def on_finished(self, silent=False):
-        if not silent:
+        if not silent and not self.hidden:
             self.affect_manager.actor.simple_broadcast(
                 f"You are no longer {self.name}",
                 f"{self.affect_manager.actor.pretty_name()} is no longer {self.name}",
@@ -568,21 +574,15 @@ class AffectEthereal(Affect):
 
 
 class AffectBoostStat(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        bonus,
-        stat,
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
-        self.bonus = bonus
-        self.stat = stat
+    def __init__(self, *args, **kwargs):
+        self.stat = kwargs['stat']
+        del kwargs['stat']
+        self.bonus = kwargs['bonus']
+        del kwargs['bonus']
+        super().__init__(*args, **kwargs)
+        #super().__init__(
+        #    affect_source_actor, affect_target_actor, name, description, turns
+        #)
         self.new_stat = 0
 
     def on_applied(self):

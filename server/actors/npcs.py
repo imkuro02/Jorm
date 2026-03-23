@@ -7,6 +7,7 @@ from actors.actor import Actor
 from configuration.config import ENEMIES, ITEMS, NPCS
 from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.stat_type import StatType
+from configuration.constants.message_type import MessageType
 from custom import loader as custom_loader
 
 # from custom import loader as custom_loader
@@ -171,6 +172,42 @@ class Npc(Actor):
 
         self.dialog_manager = Dialog
         #self.following_actor = None
+
+    def join_combat(self):
+        super().join_combat()
+        from configuration.constants.faction_type import FactionType
+        if self.party_manager.get_faction_id() == FactionType.ENEMY:
+            
+            from affects.affects import AffectBoostStat
+            amount = -1
+
+            for i in self.room.combat.participants.values():
+                if type(i).__name__ == 'Player':
+                    amount += 1
+            if amount <= 0:
+                amount = 0
+
+            self.simple_broadcast('',
+            f'{self.pretty_name()} is adding temporary afflictions of AffectBoostStat for party balance, the boost is "{amount}"', 
+            msg_type = [MessageType.DEBUG])
+            for stat in [StatType.HPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.EXP]:
+                aff = AffectBoostStat(
+                    affect_source_actor = self,
+                    affect_target_actor = self,
+                    name = f'debug party balance {StatType.name[stat]}',
+                    #name = f'PB {StatType.name[stat]}',
+                    description = 'Stat is Party Balanced to Party Size',
+                    turns = 99,
+                    bonus = amount,
+                    stat = stat,
+                    dispellable = False,
+                    hidden = True
+                )
+                def set_turn():
+                    pass
+                aff.set_turn = set_turn
+                self.affect_manager.set_affect_object(aff)
+
 
     def talk_to(self, talker):
         if not super().talk_to(talker):

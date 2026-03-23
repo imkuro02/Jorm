@@ -40,8 +40,9 @@ class CombatHistory:
 class Combat:
     def __init__(self, room, participants):
         REFTRACKER.add_ref(self)
+        room.combat = self
         self.room = room
-        self.participants = participants
+        self.participants = {}
         self.order = []
         self.current_actor = None
         self.time_since_turn_finished = 0
@@ -50,19 +51,22 @@ class Combat:
         self.combat_active = True
         self.combat_history = CombatHistory(self)
 
+        self.participants = participants
+        for p in participants.values():
+            self.add_participant(p)
         # reset threat
         for p in self.participants.values():
+            #self.add_participant(p)
             if type(p).__name__ == "Player":
-                p.set_base_threat()
-                p.stat_manager.stats[StatType.INITIATIVE] = 0
+                pass
             else:
-                p.set_base_threat()
-                p.stat_manager.stats[StatType.INITIATIVE] = 0
+                #p.set_base_threat()
+                #p.stat_manager.stats[StatType.INITIATIVE] = 0
                 for skill_id in p.skill_manager.skills:
                     cool = SKILLS[skill_id]["script_values"]["cooldown"][0] - 1
                     p.cooldown_manager.add_cooldown(skill_id, cool)
                 # p.predict_use_best_skill()
-            p.ai.clear_prediction()
+            #p.ai.clear_prediction()
 
         for p in self.room.actors.values():
             if type(p).__name__ == "Player":
@@ -82,6 +86,8 @@ class Combat:
 
     def add_participant(self, participant):
         participant.status = ActorStatusType.FIGHTING
+        participant.join_combat()
+
         if participant.id in self.participants:
             return  # already participating in combat
         self.participants[participant.id] = participant
@@ -90,8 +96,9 @@ class Combat:
             f"{participant.pretty_name()} joins the combat",
         )
         # reset threat to 0 at start of combat
-        participant.set_base_threat()
-        participant.ai.clear_prediction()
+        #participant.set_base_threat()
+        #participant.ai.clear_prediction()
+        
 
     def tick(self):
         if self.current_actor == None:

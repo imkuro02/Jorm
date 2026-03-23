@@ -119,8 +119,9 @@ class PartyManager:
 
     def party_invite(self, line):
         if self.party == None:
-            self.actor.send_line("You are not in a party")
-            return
+            self.party_create(line)
+            #self.actor.send_line("You are not in a party")
+            #return
         if self.party.actor != self.actor:
             self.actor.send_line("You are not the leader")
             return

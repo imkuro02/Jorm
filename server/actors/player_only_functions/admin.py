@@ -494,7 +494,7 @@ def command_export(self, line):
             self.send_line("cant find this item to export")
             return
 
-
+        
         self.send_line(str(items[0]) + '->' + str(items[0].__dict__))
         """
         item_dict = item.to_dict()
@@ -508,8 +508,15 @@ def command_export(self, line):
     # export actor
     if best_match in list_of_actors:
         actor = self.get_actor(best_match)
-        actor_dict = str(actor.__dict__)
-        self.send_line(str(actor) + '->' + actor_dict)
+        #actor_dict = str(actor.__dict__)
+        _dict = {}
+        actor_dict = actor.__dict__
+        for key in actor_dict:
+            _dict[key] = actor_dict[key]
+        del _dict['explored_rooms']
+        del _dict['msg_history']
+        _dict = str(_dict)
+        self.send_line(str(actor) + '->' + _dict)
 
 
 @check_is_admin

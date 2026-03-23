@@ -477,6 +477,9 @@ class Player(Actor):
             line = systems.utils.add_color(
                 line, color_settings=self.settings_manager.get_value(SETTINGS.COLOR)
             )
+
+            if self.settings_manager.get_value(SETTINGS.DEBUG):
+                line = str(msg_type) + '->' +line
             # line += f'\n'
 
             # send null byte several times to indicate new line

@@ -887,7 +887,7 @@ class SkillAreaOfEffectDamageOnFinished(Skill):
             affect = affects.AffectAreaOfEffectDamageOnFinished(
                 affect_source_actor=self.user,
                 affect_target_actor=self.other,
-                name="Suicide Bombing",
+                name="Detonating",
                 description=f"Dealing max life damage to all enemies on finished",
                 turns=int(self.script_values["duration"][self.users_skill_level]),
             )

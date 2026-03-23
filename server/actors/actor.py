@@ -44,7 +44,7 @@ class ActorStatManager:
             StatType.MIND: 10 * 1,
             StatType.SOUL: 10 * 1,
             StatType.INVSLOTS: 0,
-            StatType.LVL: 1,
+            StatType.LVL: 0,
             StatType.EXP: 0,
             StatType.PP: 0,
             StatType.THREAT: 0,
@@ -514,7 +514,13 @@ class Actor:
         return True
 
     def get_affects(self, target):
-        if len(target.affect_manager.affects) == 0:
+        affs = []
+        for aff in target.affect_manager.affects.values():
+            if aff.hidden:
+                continue
+            affs.append(aff)
+
+        if len(affs) == 0:
             if target == self:
                 output = "You are not affected by anything"
             else:
@@ -530,7 +536,7 @@ class Actor:
             t.add_data("Description")
             # output += f'{"Affliction":<15} {"For":<3} {"Info"}\n'
 
-            for aff in target.affect_manager.affects.values():
+            for aff in affs:
                 # output += f'{aff.info()}'
                 col = Color.GOOD
                 if aff.resisted_by != None:
@@ -1122,6 +1128,8 @@ class Actor:
     def join_combat(self):
         self.affect_manager.join_combat()
         self.inventory_manager.set_turn()
+        self.set_base_threat()
+        self.ai.clear_prediction()
 
     def send_line(self, line, color=True, sound=None, msg_type=None):
         return
