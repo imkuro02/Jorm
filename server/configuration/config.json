@@ -1,5 +1,5 @@
 {
-    "SHA-256": "1424de1a5a49d1c69b12d2d4130b5584bd3a9abc6283f25501f468d784a86327",
+    "SHA-256": "2655bd58caa879f4e5e5bb5c2a2a39f5be2d2761968ba62c2bb52c69071326e5",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -156,8 +156,8 @@
             "skills": {
                 "smite": 1
             },
-            "on_death_skills_use": null,
-            "on_start_skills_use": "disorient=1",
+            "on_death_skills_use": "disorient=1",
+            "on_start_skills_use": null,
             "loot": {
                 "shroom_cap": 20,
                 "potion_remove_armor": 100,
@@ -253,8 +253,8 @@
             "skills": {
                 "nudge": 1
             },
-            "on_death_skills_use": "disorient=1",
-            "on_start_skills_use": null,
+            "on_death_skills_use": null,
+            "on_start_skills_use": "explode_on_finished=1",
             "loot": {
                 "spore_fluff": 10,
                 "potion_remove_armor": 100,
@@ -3335,7 +3335,7 @@
         "slime_apply_cooldown": {
             "skill_id": "slime_apply_cooldown",
             "name": "Schlormp",
-            "description": "Apply 1 cooldown at random per 10% magic armor the target is missing.\n",
+            "description": "Apply DURATION cooldown to a random skill, this effect cannot be blocked.\n",
             "script_to_run": "SlimeApplyCooldown",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -3353,6 +3353,9 @@
                 ],
                 "cooldown": [
                     2
+                ],
+                "duration": [
+                    5
                 ]
             }
         },
@@ -3768,6 +3771,33 @@
                 ],
                 "cooldown": [
                     10
+                ]
+            }
+        },
+        "explode_on_finished": {
+            "skill_id": "explode_on_finished",
+            "name": "Suicide Mission",
+            "description": "Applies a status effect.\nWhen the effect ends, instantly die and deal max life as pure damage to all enemies.\n",
+            "script_to_run": "AreaOfEffectDamageOnFinished",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "duration": [
+                    5
+                ],
+                "cooldown": [
+                    99
+                ],
+                "levels": [
+                    1
                 ]
             }
         }

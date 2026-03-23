@@ -816,6 +816,40 @@ class AffectSummoner(Affect):
             
         self.affect_target_actor.room.join_combat(self.summoned_actor)
 
+class AffectAreaOfEffectDamageOnFinished(Affect):
+    def on_finished(self, silent = False):
+        super().on_finished(silent = silent)
+        if self.affect_target_actor.status == ActorStatusType.FIGHTING:
+            self.turns = 0 # set turns to 0 to make sure the affect doesnt print remaining turns as that is ugly
+            pars = []
+            for p in self.affect_target_actor.room.combat.participants.values():
+                pars.append(p)
+
+            for actor in pars:
+                if actor == self.affect_target_actor or self.affect_target_actor.party_manager.get_is_friendly(actor):
+                    continue
+                
+                damage_obj = Damage(
+                    damage_source_actor=self.affect_target_actor,
+                    damage_taker_actor=actor,
+                    damage_source_action=self,
+                    damage_value=self.affect_target_actor.stat_manager.stats[StatType.HPMAX],
+                    damage_type=DamageType.PURE,
+                )
+
+                damage_obj.run()
+
+            damage_obj = Damage(
+                damage_source_actor=self.affect_target_actor,
+                damage_taker_actor=self.affect_target_actor,
+                damage_source_action=self,
+                damage_value=self.affect_target_actor.stat_manager.stats[StatType.HPMAX],
+                damage_type=DamageType.PURE,
+            )
+
+            damage_obj.run()
+
+
 # XD Reforges
 
 

@@ -1,11 +1,22 @@
 versions:
-  "200326":
-    id: "200326"
-    title: Enemies
+  "230326":
+    id: "230326"
+    title: Enemy overhaul
     unixtime: 1761899677
     features:
       - wood stump and wandering rock enemies use guard on turn 1
       - wandering rock has guard in their skills list
+      - TODO
+      - Enemy that disables healing in combat
+      - Enemy that dies in x turns, damage received reduces damage dealing for some time
+      - Enemy that regenerates armor per health damage received, but loses all armor next turn
+      - Enemy tag that dies upon all other enemies being dead
+      - Enemy that explodes in x turns
+      - Enemy that gets an extra turn based on missing health
+      - Enemy that has maximum 10 health but never receives more than 1 damage
+      - Enemy that does not get aggressie unless they take 20% of health damage in one round
+      - Enemy that blocks every other turn, damaging them while they block will deal damage back
+      - Enemy that spawns thorns minions
   "150326":
     id: "150326"
     title: QOL

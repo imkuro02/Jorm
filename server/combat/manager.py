@@ -185,7 +185,9 @@ class Combat:
             self.combat_active = False
             return
 
-        participants = self.participants.values()
+        participants = [] 
+        for i in self.participants.values():
+            participants.append(i)
         
         for i in participants:
             if i.status != ActorStatusType.DEAD and i.reset_stats_after_combat == True:

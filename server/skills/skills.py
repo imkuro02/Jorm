@@ -880,10 +880,24 @@ class SkillBoostStats(SkillBoostStat):
 
 
 # XD unique skills
+
+class SkillAreaOfEffectDamageOnFinished(Skill):
+    def use(self):
+        if self.success:
+            affect = affects.AffectAreaOfEffectDamageOnFinished(
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Suicide Bombing",
+                description=f"Dealing max life damage to all enemies on finished",
+                turns=int(self.script_values["duration"][self.users_skill_level]),
+            )
+            self.other.affect_manager.set_affect_object(affect)
+
 class SkillSlimeApplyCooldown(Skill):
     def use(self):
         super().use()
         if self.success:
+            '''
             armor_percentage = self.other.stat_manager.stats[StatType.MAGARMOR] / self.other.stat_manager.stats[StatType.MAGARMORMAX]
 
             amount = 10 - (10 * armor_percentage)
@@ -901,7 +915,17 @@ class SkillSlimeApplyCooldown(Skill):
                 msg_o = f'{self.other.id}\'s {SKILLS[skill_id]["name"]} is slimed'
                 list_pretty_name_objects = [self.other]
                 self.other.pretty_broadcast(msg_s, msg_o, msg_type=[MessageType.COMBAT], list_pretty_name_objects = list_pretty_name_objects)
+            '''
+            skill_id = random.choice(list(self.other.skill_manager.skills.keys()))
 
+            x = int(self.script_values["duration"][self.users_skill_level])
+
+            self.other.cooldown_manager.add_cooldown(skill_id, x)
+            msg_s = f'Your {SKILLS[skill_id]["name"]} is slimed'
+            msg_o = f'{self.other.id}\'s {SKILLS[skill_id]["name"]} is slimed'
+            list_pretty_name_objects = [self.other]
+            self.other.pretty_broadcast(msg_s, msg_o, msg_type=[MessageType.COMBAT], list_pretty_name_objects = list_pretty_name_objects)
+            
                 
 class SkillDispel(Skill):
     def use(self):
