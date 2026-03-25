@@ -1,5 +1,5 @@
 {
-    "SHA-256": "356fcc65e1dc50a632c8c34c2c5c46e853d1b022e5ac643cf7dbd4aaba9f2c5c",
+    "SHA-256": "a7b65200f7c9175c9bcfef4670c06b46757d457ccd518fe3d9d2b4ea9a9e9cff",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3802,48 +3802,18 @@
                 ]
             }
         },
-        "consume_corpse_on_set_turn": {
-            "skill_id": "consume_corpse_on_set_turn",
-            "name": "Canibalism",
-            "description": "Applies an affliction.\nOn start of your turn, instantly consume a corpse to heal for BONUS% of its max health.\n",
-            "script_to_run": "ConsumeCorpsesOnSetTurn",
-            "target_others_is_valid": false,
-            "target_item_is_valid": false,
-            "target_self_is_valid": true,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
-            "level_req": 1.0,
-            "is_offensive": 0.0,
-            "end_turn": true,
-            "script_values": {
-                "duration": [
-                    2
-                ],
-                "cooldown": [
-                    99
-                ],
-                "levels": [
-                    1
-                ],
-                "bonus": [
-                    0.25
-                ]
-            }
-        },
         "consume_corpse": {
             "skill_id": "consume_corpse",
             "name": "Canibalize",
-            "description": "Applies an affliction.\nOn start of your turn, instantly consume a corpse to heal for BONUS% of its max health.\n",
+            "description": "Consume a corpse to heal for BONUS% of your own max health.\n",
             "script_to_run": "ConsumeCorpse",
             "target_others_is_valid": false,
             "target_item_is_valid": true,
             "target_self_is_valid": false,
             "can_use_in_combat": true,
             "can_use_out_of_combat": false,
-            "can_be_practiced": false,
-            "practice_cost": 0,
+            "can_be_practiced": true,
+            "practice_cost": 1,
             "level_req": 1.0,
             "is_offensive": 0.0,
             "end_turn": true,

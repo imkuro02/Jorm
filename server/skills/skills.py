@@ -972,13 +972,17 @@ class SkillConsumeCorpse(Skill):
             if hasattr(i, 'corpse_npc_id'):
                 return i
 
-        return False
+        return None
 
     def get_healing_value(self):
         return int(self.user.stat_manager.stats[StatType.HPMAX] * self.script_values["bonus"][self.users_skill_level])
 
     def evaluate(self):
+        if self.other != None:
+            return 1000
+
         corpse = self.check_if_corpses_present()
+        
         if corpse == False:
             return 0
 
@@ -989,17 +993,20 @@ class SkillConsumeCorpse(Skill):
         return 2
 
     def use(self):
-        
-        # print message and remove corpse from room
-        corpse = self.check_if_corpses_present()
+        corpse = self.other
+        if not hasattr(corpse, 'corpse_npc_id'):
+            self.user.send_line(f'You cannot canibalize {corpse.name}')
+            return False
 
-        if not corpse:
+        if self.other not in self.user.room.inventory_manager.items.values():
             msg_o = f'{self.user.id} becomes visibly confused at the lack of a corpse'
             msg_s = f'You become upset and confused'
             list_pretty_name_objects = [self.user]
             self.user.pretty_broadcast(msg_s, msg_o, list_pretty_name_objects = list_pretty_name_objects)
-            #self.user.room.inventory_manager.remove_item(corpse)
-            return
+            return False
+
+        if self.other != None:
+            corpse = self.other
 
         super().use()
 
@@ -1296,20 +1303,26 @@ class SkillNecromancerRessurect(SkillTargetItem):
         from types import MethodType
         from actors.npcs import Npc
         from configuration.config import ENEMIES
+        
+        if not hasattr(corpse, 'corpse_npc_id'):
+            self.user.send_line(f'You cannot resurrect {corpse.name}')
+            return False
+
         super().use()
+
         if hasattr(self.other, 'corpse_npc_id'):
             # remove corpse item on ground
             self.other.inventory_manager.remove_item(self.other)
 
             # send_line
-            self.user.simple_broadcast(f'You ressurect {self.other.corpse_npc_name}',f'{self.user.pretty_name()} ressurects {self.other.corpse_npc_name}')
+            self.user.simple_broadcast(f'You resurrect {self.other.corpse_npc_name}',f'{self.user.pretty_name()} resurrects {self.other.corpse_npc_name}')
 
             npc_class = Npc
             npc_id = self.other.corpse_npc_id
             e = npc_class(
                 npc_id = f'summoned_{npc_id}',
                 ai = EnemyAI,
-                name = self.other.corpse_npc_name.replace('The','The ressurected'),
+                name = self.other.corpse_npc_name.replace('The','The resurrected'),
                 description = ENEMIES[npc_id]["description"],
                 room = self.user.room,
                 stats = ENEMIES[npc_id]["stats"],
@@ -1407,7 +1420,7 @@ class SkillNecromancerRessurect(SkillTargetItem):
             e.trigger_manager.trigger_add('dismiss', e.trigger_dismiss)
 
             # add trigger descriptions
-            e.description += f'\nRessurected by {self.user.name}'
+            e.description += f'\rResurrected by {self.user.name}'
             e.description += f'\nCan be renamed with "rename <name> to <new name>".'
             e.description += f'\nCan be dismissed with "dismiss <name>".'
 
@@ -1428,7 +1441,5 @@ class SkillNecromancerRessurect(SkillTargetItem):
             if self.user.status == ActorStatusType.FIGHTING:
                 self.user.room.combat.add_participant(e)
 
-        else:
-            self.user.send_line('...Nothing happens')
-            del self.user.cooldown_manager.cooldowns[self.skill_id]
+       
 
