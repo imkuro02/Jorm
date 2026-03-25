@@ -315,7 +315,7 @@ class UpdateChecker:
             if _cur_actor == self.actor:
                 _map = f"Round {_round}, Your turn\n" + _map
             else:
-                _map = f"Round {_round}, {_cur_actor.pretty_name()}' turn\n" + _map
+                _map = f"Round {_round}, {_cur_actor.pretty_name(identifier = self.actor)}' turn\n" + _map
 
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")

@@ -404,7 +404,8 @@ def use(self, line, silent=False):
     if self.ai.target != None:
         if self.ai.target.id not in {**self.room.actors, **self.inventory_manager.items, **self.room.inventory_manager.items}:
             self.ai.target = None
-
+    '''
+    # old code that defaults target to yourself, not needed
     if _target == None and self.ai.target == None:
         if _action.name in skill_name_to_id:
             if bool(SKILLS[skill_name_to_id[_action.name]]["is_offensive"]):
@@ -424,14 +425,15 @@ def use(self, line, silent=False):
     if _target == None and self.ai.target == None:
         _target = self
 
+    '''
     if self.ai.target != None and _target == None:
         _target = self.ai.target
 
-    if _target == None:
-        if silent:
-            return False
-        self.send_line(f"Use {action_name} on?")
-        return True
+    #if _target == None:
+    #    if silent:
+    #        return False
+    #    self.send_line(f"Use {action_name} on?")
+    #    return True
 
     #systems.utils.debug_print(_target.id)
 

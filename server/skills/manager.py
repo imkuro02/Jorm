@@ -60,6 +60,16 @@ def skill_checks(user, target, skill_id):
         error(user, f"{skill_name} is on cooldown!")
         return False
 
+    if not skill["can_use_in_combat"]:
+        if user.status == ActorStatusType.FIGHTING:
+            error(user, f"{skill_name} cannot be used in combat")
+            return False
+
+    if not skill["can_use_out_of_combat"]:
+        if user.status != ActorStatusType.FIGHTING:
+            error(user, f"{skill_name} cannot be out of combat")
+            return False
+
     if systems.utils.get_object_parent(target) == "Actor":
         # cant target yourself
         if target == user and not skill["target_self_is_valid"]:
@@ -76,15 +86,7 @@ def skill_checks(user, target, skill_id):
         #    error(user, f'You can\'t use {skill_name} on {target.name}')
         #    return False
 
-        if not skill["can_use_in_combat"]:
-            if user.status == ActorStatusType.FIGHTING:
-                error(user, f"{skill_name} cannot be used in combat")
-                return False
-
-        if not skill["can_use_out_of_combat"]:
-            if user.status != ActorStatusType.FIGHTING:
-                error(user, f"{skill_name} cannot be out of combat")
-                return False
+        
 
         # allow using skills on dead targets
         if user.status == ActorStatusType.FIGHTING and (

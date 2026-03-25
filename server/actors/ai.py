@@ -188,6 +188,7 @@ class AI:
             if use_skill(
                 self.actor, target, self.prediction_skill, no_checks=no_checks
             ):
+                
                 self.actor.add_to_combat_history()
 
                 used_skill = self.prediction_skill

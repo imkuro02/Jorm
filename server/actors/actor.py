@@ -499,7 +499,7 @@ class Actor:
 
         if identifier != None:
             if identifier.ai.target == self:
-                output = f'(target) {output}'
+                output = f'@normal(target) {output}'
                 
         output = systems.utils.add_godot_url_actors(self, identifier, output)
         # if self.status == ActorStatusType.FIGHTING:
@@ -1054,7 +1054,7 @@ class Actor:
                         output += (
                             _prompt
                             + " "
-                            + par.pretty_name()
+                            + par.pretty_name(identifier = self)
                             + f" "
                             + _prediction
                             + "\n"
@@ -1063,7 +1063,7 @@ class Actor:
                         output += (
                             _prompt
                             + " "
-                            + par.pretty_name()
+                            + par.pretty_name(identifier = self)
                             + f"{new_line}"
                             + _prediction
                             + "\n"

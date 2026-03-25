@@ -64,6 +64,7 @@ class Skill:
         for i in valid:
             if best == None:
                 best = i
+            #if i.stat_manager.stats[StatType.HP] < best.stat_manager.stats[StatType.HP]:
             if i.stat_manager.stats[StatType.HP] / i.stat_manager.stats[StatType.HPMAX] < best.stat_manager.stats[StatType.HP] / best.stat_manager.stats[StatType.HPMAX]:
                 best = i
         return best
@@ -204,6 +205,8 @@ class Skill:
         #self.user.send_line('delayed use stopped')
 
     def use(self):
+        self.user.ai.prediction_skill = self.skill_id
+        self.user.ai.prediction_target = self.other
         # systems.utils.debug_print('aoe:',self.aoe)
         if not self.no_cooldown:
             cool = self.script_values["cooldown"][self.users_skill_level]
@@ -962,71 +965,7 @@ class SkillBoostStats(SkillBoostStat):
         super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL)
 
 
-class SkillConsumeCorpse(Skill):
-    def check_if_corpses_present(self):
-        items = []
-        for i in self.user.room.inventory_manager.items.values():
-            items.append(i)
 
-        for i in items:
-            if hasattr(i, 'corpse_npc_id'):
-                return i
-
-        return None
-
-    def get_healing_value(self):
-        return int(self.user.stat_manager.stats[StatType.HPMAX] * self.script_values["bonus"][self.users_skill_level])
-
-    def evaluate(self):
-        if self.other != None:
-            return 1000
-
-        corpse = self.check_if_corpses_present()
-        
-        if corpse == False:
-            return 0
-
-        if self.user.stat_manager.stats[StatType.HP] + self.get_healing_value() >= self.user.stat_manager.stats[StatType.HPMAX]:
-            return 0
-
-        self.other = corpse
-        return 2
-
-    def use(self):
-        corpse = self.other
-        if not hasattr(corpse, 'corpse_npc_id'):
-            self.user.send_line(f'You cannot canibalize {corpse.name}')
-            return False
-
-        if self.other not in self.user.room.inventory_manager.items.values():
-            msg_o = f'{self.user.id} becomes visibly confused at the lack of a corpse'
-            msg_s = f'You become upset and confused'
-            list_pretty_name_objects = [self.user]
-            self.user.pretty_broadcast(msg_s, msg_o, list_pretty_name_objects = list_pretty_name_objects)
-            return False
-
-        if self.other != None:
-            corpse = self.other
-
-        super().use()
-
-        msg_o = f'{self.user.id} consumes {corpse.id}'
-        msg_s = f'You consume {corpse.id}'
-        list_pretty_name_objects = [self.user, corpse]
-        self.user.pretty_broadcast(msg_s, msg_o, list_pretty_name_objects = list_pretty_name_objects)
-        self.user.room.inventory_manager.remove_item(corpse)
-
-        # calculate healing and run it
-        healing = self.get_healing_value()
-        damage_obj = Damage(
-            damage_taker_actor=self.user,
-            damage_source_action=self,
-            #combat_event=self.combat_event,
-            damage_source_actor=self.user,
-            damage_value=healing,
-            damage_type=DamageType.HEALING,
-        )
-        damage_obj.run()
 '''
 class SkillConsumeCorpsesOnSetTurn(Skill):
     def use(self):
@@ -1295,16 +1234,105 @@ class SkillTargetItem(Skill):
     def pre_use(self):
         self.use()
 
+class SkillConsumeCorpse(SkillTargetItem):
+    def check_if_corpses_present(self):
+        items = []
+        for i in self.user.room.inventory_manager.items.values():
+            items.append(i)
 
+        for i in items:
+            if hasattr(i, 'corpse_npc_id'):
+                return i
+
+        return None
+
+    def get_healing_value(self):
+        return int(self.user.stat_manager.stats[StatType.HPMAX] * self.script_values["bonus"][self.users_skill_level])
+
+    def evaluate(self):
+        if self.other != None:
+            return 1000
+
+        corpse = self.check_if_corpses_present()
+        
+        if corpse == False:
+            return 0
+
+        if self.user.stat_manager.stats[StatType.HP] + self.get_healing_value() >= self.user.stat_manager.stats[StatType.HPMAX]:
+            return 0
+
+        self.other = corpse
+        return 2
+
+    def use(self):
+        #corpse = self.other
+        if self.other == None:
+            self.other = self.check_if_corpses_present()
+
+        if self.other == None:
+            self.user.send_line(f'There are no corpses to eat')
+            return
+
+        if not hasattr(self.other, 'corpse_npc_id'):
+            self.user.send_line(f'You cannot canibalize {corpse.name}')
+            return False
+
+        if self.other not in self.user.room.inventory_manager.items.values():
+            msg_o = f'{self.user.id} becomes visibly confused at the lack of a corpse'
+            msg_s = f'You become upset and confused at the lack of a corpse'
+            list_pretty_name_objects = [self.user]
+            self.user.pretty_broadcast(msg_s, msg_o, list_pretty_name_objects = list_pretty_name_objects)
+            return False
+
+        #if self.other != None:
+        #    corpse = self.other
+
+        super().use()
+
+        msg_o = f'{self.user.id} consumes {self.other.id}'
+        msg_s = f'You consume {self.other.id}'
+        list_pretty_name_objects = [self.user, self.other]
+        self.user.pretty_broadcast(msg_s, msg_o, list_pretty_name_objects = list_pretty_name_objects)
+        self.user.room.inventory_manager.remove_item(self.other)
+
+        # calculate healing and run it
+        healing = self.get_healing_value()
+        damage_obj = Damage(
+            damage_taker_actor=self.user,
+            damage_source_action=self,
+            #combat_event=self.combat_event,
+            damage_source_actor=self.user,
+            damage_value=healing,
+            damage_type=DamageType.HEALING,
+        )
+        damage_obj.run()
 
 class SkillNecromancerRessurect(SkillTargetItem):
+    def check_if_corpses_present(self):
+        items = []
+        for i in self.user.room.inventory_manager.items.values():
+            items.append(i)
+
+        for i in items:
+            if hasattr(i, 'corpse_npc_id'):
+                return i
+
+        return None
+
     def use(self):
         from actors.ai import EnemyAI
         from types import MethodType
         from actors.npcs import Npc
         from configuration.config import ENEMIES
-        
-        if not hasattr(corpse, 'corpse_npc_id'):
+
+        if self.other == None:
+            self.other = self.check_if_corpses_present()
+
+        if self.other == None:
+            self.user.send_line(f'There are no corpses to eat')
+            return
+  
+        if not hasattr(self.other, 'corpse_npc_id'):
             self.user.send_line(f'You cannot resurrect {corpse.name}')
             return False
 

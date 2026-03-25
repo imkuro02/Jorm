@@ -1,5 +1,5 @@
 {
-    "SHA-256": "a7b65200f7c9175c9bcfef4670c06b46757d457ccd518fe3d9d2b4ea9a9e9cff",
+    "SHA-256": "57f4d0edb37604805188813b7c69b56e803c65a68caf6e45d7041bc60760cdb7",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3811,10 +3811,10 @@
             "target_item_is_valid": true,
             "target_self_is_valid": false,
             "can_use_in_combat": true,
-            "can_use_out_of_combat": false,
+            "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 6.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
