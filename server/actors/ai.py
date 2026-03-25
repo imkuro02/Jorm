@@ -8,7 +8,7 @@ from configuration.constants.actor_status_type import ActorStatusType
 #from configuration.constants.room_constant import RoomConstant
 from configuration.constants.stat_type import StatType
 from custom import loader
-from skills.manager import get_user_skill_level_as_index, use_skill
+from skills.manager import get_user_skill_level_as_index, use_skill, construct_skill
 from systems.utils import REFTRACKER
 
 
@@ -213,6 +213,8 @@ class AI:
         self.prediction_target = None
         self.prediction_skill = None
 
+
+
         # if self.prediction_skill != None:
         #    return
 
@@ -224,6 +226,29 @@ class AI:
 
         allies, enemies = self.get_targets()
         skills = self.get_skills(for_prediction=for_prediction, combat_only_skills=True)
+
+        highest = None
+
+        if skill_override != None:
+            skills = [skill_override]
+
+        for i in skills:
+            skill_obj = construct_skill(i)(skill_id = i, user = self.actor)
+            #systems.utils.debug_print(self.actor.name, skill_obj.id, skill_obj.evaluation)
+            if skill_obj.evaluation <= 0:
+                continue
+            if highest == None:
+                highest = skill_obj
+            if skill_obj.evaluation > highest.evaluation + random.randint(0,1):
+                highest = skill_obj
+
+        if highest == None:
+            return False
+
+        self.prediction_skill = highest.skill_id
+        self.prediction_target = highest.other
+        return True
+        '''
         # systems.utils.debug_print(self.actor.name,skills)
         # try to use a skill 5 times, if it fails return false
         # return true if you managed to use a skill
@@ -279,6 +304,7 @@ class AI:
             #    i.send_line(f'{self.actor.pretty_name()} {self.get_prediction_string(i)}')
             return True
         return False
+        '''
 
     """
     def use_best_skill(self, offensive_only = False):

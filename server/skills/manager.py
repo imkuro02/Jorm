@@ -251,3 +251,13 @@ def check_for_broken_skills():
             )
     
 
+def construct_skill(skill_id = None):
+    try:
+        skill_class = getattr(skills.skills, f"Skill{SKILLS[skill_id]['script_to_run']}")
+        return skill_class
+    except AttributeError:
+        user.simple_broadcast(
+            f"@redscript_to_run:{skill_id['script_to_run']} is not a valid skill object in skills.py@normal",
+            f"@redscript_to_run:{skill_id['script_to_run']} is not a valid skill object in skills.py@normal",
+        )
+        return None

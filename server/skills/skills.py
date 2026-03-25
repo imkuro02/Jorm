@@ -16,10 +16,10 @@ class Skill:
     def __init__(
         self,
         skill_id,
-        script_values,
         user,
-        other,
-        users_skill_level: int,
+        users_skill_level: int = 0,
+        script_values = None,
+        other = None,
         name = None,
         success=False,
         silent_use=False,
@@ -35,9 +35,14 @@ class Skill:
         self.name = name
         if self.name == None:
             self.name = SKILLS[skill_id]["name"]
+
         self.script_values = script_values
+        if self.script_values == None:
+            self.script_values = SKILLS[skill_id]["script_values"]
+
         self.user = user
         self.other = other
+
         self.users_skill_level = users_skill_level
         self.success = success
         self.silent_use = silent_use
@@ -49,6 +54,65 @@ class Skill:
         self.combat_event = combat_event
         if self.combat_event == None:
             self.combat_event = CombatEvent()
+
+
+        self.evaluation = self.evaluate()
+    
+    def set_other_by_hp_percent_lowest(self):
+        valid = self.get_valid_set_other_actors()
+        best = None
+        for i in valid:
+            if best == None:
+                best = i
+            if i.stat_manager.stats[StatType.HP] / i.stat_manager.stats[StatType.HPMAX] < best.stat_manager.stats[StatType.HP] / best.stat_manager.stats[StatType.HPMAX]:
+                best = i
+        return best
+
+    def set_other_by_threat(self):
+        valid = self.get_valid_set_other_actors()
+        best = None
+        for i in valid:
+            if best == None:
+                best = i
+            if i.stat_manager.stats[StatType.THREAT] > best.stat_manager.stats[StatType.THREAT]:
+                best = i
+        return best
+
+    def get_valid_set_other_actors(self):
+        all_actors = list(self.user.room.actors.values())
+        valid = []
+        for i in all_actors:
+            if i == self and not SKILLS[self.skill_id]['target_self_is_valid']:
+                continue
+            if i != self and not SKILLS[self.skill_id]['target_others_is_valid']:
+                continue
+
+            
+            if SKILLS[self.skill_id]['is_offensive']:
+                if not self.user.party_manager.get_party_id() == i.party_manager.get_party_id():
+                    valid.append(i)
+            else:
+                if self.user.party_manager.get_party_id() == i.party_manager.get_party_id():
+                    valid.append(i)
+
+        msg = f'{self.user.name} valid targets = {valid} for skill {self.skill_id}'
+        self.user.simple_broadcast(msg,msg, msg_type = ['debug'])
+        return valid
+
+    def evaluate(self):
+        # if a target is set then the prio is 1000
+        if self.other != None:
+            return 1000
+
+        # by default get target by valid highest threat
+        self.other = self.set_other_by_threat()
+
+        # if no other is picked return 0
+        if self.other == None:
+            return 0
+            
+        # return 1 (by default)
+        return 1
 
     def get_dmg_value(self, stat_type=None):
         if self.get_dmg_value_override == None:
@@ -212,7 +276,7 @@ class Skill:
 
         _skill_objects = []
 
-        targets = self.pre_use_get_targets()
+        
 
         if override_bounce_amount == None:
             bounce_amount = (
@@ -225,6 +289,7 @@ class Skill:
 
         if "aoe" in self.script_values:
             current_aoe = 0
+            targets = self.pre_use_get_targets()
             for target in targets:
                 _skill_obj = skill_obj(
                     skill_id=self.skill_id,
@@ -384,6 +449,15 @@ class SkillDamageBySoul(SkillDamage):
 
 
 class SkillCureLightWounds(SkillDamage):
+    def evaluate(self):
+        if self.other == None:
+            self.other = self.set_other_by_hp_percent_lowest()
+        if self.other == None:
+            return 0
+        if self.other.stat_manager.stats[StatType.HP] > self.other.stat_manager.stats[StatType.HPMAX]*0.75:
+            return 0
+        return 2
+
     def use(self):
         return super().use(dmg_stat_scale=StatType.SOUL, dmg_type=DamageType.HEALING)
 
@@ -393,6 +467,15 @@ class SkillCureLightWounds(SkillDamage):
 
 
 class SkillRefresh(SkillDamage):
+    def evaluate(self):
+        if self.other == None:
+            self.other = self.set_other_by_hp_percent_lowest()
+        if self.other == None:
+            return 0
+        if self.other.stat_manager.stats[StatType.HP] > self.other.stat_manager.stats[StatType.HPMAX]*0.75:
+            return 0
+        return 2
+
     def use(self):
         self.get_dmg_value_override = self.get_dmg_value(stat_type=StatType.SOUL)
         for i in self.user.room.actors.values():
@@ -879,6 +962,65 @@ class SkillBoostStats(SkillBoostStat):
         super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL)
 
 
+class SkillConsumeCorpse(Skill):
+    def check_if_corpses_present(self):
+        items = []
+        for i in self.user.room.inventory_manager.items.values():
+            items.append(i)
+
+        for i in items:
+            if hasattr(i, 'corpse_npc_id'):
+                return i
+
+        return False
+
+    def get_healing_value(self):
+        return int(self.user.stat_manager.stats[StatType.HPMAX] * self.script_values["bonus"][self.users_skill_level])
+
+    def evaluate(self):
+        corpse = self.check_if_corpses_present()
+        if corpse == False:
+            return 0
+
+        if self.user.stat_manager.stats[StatType.HP] + self.get_healing_value() >= self.user.stat_manager.stats[StatType.HPMAX]:
+            return 0
+
+        self.other = corpse
+        return 2
+
+    def use(self):
+        
+        # print message and remove corpse from room
+        corpse = self.check_if_corpses_present()
+
+        if not corpse:
+            msg_o = f'{self.user.id} becomes visibly confused at the lack of a corpse'
+            msg_s = f'You become upset and confused'
+            list_pretty_name_objects = [self.user]
+            self.user.pretty_broadcast(msg_s, msg_o, list_pretty_name_objects = list_pretty_name_objects)
+            #self.user.room.inventory_manager.remove_item(corpse)
+            return
+
+        super().use()
+
+        msg_o = f'{self.user.id} consumes {corpse.id}'
+        msg_s = f'You consume {corpse.id}'
+        list_pretty_name_objects = [self.user, corpse]
+        self.user.pretty_broadcast(msg_s, msg_o, list_pretty_name_objects = list_pretty_name_objects)
+        self.user.room.inventory_manager.remove_item(corpse)
+
+        # calculate healing and run it
+        healing = self.get_healing_value()
+        damage_obj = Damage(
+            damage_taker_actor=self.user,
+            damage_source_action=self,
+            #combat_event=self.combat_event,
+            damage_source_actor=self.user,
+            damage_value=healing,
+            damage_type=DamageType.HEALING,
+        )
+        damage_obj.run()
+'''
 class SkillConsumeCorpsesOnSetTurn(Skill):
     def use(self):
         from affects.affects import Affect
@@ -915,6 +1057,7 @@ class SkillConsumeCorpsesOnSetTurn(Skill):
                 else:
                     self.get_prediction_string_append=None
                     self.get_prediction_string_clear=False
+                return damage
                 #self.affect_target_actor.prediction_override = 'will canibalize a corpse'
             
             def set_turn(self):
@@ -966,9 +1109,10 @@ class SkillConsumeCorpsesOnSetTurn(Skill):
                 description=f"Abruptly stop your current action to consume a corpse",
                 turns=int(self.script_values["duration"][self.users_skill_level]),
                 percentage_healing = self.script_values["bonus"][self.users_skill_level],
-                #hidden = True
+                hidden = True
             )
             self.other.affect_manager.set_affect_object(affect) 
+'''
 
 class SkillAreaOfEffectDamageOnFinished(Skill):
     def use(self):

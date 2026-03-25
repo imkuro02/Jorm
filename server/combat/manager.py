@@ -60,11 +60,12 @@ class Combat:
             if type(p).__name__ == "Player":
                 pass
             else:
+                pass
                 #p.set_base_threat()
                 #p.stat_manager.stats[StatType.INITIATIVE] = 0
-                for skill_id in p.skill_manager.skills:
-                    cool = SKILLS[skill_id]["script_values"]["cooldown"][0] - 1
-                    p.cooldown_manager.add_cooldown(skill_id, cool)
+                #for skill_id in p.skill_manager.skills:
+                #    cool = SKILLS[skill_id]["script_values"]["cooldown"][0] - 1
+                #    p.cooldown_manager.add_cooldown(skill_id, cool)
                 # p.predict_use_best_skill()
             #p.ai.clear_prediction()
 

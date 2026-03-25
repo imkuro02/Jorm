@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e6e406364c00bc7ecd3eec93027a219a341e3bbf7aff81452bd93c8aa8b3764f",
+    "SHA-256": "356fcc65e1dc50a632c8c34c2c5c46e853d1b022e5ac643cf7dbd4aaba9f2c5c",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -1976,10 +1976,11 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "bite": 1
+                "bite": 1,
+                "consume_corpse": 1
             },
             "on_death_skills_use": null,
-            "on_start_skills_use": "consume_corpse_on_set_turn=1",
+            "on_start_skills_use": null,
             "loot": {
                 "zombie_skin": 20,
                 "potion_remove_armor": 100,
@@ -3822,6 +3823,33 @@
                 ],
                 "cooldown": [
                     99
+                ],
+                "levels": [
+                    1
+                ],
+                "bonus": [
+                    0.25
+                ]
+            }
+        },
+        "consume_corpse": {
+            "skill_id": "consume_corpse",
+            "name": "Canibalize",
+            "description": "Applies an affliction.\nOn start of your turn, instantly consume a corpse to heal for BONUS% of its max health.\n",
+            "script_to_run": "ConsumeCorpse",
+            "target_others_is_valid": false,
+            "target_item_is_valid": true,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "cooldown": [
+                    1
                 ],
                 "levels": [
                     1
