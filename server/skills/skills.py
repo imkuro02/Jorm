@@ -50,9 +50,6 @@ class Skill:
         if self.combat_event == None:
             self.combat_event = CombatEvent()
 
-    def evaluate_skill_for_prediction(self):
-        return 1
-
     def get_dmg_value(self, stat_type=None):
         if self.get_dmg_value_override == None:
             if "crit" not in self.script_values or stat_type == None:
@@ -882,25 +879,7 @@ class SkillBoostStats(SkillBoostStat):
         super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL)
 
 
-# XD unique skills
-class SkillConsumeCorpse(Skill):
-    def check_if_corpses_present(self):
-        items = []
-        for i in self.user.room.inventory_manager.items.values():
-            items.append(i)
-
-        for i in items:
-            if hasattr(i, 'corpse_npc_id'):
-                return i
-
-    def evaluate_skill_for_prediction(self):
-        corpse = self.check_if_corpses_present()
-        if corpse == False:
-            return 0
-        else:
-            return 2
-
-class DONTUSESkillConsumeCorpsesOnSetTurn(Skill):
+class SkillConsumeCorpsesOnSetTurn(Skill):
     def use(self):
         from affects.affects import Affect
         class AffectConsumeCorpsesOnSetTurn(Affect):

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e8cd22d4befaea006b6a057b42cb5ea63f35e73e44ab69524c6ed64ef3df3c34",
+    "SHA-256": "e6e406364c00bc7ecd3eec93027a219a341e3bbf7aff81452bd93c8aa8b3764f",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -3818,7 +3818,7 @@
             "end_turn": true,
             "script_values": {
                 "duration": [
-                    1
+                    2
                 ],
                 "cooldown": [
                     99
