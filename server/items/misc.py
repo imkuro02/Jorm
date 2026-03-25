@@ -129,9 +129,9 @@ class Item:
                 if reforge_name != None:
                     output = f"@yellow{reforge_name} {col}{self.name}@normal"
 
-        #if identifier != None:
-        #    if identifier.ai.target == self:
-        #        output = f'@normal(target) {output}'
+        if identifier != None:
+            if identifier.ai.target == self:
+                output = f'@normal(target) {output}'
 
         # if rank_only:
         #    if self.item_type == ItemType.EQUIPMENT:

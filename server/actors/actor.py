@@ -497,9 +497,9 @@ class Actor:
             case _:
                 output = output + f"{Color.NORMAL}{self.name}{Color.BACK}"
 
-        #if identifier != None:
-        #    if identifier.ai.target == self:
-        #        output = f'@normal(target) {output}'
+        if identifier != None:
+            if identifier.ai.target == self:
+                output = f'@normal(target) {output}'
                 
         output = systems.utils.add_godot_url_actors(self, identifier, output)
         # if self.status == ActorStatusType.FIGHTING:
@@ -916,7 +916,7 @@ class Actor:
                 custom_line = line_self
                 for obj in list_pretty_name_objects:
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
-                player.send_line(f"{custom_line}", msg_type=msg_type)
+                player.send_line(f"@normal{custom_line}", msg_type=msg_type)
 
                 if sound != None:
                     player.sendSound(sound)
@@ -930,7 +930,7 @@ class Actor:
                 custom_line = line_others
                 for obj in list_pretty_name_objects:
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
-                player.send_line(f"{custom_line}", msg_type=msg_type)
+                player.send_line(f"@normal{custom_line}", msg_type=msg_type)
 
     def simple_broadcast(
         self, 
