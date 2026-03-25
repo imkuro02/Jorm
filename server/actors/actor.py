@@ -497,9 +497,9 @@ class Actor:
             case _:
                 output = output + f"{Color.NORMAL}{self.name}{Color.BACK}"
 
-        if identifier != None:
-            if identifier.ai.target == self:
-                output = f'@normal(target) {output}'
+        #if identifier != None:
+        #    if identifier.ai.target == self:
+        #        output = f'@normal(target) {output}'
                 
         output = systems.utils.add_godot_url_actors(self, identifier, output)
         # if self.status == ActorStatusType.FIGHTING:
