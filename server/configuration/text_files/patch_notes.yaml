@@ -6,6 +6,7 @@ versions:
     features:
       - Temporarely removed waiting time between enemy set turn and enemy action (due to some inconsistencies)
       - Skill evaluation code for better enemy AI
+      - Using a skill without a target will use skill evaluation for setting a target (different skills evaluate differently), example; casting cure light wounds without a target will target lowest health percentage ally
 
       - The player starts at level 0, meaning they can level up a total of 15 times before reaching max level
       - Enemy Life, Hold and Ward gets 100% bonus per player in combat, the affliction itself is hidden
