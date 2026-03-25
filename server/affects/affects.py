@@ -20,6 +20,7 @@ class Affect:
         get_prediction_string_clear=False,
         dispellable=True,
         hidden = False,
+        priority = 0,
     ):
         # used for pretty_name and pretty_broadcast 
         self.id = 'affect_id-'+name
@@ -212,6 +213,11 @@ class AffectDelayedAction(Affect):
 
 class AffectStunned(Affect):
     # called at start of turn
+    def __init__(self, *args, **kwargs):
+        if 'priority' not in kwargs:
+            kwargs['priority'] = 1
+        super().__init__(*args, **kwargs)
+
     def set_turn(self):
         super().set_turn()
         self.affect_target_actor.simple_broadcast(

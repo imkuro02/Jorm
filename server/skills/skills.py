@@ -50,6 +50,9 @@ class Skill:
         if self.combat_event == None:
             self.combat_event = CombatEvent()
 
+    def evaluate_skill_for_prediction(self):
+        return 1
+
     def get_dmg_value(self, stat_type=None):
         if self.get_dmg_value_override == None:
             if "crit" not in self.script_values or stat_type == None:
@@ -475,7 +478,7 @@ class SkillDamageByFlowApplyBleed(SkillDamageByFlow):
         was_blocked = False
         damage_obj = super().use()
         bleed_damage = int(self.user.stat_manager.stats[StatType.LVL] / 2)
-        stunned_affect = affects.AffectBleed(
+        bleeding_affect = affects.AffectBleed(
             affect_source_actor=self.user,
             affect_target_actor=self.other,
             name="Bleeding",
@@ -485,7 +488,7 @@ class SkillDamageByFlowApplyBleed(SkillDamageByFlow):
             damage=bleed_damage,
             # get_prediction_string_append = 'is bleeding'
         )
-        self.other.affect_manager.set_affect_object(stunned_affect)
+        self.other.affect_manager.set_affect_object(bleeding_affect)
 
 
 class SkillBash(SkillDamageByGrit):
@@ -499,7 +502,7 @@ class SkillBash(SkillDamageByGrit):
                 description="Unable to act during combat turns",
                 turns=self.script_values["duration"][self.users_skill_level],
                 resisted_by=StatType.PHYARMOR,
-                get_prediction_string_append="are stunned!",
+                get_prediction_string_append="stunned!",
                 get_prediction_string_clear=True,
             )
             self.other.affect_manager.set_affect_object(stunned_affect)
@@ -880,6 +883,113 @@ class SkillBoostStats(SkillBoostStat):
 
 
 # XD unique skills
+class SkillConsumeCorpse(Skill):
+    def check_if_corpses_present(self):
+        items = []
+        for i in self.user.room.inventory_manager.items.values():
+            items.append(i)
+
+        for i in items:
+            if hasattr(i, 'corpse_npc_id'):
+                return i
+
+    def evaluate_skill_for_prediction(self):
+        corpse = self.check_if_corpses_present()
+        if corpse == False:
+            return 0
+        else:
+            return 2
+
+class DONTUSESkillConsumeCorpsesOnSetTurn(Skill):
+    def use(self):
+        from affects.affects import Affect
+        class AffectConsumeCorpsesOnSetTurn(Affect):
+            def __init__(self, *args, **kwargs):
+                self.percentage_healing = kwargs['percentage_healing']
+                
+                del kwargs['percentage_healing']
+                super().__init__(*args, **kwargs)
+
+                self.healing_value = self.affect_target_actor.stat_manager.stats[StatType.HPMAX] * self.percentage_healing
+
+            def wont_overheal(self):
+                #msg = f'{self.affect_target_actor.stat_manager.stats[StatType.HP]}, {self.affect_target_actor.stat_manager.stats[StatType.HPMAX]}'
+                #self.affect_target_actor.simple_broadcast(msg,msg)
+                if self.affect_target_actor.stat_manager.stats[StatType.HP] + self.healing_value >= self.affect_target_actor.stat_manager.stats[StatType.HPMAX]:
+                    return True
+                return False
+
+            def check_if_corpses_present(self):
+                items = []
+                for i in self.affect_target_actor.room.inventory_manager.items.values():
+                    items.append(i)
+
+                for i in items:
+                    if hasattr(i, 'corpse_npc_id'):
+                        return i
+                
+                return False
+            def take_damage_after_calc(self, damage):
+                if not self.wont_overheal():
+                    self.get_prediction_string_append = 'hungry!'
+                    self.get_prediction_string_clear=True
+                else:
+                    self.get_prediction_string_append=None
+                    self.get_prediction_string_clear=False
+                #self.affect_target_actor.prediction_override = 'will canibalize a corpse'
+            
+            def set_turn(self):
+
+                # check if a corpse is present, and stop if not
+                corpse = self.check_if_corpses_present()
+
+                if corpse == False:
+                    return
+
+                if self.wont_overheal():
+                    return
+               
+                # set turn to 0 to have retty name not print out duration
+                self.turns = 0
+
+                # skip eating a corpse if it would overheal you
+
+                # print message and remove corpse from room
+                msg_o = f'{self.affect_target_actor.id} consumes {corpse.id}'
+                msg_s = f'You consume {corpse.id}'
+                list_pretty_name_objects = [self.affect_target_actor, corpse]
+                self.affect_target_actor.pretty_broadcast(msg_s, msg_o, list_pretty_name_objects = list_pretty_name_objects)
+                self.affect_target_actor.room.inventory_manager.remove_item(corpse)
+
+                # calculate healing and run it
+                healing = int(self.healing_value)
+                damage_obj = Damage(
+                    damage_taker_actor=self.affect_target_actor,
+                    damage_source_action=self,
+                    #combat_event=self.combat_event,
+                    damage_source_actor=self.affect_target_actor,
+                    damage_value=healing,
+                    damage_type=DamageType.HEALING,
+                )
+                damage_obj.run()
+
+                # set turns back to 1
+                self.turns = 1
+
+                # finish current turn
+                self.affect_target_actor.finish_turn()
+
+        if self.success:
+            affect = AffectConsumeCorpsesOnSetTurn(
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Canibalizing",
+                description=f"Abruptly stop your current action to consume a corpse",
+                turns=int(self.script_values["duration"][self.users_skill_level]),
+                percentage_healing = self.script_values["bonus"][self.users_skill_level],
+                #hidden = True
+            )
+            self.other.affect_manager.set_affect_object(affect) 
 
 class SkillAreaOfEffectDamageOnFinished(Skill):
     def use(self):
@@ -1054,6 +1164,8 @@ class SkillSummonRat(SkillSummon):
 class SkillTargetItem(Skill):
     def pre_use(self):
         self.use()
+
+
 
 class SkillNecromancerRessurect(SkillTargetItem):
     def use(self):

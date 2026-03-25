@@ -4,6 +4,8 @@ versions:
     title: Enemy overhaul
     unixtime: 1761899677
     features:
+      - Temporarely removed waiting time between enemy set turn and enemy action (due to some inconsistencies)
+
       - The player starts at level 0, meaning they can level up a total of 15 times before reaching max level
       - Enemy Life, Hold and Ward gets 100% bonus per player in combat, the affliction itself is hidden
       - _dict command no longer displays explored rooms nor mesage history (its all just spam anyway)
@@ -25,6 +27,7 @@ versions:
 
       - DONE
       - Spore is now detonationg. Enemy that explodes in x turns
+      - Zombie enemy now consumes corpses if healing by consumption doesnt overheal them
   "150326":
     id: "150326"
     title: QOL

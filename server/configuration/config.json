@@ -1,5 +1,5 @@
 {
-    "SHA-256": "8283897a6fcca75067fc0c20c282f9d55b022f37c728671ee985eee5a8d7f7dc",
+    "SHA-256": "e8cd22d4befaea006b6a057b42cb5ea63f35e73e44ab69524c6ed64ef3df3c34",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -1979,7 +1979,7 @@
                 "bite": 1
             },
             "on_death_skills_use": null,
-            "on_start_skills_use": null,
+            "on_start_skills_use": "consume_corpse_on_set_turn=1",
             "loot": {
                 "zombie_skin": 20,
                 "potion_remove_armor": 100,
@@ -3777,7 +3777,7 @@
         "explode_on_finished": {
             "skill_id": "explode_on_finished",
             "name": "Detonation",
-            "description": "Applies a status effect.\nWhen the effect ends, instantly die and deal max life as pure damage to all enemies.\n",
+            "description": "Applies an affliction.\nWhen the effect ends, instantly die and deal max life as pure damage to all enemies.\n",
             "script_to_run": "AreaOfEffectDamageOnFinished",
             "target_others_is_valid": false,
             "target_item_is_valid": false,
@@ -3798,6 +3798,36 @@
                 ],
                 "levels": [
                     1
+                ]
+            }
+        },
+        "consume_corpse_on_set_turn": {
+            "skill_id": "consume_corpse_on_set_turn",
+            "name": "Canibalism",
+            "description": "Applies an affliction.\nOn start of your turn, instantly consume a corpse to heal for BONUS% of its max health.\n",
+            "script_to_run": "ConsumeCorpsesOnSetTurn",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "duration": [
+                    1
+                ],
+                "cooldown": [
+                    99
+                ],
+                "levels": [
+                    1
+                ],
+                "bonus": [
+                    0.25
                 ]
             }
         }

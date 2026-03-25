@@ -119,7 +119,7 @@ class AI:
             #
             prediction_string = prediction_string + " "
 
-        return prediction_string + f"{' '.join(aff_appends)}"
+        return prediction_string + f"{' + '.join(aff_appends)}"
 
     def get_targets(self):
         actors = self.actor.room.combat.participants.values()
@@ -364,8 +364,8 @@ class AI:
         if self.actor.room.combat.current_actor != self.actor:
             return False
 
-        if self.actor.room.combat.time_since_turn_finished <= int(10):
-            return False
+        #if self.actor.room.combat.time_since_turn_finished <= int(10):
+        #    return False
 
         return True
 
