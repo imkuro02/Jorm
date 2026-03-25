@@ -817,6 +817,11 @@ class AffectSummoner(Affect):
         self.affect_target_actor.room.join_combat(self.summoned_actor)
 
 class AffectAreaOfEffectDamageOnFinished(Affect):
+    def set_turn(self):
+        super().set_turn()
+        msg = f'Detonating in... {self.turns+1}'
+        self.affect_target_actor.simple_broadcast(msg, msg)
+
     def on_finished(self, silent = False):
         super().on_finished(silent = silent)
         if self.affect_target_actor.status == ActorStatusType.FIGHTING:
