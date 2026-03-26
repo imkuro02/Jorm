@@ -173,7 +173,7 @@ class Damage:
         if self.damage_taker_actor != None and self.damage_source_actor != None and self.dont_proc == False:
             source = self.damage_source_actor
             taker = self.damage_taker_actor
-
+            
             if type(source).__name__ == 'Player':
                 ego = float(source.settings_manager.get_value('ego'))
                 ego_damage = (self.damage_value / ego)

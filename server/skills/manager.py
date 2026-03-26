@@ -23,17 +23,10 @@ def get_skills():
 
 
 def error(user, err):
-    if type(user).__name__ == "Player":
-        # return if in combat and autobattling
-        # because then its likely that the error is caused by
-        # autobattler using wrong skill
-        # if user.settings_manager.autobattler:
-        #    if user.status == ActorStatusType.FIGHTING:
-        #        return
-        user.send_line(err)
-        user.sendSound(Audio.ERROR)
-    else:
-        systems.utils.debug_print(err)
+    print(user,err)
+    user.send_line(err)
+    #user.sendSound(Audio.ERROR)
+  
 
 
 def get_user_skill_level_as_index(user, skill_id):
@@ -46,7 +39,7 @@ def get_user_skill_level_as_index(user, skill_id):
             users_skill_level = i
     return users_skill_level
 
-
+'''
 def skill_checks(user, target, skill_id):
     skill = SKILLS[skill_id]
     skill_name = skill["name"]
@@ -138,8 +131,106 @@ def skill_checks(user, target, skill_id):
     # user.stat_manager.stats[StatType.MP] -= mp_cost
 
     return True
+'''
 
+def check_if_skill_can_be_used(skill_object):
+    #def skill_checks(user, target, skill_id):
+    user = skill_object.user
+    target = skill_object.other
+    skill_id = skill_object.skill_id
 
+    skill = SKILLS[skill_id]
+    skill_name = skill["name"]
+
+    # return if learned skill does not actually exist
+    if skill_id not in user.skill_manager.skills.keys():
+        error(user, f"{skill_name} is not learned yet")
+        return False
+
+    if skill_id in user.cooldown_manager.cooldowns:
+        error(user, f"{skill_name} is on cooldown!")
+        return False
+
+    if not skill["can_use_in_combat"]:
+        if user.status == ActorStatusType.FIGHTING:
+            error(user, f"{skill_name} cannot be used in combat")
+            return False
+
+    if not skill["can_use_out_of_combat"]:
+        if user.status != ActorStatusType.FIGHTING:
+            error(user, f"{skill_name} cannot be out of combat")
+            return False
+
+    if systems.utils.get_object_parent(target) == "Actor":
+        # cant target yourself
+        if target == user and not skill["target_self_is_valid"]:
+            error(user, f"You can't use {skill_name} on yourself")
+            return False
+
+        # cant target others
+        if target != user and not skill["target_others_is_valid"]:
+            if systems.utils.get_object_parent(target) != "Item":
+                error(user, f"You can't use {skill_name} on others")
+                return False
+
+        # if systems.utils.get_object_parent(target) != "Actor":
+        #    error(user, f'You can\'t use {skill_name} on {target.name}')
+        #    return False
+
+        
+
+        # allow using skills on dead targets
+        if user.status == ActorStatusType.FIGHTING and (
+            target.status != ActorStatusType.FIGHTING
+            and target.status != ActorStatusType.DEAD
+        ):
+            error(user, f"You are in a fight but {target.name} is not participating!")
+            return False
+
+        if (
+            user.status != ActorStatusType.FIGHTING
+            and target.status == ActorStatusType.FIGHTING
+        ):
+            error(user, f"{target.name} is in a fight you are not participating in!")
+            return False
+
+    if (
+        systems.utils.get_object_parent(target) == "Item"
+        and not skill["target_item_is_valid"]
+    ):
+        error(user, f"You can't use {skill_name} on items")
+        return False
+
+    users_skill_level = get_user_skill_level_as_index(user, skill_id)
+
+    hp_cost = 0
+    mp_cost = 0
+
+    if "hp_cost" in skill["script_values"]:
+        hp_cost = skill["script_values"]["hp_cost"][users_skill_level]
+        hp_cost = hp_cost + int(user.stat_manager.stats[StatType.LVL] * 0.5)
+        if hp_cost >= user.stat_manager.stats[StatType.HP] + 1:
+            error(
+                user,
+                f"You need atleast {hp_cost + 1} {Color.stat[StatType.HP]}{StatType.name[StatType.HP]}{Color.BACK} to use {skill_name}",
+            )
+            return False
+    # if 'mp_cost' in skill['script_values']:
+
+    # mp_cost = skill['script_values']['mp_cost'][users_skill_level]
+
+    #    mp_cost = systems.utils.calculate_skill_mp_cost(actor = user, base_value = skill['script_values']['mp_cost'][users_skill_level])
+
+    #    if mp_cost > user.stat_manager.stats[StatType.MP]:
+    #        error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
+    #        return False
+
+    user.stat_manager.stats[StatType.HP] -= hp_cost
+    # user.stat_manager.stats[StatType.MP] -= mp_cost
+
+    return True
+
+'''
 def use_skill_from_consumable(
     user: "Actor", target: "Actor", skill_id: str, skill_level: int, consumable_item, combat_event = None,
 ):
@@ -183,7 +274,8 @@ def use_skill_from_consumable(
     del _skill_obj
     return True
 
-
+'''
+'''
 def use_skill(user, target, skill_id, no_checks=False, combat_event = None):
     if skill_id not in SKILLS:
         return False
@@ -242,7 +334,7 @@ def use_skill(user, target, skill_id, no_checks=False, combat_event = None):
         
         return True
     return False
-
+'''
 def check_for_broken_skills():
     for skill in SKILLS:
         try:

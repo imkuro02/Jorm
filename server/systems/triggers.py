@@ -33,10 +33,10 @@ class TriggerManager:
         to_trigger_check.append(player.room)
 
         for i in to_trigger_check:
-            try:
-                triggered = i.trigger_manager.trigger_check(player = player, line = line)
-                if triggered:
-                    return True
-            except Exception as e:
-                systems.utils.debug_print(e)
+            #try:
+            triggered = i.trigger_manager.trigger_check(player = player, line = line)
+            if triggered:
+                return True
+            #except Exception as e:
+            #    systems.utils.debug_print(e)
         return False

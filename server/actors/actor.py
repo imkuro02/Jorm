@@ -19,7 +19,7 @@ from configuration.constants.damage_type import DamageType
 from configuration.constants.equipment_slot_type import EquipmentSlotType
 from configuration.constants.stat_type import StatType
 from items.manager import Item
-from skills.manager import use_skill
+#from skills.manager import use_skill
 from systems.dialog import Dialog
 from systems.inventory import InventoryManager
 from systems.party import PartyManager
@@ -277,12 +277,12 @@ class Actor:
 
         REFTRACKER.add_ref(self)
 
-    def add_to_combat_history(self):
+    def add_to_combat_history(self, skill_object):
         if self.status != ActorStatusType.FIGHTING:
             return False
         if self.room.combat == None:
             return False
-        self.room.combat.combat_history.add_to_combat_history(self)
+        self.room.combat.combat_history.add_to_combat_history(skill_object)
 
     def fetch_combat_history(self):
         if self.status != ActorStatusType.FIGHTING:

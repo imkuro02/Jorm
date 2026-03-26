@@ -8,7 +8,7 @@ from configuration.constants.actor_status_type import ActorStatusType
 #from configuration.constants.room_constant import RoomConstant
 from configuration.constants.stat_type import StatType
 from custom import loader
-from skills.manager import get_user_skill_level_as_index, construct_skill, check_if_skill_can_be_used#, #use_skill
+from skills.manager import get_user_skill_level_as_index, construct_skill, #use_skill
 from systems.utils import REFTRACKER
 
 
@@ -16,7 +16,9 @@ class AI:
     def __init__(self, actor):
         self.actor = actor
         # self.target = None
-        self.prediction = None
+        self.prediction_target = None
+        self.prediction_skill = None
+        self.prediction_item = None
         self.prediction_override = ""
 
         # some skills can be used without ending your turn, for example most buffs
@@ -64,7 +66,9 @@ class AI:
         pass
 
     def has_prediction(self):
-        if self.prediction == None:
+        if self.prediction_target == None:
+            return False
+        if self.prediction_skill == None and self.prediction_item == None:
             return False
         return True
 
@@ -103,7 +107,7 @@ class AI:
                     prediction_string = ""
                 else:
                     prediction_string = (
-                        f"(will use {self.prediction.pretty_name(identifier = who_checks)})"
+                        f"(will use {SKILLS[self.prediction_skill]['name']})"
                     )
 
                     # if self.prediction_target == self.actor:
@@ -116,6 +120,25 @@ class AI:
             prediction_string = prediction_string + " "
 
         return prediction_string + f"{' + '.join(aff_appends)}"
+
+    def get_targets(self):
+        actors = self.actor.room.combat.participants.values()
+        enemies = [
+            actor
+            for actor in actors
+            if actor.party_manager.get_party_id()
+            != self.actor.party_manager.get_party_id()
+            and actor.status == ActorStatusType.FIGHTING
+        ]
+
+        allies = [
+            actor
+            for actor in actors
+            if actor.party_manager.get_party_id()
+            == self.actor.party_manager.get_party_id()
+            and actor.status == ActorStatusType.FIGHTING
+        ]
+        return allies, enemies
 
     def get_skills(self, for_prediction=False, combat_only_skills=True):
         skills = []
@@ -140,35 +163,61 @@ class AI:
         return skills
 
     def clear_prediction(self):
-        self.prediction = None
+        # systems.utils.debug_print(self.actor.name, 'prediction cleared')
+        self.prediction_target = None
+        self.prediction_skill = None
+        self.prediction_item = None
 
     def use_prediction(self, no_checks=False):
-        
-        if self.prediction == None:
-            return False
+        target = self.prediction_target
 
-        if not check_if_skill_can_be_used(self.prediction):
-            return False
+        # if self.prediction_target == self.actor and self.target != None and self.target in self.actor.room.actors.values():
+        #    target = self.target
+        # else:
+        #    self.target = None
 
-        self.prediction.pre_use()
-        self.prediction.combat_event.run()
-
-        used_prediction = self.prediction
-        self.clear_prediction()
-
-        if self.can_use_skills_without_ending_turn:
-            if SKILLS[used_prediction.skill_id]["end_turn"]:
+        if self.prediction_item != None:
+            if self.prediction_item.use(self.actor, target):
+                #self.actor.add_to_combat_history()
+                self.clear_prediction()
+                # self.predict_use_best_skill()
                 self.actor.finish_turn()
-            self.predict_use_best_skill()
-        else:
-            self.actor.finish_turn()
+                return True
 
-        return True
+        if self.prediction_skill != None:
+            if use_skill(
+                self.actor, target, self.prediction_skill, no_checks=no_checks
+            ):
+                
+                #self.actor.add_to_combat_history()
 
+                used_skill = self.prediction_skill
+                self.clear_prediction()
+                # self.predict_use_best_skill()
+                if self.can_use_skills_without_ending_turn:
+                    if SKILLS[used_skill]["end_turn"]:
+                        self.actor.finish_turn()
+                    self.predict_use_best_skill()
+                else:
+                    self.actor.finish_turn()
+
+                
+                return True
+
+        # debug = f'skill {self.prediction_skill}, target {self.prediction_target}'
+        # self.actor.simple_broadcast(debug,debug)
+        return False
 
     def predict_use_best_skill(
         self, offensive_only=False, for_prediction=True, skill_override=None
     ):
+        self.prediction_target = None
+        self.prediction_skill = None
+
+
+
+        # if self.prediction_skill != None:
+        #    return
 
         if self.actor.room == None:
             return False
@@ -176,6 +225,7 @@ class AI:
         if self.actor.room.combat == None:
             return False
 
+        allies, enemies = self.get_targets()
         skills = self.get_skills(for_prediction=for_prediction, combat_only_skills=True)
 
         highest = None
@@ -196,9 +246,132 @@ class AI:
         if highest == None:
             return False
 
-        self.prediction = highest
+        self.prediction_skill = highest.skill_id
+        self.prediction_target = highest.other
         return True
-        
+        '''
+        # systems.utils.debug_print(self.actor.name,skills)
+        # try to use a skill 5 times, if it fails return false
+        # return true if you managed to use a skill
+
+        if skill_override != None:
+            skills = [skill_override]
+
+        for i in range(0, 20):
+            if skills == []:
+                break
+
+            skill_to_use = random.choice(skills)
+
+            targets = []
+
+            if offensive_only:
+                if not SKILLS[skill_to_use]["is_offensive"]:
+                    continue
+
+            if "swing" == skill_to_use and i < 5:
+                continue
+
+            if i > 15:
+                skill_to_use = "swing"
+
+            if SKILLS[skill_to_use]["is_offensive"]:
+                targets = enemies
+            else:
+                targets = allies
+
+            if targets == []:
+                continue
+
+            target = self.actor
+
+            if SKILLS[skill_to_use]["target_others_is_valid"]:
+                target = random.choice(targets)
+                for t in targets:
+                    if t == self.actor:
+                        continue
+                    if (
+                        t.stat_manager.stats[StatType.THREAT]
+                        >= target.stat_manager.stats[StatType.THREAT]
+                    ):
+                        target = t
+
+            # systems.utils.debug_print(self.actor.name, 'prediction target:', target.name)
+
+            # systems.utils.debug_print(target, skill_to_use)
+            self.prediction_target = target
+            self.prediction_skill = skill_to_use
+            # for i in self.actor.room.combat.participants.values():
+            #    i.send_line(f'{self.actor.pretty_name()} {self.get_prediction_string(i)}')
+            return True
+        return False
+        '''
+
+    """
+    def use_best_skill(self, offensive_only = False):
+        if self.actor.room.combat == None:
+            return
+
+
+        allies, enemies = self.get_targets()
+        skills = self.get_skills()
+        self.actor.send_line('use_best_skill, will use these skills ' + str(skills), msg_type = [MessageType.DEBUG])
+
+        # try to use a skill 5 times, if it fails return false
+        # return true if you managed to use a skill
+        for i in range(0,20):
+
+            if skills == []:
+                self.actor.send_line('no valid skills!!', msg_type = [MessageType.DEBUG])
+                break
+
+            skill_to_use = random.choice(skills)
+
+            targets = []
+
+            if 'swing' == skill_to_use and i<15:
+                self.actor.send_line('cant swing', msg_type = [MessageType.DEBUG])
+                continue
+
+            if i>=15:
+                skill_to_use = 'swing'
+                self.actor.send_line('will swing', msg_type = [MessageType.DEBUG])
+
+            if offensive_only:
+                if not SKILLS[skill_to_use]['is_offensive']:
+                    continue
+
+            if SKILLS[skill_to_use]['is_offensive']:
+                targets = enemies
+            else:
+                targets = allies
+
+            if targets == []:
+                self.actor.send_line('no targets', msg_type = [MessageType.DEBUG])
+                continue
+
+            #target = random.choice(targets)
+            target = random.choice(targets)
+            for t in targets:
+                if t.stat_manager.stats[StatType.THREAT] > target.stat_manager.stats[StatType.THREAT]:
+                    target = t
+
+            if use_skill(self.actor, target, skill_to_use) == True:
+                self.actor.finish_turn()
+                return True
+            else:
+                skills.remove(skill_to_use)
+                self.actor.send_line(f'Skill failed: s:{skill_to_use} t:{target.name} ts:{targets}', msg_type = [MessageType.DEBUG])
+
+            self.actor.send_line('Didnt exit skill properly', msg_type = [MessageType.DEBUG])
+            self.actor.send_line(f's:{skill_to_use} t:{target.name} ts:{targets}', msg_type = [MessageType.DEBUG])
+
+            #skills.remove(skill_to_use)
+
+        self.actor.simple_broadcast(f'You do nothing',f'{self.actor.pretty_name()} does nothing')
+        self.actor.finish_turn()
+        return False
+    """
 
     def tick(self):
         if self.actor.factory.ticks_passed <= 3:
@@ -244,14 +417,12 @@ class PlayerAI(AI):
 
     def tick(self):
         # early return if not in combat
-        #if not super().tick():
-        #    return
+        if not super().tick():
+            return
 
-        
         if self.has_prediction():
-            print(self.prediction)
             self.use_prediction()
-        #    self.clear_prediction()
+            self.clear_prediction()
 
         return
 

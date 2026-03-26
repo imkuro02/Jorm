@@ -3,7 +3,7 @@ import uuid
 from configuration.config import SKILLS
 from configuration.constants.item_type import ItemType
 from items.misc import Item
-from skills.manager import get_skills, use_skill_from_consumable
+from skills.manager import get_skills, construct_skill #use_skill_from_consumable, 
 from systems.utils import get_object_parent
 from items.manager import load_item
 
@@ -85,9 +85,14 @@ class Consumable(Item):
         
         combat_event = CombatEvent()
         for skill in self.skills.values():
-            use_skill_from_consumable(
-                user = user, target = user, skill_id = skill['skill_id'], skill_level = skill['skill_lv'], consumable_item = self, combat_event = combat_event
-            )
+            skill_obj = construct_skill(skill['skill_id'])(skill_id = skill['skill_id'], user = user)
+            skill_obj.users_skill_level = skill['skill_lv']
+            skill_obj.name = self.name
+            skill_obj.other = user
+            skill_obj.no_cooldown = True
+            skill_obj.silent_use = True
+            skill_obj.combat_event = combat_event
+            skill_obj.use()
         combat_event.run()
 
         #user.inventory_manager.remove_item(self, stack=1)

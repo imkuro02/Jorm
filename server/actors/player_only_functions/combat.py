@@ -8,7 +8,7 @@ from actors.player_only_functions.checks import (
 )
 from configuration.config import SKILLS
 
-from skills.manager import get_skills
+from skills.manager import get_skills, construct_skill
 
 from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.audio import Audio
@@ -44,6 +44,7 @@ def command_fight(self, line):
 
 
 @check_alive
+@check_your_turn
 def command_pass_turn(self, line):
     if self.room.combat == None:
         self.finish_turn(force_cooldown=True)
@@ -315,6 +316,7 @@ def use2(self, line, silent = False):
 """
 
 @check_alive
+@check_your_turn
 def use(self, line, silent=False):
     
     line = line.lower()
@@ -440,11 +442,14 @@ def use(self, line, silent=False):
     self.ai.clear_prediction()
 
     if _action.name in skill_name_to_id:
-        self.ai.prediction_skill = skill_name_to_id[_action.name]
-    #else:
-    #    self.ai.prediction_item = _action
+        self.ai.prediction = construct_skill(skill_name_to_id[_action.name])(skill_id = skill_name_to_id[_action.name], user = self)
+        self.ai.prediction.other = _target
+        self.ai.prediction.evaluate()
 
-    self.ai.prediction_target = _target
+    if self.status == ActorStatusType.NORMAL:
+        self.ai.use_prediction()
+        self.ai.clear_prediction()
+        return True
 
     if self.room.combat == None:
         self.ai.use_prediction()

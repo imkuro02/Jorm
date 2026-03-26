@@ -384,6 +384,7 @@ class Room:
 
         if self.combat == None:
             return
+            
         self.combat.tick()
 
     def join_combat(self, participant):

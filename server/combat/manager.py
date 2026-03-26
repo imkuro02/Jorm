@@ -13,13 +13,13 @@ from systems.utils import REFTRACKER, unload
 from copy import deepcopy
 
 class CombatHistoryPacket:
-    def __init__(self, actor):
+    def __init__(self, skill_object):
         REFTRACKER.add_ref(self)
-        self.actor_id =     actor.id
-        self.combat =           actor.room.combat
-        self.skill_id =        actor.ai.prediction_skill
-        self.item_id =         actor.ai.prediction_item
-        self.target_id =       actor.ai.prediction_target.id
+        actor = skill_object.user
+        self.actor_id =        actor.id
+        self.combat =          actor.room.combat
+        self.skill_id =        skill_object.skill_id
+        self.target_id =       skill_object.other
         self.round =        deepcopy(int(self.combat.round))
 
 class CombatHistory:
@@ -27,9 +27,9 @@ class CombatHistory:
         self.combat = combat
         self.history = []
 
-    def add_to_combat_history(self, actor):
+    def add_to_combat_history(self, skill_object):
         #print('appended')
-        self.history.append(CombatHistoryPacket(actor))
+        self.history.append(CombatHistoryPacket(skill_object))
         #msg = str(self.history)
         #self.combat.current_actor.simple_broadcast(msg,msg)
 
