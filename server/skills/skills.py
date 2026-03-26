@@ -1261,7 +1261,7 @@ class SkillDispel(Skill):
                     damage_value=int(self.user.stat_manager.stats[StatType.MIND]),
                     damage_type=DamageType.MAGICAL,
                 )
-            self.combat_event.run()
+            #self.combat_event.run()
             return damage_obj
             
 
