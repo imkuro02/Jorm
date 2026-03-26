@@ -907,6 +907,8 @@ class Actor:
             else:
                 players = self.party_manager.party.participants.values()
 
+        # delete duplicate entires (for example skill thats cast on yourself)
+        list_pretty_name_objects = list(set(list_pretty_name_objects))
 
         for player in players:
             if player == self:
@@ -916,7 +918,7 @@ class Actor:
                 custom_line = line_self
                 for obj in list_pretty_name_objects:
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
-                player.send_line(f"@normal{custom_line}", msg_type=msg_type)
+                player.send_line(f"{custom_line}", msg_type=msg_type)
 
                 if sound != None:
                     player.sendSound(sound)
@@ -930,7 +932,7 @@ class Actor:
                 custom_line = line_others
                 for obj in list_pretty_name_objects:
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
-                player.send_line(f"@normal{custom_line}", msg_type=msg_type)
+                player.send_line(f"{custom_line}", msg_type=msg_type)
 
     def simple_broadcast(
         self, 

@@ -202,9 +202,9 @@ class Skill:
             
             _line_to_send = _line_to_send.replace("#USER#", self.user.id)
             _line_to_send = _line_to_send.replace("#OTHER#", self.other.id)
-            _line_to_send = _line_to_send.replace("#SKILL#", self.pretty_name(receiver))
+            _line_to_send = _line_to_send.replace("#SKILL#", self.id)
 
-            list_pretty_name_objects = [self.user, self.other]
+            list_pretty_name_objects = [self, self.user, self.other]
             receiver.pretty_broadcast(
                 line_self = _line_to_send,
                 line_others = None,
