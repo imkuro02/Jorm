@@ -756,6 +756,8 @@ class Actor:
         pass
 
     def die(self, unload=True):
+            
+
         if self.room == None:
             systems.utils.debug_print(
                 self.id,
@@ -767,10 +769,10 @@ class Actor:
         self.affect_manager.unload_all_affects(silent=True, forced=False)
         self.cooldown_manager.unload_all_cooldowns()
 
-        
+        #self.ai.die()
         self.status = ActorStatusType.DEAD
-
-        self.ai.die()
+        
+        
 
 
         sound = Audio.ENEMY_DEATH

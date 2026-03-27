@@ -170,7 +170,7 @@ def command_practice(self, line):
                 self.inventory_equip(item, forced=True)
 
         output = ""
-        output += f"*All skills go up in cost by 1 PP, except the skill you practice.\n"
+        #output += f"*All skills go up in cost by 1 PP, except the skill you practice.\n"
         output += f"You are Level {Color.IMPORTANT}{self.stat_manager.stats[StatType.LVL]}{Color.NORMAL}.\n"
         output += f"You have {Color.IMPORTANT}{self.stat_manager.stats[StatType.PP]}{Color.NORMAL} practice points left.\n"
 

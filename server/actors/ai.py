@@ -38,7 +38,7 @@ class AI:
                 self.use_prediction(no_checks=True)
                 self.actor.skill_manager.unlearn(skill_id=skill, amount=lvl)
                 self.clear_prediction()
-
+                return
         
         
         self.predict_use_best_skill()
@@ -50,7 +50,9 @@ class AI:
         # debug = f'{self.actor.name}, {self.prediction_skill}, {self.prediction_target}'
         # self.actor.simple_broadcast(debug,debug)
 
+    # this function is botched
     def die(self):
+        '''
         if self.actor.on_death_skills_use != None:
             skill, lvl = self.actor.on_death_skills_use.split("=")
             skill = str(skill).strip("")
@@ -61,6 +63,8 @@ class AI:
             self.actor.skill_manager.unlearn(skill_id=skill, amount=lvl)
             self.clear_prediction()
             
+        pass
+        '''
         pass
 
     def has_prediction(self):
@@ -147,7 +151,7 @@ class AI:
         if self.prediction == None:
             return False
 
-        if not check_if_skill_can_be_used(self.prediction):
+        if no_checks == False and not check_if_skill_can_be_used(self.prediction):
             return False
 
         self.prediction.pre_use()
@@ -183,17 +187,22 @@ class AI:
         if skill_override != None:
             skills = [skill_override]
 
+        print(skills, 'override skills?')
         for i in skills:
             skill_obj = construct_skill(i)(skill_id = i, user = self.actor)
             systems.utils.debug_print(self.actor.name, skill_obj.id, skill_obj.evaluation)
-            if skill_obj.evaluation <= 0:
+
+            if skill_override == None and skill_obj.evaluation <= 0:
+                print('skipping', skill_obj.pretty_name())
                 continue
+
             if highest == None:
                 highest = skill_obj
             if skill_obj.evaluation > highest.evaluation + random.randint(0,1):
                 highest = skill_obj
 
         if highest == None:
+            print('no highest skill', skill_override)
             return False
 
         self.prediction = highest
