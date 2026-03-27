@@ -216,6 +216,9 @@ class Skill:
         pass
         #self.user.send_line('delayed use stopped')
 
+    def after_use(self):
+        pass
+
     def use(self):
         self.user.add_to_combat_history(self)
 
@@ -654,8 +657,10 @@ class SkillFinisher(SkillDamageByGritFlow):
 class SkillDamageByFlowApplyBleed(SkillDamageByFlow):
     def use(self):
         # super().use(dmg_stat_scale = StatType.FLOW, dmg_type = DamageType.PHYSICAL)
-        was_blocked = False
         damage_obj = super().use()
+        return damage_obj
+
+    def after_use(self):
         bleed_damage = int(self.user.stat_manager.stats[StatType.LVL] / 2)
         bleeding_affect = affects.AffectBleed(
             affect_source_actor=self.user,
@@ -672,24 +677,26 @@ class SkillDamageByFlowApplyBleed(SkillDamageByFlow):
 
 class SkillBash(SkillDamageByGrit):
     def use(self):
-        if self.success:
-            damage_obj = super().use()
-            stunned_affect = affects.AffectStunned(
-                affect_source_actor=self.user,
-                affect_target_actor=self.other,
-                name="Stunned",
-                description="Unable to act during combat turns",
-                turns=self.script_values["duration"][self.users_skill_level],
-                resisted_by=StatType.PHYARMOR,
-                get_prediction_string_append="stunned!",
-                get_prediction_string_clear=True,
-            )
-            self.other.affect_manager.set_affect_object(stunned_affect)
+        damage_obj = super().use()
+      
+    def after_use(self):
+        stunned_affect = affects.AffectStunned(
+            affect_source_actor=self.user,
+            affect_target_actor=self.other,
+            name="Stunned",
+            description="Unable to act during combat turns",
+            turns=self.script_values["duration"][self.users_skill_level],
+            resisted_by=StatType.PHYARMOR,
+            get_prediction_string_append="stunned!",
+            get_prediction_string_clear=True,
+        )
+        self.other.affect_manager.set_affect_object(stunned_affect)
 
 
 class SkillCleave(SkillDamage):
     
     def use(self):
+        '''
         class CustomAffect(affects.Affect):
             def dealt_damage(self, damage_obj):
                 #print(damage_obj.damage_taker_actor.stat_manager.stats[StatType.HP], damage_obj.damage_taker_actor.status)
@@ -706,13 +713,26 @@ class SkillCleave(SkillDamage):
                           name = 'Cleaving', description = 'Get a free turn on kill with cleave', turns = 0, resisted_by= None, dispellable = False)
 
         #print('should be applied innit?')
-        self.user.affect_manager.set_affect_object(aff)
-
+        #self.user.affect_manager.set_affect_object(aff)
+        '''
 
         damage_obj = super().use(
             dmg_stat_scale=StatType.GRIT, dmg_type=DamageType.PHYSICAL
         )
         
+
+    def after_use(self):
+        if self.other.stat_manager.stats[StatType.HP] <= 0:
+            self.user.send_line('dead enemy')
+            self.user.room.combat.order.insert(
+                0, self.user
+            )
+            self.user.room.combat.current_actor = (
+                self.user
+            )
+            del self.user.cooldown_manager.cooldowns['cleave']
+        else:
+            self.user.send_line('alive enemy')
 
             
 class SkillBite(SkillDamageByGritFlow):
@@ -755,7 +775,8 @@ class SkillFireball(SkillDamage):
         return _dmg_obj
 
     def use(self):
-        return super().use(dmg_stat_scale=StatType.MIND, dmg_type=DamageType.MAGICAL)
+        _dmg_obj = super().use(dmg_stat_scale=StatType.MIND, dmg_type=DamageType.MAGICAL)
+        return _dmg_obj
 
 # XD skills from consumables
 
@@ -934,7 +955,7 @@ class SkillMendArmor(Skill):
             damage_to_stat=StatType.PHYARMOR,
         )
 
-        self.combat_event.run()
+        #self.combat_event.run()
         return damage_obj            
 
 class SkillDisorient(Skill):

@@ -201,7 +201,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "bite": 1
+                "bite": 1,
+                "consume_corpse": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,

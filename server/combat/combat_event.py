@@ -178,7 +178,7 @@ class CombatEvent:
                 #    continue
 
                 actor.stat_manager.hp_mp_clamp_update()
-
+        self.popped = []
 
     def run(self):
 

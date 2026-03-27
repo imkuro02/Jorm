@@ -1,6 +1,17 @@
 versions:
   "230326":
     id: "230326"
+    title: Cleanup
+    unixtime: 1761899677
+    features:
+      - Damage event now unable to accidentally double print damage
+      - Skills now apply afflictions AFTER calculating damage
+      - Skills are capable of applying secondary damage AFTER being used 
+      - Enemy on death skills have been temporarely disabled
+      - Cleave uses the new system and no longer adds a "cleaving" affliction for death detection
+      - Rats now have canibalize in their skillset
+  "230326":
+    id: "230326"
     title: Enemy overhaul
     unixtime: 1761899677
     features:

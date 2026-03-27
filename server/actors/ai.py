@@ -156,6 +156,14 @@ class AI:
 
         self.prediction.pre_use()
         self.prediction.combat_event.run()
+        self.prediction.combat_event.run()
+        self.prediction.combat_event.run()
+        self.prediction.after_use()
+        self.prediction.combat_event.run()
+        self.prediction.combat_event.run()
+        self.prediction.combat_event.run()
+        
+
 
         used_prediction = self.prediction
         self.clear_prediction()
@@ -187,13 +195,11 @@ class AI:
         if skill_override != None:
             skills = [skill_override]
 
-        print(skills, 'override skills?')
         for i in skills:
             skill_obj = construct_skill(i)(skill_id = i, user = self.actor)
-            systems.utils.debug_print(self.actor.name, skill_obj.id, skill_obj.evaluation)
+            #systems.utils.debug_print(self.actor.name, skill_obj.id, skill_obj.evaluation)
 
             if skill_override == None and skill_obj.evaluation <= 0:
-                print('skipping', skill_obj.pretty_name())
                 continue
 
             if highest == None:
@@ -202,7 +208,6 @@ class AI:
                 highest = skill_obj
 
         if highest == None:
-            print('no highest skill', skill_override)
             return False
 
         self.prediction = highest

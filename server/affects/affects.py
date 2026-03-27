@@ -194,6 +194,8 @@ class AffectDelayedAction(Affect):
             # run delay use got cancelled on all cancelled skills
             for i in skills_to_cancel:
                 i.delay_use_got_cancelled()
+                i.combat_event.run()
+
             
         # return the damage object for some reason    
         return damage_obj
