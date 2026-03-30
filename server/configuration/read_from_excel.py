@@ -27,7 +27,7 @@ def read_from_ods_file():
     #SHEET["use_perspectives"] = read_ods(file_path, "use_perspectives")
     SHEET["items_consumable"] = read_ods(file_path, "items_consumable")
     SHEET["skill_script_values"] = pd.read_excel(
-        file_path, sheet_name="skill_script_values"
+        file_path, sheet_name="skill_script_values_NEW"
     ).to_dict(orient="dict")
     SHEET["skills"] = read_ods(file_path, "skills")
     SHEET["items_equipment"] = read_ods(file_path, "items_equipment")
@@ -79,7 +79,59 @@ def configure_equipment_reforges(SHEET):
     systems.utils.debug_print(end - start, "EQUIPMENT_REFORGES")
     return EQUIPMENT_REFORGES
 
+def configure_skill_script_values(SHEET):
+    start = time.time()
+    SKILL_SCRIPT_VALUES = {}
+    for row in SHEET["skill_script_values"]:
+        x = SHEET["skill_script_values"]
+        for index in range(0, len(x[row])):
+            d_vals = {
+                x["value_name"][index]: [
+                    x["min"][index],
+                    x["max"][index],
+                    x["bonus"][index],
+                ]
+            }
 
+            tmp = d_vals[x["value_name"][index]]
+            d_vals = {x["value_name"][index]: []}
+            # convert values that are supposed to be displayed as % to float
+            # also remove any "NaN" values
+            for i in tmp:
+                if type(i).__name__ == "float":
+                    if isnan(i):
+                        continue
+                i = str(i)
+                if "," in i:
+                    i = float(i.replace(",", "."))
+                else:
+                    i = float(i)
+
+                if isnan(i):
+                    continue
+                #if x["value_name"][index] in ["crit", "bonus", "bounce_bonus"]:
+                #    i = float(i)
+                #else:
+                #    i = int(i)
+
+                d_vals[x["value_name"][index]].append(i)
+
+            if x["skill_id"][index] in SKILL_SCRIPT_VALUES:
+                # concate the previous dict with new a new value
+                SKILL_SCRIPT_VALUES[x["skill_id"][index]] = (
+                    SKILL_SCRIPT_VALUES[x["skill_id"][index]] | d_vals
+                )
+            else:
+                # create a fresh dict
+                SKILL_SCRIPT_VALUES[x["skill_id"][index]] = {
+                    x["value_name"][index]: d_vals
+                }
+
+    end = time.time()
+    systems.utils.debug_print(end - start, "SKILL_SCRIPT_VALUES")
+    return SKILL_SCRIPT_VALUES
+
+'''
 def configure_skill_script_values(SHEET):
     start = time.time()
     SKILL_SCRIPT_VALUES = {}
@@ -138,6 +190,7 @@ def configure_skill_script_values(SHEET):
     end = time.time()
     systems.utils.debug_print(end - start, "SKILL_SCRIPT_VALUES")
     return SKILL_SCRIPT_VALUES
+'''
 
 def configure_SKILLS(SHEET, SKILL_SCRIPT_VALUES):
     start = time.time()
@@ -384,6 +437,7 @@ def configure_ITEMS2(SHEET, USE_PERSPECTIVES):
                     "soul": int(x["soul"][index]),
                     "inv_slots": int(x["inv_slots"][index]),
                 },
+                '''
                 "requirements": {
                     "lvl": int(x["lvl"][index]),
                     "hp_max": int(x["rhp_max"][index]),
@@ -396,6 +450,20 @@ def configure_ITEMS2(SHEET, USE_PERSPECTIVES):
                     "soul": int(x["rsoul"][index]),
                     "inv_slots": 0,
                 },
+                '''
+                "requirements": {
+                    "lvl": int(x["lvl"][index]),
+                    "hp_max": int(x["rhp_max"][index]),
+                    #'mp_max':   int(x['rmp_max'][index]),
+                    "phy_armor_max": int(x["rphy_armor"][index] / 10),
+                    "mag_armor_max": int(x["rmag_armor"][index] / 10),
+                    "grit": int(x["rgrit"][index]),
+                    "flow": int(x["rflow"][index]),
+                    "mind": int(x["rmind"][index]),
+                    "soul": int(x["rsoul"][index]),
+                    "inv_slots": 0,
+                },
+                
                 "drop_tags": str(x["drop_tags"][index]).split(","),
                 "drop_from_random": int(x["drop_from_random"][index]),
                 "drop_chance_base": int(x["drop_chance_base"][index]),

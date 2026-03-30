@@ -166,16 +166,17 @@ class AffectDelayedAction(Affect):
             dispellable=False,
         )
         self.skills_to_use_objects = skills_to_use_objects
-        self.get_prediction_string_append = f"will {self.skills_to_use_objects[0].name} in {self.turns + 1} turn{'s' if self.turns > 1 else ''}"
+        self.get_prediction_string_append = f"will {self.skills_to_use_objects[0].pretty_name()} in {self.turns + 1} turn{'s' if self.turns > 1 else ''}"
         self.get_prediction_string_clear = True
+        self.name = f'Charging {self.skills_to_use_objects[0].pretty_name()}'
 
     def set_turn(self):
         super().set_turn()
-        self.get_prediction_string_append = f"will {self.skills_to_use_objects[0].name} in {self.turns + 1} turn{'s' if self.turns > 1 else ''}"
+        self.get_prediction_string_append = f"will {self.skills_to_use_objects[0].pretty_name()} in {self.turns + 1} turn{'s' if self.turns > 1 else ''}"
         self.get_prediction_string_clear = True
         self.affect_target_actor.simple_broadcast(
-            f"You are Charging {self.skills_to_use_objects[0].name}",
-            f"{self.affect_target_actor.pretty_name()} is Charging {self.skills_to_use_objects[0].name}",
+            f"You are Charging {self.skills_to_use_objects[0].pretty_name()}",
+            f"{self.affect_target_actor.pretty_name()} is Charging {self.skills_to_use_objects[0].pretty_name()}",
         )
         self.affect_target_actor.finish_turn()
 
@@ -314,11 +315,11 @@ class AffectNightmare(Affect):
             )
             
             # not tried yet
-            damage_obj.damage_taker_actor.ai.predict_use_best_skill()
+            #damage_obj.damage_taker_actor.ai.predict_use_best_skill()
             
             
             # damage_obj.damage_taker_actor.room.combat.current_actor = damage_obj.damage_taker_actor
-            self.on_finished()
+            #self.on_finished()
             # damage_obj.damage_taker_actor.set_turn()
         return damage_obj
 

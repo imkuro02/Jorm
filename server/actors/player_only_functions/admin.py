@@ -320,7 +320,7 @@ def command_bonus(self, line):
         return
 
     item_name, _type, key, val = line.split(",")
-    item = self.get_item(item_name)
+    item = self.get_item(item_name)[0]
 
     if item == None:
         self.send_line("Bonus what? (cant find item)")

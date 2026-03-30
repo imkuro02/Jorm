@@ -1,5 +1,5 @@
 {
-    "SHA-256": "57f4d0edb37604805188813b7c69b56e803c65a68caf6e45d7041bc60760cdb7",
+    "SHA-256": "551f534188c939493eec48566550270af26d7fb3b3638d7900f1a0a26458a4fe",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -201,8 +201,7 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "bite": 1,
-                "consume_corpse": 1
+                "bite": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -2399,25 +2398,20 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "damage": [
-                    6,
-                    8,
-                    10
+                "levels": [
+                    1.0,
+                    2.0,
+                    0.0
                 ],
-                "crit": [
-                    0.6,
-                    0.8,
-                    1.0
+                "damage": [
+                    6.0,
+                    99.0,
+                    2.0
                 ],
                 "cooldown": [
-                    1,
-                    1,
-                    1
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
@@ -2438,16 +2432,24 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
-                ],
-                "cooldown": [
-                    3
-                ],
-                "bonus": [
-                    0.5
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "duration": [
-                    0
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "cooldown": [
+                    3.0,
+                    3.0,
+                    0.0
+                ],
+                "bonus": [
+                    50.0,
+                    1.0,
+                    25.0
                 ]
             }
         },
@@ -2467,30 +2469,25 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "damage": [
-                    8,
-                    8,
-                    9
-                ],
-                "crit": [
-                    0.6,
-                    0.62,
-                    0.64
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "duration": [
-                    1,
-                    1,
-                    1
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "damage": [
+                    8.0,
+                    99.0,
+                    0.75
                 ],
                 "cooldown": [
-                    4,
-                    4,
-                    4
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                    4.0,
+                    4.0,
+                    4.0
                 ]
             }
         },
@@ -2510,35 +2507,25 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
+                ],
                 "damage": [
-                    2,
-                    2,
-                    2
-                ],
-                "crit": [
-                    0.5,
-                    0.6,
-                    0.7
-                ],
-                "REMOV_mp_cost": [
-                    5,
-                    10,
-                    15
-                ],
-                "aoe": [
-                    0,
-                    1,
-                    2
+                    4.0,
+                    99.0,
+                    2.0
                 ],
                 "cooldown": [
-                    1,
-                    1,
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                "aoe": [
+                    0.0,
+                    1.0,
+                    0.25
                 ]
             }
         },
@@ -2558,30 +2545,20 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
+                ],
                 "damage": [
-                    10,
-                    10,
-                    10
-                ],
-                "crit": [
-                    0.6,
-                    0.75,
-                    1.0
-                ],
-                "REMOV_mp_cost": [
-                    1,
-                    1,
-                    1
+                    10.0,
+                    99.0,
+                    2.5
                 ],
                 "cooldown": [
-                    1,
-                    1,
-                    1
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
@@ -2601,30 +2578,25 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "damage": [
-                    7,
-                    8,
-                    9
-                ],
-                "crit": [
-                    0.65,
-                    0.7,
-                    0.75
-                ],
-                "cooldown": [
-                    1,
-                    1,
-                    1
-                ],
                 "levels": [
-                    1,
-                    2,
-                    3
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "duration": [
-                    3,
-                    3,
-                    3
+                    3.0,
+                    3.0,
+                    3.0
+                ],
+                "damage": [
+                    5.0,
+                    99.0,
+                    2.5
+                ],
+                "cooldown": [
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
@@ -2644,30 +2616,25 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "crit": [
-                    0.6,
-                    0.7,
-                    0.8
-                ],
                 "levels": [
-                    1,
-                    2,
-                    3
-                ],
-                "cooldown": [
-                    3,
-                    3,
-                    3
-                ],
-                "aoe": [
-                    1,
-                    1,
-                    1
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "damage": [
-                    5,
-                    10,
-                    12
+                    5.0,
+                    99.0,
+                    3.0
+                ],
+                "cooldown": [
+                    2.0,
+                    3.0,
+                    -0.5
+                ],
+                "aoe": [
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         },
@@ -2687,63 +2654,20 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "damage": [
-                    10,
-                    12,
-                    15
-                ],
-                "crit": [
-                    0.6,
-                    0.6,
-                    0.6
-                ],
                 "levels": [
-                    1,
-                    2,
-                    3
+                    1.0,
+                    3.0,
+                    0.0
+                ],
+                "damage": [
+                    10.0,
+                    99.0,
+                    2.5
                 ],
                 "cooldown": [
-                    6,
-                    6,
-                    6
-                ]
-            }
-        },
-        "double_whack": {
-            "skill_id": "double_whack",
-            "name": "Double Whack",
-            "description": "Deal physical damage based on your Flow.\nThen do it again.\n",
-            "script_to_run": "DoubleWhack",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": false,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": false,
-            "can_be_practiced": true,
-            "practice_cost": 1,
-            "level_req": 4.0,
-            "is_offensive": 1.0,
-            "end_turn": true,
-            "script_values": {
-                "damage": [
-                    3,
-                    4,
-                    5
-                ],
-                "crit": [
-                    0.5,
-                    0.6,
-                    0.7
-                ],
-                "cooldown": [
-                    1,
-                    1,
-                    1
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                    6.0,
+                    6.0,
+                    0.0
                 ]
             }
         },
@@ -2763,30 +2687,25 @@
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
-                "bonus": [
-                    1.5,
-                    1.45,
-                    1.4
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "duration": [
-                    2,
-                    2,
-                    2
-                ],
-                "REMOV_mp_cost": [
-                    30,
-                    30,
-                    30
+                    2.0,
+                    2.0,
+                    2.0
                 ],
                 "cooldown": [
-                    4,
-                    4,
-                    4
+                    4.0,
+                    4.0,
+                    4.0
                 ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                "bonus": [
+                    170.0,
+                    1.0,
+                    -10.0
                 ]
             }
         },
@@ -2806,30 +2725,20 @@
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
+                ],
                 "damage": [
-                    10,
-                    12,
-                    14
-                ],
-                "crit": [
-                    2.0,
-                    2.0,
-                    2.0
-                ],
-                "REMOV_mp_cost": [
-                    10,
-                    12,
-                    14
+                    10.0,
+                    99.0,
+                    10.0
                 ],
                 "cooldown": [
-                    6,
-                    6,
-                    6
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                    6.0,
+                    6.0,
+                    6.0
                 ]
             }
         },
@@ -2849,30 +2758,30 @@
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
-                "bonus": [
-                    0.5,
-                    0.5,
-                    0.5
-                ],
-                "duration": [
-                    3,
-                    4,
-                    5
-                ],
-                "cooldown": [
-                    5,
-                    5,
-                    5
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "hp_cost": [
-                    10,
-                    15,
-                    20
+                    10.0,
+                    99.0,
+                    5.0
                 ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                "duration": [
+                    3.0,
+                    99.0,
+                    1.0
+                ],
+                "cooldown": [
+                    5.0,
+                    5.0,
+                    0.0
+                ],
+                "bonus": [
+                    30.0,
+                    100.0,
+                    10.0
                 ]
             }
         },
@@ -2892,25 +2801,25 @@
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
-                "bonus": [
-                    0.5,
-                    0.5,
-                    0.5
-                ],
-                "cooldown": [
-                    6,
-                    6,
-                    6
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "duration": [
-                    2,
-                    3,
-                    4
+                    2.0,
+                    99.0,
+                    1.0
                 ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                "cooldown": [
+                    6.0,
+                    6.0,
+                    6.0
+                ],
+                "bonus": [
+                    50.0,
+                    50.0,
+                    0.0
                 ]
             }
         },
@@ -2931,22 +2840,29 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "duration": [
-                    10
-                ],
-                "bonus": [
-                    0.25
+                    10.0,
+                    10.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
-                "REMOV_mp_cost": [
-                    50
+                "bonus": [
+                    25.0,
+                    25.0,
+                    0.0
                 ],
                 "aoe": [
-                    4
+                    4.0,
+                    4.0,
+                    0.0
                 ]
             }
         },
@@ -2967,16 +2883,24 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "duration": [
-                    10
-                ],
-                "bonus": [
-                    0.3
+                    10.0,
+                    10.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "bonus": [
+                    35.0,
+                    35.0,
+                    0.0
                 ]
             }
         },
@@ -2997,16 +2921,24 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "duration": [
-                    10
-                ],
-                "bonus": [
-                    0.3
+                    10.0,
+                    10.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "bonus": [
+                    35.0,
+                    35.0,
+                    0.0
                 ]
             }
         },
@@ -3027,16 +2959,24 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "duration": [
-                    10
-                ],
-                "bonus": [
-                    0.3
+                    10.0,
+                    10.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "bonus": [
+                    35.0,
+                    35.0,
+                    0.0
                 ]
             }
         },
@@ -3057,16 +2997,24 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "duration": [
-                    10
-                ],
-                "bonus": [
-                    0.3
+                    10.0,
+                    10.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "bonus": [
+                    35.0,
+                    35.0,
+                    0.0
                 ]
             }
         },
@@ -3087,10 +3035,14 @@
             "end_turn": true,
             "script_values": {
                 "level ": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
@@ -3111,24 +3063,24 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1,
-                    2,
-                    3
-                ],
-                "bonus": [
-                    2.0,
+                    1.0,
                     3.0,
-                    4.0
+                    0.0
                 ],
                 "duration": [
-                    10,
-                    10,
-                    10
+                    10.0,
+                    10.0,
+                    10.0
                 ],
                 "cooldown": [
-                    1,
-                    1,
-                    1
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "bonus": [
+                    200.0,
+                    300.0,
+                    20.0
                 ]
             }
         },
@@ -3148,35 +3100,25 @@
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
+                ],
                 "damage": [
-                    4,
-                    6,
-                    8
-                ],
-                "crit": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "REMOV_mp_cost": [
-                    20,
-                    22,
-                    24
+                    4.0,
+                    99.0,
+                    4.0
                 ],
                 "cooldown": [
-                    6,
-                    6,
-                    6
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                    6.0,
+                    6.0,
+                    0.0
                 ],
                 "aoe": [
-                    2,
-                    2,
-                    2
+                    2.0,
+                    2.0,
+                    0.0
                 ]
             }
         },
@@ -3196,40 +3138,30 @@
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
+                ],
                 "damage": [
-                    4,
-                    6,
-                    8
-                ],
-                "crit": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "REMOV_mp_cost": [
-                    20,
-                    22,
-                    24
+                    4.0,
+                    99.0,
+                    2.0
                 ],
                 "cooldown": [
-                    6,
-                    6,
-                    6
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
-                ],
-                "bounce_amount": [
-                    4,
-                    4,
-                    4
+                    6.0,
+                    6.0,
+                    0.0
                 ],
                 "bounce_bonus": [
-                    -0.2,
-                    -0.18,
-                    -0.16
+                    -20.0,
+                    -10.0,
+                    2.0
+                ],
+                "bounce_amount": [
+                    4.0,
+                    4.0,
+                    0.0
                 ]
             }
         },
@@ -3250,19 +3182,19 @@
             "end_turn": false,
             "script_values": {
                 "levels": [
-                    1,
-                    2,
-                    3
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "duration": [
-                    1,
-                    1,
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    10,
-                    9,
-                    8
+                    10.0,
+                    6.0,
+                    -2.0
                 ]
             }
         },
@@ -3282,17 +3214,20 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "damage": [
-                    1
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
                 ],
-                "crit": [
-                    0.65
+                "damage": [
+                    5.0,
+                    99.0,
+                    1.5
                 ],
                 "cooldown": [
-                    1
-                ],
-                "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
@@ -3312,25 +3247,20 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "damage": [
-                    1,
-                    3,
-                    5
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
                 ],
-                "crit": [
-                    0.65,
-                    0.7,
-                    0.75
+                "damage": [
+                    1.0,
+                    99.0,
+                    5.0
                 ],
                 "cooldown": [
-                    1,
-                    1,
-                    1
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         },
@@ -3351,13 +3281,19 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
-                ],
-                "cooldown": [
-                    2
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "duration": [
-                    5
+                    5.0,
+                    5.0,
+                    0.0
+                ],
+                "cooldown": [
+                    2.0,
+                    2.0,
+                    0.0
                 ]
             }
         },
@@ -3378,16 +3314,19 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "duration": [
-                    1
-                ],
-                "REMOV_mp_cost": [
-                    100
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    2.0,
+                    2.0,
+                    0.0
                 ]
             }
         },
@@ -3407,20 +3346,20 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "cooldown": [
-                    8,
-                    6,
-                    4
-                ],
                 "levels": [
-                    1,
-                    2,
-                    3
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "duration": [
-                    2,
-                    2,
-                    2
+                    2.0,
+                    2.0,
+                    0.0
+                ],
+                "cooldown": [
+                    8.0,
+                    4.0,
+                    -2.0
                 ]
             }
         },
@@ -3440,40 +3379,30 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
+                ],
                 "damage": [
-                    1,
-                    1,
-                    1
-                ],
-                "crit": [
                     1.0,
                     1.0,
-                    1.0
-                ],
-                "REMOV_mp_cost": [
-                    20,
-                    22,
-                    24
+                    0.0
                 ],
                 "cooldown": [
-                    6,
-                    6,
-                    6
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
-                ],
-                "bounce_amount": [
-                    1,
-                    2,
-                    3
+                    6.0,
+                    6.0,
+                    6.0
                 ],
                 "bounce_bonus": [
-                    -0.2,
-                    -0.2,
-                    -0.2
+                    -20.0,
+                    -20.0,
+                    0.0
+                ],
+                "bounce_amount": [
+                    1.0,
+                    3.0,
+                    0.35
                 ]
             }
         },
@@ -3493,25 +3422,25 @@
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
-                "damage": [
-                    10,
-                    20,
-                    30
-                ],
-                "cooldown": [
-                    1,
-                    1,
-                    1
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "hp_cost": [
-                    10,
-                    15,
-                    20
+                    10.0,
+                    99.0,
+                    5.0
                 ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                "damage": [
+                    10.0,
+                    99.0,
+                    5.0
+                ],
+                "cooldown": [
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         },
@@ -3531,20 +3460,20 @@
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
+                "levels": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
                 "duration": [
-                    3,
-                    3,
-                    3
+                    3.0,
+                    3.0,
+                    0.0
                 ],
                 "cooldown": [
-                    5,
-                    4,
-                    3
-                ],
-                "levels": [
-                    1,
-                    2,
-                    3
+                    5.0,
+                    3.0,
+                    -1.0
                 ]
             }
         },
@@ -3564,25 +3493,25 @@
             "is_offensive": 1.0,
             "end_turn": false,
             "script_values": {
-                "damage": [
-                    10,
-                    10
-                ],
-                "crit": [
-                    0.33,
-                    0.33
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "hp_cost": [
-                    10,
-                    20
+                    10.0,
+                    99.0,
+                    5.0
+                ],
+                "damage": [
+                    10.0,
+                    99.0,
+                    4.0
                 ],
                 "cooldown": [
-                    1,
-                    0
-                ],
-                "levels": [
-                    1,
-                    2
+                    1.0,
+                    0.0,
+                    -0.1
                 ]
             }
         },
@@ -3603,10 +3532,14 @@
             "end_turn": false,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    6
+                    6.0,
+                    6.0,
+                    0.0
                 ]
             }
         },
@@ -3626,30 +3559,25 @@
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
-                "damage": [
-                    20,
-                    35,
-                    50
-                ],
-                "crit": [
-                    0.5,
-                    0.5,
-                    0.5
-                ],
-                "cooldown": [
-                    3,
-                    3,
-                    3
-                ],
                 "levels": [
-                    1,
-                    2,
-                    3
+                    1.0,
+                    3.0,
+                    0.0
                 ],
                 "delay": [
-                    1,
-                    1,
-                    1
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "damage": [
+                    15.0,
+                    99.0,
+                    5.0
+                ],
+                "cooldown": [
+                    3.0,
+                    3.0,
+                    0.0
                 ]
             }
         },
@@ -3670,10 +3598,14 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
@@ -3694,10 +3626,14 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
@@ -3718,10 +3654,14 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
@@ -3741,14 +3681,20 @@
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
-                "bonus": [
-                    0.2
+                "levels": [
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    10
+                    10.0,
+                    10.0,
+                    10.0
                 ],
-                "levels": [
-                    1
+                "bonus": [
+                    0.2,
+                    0.2,
+                    0.2
                 ]
             }
         },
@@ -3769,10 +3715,14 @@
             "end_turn": true,
             "script_values": {
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "cooldown": [
-                    10
+                    10.0,
+                    10.0,
+                    0.0
                 ]
             }
         },
@@ -3792,14 +3742,20 @@
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
+                "levels": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
                 "duration": [
-                    5
+                    5.0,
+                    5.0,
+                    0.0
                 ],
                 "cooldown": [
-                    99
-                ],
-                "levels": [
-                    1
+                    99.0,
+                    99.0,
+                    0.0
                 ]
             }
         },
@@ -3819,14 +3775,20 @@
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
-                "cooldown": [
-                    1
-                ],
                 "levels": [
-                    1
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "cooldown": [
+                    1.0,
+                    1.0,
+                    0.0
                 ],
                 "bonus": [
-                    0.25
+                    25.0,
+                    25.0,
+                    0.0
                 ]
             }
         }

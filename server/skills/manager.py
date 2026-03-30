@@ -28,7 +28,7 @@ def error(user, err):
     #user.sendSound(Audio.ERROR)
   
 
-
+'''
 def get_user_skill_level_as_index(user, skill_id):
     skill = SKILLS[skill_id]
     users_skill_level = -1
@@ -38,7 +38,7 @@ def get_user_skill_level_as_index(user, skill_id):
         if _users_skill_level >= skill["script_values"]["levels"][i]:
             users_skill_level = i
     return users_skill_level
-
+'''
 '''
 def skill_checks(user, target, skill_id):
     skill = SKILLS[skill_id]
@@ -201,7 +201,7 @@ def check_if_skill_can_be_used(skill_object):
         error(user, f"You can't use {skill_name} on items")
         return False
 
-    users_skill_level = get_user_skill_level_as_index(user, skill_id)
+    users_skill_level = user.skill_manager.skills[skill_id]
 
     hp_cost = 0
     mp_cost = 0

@@ -138,6 +138,9 @@ class CombatEvent:
                     output += f'{_ma}{summary[StatType.MAGARMOR]}{Color.BACK}{Color.MAGARM}MA '
                 """
 
+
+                #output_other += pop.damage_type
+
                 sound = Audio.HURT
                 # output = f'{pop.damage_taker_actor.name}  {pop.damage_hp}hp  {pop.damage_pa}pa {pop.damage_ma}ma'
                 list_pretty_name_objects = [pop.damage_taker_actor, pop.damage_source_actor, pop.damage_source_action]
@@ -191,6 +194,21 @@ class CombatEvent:
 
         # get damage_obj first in queue
         damage_obj = self.queue[0]
+
+        if damage_obj.damage_type == DamageType.PHYSICAL:
+            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.GRIT]/2)
+            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.FLOW]/4)
+
+        if damage_obj.damage_type == DamageType.MAGICAL:
+            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/2)
+            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/4)
+
+        if damage_obj.damage_type == DamageType.PURE:
+            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
+
+        if damage_obj.damage_type == DamageType.HEALING:
+            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/4)
+            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
 
         try:
             if not damage_obj.dont_proc:
@@ -248,8 +266,6 @@ class CombatEvent:
                     )
         except Exception as e:
             systems.utils.debug_print(f'Something went wrong while running damage calculations for {damage_obj} {e}')
-
-        
 
         self.pop_from_queue()
 

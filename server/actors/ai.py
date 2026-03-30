@@ -8,7 +8,7 @@ from configuration.constants.actor_status_type import ActorStatusType
 #from configuration.constants.room_constant import RoomConstant
 from configuration.constants.stat_type import StatType
 from custom import loader
-from skills.manager import get_user_skill_level_as_index, construct_skill, check_if_skill_can_be_used#, #use_skill
+from skills.manager import construct_skill, check_if_skill_can_be_used#, #use_skill, get_user_skill_level_as_index
 from systems.utils import REFTRACKER
 
 

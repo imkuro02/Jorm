@@ -58,7 +58,8 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
         for key in ITEMS[premade_id]:
             if ' req_' not in ' '+key:
                 continue
-            if 'hp' in key:
+
+            if 'lvl' not in key:
                 continue
 
             _key = key.replace('req_','')

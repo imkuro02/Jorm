@@ -9,7 +9,7 @@ from configuration.constants.color import Color
 from configuration.constants.stat_type import StatType
 from configuration.constants.skill_script_values_to_names import SkillScriptValuesToNames
 
-from skills.manager import get_skills, get_user_skill_level_as_index
+from skills.manager import get_skills, construct_skill#, get_user_skill_level_as_index
 
 """
 @check_not_in_combat
@@ -139,7 +139,7 @@ def command_practice(self, line):
 
             can_afford = skill_cost <= self.stat_manager.stats[StatType.PP]
             meets_lvl_req = skill_level_req <= self.stat_manager.stats[StatType.LVL]
-            skill_max_level = int(SKILLS[skill_id]["script_values"]["levels"][-1])
+            skill_max_level = int(SKILLS[skill_id]["script_values"]["levels"][1])
 
             col = Color.NORMAL
             if override_color != None:
@@ -195,7 +195,7 @@ def command_practice(self, line):
         if skill_id in self.skill_manager.skills:
             if (
                 self.skill_manager.skills[skill_id]
-                >= SKILLS[skill_id]["script_values"]["levels"][-1]
+                >= SKILLS[skill_id]["script_values"]["levels"][1]
             ):
                 self.send_line(f"{skill_name} is already max level")
                 for item in equips:
@@ -301,7 +301,7 @@ def command_skills(self, line, return_gmcp = False):
 
         skill_learned = skill_id in self.skill_manager.skills
         if skill_learned:
-            users_skill_level = get_user_skill_level_as_index(self, skill_id)
+            users_skill_level = self.skill_manager.skills[skill_id]
         else:
             users_skill_level = 0
 
@@ -415,6 +415,32 @@ def command_skills(self, line, return_gmcp = False):
         #    output += f'@redThis skill cannot be practied!@normal\n'
 
         if "script_values" in skill:
+            skill_obj = construct_skill(skill_id = skill_id)(skill_id = skill_id, user = self)
+            
+            t = systems.utils.Table(3)
+            t.add_data('')
+            t.add_data('Current')
+            t.add_data('Next')
+
+            t.add_data('level')
+            skill_lvl = 0
+            if skill_id in self.skill_manager.skills:
+                skill_lvl = self.skill_manager.skills[skill_id]
+
+            t.add_data(f'{skill_lvl} / {int(skill_obj.script_values["levels"][1])}')
+            t.add_data(f'{int(skill_lvl+1)} / {int(skill_obj.script_values["levels"][1])}')
+
+            for val in skill_obj.script_values:
+                if val in ['levels']:
+                    continue
+
+                t.add_data(val)
+                t.add_data(skill_obj.calculate_script_value(value = val))
+                t.add_data(skill_obj.calculate_script_value(value = val, next_level = True))
+
+        output += t.get_table()
+        '''
+        if "script_values" in skill:
             t = systems.utils.Table(len(skill["script_values"]["levels"]) + 1, 4)
 
             for val_nam in SkillScriptValuesToNames:
@@ -450,6 +476,7 @@ def command_skills(self, line, return_gmcp = False):
                         index += 1
 
             output += t.get_table()
+        '''
 
         self.send_line(output + extra_info.strip())
     else:

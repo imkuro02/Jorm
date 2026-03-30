@@ -6,7 +6,7 @@ from actors.player_only_functions.checks import (
 )
 from configuration.constants.audio import Audio
 #from configuration.constants.equipment_slot_type import EquipmentSlotType
-#from configuration.constants.item_type import ItemType
+from configuration.constants.item_type import ItemType
 from configuration.constants.stat_type import StatType
 
 @check_not_in_combat
@@ -102,7 +102,20 @@ def inventory_equip(self, item, forced=False):
                 line_others =   f"{self.id} equips {item.id}",
                 list_pretty_name_objects = [self, item]  
             )
+
             self.stat_manager.hp_mp_clamp_update()
+
+            if self.stat_manager.stats[StatType.HPMAX] < 1:
+                self.send_line('Equipping this puts you under 1 Life, unequipping now')
+                self.inventory_unequip(item)
+                return
+
+            for i in self.stat_manager.stats.values():
+                i = int(i)
+                if i < 0:
+                    self.send_line('Equipping this one or more stats under 0, unequipping now')
+                    self.inventory_unequip(item)
+                    return
 
         # self.slots[item.slot] = item.id
         # systems.utils.debug_print(self.slots[item.slot])
@@ -138,7 +151,29 @@ def inventory_unequip(self, item, silent=False):
         self.stat_manager.hp_mp_clamp_update()
         self.sendSound(Audio.ITEM_GET)
         self.pretty_broadcast(
-                line_self =     f"You equip {item.id}",
-                line_others =   f"{self.id} equips {item.id}",
+                line_self =     f"You unequip {item.id}",
+                line_others =   f"{self.id} unequips {item.id}",
                 list_pretty_name_objects = [self, item]  
             )
+
+    if self.stat_manager.stats[StatType.HPMAX] < 1:
+        self.send_line('Unequipping this puts you under 1 Life, unequipping everything')
+        items = self.inventory_manager.items.values()
+        for i in items:
+            if i.item_type != ItemType.EQUIPMENT:
+                continue
+            if i.equiped:
+                self.inventory_unequip(i, silent = True)  
+        return
+
+    for i in self.stat_manager.stats.values():
+        i = int(i)
+        if i < 0:
+            self.send_line('Unequipping this puts one or more stats under 0, unequipping everything')
+            items = self.inventory_manager.items.values()
+            for i in items:
+                if i.item_type != ItemType.EQUIPMENT:
+                    continue
+                if i.equiped:
+                    self.inventory_unequip(i, silent = True) 
+            return
