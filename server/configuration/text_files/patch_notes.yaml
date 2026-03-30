@@ -1,4 +1,17 @@
 versions:
+  "300326":
+    id: "300326"
+    title: Better skill scaling
+    unixtime: 1761899677
+    features:
+      - skill scaling has changed, now skills can be leveled infinately through equipment
+      - equipping items has changed, all requirements except level requirements are no longer present
+      - equipping / unequipping items causing your character to get negative stats now rolls back the command
+      - damage calculation has changed, there is no more crit value in skills
+      - physical damage scales off of grit and FLOW
+      - magical damage scales off of mind and soul
+      - pure and healing damage scales off of soul
+      - stat bonuses get applied before anything else, meaning you can deal hefty physical damage while maxxing out mind, by converting magical damage to physical via skills or equipment
   "230326":
     id: "230326"
     title: Cleanup
