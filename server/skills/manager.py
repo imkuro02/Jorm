@@ -207,8 +207,9 @@ def check_if_skill_can_be_used(skill_object):
     mp_cost = 0
 
     if "hp_cost" in skill["script_values"]:
-        hp_cost = skill["script_values"]["hp_cost"][users_skill_level]
-        hp_cost = hp_cost + int(user.stat_manager.stats[StatType.LVL] * 0.5)
+        hp_cost = skill["script_values"]["hp_cost"][0] + (skill["script_values"]["hp_cost"][2] * (users_skill_level-1))
+        hp_cost = int(hp_cost)
+        #hp_cost = int(hp_cost) + int(user.stat_manager.stats[StatType.LVL] * 0.5)
         if hp_cost >= user.stat_manager.stats[StatType.HP] + 1:
             error(
                 user,
