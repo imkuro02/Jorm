@@ -607,12 +607,12 @@ class Equipment(Item):
                     )
 
                 aff = reforge_obj(
-                    affect_source_actor=self.inventory_manager.owner,
-                    affect_target_actor=self.inventory_manager.owner,
-                    name=affliction_name,
-                    description=reforge_description,
+                    affect_source_actor = self.inventory_manager.owner,
+                    affect_target_actor = self.inventory_manager.owner,
+                    name = affliction_name,
+                    description = reforge_description,
                     turns=3,
-                    source_item=self,
+                    source_item = self,
                     reforge_variables=EQUIPMENT_REFORGES[reforge_id]["vars"],
                 )
                 self.inventory_manager.owner.affect_manager.set_affect_object(aff)

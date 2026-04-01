@@ -379,6 +379,51 @@ commands:
       'skill <skill>' will display extra skill information.
     related:
       - practice
+  combat: 
+    group: character
+    syntax: []
+    description: |
+      Combat in jorm is turn based.
+      Each round all characters roll hidden initiative, between 0 and FLOW.
+      Turns are in order of highest to lowest score.
+
+      Each character has one action to take per turn
+      * Some skills may not consume a turn, this will be noted in the skill description
+
+      Damage:
+        Damage type is often described in the skill description aswell.
+
+        Damage is a flat value described in the skill.
+        PHYSICAL damage gets a 50% bonus from GRIT, and 25% bonus from FLOW.
+        MAGICAL damage gets a 50% bonus from MIND, and 25% bonus from SOUL.
+        PURE damage gets a 25% bonus from SOUL.
+        HEALING gets a 50% bonus from SOUL.
+
+        All bonuses are caster dependant.
+
+      Damage reduction:
+        HOLD blocks all physical damage and WARD blocks all magical damage.
+        Both HOLD and WARD are a resource that goes down per damage taken.
+        PURE damage cannot be blocked, neither can HEALING.
+
+      Debuffs and Buffs:
+        Some skills may give the caster or the target a buff / debuff
+        Debuffs are afflictions that are blocked as long as there is any appropriate armor left
+        Debuffs always get applied if both HOLD and WARD are 0.
+        Debuffs have a chance to be resisted if the correct armor type is above 0.
+        Example: 
+          Bleed might get blocked by HOLD if the target has any HOLD left.
+          If HOLD is broken, there is a 50% chance bleed being applied.
+          If HOLD and WARD are broken the chance of being applied is 100%.
+          If HOLD is above 0 and WARD is broken, bleed has 0% chance of being applied,
+          since bleed is caused by physical damage.
+
+          Should the debuff be a magical one, then all of the above apply in reverse.
+          Where WARD needs to be broken for any chance of being applied.
+    related:
+      - stats
+      - level
+      - skills
   stats:
     group: character
     syntax:
@@ -399,6 +444,7 @@ commands:
     related:
       - level
       - practice
+      - combat
   affects:
     group: character
     syntax:
