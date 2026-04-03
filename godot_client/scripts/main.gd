@@ -8,12 +8,13 @@ var socket = WebSocketPeer.new()
 # References to UI nodes
 @onready var INPUT = $canvas/input/input
 @onready var OUTPUT = $canvas/container/output/output
+@onready var SIDEBAR = $canvas/container/sidebar
 @onready var DEBUG = $canvas/debug
 @onready var SFX_MAN = $sfx_manager
-@onready var LOOK_ROOM = $canvas/container/map_room/look_room
-@onready var ASCIIMAP = $canvas/container/map_room/ascii_map
+@onready var LOOK_ROOM = $canvas/container/sidebar/look_room
+@onready var ASCIIMAP = $canvas/container/sidebar/ascii_map
 @onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
-@onready var MOUSE_CLICK_OPTIONS = $canvas/container/output/mouse_click_options
+@onready var MOUSE_CLICK_OPTIONS = $canvas/mouse_click_options
 
 var game_state = 'none yet'
 
@@ -42,9 +43,9 @@ const telnet_stuff := {
 }
 
 func _ready():
+	SIDEBAR.visible = false
 	# Connect the input signal for Enter key
 	INPUT.text_submitted.connect(_on_input_submitted)
-
 	# Try local WebSocket first, then fallback to remote
 	await try_connect_in_order([websocket_url_local, websocket_url])
 
@@ -162,6 +163,7 @@ func handle_gmcp(message: String):
 			#OUTPUT.append_text("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 			INPUT.secret = 'REGISTER_PASSWORD' in game_state or 'LOGIN_PASSWORD' in game_state
 			INPUT.clear()
+			SIDEBAR.visible = 'PLAY' in game_state
 				
 		'Client.Media.Play':
 			var sfx = load("res://audio/sfx/" + data_dict['name'])
@@ -257,9 +259,9 @@ func _process(_delta):
 		OUTPUT.get_message("\n\n<--!-->\tYou have been disconnected! refresh the page to reconnect!\t<--!-->")
 		set_process(false)
 
-func handle_meta_clicked(meta):
-	print(meta)
-	if Input.is_key_pressed(KEY_CTRL):
+func handle_meta_clicked(meta, forced = false):
+	#print(meta)
+	if forced:
 		if ',' in meta:
 			var output := []
 			var entries = meta.split(",")
@@ -284,13 +286,14 @@ func handle_meta_clicked(meta):
 					var url = parts[1].strip_edges()
 					var text = parts[0].strip_edges()
 					output.append("[url=%s]%s[/url]\n" % [url, text])
-			#MOUSE_CLICK_OPTIONS.text = "".join(output)
+			MOUSE_CLICK_OPTIONS.text = "".join(output).strip_edges(false, true)
 			#OUTPUT.append_text("<OPTIONS START>\n")
-			OUTPUT.append_text("".join(output))
+			#OUTPUT.append_text("".join(output))
 			#OUTPUT.append_text("<OPTIONS END>\n")
 		else:
 			socket.send_text(meta.strip_edges())
-	
+			
+"""
 func _on_navigation_meta_clicked(meta):
 	handle_meta_clicked(meta)
 
@@ -305,4 +308,53 @@ func _on_output_combat_meta_clicked(meta):
 
 func _on_ascii_map_meta_clicked(meta):
 	handle_meta_clicked(meta)
+"""
 
+var last_button_clicked = MOUSE_BUTTON_LEFT
+var last_meta_hovered = null
+
+func _input(event):
+	#print(event)
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			MOUSE_CLICK_OPTIONS.text = ""
+			MOUSE_CLICK_OPTIONS.size.x = 0
+			MOUSE_CLICK_OPTIONS.size.y = 0
+			MOUSE_CLICK_OPTIONS.position.x = -1000
+			MOUSE_CLICK_OPTIONS.position.y = -1000
+			if last_meta_hovered == null:
+				return
+			handle_meta_clicked(last_meta_hovered, false)
+			if MOUSE_CLICK_OPTIONS.text == "":
+				return
+			MOUSE_CLICK_OPTIONS.position.x = event.position.x
+			MOUSE_CLICK_OPTIONS.position.y = event.position.y
+		if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
+			if last_meta_hovered == null:
+				return
+			handle_meta_clicked(last_meta_hovered, true)
+					
+func _on_ascii_map_meta_hover_started(meta):
+	last_meta_hovered = meta
+func _on_ascii_map_meta_hover_ended(meta):
+	last_meta_hovered = null
+
+func _on_navigation_meta_hover_started(meta):
+	last_meta_hovered = meta
+func _on_navigation_meta_hover_ended(meta):
+	last_meta_hovered = null
+
+func _on_output_meta_hover_started(meta):
+	last_meta_hovered = meta
+func _on_output_meta_hover_ended(meta):
+	last_meta_hovered = null
+
+func _on_mouse_click_options_meta_hover_started(meta):
+	last_meta_hovered = meta
+func _on_mouse_click_options_meta_hover_ended(meta):
+	last_meta_hovered = null
+
+func _on_output_combat_meta_hover_started(meta):
+	last_meta_hovered = meta
+func _on_output_combat_meta_hover_ended(meta):
+	last_meta_hovered = null
