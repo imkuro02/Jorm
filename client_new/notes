@@ -1,0 +1,27 @@
+/*
+you can put this inside of the client but then the godot iframe still has default cursor
+*/
+
+<style>
+body {
+  cursor: none;
+}
+
+#cursor {
+  position: fixed;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+}
+</style>
+
+<img id="cursor" src="https://www.rw-designer.com/cursor-view/193893.png">
+
+<script>
+const cursor = document.getElementById("cursor");
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.left = e.clientX -16 + "px";
+  cursor.style.top = e.clientY -16 + "px";
+});
+</script>
