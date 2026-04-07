@@ -37,7 +37,8 @@ class AI:
                 self.predict_use_best_skill(skill_override=skill)
                 self.use_prediction(no_checks=True)
                 self.actor.skill_manager.unlearn(skill_id=skill, amount=lvl)
-                self.clear_prediction()
+                #self.clear_prediction()
+                self.predict_use_best_skill()
                 return
         
         
@@ -232,8 +233,8 @@ class AI:
         if self.actor.room.combat.current_actor != self.actor:
             return False
 
-        #if self.actor.room.combat.time_since_turn_finished <= int(10):
-        #    return False
+        if self.actor.room.combat.time_since_turn_finished <= int(10):
+            return False
 
         return True
 

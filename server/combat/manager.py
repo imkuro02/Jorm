@@ -283,7 +283,8 @@ class Combat:
         self.turn += 1
 
     def initiative(self):
-        show_turns_and_stuff = False
+        show_turns_and_stuff = True
+        show_prompts_and_stuff = False
 
         for i in self.participants.values():
             if i.status != ActorStatusType.DEAD:
@@ -331,7 +332,7 @@ class Combat:
             par.ai.initiative()
 
             # par.ai.predict_use_best_skill()
-        if show_turns_and_stuff:
+        if show_prompts_and_stuff:
             for par in self.participants.values():
                 par.show_prompts(self.participants.values())
                 par.send_line("")

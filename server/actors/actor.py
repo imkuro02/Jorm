@@ -39,10 +39,10 @@ class ActorStatManager:
             StatType.PHYARMORMAX: 0,
             StatType.MAGARMOR: 0,
             StatType.MAGARMORMAX: 0,
-            StatType.GRIT: 10 * 0,
-            StatType.FLOW: 10 * 0,
-            StatType.MIND: 10 * 0,
-            StatType.SOUL: 10 * 0,
+            StatType.GRIT: 10 * 1,
+            StatType.FLOW: 10 * 1,
+            StatType.MIND: 10 * 1,
+            StatType.SOUL: 10 * 1,
             StatType.INVSLOTS: 0,
             StatType.LVL: 0,
             StatType.EXP: 0,
@@ -1162,6 +1162,7 @@ class Actor:
                 # self.show_prompts(self.room.combat.participants.values())
                 continue
 
+            '''
             _icon = self.get_icon(who_checks=par)
             if _icon != "":
                 _icon = "\n" + _icon
@@ -1169,6 +1170,7 @@ class Actor:
                 f"{self.prompt(par)} {self.pretty_name()}'s turn{Color.NORMAL}{_icon}"
             )
             par.send_line(output_other)
+            '''
 
         # print(self.room.combat)
 
