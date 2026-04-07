@@ -286,6 +286,7 @@ class EnemyAI(AI):
         if not super().tick():
             return
 
+        
         self.use_prediction()
 
 

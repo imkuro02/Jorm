@@ -183,10 +183,19 @@ class Protocol(protocol.Protocol):
                 self.id = self.account[0]
                 self.username = self.account[1]
                 self.password = self.account[2]
+                delay = 0
                 for online_account in self.factory.protocols:
                     if self.id == online_account.id and self != online_account:
+                        self.send_line('Logging you out of another window')
+                        online_account.send_line('Logging in on another window, closing this connection')
+                        delay = 30
                         online_account.disconnect()
-                self.load_actor()
+
+                self.factory.delayed_functions.add_delayed_function(
+                    caller = self, tag = 'movement', delay = delay,
+                    func=lambda: self.load_actor(),
+                )
+                
 
             case self.PLAY_AS_GUEST:
                 self.guest = True

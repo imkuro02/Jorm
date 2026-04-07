@@ -1061,6 +1061,7 @@ class Actor:
         if self != self.room.combat.current_actor:
             return
 
+        
         self.room.combat.next_turn()
 
     def show_prompts(self, order=None, no_predictions=False, return_gmcp=False):

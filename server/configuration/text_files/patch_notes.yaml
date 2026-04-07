@@ -7,6 +7,7 @@ versions:
       - Equipment can now bring stats under 0
       - Settings now have a hint of what they do (settings will display all settings)
       - typing "stats" will now display bonuses from equipment to the side
+      - Logging in on another window now logs you out (properly)
   "300326":
     id: "300326"
     title: Better skill scaling

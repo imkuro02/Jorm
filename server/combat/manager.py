@@ -102,6 +102,8 @@ class Combat:
         
 
     def tick(self):
+        
+            
         if self.current_actor == None:
             return
 
@@ -281,7 +283,7 @@ class Combat:
         self.turn += 1
 
     def initiative(self):
-        show_turns_and_stuff = True
+        show_turns_and_stuff = False
 
         for i in self.participants.values():
             if i.status != ActorStatusType.DEAD:
@@ -335,6 +337,7 @@ class Combat:
                 par.send_line("")
 
         self.round += 1
+        
         self.next_turn()
         # self.current_actor = self.order[0]
         # self.current_actor.set_turn()

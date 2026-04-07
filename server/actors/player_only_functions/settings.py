@@ -418,6 +418,9 @@ def command_settings(self, line):
         t.add_data("Hint")
 
         for i in s0:
+            if i == SETTINGS.COLOR:
+                continue
+
             _default = True
             s = s0
             col = Color.BAD
@@ -428,6 +431,8 @@ def command_settings(self, line):
 
             t.add_data(i, col=col)
 
+            
+                
             if i in [SETTINGS.COLOR, SETTINGS.ALIAS, SETTINGS.EMAIL, SETTINGS.PROMPT]:
                 t.add_data(f"Special")
                 if i in self.settings_manager.info:
@@ -445,7 +450,11 @@ def command_settings(self, line):
 
             
 
-        output = t.get_table() + 'Type "settings [Setting]" to view vlaue of "Special"'
+        output = t.get_table() + 'Type "set <setting>" to view vlaue of "Special"'
+        output += '\nType "set username <new username>" to change your name'
+        output += '\nType "set password <new password>" to change your name'
+        output += '\nType "set logout" to log out of jorm'
+        output += '\nType "set reset" reset all settings'
         self.send_line(output)
         return
 
