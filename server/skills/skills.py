@@ -1088,11 +1088,15 @@ class SkillBoostStat(Skill):
         if self.success:
             turns = int(self.calculate_script_value(value = 'duration'))
             bonus = (self.calculate_script_value(value = 'bonus')/100)
+            if int(self.other.stat_manager.stats[stat] * bonus) < 0:
+                bonus_str = f'{int(self.other.stat_manager.stats[stat] * bonus)}'
+            else:
+                bonus_str = f'+{int(self.other.stat_manager.stats[stat] * bonus)}'
             aff = affects.AffectBoostStat(
                 affect_source_actor=self.user,
                 affect_target_actor=self.other,
                 name=name_of_boost,
-                description=f"Temporary boost {StatType.name[stat].lower()} by {int(bonus * 100)}% (+{int(self.other.stat_manager.stats[stat] * bonus)})",
+                description=f"Temporary boost {StatType.name[stat].lower()} by {int(bonus * 100)}% ({bonus_str})",
                 turns=turns,
                 bonus=bonus,
                 stat=stat,

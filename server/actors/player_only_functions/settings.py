@@ -59,6 +59,20 @@ LIST_OFF = ["off", "false", "disabled", "disable", "0"]
 class Settings:
     def __init__(self, actor):
         self.actor = actor
+        self.info = {
+            SETTINGS.GMCP: "Use gmcp",
+            SETTINGS.GODOT: "Use godot client features",
+            SETTINGS.ECHO: "Echo the last input sent",
+            SETTINGS.VIEW_ROOM: "Display room information on movement",
+            SETTINGS.VIEW_MAP: "Display ascii map on movement",
+            SETTINGS.VIEW_MAP_WALLS: "Currently broken",
+            SETTINGS.VIEW_ASCII_ART: "Display icons for mobs",
+            SETTINGS.DEBUG: "Debug information",
+            SETTINGS.ALIAS: "Keyword shortcuts for long commands, \"help alias\" for more info",
+            SETTINGS.EGO: "Value between 1 and 10, manual difficulty scaling",
+            SETTINGS.PROMPT: "\"Help prompt\" for more info",
+            SETTINGS.EMAIL: "Recovery email address",
+            }
         self.defaults = {
             SETTINGS.GMCP: True,
             SETTINGS.GODOT: False,
@@ -397,10 +411,11 @@ def command_settings(self, line):
 
         s0 = self.settings_manager.defaults
         s1 = self.settings_manager.settings
-        t = Table(2, 1)
+        t = Table(3, 1)
 
         t.add_data("Setting")
         t.add_data("Value")
+        t.add_data("Hint")
 
         for i in s0:
             _default = True
@@ -412,10 +427,23 @@ def command_settings(self, line):
                 col = Color.GOOD
 
             t.add_data(i, col=col)
+
             if i in [SETTINGS.COLOR, SETTINGS.ALIAS, SETTINGS.EMAIL, SETTINGS.PROMPT]:
                 t.add_data(f"Special")
+                if i in self.settings_manager.info:
+                    t.add_data(self.settings_manager.info[i])
+                else:
+                    t.add_data("")
                 continue
+
             t.add_data(s[i])
+
+            if i in self.settings_manager.info:
+                t.add_data(self.settings_manager.info[i])
+            else:
+                t.add_data("")
+
+            
 
         output = t.get_table() + 'Type "settings [Setting]" to view vlaue of "Special"'
         self.send_line(output)

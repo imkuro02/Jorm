@@ -102,14 +102,15 @@ def command_practice(self, line):
                 for i in range(0, 3):
                     t.add_data("___", filler="_")
 
-            equips = []
-            for item in self.slots_manager.slots.values():
-                if item == None:
-                    continue
-                equips.append(self.inventory_manager.items[item])
+            equips = self.remove_equips_for_raw_stats()
+            #equips = []
+            #for item in self.slots_manager.slots.values():
+            #    if item == None:
+            #        continue
+            #    equips.append(self.inventory_manager.items[item])
+            #for item in equips:
+            #    self.inventory_unequip(item, silent=True)
 
-            for item in equips:
-                self.inventory_unequip(item, silent=True)
             # systems.utils.debug_print(self.skill_manager.skills)
             ##
             '''
@@ -166,8 +167,9 @@ def command_practice(self, line):
             )
             # t.add_data(f'Requires Level {skill_level_req}.')
 
-            for item in equips:
-                self.inventory_equip(item, forced=True)
+            self.unremove_equips_for_raw_stats(equips)
+            #for item in equips:
+            #    self.inventory_equip(item, forced=True)
 
         output = ""
         #output += f"*All skills go up in cost by 1 PP, except the skill you practice.\n"
@@ -422,7 +424,7 @@ def command_skills(self, line, return_gmcp = False):
             t.add_data('Current')
             t.add_data('Next')
 
-            t.add_data('level')
+            t.add_data('LEVEL')
             skill_lvl = 0
             if skill_id in self.skill_manager.skills:
                 skill_lvl = self.skill_manager.skills[skill_id]
@@ -434,7 +436,10 @@ def command_skills(self, line, return_gmcp = False):
                 if val in ['levels']:
                     continue
 
-                t.add_data(val)
+                if val not in SkillScriptValuesToNames:
+                    continue
+                
+                t.add_data(SkillScriptValuesToNames[val])
                 t.add_data(skill_obj.calculate_script_value(value = val))
                 t.add_data(skill_obj.calculate_script_value(value = val, next_level = True))
 

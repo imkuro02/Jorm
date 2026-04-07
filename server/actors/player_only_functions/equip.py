@@ -54,6 +54,8 @@ def inventory_equip(self, item, forced=False):
     if item.slot != None:
         req_not_met = False
         for stat_name in item.stat_manager.reqs:
+            if stat_name != 'lvl':
+                continue
             if self.stat_manager.stats[stat_name] < item.stat_manager.reqs[stat_name]:
                 if not forced:
                     self.send_line(
@@ -104,7 +106,7 @@ def inventory_equip(self, item, forced=False):
             )
 
             self.stat_manager.hp_mp_clamp_update()
-
+            '''
             if self.stat_manager.stats[StatType.HPMAX] < 1:
                 self.send_line('Equipping this puts you under 1 Life, unequipping now')
                 self.inventory_unequip(item)
@@ -116,6 +118,7 @@ def inventory_equip(self, item, forced=False):
                     self.send_line('Equipping this one or more stats under 0, unequipping now')
                     self.inventory_unequip(item)
                     return
+            '''
 
         # self.slots[item.slot] = item.id
         # systems.utils.debug_print(self.slots[item.slot])
@@ -156,6 +159,7 @@ def inventory_unequip(self, item, silent=False):
                 list_pretty_name_objects = [self, item]  
             )
 
+    '''
     if self.stat_manager.stats[StatType.HPMAX] < 1:
         self.send_line('Unequipping this puts you under 1 Life, unequipping everything')
         items = self.inventory_manager.items.values()
@@ -177,3 +181,4 @@ def inventory_unequip(self, item, silent=False):
                 if i.equiped:
                     self.inventory_unequip(i, silent = True) 
             return
+    '''

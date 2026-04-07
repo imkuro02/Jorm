@@ -4,6 +4,14 @@ versions:
     title: Better skill scaling
     unixtime: 1761899677
     features:
+      - Equipment can now bring stats under 0
+      - Settings now have a hint of what they do (settings will display all settings)
+      - typing "stats" will now display bonuses from equipment to the side
+  "300326":
+    id: "300326"
+    title: Better skill scaling
+    unixtime: 1761899677
+    features:
       - skill scaling has changed, now skills can be leveled infinately through equipment
       - equipping items has changed, all requirements except level requirements are no longer present
       - equipping / unequipping items causing your character to get negative stats now rolls back the command

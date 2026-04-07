@@ -376,6 +376,8 @@ class Player(Actor):
 
         self.loaded = True
 
+    
+
     def die(self, unload=False):
         super().die(unload=False)
         #lost_exp = int(self.stat_manager.stats[StatType.EXP] * 0.025)

@@ -88,6 +88,7 @@ class ActorStatManager:
                 ma_bonus = 0
 
         self.stats[stat] += points
+
         self.stats[StatType.HPMAX] += points * hp_bonus
         self.stats[StatType.HP] += points * hp_bonus
         # self.stats[StatType.MPMAX] += points * mp_bonus
@@ -276,6 +277,21 @@ class Actor:
         
 
         REFTRACKER.add_ref(self)
+
+    def remove_equips_for_raw_stats(self):
+        equips = []
+        for item in self.slots_manager.slots.values():
+            if item == None:
+                continue
+            equips.append(self.inventory_manager.items[item])
+
+        for item in equips:
+            self.inventory_unequip(item, silent=True)
+        return equips
+
+    def unremove_equips_for_raw_stats(self, equips):
+        for item in equips:
+            self.inventory_equip(item, forced=True)
 
     def add_to_combat_history(self, skill_object):
         if self.status != ActorStatusType.FIGHTING:
@@ -584,8 +600,27 @@ class Actor:
 
         output += self.get_character_equipment()
 
+
+        _stats_with_equips = {}
+        for i in self.stat_manager.stats:
+            _stats_with_equips[i] = self.stat_manager.stats[i]
+
+        _equips = self.remove_equips_for_raw_stats()
+        _stats_without_equips = {}
+        for i in self.stat_manager.stats:
+            _stats_without_equips[i] = self.stat_manager.stats[i]
+        self.unremove_equips_for_raw_stats(_equips)
+
+        _stats_calculated_bonuses = {}
+        for i in _stats_with_equips:
+            _stats_calculated_bonuses[i] = _stats_with_equips[i] - _stats_without_equips[i]
+        
+
+
+        #print(_stats_with_equips, '\n', _stats_without_equips, '\n', _stats_calculated_bonuses)
+
         if True: #if not self.dont_join_fights:
-            t = systems.utils.Table(4, 1)
+            t = systems.utils.Table(5, 1)
             _piss = [
                 StatType.HP,
                 StatType.PHYARMOR,
@@ -602,11 +637,23 @@ class Actor:
                     t.add_data(f"{self.stat_manager.stats[_shit]}")
                     t.add_data(f"/")
                     t.add_data(f"{self.stat_manager.stats[_shit + '_max']}")
+                    bonus = _stats_calculated_bonuses[_shit]
+                    col = Color.BAD
+                    if bonus >= 0:
+                        col = Color.GOOD
+                        bonus = f'+{bonus}'
+                    t.add_data("" if _stats_calculated_bonuses[_shit] == 0 else f"{Color.NORMAL}({col}{bonus}{Color.NORMAL})")
                 else:
                     t.add_data(StatType.name[_shit] + ":")
-                    t.add_data(self.stat_manager.stats[_shit])
+                    t.add_data(_stats_with_equips[_shit])
+                    bonus = _stats_calculated_bonuses[_shit]
                     t.add_data("")
                     t.add_data("")
+                    col = Color.BAD
+                    if bonus >= 0:
+                        col = Color.GOOD
+                        bonus = f'+{bonus}'
+                    t.add_data("" if _stats_calculated_bonuses[_shit] == 0 else f"{Color.NORMAL}({col}{bonus}{Color.NORMAL})")
 
             output += t.get_table()
 

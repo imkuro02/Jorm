@@ -453,7 +453,7 @@ def configure_ITEMS2(SHEET, USE_PERSPECTIVES):
                 '''
                 "requirements": {
                     "lvl": int(x["lvl"][index]),
-                    "hp_max": int(x["rhp_max"][index]),
+                    "hp_max": 0,
                     #'mp_max':   int(x['rmp_max'][index]),
                     "phy_armor_max": int(x["rphy_armor"][index] / 10),
                     "mag_armor_max": int(x["rmag_armor"][index] / 10),
