@@ -8,6 +8,8 @@ versions:
       - Settings now have a hint of what they do (settings will display all settings)
       - typing "stats" will now display bonuses from equipment to the side
       - Logging in on another window now logs you out (properly)
+      - Action queueing re-added, you can queue an action when its not your turn
+      - Made combat prompts shorter and removed ascii art from turns
   "300326":
     id: "300326"
     title: Better skill scaling

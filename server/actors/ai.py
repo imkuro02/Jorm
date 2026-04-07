@@ -258,6 +258,13 @@ class PlayerAI(AI):
         return
 
     def tick(self):
+        if not super().tick():
+            return
+
+        self.use_prediction()
+        self.clear_prediction()
+    '''
+    def tick(self):
         # early return if not in combat
         #if not super().tick():
         #    return
@@ -269,6 +276,7 @@ class PlayerAI(AI):
         #    self.clear_prediction()
 
         return
+    '''
 
 
 class EnemyAI(AI):

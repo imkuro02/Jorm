@@ -13,6 +13,7 @@ from skills.manager import get_skills, construct_skill
 from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.audio import Audio
 from configuration.constants.stat_type import StatType
+from configuration.constants.color import Color
 
 @check_your_turn
 @check_alive
@@ -316,7 +317,7 @@ def use2(self, line, silent = False):
 """
 
 @check_alive
-@check_your_turn
+#@check_your_turn
 def use(self, line, silent=False):
     
     line = line.lower()
@@ -456,12 +457,13 @@ def use(self, line, silent=False):
         self.ai.clear_prediction()
         return True
 
-    if self.room.combat.current_actor == self:
-        self.ai.use_prediction()
-        self.ai.clear_prediction()
+    if self.room.combat.current_actor != self:
+        self.send_line(f'{Color.IMPORTANT}Your action will be executed on your turn{Color.NORMAL}')
+        #self.ai.use_prediction()
+        #self.ai.clear_prediction()
         return True
 
-    self.ai.clear_prediction()
+    #self.ai.clear_prediction()
     return True
 
 def command_use(self, line, silent=False):
