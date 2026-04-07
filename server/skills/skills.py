@@ -648,8 +648,34 @@ class SkillStrike(SkillDamage):
         #self.name = f'{prefix} {self.name}'
         self.name_prefix = prefix
         #super().use()
-        return super().use(
-            dmg_stat_scale=highest_stat, dmg_type=dmg_type
+        history = self.user.fetch_combat_history()
+        bonus = 0
+        _calculated_strike = True
+        for packet in history:
+
+            if packet.round == 2:
+                _calculated_strike = False
+                continue
+
+            # check previous round
+            if packet.round != self.user.room.combat.round -1:
+                #print(packet.skill, packet.round, self.user.room.combat.round)
+                continue
+
+            # check if this user
+            if packet.actor_id != self.user.id:
+                continue
+            
+            # check if same skill
+            if packet.skill_id == 'strike':
+                _calculated_strike = False  
+
+        if _calculated_strike:
+            self.name_prefix = 'Calculated ' + self.name_prefix
+            bonus = 10
+
+        super().use(
+            dmg_stat_scale=highest_stat, dmg_type=dmg_type, dmg_flat = bonus
         )
 
 
