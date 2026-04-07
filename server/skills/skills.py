@@ -753,7 +753,7 @@ class SkillCleave(SkillDamage):
 
     def after_use(self):
         if self.other.stat_manager.stats[StatType.HP] <= 0:
-            self.user.send_line('dead enemy')
+            #self.user.send_line('dead enemy')
             self.user.room.combat.order.insert(
                 0, self.user
             )
@@ -761,8 +761,8 @@ class SkillCleave(SkillDamage):
                 self.user
             )
             del self.user.cooldown_manager.cooldowns['cleave']
-        else:
-            self.user.send_line('alive enemy')
+        #else:
+        #    self.user.send_line('alive enemy')
 
             
 class SkillBite(SkillDamageByGritFlow):
