@@ -67,7 +67,7 @@ class Skill:
         self.users_skill_level += next_level
 
         if self.users_skill_level == 0:
-            return 'No value'
+            return 0
 
         val = self.script_values[value][0]
         val = val + (self.script_values[value][2] * (self.users_skill_level -1))
@@ -1438,7 +1438,7 @@ class SkillConsumeCorpse(SkillTargetItem):
         return None
 
     def get_healing_value(self):
-        return int(self.user.stat_manager.stats[StatType.HPMAX] * (self.calculate_script_value(value = 'bonus')/100))
+        return int(self.user.stat_manager.stats[StatType.HPMAX] * (self.calculate_script_value(value = 'bonus')/100) )
 
     def evaluate(self):
         if self.other != None:

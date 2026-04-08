@@ -249,8 +249,8 @@ class Settings:
                     if value > 10:
                         self.actor.send_line('You cannot set your ego above 10 ("set ego 1" is default)')
                         return
-                    if not self.actor.room.can_be_recall_site:
-                        self.actor.send_line('You can only set your ego in safe rooms (rest to recall to a safe room)')
+                    if not type(self.actor.room).__name__ == 'tavern_room':
+                        self.actor.send_line('You can only set ego in the tavern ("set ego 1" is default)')
                         return
                     self.actor.send_line(f"Ego: {value}")
                     self.settings[SETTINGS.EGO] = value
