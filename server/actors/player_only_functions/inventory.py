@@ -136,6 +136,10 @@ def command_drop(self, line):
 def command_scrap(self, line):
     items_to_get = []
 
+    if self.inventory_manager.get_amount_of_free_item_slots() == 0:
+        self.send_line('You need atleast one free inventory slot to scrap items.')
+        return
+    
     for item in self.inventory_manager.items.values():
         items_to_get.append(item)
 

@@ -13,6 +13,7 @@ versions:
       - Affliction damage no longer crashes game after user dies and victim is alive
       - Strike deals bonus flow damage IF has not been used in previous round by user ("skill strike" for more)
       - Ego can only be set while in tavern
+      - Item stacks combined with another stack in inventory exceeding max_stack value WHILE inventory is full no longer crashes the game (in one tested instance atleast)
   "300326":
     id: "300326"
     title: Better skill scaling

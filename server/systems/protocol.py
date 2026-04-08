@@ -609,6 +609,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         self.actor.finish_turn()
 
     def save_actor(self):
+        #return
         if self.guest:
             systems.utils.debug_print("Not saving guest lol xd")
             return

@@ -215,10 +215,13 @@ class InventoryManager:
                     continue
 
                 if _i.stack + item.stack > _i.stack_max:
+                    
                     _i.time_on_ground = 0
                     item.stack -= _i.stack_max - _i.stack
                     _i.stack = _i.stack_max
-                    self.items[item.id] = item
+                    self.add_item(item, stack_items=stack_items, dont_send_objective_proposal=dont_send_objective_proposal, forced=forced)
+
+
                     if (
                         not dont_send_objective_proposal
                         and type(self.owner).__name__ == "Player"

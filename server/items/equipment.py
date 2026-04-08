@@ -208,7 +208,7 @@ class EquipmentBonusManager:
         """
 
         if not self.check_if_valid(bonus):
-            systems.utils.debug_print("failed to add bonus ", bonus.__dict__)
+            systems.utils.debug_print(self.id, self.name ,"failed to add bonus ", bonus.__dict__)
             return
 
         self.bonuses[id] = bonus
