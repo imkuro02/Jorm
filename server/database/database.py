@@ -304,7 +304,8 @@ class Database:
                 )
 
         my_dict = {}
-        my_dict = actor.stat_manager.stats
+        for i in actor.stat_manager.stats:
+            my_dict[i] = actor.stat_manager.stats[i]
         my_dict["actor_id"] = actor_id
         # my_dict['mp_max'] = 0
         # my_dict['mp'] = 0

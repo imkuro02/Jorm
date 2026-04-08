@@ -612,9 +612,8 @@ class Actor:
         self.unremove_equips_for_raw_stats(_equips)
 
         _stats_calculated_bonuses = {}
-        for i in _stats_with_equips:
-            _stats_calculated_bonuses[i] = _stats_with_equips[i] - _stats_without_equips[i]
-        
+        for i in self.stat_manager.stats:
+            _stats_calculated_bonuses[i] = int(_stats_with_equips[i]) - int(_stats_without_equips[i])
 
 
         #print(_stats_with_equips, '\n', _stats_without_equips, '\n', _stats_calculated_bonuses)

@@ -276,6 +276,7 @@ class AffectGuarding(Affect):
                 ),
                 damage_type=DamageType.HEALING,
                 damage_to_stat=StatType.PHYARMOR,
+                dont_proc = True,
             )
 
             damage_obj2 = Damage(
@@ -288,7 +289,8 @@ class AffectGuarding(Affect):
                 ),
                 damage_type=DamageType.HEALING,
                 damage_to_stat=StatType.MAGARMOR,
-                silent = True
+                silent = True,
+                dont_proc = True,
             )
 
             damage_obj1.run()
@@ -358,6 +360,7 @@ class Leech(Affect):
             damage_value=damage_value,
             damage_type=DamageType.HEALING,
             combat_event=damage_obj.combat_event,
+            dont_proc = True,
         )
 
 
@@ -395,6 +398,7 @@ class AffectThorns(Affect):
             ),
             damage_type=DamageType.PURE,
             combat_event=damage_obj.combat_event,
+            dont_proc = True,
         )
 
         return damage_obj
@@ -734,6 +738,7 @@ class AffectDOT(Affect):
             damage_value=self.damage_value,
             damage_type=self.damage_type,
             damage_to_stat=self.damage_to_stat,
+            dont_prc = True,
         )
 
         damage_obj.run()
@@ -761,6 +766,7 @@ class AffectPromise(Affect):
             damage_source_action=self,
             damage_value=self.accumulated_damage,
             damage_type=DamageType.PURE,
+            dont_proc = True,
         )
 
         damage_obj.run()
@@ -850,6 +856,7 @@ class AffectAreaOfEffectDamageOnFinished(Affect):
                     damage_source_action=self,
                     damage_value=self.affect_target_actor.stat_manager.stats[StatType.HPMAX],
                     damage_type=DamageType.PURE,
+                    dont_proc = True,
                 )
 
                 damage_obj.run()
@@ -860,6 +867,7 @@ class AffectAreaOfEffectDamageOnFinished(Affect):
                 damage_source_action=self,
                 damage_value=self.affect_target_actor.stat_manager.stats[StatType.HPMAX],
                 damage_type=DamageType.PURE,
+                dont_proc = True,
             )
 
             damage_obj.run()

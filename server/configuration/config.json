@@ -1,5 +1,5 @@
 {
-    "SHA-256": "551f534188c939493eec48566550270af26d7fb3b3638d7900f1a0a26458a4fe",
+    "SHA-256": "33c9974a2cd774aea2f5eb13768120be04de6bd013f9c416a4a4cba89924f6cc",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -1366,7 +1366,7 @@
                 "phy_armor": 60,
                 "mag_armor": 40,
                 "grit": 10,
-                "flow": 25,
+                "flow": 35,
                 "mind": 10,
                 "soul": 10,
                 "exp": 9,
@@ -2385,7 +2385,7 @@
         "strike": {
             "skill_id": "strike",
             "name": "Strike",
-            "description": "Deal damage based on your highest main stat.\nDamage type is determined by your highest stat between GRIT, FLOW, MIND or SOUL.\n",
+            "description": "Deal damage based on your highest main stat.\nDamage type is determined by your highest stat between GRIT, FLOW, MIND or SOUL.\nUsing strike past the first round without using strike in previous round grants\n1/4 of FLOW as flat damage bonus.\n",
             "script_to_run": "Strike",
             "target_others_is_valid": true,
             "target_item_is_valid": false,

@@ -2,7 +2,7 @@ versions:
   "070426":
     id: "070426"
     title: Better skill scaling
-    unixtime: 1761899677
+    unixtime: 1775631568
     features:
       - Equipment can now bring stats under 0
       - Settings now have a hint of what they do (settings will display all settings)
@@ -10,6 +10,8 @@ versions:
       - Logging in on another window now logs you out (properly)
       - Action queueing re-added, you can queue an action when its not your turn
       - Made combat prompts shorter and removed ascii art from turns
+      - Affliction damage no longer crashes game after user dies and victim is alive
+      - Strike deals bonus flow damage IF has not been used in previous round by user ("skill strike" for more)
   "300326":
     id: "300326"
     title: Better skill scaling
