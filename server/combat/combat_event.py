@@ -186,29 +186,34 @@ class CombatEvent:
     def run(self):
 
         if len(self.queue) == 0:
-            try:
-                self.print()
-            except Exception as e:
-                systems.utils.debug_print(f'Something went wrong while printing damage {e}')
+            #try:
+            self.print()
+            #except Exception as e:
+            #    systems.utils.debug_print(f'Something went wrong while printing damage {e}')
             return
 
         # get damage_obj first in queue
         damage_obj = self.queue[0]
+        try:
+            if not damage_obj.dont_proc:
+                if damage_obj.damage_type == DamageType.PHYSICAL:
+                    damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.GRIT]/2)
+                    damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.FLOW]/4)
 
-        if damage_obj.damage_type == DamageType.PHYSICAL:
-            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.GRIT]/2)
-            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.FLOW]/4)
+                if damage_obj.damage_type == DamageType.MAGICAL:
+                    damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/2)
+                    damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/4)
 
-        if damage_obj.damage_type == DamageType.MAGICAL:
-            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/2)
-            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/4)
+                if damage_obj.damage_type == DamageType.PURE:
+                    damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
 
-        if damage_obj.damage_type == DamageType.PURE:
-            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
-
-        if damage_obj.damage_type == DamageType.HEALING:
-            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/4)
-            damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
+                if damage_obj.damage_type == DamageType.HEALING:
+                    damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/4)
+                    damage_obj.damage_value += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
+                    
+        except Exception as e:
+            systems.utils.debug_print('Something went wrong while applying stats to damage:')
+            systems.utils.debug_print(f'"{e}"')
 
         try:
             if not damage_obj.dont_proc:

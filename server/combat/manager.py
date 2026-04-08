@@ -20,7 +20,7 @@ class CombatHistoryPacket:
         self.combat =          actor.room.combat
         self.skill_id =        skill_object.skill_id
         self.target_id =       skill_object.other
-        self.round =        deepcopy(int(self.combat.round))
+        self.round =           deepcopy(int(self.combat.round))
 
 class CombatHistory:
     def __init__(self, combat):
@@ -46,7 +46,7 @@ class Combat:
         self.order = []
         self.current_actor = None
         self.time_since_turn_finished = 0
-        self.round = 1
+        self.round = 0
         self.turn = 0
         self.combat_active = True
         self.combat_history = CombatHistory(self)
@@ -311,7 +311,7 @@ class Combat:
 
                 order = (
                     ("\n" * 1)
-                    + f"{Color.COMBAT_TURN}ROUND {self.round}...{Color.NORMAL} "
+                    + f"{Color.COMBAT_TURN}ROUND {self.round+1}...{Color.NORMAL} "
                     + "".join(order.rsplit(" -> ", 1))
                 )
                 # par.send_line(('#'*80)+'\n'+order)

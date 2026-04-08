@@ -542,7 +542,6 @@ class SkillDamage(Skill):
                 damage_value=dmg,
                 damage_type=dmg_type,
                 damage_to_stat=dmg_to_stat,
-
             )
 
             #self.combat_event.add_to_queue(damage_obj)
@@ -650,34 +649,25 @@ class SkillStrike(SkillDamage):
         #super().use()
         history = self.user.fetch_combat_history()
         bonus = 0
-        _calculated_strike = True
-        for packet in history:
+        _calculated_strike = False
 
-            if packet.round == 2:
-                _calculated_strike = False
-                continue
+        if self.user.room.combat.round -1 != 0:
+            valid_packets = [_packet for _packet in history if _packet.round == self.user.room.combat.round -1]
+            valid_packets = [_packet for _packet in valid_packets if _packet.actor_id == self.user.id]
+            valid_packets = [_packet for _packet in valid_packets if _packet.skill_id == 'strike']
 
-            # check previous round
-            if packet.round != self.user.room.combat.round -1:
-                #print(packet.skill, packet.round, self.user.room.combat.round)
-                continue
-
-            # check if this user
-            if packet.actor_id != self.user.id:
-                continue
-            
-            # check if same skill
-            if packet.skill_id == 'strike':
-                _calculated_strike = False  
+            if len(valid_packets) == 0:
+                _calculated_strike = True
 
         if _calculated_strike:
             self.name_prefix = 'Calculated ' + self.name_prefix
-            bonus = 10
+            bonus = int(self.user.stat_manager.stats[StatType.FLOW]/4)
 
-        super().use(
+        _dmg_obj = super().use(
             dmg_stat_scale=highest_stat, dmg_type=dmg_type, dmg_flat = bonus
         )
 
+        return _dmg_obj
 
 class SkillGuard(Skill):
     def use(self):

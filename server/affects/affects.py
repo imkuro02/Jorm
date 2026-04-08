@@ -693,11 +693,12 @@ class AffectBleed(Affect):
     def set_turn(self):
         super().set_turn()
         damage_obj = Damage(
-            damage_source_actor=self.affect_source_actor,
-            damage_taker_actor=self.affect_target_actor,
-            damage_source_action=self,
-            damage_value=self.damage,
-            damage_type=DamageType.PHYSICAL,
+            damage_source_actor = self.affect_source_actor,
+            damage_taker_actor = self.affect_target_actor,
+            damage_source_action = self,
+            damage_value = self.damage,
+            damage_type = DamageType.PHYSICAL,
+            dont_proc = True,
         )
 
         # self.damage = int(self.damage*0.5)
