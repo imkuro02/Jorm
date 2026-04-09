@@ -1383,6 +1383,15 @@ class SkillPortal(Skill):
 
 
 class SkillPromise(Skill):
+    def evaluate(self):
+        if self.other == None:
+            self.other = self.set_other_by_hp_percent_lowest()
+        if self.other == None:
+            return 0
+        if self.other.stat_manager.stats[StatType.HP] > self.other.stat_manager.stats[StatType.HPMAX]*0.75:
+            return 0
+        return 2
+        
     def use(self):
         super().use()
         if self.success:

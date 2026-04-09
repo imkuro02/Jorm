@@ -1,5 +1,5 @@
 {
-    "SHA-256": "749864226d9ccdfb7bf05f2e93e22508e84afa370478ad73d1aa9f42b2aa391a",
+    "SHA-256": "a36921db7d64643498f063bee99d2a94d6cd093ccf905f1416b73530b0532a28",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -154,7 +154,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "smite": 1
+                "smite": 1,
+                "cure_light_wounds": 1
             },
             "on_death_skills_use": "disorient=1",
             "on_start_skills_use": null,
@@ -552,7 +553,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "strike": 1
+                "strike": 1,
+                "guard": 3
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -719,7 +721,8 @@
             "include_in_daily_quests": true,
             "skills": {
                 "strike": 1,
-                "guard": 1
+                "guard": 1,
+                "bash": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": "guard=1",
@@ -1251,7 +1254,9 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "strike": 1
+                "strike": 1,
+                "slash": 1,
+                "promise": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
