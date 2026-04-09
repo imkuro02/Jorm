@@ -1065,6 +1065,20 @@ class SkillLeech(Skill):
 
 
 class SkillThorns(Skill):
+    def evaluate(self):
+        # if a target is set then the prio is 1000
+        if self.other != None:
+            return 1000
+
+        # by default get target by valid highest threat
+        self.other = self.user
+
+        # if no other is picked return 0
+        if self.other == None:
+            return 0
+            
+        # return 1 (by default)
+        return 2
     def use(self):
         super().use()
         if self.success:
