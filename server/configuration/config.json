@@ -1,5 +1,5 @@
 {
-    "SHA-256": "0e8476603d535342d666a51958c78a05f5bc18dec949a5cd53a77e00d08e1751",
+    "SHA-256": "749864226d9ccdfb7bf05f2e93e22508e84afa370478ad73d1aa9f42b2aa391a",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -239,8 +239,8 @@
             "name": "Spore",
             "description": "A ball of fluff.",
             "stats": {
-                "hp": 30,
-                "phy_armor": 0,
+                "hp": 15,
+                "phy_armor": 30,
                 "mag_armor": 0,
                 "grit": 5,
                 "flow": 5,
@@ -251,7 +251,8 @@
             },
             "include_in_daily_quests": true,
             "skills": {
-                "nudge": 1
+                "nudge": 1,
+                "guard": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": "explode_on_finished=1",
@@ -1238,8 +1239,8 @@
             "name": "Large Wood Stump",
             "description": "A massive reanimated stump of a once-great tree, its gnarled, dirt-covered roots twisting and thrashing like monstrous tentacles. At the center of its jagged, bark-covered body sits a single, menacing eye, glowing with a fierce, malevolent light. With each deliberate step, the stump groans and creaks, sending splinters of wood into the air. It moves with a terrifying purpose, its roots slamming the ground as it advances, ready to crush anything in its path.",
             "stats": {
-                "hp": 30,
-                "phy_armor": 20,
+                "hp": 60,
+                "phy_armor": 60,
                 "mag_armor": 20,
                 "grit": 30,
                 "flow": 10,
