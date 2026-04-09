@@ -2,10 +2,12 @@ import sqlite3
 
 import systems.utils
 from configuration.constants.item_type import ItemType
+import configuration.config as config
 
 class Database:
-    def __init__(self):
+    def __init__(self, factory):
         # Connect to the database
+        self.factory = factory
         self.conn = sqlite3.connect("database/database.db")
         self.cursor = self.conn.cursor()
 
@@ -205,7 +207,7 @@ class Database:
                         and q != "daily_quest"
                     ]
                 ),
-                "explored_rooms": len([q for q in actor["explored_rooms"]]),
+                "explored_rooms": len([q for q in actor["explored_rooms"] if q in config.WORLD['world']]),
             }
             # systems.utils.debug_print(actor['quests'], actor['quests'].values())
             actor_objs.append(actor_obj)

@@ -18,7 +18,7 @@ class ServerFactory(protocol.Factory):
         self.protocols = set()
         
 
-        self.db = Database()
+        self.db = Database(self)
         
         self.runtime = time.time()
         self.start = time.time()
