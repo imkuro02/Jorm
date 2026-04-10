@@ -21,7 +21,7 @@ def load_map():
                     all_data["nodes"].update(data["nodes"])
                     all_data["edges"].update(data["edges"])
                     # all_data['file'] = file_path.replace(MAP_DIRECTORY,'')
-    
+    '''
     # add extra edges
     for node in all_data["nodes"].values():
 
@@ -51,14 +51,14 @@ def load_map():
                             'json':{'direction':_dir}
                         }
                     }
+    '''
+
+
     
 
     for node in all_data["nodes"].values():
         data = node["data"]
         json_data = node["data"]["json"]
-
-
-
         room_id = data["from_file"] + "/" + data["id"]
         room_name = "somewhere"
         room_desc = "There is nothing noteworthy here"
@@ -86,8 +86,10 @@ def load_map():
             edge_data = edge["data"]
             if edge_data["source"] == data["id"]:
                 all_data["edges"][edge_data["id"]]["data"]["source"] = room_id
+                all_data["edges"][edge_data["id"]]["data"]["original_source"] = data['id']
             if edge_data["target"] == data["id"]:
                 all_data["edges"][edge_data["id"]]["data"]["target"] = room_id
+                all_data["edges"][edge_data["id"]]["data"]["original_target"] = data['id']
 
         if skip_loading:
             continue
@@ -160,13 +162,15 @@ def load_map():
             if "direction" in json_data:
                 new_exit["direction"] = json_data["direction"]
             else:
-                if all_data['nodes'][new_exit['from'].replace('overworld/','')]['position']['x'] < all_data['nodes'][new_exit['to_room_id'].replace('overworld/','')]['position']['x']:
+                _os = edge_data['original_source']
+                _ot = edge_data['original_target']
+                if all_data['nodes'][_os]['position']['x'] < all_data['nodes'][_ot]['position']['x']:
                     new_exit["direction"] = 'east'
-                if all_data['nodes'][new_exit['from'].replace('overworld/','')]['position']['x'] > all_data['nodes'][new_exit['to_room_id'].replace('overworld/','')]['position']['x']:
+                if all_data['nodes'][_os]['position']['x'] > all_data['nodes'][_ot]['position']['x']:
                     new_exit["direction"] = 'west'
-                if all_data['nodes'][new_exit['from'].replace('overworld/','')]['position']['y'] < all_data['nodes'][new_exit['to_room_id'].replace('overworld/','')]['position']['y']:
+                if all_data['nodes'][_os]['position']['y'] < all_data['nodes'][_ot]['position']['y']:
                     new_exit["direction"] = 'south'
-                if all_data['nodes'][new_exit['from'].replace('overworld/','')]['position']['y'] > all_data['nodes'][new_exit['to_room_id'].replace('overworld/','')]['position']['y']:
+                if all_data['nodes'][_os]['position']['y'] > all_data['nodes'][_ot]['position']['y']:
                     new_exit["direction"] = 'north'
             if "item_required" in json_data:
                 new_exit["item_required"] = json_data["item_required"]
