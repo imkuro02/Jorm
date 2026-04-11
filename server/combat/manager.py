@@ -5,6 +5,7 @@ from combat.combat_event import CombatEvent
 from combat.damage_event import Damage
 from configuration.config import SKILLS
 from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.message_type import MessageType
 from configuration.constants.color import Color
 #from configuration.constants.damage_type import DamageType
 from configuration.constants.stat_type import StatType
@@ -310,12 +311,11 @@ class Combat:
                         order = order + i.pretty_name() + " -> "
 
                 order = (
-                    ("\n" * 1)
-                    + f"{Color.COMBAT_TURN}ROUND {self.round+1}...{Color.NORMAL} "
+                    f"{Color.COMBAT_TURN}ROUND {self.round+1}...{Color.NORMAL} "
                     + "".join(order.rsplit(" -> ", 1))
                 )
                 # par.send_line(('#'*80)+'\n'+order)
-                par.send_line(order)
+                par.send_line(order, msg_type = [MessageType.COMBAT])
 
         for i in self.order:
             if i.room != self.room:

@@ -450,7 +450,9 @@ class Player(Actor):
     def sendSound(self, sfx):
         self.protocol.send_gmcp({"name": sfx}, "Client.Media.Play")
 
-    def send_line(self, line, color=True, sound=None, msg_type=None):
+
+    def send_line(self, line, color=True, sound=None, msg_type: [] = None):
+        
         # if self.last_line_received == line:
         #   return
 
@@ -469,6 +471,10 @@ class Player(Actor):
         if sound != None:
             self.sendSound(sound)
 
+
+        if msg_type == MessageType.COMBAT:
+            line = '@bredX '+line.replace('\n','\n@bredX ')
+            
         if color:
             # start = time.time()
 
