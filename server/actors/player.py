@@ -472,8 +472,8 @@ class Player(Actor):
             self.sendSound(sound)
 
 
-        if msg_type == MessageType.COMBAT:
-            line = '@bredX '+line.replace('\n','\n@bredX ')
+        #if msg_type == MessageType.COMBAT:
+        #    line = '@bredX '+line.replace('\n','\n@bredX ')
             
         if color:
             # start = time.time()
