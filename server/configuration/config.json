@@ -1,5 +1,5 @@
 {
-    "SHA-256": "a36921db7d64643498f063bee99d2a94d6cd093ccf905f1416b73530b0532a28",
+    "SHA-256": "087b134e3dc245b51e49a9a188901c13989bf922433ecb52ae4ab932a76b74bd",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -2346,6 +2346,51 @@
             "ai": "Enemy",
             "name": "Gambler",
             "description": "A tiny figure with a bunch of dice squats on the ground.",
+            "stats": {
+                "hp": 30,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "grit": 10,
+                "flow": 10,
+                "mind": 10,
+                "soul": 10,
+                "exp": 1,
+                "lvl": 1
+            },
+            "include_in_daily_quests": false,
+            "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "axe": 120,
+                "grit body 1": 120,
+                "grit body 3": 160,
+                "grit head 1": 120,
+                "grit head 3": 160,
+                "grit relic 1": 120,
+                "grit trinket 1": 120,
+                "grit trinket 3": 160,
+                "grit weapon 1": 120,
+                "grit weapon 3": 160,
+                "grit weapon alt 3": 160,
+                "rock": 39,
+                "summoning_rock": 39
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "npc_blacksmith": {
+            "npc_id": "npc_blacksmith",
+            "ai": "Enemy",
+            "name": "Blacksmith",
+            "description": "A short bearded figure wearing a red hat",
             "stats": {
                 "hp": 30,
                 "phy_armor": 0,

@@ -85,14 +85,9 @@ def command_map(self, line, return_gmcp = False):
    
     for room in coords:
         x, y, z, depth = coords[room]
-        gx = (x*3) + GRID_CENTER_X
-        gy = (y*3) + GRID_CENTER_Y
+        gx = (x*2) + GRID_CENTER_X
+        gy = (y*2) + GRID_CENTER_Y
         if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
-            if (x, y, z) == (0, 0, 0):
-                grid[gy][gx] = "@bcyan"   
-            else:
-                grid[gy][gx] = "@bblack"
-
             has_up = False
             has_down = False
             for _exit in room.exits:
@@ -101,11 +96,27 @@ def command_map(self, line, return_gmcp = False):
                 if _exit.direction == 'down':
                     has_down = True
 
-            #cell = f'{depth}'
+            
+
+
+            color = '@bblack'
+
+            #if setting_render_walls:
+            _color, _texture, _priority = room.get_wall_data()
+            color = _color
+            cell = _texture
+            #cell = wall
+
             if (x, y, z) == (0, 0, 0):
                 cell = '@'
-            else:
+
+            if room.is_player_present():
+                color = "@bcyan" 
+
+            if cell == ' ':
                 cell = 'O'
+                color = '@bblack'
+
             if has_up:
                 cell = '<'
             if has_down:
@@ -113,24 +124,26 @@ def command_map(self, line, return_gmcp = False):
             if has_down and has_up:
                 cell = 'x'
 
+            grid[gy][gx] = color + cell
 
-            grid[gy][gx] += cell
+            '''
+            if setting_render_walls:
+                color, texture, priority = room.get_wall_data()
+                wall = f'{color}{texture}'
 
-            color, texture, priority = room.get_wall_data()
-            wall = f'{color}{texture}'
+                grid[gy-1][gx-1] = wall
+                grid[gy+1][gx+1] = wall
 
-            grid[gy-1][gx-1] = wall
-            grid[gy+1][gx+1] = wall
-
-            grid[gy-1][gx+1] = wall
-            grid[gy+1][gx-1] = wall
+                grid[gy-1][gx+1] = wall
+                grid[gy+1][gx-1] = wall
 
 
-            grid[gy][gx+1] = wall
-            grid[gy][gx-1] = wall
+                grid[gy][gx+1] = wall
+                grid[gy][gx-1] = wall
 
-            grid[gy+1][gx] = wall
-            grid[gy-1][gx] = wall
+                grid[gy+1][gx] = wall
+                grid[gy-1][gx] = wall
+            '''
                 
             
             for _exit in room.exits:
@@ -223,30 +236,24 @@ def command_map(self, line, return_gmcp = False):
         for x in y:
             _map += ''.join(x)
         _map += '\n'
-    #_map = grid
-
-    #_map = coords
-
+ 
     col = '@bblack'
     tex = '#'
-    #col, tex, pri = start_room.get_wall_data()
-    #if tex == ' ':
-    #    tex = '.'
-    #split_map = _map.split('\n')
-    #_map = f'{col}{tex*(GRID_SIZE_X+2)}\n{col}{tex*1}{_map.replace("\n",f"{col}{tex*1}\n{col}{tex*1}")}{col}{tex*(GRID_SIZE_X+1)}'
-    
-    #__map = _map.split('\n')
-    #_map = []
-    #for i in __map:
-    #    _map.append(f'')
-    _map = f'{col}{tex*(GRID_SIZE_X+2)}' + '\n' + _map + f'{col}{tex*(GRID_SIZE_X+2)}' 
+
+
+    #top_border = f'{col}{tex*(GRID_SIZE_X+2)}'
+    #bot_border = f'{col}{tex*(GRID_SIZE_X+2)}'
+
+    top_border = f'{Color.NORMAL}<MAP START>'
+    bot_border = f'{Color.NORMAL}<MAP END>'
+    _map = top_border + '\n' + _map + bot_border
 
     _map = _map + '@normal'
     if return_gmcp:
         return str(_map)
     else:
         self.send_line(str(_map))
-
+'''
 def command_map2(self, line, return_gmcp=False):
     setting_render_walls = self.settings_manager.get_value('viewmapwalls')
     if self.room == None:
@@ -684,7 +691,7 @@ def command_map2(self, line, return_gmcp=False):
         self.send_line("<Map Start>\n" + combined_output + "<Map End>")
     else:
         return combined_output
-
+'''
 
 def command_scan(self, line):
     see = ""

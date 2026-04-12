@@ -1,3 +1,5 @@
+
+
 [id:tutorial_enemy_1]
 @white     ,--(@yellow?@white) (@yellow?@white)
 @white    /#####\@bredo o@white|
@@ -571,4 +573,14 @@ the_well_below_trap
  @bred/@bcyan'uU
 @bredO@yellow)@white-@yellow(@bred \
 @yellow(_@green$@yellow_)@bredO
+[end]
+
+[id:npc_blacksmith]
+@bred    .-'@
+   @bred~~~~~
+  @yellow% -  -
+@bred  \  @yellow~_~|
+@bred  |@yellow\~/\~/
+@bred  |@yellow W  W@bred|
+@bred  |@yellow #  #@bred|  
 [end]

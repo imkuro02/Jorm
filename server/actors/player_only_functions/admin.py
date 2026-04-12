@@ -513,8 +513,10 @@ def command_export(self, line):
         actor_dict = actor.__dict__
         for key in actor_dict:
             _dict[key] = actor_dict[key]
-        del _dict['explored_rooms']
-        del _dict['msg_history']
+        if 'explored_rooms' in _dict:
+            del _dict['explored_rooms']
+        if 'msghistory' in _dict:
+            del _dict['msg_history']
         _dict = str(_dict)
         self.send_line(str(actor) + '->' + _dict)
 

@@ -38,8 +38,8 @@ for line in lines:
 
 def get_icon(icon_id):
     if icon_id not in ICONS:
-        return ''
-        return "no icon?"
+        #return ''
+        return f"{icon_id}"
     border = ""  #'@normal|  '
     icon = ICONS[icon_id]
     icon = icon.split("\n")

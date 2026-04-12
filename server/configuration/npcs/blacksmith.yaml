@@ -1,0 +1,33 @@
+npc_blacksmith:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc> says "Come to chit chat about reforging?"
+      options:
+        - line: |
+              ask "What is reforging?"
+          goto: what
+        - line: |
+              ask "How do I reforge?"
+          goto: how
+    
+    what:
+      dialog:
+          - line: |
+              <npc> says "Ah! reforging is the act of rubbin scrap on an item til its all better." They lean in closer "Reforging an item costs the item level times 10 in scrap, so a level 10 item woud cost ya about 100 scrap to reforge"
+      options:
+        - line: |
+              ask "How do I reforge?"
+          goto: how
+
+    how:
+      dialog:
+          - line: |
+              <npc> says "You simply @tip"reforge <item>"@back then ya lean back and pray it dont stink!"
+      options:
+        - line: |
+              ask "What is reforging?"
+          goto: what
+
+

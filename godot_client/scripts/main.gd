@@ -163,6 +163,7 @@ func handle_gmcp(message: String):
 			#OUTPUT.append_text("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 			INPUT.secret = 'REGISTER_PASSWORD' in game_state or 'LOGIN_PASSWORD' in game_state
 			INPUT.clear()
+			
 			SIDEBAR.visible = 'PLAY' in game_state
 				
 		'Client.Media.Play':
