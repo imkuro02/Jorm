@@ -36,6 +36,10 @@ container.appendChild(JsonEditor)
 var selectedNode = null; // Track the currently selected node or edge
 var selectedEdge = null;
 var copiedData = null;
+let clipboard = {
+    nodes: [],
+    edges: []
+};
 
 function NODEsetSelectedNode(node){
     if (selectedNode == node){
@@ -197,9 +201,106 @@ function generateUUID4() {
     return v.toString(16);
     });
 }
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key.toLowerCase() === 'v') {
+        event.preventDefault();
+    
+        let idMap = {};
+        let newElements = [];
+    
+        cy.elements().unselect();
+    
+        // 1. Paste nodes
+        clipboard.nodes.forEach(n => {
+            let newId = generateUUID4();
+            idMap[n.data.id] = newId;
+    
+            newElements.push({
+                group: 'nodes',
+                data: {
+                    ...n.data,
+                    id: newId,
+                    json: JSON.parse(JSON.stringify(n.data.json || {}))
+                },
+                position: {
+                    x: n.position.x + 20,
+                    y: n.position.y + 20
+                }
+            });
+        });
+    
+        // 2. Paste edges (rewired to new node IDs)
+        clipboard.edges.forEach(e => {
+            let newId = generateUUID4();
+    
+            let source = idMap[e.data.source];
+            let target = idMap[e.data.target];
+    
+            if (source && target && source !== target) {
+                newElements.push({
+                    group: 'edges',
+                    data: {
+                        ...e.data,
+                        id: newId,
+                        source: source,
+                        target: target,
+                        json: JSON.parse(JSON.stringify(e.data.json || {}))
+                    }
+                });
+            }
+        });
+    
+        // 3. Add to graph
+        let added = cy.add(newElements);
+    
+        // 4. Highlight pasted elements
+        added.select();
+    
+        console.log("Pasted");
+    }
 
+    // DELETE (you already have this)
+    if (event.key === "Delete") {
+        let selectedNodes = cy.$(':selected');
+        if (selectedNodes.length > 0) {
+            selectedNodes.remove();
+        }
+    }
+
+    // 👇 PUT CTRL+C HERE
+    if (event.ctrlKey && event.key.toLowerCase() === 'c') {
+        event.preventDefault();
+
+        let selectedNodes = cy.nodes(':selected');
+
+        clipboard.nodes = [];
+        clipboard.edges = [];
+
+        let nodeIds = new Set();
+
+        selectedNodes.forEach(n => {
+            clipboard.nodes.push({
+                data: JSON.parse(JSON.stringify(n.data())),
+                position: { ...n.position() }
+            });
+            nodeIds.add(n.id());
+        });
+
+        cy.edges().forEach(e => {
+            if (nodeIds.has(e.source().id()) && nodeIds.has(e.target().id())) {
+                clipboard.edges.push({
+                    data: JSON.parse(JSON.stringify(e.data()))
+                });
+            }
+        });
+
+        console.log("Copied:", clipboard);
+    }
+
+});
 // Right-click to create new node or delete a node
 cy.on('cxttap', function(event) {
+   
     if (!event.target || event.target === cy) {
     // Right-click on empty space or the Cytoscape container itself
     //selectedNode = null;
@@ -429,3 +530,4 @@ document.addEventListener('keydown', function(event) {
 
 window.selectedNode = selectedNode;
 window.NODEsetSelectedNode = NODEsetSelectedNode;
+
