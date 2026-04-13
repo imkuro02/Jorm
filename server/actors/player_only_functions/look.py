@@ -16,12 +16,12 @@ def command_map(self, line, return_gmcp = False):
     
     
     #GRID_SIZE = 15*1
-    GRID_SIZE_X = 3*11
-    GRID_SIZE_Y = 3*5
+    GRID_SIZE_X = 3 * 1 * 11
+    GRID_SIZE_Y = 3 * 1* 5
     GRID_CENTER_X = GRID_SIZE_X // 2
     GRID_CENTER_Y = GRID_SIZE_Y // 2
 
-    DEPTH = GRID_SIZE_X // 1
+    DEPTH = 3#GRID_SIZE_X // 1
 
     rooms = self.room.world.rooms
     start_room = self.room
@@ -85,8 +85,8 @@ def command_map(self, line, return_gmcp = False):
    
     for room in coords:
         x, y, z, depth = coords[room]
-        gx = (x*2) + GRID_CENTER_X
-        gy = (y*2) + GRID_CENTER_Y
+        gx = (x*3) + GRID_CENTER_X
+        gy = (y*3) + GRID_CENTER_Y
         if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
             has_up = False
             has_down = False
