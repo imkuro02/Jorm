@@ -248,7 +248,6 @@ class PlayerAI(AI):
     def use_prediction(self, no_checks=False):
         if super().use_prediction(no_checks=no_checks):
             return True
-        # self.actor.simple_broadcast('You do nothing!', f'{self.actor.pretty_name()} does nothing!')
         return False
 
     def die(self):

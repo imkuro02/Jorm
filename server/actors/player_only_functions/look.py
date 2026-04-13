@@ -107,15 +107,19 @@ def command_map(self, line, return_gmcp = False):
             cell = _texture
             #cell = wall
 
-            if (x, y, z) == (0, 0, 0):
-                cell = '@'
+            
 
-            if room.is_player_present():
-                color = "@bcyan" 
+            
 
             if cell == ' ':
                 cell = 'O'
                 color = '@bblack'
+
+            if room.is_player_present():
+                color = "@cyan" 
+
+            if (x, y, z) == (0, 0, 0):
+                color = '@bgcyan'
 
             if has_up:
                 cell = '<'
@@ -124,7 +128,7 @@ def command_map(self, line, return_gmcp = False):
             if has_down and has_up:
                 cell = 'x'
 
-            grid[gy][gx] = color + cell
+            grid[gy][gx] = color + cell + Color.NORMAL
 
             '''
             if setting_render_walls:
@@ -244,7 +248,7 @@ def command_map(self, line, return_gmcp = False):
     #top_border = f'{col}{tex*(GRID_SIZE_X+2)}'
     #bot_border = f'{col}{tex*(GRID_SIZE_X+2)}'
 
-    top_border = f'{Color.NORMAL}<MAP START>'
+    top_border = f'{Color.NORMAL}<MAP START> {start_room.pretty_name()}'
     bot_border = f'{Color.NORMAL}<MAP END>'
     _map = top_border + '\n' + _map + bot_border
 
@@ -253,8 +257,7 @@ def command_map(self, line, return_gmcp = False):
         return str(_map)
     else:
         self.send_line(str(_map))
-'''
-def command_map2(self, line, return_gmcp=False):
+def command_map3(self, line, return_gmcp=False):
     setting_render_walls = self.settings_manager.get_value('viewmapwalls')
     if self.room == None:
         return
@@ -691,7 +694,6 @@ def command_map2(self, line, return_gmcp=False):
         self.send_line("<Map Start>\n" + combined_output + "<Map End>")
     else:
         return combined_output
-'''
 
 def command_scan(self, line):
     see = ""

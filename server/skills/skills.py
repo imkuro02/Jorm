@@ -1070,7 +1070,6 @@ class SkillThorns(Skill):
         if self.other != None:
             return 1000
 
-        # by default get target by valid highest threat
         self.other = self.user
 
         # if no other is picked return 0
