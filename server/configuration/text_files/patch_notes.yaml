@@ -1,7 +1,13 @@
 versions:
+  "150426":
+    id: "150426"
+    title: Map
+    unixtime: 1775631568
+    features:
+      - Map editor supports copy paste
   "070426":
     id: "070426"
-    title: Better skill scaling
+    title: Settings
     unixtime: 1775631568
     features:
       - Equipment can now bring stats under 0
