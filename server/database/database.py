@@ -207,7 +207,7 @@ class Database:
                         and q != "daily_quest"
                     ]
                 ),
-                "explored_rooms": len([q for q in actor["explored_rooms"] if q in config.WORLD['world']]),
+                "explored_rooms": len([q for q in actor["explored_rooms"]]),
             }
             # systems.utils.debug_print(actor['quests'], actor['quests'].values())
             actor_objs.append(actor_obj)

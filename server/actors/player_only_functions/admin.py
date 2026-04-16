@@ -219,7 +219,6 @@ def command_history(self, line):
         self.send_line(i, msg_type=None)
     self.send_line("<History End>")
 
-
 def command_ranks(self, line):
     # limit = 200
     # if limit >= 200: limit = 200
@@ -243,8 +242,12 @@ def command_ranks(self, line):
     # if length >= limit:
     #    length = limit
     rank = 0
+    enum = 0
     for i in range(0, len(ranks)):
         rank += 1
+        enum += 1
+        if enum > 10:
+            break
         # if ranks[i]['time_in_game'] == 0:
         #    continue
         # if ranks[i]['quests_turned_in'] == 0:
@@ -564,14 +567,14 @@ def command_kick(self, line):
 
 
 def command_online(self, line):
+    t = systems.utils.Table(3, 6)
     output = ""
-    t = systems.utils.Table(4, 3)
     for proto in self.protocol.factory.protocols:
         # ignore protocols that have not yet signed in
         if proto.actor == None:
             continue
         user = proto.actor
-        t.add_data(user.pretty_name())
+        t.add_data(user.pretty_name(self))
     output = t.get_table()
     self.send_line(output)
 

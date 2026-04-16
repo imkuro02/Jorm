@@ -6,6 +6,8 @@ versions:
     features:
       - Map editor supports copy paste
       - Emoting now uses godot urls
+      - Explored rooms now show up in rankings
+      - Rankings now show max 10 results
   "070426":
     id: "070426"
     title: Settings

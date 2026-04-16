@@ -574,6 +574,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
             # systems.utils.debug_print(actor['explored_rooms'])
             if actor["explored_rooms"] != []:
                 for i in actor["explored_rooms"]:
+                    if i[1] not in self.actor.room.world.rooms:
+                        continue
                     self.actor.explored_rooms.append(i[1])
 
         self.actor.inventory_manager.all_items_set_new(False)
