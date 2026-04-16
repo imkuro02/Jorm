@@ -21,7 +21,7 @@ def command_map(self, line, return_gmcp = False):
     GRID_CENTER_X = GRID_SIZE_X // 2
     GRID_CENTER_Y = GRID_SIZE_Y // 2
 
-    DEPTH = 3#GRID_SIZE_X // 1
+    DEPTH = 2#GRID_SIZE_X // 1
 
     rooms = self.room.world.rooms
     start_room = self.room
