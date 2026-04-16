@@ -245,9 +245,7 @@ def command_ranks(self, line):
     enum = 0
     for i in range(0, len(ranks)):
         rank += 1
-        enum += 1
-        if enum > 10:
-            break
+        
         # if ranks[i]['time_in_game'] == 0:
         #    continue
         # if ranks[i]['quests_turned_in'] == 0:
@@ -256,6 +254,10 @@ def command_ranks(self, line):
         if line != "":
             if line != ranks[i]["name"]:
                 continue
+
+        enum += 1
+        if enum > 10:
+            break
         t.add_data(f"{rank}. ")
         t.add_data(ranks[i]["lvl"])
         t.add_data(ranks[i]["name"])
