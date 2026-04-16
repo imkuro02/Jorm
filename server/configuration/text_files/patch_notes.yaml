@@ -5,6 +5,7 @@ versions:
     unixtime: 1775631568
     features:
       - Map editor supports copy paste
+      - Emoting now uses godot urls
   "070426":
     id: "070426"
     title: Settings

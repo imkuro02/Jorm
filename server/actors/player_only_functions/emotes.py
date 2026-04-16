@@ -61,27 +61,41 @@ def command_emote(self, line):
     }
 
     for perspective in perspectives:
-        perspectives[perspective] = perspectives[perspective].replace('#USER#', self.pretty_name())
-        perspectives[perspective] = perspectives[perspective].replace('#OTHER#', target.pretty_name())
+        perspectives[perspective] = perspectives[perspective].replace('#USER#', self.id)
+        perspectives[perspective] = perspectives[perspective].replace('#OTHER#', target.id)
 
+
+    list_pretty_name_objects = [self, target]
+
+    
     for receiver in self.room.actors.values():
         if type(receiver).__name__ != "Player":
             continue
 
         if receiver == self and receiver == target:
-            receiver.send_line(perspectives['you on you'])
+            _p = perspectives['you on you']
+            receiver.pretty_broadcast(line_self = _p, line_others = '', send_to="room", sound=None, msg_type=None, list_pretty_name_objects = list_pretty_name_objects)
+            #receiver.send_line(perspectives['you on you'])
             continue
         if receiver == self and receiver != target:
-            receiver.send_line(perspectives['you on other'])
+            _p = perspectives['you on other']
+            receiver.pretty_broadcast(line_self = _p, line_others = '', send_to="room", sound=None, msg_type=None, list_pretty_name_objects = list_pretty_name_objects)
+            #receiver.send_line(perspectives['you on other'])
             continue
         if receiver != self and receiver != target and self == target:
-            receiver.send_line(perspectives['user on user'])
+            _p = perspectives['user on user']
+            receiver.pretty_broadcast(line_self = _p, line_others = '', send_to="room", sound=None, msg_type=None, list_pretty_name_objects = list_pretty_name_objects)
+            #receiver.send_line(perspectives['user on user'])
             continue
         if receiver != self and receiver == target:
-            receiver.send_line(perspectives['user on you'])
+            _p = perspectives['user on you']
+            receiver.pretty_broadcast(line_self = _p, line_others = '', send_to="room", sound=None, msg_type=None, list_pretty_name_objects = list_pretty_name_objects)
+            #receiver.send_line(perspectives['user on you'])
             continue
         if receiver != self and receiver != target:
-            receiver.send_line(perspectives['user on other'])
+            _p = perspectives['you on other']
+            receiver.pretty_broadcast(line_self = _p, line_others = '', send_to="room", sound=None, msg_type=None, list_pretty_name_objects = list_pretty_name_objects)
+            #receiver.send_line(perspectives['user on other'])
             continue
     return
 
