@@ -104,7 +104,7 @@ class PartyManager:
                 return FactionType.ENEMY
             if type(self.actor).__name__ == "Player":
                 # return 'party id players' #self.actor.id #'party id players'
-                return FactionType.PLAYER # self.actor.id
+                return self.actor.id
 
     def clear_invites(self):
         self.invitations = []

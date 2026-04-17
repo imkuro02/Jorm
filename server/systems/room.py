@@ -490,7 +490,9 @@ class Room:
                     actor.instanced_rooms = []
         else:
             if type(actor).__name__ == "Player":
+               
                 instanced_room_id = self.id + "#" + actor.party_manager.get_party_id()
+
                 if instanced_room_id not in self.world.rooms:
                     self.world.rooms[instanced_room_id] = Room(
                         self.world,

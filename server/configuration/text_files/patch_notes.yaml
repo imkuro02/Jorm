@@ -1,6 +1,13 @@
 versions:
   "150426":
     id: "150426"
+    title: Bugfix
+    unixtime: 1775631568
+    features:
+      - Instances without a party doesnt combine you with other players
+      - Ressurected npc as allies no longer grant exp
+  "150426":
+    id: "150426"
     title: Map
     unixtime: 1775631568
     features:

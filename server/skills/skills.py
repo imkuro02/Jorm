@@ -1478,7 +1478,6 @@ class SkillConsumeCorpse(SkillTargetItem):
         return 2
 
     def use(self):
-        #corpse = self.other
         if self.other == None:
             self.other = self.check_if_corpses_present()
 
@@ -1487,7 +1486,7 @@ class SkillConsumeCorpse(SkillTargetItem):
             return
 
         if not hasattr(self.other, 'corpse_npc_id'):
-            self.user.send_line(f'You cannot canibalize {corpse.name}')
+            self.user.send_line(f'You cannot canibalize {self.other.name}')
             return False
 
         if self.other not in self.user.room.inventory_manager.items.values():
@@ -1544,11 +1543,11 @@ class SkillNecromancerRessurect(SkillTargetItem):
             self.other = self.check_if_corpses_present()
 
         if self.other == None:
-            self.user.send_line(f'There are no corpses to eat')
+            self.user.send_line(f'There are no corpses to ressurect')
             return
   
         if not hasattr(self.other, 'corpse_npc_id'):
-            self.user.send_line(f'You cannot resurrect {corpse.name}')
+            self.user.send_line(f'You cannot resurrect {self.other.name}')
             return False
 
         super().use()
@@ -1663,10 +1662,10 @@ class SkillNecromancerRessurect(SkillTargetItem):
             e.trigger_manager.trigger_add('dismiss', e.trigger_dismiss)
 
             # add trigger descriptions
-            e.description += f'\rResurrected by {self.user.name}'
+            e.description += f'\nResurrected by {self.user.name}'
             e.description += f'\nCan be renamed with "rename <name> to <new name>".'
             e.description += f'\nCan be dismissed with "dismiss <name>".'
-
+            e.stat_manager.stats[StatType.EXP] = 0
             # create aff
             affect = affects.AffectSummoner(
                 affect_source_actor=self.user,
