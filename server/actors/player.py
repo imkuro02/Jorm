@@ -289,6 +289,13 @@ class UpdateChecker:
         # self.actor.send_line(str(_grid))
         self.protocol.send_gmcp(_grid, "Map")
 """
+    def tick_send_exp(self):
+        exp_cur = self.actor.stat_manager.stats[StatType.EXP]
+        exp_max = self.actor.get_exp_needed_to_level()
+        lvl = self.actor.stat_manager.stats[StatType.LVL]
+        self.actor.protocol.send_gmcp(
+            {"exp_cur": exp_cur, "exp_max": exp_max, 'lvl': lvl}, "ExpBar"
+        )
 
     def tick_send_time(self):
         time = self.actor.room.world.game_time.get_game_time()
@@ -297,6 +304,8 @@ class UpdateChecker:
         )
 
     def tick(self):
+        self.tick_send_exp()
+
         if self.actor.protocol == None:
             return
 

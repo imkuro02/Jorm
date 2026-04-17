@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=18 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dnj77qukfgln4" path="res://images/kuro/up.png" id="6_d5hl4"]
 [ext_resource type="Texture2D" uid="uid://d07eg5x1ov0v4" path="res://images/kuro/down.png" id="7_1kjrd"]
 [ext_resource type="Texture2D" uid="uid://doybnjy4cr05" path="res://images/kuro/bg.png" id="9_2qqwb"]
+[ext_resource type="Script" path="res://scripts/smooth_exp_bar.gd" id="10_flati"]
 [ext_resource type="FontFile" uid="uid://csvw2gt15o8yp" path="res://fonts/PixelCode-Medium.ttf" id="19_jxno8"]
 [ext_resource type="Script" path="res://scripts/input.gd" id="20_c83m0"]
 
@@ -49,6 +50,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.585, 1.585)
 
 [node name="side_panel" type="Panel" parent="canvas/HBoxContainer"]
 custom_minimum_size = Vector2(416, 0)
@@ -246,7 +248,7 @@ anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = -8.0
-offset_bottom = -48.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -377,6 +379,21 @@ bbcode_enabled = true
 text = "test         
 test"
 selection_enabled = true
+
+[node name="smooth_exp_bar" type="RichTextLabel" parent="canvas"]
+anchors_preset = -1
+anchor_top = 0.996
+anchor_right = 1.0
+anchor_bottom = 0.996
+offset_left = 8.0
+offset_top = -60.16
+offset_right = -8.0
+offset_bottom = -40.16
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+bbcode_enabled = true
+text = "[#############################################    1/10  (10%)             ############################################]"
+scroll_active = false
+script = ExtResource("10_flati")
 
 [node name="sfx_manager" type="AudioStreamPlayer" parent="."]
 volume_db = -20.292

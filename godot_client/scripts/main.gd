@@ -15,6 +15,7 @@ var socket = WebSocketPeer.new()
 @onready var ASCIIMAP = $canvas/container/sidebar/ascii_map
 @onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
 @onready var MOUSE_CLICK_OPTIONS = $canvas/mouse_click_options
+@onready var EXPBAR = $canvas/smooth_exp_bar
 
 var game_state = 'none yet'
 
@@ -44,6 +45,7 @@ const telnet_stuff := {
 
 func _ready():
 	SIDEBAR.visible = false
+	EXPBAR.visible = false
 	# Connect the input signal for Enter key
 	INPUT.text_submitted.connect(_on_input_submitted)
 	# Try local WebSocket first, then fallback to remote
@@ -155,6 +157,9 @@ func handle_gmcp(message: String):
 		data_dict = JSON.parse_string(dict_string.replace("'", '"'))
 
 	match prefix:
+		'ExpBar':
+			EXPBAR.fill_exp(data_dict['exp_cur'], data_dict['exp_max'], data_dict['lvl'])
+			
 		'GAME_STATE':
 			game_state = dict_string
 			ASCIIMAP.clear()
@@ -165,6 +170,7 @@ func handle_gmcp(message: String):
 			INPUT.clear()
 			
 			SIDEBAR.visible = 'PLAY' in game_state
+			EXPBAR.visible = 'PLAY' in game_state
 				
 		'Client.Media.Play':
 			var sfx = load("res://audio/sfx/" + data_dict['name'])
