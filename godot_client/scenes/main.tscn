@@ -267,7 +267,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="ascii_map" type="RichTextLabel" parent="canvas/container/sidebar"]
-custom_minimum_size = Vector2(384, 376)
+custom_minimum_size = Vector2(384, 392)
 layout_mode = 2
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
