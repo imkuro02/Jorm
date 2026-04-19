@@ -10,7 +10,8 @@ def command_say(self, line):
     self.simple_broadcast(
         f'You say "@cyan{line}@normal"',
         f'{self.pretty_name()} says "@cyan{line}@normal"@normal',
-        msg_type = [MessageType.SAY, MessageType.CHAT])
+        msg_type = [MessageType.SAY, MessageType.CHAT],
+        sound = 'notif1.wav')
 
 @check_no_empty_line
 @check_not_spamming
@@ -19,7 +20,8 @@ def command_shout(self, line):
     self.simple_broadcast(
         f'You shout "@cyan{line}@normal"',
         f'{self.pretty_name()} shouts "@cyan{line}@normal" from "{self.room.pretty_name()}@normal"',
-        send_to = 'world', msg_type = [MessageType.SHOUT, MessageType.CHAT])
+        send_to = 'world', msg_type = [MessageType.SHOUT, MessageType.CHAT],
+        sound = 'notif1.wav')
 
 @check_not_spamming
 def command_emote(self, line):
