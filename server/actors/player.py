@@ -304,10 +304,14 @@ class UpdateChecker:
         )
 
     def tick(self):
-        self.tick_send_exp()
+
+        if self.actor == None:
+            return
 
         if self.actor.protocol == None:
             return
+
+        self.tick_send_exp()
 
         if self.actor.status != ActorStatusType.FIGHTING:
             _map = self.actor.show_prompts(

@@ -1,11 +1,15 @@
 versions:
-  "150426":
-    id: "150426"
-    title: Bugfix
+  "190426":
+    id: "190426"
+    title: Patch
     unixtime: 1775631568
     features:
       - Instances without a party doesnt combine you with other players
       - Ressurected npc as allies no longer grant exp
+      - Mouse options now cannot extend beyond the screen and get cut out
+      - Changed some clickable options around
+      - Removed AFK kicking
+      - In game time is now shown on rankings
   "150426":
     id: "150426"
     title: Map

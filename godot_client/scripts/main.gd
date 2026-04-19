@@ -336,6 +336,14 @@ func _input(event):
 				return
 			MOUSE_CLICK_OPTIONS.position.x = event.position.x
 			MOUSE_CLICK_OPTIONS.position.y = event.position.y
+			
+			var screen_height = get_viewport_rect().size.y - (6*16)
+			var screen_width = get_viewport_rect().size.x
+			if MOUSE_CLICK_OPTIONS.position.y + MOUSE_CLICK_OPTIONS.size.y > screen_height:
+				MOUSE_CLICK_OPTIONS.position.y = screen_height - MOUSE_CLICK_OPTIONS.size.y
+			if MOUSE_CLICK_OPTIONS.position.x + MOUSE_CLICK_OPTIONS.size.x > screen_width:
+				MOUSE_CLICK_OPTIONS.position.x = screen_width - MOUSE_CLICK_OPTIONS.size.x
+				
 		if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
 			if last_meta_hovered == null:
 				return

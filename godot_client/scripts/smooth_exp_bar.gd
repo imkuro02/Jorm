@@ -19,6 +19,7 @@ func fill_exp(exp_cur, exp_max, lvl) -> void:
 	
 	var percent = (float(exp_cur) / float(exp_max)) * 100.0
 	var formatted = "(%.2f%%)" % percent
+	
 	base_text = " EXP " + str(exp_cur) + " / " + str(exp_max) + " " + str(formatted) + " LEVEL " + str(lvl)
 
 	var font = label.get_theme_font("normal_font")

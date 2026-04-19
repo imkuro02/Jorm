@@ -212,6 +212,7 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.775063, 0.775063, 0.775063, 1)
+metadata/_edit_group_ = true
 
 [node name="input" type="LineEdit" parent="canvas/input"]
 layout_mode = 1
@@ -219,7 +220,7 @@ anchors_preset = -1
 anchor_top = 1.25
 anchor_right = 1.0
 anchor_bottom = 1.25
-offset_left = 72.0
+offset_left = 32.0
 offset_top = -44.0
 offset_bottom = -4.0
 grow_horizontal = 2
@@ -238,8 +239,7 @@ offset_top = 4.0
 offset_right = 1264.0
 offset_bottom = 26.0
 theme_override_fonts/font = ExtResource("19_jxno8")
-text = "INPUT:
-"
+text = " >"
 
 [node name="container" type="BoxContainer" parent="canvas"]
 anchors_preset = 15

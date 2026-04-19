@@ -442,7 +442,7 @@ def add_godot_url_fight_etc(object, identifier, output):
     from configuration.constants.actor_status_type import ActorStatusType
     if identifier != None:
         if identifier.protocol.enabled_godot:
-            spaces = 5
+            spaces = 10
             _o = ''
             _o += f'[url=look]{"Look ":<{spaces}}[/url]'
             _o += f'[url=map]{"Map ":<{spaces}}[/url]'
@@ -451,20 +451,27 @@ def add_godot_url_fight_etc(object, identifier, output):
             else:
                 _o += f'[url=fight]{"Fight ":<{spaces}}[/url]'
 
-            _o += f'[url=inventory]{"Inventory ":<{spaces}}[/url]'
-            _o += f'[url=equipment]{"Equipment ":<{spaces}}[/url]'
+            #_o += f'[url=inventory]{"Inventory ":<{spaces}}[/url]'
+            #_o += f'[url=equipment]{"Equipment ":<{spaces}}[/url]'
             _o += f'[url=get all]{"Get-All ":<{spaces}}[/url]'
 
-            _o += f'[url=practice]{"Practice ":<{spaces}}[/url]'
+            #_o += f'[url=practice]{"Practice ":<{spaces}}[/url]'
             _o += f'[url=skills]{"Skills ":<{spaces}}[/url]'
-            _o += f'[url=stats]{"Stats ":<{spaces}}[/url]'
+            #_o += f'[url=stats]{"Stats ":<{spaces}}[/url]'
 
             __o = ''
+            __o += f'Stats->stats,'
+            __o += f'Practice->practice,'
+            __o += f'Inventory->inventory,'
+            __o += f'Equipment->equipment,'
             __o += f'Level Grit->level grit,'
             __o += f'Level Flow->level flow,'
             __o += f'Level Mind->level mind,'
             __o += f'Level Soul->level soul,'
-            _o += f'[url={__o}{"Level-Up ":<{spaces}}[/url]'
+            __o += f'Respec->respec,'
+            _o += f'[url={__o}]{"Char ":<{spaces}}[/url]'
+            _o += f'[url=rest]{"Rest ":<{spaces}}[/url]'
+            _o += f'[url=Log Out->set logout,]{"Quit ":<{spaces}}[/url]'
             return output + '\n' + _o  
 
     return output
@@ -659,7 +666,7 @@ def get_datetime_ago_from_unix(timestamp):
             return f"{ago[i]} {i} ago"
 
 
-def seconds_to_dhms(seconds, return_as_dict=False):
+def seconds_to_dhms(seconds, return_as_dict = False):
     seconds_in_day = 86400
     seconds_in_hour = 3600
     seconds_in_minute = 60
@@ -674,11 +681,22 @@ def seconds_to_dhms(seconds, return_as_dict=False):
     seconds = seconds - (minutes * seconds_in_minute)
 
     if not return_as_dict:
-        return f"{days:0>{2}}:{hours:0>{2}}:{minutes:0>{2}}:{seconds:0>{2}}"
+        return f"{days:0>{2}}d{hours:0>{2}}h{minutes:0>{2}}m{seconds:0>{2}}s"
     else:
         return {"days": days, "hours": hours, "minutes": minutes, "seconds": seconds}
     # return("{0:.0f}:{1:.0f}:{2:.0f}:{3:.0f}".format(
     #    days, hours, minutes, seconds))
+
+def seconds_to_dhm(seconds, return_as_dict = False):
+    _d = seconds_to_dhms(seconds, return_as_dict = True)
+    days =      _d['days']
+    hours =     _d['hours']
+    minutes =   _d['minutes']
+    seconds =   _d['seconds']
+    if not return_as_dict:
+        return f"{days: >{2}}d {hours: >{2}}h {minutes: >{2}}m"
+    else:
+        return {"days": days, "hours": hours, "minutes": minutes}
 
 
 import re
