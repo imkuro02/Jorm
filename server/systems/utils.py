@@ -470,7 +470,7 @@ def add_godot_url_fight_etc(object, identifier, output):
             __o += f'Level Soul->level soul,'
             __o += f'Respec->respec,'
             _o += f'[url={__o}]{"Char ":<{spaces}}[/url]'
-            _o += f'[url=rest]{"Rest ":<{spaces}}[/url]'
+            _o += f'[url=Rest->rest,]{"Rest ":<{spaces}}[/url]'
             _o += f'[url=Log Out->set logout,]{"Quit ":<{spaces}}[/url]'
             return output + '\n' + _o  
 
