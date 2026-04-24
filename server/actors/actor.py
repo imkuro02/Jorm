@@ -51,6 +51,10 @@ class ActorStatManager:
             StatType.INITIATIVE: 0,
         }
 
+    def is_max_level(self):
+        return self.stats[StatType.LVL] >= 15
+            
+
     def gain_stat_points(self, stat=StatType.GRIT, points=1):
         hp_bonus = 0
         mp_bonus = 0
@@ -669,19 +673,24 @@ class Actor:
 
             t.add_data("Experience:")
             t.add_data(self.stat_manager.stats[StatType.EXP])
-            t.add_data("/")
-            t.add_data(self.get_exp_needed_to_level())
+            if not self.stat_manager.is_max_level():
+                t.add_data("/")
+                t.add_data(self.get_exp_needed_to_level())
+            else:
+                t.add_data("")
+                t.add_data("")
 
             #    t.add_data(str(self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level()))
-            t.add_data("Can level?:")
-            t.add_data(
-                f"{Color.GOOD}YES{Color.NORMAL}"
-                if self.stat_manager.stats[StatType.EXP]
-                >= self.get_exp_needed_to_level()
-                else f"{Color.BAD}NO{Color.NORMAL}"
-            )
-            t.add_data("")
-            t.add_data("")
+            if not self.stat_manager.is_max_level():
+                t.add_data("Can level?:")
+                t.add_data(
+                    f"{Color.GOOD}YES{Color.NORMAL}"
+                    if self.stat_manager.stats[StatType.EXP]
+                    >= self.get_exp_needed_to_level()
+                    else f"{Color.BAD}NO{Color.NORMAL}"
+                )
+                t.add_data("")
+                t.add_data("")
 
             t.add_data("Practices:")
             t.add_data(self.stat_manager.stats[StatType.PP])

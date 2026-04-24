@@ -24,7 +24,7 @@ def command_name_change(self, line):
 
 @check_not_in_combat
 def command_level_up(self, stat):
-    if self.stat_manager.stats[StatType.LVL] >= 15:
+    if self.stat_manager.is_max_level():
         self.send_line('You are max level!')
         return
 
