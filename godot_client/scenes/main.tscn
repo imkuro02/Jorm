@@ -304,7 +304,7 @@ size_flags_vertical = 3
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-text = "client version: 030426
+text = "client version: 240426
 "
 meta_underlined = false
 hint_underlined = false
@@ -394,9 +394,6 @@ bbcode_enabled = true
 text = "[#############################################    1/10  (10%)             ############################################]"
 scroll_active = false
 script = ExtResource("10_flati")
-
-[node name="sfx_manager" type="AudioStreamPlayer" parent="."]
-volume_db = -20.292
 
 [node name="Node11" type="CanvasLayer" parent="."]
 visible = false

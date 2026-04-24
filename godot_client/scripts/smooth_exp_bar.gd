@@ -20,7 +20,11 @@ func fill_exp(exp_cur, exp_max, lvl) -> void:
 	var percent = (float(exp_cur) / float(exp_max)) * 100.0
 	var formatted = "(%.2f%%)" % percent
 	
-	base_text = " EXP " + str(exp_cur) + " / " + str(exp_max) + " " + str(formatted) + " LEVEL " + str(lvl)
+	if lvl == 15:
+		percent = 100
+		base_text = " EXP " + str(exp_cur) + " MAX LEVEL 15 "
+	else:
+		base_text = " EXP " + str(exp_cur) + " / " + str(exp_max) + " " + str(formatted) + " LEVEL " + str(lvl)
 
 	var font = label.get_theme_font("normal_font")
 	var font_size = label.get_theme_font_size("normal_font_size")
@@ -52,5 +56,8 @@ func fill_exp(exp_cur, exp_max, lvl) -> void:
 	var col_nor = "[bgcolor=black][color=white]"
 	var text_colored = text_uncolored.insert(index, col_nor)
 	
-	var final_text = "[center]" + col_nor + "_.-') " + col_exp + text_colored + col_nor + " ('-._"
+	var final_text = ''
+
+
+	final_text = "[center]" + col_nor + "_.-') " + col_exp + text_colored + col_nor + " ('-._"
 	label.append_text(final_text)

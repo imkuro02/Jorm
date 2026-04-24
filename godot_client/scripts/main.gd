@@ -173,9 +173,20 @@ func handle_gmcp(message: String):
 			EXPBAR.visible = 'PLAY' in game_state
 				
 		'Client.Media.Play':
-			var sfx = load("res://audio/sfx/" + data_dict['name'])
-			SFX_MAN.stream = sfx
-			SFX_MAN.play()
+			#var sfx = load("res://audio/sfx/" + data_dict['name'])
+			#SFX_MAN.stream = sfx
+			#SFX_MAN.play()
+			
+			var sound_player = AudioStreamPlayer2D.new()
+			sound_player.stream = load("res://audio/sfx/" + data_dict['name'])
+			add_child(sound_player)
+			sound_player.volume_db -= 10
+			sound_player.play()
+
+			# Wait for the sound to finish
+			await sound_player.finished
+			sound_player.queue_free()
+
 		#'Actors':
 		#	ACTORS_OUTPUT.set_text("")
 		#	ACTORS_OUTPUT.clear()
