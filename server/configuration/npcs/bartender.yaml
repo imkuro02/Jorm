@@ -133,8 +133,6 @@ bartender:
           quest_check:
           - id: bartender_rat_cheese
             state: completed
-          
-    
 
     cheese_quest_not_started:
       dialog:

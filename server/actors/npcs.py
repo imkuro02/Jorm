@@ -31,6 +31,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
     dont_join_fights = False
     on_death_skills_use = None
     on_start_skills_use = None
+    can_drop_corpse = True
 
     if npc_id in ENEMIES:
         name = systems.utils.generate_name() + " The " + ENEMIES[npc_id]["name"]
@@ -44,6 +45,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         on_death_skills_use = ENEMIES[npc_id]["on_death_skills_use"]
         on_start_skills_use = ENEMIES[npc_id]["on_start_skills_use"]
         loot = _loot  # {}
+        can_drop_corpse = ENEMIES[npc_id]["drop_corpse"]
 
     if npc_id in NPCS:
         tree = copy.deepcopy(NPCS[npc_id]["tree"])
@@ -69,6 +71,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         dont_join_fights=dont_join_fights,
         on_death_skills_use=on_death_skills_use,
         on_start_skills_use=on_start_skills_use,
+        can_drop_corpse = can_drop_corpse,
     )
 
     npc_class = custom_loader.compare_replace_npcs(my_npc)
@@ -93,6 +96,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         dont_join_fights=dont_join_fights,
         on_death_skills_use=on_death_skills_use,
         on_start_skills_use=on_start_skills_use,
+        can_drop_corpse = can_drop_corpse,
     )
 
     return my_npc
@@ -114,6 +118,7 @@ class Npc(Actor):
         dont_join_fights=True,
         on_death_skills_use=None,
         on_start_skills_use=None,
+        can_drop_corpse = False,
     ):
         super().__init__(
             name=name,
@@ -121,6 +126,8 @@ class Npc(Actor):
             description=description,
             room=room,
         )
+
+        self.can_drop_corpse = can_drop_corpse
 
         self.on_death_skills_use = on_death_skills_use
         self.on_start_skills_use = on_start_skills_use
@@ -325,6 +332,9 @@ class Npc(Actor):
                 room.inventory_manager.add_item(new_item)
 
     def drop_corpse(self):
+        if self.can_drop_corpse == False:
+            return
+        
         # dont drop a corpse if npc_id is not valid
         if self.npc_id not in ENEMIES:
             return

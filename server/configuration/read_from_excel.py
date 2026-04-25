@@ -541,6 +541,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                     "exp": int(x["exp"][index]) ,
                     "lvl": int(x["lvl"][index]) ,
                 },
+                "drop_corpse": bool(x["drop_corpse"][index]),
                 "include_in_daily_quests": bool(x["include_in_daily_quests"][index]),
                 "skills": {},  # EMPTY DICT TO STORE SKILLS
                 "on_death_skills_use": None

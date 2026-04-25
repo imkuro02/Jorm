@@ -1,4 +1,11 @@
 versions:
+  "240426":
+    id: "240426"
+    title: Patch
+    unixtime: 1775631568
+    features:
+      - All quest npcs removed from map outside of town
+      - Small mouse in tutorial does not spawn a corpse after death (since their corpse is a droppable quest item)
   "190426":
     id: "190426"
     title: Patch
