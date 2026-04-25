@@ -857,8 +857,16 @@ class Actor:
         self.simple_broadcast(
             f"{Color.BAD}You died{Color.NORMAL}... {tooltip}",
             f"{self.pretty_name()} {Color.BAD}{die_line}{Color.NORMAL}",
-            sound=sound,
+            sound = sound,
+            send_to = 'room'
         )
+
+        if type(self).__name__ == 'Player':
+            self.simple_broadcast(
+                f'You logged off',
+                f'{self.pretty_name()} {Color.BAD}{die_line}{Color.NORMAL} in {self.room.pretty_name()}{Color.NORMAL}',
+                send_to = 'world_not_room'
+            )
 
         # i need a better fix but rn i just wanna push new client man
         if self.room != None:
@@ -933,6 +941,11 @@ class Actor:
         if self.room == None:
                 return
 
+        if send_to == "world_not_room":
+            players = [
+                proto.actor for proto in self.factory.protocols if proto.actor != None and proto.actor.room != self.room
+            ]
+
         if send_to == "world":
             players = [
                 proto.actor for proto in self.factory.protocols if proto.actor != None
@@ -998,6 +1011,11 @@ class Actor:
     ):
         if self.room == None:
             return
+        
+        if send_to == "world_not_room":
+            players = [
+                proto.actor for proto in self.factory.protocols if proto.actor != None and proto.actor.room != self.room
+            ]
 
         if send_to == "world":
             players = [

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "cc9f5fddcd389fbcc4e822d761bc415dc2157c5011c51fd1b6be8f0f9d7e9a9c",
+    "SHA-256": "91454a1dfd244a9d81d154ec0a1d513b223dc49ff355e9a4edea8b9e63afd6d0",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -2496,7 +2496,7 @@
             "script_values": {
                 "levels": [
                     1.0,
-                    2.0,
+                    3.0,
                     0.0
                 ],
                 "damage": [
@@ -2529,7 +2529,7 @@
             "script_values": {
                 "levels": [
                     1.0,
-                    3.0,
+                    1.0,
                     0.0
                 ],
                 "duration": [

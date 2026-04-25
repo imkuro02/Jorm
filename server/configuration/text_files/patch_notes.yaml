@@ -6,6 +6,9 @@ versions:
     features:
       - All quest npcs removed from map outside of town
       - Small mouse in tutorial does not spawn a corpse after death (since their corpse is a droppable quest item)
+      - Cannot save PP for later use, you need spend x practice points before higher level skills become practicable
+      - Message for all players logging on and off
+      - Players dying is broadcasted globally
   "190426":
     id: "190426"
     title: Patch

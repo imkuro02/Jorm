@@ -71,6 +71,13 @@ def command_level_up(self, stat):
     )
 
 
+def check_valid_pp_order(_self, skill_level_req):
+    #if skill_level_req-1 <= _self.stat_manager.stats[StatType.LVL] - _self.stat_manager.stats[StatType.PP]:
+
+    0 - (4 - 1)
+    skill_level_req = skill_level_req -1
+    return skill_level_req - (_self.stat_manager.stats[StatType.LVL] - _self.stat_manager.stats[StatType.PP])
+
 @check_alive
 @check_not_in_combat
 def command_practice(self, line):
@@ -161,7 +168,7 @@ def command_practice(self, line):
             )
             t.add_data(
                 f"(can practice)"
-                if (can_afford and meets_lvl_req and skill_level < skill_max_level)
+                if (can_afford and meets_lvl_req and skill_level < skill_max_level and check_valid_pp_order(self, skill_level_req)<=0)
                 else f"",
                 col=col,
             )
@@ -237,6 +244,15 @@ def command_practice(self, line):
         if self.stat_manager.stats[StatType.LVL] < SKILLS[skill_id]["level_req"]:
             self.send_line(
                 f"{Color.BAD}You are not high enough level to practice {skill_name}{Color.NORMAL}"
+            )
+            return
+        
+        skill_level_req = int(SKILLS[skill_id]["level_req"])
+        _valid_pp_order = check_valid_pp_order(self, skill_level_req)
+        #print(_valid_pp_order)
+        if not _valid_pp_order<=0:
+            self.send_line(
+                f"{Color.BAD}You must spend atleast {_valid_pp_order} points on lower level skills before practicing {skill_name}{Color.NORMAL}"
             )
             return
 

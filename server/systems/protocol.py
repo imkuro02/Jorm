@@ -17,6 +17,7 @@ from configuration.constants.color import Color
 from configuration.constants.item_type import ItemType
 from configuration.constants.room_constant import RoomConstant
 #from configuration.constants.stat_type import StatType
+from configuration.constants.message_type import MessageType
 
 from items.equipment import EquipmentBonus
 from items.manager import load_item, save_item
@@ -607,7 +608,13 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         self.actor.get_any_new_patches()
         self.actor.new_room_look()
-        self.actor.friend_manager.friend_broadcast_login()
+        self.actor.simple_broadcast(
+            f'You logged on',
+            f'{self.actor.pretty_name()} has logged on',
+            send_to = 'world', msg_type = [MessageType.SHOUT, MessageType.CHAT],
+            #sound = 'notif1.wav'
+        )
+        #self.actor.friend_manager.friend_broadcast_login()
         self.actor.finish_turn()
 
     def save_actor(self):
@@ -629,10 +636,15 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
     def unload_actor(self):
         self.actor.affect_manager.unload_all_affects(silent=False)
         self.save_actor()
+
         self.actor.simple_broadcast(
-            "Logging off", f"{self.actor.pretty_name()} logging off"
+            f'You logged off',
+            f'{self.actor.pretty_name()} has logged off',
+            send_to = 'world', msg_type = [MessageType.SHOUT, MessageType.CHAT],
+            #sound = 'notif1.wav'
         )
-        self.actor.friend_manager.friend_broadcast_logout()
+        #self.actor.friend_manager.friend_broadcast_logout()
+
         # teleport player to loading to remove them safely
         self.factory.world.rooms[RoomConstant.LOADING].move_actor(self.actor)
         # del self.factory.world.rooms[RoomConstant.LOADING].actors[self.actor.id]
