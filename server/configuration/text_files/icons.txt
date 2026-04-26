@@ -584,3 +584,9 @@ the_well_below_trap
 @bred  |@yellow W  W@bred|
 @bred  |@yellow #  #@bred|  
 [end]
+
+[id:npc_shop]
+@bpurple   ??
+@yellow<\@bpurple/OO\@yellow/>
+@yellow</@bpurple"uu"@yellow\>
+[end]

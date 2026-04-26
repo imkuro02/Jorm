@@ -1,0 +1,35 @@
+npc_shop:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc> says "welcome!"
+
+    start_shopping:
+      append_to: start
+      options:
+        - line: |
+            ask about wares
+          goto: shopping
+
+    shopping:
+      dialog:
+        - line: |
+            <npc> says "I got plenty to sell!"
+        - line: |
+            <npc> says "What can I get ya?"
+        - line: |
+            <npc> says "Need anything?"
+      options:
+     
+        - line: |
+            purchase one Rope for 100 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: rope
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 100
+    

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "91454a1dfd244a9d81d154ec0a1d513b223dc49ff355e9a4edea8b9e63afd6d0",
+    "SHA-256": "d1a6b834ebc5bc6635a3e861aef0583ee7b853d2fb3154b601c17c7af07d4432",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -2389,6 +2389,52 @@
             "ai": "Enemy",
             "name": "Gambler",
             "description": "A tiny figure with a bunch of dice squats on the ground.",
+            "stats": {
+                "hp": 30,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "grit": 10,
+                "flow": 10,
+                "mind": 10,
+                "soul": 10,
+                "exp": 1,
+                "lvl": 1
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": false,
+            "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "axe": 120,
+                "grit body 1": 120,
+                "grit body 3": 160,
+                "grit head 1": 120,
+                "grit head 3": 160,
+                "grit relic 1": 120,
+                "grit trinket 1": 120,
+                "grit trinket 3": 160,
+                "grit weapon 1": 120,
+                "grit weapon 3": 160,
+                "grit weapon alt 3": 160,
+                "rock": 39,
+                "summoning_rock": 39
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "npc_shop": {
+            "npc_id": "npc_shop",
+            "ai": "Enemy",
+            "name": "Shopkeeper",
+            "description": "A tiny fairy flying around.",
             "stats": {
                 "hp": 30,
                 "phy_armor": 0,
