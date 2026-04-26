@@ -1046,6 +1046,7 @@ class ReforgeSkillDamageBonus(AffectReforge):
 
         return damage_obj
 
+"""
 
 # this can make indirect healing like leech heal you for less...
 class ReforgeRandomTargetBonus(AffectReforge):
@@ -1096,8 +1097,6 @@ class ReforgeRandomTargetBonus(AffectReforge):
             )
         return damage_obj
 
-
-"""
 # not fully working
 # enemies that have spent their round do not count as targetting you
 class ReforgePureDamageBonusToNonTargettingEnemies(AffectReforge):
@@ -1120,3 +1119,63 @@ class ReforgePureDamageBonusToNonTargettingEnemies(AffectReforge):
             damage_obj.damage_source_actor.simple_broadcast('unHOLY MOLY','unHOLY MOLY')
         return damage_obj
 """
+
+class ReforgeChanceDontEndTurnOnHeal(AffectReforge):
+    def __init__(self,
+            affect_source_actor,
+            affect_target_actor,
+            name, description, turns,
+            source_item = None,
+            reforge_variables = None
+        ):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+        self.combat_round = -1 
+        self.combat_id = -1
+    def dealt_damage(self, damage_obj):
+        _p = self.affect_target_actor
+        _c = self.affect_target_actor.room.combat
+
+
+        if damage_obj.damage_type != DamageType.HEALING:
+            #_p.send_line('dealt damage, but not healing')
+            return damage_obj
+        
+        if _c == None:
+            #_p.send_line('no combat')
+            return damage_obj
+        
+        if self.affect_target_actor not in _c.participants.values():
+            #_p.send_line('not in combat')
+            return damage_obj
+        
+        if _c.id != self.combat_id:
+            self.combat_round = -1
+            self.combat_id = _c.id
+            #_p.send_line('set correct combat id and reset combat round')
+
+
+        if self.combat_round == _c.round:
+            #_p.send_line('already checked this round')
+            return damage_obj
+        
+        self.combat_round = _c.round
+        #_p.send_line('round set')
+
+        if systems.utils.get_object_parent(damage_obj.damage_source_action) != "Skill":
+            #_p.send_line('healing not from skill')
+            return damage_obj
+        
+        _succ = random.randint(0,100) <= float(self.reforge_variables["var_a"])*100
+
+        if not _succ:
+            _p.send_line('roll chance failed')
+            return damage_obj
+        
+        if damage_obj.damage_source_action.dont_finish_turn == False:
+            damage_obj.damage_source_action.dont_finish_turn = True
+            #_p.send_line('success, skill wont end turn')
+            list_pretty_name_objects = [self.source_item]
+            _p.pretty_broadcast(f'Your {self.source_item.id} makes this turn last longer','',list_pretty_name_objects = list_pretty_name_objects)
+        
+
+

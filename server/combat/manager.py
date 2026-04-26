@@ -13,6 +13,8 @@ from systems.utils import unload
 from systems.utils import REFTRACKER, unload
 from copy import deepcopy
 
+import uuid
+
 class CombatHistoryPacket:
     def __init__(self, skill_object):
         REFTRACKER.add_ref(self)
@@ -41,6 +43,7 @@ class CombatHistory:
 class Combat:
     def __init__(self, room, participants):
         REFTRACKER.add_ref(self)
+        self.id = str(uuid.uuid4())
         room.combat = self
         self.room = room
         self.participants = {}

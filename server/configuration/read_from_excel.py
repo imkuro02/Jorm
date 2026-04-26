@@ -63,6 +63,7 @@ def configure_equipment_reforges(SHEET):
                 "slot_head": bool(x["slot_head"][index]),
                 "slot_trinket": bool(x["slot_trinket"][index]),
                 "slot_relic": bool(x["slot_relic"][index]),
+                "slot_bag": bool(x["slot_bag"][index]),
                 "roll_chance": int(x["roll_chance"][index]),
                 "affliction_to_create": str(x["affliction_to_create"][index]),
                 "description": x["description"][index],

@@ -25,6 +25,7 @@ class Skill:
         no_cooldown=False,
         bounce=0,
         combat_event=None,
+        dont_finish_turn = False,
     ):
         self.skill_id = skill_id
         
@@ -57,6 +58,7 @@ class Skill:
         if self.combat_event == None:
             self.combat_event = CombatEvent()
 
+        self.dont_finish_turn = dont_finish_turn
 
         self.evaluation = self.evaluate()
     

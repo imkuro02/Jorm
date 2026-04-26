@@ -169,6 +169,9 @@ class AI:
         used_prediction = self.prediction
         self.clear_prediction()
 
+        if used_prediction.dont_finish_turn:
+            return True
+        
         if self.can_use_skills_without_ending_turn:
             if SKILLS[used_prediction.skill_id]["end_turn"]:
                 self.actor.finish_turn()
