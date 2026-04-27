@@ -394,10 +394,10 @@ commands:
         Damage type is often described in the skill description aswell.
 
         Damage is a flat value described in the skill.
-        PHYSICAL damage gets a 50% bonus from GRIT, and 25% bonus from FLOW.
+        PHYSICAL damage gets a 50% bonus from FLOW, and 25% bonus from GRIT.
         MAGICAL damage gets a 50% bonus from MIND, and 25% bonus from SOUL.
-        PURE damage gets a 25% bonus from SOUL.
-        HEALING gets a 50% bonus from SOUL.
+        PURE damage gets a 25% bonus from SOUL and MIND.
+        HEALING gets a 25% bonus from SOUL.
 
         All bonuses are caster dependant.
 
