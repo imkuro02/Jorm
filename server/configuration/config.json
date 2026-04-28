@@ -1,5 +1,5 @@
 {
-    "SHA-256": "6fbc71ade02839b77b74b7e00071e81c26affe19b431cafcd5e931f790e1373c",
+    "SHA-256": "f55bb44fca931d3c740984902eaf47aa1b47be317a124268bf065f05d09af24d",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -13464,6 +13464,28 @@
             "ambience": null,
             "can_pick_up": true,
             "description": "Pieces of scrap"
+        },
+        "crossroad_sign": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "crossroad_sign",
+            "name": "Crossroad Sign",
+            "stack_max_amount": 1,
+            "drop_tags": "none",
+            "drop_from_random": false,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "description_room": "A @tipsign@back is planted firmly into the soil.",
+            "invisible": true,
+            "ambience_sfx": null,
+            "ambience": null,
+            "can_pick_up": false,
+            "description": "The sign points south... \"Town\", rather vague."
         },
         "tutorial_paper_1": {
             "item_type": "misc",

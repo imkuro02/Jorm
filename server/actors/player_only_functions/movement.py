@@ -62,11 +62,10 @@ def move_party_leader(self, room_id):
     self.sendSound(Audio.walk())
 
 
-    if self.recall_site not in [room.id for room in self.room.world.rooms.values() if room.can_be_recall_site] and self.room.can_be_recall_site:
-        #self.command_rest('set')
+    if self.recall_site != 'overworld/tavern' and self.recall_site != 'overworld/crossroad' and self.room.id == 'overworld/crossroad':
+        self.recall_site = 'overworld/crossroad'
+    if self.recall_site != 'overworld/tavern' and self.room.id == 'overworld/tavern':
         self.rest_set('')
-
-
 
 
     # move party members
