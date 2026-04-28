@@ -1,4 +1,10 @@
 versions:
+  "280426":
+    id: "280426"
+    title: Patch
+    unixtime: 1775631568
+    features:
+      - Semi randomized damage
   "240426":
     id: "240426"
     title: Patch
