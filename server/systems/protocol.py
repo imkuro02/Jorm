@@ -78,7 +78,7 @@ class Protocol(protocol.Protocol):
     def send_mssp(self):
         data = IAC + SB + MSSP
         data += b"\x01NAME\x02Jorm"
-        data += b"\x01PLAYERS\x02" + str(len(self.factory.protocols)).encode("utf-8")
+        data += b"\x01PLAYERS\x02" + str(len([pro for pro in self.factory.protocols if pro.actor != None])).encode("utf-8")
         data += b"\x01UPTIME\x02" + str(int(self.factory.start)).encode("utf-8")
         data += IAC + SE
         self.transport.write(data)
@@ -135,7 +135,7 @@ class Protocol(protocol.Protocol):
             f"#DISCORD#", f"{Color.IMPORTANT}https://discord.gg/AZ98axtXc6{Color.BACK}"
         )
         splash = splash.replace(
-            f"#ONLINE#", f"{Color.IMPORTANT}{len(self.factory.protocols)}{Color.BACK}"
+            f"#ONLINE#", f"{Color.IMPORTANT}{len([pro for pro in self.factory.protocols if pro.actor != None])}{Color.BACK}"
         )
         splash = f"{Color.NORMAL}{splash}{Color.NORMAL}"
         self.send_line(splash)
