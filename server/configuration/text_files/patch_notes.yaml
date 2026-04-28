@@ -6,6 +6,7 @@ versions:
     features:
       - Semi randomized damage
       - Tutorial crossroads now lead to actual crossroad which is just a bit north of town
+      - Fixed showing protocols as online players
   "240426":
     id: "240426"
     title: Patch
