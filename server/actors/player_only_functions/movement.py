@@ -4,7 +4,9 @@ from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.faction_type import FactionType
 from configuration.constants.audio import Audio
 from configuration.constants.stat_type import StatType
+from configuration.constants.room_constant import RoomConstant
 from affects.affects import Affect
+
 import random
 @check_not_in_party_or_is_party_leader
 @check_your_turn
@@ -61,10 +63,9 @@ def move_party_leader(self, room_id):
     world.rooms[new_room].move_actor(self)
     self.sendSound(Audio.walk())
 
-
-    if self.recall_site != 'overworld/tavern' and self.recall_site != 'overworld/crossroad' and self.room.id == 'overworld/crossroad':
-        self.recall_site = 'overworld/crossroad'
-    if self.recall_site != 'overworld/tavern' and self.room.id == 'overworld/tavern':
+    if self.recall_site != RoomConstant.TAVERN and self.recall_site != RoomConstant.CROSSROAD and self.room.id == RoomConstant.CROSSROAD:
+        self.recall_site = RoomConstant.CROSSROAD
+    if self.recall_site != RoomConstant.TAVERN and self.room.id == RoomConstant.TAVERN:
         self.rest_set('')
 
 

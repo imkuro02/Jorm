@@ -656,13 +656,13 @@ def rest_home(self, line):
 
 
         self.stat_manager.stats[StatType.HP] = int(
-            1
+            30
         )
         self.stat_manager.stats[StatType.PHYARMOR] = int(
-           1
+           30
         )
         self.stat_manager.stats[StatType.MAGARMOR] = int(
-            1
+            30
         )
         '''
         self.stat_manager.stats[StatType.HP] = int(
