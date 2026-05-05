@@ -233,7 +233,7 @@ class CombatEvent:
                     rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/4)
                     rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
                 
-                damage_obj.damage_value += random.randint(int(rand_dmg/2), rand_dmg)
+                damage_obj.damage_value += random.randint(0, rand_dmg)
                     
         except Exception as e:
             systems.utils.debug_print('Something went wrong while applying stats to damage:')
