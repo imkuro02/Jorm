@@ -588,7 +588,12 @@ class Equipment(Item):
                 err = f"cant set affliction object of {affliction_to_create} on {self} of id {self.premade_id} of unique id {self.id} finish_turn()"
                 self.inventory_manager.owner.simple_broadcast(err, err)
 
+
+            # the obj_id is here to make sure that you can have multiple of the same reforge 
+            # and they dont override eachother
+            obj_id = 0
             if reforge_obj:
+                obj_id += 1
                 reforge_name = EQUIPMENT_REFORGES[reforge_id]["name"]
                 # reforge_name = 'Reforged'
                 # reforge_description = EQUIPMENT_REFORGES[reforge_id]['description']
@@ -599,7 +604,7 @@ class Equipment(Item):
                     "Wearing" if self.slot != EquipmentSlotType.WEAPON else "Wielding"
                 )
                 # affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
-                affliction_name = f"{wear_or_wield} {slot_name} {reforge_id}"
+                affliction_name = f"{wear_or_wield} {slot_name} {reforge_id} {obj_id}"
                 reforge_description = f"Your {slot_name} item is {reforge_name}"
                 if reforge_obj == affects.AffectReforge:
                     reforge_description = (

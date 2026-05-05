@@ -40,8 +40,7 @@ class CombatEvent:
                 case DamageType.PURE:
                     color = Color.DAMAGE_PURE
 
-            if not pop.silent and pop.damage_type != DamageType.CANCELLED:
-                damage_snapshot2 = {
+            damage_snapshot2 = {
                     StatType.HP: pop.damage_taker_actor.stat_manager.stats[StatType.HP],
                     StatType.PHYARMOR: pop.damage_taker_actor.stat_manager.stats[
                         StatType.PHYARMOR
@@ -50,6 +49,9 @@ class CombatEvent:
                         StatType.MAGARMOR
                     ],
                 }
+
+            if not pop.silent and pop.damage_type != DamageType.CANCELLED:
+                
 
                 """
                 summary = {
@@ -97,6 +99,8 @@ class CombatEvent:
                     pop.damage_snapshot[StatType.MAGARMOR] != 0
                     and damage_snapshot2[StatType.MAGARMOR] == 0
                 )
+                
+
 
                 # if phy_arm_broke:
                 #    output += f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.PHYARMOR]}{Color.BACK} {Color.COMBAT_TURN}BROKE{Color.BACK},'
@@ -154,17 +158,31 @@ class CombatEvent:
                     pop.damage_taker_actor.send_line(
                         f"{output}", sound=sound, msg_type=[MessageType.COMBAT]
                     )
+
                 if mag_arm_broke:
                     output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.MAGARMOR]} has broken{Color.NORMAL}"
                     pop.damage_taker_actor.send_line(
                         f"{output}", sound=sound, msg_type=[MessageType.COMBAT]
                     )
+                
                 # if phy_arm_broke:
                 #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.PHYARMOR]}{Color.BACK} has broken'
                 #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MessageType.COMBAT])
                 # if mag_arm_broke:
                 #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.MAGARMOR]}{Color.BACK} has broken'
                 #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MessageType.COMBAT])
+
+            hp_maxxed = (
+                pop.damage_snapshot[StatType.HP] != pop.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
+                and damage_snapshot2[StatType.HP] >= pop.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
+            )
+            
+            if hp_maxxed:
+                sound = Audio.BUFF
+                output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.HP]} is full!{Color.NORMAL}"
+                pop.damage_taker_actor.send_line(
+                    f"{output}", sound=sound, msg_type=[MessageType.COMBAT]
+                )
 
             actors = []
             actors = [pop.damage_taker_actor]
@@ -212,10 +230,10 @@ class CombatEvent:
                     rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/4)
 
                 if damage_obj.damage_type == DamageType.HEALING:
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/6)
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/4)
+                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/4)
+                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
                 
-                damage_obj.damage_value = random.randint(int(rand_dmg/2), rand_dmg)
+                damage_obj.damage_value += random.randint(int(rand_dmg/2), rand_dmg)
                     
         except Exception as e:
             systems.utils.debug_print('Something went wrong while applying stats to damage:')

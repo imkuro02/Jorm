@@ -247,6 +247,7 @@ class PlayerAI(AI):
         super().__init__(actor)
         self.can_use_skills_without_ending_turn = True
         self.target = None
+        self.prediction_queue = []
 
     def use_prediction(self, no_checks=False):
         if super().use_prediction(no_checks=no_checks):
@@ -260,8 +261,15 @@ class PlayerAI(AI):
         return
 
     def tick(self):
+        if self.actor.status != ActorStatusType.FIGHTING:
+            self.prediction_queue = []
+
         if not super().tick():
             return
+
+        if self.prediction_queue != []:
+            self.prediction = self.prediction_queue[0]
+            self.prediction_queue.pop(0)
 
         self.use_prediction()
         self.clear_prediction()

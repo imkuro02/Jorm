@@ -459,6 +459,10 @@ def use(self, line, silent=False):
 
     if self.room.combat.current_actor != self:
         self.send_line(f'{Color.IMPORTANT}Your action will be executed on your turn{Color.NORMAL}')
+        
+        self.ai.prediction_queue.append(self.ai.prediction)
+        self.ai.prediction = None
+
         #self.ai.use_prediction()
         #self.ai.clear_prediction()
         return True

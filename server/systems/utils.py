@@ -663,7 +663,7 @@ def get_datetime_ago_from_unix(timestamp):
 
     for i in ago:
         if not ago[i] == 0:
-            return f"{ago[i]} {i} ago"
+            return f"{ago[i]}{i[0]} ago"
 
 
 def seconds_to_dhms(seconds, return_as_dict = False):

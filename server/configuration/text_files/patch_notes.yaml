@@ -7,6 +7,7 @@ versions:
       - Semi randomized damage
       - Tutorial crossroads now lead to actual crossroad which is just a bit north of town
       - Fixed showing protocols as online players
+      - Full health notification for when you heal to full
   "240426":
     id: "240426"
     title: Patch
