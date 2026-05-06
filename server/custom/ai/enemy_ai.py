@@ -7,6 +7,7 @@ from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.room_constant import RoomConstant
 from configuration.constants.stat_type import StatType
 
+'''
 class SlimeAI(AI):
     def tick(self):
         if not super().tick():
@@ -39,7 +40,7 @@ class SlimeAI(AI):
         # self.predict_use_best_skill()
         self.actor.finish_turn()
         return False
-
+'''
 
 class CowardAI(AI):
     def tick(self):

@@ -191,6 +191,8 @@ class Npc(Actor):
             for i in self.room.combat.participants.values():
                 if type(i).__name__ == 'Player':
                     amount += 1
+                    #amount += (i.stat_manager.stats[StatType.LVL] - self.stat_manager.stats[StatType.LVL]) * 0.25
+
             if amount <= 0:
                 amount = 0
 

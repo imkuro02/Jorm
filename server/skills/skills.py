@@ -218,18 +218,20 @@ class Skill:
             if receiver == self.user and receiver != self.other:
                 _line_to_send = perspectives["you on other"]
                 
-            if (
-                receiver != self.user
-                and receiver != self.other
-                and self.user == self.other
-            ):
-                _line_to_send = perspectives["user on user"]
+            
                 
             if receiver != self.user and receiver == self.other:
                 _line_to_send = perspectives["user on you"]
                 
             if receiver != self.user and receiver != self.other:
                 _line_to_send = perspectives["user on other"]
+
+            if (
+                receiver != self.user
+                and receiver != self.other
+                and self.user == self.other
+            ):
+                _line_to_send = perspectives["user on user"]
                 
             
             _line_to_send = _line_to_send.replace("#USER#", self.user.id)
@@ -1274,6 +1276,30 @@ class SkillAreaOfEffectDamageOnFinished(Skill):
                 turns=int(self.calculate_script_value(value = 'duration')),
             )
             self.other.affect_manager.set_affect_object(affect)
+
+class SkillSlimeSplit(Skill):
+    def evaluate(self):
+        self.other = self.user
+        stats = self.user.stat_manager.stats
+        if (
+                stats[StatType.HP] < stats[StatType.HPMAX] * 0.75
+                and stats[StatType.HPMAX] > 10
+            ):
+            return 3
+        else:
+            return 0
+
+    def use(self):
+        super().use()
+        stats = self.user.stat_manager.stats
+        stats[StatType.HP] = int(stats[StatType.HP] * 0.5)
+        stats[StatType.HPMAX] = stats[StatType.HP]
+        # create npc is assigned in actors.npcs script
+        clone = systems.utils.create_npc(self.user.room, self.user.npc_id)
+        clone.stat_manager.stats[StatType.HPMAX] = stats[StatType.HP]
+        clone.stat_manager.stats[StatType.HP] = stats[StatType.HP]
+        #clone.simple_broadcast("", f"{self.user.pretty_name()} splits!")
+        clone.room.join_combat(clone)
 
 class SkillSlimeApplyCooldown(Skill):
     def use(self):

@@ -1,4 +1,26 @@
 versions:
+  #"290426":
+  #  id: "290426"
+  #  title: Burdens
+  #  unixtime: 1775631568
+  #  features:
+  #    - A system where you stack negative effects in exchange for exp bonus
+  #    - 3 Burden of DAMAGE_TYPE Criticality - All DAMAGE_TYPE is doubled
+  #    - 4 Burden of STAT_TYPE Decay - STAT_TYPE decreases by 3 each turn, resets at combat start
+  #    - Burden of Hunger - All enemies learn Canibalize on combat start
+  #    - Burden of Poison - All Physical damage has a chance to apply Poison
+  #    - Burden of Savagery - Enemy strikes deal more damage per strike used in combat
+  #    - Burden of Blood - All enemies leech at combat start
+  #    - Burden of Steel - All enemies guard at combat start
+  #    - Burden of Bloom - All enemies heal 50% health on round 3 
+  #    - Burden of Vitality - All enemies receive 25% max health at combat start
+  "060526":
+    id: "060526"
+    title: Patch
+    unixtime: 1775631568
+    features:
+      - SlimeAI has been replaced with "Split" skill, meaning different enemy AI's can now Split
+      - If a user uses a skill on themselves it will no longer say "user used skill on user" rather "user used skill"
   "280426":
     id: "280426"
     title: Patch

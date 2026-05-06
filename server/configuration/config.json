@@ -1,5 +1,5 @@
 {
-    "SHA-256": "b650f861966fed8b7a442214d5483851f0759e4b098bc5b0455a751dc4988993",
+    "SHA-256": "5fca83b81cb9a0dd23f9c854a7aeb728b8d90eb93dd147432a8e3869162ed2c5",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -605,7 +605,7 @@
         },
         "green_slime": {
             "npc_id": "green_slime",
-            "ai": "Slime",
+            "ai": "Enemy",
             "name": "Green Slime",
             "description": "A mass of green ooze. It is sticky yet bouncy, moving with no purpose.",
             "stats": {
@@ -623,7 +623,8 @@
             "include_in_daily_quests": true,
             "skills": {
                 "magic_missile": 1,
-                "slime_apply_cooldown": 1
+                "slime_apply_cooldown": 1,
+                "slime_split": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -948,7 +949,7 @@
         },
         "red_slime": {
             "npc_id": "red_slime",
-            "ai": "Slime",
+            "ai": "Enemy",
             "name": "Red Slime",
             "description": "A mass of red ooze, sticky yet bouncy, moves with no purpose, leaving a faint, ominous trail as it shifts aimlessly.",
             "stats": {
@@ -966,7 +967,8 @@
             "include_in_daily_quests": true,
             "skills": {
                 "strike": 1,
-                "slime_apply_cooldown": 1
+                "slime_apply_cooldown": 1,
+                "slime_split": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -1074,7 +1076,7 @@
         },
         "blue_slime": {
             "npc_id": "blue_slime",
-            "ai": "Slime",
+            "ai": "Enemy",
             "name": "Blue Slime",
             "description": "A mass of blue ooze, sticky yet bouncy, moves aimlessly with a strange, unsettling fluidity.",
             "stats": {
@@ -1092,7 +1094,8 @@
             "include_in_daily_quests": true,
             "skills": {
                 "strike": 1,
-                "slime_apply_cooldown": 1
+                "slime_apply_cooldown": 1,
+                "slime_split": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -3403,6 +3406,34 @@
                     1.0,
                     1.0,
                     1.0
+                ]
+            }
+        },
+        "slime_split": {
+            "skill_id": "slime_split",
+            "name": "Split",
+            "description": "User takes remaining health and halves it, a clone spawns with the other half of health.",
+            "script_to_run": "SlimeSplit",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "cooldown": [
+                    1.0,
+                    1.0,
+                    0.0
                 ]
             }
         },
