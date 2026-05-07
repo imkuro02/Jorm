@@ -278,7 +278,8 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 metadata/_edit_group_ = true
 
-[node name="navigation" type="RichTextLabel" parent="canvas/container/sidebar"]
+[node name="navigation2" type="RichTextLabel" parent="canvas/container/sidebar"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
@@ -287,6 +288,34 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
 text = "[url=down][D][/url][url=north][N][/url][url=up][U][/url]
 [url=west][W][/url][url=south][S][/url][url=east][E][/url]
+/---------------------------------\\
+|    /   _|#|    ↑    |    ↗   _|#|
+|   /  _|###|    |    |   /  _|###|
+| ↙  _|#####|    |    |  / _|#####|
+(---------------------------------)
+|           |    |    |           |
+|    <--    |    |    |    -->    |
+|           |    ↓    |           |
+\\---------------------------------/"
+fit_content = true
+meta_underlined = false
+script = ExtResource("3_gkcnj")
+
+[node name="navigation" type="RichTextLabel" parent="canvas/container/sidebar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+text = "/---------------------------------\\
+|[url=down]           |[url=north]         |[url=up]           |
+|[url=down]   down    |[url=north]  north  |[url=up]     up    |
+|[url=down]           |[url=north]         |[url=up]           |
+(---------------------------------)
+|[url=west]           |[url=south]         |[url=east]           |
+|[url=west]   west    | [url=south] south  |[url=east]    east   |
+|[url=west]           |[url=south]         |[url=east]           |
+\\---------------------------------/
 "
 fit_content = true
 meta_underlined = false
@@ -483,6 +512,9 @@ texture = ExtResource("7_1kjrd")
 [connection signal="meta_clicked" from="canvas/container/sidebar/ascii_map" to="." method="_on_ascii_map_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/container/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/container/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_started"]
+[connection signal="meta_clicked" from="canvas/container/sidebar/navigation2" to="." method="_on_navigation_meta_clicked"]
+[connection signal="meta_hover_ended" from="canvas/container/sidebar/navigation2" to="." method="_on_navigation_meta_hover_ended"]
+[connection signal="meta_hover_started" from="canvas/container/sidebar/navigation2" to="." method="_on_navigation_meta_hover_started"]
 [connection signal="meta_clicked" from="canvas/container/sidebar/navigation" to="." method="_on_navigation_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/container/sidebar/navigation" to="." method="_on_navigation_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/container/sidebar/navigation" to="." method="_on_navigation_meta_hover_started"]
