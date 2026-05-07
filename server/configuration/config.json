@@ -1,5 +1,5 @@
 {
-    "SHA-256": "74cf7ba223acad0a447742956186d16710591898cb46ed5432d306e6ac9244a3",
+    "SHA-256": "930b6af9948eab0a9df99f51c342ec83b6fb0c433688d9739cf93cf7b9cb8bba",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -2672,7 +2672,7 @@
                 "aoe": [
                     0.0,
                     1.0,
-                    0.25
+                    0.5
                 ]
             }
         },
@@ -3416,7 +3416,7 @@
             "name": "Split",
             "description": "User takes remaining health and halves it, a clone spawns with the other half of health.",
             "script_to_run": "SlimeSplit",
-            "target_others_is_valid": false,
+            "target_others_is_valid": true,
             "target_item_is_valid": false,
             "target_self_is_valid": true,
             "can_use_in_combat": true,
