@@ -1685,10 +1685,11 @@ class SkillNecromancerRessurect(SkillTargetItem):
 
             
             # link get_party_id to master party id
-            e.party_manager.get_party_id = MethodType(
-                type(self.user.party_manager).get_party_id,  # unbound function
-                self.user.party_manager                      # bind to USER party manager
-            )
+            e.party_manager.get_party_id = self.user.party_manager.get_party_id
+            #e.party_manager.get_party_id = MethodType(
+            #    type(self.user.party_manager).get_party_id,  # unbound function
+            #    self.user.party_manager                      # bind to USER party manager
+            #)
 
             # link triggers 
             e.trigger_rename = MethodType(
@@ -1754,13 +1755,23 @@ class SkillMushroomSpawnSpore(Skill):
         super().use()
         from types import MethodType
         e = systems.utils.create_npc(self.user.room, 'spore')
-        e.party_manager.get_party_id = MethodType(
-                type(self.user.party_manager).get_party_id,  # unbound function
-                self.user.party_manager                      # bind to USER party manager
-            )
+        e.party_manager.get_party_id = self.user.party_manager.get_party_id
         e.name = e.name.replace('The','The Summoned')
         e.loot = {}
         e.stat_manager.stats[StatType.EXP] = 0
 
+        affect = affects.AffectSummoner(
+            affect_source_actor=self.user,
+            affect_target_actor=self.user,
+            name="Summoner",
+            description=f"You have summoned someone or something.",
+            turns = self.user.stat_manager.stats[StatType.SOUL],
+            dispellable = False,
+            summoned_actor = e,
+            stackable = True,
+        )
+
+        self.user.affect_manager.set_affect_object(affect)
+        
         if self.user.status == ActorStatusType.FIGHTING:
             self.user.room.combat.add_participant(e)

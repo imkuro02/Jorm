@@ -795,6 +795,8 @@ class AffectSummoner(Affect):
     def __init__(self, *args, **kwargs):
         self.summoned_actor = kwargs['summoned_actor']
         del kwargs['summoned_actor']
+        self.stackable = kwargs['stackable']
+        del kwargs['stackable']
         super().__init__(*args, **kwargs)
         
     def summon_checks(self):
@@ -816,7 +818,13 @@ class AffectSummoner(Affect):
             self.affect_target_actor.room.move_actor(self.summoned_actor, silent = True)
             self.summoned_actor.finish_turn(force_cooldown = True)
 
-
+    # super hacky, but basically add a seperate affect with another name 
+    # this is so that multiple summons can be active at once but have different timers
+    def merge_request(self, affect_to_merge):
+        if affect_to_merge.stackable and self.stackable:
+            affect_to_merge.name += 'I'
+            self.affect_target_actor.affect_manager.set_affect_object(affect_to_merge)
+            return True
 
     def on_finished(self,silent=False):
         super().on_finished(silent=silent)
