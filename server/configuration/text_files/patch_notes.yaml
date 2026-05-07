@@ -21,6 +21,8 @@ versions:
     features:
       - SlimeAI has been replaced with "Split" skill, meaning different enemy AI's can now Split
       - If a user uses a skill on themselves it will no longer say "user used skill on user" rather "user used skill"
+      - Pig now has skill "Swine dash" an AOE bash
+      - Mushroom enemies now release spores when there are less than 3 enemies in combat
   "280426":
     id: "280426"
     title: Patch

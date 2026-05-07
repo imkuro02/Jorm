@@ -538,6 +538,7 @@ class SkillDamage(Skill):
             else:
                 dmg = self.calculate_script_value(value = 'damage') + dmg_flat
 
+            self.get_dmg_value_override = dmg
             damage_obj = Damage(
                 damage_taker_actor=self.other,
                 damage_source_actor=self.user,
@@ -726,6 +727,20 @@ class SkillDamageByFlowApplyBleed(SkillDamageByFlow):
 
 
 class SkillBash(SkillDamageByGrit):
+    def evaluate(self):
+        # if a target is set then the prio is 1000
+        if self.other != None:
+            return 1000
+
+        # by default get target by valid highest threat
+        self.other = self.set_other_by_threat()
+
+        # if no other is picked return 0
+        if self.other == None:
+            return 0
+            
+        return 2
+
     def use(self):
         damage_obj = super().use()
       
@@ -742,6 +757,8 @@ class SkillBash(SkillDamageByGrit):
         )
         self.other.affect_manager.set_affect_object(stunned_affect)
 
+class SkillPigDash(SkillBash):
+    pass
 
 class SkillCleave(SkillDamage):
     
@@ -1434,6 +1451,7 @@ class SkillPromise(Skill):
 
 # XD Summon
 # testing stuff here
+
 '''
 class SkillSummon(Skill):
     def get_party_id(self):
@@ -1466,10 +1484,11 @@ class SkillSummon(Skill):
         if self.user.status == ActorStatusType.FIGHTING:
             self.user.room.combat.add_participant(e)
 
-class SkillSummonRat(SkillSummon):
-    def use(self):
-        super().use('rat')
+#class SkillSummonRat(SkillSummon):
+#    def use(self):
+#        super().use('rat')
 '''
+
 
 class SkillTargetItem(Skill):
     def pre_use(self):
@@ -1713,3 +1732,35 @@ class SkillNecromancerRessurect(SkillTargetItem):
 
        
 
+
+class SkillMushroomSpawnSpore(Skill):
+    def evaluate(self):
+        self.other = self.user
+
+        if self.user.room.combat == None:
+            return 0
+
+        ally_count = 0
+        for i in self.user.room.combat.participants.values():
+            if i.party_manager.get_party_id() == self.user.party_manager.get_party_id():
+                ally_count += 1
+        
+        if ally_count >= 3:
+            return 0
+
+        return 10
+
+    def use(self):
+        super().use()
+        from types import MethodType
+        e = systems.utils.create_npc(self.user.room, 'spore')
+        e.party_manager.get_party_id = MethodType(
+                type(self.user.party_manager).get_party_id,  # unbound function
+                self.user.party_manager                      # bind to USER party manager
+            )
+        e.name = e.name.replace('The','The Summoned')
+        e.loot = {}
+        e.stat_manager.stats[StatType.EXP] = 0
+
+        if self.user.status == ActorStatusType.FIGHTING:
+            self.user.room.combat.add_participant(e)

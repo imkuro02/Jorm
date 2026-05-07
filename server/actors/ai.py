@@ -18,17 +18,25 @@ class AI:
         # self.target = None
         self.prediction = None
         self.prediction_override = ""
-
+        
         # some skills can be used without ending your turn, for example most buffs
         # if this value is true, then you are allowed to use multiple skills per turn
         # if its false then your turn ends regardless
         self.can_use_skills_without_ending_turn = False
         # all AI is set to false, except player AI'
 
+
         REFTRACKER.add_ref(self)
 
     def initiative(self):
-        if self.actor.room.combat.round == 1:
+        history = self.actor.fetch_combat_history()
+        first_round = True
+        for packet in history:
+            if packet.actor_id == self.actor.id:
+                first_round = False
+                break
+
+        if first_round:
             if self.actor.on_start_skills_use != None:
                 skill, lvl = self.actor.on_start_skills_use.split("=")
                 skill = str(skill).strip("")

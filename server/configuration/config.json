@@ -1,5 +1,5 @@
 {
-    "SHA-256": "5fca83b81cb9a0dd23f9c854a7aeb728b8d90eb93dd147432a8e3869162ed2c5",
+    "SHA-256": "74cf7ba223acad0a447742956186d16710591898cb46ed5432d306e6ac9244a3",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -567,7 +567,8 @@
             "include_in_daily_quests": true,
             "skills": {
                 "strike": 1,
-                "guard": 3
+                "guard": 3,
+                "mushroom_spawn_spore": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -794,7 +795,8 @@
             "drop_corpse": true,
             "include_in_daily_quests": true,
             "skills": {
-                "strike": 1
+                "strike": 1,
+                "pig_dash": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -3466,6 +3468,82 @@
                 "cooldown": [
                     2.0,
                     2.0,
+                    0.0
+                ]
+            }
+        },
+        "mushroom_spawn_spore": {
+            "skill_id": "mushroom_spawn_spore",
+            "name": "Release Spores",
+            "description": "Release spores to fight for you.\n",
+            "script_to_run": "MushroomSpawnSpore",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "cooldown": [
+                    1.0,
+                    1.0,
+                    0.0
+                ]
+            }
+        },
+        "pig_dash": {
+            "skill_id": "pig_dash",
+            "name": "Swine Dash",
+            "description": "Dash at multiple targets, acting like an AOE Bash..\n",
+            "script_to_run": "PigDash",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": false,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
+                ],
+                "duration": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "cooldown": [
+                    3.0,
+                    3.0,
+                    0.0
+                ],
+                "damage": [
+                    8.0,
+                    99.0,
+                    0.75
+                ],
+                "bounce_bonus": [
+                    0.0,
+                    10.0,
+                    2.0
+                ],
+                "bounce_amount": [
+                    4.0,
+                    4.0,
                     0.0
                 ]
             }
