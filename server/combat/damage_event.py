@@ -74,7 +74,6 @@ class Damage:
             source = self.damage_source_actor
             taker = self.damage_taker_actor
             
-            '''
             if type(source).__name__ == 'Player':
                 ego = float(source.settings_manager.get_value('ego'))
                 ego_damage = (self.damage_value / ego)
@@ -84,20 +83,18 @@ class Damage:
 
             if type(taker).__name__ == 'Player':
                 ego = float(taker.settings_manager.get_value('ego'))
-                
                 ego_damage = int(self.damage_value * (ego)) #- self.damage_value
                 self.damage_value = ego_damage
-            '''
        
-        if self.damage_taker_actor != None and self.damage_source_actor != None and self.dont_proc == False:
-            source = self.damage_source_actor
-            taker = self.damage_taker_actor
-            if type(taker).__name__ == 'Player':
-                if taker.party_manager.party != None:
-                    if self.damage_type != DamageType.HEALING:
-                        if self.damage_type != DamageType.HEALING:
-                            self.damage_value += taker.stat_manager.stats[StatType.LVL] * 2
-                            self.damage_value -= source.stat_manager.stats[StatType.LVL] * 2
+        #if self.damage_taker_actor != None and self.damage_source_actor != None and self.dont_proc == False:
+        #    source = self.damage_source_actor
+        #    taker = self.damage_taker_actor
+        #    if type(taker).__name__ == 'Player':
+        #        if taker.party_manager.party != None:
+        #            if self.damage_type != DamageType.HEALING:
+        #                if self.damage_type != DamageType.HEALING:
+        #                    self.damage_value += taker.stat_manager.stats[StatType.LVL] * 2
+        #                    self.damage_value -= source.stat_manager.stats[StatType.LVL] * 2
 
 
         #if self.damage_taker_actor.room.combat != None:
