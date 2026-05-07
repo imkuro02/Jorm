@@ -121,7 +121,7 @@ class Spawner:
         if self.room.is_player_present():
             return
         
-        if self.room.world.factory.ticks_passed % (30 * 60 * 3) == 3:
+        if self.room.world.factory.ticks_passed % (30 * 1 * 3) == 3:
             for i in self.room.actors.values():
                 break
             self.respawn_all()
