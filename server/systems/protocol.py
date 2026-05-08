@@ -436,10 +436,10 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         )
         self.factory.delayed_functions.add_delayed_function(
             caller = self, tag = 'loading', delay = 30*12,
-            func=lambda: self.send_line('...@bredSuffecating@normal'),
+            func=lambda: self.send_line('...@bredSuffocating@normal'),
         )
         self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'loading', delay = (30*13)+1,
+            caller = self, tag = 'loading', delay = (30*15),
             func=lambda: self.send_line('[Press enter to continue]'),
         )
         #self.factory.delayed_functions.add_delayed_function(
