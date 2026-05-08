@@ -345,6 +345,7 @@ class Skill:
                 self.combat_event.run()
                 self.combat_event = CombatEvent()
                 self.silent_use = True
+                self.no_cooldown = True
                 if len(self.pre_use_get_targets()) == 0:
                     break
 
