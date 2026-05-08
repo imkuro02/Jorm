@@ -194,7 +194,7 @@ class Protocol(protocol.Protocol):
 
                 self.factory.delayed_functions.add_delayed_function(
                     caller = self, tag = 'movement', delay = delay,
-                    func=lambda: self.load_actor(),
+                    func=lambda: self.before_load_actor(),
                 )
                 
 
@@ -204,11 +204,16 @@ class Protocol(protocol.Protocol):
                 self.username = self.account[1]
                 self.password = self.account[2]
                 state = self.PLAY
-                self.load_actor()
+                self.before_load_actor()
 
         self.state = state
 
     def PLAY(self, line):
+        if self.actor == None:
+            self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
+            self.load_actor()
+            return
+            
         if line:
             self.actor.last_line_sent = line
         self.actor.queue_handle(line)
@@ -409,6 +414,39 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 systems.utils.debug_print(
                     f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!{i} is not in inventory?"
                 )
+
+    def before_load_actor(self):
+        # DELAY
+        
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'loading', delay = 1,
+            func=lambda: self.send_line('\n'*28),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'loading', delay = 30*1,                                           
+            func=lambda: self.send_line('A great forest stretches as far north as the eye can see'),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'loading', delay = 30*4,
+            func=lambda: self.send_line('Entire cities, swallowed by the forest'),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'loading', delay = 30*8,
+            func=lambda: self.send_line('It grows rapidly, the roots are climbing the walls, warping the gates, it is...'),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'loading', delay = 30*12,
+            func=lambda: self.send_line('...@bredSuffecating@normal'),
+        )
+        self.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'loading', delay = (30*13)+1,
+            func=lambda: self.send_line('[Press enter to continue]'),
+        )
+        #self.factory.delayed_functions.add_delayed_function(
+        #    caller = self, tag = 'loading', delay = 30*14,
+        #    func=lambda: self.load_actor(),
+        #)
+        
 
     def load_actor(self):
         actor = self.factory.db.read_actor(self.account[0])
@@ -667,6 +705,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
     # override
     def dataReceived(self, data):
+        self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
+
         self.tick_since_last_message = self.factory.ticks_passed
         
         if data == b'\xff\xfa\xc9\x00\xff\xf0':
