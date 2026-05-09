@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b4jjpl6leh0oo"
+path="res://.godot/imported/20 Lost Song.ogg-3fef2a28f1f2b6f9134d9a47c0548dbf.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/20 Lost Song.ogg"
+dest_files=["res://.godot/imported/20 Lost Song.ogg-3fef2a28f1f2b6f9134d9a47c0548dbf.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

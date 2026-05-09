@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ct8hqhtucm3ux"
+path="res://.godot/imported/01 Over the Underworld.ogg-c2b34dfeed590e4b958c8238d4c69da1.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/01 Over the Underworld.ogg"
+dest_files=["res://.godot/imported/01 Over the Underworld.ogg-c2b34dfeed590e4b958c8238d4c69da1.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

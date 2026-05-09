@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://csy0wqndjojqr"
+path="res://.godot/imported/04 Echoing Mijanda.ogg-6a728c4af1bdae5a60ce141b41c2ab11.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/04 Echoing Mijanda.ogg"
+dest_files=["res://.godot/imported/04 Echoing Mijanda.ogg-6a728c4af1bdae5a60ce141b41c2ab11.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

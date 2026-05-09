@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b6uy8pv1gbdls"
+path="res://.godot/imported/Contrast 100.mp3-5f67f05eb6d20a5f5115e3b6228b0740.mp3str"
+
+[deps]
+
+source_file="res://audio/music/alvin/Contrast 100.mp3"
+dest_files=["res://.godot/imported/Contrast 100.mp3-5f67f05eb6d20a5f5115e3b6228b0740.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

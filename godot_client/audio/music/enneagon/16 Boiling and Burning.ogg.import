@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b8t4pqqhwxyfe"
+path="res://.godot/imported/16 Boiling and Burning.ogg-fc45c36d5def045c82ea155f03c766bc.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/16 Boiling and Burning.ogg"
+dest_files=["res://.godot/imported/16 Boiling and Burning.ogg-fc45c36d5def045c82ea155f03c766bc.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

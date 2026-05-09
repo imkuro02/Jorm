@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dbu1tba77x4h3"
+path="res://.godot/imported/17 How the Turn Tables.ogg-0194171a46be05ad7d55efea71cc1336.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/17 How the Turn Tables.ogg"
+dest_files=["res://.godot/imported/17 How the Turn Tables.ogg-0194171a46be05ad7d55efea71cc1336.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

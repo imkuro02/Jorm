@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cq8uk2hxc1hrj"
+path="res://.godot/imported/15 Heroes Guild Go.ogg-5fff9cf83fc1edc1613ef00e52f47580.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/15 Heroes Guild Go.ogg"
+dest_files=["res://.godot/imported/15 Heroes Guild Go.ogg-5fff9cf83fc1edc1613ef00e52f47580.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

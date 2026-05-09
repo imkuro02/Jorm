@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bxieget5ktq37"
+path="res://.godot/imported/10 Sure Is Dark In Here.ogg-8b512e0a5d0abc158431bf443c9b01ef.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/10 Sure Is Dark In Here.ogg"
+dest_files=["res://.godot/imported/10 Sure Is Dark In Here.ogg-8b512e0a5d0abc158431bf443c9b01ef.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

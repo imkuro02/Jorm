@@ -16,6 +16,7 @@ var socket = WebSocketPeer.new()
 @onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
 @onready var MOUSE_CLICK_OPTIONS = $canvas/mouse_click_options
 @onready var EXPBAR = $canvas/smooth_exp_bar
+@onready var BGM = $BackgroundMusicStreamPlayer
 
 var game_state = 'none yet'
 
@@ -157,6 +158,10 @@ func handle_gmcp(message: String):
 		data_dict = JSON.parse_string(dict_string.replace("'", '"'))
 
 	match prefix:
+		'ACTOR_STATUS':
+			BGM.change_state(dict_string)
+			
+			
 		'ExpBar':
 			EXPBAR.fill_exp(data_dict['exp_cur'], data_dict['exp_max'], data_dict['lvl'])
 			

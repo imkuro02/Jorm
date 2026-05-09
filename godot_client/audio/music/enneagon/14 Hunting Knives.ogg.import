@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cmhwfv3vo3ead"
+path="res://.godot/imported/14 Hunting Knives.ogg-9c68afb9f5b2981e73c1265baf0673a8.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/14 Hunting Knives.ogg"
+dest_files=["res://.godot/imported/14 Hunting Knives.ogg-9c68afb9f5b2981e73c1265baf0673a8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

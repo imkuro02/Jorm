@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ccjltu2ieatwg"
+path="res://.godot/imported/12 Don't You Know Who We Are.ogg-f44f7cc7ce6817c67371595ab2fafa6a.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/12 Don't You Know Who We Are.ogg"
+dest_files=["res://.godot/imported/12 Don't You Know Who We Are.ogg-f44f7cc7ce6817c67371595ab2fafa6a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

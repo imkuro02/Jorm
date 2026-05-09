@@ -143,6 +143,7 @@ class Protocol(protocol.Protocol):
     def change_state(self, state):
         state_name = state.__name__
         self.send_gmcp(f"{state_name}", "GAME_STATE")
+        self.send_gmcp('Menu', "ACTOR_STATUS")
         match state:
             case self.LOGIN_OR_REGISTER:
                 self.id = str(uuid.uuid4())
@@ -416,32 +417,31 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 )
 
     def before_load_actor(self):
-        # DELAY
-        
-        self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'loading', delay = 1,
-            func=lambda: self.send_line('\n'*28),
-        )
-        self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'loading', delay = 30*1,                                           
-            func=lambda: self.send_line('A great forest stretches as far north as the eye can see'),
-        )
-        self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'loading', delay = 30*4,
-            func=lambda: self.send_line('Entire cities, swallowed by the forest'),
-        )
-        self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'loading', delay = 30*8,
-            func=lambda: self.send_line('It grows rapidly, the roots are climbing the walls, warping the gates, it is...'),
-        )
-        self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'loading', delay = 30*12,
-            func=lambda: self.send_line('...@bredSuffocating@normal'),
-        )
-        self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'loading', delay = (30*15),
-            func=lambda: self.send_line('[Press enter to continue]'),
-        )
+        self.send_line('\n'*50)
+        cutscene = False
+        if cutscene:
+            self.factory.delayed_functions.add_delayed_function(
+                caller = self, tag = 'loading', delay = 30*1,                                           
+                func=lambda: self.send_line('A great forest stretches as far north as the eye can see'),
+            )
+            self.factory.delayed_functions.add_delayed_function(
+                caller = self, tag = 'loading', delay = 30*4,
+                func=lambda: self.send_line('Entire cities, swallowed by the forest'),
+            )
+            self.factory.delayed_functions.add_delayed_function(
+                caller = self, tag = 'loading', delay = 30*8,
+                func=lambda: self.send_line('It grows rapidly, the roots are climbing the walls, warping the gates, it is...'),
+            )
+            self.factory.delayed_functions.add_delayed_function(
+                caller = self, tag = 'loading', delay = 30*12,
+                func=lambda: self.send_line('...@bredSuffocating@normal'),
+            )
+            self.factory.delayed_functions.add_delayed_function(
+                caller = self, tag = 'loading', delay = (30*15),
+                func=lambda: self.send_line('[Press enter to continue]'),
+            )
+        else:
+            self.load_actor()
         #self.factory.delayed_functions.add_delayed_function(
         #    caller = self, tag = 'loading', delay = 30*14,
         #    func=lambda: self.load_actor(),

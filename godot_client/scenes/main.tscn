@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=20 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://betuh687d54m2" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://d07eg5x1ov0v4" path="res://images/kuro/down.png" id="7_1kjrd"]
 [ext_resource type="Texture2D" uid="uid://doybnjy4cr05" path="res://images/kuro/bg.png" id="9_2qqwb"]
 [ext_resource type="Script" path="res://scripts/smooth_exp_bar.gd" id="10_flati"]
+[ext_resource type="AudioStream" uid="uid://c6ka6e0w0sqct" path="res://audio/music/alvin/N A W A K - FOREST.mp3" id="15_77trc"]
+[ext_resource type="Script" path="res://scripts/BackgroundMusic.gd" id="16_vp8dw"]
 [ext_resource type="FontFile" uid="uid://csvw2gt15o8yp" path="res://fonts/PixelCode-Medium.ttf" id="19_jxno8"]
 [ext_resource type="Script" path="res://scripts/input.gd" id="20_c83m0"]
 
@@ -508,6 +510,12 @@ modulate = Color(0.666667, 0.34902, 0.0392157, 1)
 texture_filter = 1
 position = Vector2(48, 56)
 texture = ExtResource("7_1kjrd")
+
+[node name="BackgroundMusicStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_77trc")
+volume_db = -10.0
+autoplay = true
+script = ExtResource("16_vp8dw")
 
 [connection signal="meta_clicked" from="canvas/container/sidebar/ascii_map" to="." method="_on_ascii_map_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/container/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_ended"]

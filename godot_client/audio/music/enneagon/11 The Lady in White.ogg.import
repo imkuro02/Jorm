@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bn1cdo4p1mfwp"
+path="res://.godot/imported/11 The Lady in White.ogg-a479017cfb3827fc99fbe8710d811b0b.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/enneagon/11 The Lady in White.ogg"
+dest_files=["res://.godot/imported/11 The Lady in White.ogg-a479017cfb3827fc99fbe8710d811b0b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

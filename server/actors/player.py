@@ -339,6 +339,8 @@ class UpdateChecker:
             _map = self.actor.command_map("", return_gmcp = True)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "MAP")
 
+        self.actor.protocol.send_gmcp(self.actor.status, "ACTOR_STATUS")
+
         # _look = self.actor.command_look("", return_gmcp=True)
         # self.actor.protocol.send_gmcp(systems.utils.add_color(_look), "LOOK_ROOM")
 
