@@ -391,6 +391,9 @@ def command_skills(self, line, return_gmcp = False):
         if not _can_practice:
             extra_info += f"{_name} CANNOT be learned via practices." + "\n"
 
+        if 'charges' in skill['script_values']:
+            extra_info += f"{_name} has x amount of charges, that will restock on rest" + "\n"
+
         """(
             f'{_name} is {"a offensive" if _is_offensive else "an non-offensive" } skill that {_target}.'
             f'It {_combat}, and '
@@ -505,9 +508,10 @@ def command_skills(self, line, return_gmcp = False):
             self.send_line("You do not know any skills...")
             return
 
-        t = systems.utils.Table(3, spaces=2)
+        t = systems.utils.Table(4, spaces=2)
         t.add_data("Skill")
         t.add_data("Ready")
+        t.add_data("x")
         t.add_data("Level")
 
         for skill_id in SKILLS:
@@ -550,6 +554,16 @@ def command_skills(self, line, return_gmcp = False):
                 t.add_data(f"In {self.cooldown_manager.cooldowns[skill_id]}", Color.BAD)
             elif diff <= 0:
                 t.add_data(f"Never", Color.BAD)
+
+            _tmp_skill = construct_skill(skill_id)(skill_id = skill_id, user = self)
+            charges_max = int(_tmp_skill.calculate_script_value(value = 'charges'))
+            if charges_max >= 999:
+                t.add_data(f' ')
+            else:
+                if skill_id in self.cooldown_manager.charges:
+                    t.add_data(f'{charges_max-self.cooldown_manager.charges[skill_id]}/{charges_max}')
+                else:
+                    t.add_data(f'{charges_max}/{charges_max}')
 
             if diff == 0:
                 diff = ""

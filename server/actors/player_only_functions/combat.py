@@ -624,6 +624,7 @@ def rest_here(self, line):
     )
     self.affect_manager.unload_all_affects(forced=False)
     self.cooldown_manager.unload_all_cooldowns()
+    self.cooldown_manager.unload_all_charges()
     # self.new_room_look()
     self.finish_turn()
 
@@ -651,6 +652,8 @@ def rest_here_request(self, line):
 
 def rest_home(self, line):
     self.sendSound(Audio.BUFF)
+    self.cooldown_manager.unload_all_charges()
+
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL
 
@@ -694,6 +697,7 @@ def rest_home(self, line):
         self.new_room_look()
         self.simple_broadcast("You ressurect", f"{self.pretty_name()} has ressurected")
     else:
+        
         if self.room.id == self.recall_site:
             self.simple_broadcast(f"You rest", f"{self.pretty_name()} rests")
         else:

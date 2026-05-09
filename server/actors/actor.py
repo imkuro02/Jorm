@@ -182,7 +182,27 @@ class CooldownManager:
         self.actor = actor
         self.long_cooldowns = {}
         self.cooldowns = {}
+        self.charges = {}
 
+    # charges
+    def add_charge_spent(self, charge, points):
+        if charge not in self.charges:
+            self.charges[charge] = points
+        else:
+            self.charges[charge] += points
+
+    def remove_charge_spent(self, charge):
+        if charge in self.charges:
+            del self.charges[charge]
+
+    def unload_all_charges(self, silent=False):
+        charge_to_del = []
+        for charge in self.charges:
+            charge_to_del.append(charge)
+        for charge in charge_to_del:
+            self.remove_charge_spent(charge)
+
+    # cooldowns
     def add_cooldown(self, cooldown, turns):
         if cooldown not in self.cooldowns:
             self.cooldowns[cooldown] = turns

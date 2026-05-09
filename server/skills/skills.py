@@ -64,7 +64,7 @@ class Skill:
     
     def calculate_script_value(self, value, next_level = False):
         if value not in self.script_values:
-            return 999999
+            return 999_999_999
             
         self.users_skill_level += next_level
 
@@ -258,10 +258,15 @@ class Skill:
 
         self.normalize_combat_event()
 
+        
+
         if not self.no_cooldown:
+            self.user.cooldown_manager.add_charge_spent(self.skill_id, 1)
             cool = int(self.calculate_script_value(value = 'cooldown'))
             if cool != 0:
                 self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
+
+            
 
         if not self.silent_use:
             self.use_broadcast()

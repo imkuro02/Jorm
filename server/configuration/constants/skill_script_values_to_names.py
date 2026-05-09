@@ -13,4 +13,5 @@ SkillScriptValuesToNames = {
     "hp_cost": "HP-COST",
     "mp_cost": "MP-COST",
     "delay": "DELAY",
+    'charges': 'CHARGES'
 }

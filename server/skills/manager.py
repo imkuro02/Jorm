@@ -147,6 +147,11 @@ def check_if_skill_can_be_used(skill_object):
         error(user, f"{skill_name} is not learned yet")
         return False
 
+    if skill_id in user.cooldown_manager.charges:
+        if user.cooldown_manager.charges[skill_id] >= int(skill_object.calculate_script_value(value = 'charges')):
+            error(user, f"{skill_name} is out of charges!")
+            return False
+    
     if skill_id in user.cooldown_manager.cooldowns:
         error(user, f"{skill_name} is on cooldown!")
         return False
