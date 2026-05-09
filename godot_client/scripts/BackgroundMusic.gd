@@ -16,5 +16,6 @@ func change_state(state):
 	if load(states[state]) != stream:
 		stream = load(states[state])
 		play()
+		stream.loop = true
 
 
