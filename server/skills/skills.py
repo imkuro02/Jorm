@@ -351,14 +351,15 @@ class Skill:
                 self.combat_event = CombatEvent()
                 self.silent_use = True
                 self.no_cooldown = True
-                if len(self.pre_use_get_targets()) == 0:
+
+                _targs = self.pre_use_get_targets()
+                if len(_targs) == 0:
                     break
 
-
-                self.other = self.pre_use_get_targets()[0]
+                self.other = _targs[0]
                 attempts = 0
                 while self.other in used_in_aoe:
-                    self.other = self.pre_use_get_targets()[0]
+                    self.other = _targs[0]
                     attempts += 1
                     if attempts >= 10:
                         break
