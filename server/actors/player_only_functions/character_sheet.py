@@ -508,11 +508,11 @@ def command_skills(self, line, return_gmcp = False):
             self.send_line("You do not know any skills...")
             return
 
-        t = systems.utils.Table(4, spaces=2)
+        t = systems.utils.Table(3, spaces=1)
         t.add_data("Skill")
         t.add_data("Ready")
-        t.add_data("x")
-        t.add_data("Level")
+        t.add_data("") #charges
+        #t.add_data("Level")
 
         for skill_id in SKILLS:
             equips = []
@@ -561,9 +561,9 @@ def command_skills(self, line, return_gmcp = False):
                 t.add_data(f' ')
             else:
                 if skill_id in self.cooldown_manager.charges:
-                    t.add_data(f'{charges_max-self.cooldown_manager.charges[skill_id]}/{charges_max}')
+                    t.add_data(f'({charges_max-self.cooldown_manager.charges[skill_id]}/{charges_max})')
                 else:
-                    t.add_data(f'{charges_max}/{charges_max}')
+                    t.add_data(f'({charges_max}/{charges_max})')
 
             if diff == 0:
                 diff = ""
@@ -572,12 +572,11 @@ def command_skills(self, line, return_gmcp = False):
             elif diff > 0:
                 diff = f"{Color.NORMAL}({Color.GOOD}+{diff}{Color.NORMAL})"
 
-            if cur_lvl >= 1:
-                cur_lvl = f"{Color.GOOD}{cur_lvl}{Color.NORMAL}"
-            else:
-                cur_lvl = f"{Color.BAD}{cur_lvl}{Color.NORMAL}"
-
-            t.add_data(f"{cur_lvl} {diff}")
+            #if cur_lvl >= 1:
+            #    cur_lvl = f"{Color.GOOD}{cur_lvl}{Color.NORMAL}"
+            #else:
+            #    cur_lvl = f"{Color.BAD}{cur_lvl}{Color.NORMAL}"
+            #t.add_data(f"{cur_lvl} {diff}")
         
         if return_gmcp:
             return t.get_table()
