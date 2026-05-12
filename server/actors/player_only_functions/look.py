@@ -248,7 +248,8 @@ def command_map(self, line, return_gmcp = False):
     #top_border = f'{col}{tex*(GRID_SIZE_X+2)}'
     #bot_border = f'{col}{tex*(GRID_SIZE_X+2)}'
 
-    top_border = f'{Color.NORMAL}<MAP START> {start_room.pretty_name()}'
+    #top_border = f'{Color.NORMAL}<MAP START> {start_room.pretty_name()}'
+    top_border = f'{Color.NORMAL}<MAP START>'
     bot_border = f'{Color.NORMAL}<MAP END>'
     _map = top_border + '\n' + _map + bot_border
 
@@ -764,6 +765,33 @@ def command_look(self, line, return_gmcp=False):
         see = see + f"{Color.DESCRIPTION}{room.get_description()}{Color.NORMAL}\n"
 
         exits = self.protocol.factory.world.rooms[room.id].get_active_exits(self)
+
+        exit_count = 0
+
+        see_exits = ""
+        for _exit in exits:
+            if _exit.secret:
+                continue
+        
+            _exit_dir = _exit.pretty_direction()
+            _exit_one_way = _exit.is_one_way_exit()
+            _exit_blocked = _exit.blocked and self.room.is_enemy_present()
+            _exit_item_required = _exit.item_required
+
+            see_exits += f'{_exit_dir}, '
+
+
+
+            exit_count += 1
+
+        if exit_count == 0:
+            see = see + 'EXITS: You do not see a way out'
+        else:
+            see_exits = see_exits[:-2]
+            see = see + "EXITS: [" + see_exits +']'
+        see += '\n'
+
+        '''
         # blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
         exit_count = 0
         see_exits = ""
@@ -789,8 +817,9 @@ def command_look(self, line, return_gmcp=False):
             see = see + "" + see_exits
             # see = see + '\n'
 
+        '''
         # see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
-
+        
         for i in room.actors.values():
             if i == self:
                 pass

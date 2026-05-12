@@ -14,6 +14,13 @@ versions:
   #    - Burden of Steel - All enemies guard at combat start
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
   #    - Burden of Vitality - All enemies receive 25% max health at combat start
+  "120526":
+    id: "120526"
+    title: Patch
+    unixtime: 1775631568
+    features:
+      - Client background music
+      - Room descriptions now got exit names on same line
   "060526":
     id: "060526"
     title: Patch

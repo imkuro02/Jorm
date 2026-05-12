@@ -197,13 +197,16 @@ class Exit:
         if self.blocked:
             e = self.room.is_enemy_present()
             if e != False:
-                return f"{dir_name_and_room}, is blocked by {e.pretty_name()}"
+                return f"{dir_name_and_room} is blocked by {e.pretty_name()}"
 
         if self.item_required:
             if self.item_required_consume:
-                return f'{dir_name_and_room}, requires one "{ITEMS[self.item_required]["name"]}"'
+                return f'{dir_name_and_room} requires one "{ITEMS[self.item_required]["name"]}"'
             else:
-                return f'{dir_name_and_room}, requires "{ITEMS[self.item_required]["name"]}"'
+                return f'{dir_name_and_room} requires "{ITEMS[self.item_required]["name"]}"'
+
+        if self.is_one_way_exit():
+            return f'{dir_name_and_room} has no return'
         return f"{dir_name_and_room}"
 
 
