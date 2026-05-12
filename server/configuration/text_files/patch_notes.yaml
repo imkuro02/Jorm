@@ -21,6 +21,7 @@ versions:
     features:
       - Client background music
       - Room descriptions now got exit names on same line
+      - Armor regens WAY faster than HP
   "060526":
     id: "060526"
     title: Patch

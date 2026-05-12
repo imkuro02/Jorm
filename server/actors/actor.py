@@ -820,7 +820,7 @@ class Actor:
                             return
                     #self.heal(value=self.stat_manager.stats[StatType.LVL] * 1)
                     self.heal(value = 1, heal_armor = False, heal_marmor = False)
-                    self.heal(value = 1, heal_hp = False)
+                    self.heal(value = 30, heal_hp = False)
                     return
         
 
