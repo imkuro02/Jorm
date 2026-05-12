@@ -34,7 +34,7 @@ func change_state(state):
 			stream.loop = true
 		)
 
-		tween.tween_property(self, "volume_db", 0.0, 0)
+		tween.tween_property(self, "volume_db", -15.0, 0)
 		
 			
 
