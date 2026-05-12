@@ -590,3 +590,18 @@ the_well_below_trap
 @yellow<\@bpurple/OO\@yellow/>
 @yellow</@bpurple"uu"@yellow\>
 [end]
+
+[id:mini_boss_cow]
+      (   )
+ ______(OO)
+/|\____\(oo)
+*| |W-| |
+[end]
+
+[id:mini_boss_bull]
+          (      )
+   ________(@  @)
+ /(         (oo)
+@ (___________)
+    | |   | |
+[end]
