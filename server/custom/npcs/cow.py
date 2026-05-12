@@ -39,8 +39,8 @@ class cow(Npc):
             return True
 
         player.simple_broadcast(
-            f'You milk {self.pretty_name()}',
-            f'{player.pretty_name()} pets {self.pretty_name()} ',
+            f'You milk {self.pretty_name()}, you soon come to regret this decision',
+            f'{player.pretty_name()} milks {self.pretty_name()}, they soon come to regret this decision',
         )
 
         e = create_npc(self.room, 'mini_boss_bull')
