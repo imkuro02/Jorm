@@ -6,16 +6,35 @@ var states = {
 	'Menu': "res://audio/music/alvin/N A W A K - FOREST.mp3"
 }
 
-# Called when the node enters the scene tree for the first time.
+var current_song = states['Menu']
+
 func _ready():
 	stream.loop = true
-	pass # Replace with function body.
-
+	change_state('Menu')
+	
+	
 
 func change_state(state):
 	if load(states[state]) != stream:
-		stream = load(states[state])
-		play()
-		stream.loop = true
+		
+		var _time1 = 0.0
+		var _time2 = 0.0
+		if state != 'Fighting':
+			_time1 = 0.5
+			_time2 = 1.0
+			
+		var tween = create_tween()
 
+		tween.tween_property(self, "volume_db", -40.0, _time1)
+		#tween.tween_interval(3.0)
+
+		tween.tween_callback(func():
+			stream = load(states[state])
+			play()
+			stream.loop = true
+		)
+
+		tween.tween_property(self, "volume_db", 0.0, 0)
+		
+			
 
