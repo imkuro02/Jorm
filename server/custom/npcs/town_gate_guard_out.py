@@ -11,16 +11,13 @@ class town_guard_npc(Npc):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        #print(self.__dict__)
-        self.time_exisiting = 0
-        self.actors = len(self.room.actors.values())
 
     def tick(self):
-        super().tick()
-        self.time_exisiting += 1
-        if self.time_exisiting % (30 * 4) == 0:
-            if self.actors != len(self.room.actors.values()):
-                self.actors = len(self.room.actors.values())
+        if self.factory.ticks_passed % (30 * 4) == 0:
+            if not hasattr(self,'actors_in_room_count'):
+                self.actors_in_room_count = 0
+            if self.actors_in_room_count != len(self.room.actors.values()):
+                self.actors_in_room_count = len(self.room.actors.values())
                 self.simple_broadcast(
                     "", f'"Good to be alive or something" says {self.pretty_name()}'
                 )

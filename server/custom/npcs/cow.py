@@ -13,6 +13,20 @@ class cow(Npc):
         self.trigger_manager.trigger_add(trigger_key = 'milk', trigger_action = self.trigger_milk)
         self.description += '\nYou can "milk" the cow'
 
+    def tick(self):
+        super().tick()
+        if self.status != ActorStatusType.NORMAL:
+            return
+
+        if self.factory.ticks_passed % (30 * 4) == 0:
+            if not hasattr(self,'actors_in_room_count'):
+                self.actors_in_room_count = 0
+            if self.actors_in_room_count != len(self.room.actors.values()):
+                self.actors_in_room_count = len(self.room.actors.values())
+                self.simple_broadcast(
+                    "", f'{self.pretty_name()} Moo\'s at you'
+                )
+
     def set_turn(self):
         if self.room.combat == None:
             return
