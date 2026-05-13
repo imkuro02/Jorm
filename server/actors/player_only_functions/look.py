@@ -85,8 +85,8 @@ def command_map(self, line, return_gmcp = False):
    
     for room in coords:
         x, y, z, depth = coords[room]
-        gx = (x*3) + GRID_CENTER_X
-        gy = (y*3) + GRID_CENTER_Y
+        gx = (x*2) + GRID_CENTER_X
+        gy = (y*2) + GRID_CENTER_Y
         if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
             has_up = False
             has_down = False
