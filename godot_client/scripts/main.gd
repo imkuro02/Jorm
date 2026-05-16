@@ -200,7 +200,8 @@ func handle_gmcp(message: String):
 			#print('dict_string')
 			#print(dict_string)
 			OUTPUT_COMBAT.clear()
-			OUTPUT_COMBAT.get_message('********************************************************************************\n'+dict_string)
+			#OUTPUT_COMBAT.get_message('********************************************************************************\n'+dict_string)
+			OUTPUT_COMBAT.get_message(dict_string)
 		'MAP':
 			ASCIIMAP.clear()
 			ASCIIMAP.get_message(dict_string)

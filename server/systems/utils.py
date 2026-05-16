@@ -641,7 +641,7 @@ class Table:
                 index += 1
                 i = 0
 
-        # output = output[:-1] if output.endswith("\n") else output
+        output = output[:-1] if output.endswith("\n") else output
 
         return output
 

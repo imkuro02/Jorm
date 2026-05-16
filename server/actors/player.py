@@ -313,30 +313,28 @@ class UpdateChecker:
 
         self.tick_send_exp()
 
+        _split = '********************************************************************************\n'
+
+
         if self.actor.status != ActorStatusType.FIGHTING:
-            _map = self.actor.show_prompts(
+            _map = _split + self.actor.show_prompts(
                 order=self.actor.room.actors.values(),
                 no_predictions=True,
                 return_gmcp=True,
             )
         else:
-            _map = self.actor.show_prompts(
+            _map = _split + self.actor.show_prompts(
                 order=None, no_predictions=False, return_gmcp=True
             )
-            _cur_actor = self.actor.room.combat.current_actor
-            _round = self.actor.room.combat.round
-            if _cur_actor == self.actor:
-                _map = f"Round {_round}, Your turn\n" + _map
-            else:
-                _map = f"Round {_round}, {_cur_actor.pretty_name(identifier = self.actor)}' turn\n" + _map
+
+            if self.actor.status == ActorStatusType.FIGHTING:
+                _map = _map + _split + self.actor.command_skills('', return_gmcp = True)
 
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
 
-        if self.actor.status == ActorStatusType.FIGHTING:
-            _map = self.actor.command_skills('', return_gmcp = True)
-        else:
-            _map = self.actor.command_map("", return_gmcp = True)
+        
+        _map = self.actor.command_map("", return_gmcp = True)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "MAP")
 
         self.actor.protocol.send_gmcp(self.actor.status, "ACTOR_STATUS")

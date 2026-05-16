@@ -22,6 +22,8 @@ versions:
       - Client background music
       - Room descriptions now got exit names on same line
       - Armor regens WAY faster than HP
+      - Skills are now displayed right under characters when in combat
+      - Tweaks to how tables are displayed, random empty lines at the end of output should be gone(?)
   "060526":
     id: "060526"
     title: Patch

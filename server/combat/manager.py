@@ -75,7 +75,7 @@ class Combat:
 
         for p in self.room.actors.values():
             if type(p).__name__ == "Player":
-                p.send_line("@tipA fight has started!@back")
+                p.send_line(f"{Color.COMBAT_IMPORTANT}A fight has started!{Color.BACK}")
 
     def add_to_combat_history(self, actor):
         self.combat_history.add_to_combat_history(actor)

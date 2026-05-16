@@ -181,9 +181,9 @@ def command_practice(self, line):
         output = ""
         #output += f"*All skills go up in cost by 1 PP, except the skill you practice.\n"
         output += f"You are Level {Color.IMPORTANT}{self.stat_manager.stats[StatType.LVL]}{Color.NORMAL}.\n"
-        output += f"You have {Color.IMPORTANT}{self.stat_manager.stats[StatType.PP]}{Color.NORMAL} practice points left.\n"
+        output += f"You have {Color.IMPORTANT}{self.stat_manager.stats[StatType.PP]}{Color.NORMAL} practice points left."
 
-        self.send_line(t.get_table() + output)
+        self.send_line(t.get_table() + '\n' + output)
 
     else:
         id_to_name, name_to_id = get_skills()

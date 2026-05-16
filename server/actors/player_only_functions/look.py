@@ -862,7 +862,7 @@ def command_look(self, line, return_gmcp=False):
                         except Exception as e:
                             t.add_data(" ")
 
-                see = see + "\n" + t.get_table()
+                see = see + "\n" + t.get_table() + '\n'
 
         if not room.inventory_manager.is_empty():
             see_items = ""
@@ -883,6 +883,7 @@ def command_look(self, line, return_gmcp=False):
             if see_items != "":
                 see = see + "" + see_items
 
+        see = see[:-1] if see.endswith("\n") else see
         if not return_gmcp:
             self.send_line(see)
         else:
