@@ -77,7 +77,8 @@ class KillTracking:
                 if "," in _who_slayed:
                     parts = _who_slayed.rsplit(",", 1)
                     _who_slayed = " and".join(parts)
-            broadcast_message = f'The {self.kills[npc_id]}th {ENEMIES[npc_id]["name"]} has been slain by {_who_slayed}'
+                    _who_slayed = _who_slayed.strip()
+            broadcast_message = f'\n{_who_slayed} has slain the {self.kills[npc_id]}th {ENEMIES[npc_id]["name"]}\n'
 
 
 
