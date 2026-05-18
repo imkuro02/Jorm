@@ -738,6 +738,31 @@ def command_lore(self, line):
     list_of_rooms = [room for room in LORE["rooms"]]
     list_of_skills = [skill for skill in LORE["skills"]]
 
+    if line == 'npcs':
+        sorted_enemies = sorted(
+            LORE["enemies"].values(),
+            key=lambda enemy: enemy["stats"]["lvl"]
+        )
+        t = systems.utils.Table(2, 1)
+        for i in sorted_enemies:
+            if i['dont_join_fights'] == True:
+                t.add_data(f'-',filler='-')
+            else:
+                t.add_data(f'Lv {i["stats"]["lvl"]}')
+            t.add_data(f' {i["name"]}')
+        self.send_line(t.get_table())
+        self.send_line('#npcs is: '+str(len(sorted_enemies)))
+        return
+    if line == 'items':
+        self.send_line('#items is: '+str(len(list_of_items)))
+        return
+    if line == 'rooms':
+        self.send_line('#rooms is: '+str(len(list_of_rooms)))
+        return
+    if line == 'skills':
+        self.send_line('#skills is: '+str(len(list_of_skills)))
+        return
+
     if line in "grit flow mind soul phy_armor mag_armor hp".split():
         line = line.strip()
         if line in "hp phy_armor mag_armor".strip():
