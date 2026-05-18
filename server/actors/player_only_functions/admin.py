@@ -14,6 +14,7 @@ from configuration.config import (
     LORE,
     PATCH_NOTES,
     SKILLS,
+    ENEMIES,
 )
 from configuration.constants.color import Color
 #from configuration.constants.equipment_slot_type import EquipmentSlotType
@@ -860,8 +861,8 @@ def command_lore(self, line):
             output += output_room_spawns.strip() + "\n" + "\n"
         if output_loot_drops != "":
             output += f"{Color.IMPORTANT}Potential drops{Color.NORMAL}:\n"
-            output += output_loot_drops + "\n" + "\n"
-
+            output += output_loot_drops + "\n" + '\n'
+        output += f"{ENEMIES[e.npc_id]['name']}s slain: {self.get_tracked_npcs_killed(e.npc_id)}"
         self.send_line(output.strip())
 
         e.die()

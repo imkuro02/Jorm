@@ -617,6 +617,9 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                         continue
                     self.actor.explored_rooms.append(i[1])
 
+            for i in actor['tracked_npcs_killed']:
+                self.actor.tracked_npcs_killed[i] = actor['tracked_npcs_killed'][i]
+
         self.actor.inventory_manager.all_items_set_new(False)
 
         self.state = self.PLAY

@@ -622,7 +622,7 @@ class Actor:
             if self.description != None:
                 output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"
 
-        output += self.get_character_equipment()
+        output += self.get_character_equipment() +'\n'
 
 
         _stats_with_equips = {}
@@ -678,7 +678,7 @@ class Actor:
                         bonus = f'+{bonus}'
                     t.add_data("" if _stats_calculated_bonuses[_shit] == 0 else f"{Color.NORMAL}({col}{bonus}{Color.NORMAL})")
 
-            output += t.get_table()
+            output += t.get_table() +'\n'
 
         if type(self).__name__ == "Player":
             t = systems.utils.Table(4, 1)
@@ -722,7 +722,9 @@ class Actor:
             t.add_data("")
             t.add_data("")
 
-            output += t.get_table()
+            output += t.get_table() + '\n'
+
+            output += f'Total kills: {self.get_tracked_npcs_killed_total()}, most kills against: {self.get_tracked_npcs_killed_most_of()}'
 
         return output
 

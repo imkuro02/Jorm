@@ -21,6 +21,7 @@ versions:
     features:
       - You can now lore npcs, items, skills, and rooms and get how many exist in game, ex; "lore rooms"
       - A global kill counter for all npcs is now stored, kind of like in terraria "kuro has killed the 100th slime"
+      - A private kill counter for all npcs is now stored, independant of global counter
   "120526":
     id: "120526"
     title: Patch

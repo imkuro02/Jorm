@@ -379,8 +379,11 @@ class Npc(Actor):
             if type(actor).__name__ == "Player":
                 if actor.status == ActorStatusType.DEAD:
                     continue
+
+                actor.add_tracked_npcs_killed(npc_id = self.npc_id, amount = 1)
                 actor.gain_exp(self.stat_manager.stats[StatType.EXP])
                 self.drop_loot(actor, room)
+                
                 # self.drop_loot_on_ground()
                 proposal = ObjectiveCountProposal(
                     OBJECTIVE_TYPES.KILL_X, self.npc_id, 1

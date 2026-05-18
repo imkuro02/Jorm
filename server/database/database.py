@@ -127,6 +127,32 @@ class Database:
             FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
         )""")
 
+
+        # tracking kills and stuff
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS tracked_npcs_killed (
+            actor_id TEXT NOT NULL,
+            enemy_id TEXT NOT NULL,
+            amount INT NOT NULL,
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        )""")
+
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS tracked_items_dropped_from_npcs_killed (
+            actor_id TEXT NOT NULL,
+            enemy_id TEXT NOT NULL,
+            premade_id TEXT NOT NULL,
+            amount INT NOT NULL,
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        )""")
+
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS tracked_global_npcs_killed (
+            enemy_id TEXT NOT NULL,
+            premade_id TEXT NOT NULL,
+            amount INT NOT NULL
+        )""")
+
         # Commit changes
         self.conn.commit()
 
@@ -540,6 +566,74 @@ class Database:
                 my_dict,
             )
 
+        my_dict = {}
+        my_dict["actor_id"] = actor_id
+        self.cursor.execute(
+            """
+            DELETE FROM tracked_npcs_killed WHERE actor_id = ?
+        """,
+            (actor_id,),
+        )
+
+        for key in actor.tracked_npcs_killed:
+            my_dict["actor_id"] =   actor_id
+            my_dict["enemy_id"] =   key
+            my_dict["amount"] =     actor.tracked_npcs_killed[key]
+            self.cursor.execute(
+                """
+                INSERT INTO tracked_npcs_killed (
+                    actor_id, enemy_id, amount
+                ) VALUES (
+                    :actor_id, :enemy_id, :amount
+                )
+            """,
+                my_dict,
+            )
+
+        '''
+        for _dic in actor.tracked_items_dropped_from_npcs_killed.values():
+            my_dict["actor_id"] =    actor_id
+            my_dict["enemy_id"] =    _dic['enemy_id']
+            my_dict["premade_id"] =  _dic['premade_id']
+            my_dict["amount"] =      _dic['amount']
+            self.cursor.execute(
+                """
+                INSERT INTO explored_rooms (
+                    actor_id, enemy_id, premade_id, amount
+                ) VALUES (
+                    :actor_id, :enemy_id, :premade_id, :amount
+                )
+            """,
+                my_dict,
+            )
+        '''
+            # tracking kills and stuff
+        '''
+                                            self.cursor.execute("""
+                                            CREATE TABLE IF NOT EXISTS tracked_npcs_killed (
+                                                actor_id TEXT NOT NULL,
+                                                enemy_id TEXT NOT NULL,
+                                                amount INT NOT NULL,
+                                                FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+                                            )""")
+
+                                            self.cursor.execute("""
+                                            CREATE TABLE IF NOT EXISTS tracked_items_dropped_from_npcs_killed (
+                                                actor_id TEXT NOT NULL,
+                                                enemy_id TEXT NOT NULL,
+                                                premade_id TEXT NOT NULL,
+                                                amount INT NOT NULL,
+                                                FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+                                            )""")
+
+                                            self.cursor.execute("""
+                                            CREATE TABLE IF NOT EXISTS tracked_global_npcs_killed (
+                                                enemy_id TEXT NOT NULL,
+                                                premade_id TEXT NOT NULL,
+                                                amount INT NOT NULL
+                                            )""")
+        '''
+
         self.write_admins(actor)
         self.conn.commit()
 
@@ -658,6 +752,15 @@ class Database:
 
         explored_rooms = self.cursor.fetchall()
 
+        self.cursor.execute(
+            """
+            SELECT * FROM tracked_npcs_killed WHERE actor_id = ?
+        """,
+            (actor_id,),
+        )
+
+        tracked_npcs_killed = self.cursor.fetchall()
+
         my_dict = {}
         my_dict["actor_id"] = actor_id
         my_dict["actor_name"] = actor_name
@@ -763,6 +866,10 @@ class Database:
                 my_dict["explored_rooms"].append(explored_room)
         # systems.utils.debug_print(my_dict['friends'])
 
+        my_dict['tracked_npcs_killed'] = {}
+        for i in tracked_npcs_killed:
+            my_dict['tracked_npcs_killed'][i[1]] = i[2]
+            
         return my_dict
 
     # write down admin on save

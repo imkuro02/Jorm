@@ -357,6 +357,7 @@ class Player(Actor):
         self.recently_send_message_count = 0
         self.instanced_rooms = []
         self.collect_lost_exp_rooms = {}
+        self.tracked_npcs_killed = {}
 
         super().__init__(name=name, room=room, _id=_id)
 
@@ -389,7 +390,38 @@ class Player(Actor):
 
         self.loaded = True
 
+    def add_tracked_npcs_killed(self, npc_id, amount):
+        if npc_id in self.tracked_npcs_killed:
+            self.tracked_npcs_killed[npc_id] += amount
+        else:
+            self.tracked_npcs_killed[npc_id] = amount
+
+    def get_tracked_npcs_killed(self, npc_id):
+        if npc_id in self.tracked_npcs_killed:
+            return self.tracked_npcs_killed[npc_id]
+        else:
+            return 0
+        
+    def get_tracked_npcs_killed_total(self):
+        total = 0
+        for i in self.tracked_npcs_killed:
+            total += self.tracked_npcs_killed[i]
+        return total
     
+    def get_tracked_npcs_killed_most_of(self):
+        total = 0
+        most = None
+        for i in self.tracked_npcs_killed:
+            if total <= self.tracked_npcs_killed[i]:
+                total = self.tracked_npcs_killed[i]
+                most = i
+
+        if most == None:
+            return 'Nothing'
+        from configuration.config import ENEMIES
+
+        returning = ENEMIES[most]['name'] + f' ({self.get_tracked_npcs_killed(most)})'
+        return returning
 
     def die(self, unload=False):
         super().die(unload=False)
