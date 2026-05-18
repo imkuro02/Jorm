@@ -373,6 +373,8 @@ class Npc(Actor):
 
         super().die(unload=False)
 
+        room.world.kill_tracking.add_kill(self)
+        
         for actor in participants:
             if type(actor).__name__ == "Player":
                 if actor.status == ActorStatusType.DEAD:

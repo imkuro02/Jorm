@@ -25,6 +25,63 @@ from items.manager import load_item
 from systems.inventory import InventoryManager
 from systems.room import Exit, Room
 from systems.utils import REFTRACKER, unload
+import json
+from configuration.config import ENEMIES
+
+class KillTracking:
+    def __init__(self, factory):
+        self.path = 'database/kill_tracking.json'
+        self.kills = {}
+
+        if not os.path.exists(self.path):
+            with open(self.path, "w") as f:
+                json.dump({}, f)  # write empty dict
+
+        with open(self.path, "r") as f:
+            loaded_data = json.load(f)
+            self.kills = loaded_data
+
+        
+
+    def add_kill(self, npc_obj):
+        npc_id = npc_obj.npc_id
+        if npc_id in self.kills:
+            self.kills[npc_id] += 1
+        else:
+            self.kills[npc_id] = 1
+
+        with open(self.path, "w") as f:
+            json.dump(self.kills, f, indent=4)
+
+        if self.kills[npc_id] % 50 == 0:
+            _player = None
+            for i in npc_obj.room.combat.participants.values():
+                if type(i).__name__ != 'Player':
+                    continue
+                _player = i
+                break
+
+            if _player == None:
+                return
+
+            _who_slayed = _player.pretty_name()
+            if _player.party_manager.party != None:
+                _who_slayed = ''
+                for i in _player.party_manager.party.participants.values():
+                    _who_slayed += i.pretty_name()+', '
+                
+                # remove last comma
+                _who_slayed = _who_slayed[::-1].replace(",", "", 1)[::-1]
+
+                # if there are still commas left, replace the last one with " and"
+                if "," in _who_slayed:
+                    parts = _who_slayed.rsplit(",", 1)
+                    _who_slayed = " and".join(parts)
+            broadcast_message = f'The {self.kills[npc_id]}th {ENEMIES[npc_id]["name"]} has been slain by {_who_slayed}'
+
+
+
+            npc_obj.pretty_broadcast('', broadcast_message, send_to = "world")
 
 
 class GameTime:
@@ -174,7 +231,9 @@ class World:
         self.rooms = {}
         self.rooms_to_unload = []
         self.game_time = GameTime(self.factory)
+        self.kill_tracking = KillTracking(self.factory)
         self.reload()
+
 
     def spawn_boss(self):
         all_mobs = []
