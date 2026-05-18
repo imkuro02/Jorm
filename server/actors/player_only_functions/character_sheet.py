@@ -462,7 +462,7 @@ def command_skills(self, line, return_gmcp = False):
                 t.add_data(skill_obj.calculate_script_value(value = val))
                 t.add_data(skill_obj.calculate_script_value(value = val, next_level = True))
 
-        output += t.get_table()
+        output += t.get_table() + '\n'
         '''
         if "script_values" in skill:
             t = systems.utils.Table(len(skill["script_values"]["levels"]) + 1, 4)
