@@ -590,6 +590,9 @@ class Actor:
         return output
 
     def get_character_equipment(self, identifier = None, hide_empty=True):
+        if len([i for i in self.slots_manager.slots.values() if i != None]) == 0:
+            return ''
+
         t = systems.utils.Table(2, spaces=1)
         for i in self.slots_manager.slots:
             if None == self.slots_manager.slots[i]:
@@ -605,7 +608,7 @@ class Actor:
                         self.slots_manager.slots[i]
                     ].pretty_name(identifier = identifier, rank_only=True)
                 )
-        output = t.get_table()
+        output = t.get_table()+'\n'
         return output
 
     def get_character_sheet(self, sheet_getter=None, is_glancing=False):
@@ -622,7 +625,7 @@ class Actor:
             if self.description != None:
                 output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"
 
-        output += self.get_character_equipment() +'\n'
+        output += self.get_character_equipment() 
 
 
         _stats_with_equips = {}
@@ -678,7 +681,7 @@ class Actor:
                         bonus = f'+{bonus}'
                     t.add_data("" if _stats_calculated_bonuses[_shit] == 0 else f"{Color.NORMAL}({col}{bonus}{Color.NORMAL})")
 
-            output += t.get_table() +'\n'
+            output += t.get_table()
 
         if type(self).__name__ == "Player":
             t = systems.utils.Table(4, 1)
@@ -718,13 +721,16 @@ class Actor:
             t.add_data("")
 
             t.add_data(StatType.name[StatType.INVSLOTS] + ":")
-            t.add_data(f"+{self.stat_manager.stats[StatType.INVSLOTS]}")
+            t.add_data(f"{self.stat_manager.stats[StatType.INVSLOTS]+20}")
             t.add_data("")
             t.add_data("")
 
-            output += t.get_table() + '\n'
+            output += '\n' + t.get_table() + '\n'
 
-            output += f'Total kills: {self.get_tracked_npcs_killed_total()}, most kills against: {self.get_tracked_npcs_killed_most_of()}'
+            output += f'Total kills: {self.get_tracked_npcs_killed_total()}, most kills against: {self.get_tracked_npcs_killed_most_of()}\n'
+            output += f'Rooms explored: {len(self.explored_rooms)}\n'
+            output += f'Time in Game: {systems.utils.seconds_to_dhm(self.time_in_game)}'
+
 
         return output
 
