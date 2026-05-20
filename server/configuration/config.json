@@ -1,5 +1,5 @@
 {
-    "SHA-256": "912d516e3e859af9023411d1562f23dd09766784c45201edeca7116f3748b6d4",
+    "SHA-256": "7875add19da517fc68c918b5951701ea1e75ffaa2b206d62e3defbfdc56640c9",
     "enemies": {
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
@@ -140,11 +140,139 @@
                 "all"
             ]
         },
+        "shroom_easy": {
+            "npc_id": "shroom_easy",
+            "ai": "Enemy",
+            "name": "Baby Shroom",
+            "description": "A tiny little mushroom with two tiny legs. It wobbles as it moves.",
+            "stats": {
+                "hp": 30,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "grit": 0,
+                "flow": 0,
+                "mind": 0,
+                "soul": 0,
+                "exp": 1,
+                "lvl": 1
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {
+                "nudge": 1,
+                "cure_light_wounds": 1
+            },
+            "on_death_skills_use": "disorient=1",
+            "on_start_skills_use": null,
+            "loot": {
+                "food_item_cheese": 39,
+                "tavern_food_item_dinner_0": 39,
+                "tavern_food_item_dinner_1": 39,
+                "tavern_food_item_dinner_2": 39,
+                "tavern_food_item_mug_of_ale": 39,
+                "tutorial_paper_1": 39,
+                "tutorial_paper_2": 39,
+                "tutorial_quest_item_1": 39,
+                "key_tavern_sewer": 39,
+                "tutor_resting_item": 39,
+                "mug": 39,
+                "scenery_campfire": 39,
+                "scenery_fireplace": 39,
+                "scenery_leaky_ceiling": 39,
+                "scenery_tavern_table_carving": 39,
+                "scenery_ioizor_statue": 39,
+                "copper_metal": 39,
+                "bronze_metal": 39,
+                "iron_metal": 39,
+                "mana_iron_metal": 39,
+                "steel_metal": 39,
+                "mana_steel_metal": 39,
+                "gold_metal": 39,
+                "titanium_metal": 39,
+                "palladium_metal": 39,
+                "mythril_metal": 39,
+                "orichalcum_metal": 39,
+                "simple_wood": 39,
+                "oak_wood": 39,
+                "pine_wood": 39,
+                "maple_wood": 39,
+                "birch_wood": 39,
+                "walnut_wood": 39,
+                "spruce_wood": 39,
+                "elm_wood": 39,
+                "fir_wood": 39,
+                "cactus_wood": 39,
+                "bamboo_wood": 39,
+                "magnolia_wood": 39,
+                "cherry_wood": 39,
+                "mana_crystal": 39,
+                "hard_bone": 39,
+                "corpse": 39,
+                "white_rat_hide": 39,
+                "green_jelly": 39,
+                "tentacle": 39,
+                "key_zone_3_manor": 39,
+                "key_zone_3_manor_shovel": 39,
+                "empty_plate": 39
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "none"
+            ]
+        },
+        "shroom_trio": {
+            "npc_id": "shroom_trio",
+            "ai": "Enemy",
+            "name": "Shroom Trio",
+            "description": "Three tiny shrooms that have fused together. they move slowly and carefully.",
+            "stats": {
+                "hp": 45,
+                "phy_armor": 10,
+                "mag_armor": 10,
+                "grit": 5,
+                "flow": 5,
+                "mind": 5,
+                "soul": 10,
+                "exp": 2,
+                "lvl": 2
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {},
+            "on_death_skills_use": "disorient=1",
+            "on_start_skills_use": null,
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "axe": 125,
+                "soul body 1": 125,
+                "soul body 3": 140,
+                "soul head 1": 125,
+                "soul head 3": 140,
+                "soul relic 1": 125,
+                "soul trinket 1": 125,
+                "soul trinket 3": 140,
+                "soul weapon 1": 125,
+                "soul weapon 3": 140,
+                "rock": 38,
+                "summoning_rock": 38
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
         "shroom": {
             "npc_id": "shroom",
             "ai": "Enemy",
             "name": "Shroom",
-            "description": "An orange-capped mushroom with a bone-white stem, roughly the size of a boot. It has small eyes concealed beneath the cap. It has no arms and very short, skinny legs. Its mouth wears a perpetual grin.",
+            "description": "A tiny little mushroom cap with little legs, it topples over whenever it moves.",
             "stats": {
                 "hp": 30,
                 "phy_armor": 0,
@@ -159,8 +287,9 @@
             "drop_corpse": true,
             "include_in_daily_quests": true,
             "skills": {
-                "smite": 1,
-                "cure_light_wounds": 1
+                "smite": 13,
+                "cure_light_wounds": 1,
+                "guard": 1
             },
             "on_death_skills_use": "disorient=1",
             "on_start_skills_use": null,
@@ -1695,7 +1824,7 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false,
+            "dont_join_fights": true,
             "no_random_loot": false,
             "drop_tags": [
                 "all",

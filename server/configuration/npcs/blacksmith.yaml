@@ -31,3 +31,86 @@ npc_blacksmith:
           goto: what
 
 
+    start_shopping:
+      append_to: start
+      options:
+        - line: |
+            ask about wares
+          goto: shopping
+
+    shopping:
+      dialog:
+        - line: |
+            <npc> says "I got plenty to sell!"
+        - line: |
+            <npc> says "What can I get ya?"
+        - line: |
+            <npc> says "Need anything?"
+      options:
+        - line: |
+            purchase a Handaxe for 5 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: grit weapon 1
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 5
+
+        - line: |
+            purchase one Leather vest for 5 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: grit body 1
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 5
+
+        - line: |
+            purchase one Leather hat for 5 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: grit head 1
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 5
+
+        - line: |
+            purchase a Dirk for 5 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: flow weapon 1
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 5
+
+        - line: |
+            purchase one Ragged tunic for 5 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: flow body 1
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 5
+
+        - line: |
+            purchase one Ragged hood for 5 Scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: flow head 1
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 5
+
+
