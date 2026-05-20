@@ -13,7 +13,14 @@ versions:
   #    - Burden of Blood - All enemies leech at combat start
   #    - Burden of Steel - All enemies guard at combat start
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
-  #    - Burden of Vitality - All enemies receive 25% max health at combat start
+  #    - Burden of Vitality - All enemies receive 25% max health at combat start'
+  "200526":
+    id: "200526"
+    title: Patch
+    unixtime: 1775631568
+    features:
+      - Quest item rewards now stack 
+      - Exiting npc dialogue is smoother
   "180526":
     id: "180526"
     title: Patch

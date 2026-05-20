@@ -327,7 +327,7 @@ class Dialog:
         if line == 0 or line == -1:
             self.end_dialog()
             self.player.send_line(f'You stop talking to {self.npc.pretty_name(identifier = self.player)}')
-            return True
+            return False
 
         if not(line <= len(options) and line >= 1):
             self.player.send_line(f'Type a valid number between 0 and {len(self.get_valid_options())}\nTyping 0 will end the conversation\nYou can leave dialog with any non numerical command')
@@ -463,6 +463,7 @@ class Dialog:
             turned_in_successfully = self.player.quest_manager.turn_in_quest(
                 answer["quest_turn_in"]["id"]
             )
+
             if turned_in_successfully:
                 self.player.send_line(
                     f"{Color.GOOD}Quest turned in{Color.NORMAL}: {self.player.quest_manager.quests[answer['quest_turn_in']['id']].name}"
@@ -481,7 +482,7 @@ class Dialog:
                     if item == None:
                         continue
                     item.stack = item_id["amount"]
-                    self.player.inventory_manager.add_item(item, stack_items=False)
+                    self.player.inventory_manager.add_item(item, stack_items=True)
                     self.player.send_line(f"You got: {item.pretty_name()}")
 
             if "reward_exp" in answer:
