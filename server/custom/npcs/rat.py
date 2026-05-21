@@ -14,6 +14,15 @@ class rat(Npc):
         self.trigger_manager.trigger_add(trigger_key = 'pet', trigger_action = self.trigger_pet)
         self.description += '\nYou can "pet" the rat'
 
+
+    #    self.trigger_manager.trigger_add(trigger_key = 'command_go', trigger_action = self.trigger_command_go)
+
+    #def trigger_command_go(self, player, line):
+    #    line = line.replace('command_go ','')
+    #    _dir = player.find_direction_for_command_go(line)
+    #    _l = f'{player.name} {line}... {_dir.__dict__}'
+    #    self.simple_broadcast(_l,_l)
+
     def trigger_pet(self, player, line):
         line = line.replace('pet','')
         if not line:

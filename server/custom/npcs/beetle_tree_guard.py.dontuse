@@ -1,0 +1,100 @@
+from actors.npcs import Npc
+from configuration.constants.actor_status_type import ActorStatusType
+
+class beetle_tree_guard(Npc):
+    @classmethod
+    def compare_replace(self, npc_object):
+        if "beetle_man" != npc_object.npc_id.lower():
+            return False
+        return True
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.west_log = 'overworld/57e8dcb4-4c40-40e1-a7c9-33c261eb3ff3'
+        self.east_log = 'overworld/9beade9f-4e7e-4f65-b387-62f5d4e2d2e2'
+        self.yeet_room = 'overworld/a2c99cd0-ede4-4b9f-9857-ef099fe81482'
+
+        self.pacified = False
+
+        self.trigger_manager.trigger_add(trigger_key = 'command_go', trigger_action = self.trigger_command_go)
+
+    def set_pacified(self, _bool):
+        self.pacified = _bool
+
+    def trigger_command_go(self, player, line):
+        line = line.replace('command_go ','')
+        _dir = player.find_direction_for_command_go(line)
+        if _dir == None:
+            return False
+        #_l = f'{player.name} {line}... {_dir.__dict__}'
+        #self.simple_broadcast(_l,_l)
+        
+        if (self.room.id == self.west_log and _dir.direction == 'east') or (self.room.id == self.east_log and _dir.direction == 'west'):
+            if self.pacified == False:
+                if self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'movement') >= 1:
+                    player.pretty_broadcast(
+                        f'{self.id} gets angry and wrestles you til you tumble into the water bellow the log',
+                        f'{self.id} gets angry and wrestles {player.id} til they tumble into the water bellow the log',
+                        list_pretty_name_objects=[self, player]
+                    )
+                    player.move_party_leader(room_id = self.yeet_room)
+                    return True
+
+                self.pacified = False
+
+                self.factory.delayed_functions.add_delayed_function(
+                    caller = self, tag = 'movement', delay = 30*0,
+                    func=lambda: 
+                        self.pretty_broadcast(
+                            f'{self.id} says "Be careful traveler, let me move first"',
+                            f'{self.id} says "Be careful traveler, let me move first"', 
+                            list_pretty_name_objects=[self]
+                        ),
+                )
+
+                self.factory.delayed_functions.add_delayed_function(
+                    caller = self, tag = 'movement', delay = 30*1,
+                    func=lambda: 
+                        self.pretty_broadcast(
+                            f'{self.id} starts to turn slowly...',
+                            f'{self.id} starts to turn slowly...', 
+                            list_pretty_name_objects=[self]
+                        ),
+                )
+
+                self.factory.delayed_functions.add_delayed_function(
+                    caller = self, tag = 'movement', delay = 30*2,
+                    func=lambda: 
+                        self.pretty_broadcast(
+                            f'{self.id} starts to move...',
+                            f'{self.id} starts to move...', 
+                            list_pretty_name_objects=[self]
+                        ),
+                )
+
+                self.factory.delayed_functions.add_delayed_function(
+                    caller = self, tag = 'movement', delay = 30*3,
+                    func=lambda: 
+                        self.pretty_broadcast(
+                            f'{self.id} finally steps aside...',
+                            f'{self.id} finally steps aside...', 
+                            list_pretty_name_objects=[self]
+                        ),
+                )
+
+                self.factory.delayed_functions.add_delayed_function(
+                    caller = self, tag = 'movement', delay = 1 + 30*3,
+                    func=lambda: self.set_pacified(True),
+                )
+
+                self.factory.delayed_functions.add_delayed_function(
+                    caller = self, tag = 'movement', delay = 1 + 30*20,
+                    func=lambda: self.set_pacified(False),
+                )
+                
+                return True
+            return False
+        return False
+
+

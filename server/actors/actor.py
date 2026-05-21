@@ -332,6 +332,8 @@ class Actor:
         return self.room.combat.combat_history.fetch_combat_history()
 
     def add_prompt_syntax(self, prompt_syntax):
+        
+
         justing = 3
         no_armor = "   "  # '0'
         just_space = "_"
@@ -491,6 +493,10 @@ class Actor:
         for trans in translations:
             prompt_syntax = prompt_syntax.replace(trans, str(translations[trans]))
 
+        # hacky work
+        if self.dont_join_fights:
+            return '-'*len(systems.utils.remove_color(prompt_syntax))
+
         return prompt_syntax
 
     def prompt(self, actor_that_asked=None):
@@ -612,7 +618,10 @@ class Actor:
         return output
 
     def get_character_sheet(self, sheet_getter=None, is_glancing=False):
-        output = f"{self.pretty_name()} ({self.status})\n"
+
+        output = f"{self.pretty_name()} ({self.status})"
+        output += '\n'
+
         # if no description then ignore
 
         if sheet_getter != None:
@@ -623,7 +632,12 @@ class Actor:
 
         if True: #if not is_glancing:
             if self.description != None:
-                output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"
+                output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}"
+
+        if self.dont_join_fights:
+            return output
+
+        output += '\n'
 
         output += self.get_character_equipment() 
 
@@ -644,8 +658,8 @@ class Actor:
 
 
         #print(_stats_with_equips, '\n', _stats_without_equips, '\n', _stats_calculated_bonuses)
-
-        if True: #if not self.dont_join_fights:
+        
+        if True:
             t = systems.utils.Table(5, 1)
             _piss = [
                 StatType.HP,

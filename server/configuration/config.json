@@ -1,6 +1,36 @@
 {
-    "SHA-256": "7875add19da517fc68c918b5951701ea1e75ffaa2b206d62e3defbfdc56640c9",
+    "SHA-256": "2d9bf5e5b735d7d220c0d5fe69572bbc1e48b27d4c8f811c928348df432e2506",
     "enemies": {
+        "rubble": {
+            "npc_id": "rubble",
+            "ai": "Enemy",
+            "name": "Rubble",
+            "description": "Rubble that is blocking the way",
+            "stats": {
+                "hp": 1,
+                "phy_armor": 1,
+                "mag_armor": 1,
+                "grit": 1,
+                "flow": 1,
+                "mind": 1,
+                "soul": 1,
+                "exp": 1,
+                "lvl": 999
+            },
+            "drop_corpse": false,
+            "include_in_daily_quests": false,
+            "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": true,
+            "no_random_loot": false,
+            "drop_tags": [
+                "none"
+            ]
+        },
         "tutorial_enemy_1": {
             "npc_id": "tutorial_enemy_1",
             "ai": "Enemy",
@@ -1458,6 +1488,41 @@
             "drop_tags": [
                 "all",
                 "wood"
+            ]
+        },
+        "beetle_man": {
+            "npc_id": "beetle_man",
+            "ai": "Enemy",
+            "name": "Beetler",
+            "description": "A yellow worm the size of a child. It has two arms on each side. It drags itself forward, leaving a trail with its heavy tail. It has one central eye. Its mouth has several rows of square, yellowish teeth.",
+            "stats": {
+                "hp": 125,
+                "phy_armor": 40,
+                "mag_armor": 40,
+                "grit": 25,
+                "flow": 5,
+                "mind": 5,
+                "soul": 5,
+                "exp": 10,
+                "lvl": 10
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {
+                "bash": 5,
+                "strike": 5,
+                "guard": 1
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": true,
+            "drop_tags": [
+                "all",
+                "humanoid"
             ]
         },
         "evil_eye": {

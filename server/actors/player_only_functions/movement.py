@@ -127,6 +127,18 @@ def move_party_leader(self, room_id):
             self.explored_rooms.append(self.room.get_real_id())
 
 
+def find_direction_for_command_go(self, line):
+    direction = None
+
+    exits = self.room.get_active_exits(self)
+    for _exit in exits:
+        if ' '+line.lower() in ' '+_exit.direction.lower():
+            room_obj = _exit.get_room_obj()
+            if room_obj != None:
+                direction = _exit
+
+    return direction
+
 @check_not_in_combat
 @check_alive
 @check_not_in_party_or_is_party_leader
@@ -141,14 +153,7 @@ def command_go(self, line = '', room_id = None):
             self.send_line('Go where?')
             return
 
-        direction = None
-
-        exits = self.room.get_active_exits(self)
-        for _exit in exits:
-            if ' '+line.lower() in ' '+_exit.direction.lower():
-                room_obj = _exit.get_room_obj()
-                if room_obj != None:
-                    direction = _exit
+        direction = self.find_direction_for_command_go(line)
 
         if direction == None:
             self.simple_broadcast(
