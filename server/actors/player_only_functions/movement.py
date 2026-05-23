@@ -139,6 +139,10 @@ def find_direction_for_command_go(self, line):
 
     return direction
 
+def command_follow(self, line = ''):
+    _actor = self.get_actor(line)
+    print(_actor)
+    
 @check_not_in_combat
 @check_alive
 @check_not_in_party_or_is_party_leader
