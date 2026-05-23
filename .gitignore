@@ -1,7 +1,5 @@
 server/server.crt
 server/server.key
-server/database/gametime.txt
-server/database/gambling_earnings.json
 godot_client/export
 notestoself
 *.db
