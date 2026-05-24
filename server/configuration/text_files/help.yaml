@@ -795,6 +795,23 @@ commands:
     related:
       - look
       - map
+  follow:
+    group: other
+    syntax:
+      - follow <name>
+      - follow
+    description: |
+      Start following a character around (for now players only).
+      You can stop following by typing "follow" without arguments.
+      Following a character this way does not stop you from moving away by yourself.
+      You will also not get dragged into combat, and you will not follow a character
+      who returns to rest.
+    related:
+      - look
+      - map
+      - party
+      - rest
+      - go
   color:
     group: other
     syntax:

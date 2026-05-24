@@ -22,6 +22,7 @@ versions:
       - Quest item rewards now stack 
       - Exiting npc dialogue is smoother
       - Path from crossroad back to town is easier 
+      - Added follow command (help follow)
   "180526":
     id: "180526"
     title: Patch

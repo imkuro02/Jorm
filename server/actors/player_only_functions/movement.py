@@ -83,6 +83,22 @@ def move_party_leader(self, room_id):
                 #par.finish_turn(force_cooldown = True)
                 par.sendSound(Audio.walk())
 
+    # move cringe followers
+    for par in old_room.actors.copy().values():
+        if hasattr(par, 'trigger_go_follow_actor'):
+            if par.trigger_go_follow_actor != self:
+                continue
+            if par == self:
+                continue
+            if par.room != old_room:
+                continue
+            #par.command_go(line)
+            self.room.move_actor(par, silent = True)
+            par.pretty_broadcast(f'You follow {self.id}',None, list_pretty_name_objects=[self], sound = Audio.walk())
+            #####################
+            par.finish_turn(force_cooldown = True)
+            par.sendSound(Audio.walk())
+
 
     # move followers (currently moves EVERYTHING)
     '''
@@ -120,11 +136,22 @@ def move_party_leader(self, room_id):
                     par.new_room_look()
                 if par.room.get_real_id() not in par.explored_rooms:
                     par.explored_rooms.append(self.room.get_real_id())
-
     else:
         self.new_room_look()
         if self.room.get_real_id() not in self.explored_rooms:
             self.explored_rooms.append(self.room.get_real_id())
+
+    # do the rest with cringe followers
+    for par in self.room.actors.copy().values():
+        if hasattr(par, 'trigger_go_follow_actor'):
+            if par.trigger_go_follow_actor != self:
+                continue
+            if par.room.get_real_id() not in par.explored_rooms:
+                par.explored_rooms.append(self.room.get_real_id())
+            par.finish_turn(force_cooldown = True)
+            self.pretty_broadcast(f'{par.id} is following you',None, list_pretty_name_objects=[par], sound = Audio.walk())
+
+    
 
 
 def find_direction_for_command_go(self, line):
@@ -139,10 +166,26 @@ def find_direction_for_command_go(self, line):
 
     return direction
 
+
 def command_follow(self, line = ''):
     _actor = self.get_actor(line)
-    print(_actor)
+
+    if _actor == self:
+        if hasattr(self, 'trigger_go_follow_actor'):
+            del self.trigger_go_follow_actor
+        self.send_line('You follow no one.')
+        return
+
+    if _actor != None and line != '':
+        self.trigger_go_follow_actor = _actor
+        self.pretty_broadcast(f'You follow {_actor.id}',None, list_pretty_name_objects=[_actor], sound = Audio.walk())
+    else:
+        if hasattr(self, 'trigger_go_follow_actor'):
+            del self.trigger_go_follow_actor
+        self.send_line('You follow no one.')
     
+
+
 @check_not_in_combat
 @check_alive
 @check_not_in_party_or_is_party_leader
