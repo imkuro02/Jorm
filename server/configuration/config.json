@@ -1,5 +1,5 @@
 {
-    "SHA-256": "86374bcaf296609d84f61c74a55f35c68a8c7e3d30911d15567cc9caa2f3dc3a",
+    "SHA-256": "2df87a675111944096cd17f838c2d43c7bc52617ed2a44416d119f506da807b7",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -3762,9 +3762,9 @@
         "slime_split": {
             "skill_id": "slime_split",
             "name": "Split",
-            "description": "User takes remaining health and halves it, a clone spawns with the other half of health.",
+            "description": "User takes remaining health and halves it, a clone spawns with the other half of health.\n",
             "script_to_run": "SlimeSplit",
-            "target_others_is_valid": true,
+            "target_others_is_valid": false,
             "target_item_is_valid": false,
             "target_self_is_valid": true,
             "can_use_in_combat": true,
