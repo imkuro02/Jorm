@@ -19,20 +19,18 @@ class beetle_tree_guard(Npc):
         self.east_log = 'overworld/9beade9f-4e7e-4f65-b387-62f5d4e2d2e2'
         self.yeet_room = 'overworld/a2c99cd0-ede4-4b9f-9857-ef099fe81482'
 
-        self.pacified = False
-
         self.trigger_manager.trigger_add(trigger_key = 'command_go', trigger_action = self.trigger_command_go)
 
-    def set_pacified(self, _bool):
-        self.pacified = _bool
+        self.anger_levels = {}
 
-    def trigger_command_go(self, player, line):
-        line = line.replace('command_go ','')
-        _dir = player.find_direction_for_command_go(line)
-        if _dir == None:
-            return False
-        
-        if (self.room.id == self.west_log and _dir.direction == 'east') or (self.room.id == self.east_log and _dir.direction == 'west'):
+
+    def anger_raise(self, player):
+        if player in self.anger_levels:
+            self.anger_levels[player] += 1
+        else:
+            self.anger_levels[player] = 1
+
+        if self.anger_levels[player] == 4:
             player.pretty_broadcast(
                 f'{self.id} gets angry and wrestles you\nYou tumble into the water below the log\nSPLASH!',
                 f'{self.id} gets angry and wrestles {player.id}\{player.id} tumbles into the water below the log\nSPLASH!',
@@ -50,6 +48,24 @@ class beetle_tree_guard(Npc):
                 )
             damage_obj.run()
             return True
+        else:
+            player.pretty_broadcast(
+                f'{self.id} stands in your way, looking annoyed',
+                f'{self.id} stands in {player.id}s way, looking annoyed',
+                list_pretty_name_objects=[self, player]
+            )
+            return True
+
+    def trigger_command_go(self, player, line):
+        line = line.replace('command_go ','')
+        _dir = player.find_direction_for_command_go(line)
+        if _dir == None:
+            return False
+        
+        if (self.room.id == self.west_log and _dir.direction == 'east') or (self.room.id == self.east_log and _dir.direction == 'west'):
+            return self.anger_raise(player)
+
+            
 
   
 
