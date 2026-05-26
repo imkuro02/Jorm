@@ -614,13 +614,13 @@ class Actor:
                         self.slots_manager.slots[i]
                     ].pretty_name(identifier = identifier, rank_only=True)
                 )
+
         output = t.get_table()+'\n'
         return output
 
     def get_character_sheet(self, sheet_getter=None, is_glancing=False):
 
         output = f"{self.pretty_name()} ({self.status})"
-        output += '\n'
 
         # if no description then ignore
 
@@ -628,7 +628,7 @@ class Actor:
             if type(sheet_getter).__name__ == "Player":
                 if sheet_getter.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
                     if type(self).__name__ != "Player":
-                        output += get_icon(self.npc_id)
+                        output += '\n'+get_icon(self.npc_id)
 
         if True: #if not is_glancing:
             if self.description != None:

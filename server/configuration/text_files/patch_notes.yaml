@@ -23,6 +23,9 @@ versions:
       - Exiting npc dialogue is smoother
       - Path from crossroad back to town is easier 
       - Added follow command (help follow)
+      - Full health notification no longer sent more than once 
+      - Items despawn faster, enemies respawn slower
+
   "180526":
     id: "180526"
     title: Patch
