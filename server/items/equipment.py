@@ -570,6 +570,7 @@ class Equipment(Item):
 
         # systems.utils.debug_print(reforges_to_apply)
 
+        obj_id = 0
         for reforge_id in reversed(reforges_to_apply):
             if reforge_id == None:
                 continue
@@ -591,7 +592,7 @@ class Equipment(Item):
 
             # the obj_id is here to make sure that you can have multiple of the same reforge 
             # and they dont override eachother
-            obj_id = 0
+            
             if reforge_obj:
                 obj_id += 1
                 reforge_name = EQUIPMENT_REFORGES[reforge_id]["name"]
@@ -621,3 +622,6 @@ class Equipment(Item):
                     reforge_variables=EQUIPMENT_REFORGES[reforge_id]["vars"],
                 )
                 self.inventory_manager.owner.affect_manager.set_affect_object(aff)
+
+        # code to apply a bonus:
+        # bonus dirk,special,dmg_phy_bonus,1

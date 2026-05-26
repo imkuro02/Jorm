@@ -903,7 +903,7 @@ class AffectReforge(Affect):
             description,
             turns,
             dispellable=dispellable,
-            hidden = True
+            hidden = False
         )
         self.source_item = source_item
         self.reforge_variables = reforge_variables
@@ -1023,11 +1023,11 @@ class ReforgePlusDamageTypeMinusDamageTypes(AffectReforge):
         # systems.utils.debug_print(damage_obj.damage_value)
         if damage_obj.damage_type == self.reforge_variables["var_a"]:
             damage_obj.damage_value = int(
-                damage_obj.damage_value * float(self.reforge_variables["var_b"])
+                (damage_obj.damage_value * float(self.reforge_variables["var_b"])) +1
             )
         else:
             damage_obj.damage_value = int(
-                damage_obj.damage_value * float(self.reforge_variables["var_c"])
+                (damage_obj.damage_value * float(self.reforge_variables["var_c"])) -1
             )
         # systems.utils.debug_print(damage_obj.damage_value)
         return damage_obj
