@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
     "SHA-256": "a4a770e5c7d9bae7801c26148d8c8c6fcad73f91124b9e8b1c2738ad7f1b1b1c",
-=======
-    "SHA-256": "2df87a675111944096cd17f838c2d43c7bc52617ed2a44416d119f506da807b7",
->>>>>>> ef03b5b41b06a042c77c2d4ef38ea6ff6d10a043
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -3667,11 +3663,7 @@
         "disorient": {
             "skill_id": "disorient",
             "name": "Disorient",
-<<<<<<< HEAD
             "description": "User takes remaining health and halves it, a clone spawns with the other half of health.\n",
-=======
-            "description": "Target becomes disoriented.\nPHYSICAL damage received is doubled, but half is applied as PURE damage.\nApplies only if target has any HOLD left.\n",
->>>>>>> ef03b5b41b06a042c77c2d4ef38ea6ff6d10a043
             "script_to_run": "Disorient",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
