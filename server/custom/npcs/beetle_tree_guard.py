@@ -1,6 +1,10 @@
 from actors.npcs import Npc
 from configuration.constants.actor_status_type import ActorStatusType
 
+from combat.damage_event import Damage
+from configuration.constants.damage_type import DamageType
+from configuration.constants.stat_type import StatType
+
 class beetle_tree_guard(Npc):
     @classmethod
     def compare_replace(self, npc_object):
@@ -30,11 +34,21 @@ class beetle_tree_guard(Npc):
         
         if (self.room.id == self.west_log and _dir.direction == 'east') or (self.room.id == self.east_log and _dir.direction == 'west'):
             player.pretty_broadcast(
-                f'{self.id} gets angry and wrestles you til you tumble into the water bellow the log',
-                f'{self.id} gets angry and wrestles {player.id} til they tumble into the water bellow the log',
+                f'{self.id} gets angry and wrestles you\nYou tumble into the water below the log\nSPLASH!',
+                f'{self.id} gets angry and wrestles {player.id}\{player.id} tumbles into the water below the log\nSPLASH!',
                 list_pretty_name_objects=[self, player]
             )
-            player.move_party_leader(room_id = self.yeet_room)
+            player.move_party_leader(room_id = self.yeet_room, no_new_room_look = True)
+            damage_obj = Damage(
+                    damage_taker_actor=player,
+                    damage_source_action=self,
+                    combat_event=None,
+                    damage_source_actor=self,
+                    damage_value=1000,
+                    damage_type=DamageType.PHYSICAL,
+                    damage_to_stat=StatType.PHYARMOR
+                )
+            damage_obj.run()
             return True
 
   
