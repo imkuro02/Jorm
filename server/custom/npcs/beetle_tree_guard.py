@@ -30,7 +30,7 @@ class beetle_tree_guard(Npc):
         else:
             self.anger_levels[player] = 1
 
-        if self.anger_levels[player] == 4:
+        if self.anger_levels[player] >= 4:
             player.pretty_broadcast(
                 f'{self.id} gets angry and wrestles you\nYou tumble into the water below the log\nSPLASH!',
                 f'{self.id} gets angry and wrestles {player.id}\{player.id} tumbles into the water below the log\nSPLASH!',
