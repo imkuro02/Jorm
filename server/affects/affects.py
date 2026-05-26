@@ -921,7 +921,7 @@ class AffectReforge(Affect):
             description,
             turns,
             dispellable=dispellable,
-            hidden = False
+            hidden = True
         )
         self.source_item = source_item
         self.reforge_variables = reforge_variables
