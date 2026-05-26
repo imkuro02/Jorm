@@ -1,5 +1,5 @@
 {
-    "SHA-256": "2d9bf5e5b735d7d220c0d5fe69572bbc1e48b27d4c8f811c928348df432e2506",
+    "SHA-256": "86374bcaf296609d84f61c74a55f35c68a8c7e3d30911d15567cc9caa2f3dc3a",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -1515,11 +1515,40 @@
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
-            "loot": {},
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "blessing_of_grit": 60,
+                "bag_0": 1000,
+                "bag_1": 1000,
+                "bag_2": 1000,
+                "grit body 12": 160,
+                "grit body 3": 155,
+                "grit body 6": 140,
+                "grit body 9": 125,
+                "grit head 12": 160,
+                "grit head 3": 155,
+                "grit head 6": 140,
+                "grit head 9": 125,
+                "grit trinket 12 shield ": 160,
+                "grit trinket 12 sword": 160,
+                "grit trinket 3": 155,
+                "grit trinket 6": 140,
+                "grit trinket 9": 125,
+                "grit weapon 12": 160,
+                "grit weapon 3": 155,
+                "grit weapon 6": 140,
+                "grit weapon 9": 125,
+                "grit weapon alt 3": 155,
+                "rock": 30,
+                "summoning_rock": 30,
+                "tattered_cloth": 30,
+                "simple_cloth": 30
+            },
             "combat_loop": {},
-            "can_start_fights": true,
+            "can_start_fights": false,
             "dont_join_fights": false,
-            "no_random_loot": true,
+            "no_random_loot": false,
             "drop_tags": [
                 "all",
                 "humanoid"
@@ -1889,7 +1918,7 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": true,
+            "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
                 "all",
@@ -3634,7 +3663,7 @@
         "disorient": {
             "skill_id": "disorient",
             "name": "Disorient",
-            "description": "Remove all Hold and Ward from your target for DURATION of turns.\n",
+            "description": "Target becomes disoriented.\nPHYSICAL damage received is doubled, but half is applied as PURE damage.\nApplies only if target has any HOLD left.\n",
             "script_to_run": "Disorient",
             "target_others_is_valid": true,
             "target_item_is_valid": false,

@@ -25,6 +25,7 @@ versions:
       - Added follow command (help follow)
       - Full health notification no longer sent more than once 
       - Items despawn faster, enemies respawn slower
+      - Disorient skill reworked
 
   "180526":
     id: "180526"
