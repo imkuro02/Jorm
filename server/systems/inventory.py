@@ -201,7 +201,8 @@ class InventoryManager:
             return False
 
 
-
+        item.time_on_ground = 0
+        
         if stack_items:
             for _i in self.items.values():
                 if item.premade_id != _i.premade_id:

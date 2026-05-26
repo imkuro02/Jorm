@@ -1045,6 +1045,7 @@ class SkillMendArmor(Skill):
 class SkillDisorient(Skill):
     def use(self):
         super().use()
+        '''
         if self.success:
             turns = int(self.calculate_script_value(value = 'duration'))
             # reduction = self.script_values['bonus'][self.users_skill_level]
@@ -1053,6 +1054,20 @@ class SkillDisorient(Skill):
                 affect_target_actor=self.other,
                 name="Disoriented",
                 description=f"All armor is reduced to 0 momentarily",
+                turns=turns,
+                dispellable=False,
+                #resisted_by=None
+            )
+            self.other.affect_manager.set_affect_object(_effect)
+        '''
+        if self.success:
+            turns = int(self.calculate_script_value(value = 'duration'))
+            # reduction = self.script_values['bonus'][self.users_skill_level]
+            _effect = affects.AffectDisoriented(
+                affect_source_actor=self.user,
+                affect_target_actor=self.other,
+                name="Disoriented",
+                description=f"Physical damage received repeats as pure damage",
                 turns=turns,
                 dispellable=False,
                 #resisted_by=None

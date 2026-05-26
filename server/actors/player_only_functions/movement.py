@@ -53,7 +53,7 @@ def command_flee(self, line):
 
 
 
-def move_party_leader(self, room_id):
+def move_party_leader(self, room_id, no_new_room_look = False):
     old_room = self.room
     new_room = room_id
     world = self.room.world
@@ -137,7 +137,8 @@ def move_party_leader(self, room_id):
                 if par.room.get_real_id() not in par.explored_rooms:
                     par.explored_rooms.append(self.room.get_real_id())
     else:
-        self.new_room_look()
+        if not no_new_room_look: 
+            self.new_room_look()
         if self.room.get_real_id() not in self.explored_rooms:
             self.explored_rooms.append(self.room.get_real_id())
 

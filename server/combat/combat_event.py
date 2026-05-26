@@ -172,8 +172,11 @@ class CombatEvent:
                 #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.MAGARMOR]}{Color.BACK} has broken'
                 #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MessageType.COMBAT])
 
+
+            
+
             hp_maxxed = (
-                pop.damage_snapshot[StatType.HP] != pop.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
+                pop.damage_snapshot[StatType.HP] < pop.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
                 and damage_snapshot2[StatType.HP] >= pop.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
             )
             
@@ -200,6 +203,8 @@ class CombatEvent:
                 #    continue
 
                 actor.stat_manager.hp_mp_clamp_update()
+
+            
         self.popped = []
 
     def run(self):

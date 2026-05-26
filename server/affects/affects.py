@@ -498,7 +498,25 @@ class AffectArmorReduceToZero(Affect):
         combat_event.run()
         return super().on_finished(silent)
 
-
+class AffectDisoriented(Affect):
+    def take_damage_before_calc(self, damage_obj: Damage):
+        if self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] <= 0:
+            return damage_obj
+            
+        if damage_obj.damage_type == DamageType.PHYSICAL:
+            #combat_event = CombatEvent()
+            damage_obj2 = Damage(
+                damage_source_actor=self.affect_source_actor,
+                damage_taker_actor=self.affect_target_actor,
+                damage_source_action=self,
+                damage_value=damage_obj.damage_value,
+                damage_type=DamageType.PURE,
+                damage_to_stat=StatType.HP,
+                dont_proc=True,
+                combat_event = damage_obj.combat_event,
+            )
+            #combat_event.run()
+        return damage_obj 
 """
 class AffectOvercharge(Affect):
     def __init__(self, affect_source_actor, affect_target_actor, name, description, turns, bonus = 1):

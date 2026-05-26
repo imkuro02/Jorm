@@ -26,6 +26,10 @@ from systems.inventory import InventoryManager
 from systems.utils import REFTRACKER, unload
 from systems.triggers import TriggerManager
 
+
+RESPAWN_TIME_MOBS =     30 * 10
+DESPAWN_TIME_ITEMS =    30 * 20
+
 class Spawner:
     def __init__(self, room):
         self.room = room
@@ -121,7 +125,7 @@ class Spawner:
         if self.room.is_player_present():
             return
         
-        if self.room.world.factory.ticks_passed % (30 * 1 * 3) == 3:
+        if self.room.world.factory.ticks_passed % (RESPAWN_TIME_MOBS) == 3:
             for i in self.room.actors.values():
                 break
             self.respawn_all()
@@ -379,7 +383,9 @@ class Room:
                 items_to_remove.append(i)
             else:
                 i.time_on_ground += 1
-                if i.time_on_ground >= (30 * 60 * 5):
+                if i.time_on_ground >= (DESPAWN_TIME_ITEMS):
+                    #if not self.room.is_player_present():
+                    #    items_to_remove.append(i)
                     items_to_remove.append(i)
 
         for i in items_to_remove:
