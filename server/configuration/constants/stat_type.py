@@ -1,4 +1,3 @@
-
 class StatType:
     HPMAX =     'hp_max'
     #MPMAX =     'mp_max'
@@ -47,3 +46,26 @@ class StatType:
         THREAT: 'Threat',
         INITIATIVE: 'Initiative'
     }
+
+StatBonus = {
+    StatType.GRIT: {
+        StatType.HP: 4,
+        StatType.PHYARMOR: 2,
+        StatType.MAGARMOR: 0,
+    },
+    StatType.FLOW: {
+        StatType.HP: 3,
+        StatType.PHYARMOR: 2,
+        StatType.MAGARMOR: 1,
+    },
+    StatType.MIND: {
+        StatType.HP: 3,
+        StatType.PHYARMOR: 0,
+        StatType.MAGARMOR: 3,
+    },
+    StatType.SOUL: {
+        StatType.HP: 3,
+        StatType.PHYARMOR: 1,
+        StatType.MAGARMOR: 2,
+    },
+}

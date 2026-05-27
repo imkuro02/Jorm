@@ -14,6 +14,12 @@ versions:
   #    - Burden of Steel - All enemies guard at combat start
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
   #    - Burden of Vitality - All enemies receive 25% max health at combat start'
+  "270526":
+    id: "270526"
+    title: Patch
+    unixtime: 1775631568
+    features:
+      - Identifying items now displays HOLD WARD and LIFE bonuses from the 4 main stats 
   "200526":
     id: "200526"
     title: Patch

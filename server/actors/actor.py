@@ -17,7 +17,7 @@ from configuration.constants.audio import Audio
 from configuration.constants.color import Color
 from configuration.constants.damage_type import DamageType
 from configuration.constants.equipment_slot_type import EquipmentSlotType
-from configuration.constants.stat_type import StatType
+from configuration.constants.stat_type import StatType, StatBonus
 from items.manager import Item
 #from skills.manager import use_skill
 from systems.dialog import Dialog
@@ -57,39 +57,13 @@ class ActorStatManager:
 
     def gain_stat_points(self, stat=StatType.GRIT, points=1):
         hp_bonus = 0
-        mp_bonus = 0
         pa_bonus = 0
         ma_bonus = 0
-        match stat:
-            case StatType.GRIT:
-                stat = StatType.GRIT
-                hp_bonus = 4
-                mp_bonus = 0
-                pa_bonus = 2
-                ma_bonus = 0
-            case StatType.FLOW:
-                stat = StatType.FLOW
-                hp_bonus = 3
-                mp_bonus = 0
-                pa_bonus = 2
-                ma_bonus = 1
-            case StatType.MIND:
-                stat = StatType.MIND
-                hp_bonus = 3
-                mp_bonus = 0
-                pa_bonus = 0
-                ma_bonus = 3
-            case StatType.SOUL:
-                stat = StatType.SOUL
-                hp_bonus = 3
-                mp_bonus = 0
-                pa_bonus = 1
-                ma_bonus = 2
-            case _:
-                hp_bonus = 0
-                mp_bonus = 0
-                pa_bonus = 0
-                ma_bonus = 0
+        if stat in StatBonus:
+            hp_bonus = StatBonus[stat][StatType.HP]
+            pa_bonus = StatBonus[stat][StatType.PHYARMOR]
+            ma_bonus = StatBonus[stat][StatType.MAGARMOR]
+        
 
         self.stats[stat] += points
 

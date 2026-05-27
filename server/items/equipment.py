@@ -10,11 +10,11 @@ from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.color import Color
 from configuration.constants.equipment_slot_type import EquipmentSlotType
 from configuration.constants.item_type import ItemType
-from configuration.constants.stat_type import StatType
+from configuration.constants.stat_type import StatType, StatBonus
 from configuration.constants.bonus_type import BonusType
 from items.misc import Item
 from systems.utils import Table
-
+import copy
 class EquipSkillManager:
     def __init__(self, item):
         self.item = item
@@ -143,9 +143,8 @@ class EquipmentBonusManager:
                     self.item.stat_manager.stats[stat] -= _bonus
 
             case BonusType.SKILL_LEVEL:
-                # if bonus.key in SKILLS:
-                #    self.item.skill_manager.learn(bonus.key, bonus.val)
-                #    return
+                if bonus.key in SKILLS:
+                    self.item.skill_manager.learn(bonus.key, -bonus.val)
                 pass
 
             case BonusType.STAT:
@@ -175,7 +174,7 @@ class EquipmentBonusManager:
                 ]:
                     self.item.stat_manager.reqs[bonus.key] -= bonus.val
 
-        # systems.utils.debug_print(bonus.__dict__,'removed')
+        #systems.utils.debug_print(bonus.__dict__,'removed')
         del self.bonuses[bonus.id]
 
     # recursive is used for re-adding reforge bonuses
@@ -186,29 +185,33 @@ class EquipmentBonusManager:
     # currently disabled because it didnt fawking work
     def add_bonus(self, bonus, recursive=True, merging=True):
         if bonus.id == 0:
-            id = len(self.bonuses) + 1
+            id = len(self.bonuses) + 10_000
         else:
             id = bonus.id
-
-        """
-        for i in self.bonuses:
-            if not merging:
-                break
-            if self.bonuses[i].type == bonus.type and self.bonuses[i].key == bonus.key:
-                #updated_bonus = self.bonuses[i]
-                #self.remove_bonus(updated_bonus)
-                #updated_bonus.val = updated_bonus.val + bonus.val
-                self.bonuses[i].val = self.bonuses[i].val + bonus.val
-
-                returned_bonus = self.add_bonus(bonus, merging = False)
-                # delete it but dont actually run the remove bonus thing
-                del self.bonuses[returned_bonus.id]
-
-                return
-        """
+            bonus.id = id
 
         if not self.check_if_valid(bonus):
-            systems.utils.debug_print(self.id, self.name ,"failed to add bonus ", bonus.__dict__)
+            systems.utils.debug_print("failed to add bonus ", bonus.__dict__)
+            return
+
+        for i in copy.deepcopy(self.bonuses).values():
+            if not merging:
+                continue
+            if self.bonuses[i.id].type != bonus.type or self.bonuses[i.id].key != bonus.key:
+                continue
+            if i.type not in [BonusType.SKILL_LEVEL, BonusType.STAT, BonusType.STAT_REQ]:
+                continue
+    
+            bonus.val += i.val
+            self.remove_bonus(i)
+            if bonus.val == 0:
+                return
+            self.add_bonus(bonus, merging = False)
+            return
+        
+
+        if not self.check_if_valid(bonus):
+            systems.utils.debug_print("failed to add bonus ", bonus.__dict__)
             return
 
         self.bonuses[id] = bonus
@@ -353,9 +356,9 @@ class Equipment(Item):
             )
             t.add_data(StatType.name[stat])
             t.add_data(self.stat_manager.reqs[stat], col=col)
-        output += t.get_table()
+        output += t.get_table() + '\n'
 
-        output += f"\n{Color.TOOLTIP}Total stats with bonuses:{Color.NORMAL}\n"
+        output += f"{Color.TOOLTIP}Stats with Bonuses:{Color.NORMAL}\n"
         t = Table(2, 3)
         ordered_stats = [
             StatType.HPMAX,
@@ -367,41 +370,63 @@ class Equipment(Item):
             StatType.SOUL,
             StatType.INVSLOTS,
         ]
+
+        hp_bonus = 0
+        pa_bonus = 0
+        ma_bonus = 0
         for stat in ordered_stats:
-            if self.stat_manager.stats[stat] == 0:
+            stat_val = self.stat_manager.stats[stat]
+            if stat in StatBonus:
+                hp_bonus += stat_val * StatBonus[stat][StatType.HP]
+                pa_bonus += stat_val * StatBonus[stat][StatType.PHYARMOR]
+                ma_bonus += stat_val * StatBonus[stat][StatType.MAGARMOR]
+
+        for stat in ordered_stats:
+            stat_val = self.stat_manager.stats[stat]
+            if stat == StatType.HPMAX: stat_val = stat_val + hp_bonus
+            if stat == StatType.PHYARMORMAX: stat_val = stat_val + pa_bonus
+            if stat == StatType.MAGARMORMAX: stat_val = stat_val + ma_bonus
+
+            if stat_val == 0:
                 continue
+                    
             t.add_data(StatType.name[stat])
             # t.add_data(self.stat_manager.stats[stat])
-            if self.stat_manager.stats[stat] < 0:
-                t.add_data(f"{self.stat_manager.stats[stat]}", Color.BAD)
+            if stat_val < 0:
+                t.add_data(f"{stat_val}", Color.BAD)
             else:
-                t.add_data(f"+{self.stat_manager.stats[stat]}", Color.GOOD)
+                t.add_data(f"+{stat_val}", Color.GOOD)
             # t.add_data(f'({new})')
-        output += t.get_table()
+
+        output += t.get_table() + '\n'
 
         if len(self.manager.bonuses.values()) >= 1:
-            output += f"\n{Color.TOOLTIP}Special bonus:{Color.NORMAL}\n"
+            output += f"{Color.TOOLTIP}Bonuses:{Color.NORMAL}\n"
             for bonus in self.manager.bonuses.values():
                 col = f"{Color.GOOD}+" if bonus.val >= 1 else f"{Color.BAD}"
                 match bonus.type:
                     case BonusType.REFORGE:
-                        output += f'+ {Color.TOOLTIP}Reforged: "{Color.IMPORTANT}{EQUIPMENT_REFORGES[bonus.key]["name"]}{Color.TOOLTIP}"{Color.NORMAL}\n'
-                        output += f"  {EQUIPMENT_REFORGES[bonus.key]['description']}\n"
+                        output += f'{EQUIPMENT_REFORGES[bonus.key]["name"]} Reforge: '
+                        output += f"{EQUIPMENT_REFORGES[bonus.key]['description']}\n"
 
                     case BonusType.SPECIAL:
-                        # output += f'{Color.TOOLTIP}Special: "{Color.IMPORTANT}{EQUIPMENT_REFORGES[bonus.key]["name"]}{Color.TOOLTIP}"{Color.NORMAL}\n'
-                        output += f"+ {EQUIPMENT_REFORGES[bonus.key]['description']}\n"
+                        output += f'{EQUIPMENT_REFORGES[bonus.key]["name"]} Bonus: '
+                        output += f"{EQUIPMENT_REFORGES[bonus.key]['description']}\n"
 
                     case BonusType.SKILL_LEVEL:
-                        output += f"+ Skill {SKILLS[bonus.key]['name']} {col}{bonus.val}{Color.BACK}\n"
+                        output += f"Skill Bonus: {SKILLS[bonus.key]['name']} {col}{bonus.val}{Color.BACK}\n"
 
                     case BonusType.STAT:
-                        output += f"+ Stat {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n"
+                        output += f"Stat Bonus: {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n"
 
                     case BonusType.STAT_REQ:
-                        output += f"+ Required {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n"
+                        output += f"Req Bonus: {StatType.name[bonus.key]} {col}{bonus.val}{Color.BACK}\n"
 
         if self.equiped == False:
+            no_changes = True
+            output += f"{Color.TOOLTIP}On equip changes:{Color.NORMAL}\n"
+            t = Table(2, 0)
+            '''
             output += f"\n{Color.TOOLTIP}On equip changes:{Color.NORMAL}\n"
             eq = None
             if (
@@ -415,10 +440,10 @@ class Equipment(Item):
             t = Table(3, 3)
             no_changes = True
             for stat in ordered_stats:
-                difference = self.stat_manager.stats[stat]
+                
                 if eq != None:
                     difference = (
-                        self.stat_manager.stats[stat] - eq.stat_manager.stats[stat]
+                        new_item[stat] - old_item[stat]
                     )
 
                 new_stat = identifier.stat_manager.stats[stat] + difference
@@ -435,10 +460,70 @@ class Equipment(Item):
                     t.add_data(f"{StatType.name[stat]}")
                     t.add_data(f"+{difference}", col=f"{Color.GOOD}")
                     t.add_data(f"({new_stat})")
+            '''
+            eq = None
+            if (
+                identifier.slots_manager.slots[self.slot] != None
+                and identifier.slots_manager.slots[self.slot] != self.id
+            ):
+                eq = identifier.inventory_manager.items[
+                    identifier.slots_manager.slots[self.slot]
+                ]
+            
+            
+            no_change_stats= {}
+            old_item_stats = {}
+            new_item_stats = {}
+
+            for stat in ordered_stats:
+                old_item_stats[stat] = identifier.stat_manager.stats[stat]
+
+            if eq != None:
+                identifier.inventory_unequip(eq, silent=True)
+            for stat in ordered_stats:
+                no_change_stats[stat] = identifier.stat_manager.stats[stat]
+
+            identifier.inventory_equip(self, forced=True)
+            for stat in ordered_stats:
+                new_item_stats[stat] = identifier.stat_manager.stats[stat]
+
+            identifier.inventory_unequip(self, silent=True)
+            if eq != None:
+                identifier.inventory_equip(eq, forced=True)
+            
+            
+
+            
+
+            
+            for stat in ordered_stats:
+                stat_val = new_item_stats[stat] - old_item_stats[stat]
+                if stat_val == 0:
+                    continue
+                no_changes = False
+                t.add_data(StatType.name[stat]+'   ')
+                # t.add_data(self.stat_manager.stats[stat])
+                if new_item_stats[stat] > old_item_stats[stat]:
+                    t.add_data(f"+{new_item_stats[stat] - old_item_stats[stat]}", Color.GOOD)
+                    '''
+                    t.add_data(f" ( ")
+                    t.add_data(f"{old_item_stats[stat]}", Color.BAD)
+                    t.add_data(f" -> ")
+                    t.add_data(f"{new_item_stats[stat]}", Color.GOOD)
+                    t.add_data(f" ) ")
+                    '''
+                else:
+                    t.add_data(f"{new_item_stats[stat] - old_item_stats[stat]}", Color.BAD)
+                    '''
+                    t.add_data(f" ( ")
+                    t.add_data(f"{old_item_stats[stat]}", Color.GOOD)
+                    t.add_data(f" -> ")
+                    t.add_data(f"{new_item_stats[stat]}", Color.BAD)
+                    t.add_data(f" ) ")
+                    '''
 
             if no_changes:
                 t.add_data(f"No changes")
-                t.add_data(f"")
                 t.add_data(f"")
             # output += t.get_table()
 
@@ -481,12 +566,12 @@ class Equipment(Item):
                 if new == curr:
                     continue
 
-                t.add_data(f"{SKILLS[bonus['key']]['name']}")
+                t.add_data(f"Skill {SKILLS[bonus['key']]['name']}")
                 if new < curr:
                     t.add_data(f"{val}", f"{Color.BAD}")
                 else:
                     t.add_data(f"+{val}", f"{Color.GOOD}")
-                t.add_data(f"({new})")
+                #t.add_data(f"({new})")
 
             output += t.get_table()
         return output.strip("\n")

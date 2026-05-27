@@ -502,7 +502,7 @@ class AffectDisoriented(Affect):
     def take_damage_before_calc(self, damage_obj: Damage):
         if self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] <= 0:
             return damage_obj
-            
+
         if damage_obj.damage_type == DamageType.PHYSICAL:
             #combat_event = CombatEvent()
             damage_obj2 = Damage(
@@ -1194,14 +1194,15 @@ class ReforgeChanceDontEndTurnOnHeal(AffectReforge):
         _succ = random.randint(0,100) <= float(self.reforge_variables["var_a"])*100
 
         if not _succ:
-            _p.send_line('roll chance failed')
+            #_p.send_line('roll chance failed')
             return damage_obj
         
         if damage_obj.damage_source_action.dont_finish_turn == False:
             damage_obj.damage_source_action.dont_finish_turn = True
             #_p.send_line('success, skill wont end turn')
             list_pretty_name_objects = [self.source_item]
-            _p.pretty_broadcast(f'Your {self.source_item.id} makes this turn last longer','',list_pretty_name_objects = list_pretty_name_objects)
+            _p.pretty_broadcast(f'Your {self.source_item.id} makes this turn last longer',None,list_pretty_name_objects = list_pretty_name_objects)
+            return damage_obj
         
 
 
