@@ -23,6 +23,8 @@ versions:
       - Item bonuses now merge (grit +1 and grit +2 merge into grit +3)
       - Fixed enemy respawn time actually needing x3 as much time
       - New blacksmith quest, used for unlocking reforging
+      - Exp required to level slightly bumped up
+      #- skill that refreshes charges
   "200526":
     id: "200526"
     title: Patch
