@@ -4,32 +4,6 @@ npc_blacksmith:
       dialog:
         - line: |
             <npc> says "Come to chit chat about reforging?"
-      options:
-        - line: |
-              ask "What is reforging?"
-          goto: what
-        - line: |
-              ask "How do I reforge?"
-          goto: how
-    
-    what:
-      dialog:
-          - line: |
-              <npc> says "Ah! reforging is the act of rubbin scrap on an item til its all better." They lean in closer "Reforging an item costs the item level times 10 in scrap, so a level 10 item woud cost ya about 100 scrap to reforge"
-      options:
-        - line: |
-              ask "How do I reforge?"
-          goto: how
-
-    how:
-      dialog:
-          - line: |
-              <npc> says "You simply @tip"reforge <item>"@back then ya lean back and pray it dont stink!"
-      options:
-        - line: |
-              ask "What is reforging?"
-          goto: what
-
 
     start_shopping:
       append_to: start
@@ -114,3 +88,75 @@ npc_blacksmith:
                 amount: 5
 
 
+    start_reforging:
+        append_to: start
+        options:
+          - line: |
+              ask about "reforging"
+            goto: reforging
+
+    reforging:
+      dialog:
+        - line: |
+            <npc> says "Reforging? its the act of reshaping the hidden qualities of your equipment.
+            The work is unpredictable, and demands a lot of scrap depending on the weapon or armor.
+            I can teach you how to reforge, if you do me a favor and kill the shroom trio."
+          quest_check:
+            - id: blacksmith_reforge
+              state: not_started
+        - line: |
+            <npc> says "Reforging? I told you I will teach you after you kill the shroomtrio"
+          quest_check:
+            - id: blacksmith_reforge
+              state: in_progress
+        - line: |
+            <npc> says "Reforging? I told you I will teach you after you kill the shroomtrio"
+          quest_check:
+            - id: blacksmith_reforge
+              state: completed
+        - line: |
+            <npc> says "As I promised, I will teach you how to reforge"
+            They stretch then grin "type @tip"help reforge"@normal for more information" 
+            They laugh and get back to smithing.
+          quest_check:
+            - id: blacksmith_reforge
+              state: turned_in
+      options:
+        - line: |
+            accept
+          goto: reforging_accept
+          quest_start: 
+              id: blacksmith_reforge
+          quest_check:
+          - id: blacksmith_reforge
+            state: not_started
+        - line: |
+            tell them you killed the shroomtrio
+          goto: reforging
+          quest_turn_in:
+              id: blacksmith_reforge
+              reward_exp: 10
+              reward:
+                - item: currency_0
+                  amount: 25
+          quest_check:
+          - id: blacksmith_reforge
+            state: completed
+
+    reforging_accept:
+      dialog:
+        - line: |
+            <npc> says "Great, go kill them, and I will tell teach you how to reforge"
+
+      
+    start_scrap:
+        append_to: start
+        options:
+          - line: |
+              ask about "scrapping"
+            goto: scrap
+
+    scrap:
+      dialog:
+        - line: |
+            <npc> says "Scrapping? thats easy! type @tip"help scrap"@normal for more information" 

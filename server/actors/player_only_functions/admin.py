@@ -604,6 +604,8 @@ from systems.quest import OBJECTIVE_TYPES, QUEST_STATE_TYPES
 
 
 def command_quest(self, line="list"):
+    if line == '':
+        line = 'all'
     lines = line.split(" ")
     command = lines[0]
 

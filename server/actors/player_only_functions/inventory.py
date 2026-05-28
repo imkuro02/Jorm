@@ -9,6 +9,7 @@ from actors.player_only_functions.checks import (
     check_no_empty_line,
     check_not_in_combat,
     check_not_trading,
+    check_quest_state,
 )
 
 from configuration.config import (
@@ -175,7 +176,7 @@ def command_scrap(self, line):
         f"{self.pretty_name(self)} scraps {', '.join(items_pretty_name_before_pickup)}",
     )
 
-
+@check_quest_state(quest_id = 'blacksmith_reforge', required_state = 'turned_in')
 @check_not_trading
 @check_no_empty_line
 @check_not_in_combat

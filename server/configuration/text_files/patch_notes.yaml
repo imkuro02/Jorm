@@ -21,6 +21,8 @@ versions:
     features:
       - Identifying items now displays HOLD WARD and LIFE bonuses from the 4 main stats 
       - Item bonuses now merge (grit +1 and grit +2 merge into grit +3)
+      - Fixed enemy respawn time actually needing x3 as much time
+      - New blacksmith quest, used for unlocking reforging
   "200526":
     id: "200526"
     title: Patch

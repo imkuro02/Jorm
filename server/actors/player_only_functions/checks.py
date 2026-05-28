@@ -1,6 +1,6 @@
 
 from configuration.constants.actor_status_type import ActorStatusType
-
+from functools import wraps
 
 def check_is_admin(func):
     def wrapper(*args, **kwargs):
@@ -17,6 +17,24 @@ def check_is_admin(func):
             return
         return func(*args, **kwargs)
     return wrapper
+
+# bartender_rat_cheese
+
+def check_quest_state(quest_id, required_state):
+    from configuration.config import QUESTS
+    def decorator(func):
+        @wraps(func)
+        def wrapper(self, line, *args, **kwargs):
+            if self.quest_manager.check_quest_state(quest_id) != required_state:
+                match required_state:
+                    case 'turned_in': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be turned in first')
+                    case 'completed': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be completed first')
+                    case 'in_progress': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be in progress')
+                    case 'not_started': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be not started')
+                return
+            return func(self, line, *args, **kwargs)
+        return wrapper
+    return decorator
 
 def check_not_spamming(func):
     def wrapper(*args, **kwargs):

@@ -27,8 +27,8 @@ from systems.utils import REFTRACKER, unload
 from systems.triggers import TriggerManager
 
 
-RESPAWN_TIME_MOBS =     30 * 10
-DESPAWN_TIME_ITEMS =    30 * 20
+RESPAWN_TIME_MOBS =     30 * 60
+DESPAWN_TIME_ITEMS =    30 * 60
 
 class Spawner:
     def __init__(self, room):
@@ -125,7 +125,7 @@ class Spawner:
         if self.room.is_player_present():
             return
         
-        if self.room.world.factory.ticks_passed % (RESPAWN_TIME_MOBS) == 3:
+        if self.room.world.factory.ticks_passed % RESPAWN_TIME_MOBS == 0:
             for i in self.room.actors.values():
                 break
             self.respawn_all()

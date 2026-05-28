@@ -21,7 +21,6 @@ class QUEST_STATE_TYPES:
     TURNED_IN = "turned_in"
     NOT_STARTED = "not_started"
 
-
 class QuestManager:
     def __init__(self, actor):
         self.actor = actor

@@ -203,6 +203,10 @@ commands:
     description: |
       Scrap an item or items.
       Scrapping an item destroys it, but gives you scrap in return.
+
+      Scrap is the main currency in Jorm, and scrapping 
+      is the main way of obtaining scrap.
+
       Non equippable items return their amount as scrap.
       Equippable items return their item level +1 as scrap.
       Scrap can be used as both currency, and reforge material.
@@ -669,10 +673,12 @@ commands:
     syntax:
       - quest
       - quest all
+      - quest list
       - quest view <quest>
       - quest drop <quest>
     description: |
-      By default, view all currently not turned in quests.
+      By default, view all quests. (quest / quest all).
+      quest list shows a list of active quests
       Quests have different states;
       - not started     - quest has not been started and will not display in your log.
       - in progress     - quest has been started and is in progress.

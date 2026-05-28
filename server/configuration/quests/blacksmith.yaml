@@ -1,0 +1,15 @@
+blacksmith_reforge:
+  name: Kill The Trio
+  description: 
+    in_progress: |
+      The blacksmith offered to teach me the art of reforging, if I can defeat the shroomtrio
+    completed: |
+      I managed to bea- I mean I defeated the shroomtrio and should return to the blacksmith
+    turned_in: |
+      I dont want to ever speak of this again
+  objectives:
+    Murder:
+      type: kill_x
+      objective: shroom_trio
+      completed_at: 1
+      
