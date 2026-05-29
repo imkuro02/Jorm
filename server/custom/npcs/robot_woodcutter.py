@@ -22,13 +22,15 @@ class robot_woodcutter(Npc):
 
     def despawn_footprints(self):
         for i in self.footprints:
-            i.inventory_manager.remove_item(i) 
+            if i.inventory_manager != None:
+                i.inventory_manager.remove_item(i) 
             i.unload()
         self.footprints = []
 
     def despawn_pre_footprints(self):
         for i in self.pre_footprints:
-            i.inventory_manager.remove_item(i) 
+            if i.inventory_manager != None:
+                i.inventory_manager.remove_item(i) 
             i.unload()
         self.pre_footprints = []
 
