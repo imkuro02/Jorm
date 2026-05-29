@@ -1537,7 +1537,7 @@ class SkillConsumeCorpse(SkillTargetItem):
 
         corpse = self.check_if_corpses_present()
         
-        if corpse == False:
+        if corpse == None:
             return 0
 
         if self.user.stat_manager.stats[StatType.HP] + self.get_healing_value() >= self.user.stat_manager.stats[StatType.HPMAX]:
