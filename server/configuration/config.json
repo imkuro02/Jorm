@@ -1,5 +1,5 @@
 {
-    "SHA-256": "bb6ca933523575931df6e1dec5909ee1ada34f397e43e6a72f11b3398a524795",
+    "SHA-256": "50984ab067a5d4944556ae44868ae7f99455f03156487ac5211a7ea7c7498cd1",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -273,8 +273,8 @@
             "include_in_daily_quests": true,
             "skills": {
                 "guard": 1,
-                "smite": 13,
-                "cure_light_wounds": 1
+                "smite": 3,
+                "cure_light_wounds": 6
             },
             "on_death_skills_use": "disorient=1",
             "on_start_skills_use": null,
@@ -326,7 +326,7 @@
             "drop_corpse": true,
             "include_in_daily_quests": true,
             "skills": {
-                "smite": 13,
+                "smite": 3,
                 "cure_light_wounds": 1,
                 "guard": 1
             },
