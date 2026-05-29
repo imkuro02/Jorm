@@ -53,6 +53,11 @@ class robot_woodcutter(Npc):
             break
 
         if len(self.footprints)-1>=self.footprints_max:
+            if self.footprints[0].inventory_manager == None:
+                self.footprints[0].unload()
+                self.footprints.pop(0)
+                continue
+                
             for i in self.footprints[0].inventory_manager.owner.actors.values():
                 br = f'{Color.BAD}The tire tracks leading {dir} dry up and the trail goes cold.{Color.BACK}'
                 i.simple_broadcast(br,br)
