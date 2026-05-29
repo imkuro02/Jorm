@@ -129,7 +129,8 @@ def command_drop(self, line):
         list_pretty_name_objects =  list_pretty_name_objects  
     )
 
-
+#@check_quest_state(quest_id = 'robot_scrap', required_state = 'not_started', _not = True)
+@check_quest_state(quest_id = 'robot_scrap', required_state = 'turned_in')
 @check_not_trading
 @check_no_empty_line
 @check_not_in_combat

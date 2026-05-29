@@ -218,14 +218,22 @@ class Npc(Actor):
                 self.affect_manager.set_affect_object(aff)
 
 
-    def talk_to(self, talker):
+    def talk_to(self, talker, they_talk_to_you = False):
         if not super().talk_to(talker):
             return
         # if returned true, start dialog
-        talker.simple_broadcast(
-            f"You approach {self.pretty_name()}",
-            f"{talker.pretty_name()} approaches {self.pretty_name()}.",
-        )
+        if not they_talk_to_you:
+            talker.pretty_broadcast(
+                f"You approach {self.id}",
+                f"{talker.id} approaches {self.id}",
+                list_pretty_name_objects = [self, talker]
+            )
+        else:
+            talker.pretty_broadcast(
+                f"{self.id} approaches you",
+                f"{self.id} approaches {talker.id}",
+                list_pretty_name_objects = [self, talker]
+            )
         talker.current_dialog = self.dialog_manager(talker, self, self.dialog_tree)
         talker.current_dialog.print_dialog()
         # return True

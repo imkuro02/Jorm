@@ -1,5 +1,5 @@
 {
-    "SHA-256": "1a8dfb1897144972d7014d73e5a87e8e245471d892dcf6e2166bd9d3f335c8e4",
+    "SHA-256": "2b45fd927ef619521b6e53b4c62948ebb16a6b02b5f9936067a9dd1519479d12",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -259,15 +259,15 @@
             "name": "Shroom Trio",
             "description": "Three tiny shrooms that have fused together. they move slowly and carefully.",
             "stats": {
-                "hp": 45,
+                "hp": 75,
                 "phy_armor": 10,
-                "mag_armor": 10,
+                "mag_armor": 25,
                 "grit": 5,
                 "flow": 5,
                 "mind": 5,
                 "soul": 10,
-                "exp": 2,
-                "lvl": 2
+                "exp": 8,
+                "lvl": 4
             },
             "drop_corpse": true,
             "include_in_daily_quests": true,
@@ -277,18 +277,23 @@
             "loot": {
                 "potion_remove_armor": 100,
                 "potion_hp_30": 100,
-                "axe": 125,
-                "soul body 1": 125,
-                "soul body 3": 140,
-                "soul head 1": 125,
-                "soul head 3": 140,
-                "soul relic 1": 125,
-                "soul trinket 1": 125,
-                "soul trinket 3": 140,
-                "soul weapon 1": 125,
-                "soul weapon 3": 140,
-                "rock": 38,
-                "summoning_rock": 38
+                "axe": 135,
+                "bag_0": 1000,
+                "soul body 1": 135,
+                "soul body 3": 125,
+                "soul body 6": 160,
+                "soul head 1": 135,
+                "soul head 3": 125,
+                "soul head 6": 160,
+                "soul relic 1": 135,
+                "soul trinket 1": 135,
+                "soul trinket 3": 125,
+                "soul trinket 6": 160,
+                "soul weapon 1": 135,
+                "soul weapon 3": 125,
+                "soul weapon 6": 160,
+                "rock": 36,
+                "summoning_rock": 36
             },
             "combat_loop": {},
             "can_start_fights": false,
@@ -2474,144 +2479,6 @@
                 "fairy"
             ]
         },
-        "npc_zone_1": {
-            "npc_id": "npc_zone_1",
-            "ai": "Enemy",
-            "name": "Lumberjack",
-            "description": "They rest by a wooden stump, a rusty handaxe by their side.",
-            "stats": {
-                "hp": 30,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "grit": 10,
-                "flow": 10,
-                "mind": 10,
-                "soul": 10,
-                "exp": 1,
-                "lvl": 1
-            },
-            "drop_corpse": true,
-            "include_in_daily_quests": false,
-            "skills": {},
-            "on_death_skills_use": null,
-            "on_start_skills_use": null,
-            "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
-                "axe": 120,
-                "grit body 1": 120,
-                "grit body 3": 160,
-                "grit head 1": 120,
-                "grit head 3": 160,
-                "grit relic 1": 120,
-                "grit trinket 1": 120,
-                "grit trinket 3": 160,
-                "grit weapon 1": 120,
-                "grit weapon 3": 160,
-                "grit weapon alt 3": 160,
-                "rock": 39,
-                "summoning_rock": 39
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "npc_zone_2": {
-            "npc_id": "npc_zone_2",
-            "ai": "Enemy",
-            "name": "Slime Scientist",
-            "description": "A curious figure is poking at a dead slime with a stick.",
-            "stats": {
-                "hp": 30,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "grit": 10,
-                "flow": 10,
-                "mind": 10,
-                "soul": 10,
-                "exp": 1,
-                "lvl": 1
-            },
-            "drop_corpse": true,
-            "include_in_daily_quests": false,
-            "skills": {},
-            "on_death_skills_use": null,
-            "on_start_skills_use": null,
-            "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
-                "axe": 120,
-                "grit body 1": 120,
-                "grit body 3": 160,
-                "grit head 1": 120,
-                "grit head 3": 160,
-                "grit relic 1": 120,
-                "grit trinket 1": 120,
-                "grit trinket 3": 160,
-                "grit weapon 1": 120,
-                "grit weapon 3": 160,
-                "grit weapon alt 3": 160,
-                "rock": 39,
-                "summoning_rock": 39
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "npc_zone_3": {
-            "npc_id": "npc_zone_3",
-            "ai": "Enemy",
-            "name": "Gardener",
-            "description": "The gardener is leaning against the walls of a small shed.",
-            "stats": {
-                "hp": 30,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "grit": 10,
-                "flow": 10,
-                "mind": 10,
-                "soul": 10,
-                "exp": 1,
-                "lvl": 1
-            },
-            "drop_corpse": true,
-            "include_in_daily_quests": false,
-            "skills": {},
-            "on_death_skills_use": null,
-            "on_start_skills_use": null,
-            "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
-                "axe": 120,
-                "grit body 1": 120,
-                "grit body 3": 160,
-                "grit head 1": 120,
-                "grit head 3": 160,
-                "grit relic 1": 120,
-                "grit trinket 1": 120,
-                "grit trinket 3": 160,
-                "grit weapon 1": 120,
-                "grit weapon 3": 160,
-                "grit weapon alt 3": 160,
-                "rock": 39,
-                "summoning_rock": 39
-            },
-            "combat_loop": {},
-            "can_start_fights": false,
-            "dont_join_fights": true,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
         "gambling_0": {
             "npc_id": "gambling_0",
             "ai": "Enemy",
@@ -2709,6 +2576,52 @@
             "ai": "Enemy",
             "name": "Blacksmith",
             "description": "A short bearded figure wearing a red hat",
+            "stats": {
+                "hp": 30,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "grit": 10,
+                "flow": 10,
+                "mind": 10,
+                "soul": 10,
+                "exp": 1,
+                "lvl": 1
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": false,
+            "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "axe": 120,
+                "grit body 1": 120,
+                "grit body 3": 160,
+                "grit head 1": 120,
+                "grit head 3": 160,
+                "grit relic 1": 120,
+                "grit trinket 1": 120,
+                "grit trinket 3": 160,
+                "grit weapon 1": 120,
+                "grit weapon 3": 160,
+                "grit weapon alt 3": 160,
+                "rock": 39,
+                "summoning_rock": 39
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "npc_robot": {
+            "npc_id": "npc_robot",
+            "ai": "Enemy",
+            "name": "Automaton",
+            "description": "A mechanical construct, its body hisses as it twists and turns, its heavy treads grind against the ground as it lumbers forward.",
             "stats": {
                 "hp": 30,
                 "phy_armor": 0,
@@ -2853,6 +2766,66 @@
             "no_random_loot": false,
             "drop_tags": [
                 "all"
+            ]
+        },
+        "robot_woodcutter": {
+            "npc_id": "robot_woodcutter",
+            "ai": "Enemy",
+            "name": "Lumberjack Automaton",
+            "description": "A mechanical construct, its body hisses as it twists and turns, its heavy treads grind against the ground as it lumbers forward.",
+            "stats": {
+                "hp": 60,
+                "phy_armor": 45,
+                "mag_armor": 0,
+                "grit": 10,
+                "flow": 5,
+                "mind": 5,
+                "soul": 0,
+                "exp": 8,
+                "lvl": 4
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {
+                "guard": 1,
+                "slash": 1,
+                "strike": 3,
+                "explode_on_finished": 1
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": "guard=1",
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "axe": 135,
+                "bag_0": 1000,
+                "grit body 1": 135,
+                "grit body 3": 125,
+                "grit body 6": 160,
+                "grit head 1": 135,
+                "grit head 3": 125,
+                "grit head 6": 160,
+                "grit relic 1": 135,
+                "grit trinket 1": 135,
+                "grit trinket 3": 125,
+                "grit trinket 6": 160,
+                "grit weapon 1": 135,
+                "grit weapon 3": 125,
+                "grit weapon 6": 160,
+                "grit weapon alt 3": 125,
+                "rock": 36,
+                "tree_branch": 36,
+                "simple_bark": 36,
+                "tree_root": 36,
+                "summoning_rock": 36
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "wood"
             ]
         }
     },

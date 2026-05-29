@@ -577,9 +577,12 @@ class Table:
         self.data = []
         self.SPACE = spaces
 
-    def add_data(self, val, col="@normal", filler=" "):
+    def add_data(self, val, col="@normal", filler=" ", add_to_start = False):
         data = {"val": str(val), "col": str(col), "fil": filler}
-        self.data.append(data)
+        if add_to_start:
+            self.data.insert(0, data)
+        else:
+            self.data.append(data)
 
     def get_table(self):
         if not self.data:

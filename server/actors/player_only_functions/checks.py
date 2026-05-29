@@ -20,18 +20,27 @@ def check_is_admin(func):
 
 # bartender_rat_cheese
 
-def check_quest_state(quest_id, required_state):
+def check_quest_state(quest_id, required_state, _not = False):
     from configuration.config import QUESTS
     def decorator(func):
         @wraps(func)
         def wrapper(self, line, *args, **kwargs):
-            if self.quest_manager.check_quest_state(quest_id) != required_state:
-                match required_state:
-                    case 'turned_in': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be turned in first')
-                    case 'completed': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be completed first')
-                    case 'in_progress': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be in progress')
-                    case 'not_started': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be not started')
-                return
+            if _not == False:
+                if self.quest_manager.check_quest_state(quest_id) != required_state:
+                    match required_state:
+                        case 'turned_in': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be turned in for this')
+                        case 'completed': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be completed for this')
+                        case 'in_progress': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be in progress for this')
+                        case 'not_started': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must not be started for this')
+                    return
+            else:
+                if self.quest_manager.check_quest_state(quest_id) == required_state:
+                    match required_state:
+                        case 'turned_in': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must not be turned in for this')
+                        case 'completed': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must not be completed for this')
+                        case 'in_progress': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must not be in progress for this')
+                        case 'not_started': self.send_line(f'"{QUESTS[quest_id]["name"]}" quest must be started for this')
+                    return
             return func(self, line, *args, **kwargs)
         return wrapper
     return decorator

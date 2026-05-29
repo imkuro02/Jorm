@@ -1,0 +1,61 @@
+npc_robot:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc>'s arm twists and jitters while they scan you
+
+    start_scrapping:
+        append_to: start
+        options:
+          - line: |
+              ask about "scrapping"
+            goto: scrapping
+
+    scrapping:
+      dialog:
+        - line: |
+            <npc> says "Scrap? I need scrap, please go murder the wretched Lumberjack Automaton and I will teach you the art of repurposing material"
+          quest_check:
+            - id: robot_scrap
+              state: not_started
+        - line: |
+            <npc> says "Hello-o, are you not done with the murder?"
+          quest_check:
+            - id: robot_scrap
+              state: in_progress
+        - line: |
+            <npc> says "Hello-o, are you not done with the murder?"
+          quest_check:
+            - id: robot_scrap
+              state: completed
+        - line: |
+            <npc> says "You are qualified for scrapping, the way you scrapped that Lumberjack Automaton"
+            Their arm twitches "You can now "@tipscrap@normal" items with the "@tipscrap@normal" command"
+            They spin around "Remember you can always @tip"help scrap"@normal for more information"
+          quest_check:
+            - id: robot_scrap
+              state: turned_in
+      options:
+        - line: |
+            accept
+          goto: robot_scrap_accept
+          quest_start: 
+              id: robot_scrap
+          quest_check:
+          - id: robot_scrap
+            state: not_started
+        - line: |
+            tell them you killed the Lumberjack Automaton
+          goto: scrapping
+          quest_turn_in:
+              id: robot_scrap
+              reward_exp: 50
+          quest_check:
+          - id: robot_scrap
+            state: completed
+
+    robot_scrap_accept:
+      dialog:
+        - line: |
+            <npc> says "Thank you" then jitters "please tell me if there is anything else you would like to assist me with later"

@@ -495,7 +495,7 @@ class Actor:
     def get_important_dialog(self, actor_to_compare, return_dict=False):
         return False
 
-    def talk_to(self, talker):
+    def talk_to(self, talker, they_talk_to_you = False):
         if talker.current_dialog != None:
             talker.send_line("You are already conversing")
             return False

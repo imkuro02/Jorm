@@ -1,0 +1,15 @@
+robot_scrap:
+  name: Kill Lumberjack Automaton
+  description: 
+    in_progress: |
+      The automaton has asked me to kill "Lumberjack Automaton" whoever that may be
+    completed: |
+      The Lumberjack Automaton is "dead" and I should return to the automaton
+    turned_in: |
+      I now know how to scrap items. and I can "@tiphelp scrap@normal" if I ever get confused
+  objectives:
+    Murder:
+      type: kill_x
+      objective: robot_woodcutter
+      completed_at: 1
+      

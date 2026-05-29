@@ -849,6 +849,10 @@ def command_look(self, line, return_gmcp=False):
                 if len(i) >= max_height:
                     max_height = len(i)
 
+            for i in icons:
+                while len(i) < max_height:
+                    i.insert(0,' ')
+
             amount = len(icons)
             if amount != 0:
                 t = systems.utils.Table(amount)
@@ -860,7 +864,7 @@ def command_look(self, line, return_gmcp=False):
                             t.add_data(icons[column][row])
 
                         except Exception as e:
-                            t.add_data(" ")
+                            t.add_data("XD")
 
                 see = see + "\n" + t.get_table() + '\n'
 

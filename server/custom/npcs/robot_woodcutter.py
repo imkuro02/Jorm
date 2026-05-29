@@ -2,34 +2,23 @@ from actors.npcs import Npc
 from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.color import Color
 from items.misc import Item
-
-class wander_around_mob(Npc):
+class robot_woodcutter(Npc):
     @classmethod
     def compare_replace(self, npc_object):
-        if "overworld/c6a0418c-71e1-41f5-8779-bfe88a2db798" != npc_object.room.id:
+        if "robot_woodcutter" != npc_object.npc_id:
             return False
         return True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.wander_directions_order = ['north', 'east', 'south', 'west']
+        self.wander_directions_order = ['south', 'north']
         self.wander_direction_current = 0
         self.wander_ticks_passed = 0
-        self.wander_ticks_required = 30*10
+        self.wander_ticks_required = 30*3
         self.wander_ticks_warning_required = 10
         self.footprints = []
         self.pre_footprints = []
         self.footprints_max = 1
-
-        self.trigger_manager.trigger_add(trigger_key = 'command_go', trigger_action = self.trigger_dont_leave)
-        self.trigger_manager.trigger_add(trigger_key = 'command_rest', trigger_action = self.trigger_dont_leave)
-
-    def trigger_dont_leave(self, player, line):
-        if player.status == ActorStatusType.DEAD:
-            return False
-
-        player.send_line(f'You cannot do that while {self.pretty_name(identifier = player)} is here')
-        return True
 
     def despawn_footprints(self):
         for i in self.footprints:
@@ -46,8 +35,8 @@ class wander_around_mob(Npc):
     def spawn_footprints(self, dir):
         corpse = Item()
         corpse.name = f'Footprints'
-        corpse.description = f'There is a set of footprints leading {dir.lower()}, you wonder who they belong to.'
-        corpse.description_room = f'{Color.BAD}A pair of footprints is leading {dir.lower()}{Color.BACK}'
+        corpse.description = f'There is a set of tire tracks leading {dir.lower()}, you wonder who they belong to.'
+        corpse.description_room = f'{Color.BAD}A pair of tire tracks is leading {dir.lower()}{Color.BACK}'
         corpse.stack_max = 1
         corpse.keep = False
         corpse.can_pick_up = False
@@ -59,13 +48,13 @@ class wander_around_mob(Npc):
         self.footprints.append(corpse)
 
         for i in self.room.actors.values():
-            br = f'{self.pretty_name()} {Color.BAD}leaves a trail of footprints behind.{Color.BACK}'
+            br = f'{self.pretty_name()} {Color.BAD}leaves a trail of tire tracks behind.{Color.BACK}'
             i.simple_broadcast(br,br)
             break
 
         if len(self.footprints)-1>=self.footprints_max:
             for i in self.footprints[0].inventory_manager.owner.actors.values():
-                br = f'{Color.BAD}The footprints leading {dir} dry up and the trail goes cold.{Color.BACK}'
+                br = f'{Color.BAD}The tire tracks leading {dir} dry up and the trail goes cold.{Color.BACK}'
                 i.simple_broadcast(br,br)
                 break
 
@@ -131,6 +120,8 @@ class wander_around_mob(Npc):
                     self.wander_direction_current = 0
                     
     def tick(self):
+        from custom.npcs import _utils
+        _utils.greet_message(self, f'{self.id} says "You are in the way"')
         super().tick()
         self.wander_ticks_passed += 1
         if self.wander_ticks_passed == self.wander_ticks_warning_required:
@@ -149,7 +140,3 @@ class wander_around_mob(Npc):
         self.despawn_pre_footprints()
         super().unload()
 
-from actors.npcs import Npc
-from configuration.constants.actor_status_type import ActorStatusType
-from configuration.constants.color import Color
-from items.misc import Item

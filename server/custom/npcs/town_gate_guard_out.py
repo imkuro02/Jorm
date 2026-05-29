@@ -1,5 +1,5 @@
 from actors.npcs import Npc
-
+from configuration.constants.room_constant import RoomConstant
 
 class town_guard_npc(Npc):
     @classmethod
@@ -13,14 +13,25 @@ class town_guard_npc(Npc):
         super().__init__(*args, **kwargs)
 
     def tick(self):
-        if self.factory.ticks_passed % (30 * 4) == 0:
-            if not hasattr(self,'actors_in_room_count'):
-                self.actors_in_room_count = 0
-            if self.actors_in_room_count != len(self.room.actors.values()):
-                self.actors_in_room_count = len(self.room.actors.values())
-                self.simple_broadcast(
-                    "", f'"Good to be alive or something" says {self.pretty_name()}'
-                )
+        from custom.npcs import _utils
+        send_to = [i for i in self.room.actors.values() if type(i).__name__ == 'Player' and 
+                    i.recall_site != RoomConstant.TAVERN]
+        _utils.greet_message(
+            self = self, 
+            message = f'{self.id} says "You should check out the tavern, if you have not yet"',
+            send_to = send_to
+            )
+        send_to = [i for i in self.room.actors.values() if type(i).__name__ == 'Player' and 
+                    i.quest_manager.check_quest_state('blacksmith_reforge') == 'not_started']
+        _utils.greet_message(
+            self = self, 
+            message = f'{self.id} says "The blacksmith recently reforged my spear, nice fella just west of town square"',
+            send_to = send_to
+            )
+        _utils.greet_message(
+            self = self, 
+            message = f'{self.id} nods at you',
+            )
 
         if self.room.combat != None:
             self.simple_broadcast(

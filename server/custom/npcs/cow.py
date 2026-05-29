@@ -15,17 +15,11 @@ class cow(Npc):
 
     def tick(self):
         super().tick()
-        if self.status != ActorStatusType.NORMAL:
-            return
-
-        if self.factory.ticks_passed % (30 * 4) == 0:
-            if not hasattr(self,'actors_in_room_count'):
-                self.actors_in_room_count = 0
-            if self.actors_in_room_count != len(self.room.actors.values()):
-                self.actors_in_room_count = len(self.room.actors.values())
-                self.simple_broadcast(
-                    "", f'{self.pretty_name()} Moo\'s at you'
-                )
+        from custom.npcs import _utils
+        _utils.greet_message(
+            self = self, 
+            message = f'{self.id} moo\'s at you',
+            )
 
     def set_turn(self):
         if self.room.combat == None:

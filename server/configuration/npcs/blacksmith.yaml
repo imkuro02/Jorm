@@ -159,4 +159,4 @@ npc_blacksmith:
     scrap:
       dialog:
         - line: |
-            <npc> says "Scrapping? thats easy! type @tip"help scrap"@normal for more information" 
+            <npc> says "Curious about scrapping? just speak to my son" 
