@@ -11,10 +11,58 @@ func _ready():
 func _process(delta):
 	pass
 
+#func get_message(message):
+#	self.append_text(add_ansi_text(message))
+#	self.scroll_following = true
+
+func is_scrolled_to_bottom() -> bool:
+	var vscroll := get_v_scroll_bar()
+	return vscroll.value >= vscroll.max_value - vscroll.page
+	
+func clear_log():
+	lines = []
+	clear()
+	
+var lines: Array[String] = []
+const MAX_LINES := 100
 func get_message(message):
 	
-	self.append_text(add_ansi_text(message))
-	self.scroll_following = true
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	if message == '':
+		return
+	var bbcode_line = add_ansi_text(message)
+
+	lines.append(bbcode_line)
+	
+	if is_scrolled_to_bottom():	
+		if lines.size() > MAX_LINES:
+			lines.pop_front()
+		clear()
+		
+	self.append_text("".join(lines))
+
+	scroll_following = true
 	
 func add_ansi_text(ansi_text: String) -> String:
 	var ansi_to_fg = {

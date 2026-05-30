@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://csvw2gt15o8yp"
+uid="uid://31bqc5l53wq1"
 path="res://.godot/imported/PixelCode-Medium.ttf-21f3dd4171c00c66354c2123a17373d0.fontdata"
 
 [deps]
@@ -15,16 +15,13 @@ dest_files=["res://.godot/imported/PixelCode-Medium.ttf-21f3dd4171c00c66354c2123
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
-disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
-modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=1
-keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null
 fallbacks=[]

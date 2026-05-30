@@ -10,7 +10,7 @@ var socket = WebSocketPeer.new()
 @onready var OUTPUT = $canvas/container/output/output
 @onready var SIDEBAR = $canvas/container/sidebar
 @onready var DEBUG = $canvas/debug
-@onready var SFX_MAN = $sfx_manager
+#@onready var SFX_MAN = $sfx_manager
 @onready var LOOK_ROOM = $canvas/container/sidebar/look_room
 @onready var ASCIIMAP = $canvas/container/sidebar/ascii_map
 @onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
@@ -50,7 +50,8 @@ func _ready():
 	# Connect the input signal for Enter key
 	INPUT.text_submitted.connect(_on_input_submitted)
 	# Try local WebSocket first, then fallback to remote
-	await try_connect_in_order([websocket_url_local, websocket_url])
+	await try_connect_in_order([websocket_url, websocket_url_local])
+	#await try_connect_in_order([websocket_url_local, websocket_url])
 
 
 # --- Connection Handling ---
@@ -167,9 +168,9 @@ func handle_gmcp(message: String):
 			
 		'GAME_STATE':
 			game_state = dict_string
-			ASCIIMAP.clear()
-			OUTPUT_COMBAT.clear()
-			#OUTPUT.clear()
+			ASCIIMAP.clear_log()
+			OUTPUT_COMBAT.clear_log()
+			#OUTPUT.clear_log()
 			#OUTPUT.append_text("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 			INPUT.secret = 'REGISTER_PASSWORD' in game_state or 'LOGIN_PASSWORD' in game_state
 			INPUT.clear()
@@ -194,22 +195,22 @@ func handle_gmcp(message: String):
 
 		#'Actors':
 		#	ACTORS_OUTPUT.set_text("")
-		#	ACTORS_OUTPUT.clear()
+		#	ACTORS_OUTPUT.clear_log()
 		#	ACTORS_OUTPUT.get_message(dict_string)
 		'OUTPUT_COMBAT':
 			#print('dict_string')
 			#print(dict_string)
-			OUTPUT_COMBAT.clear()
+			OUTPUT_COMBAT.clear_log()
 			#OUTPUT_COMBAT.get_message('********************************************************************************\n'+dict_string)
 			OUTPUT_COMBAT.get_message(dict_string)
 		'MAP':
-			ASCIIMAP.clear()
+			ASCIIMAP.clear_log()
 			ASCIIMAP.get_message(dict_string)
 		'MMAAPP':
-			ASCIIMAP.clear()
+			ASCIIMAP.clear_log()
 			ASCIIMAP.get_message(dict_string)
 		'LOOK_ROOM':
-			LOOK_ROOM.clear()
+			LOOK_ROOM.clear_log()
 			LOOK_ROOM.get_message(dict_string)
 		#'Time':
 		#	CLOCK.get_message(data_dict)
