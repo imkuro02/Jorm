@@ -336,7 +336,7 @@ class Skill:
 
         self.bounce = 0
         if 'bounce_amount' in self.script_values:
-            self.bounce = self.calculate_script_value(value = 'bounce_amount')
+            self.bounce = self.calculate_script_value(value = 'bounce_amount')+1
 
         self.aoe = 0
         if 'aoe' in self.script_values:
