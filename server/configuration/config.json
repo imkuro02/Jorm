@@ -1,5 +1,5 @@
 {
-    "SHA-256": "50984ab067a5d4944556ae44868ae7f99455f03156487ac5211a7ea7c7498cd1",
+    "SHA-256": "23fe3d4681bf22a0534553fbb977c3feefdd9ab26844e72c36c9b9d46c0b6e70",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -3303,7 +3303,7 @@
             "script_values": {
                 "levels": [
                     1.0,
-                    1.0,
+                    3.0,
                     0.0
                 ],
                 "duration": [
@@ -3325,6 +3325,11 @@
                     4.0,
                     4.0,
                     0.0
+                ],
+                "charges": [
+                    1.0,
+                    10.0,
+                    1.0
                 ]
             }
         },

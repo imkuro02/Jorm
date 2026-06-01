@@ -766,6 +766,7 @@ def command_lore(self, line):
         self.send_line('#skills is: '+str(len(list_of_skills)))
         return
 
+    '''
     if line in "grit flow mind soul phy_armor mag_armor hp".split():
         line = line.strip()
         if line in "hp phy_armor mag_armor".strip():
@@ -810,6 +811,7 @@ def command_lore(self, line):
         self.send_line(f"Best in slot equipment for your level:\n{t.get_table()}")
         return
 
+    '''
     whole_list = list_of_enemies + list_of_items + list_of_rooms + list_of_skills
 
     to_find = systems.utils.match_word(line, whole_list)

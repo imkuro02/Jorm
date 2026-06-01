@@ -221,24 +221,9 @@ class CombatEvent:
         try:
             if not damage_obj.dont_proc:
                 rand_dmg = 0
+                rand_dmg += damage_obj.damage_source_actor.calculate_damage_type_damage_bonus(damage_obj.damage_type)
+                damage_obj.damage_value += rand_dmg #random.randint(0, rand_dmg)
 
-                if damage_obj.damage_type == DamageType.PHYSICAL:
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.FLOW]/2)
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.GRIT]/4)
-
-                if damage_obj.damage_type == DamageType.MAGICAL:
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/2)
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/4)
-
-                if damage_obj.damage_type == DamageType.PURE:
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/4)
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/4)
-
-                if damage_obj.damage_type == DamageType.HEALING:
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.MIND]/4)
-                    rand_dmg += int(damage_obj.damage_source_actor.stat_manager.stats[StatType.SOUL]/2)
-                
-                damage_obj.damage_value += random.randint(0, rand_dmg)
                     
         except Exception as e:
             systems.utils.debug_print('Something went wrong while applying stats to damage:')
@@ -298,6 +283,9 @@ class CombatEvent:
                     damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += (
                         abs(damage_obj.damage_value)
                     )
+
+
+
         except Exception as e:
             systems.utils.debug_print(f'Something went wrong while running damage calculations for {damage_obj} {e}')
 

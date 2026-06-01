@@ -6,13 +6,14 @@ from items.misc import Item
 class wander_around_mob(Npc):
     @classmethod
     def compare_replace(self, npc_object):
-        if "overworld/c6a0418c-71e1-41f5-8779-bfe88a2db798" != npc_object.room.id:
+        if "overworld/9cf4310e-9068-433a-acc6-a85c72f7069e" != npc_object.room.id:
             return False
         return True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.wander_directions_order = ['north', 'east', 'south', 'west']
+        self.name = self.name.replace('The','The Wandering')
         self.wander_direction_current = 0
         self.wander_ticks_passed = 0
         self.wander_ticks_required = 30*10
@@ -21,8 +22,8 @@ class wander_around_mob(Npc):
         self.pre_footprints = []
         self.footprints_max = 1
 
-        self.trigger_manager.trigger_add(trigger_key = 'command_go', trigger_action = self.trigger_dont_leave)
-        self.trigger_manager.trigger_add(trigger_key = 'command_rest', trigger_action = self.trigger_dont_leave)
+        #self.trigger_manager.trigger_add(trigger_key = 'command_go', trigger_action = self.trigger_dont_leave)
+        #self.trigger_manager.trigger_add(trigger_key = 'command_rest', trigger_action = self.trigger_dont_leave)
 
     def trigger_dont_leave(self, player, line):
         if player.status == ActorStatusType.DEAD:
@@ -33,13 +34,15 @@ class wander_around_mob(Npc):
 
     def despawn_footprints(self):
         for i in self.footprints:
-            i.inventory_manager.remove_item(i) 
+            if i.inventory_manager != None:
+                i.inventory_manager.remove_item(i) 
             i.unload()
         self.footprints = []
 
     def despawn_pre_footprints(self):
         for i in self.pre_footprints:
-            i.inventory_manager.remove_item(i) 
+            if i.inventory_manager != None:
+                i.inventory_manager.remove_item(i) 
             i.unload()
         self.pre_footprints = []
 
@@ -64,6 +67,10 @@ class wander_around_mob(Npc):
             break
 
         if len(self.footprints)-1>=self.footprints_max:
+            if self.footprints[0].inventory_manager == None:
+                self.despawn_footprints()
+                return
+
             for i in self.footprints[0].inventory_manager.owner.actors.values():
                 br = f'{Color.BAD}The footprints leading {dir} dry up and the trail goes cold.{Color.BACK}'
                 i.simple_broadcast(br,br)
@@ -72,6 +79,7 @@ class wander_around_mob(Npc):
             self.footprints[0].inventory_manager.remove_item(self.footprints[0])
             self.footprints[0].unload()
             self.footprints.pop(0)
+
 
         self.despawn_pre_footprints()
         

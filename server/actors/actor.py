@@ -305,6 +305,25 @@ class Actor:
             return []
         return self.room.combat.combat_history.fetch_combat_history()
 
+    def calculate_damage_type_damage_bonus(self, damage_type):
+        _dmg = 0
+        if damage_type == DamageType.PHYSICAL:
+            _dmg += int(self.stat_manager.stats[StatType.FLOW]/2)
+            _dmg += int(self.stat_manager.stats[StatType.GRIT]/4)
+
+        if damage_type == DamageType.MAGICAL:
+            _dmg += int(self.stat_manager.stats[StatType.MIND]/2)
+            _dmg += int(self.stat_manager.stats[StatType.SOUL]/4)
+
+        if damage_type == DamageType.PURE:
+            _dmg += int(self.stat_manager.stats[StatType.SOUL]/4)
+            _dmg += int(self.stat_manager.stats[StatType.MIND]/4)
+
+        if damage_type == DamageType.HEALING:
+            _dmg += int(self.stat_manager.stats[StatType.MIND]/4)
+            _dmg += int(self.stat_manager.stats[StatType.SOUL]/2)
+        return _dmg
+
     def add_prompt_syntax(self, prompt_syntax):
         
 
@@ -613,7 +632,10 @@ class Actor:
 
         output += '\n'
 
-        output += self.get_character_equipment() 
+        _gear = self.get_character_equipment()
+        if _gear.strip() != '':
+            output += '@tipEquipment:@normal\n'
+            output += self.get_character_equipment() 
 
 
         _stats_with_equips = {}
@@ -634,6 +656,7 @@ class Actor:
         #print(_stats_with_equips, '\n', _stats_without_equips, '\n', _stats_calculated_bonuses)
         
         if True:
+            output += '@tipStats:@normal\n'
             t = systems.utils.Table(5, 1)
             _piss = [
                 StatType.HP,
@@ -643,7 +666,6 @@ class Actor:
                 StatType.FLOW,
                 StatType.MIND,
                 StatType.SOUL,
-                StatType.LVL,
             ]
             for _shit in _piss:
                 if _shit + "_max" in StatType.name:
@@ -669,7 +691,40 @@ class Actor:
                         bonus = f'+{bonus}'
                     t.add_data("" if _stats_calculated_bonuses[_shit] == 0 else f"{Color.NORMAL}({col}{bonus}{Color.NORMAL})")
 
-            output += t.get_table()
+            
+            output += t.get_table() + '\n'
+            _dmg_types = [DamageType.PHYSICAL, DamageType.MAGICAL, DamageType.PURE, DamageType.HEALING]
+
+            t = systems.utils.Table(4, 1)
+            output += '@tipDamage:@normal\n'
+            for dmg_type in _dmg_types:
+                t.add_data(f'{DamageType.name[dmg_type][:4].capitalize()}')
+                t.add_data(f'+{self.calculate_damage_type_damage_bonus(dmg_type)}')
+            output += t.get_table()+'\n'
+            '''
+
+            t = systems.utils.Table(4, 1)
+            dmg_type = _dmg_types[0]
+            t.add_data(f'{DamageType.name[dmg_type][:4].capitalize()}')
+            dmg_type = _dmg_types[1]
+            t.add_data(f'{DamageType.name[dmg_type][:4].capitalize()}')
+            dmg_type = _dmg_types[2]
+            t.add_data(f'{DamageType.name[dmg_type][:4].capitalize()}')
+            dmg_type = _dmg_types[3]
+            t.add_data(f'{DamageType.name[dmg_type][:4].capitalize()}')
+
+            dmg_type = _dmg_types[0]
+            t.add_data(f'+{str(self.calculate_damage_type_damage_bonus(dmg_type))}'.rjust(4))
+            dmg_type = _dmg_types[1]
+            t.add_data(f'+{str(self.calculate_damage_type_damage_bonus(dmg_type))}'.rjust(4))
+            dmg_type = _dmg_types[2]
+            t.add_data(f'+{str(self.calculate_damage_type_damage_bonus(dmg_type))}'.rjust(4))
+            dmg_type = _dmg_types[3]
+            t.add_data(f'+{str(self.calculate_damage_type_damage_bonus(dmg_type))}'.rjust(4))
+            output += '\n'+t.get_table()
+            '''
+            output += '@tipExtra:@normal\n'
+            output += f'Level: {self.stat_manager.stats[StatType.LVL]}'
 
         if type(self).__name__ == "Player":
             t = systems.utils.Table(4, 1)
