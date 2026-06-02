@@ -1,5 +1,5 @@
 {
-    "SHA-256": "a064527961e1a34a91150bf6ae628588c7eccba08e69d7668cc26cde51c86d46",
+    "SHA-256": "02b9fbf4b87be6aff19b1c5aa3672395a816dc405eae4726be771c4385d16221",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -2704,7 +2704,7 @@
             },
             "combat_loop": {},
             "can_start_fights": true,
-            "dont_join_fights": false,
+            "dont_join_fights": true,
             "no_random_loot": false,
             "drop_tags": [
                 "all"

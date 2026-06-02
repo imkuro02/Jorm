@@ -31,6 +31,7 @@ class cow(Npc):
 
         self.simple_broadcast('The cow calms down...','The cow calms down...')
         self.status = ActorStatusType.NORMAL
+
     def trigger_milk(self, player, line):
         line = line.replace('milk','')
         if not line:
@@ -70,11 +71,18 @@ class bull(Npc):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.can_join_fights = False
         self.trigger_manager.trigger_add(trigger_key = 'command_flee', trigger_action = self.trigger_flee)
-        self.description += '\nYou can "milk" the cow'
 
     def trigger_flee(self, player, line):
         player.send_line('you cannot flee now!')
         return True
+
+    def tick(self):
+        if self.room == None:
+            return
+        if self.status != ActorStatusType.FIGHTING:
+            #self.pretty_broadcast('',f'{self.id} moo\'s away', list_pretty_name_objects = [self])
+            self.unload()
+        else:
+            super().tick()
 
