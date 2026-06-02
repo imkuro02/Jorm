@@ -638,10 +638,11 @@ commands:
     group: other
     syntax:
       - news
-      - news <patch id>
+      - news <news id>
+      - news all
     description: |
-      Display all recent patches in order of newest to oldest.
-      Patches that have been added since your last login will be displayed as "new"
+      Display all recent patches in order of oldest to newest.
+      Alternatively input the news id to view a specific patch and what it brought.
     related:
       - help
   rank:

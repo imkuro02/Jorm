@@ -23,6 +23,10 @@ versions:
       - World slightly more streamlined
       - Fixed moving npcs crash (undead in manor and the lumberbot)
       - Damage is fixed and not randomized (again)
+      - News command overhaul
+      - Damp cave and hamlet added to map
+      - Exp drop from all enemies is now Level*2
+      - Ascii map range increased
   "270526":
     id: "270526"
     title: Patch

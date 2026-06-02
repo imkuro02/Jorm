@@ -1,5 +1,5 @@
 {
-    "SHA-256": "6065ad04bebb554e83038464715c72d3916d23861974e48a5fc44b78c5e0697c",
+    "SHA-256": "a064527961e1a34a91150bf6ae628588c7eccba08e69d7668cc26cde51c86d46",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -14,7 +14,7 @@
                 "flow": 1,
                 "mind": 1,
                 "soul": 1,
-                "exp": 1,
+                "exp": 999,
                 "lvl": 999
             },
             "drop_corpse": false,
@@ -266,7 +266,7 @@
                 "flow": 5,
                 "mind": 5,
                 "soul": 10,
-                "exp": 8,
+                "exp": 4,
                 "lvl": 4
             },
             "drop_corpse": true,
@@ -1446,7 +1446,7 @@
                 "flow": 10,
                 "mind": 5,
                 "soul": 5,
-                "exp": 10,
+                "exp": 7,
                 "lvl": 7
             },
             "drop_corpse": true,
@@ -1886,7 +1886,7 @@
                 "flow": 10,
                 "mind": 10,
                 "soul": 10,
-                "exp": 15,
+                "exp": 10,
                 "lvl": 10
             },
             "drop_corpse": true,
@@ -2785,7 +2785,7 @@
                 "flow": 5,
                 "mind": 5,
                 "soul": 0,
-                "exp": 8,
+                "exp": 4,
                 "lvl": 4
             },
             "drop_corpse": true,
@@ -4408,7 +4408,7 @@
             "ambience_sfx": null,
             "ambience": "The potion emits a soft glow",
             "can_pick_up": true,
-            "description": "A bottle of green goop."
+            "description": "A disgusting bottle of goop, it shreds the drinkers HOLD and WARD."
         },
         "potion_hp_30": {
             "item_type": "consumable",
@@ -4440,7 +4440,7 @@
             "dont_load": 0,
             "premade_id": "translucent scroll",
             "name": "Translucent Scroll",
-            "skills": "ethereal=0",
+            "skills": "ethereal=1",
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "read",
@@ -4465,7 +4465,7 @@
             "dont_load": 0,
             "premade_id": "blessing_of_grit",
             "name": "Scroll of Grit",
-            "skills": "bless_grit=0",
+            "skills": "bless_grit=1",
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "read",
@@ -4490,7 +4490,7 @@
             "dont_load": 0,
             "premade_id": "blessing_of_flow",
             "name": "Scroll of Flow",
-            "skills": "bless_flow=0",
+            "skills": "bless_flow=1",
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "read",
@@ -4515,7 +4515,7 @@
             "dont_load": 0,
             "premade_id": "blessing_of_mind",
             "name": "Scroll of Mind",
-            "skills": "bless_mind=0",
+            "skills": "bless_mind=1",
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "read",
@@ -4540,7 +4540,7 @@
             "dont_load": 0,
             "premade_id": "blessing_of_soul",
             "name": "Scroll of Soul",
-            "skills": "bless_soul=0",
+            "skills": "bless_soul=1",
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "read",

@@ -57,12 +57,26 @@ def command_patch_notes(self, line):
         self.send_line(output)
         return
 
-    t = systems.utils.Table(3, 3)
-    t.add_data("Status")
+    for i in patches["versions"]:
+        if line != 'all':
+            _ = patches["versions"][i]
+            self.command_patch_notes(i)
+            self.send_line('type "@tipnews all@normal" for all news' )
+            return
+        break
+
+    t = systems.utils.Table(2, 3)
+    #t.add_data("Status")
     t.add_data("Patch")
     t.add_data("Title")
 
-    for i in patches["versions"]:
+    for i in reversed(patches["versions"]):
+        if line != 'all':
+            _ = patches["versions"][i]
+            self.command_patch_notes(i)
+            self.send_line('type "@tipnews all@normal" for all news' )
+            return
+
         i = patches["versions"][i]
 
         unix_version = int(i["unixtime"])
@@ -71,14 +85,15 @@ def command_patch_notes(self, line):
 
         col = Color.IMPORTANT if is_new else Color.NORMAL
 
-        if is_new:
-            t.add_data("New", col)
-        else:
-            t.add_data("Old", col)
+        #if is_new:
+        #    t.add_data("New", col)
+        #else:
+        #    t.add_data("Old", col)
         t.add_data(i["id"], col)
         t.add_data(i["title"], col)
 
     self.send_line(t.get_table())
+    self.send_line('type "@tipnews <news id>@normal" to look up specific news' )
 
 
 def command_show_ref_all(self, line):
