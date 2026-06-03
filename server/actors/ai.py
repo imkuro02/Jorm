@@ -163,6 +163,7 @@ class AI:
         if no_checks == False and not check_if_skill_can_be_used(self.prediction):
             return False
 
+        self.prediction = self.actor.affect_manager.on_skill_used(self.prediction)
         self.prediction.pre_use()
         self.prediction.combat_event.run()
         self.prediction.combat_event.run()

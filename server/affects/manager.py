@@ -92,3 +92,8 @@ class AffectsManager:
     def join_combat(self):
         for aff in self.get_all_afflictions().values():
             aff.join_combat()
+
+    def on_skill_used(self, skill_obj):
+        for aff in self.get_all_afflictions().values():
+            skill_obj = aff.on_skill_used(skill_obj)
+        return skill_obj

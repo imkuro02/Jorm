@@ -126,6 +126,9 @@ class Affect:
 
     def join_combat(self):
         pass
+    
+    def on_skill_used(self, skill_object):
+        return skill_object
 
 class AffectWellRested(Affect):
     def set_turn(self):
@@ -645,7 +648,7 @@ class AffectStealth(Affect):
     def on_applied(self):
         super().on_applied()
         self.new_stat = int(
-            self.affect_target_actor.stat_manager.stats[StatType.FLOW] * 1
+            self.affect_target_actor.stat_manager.stats[StatType.FLOW] * self.bonus
         )
         self.affect_target_actor.stat_manager.stats[StatType.FLOW] += self.new_stat
 
@@ -662,11 +665,13 @@ class AffectStealth(Affect):
         if damage_obj.damage_source_action.skill_id != "stab":
             return damage_obj
 
-        damage_obj.damage_value = int(damage_obj.damage_value * self.bonus)
+        damage_obj.damage_value += int(damage_obj.damage_value * self.bonus)
         return damage_obj
 
     def take_damage_before_calc(self, damage_obj: "Damage"):
         if damage_obj.damage_type != DamageType.HEALING:
+            if damage_obj.damage_type == DamageType.PHYSICAL:
+                damage_obj.damage_value -= int(damage_obj.damage_value * self.bonus)
             self.on_finished(silent=False)
         return damage_obj
 
@@ -1206,3 +1211,42 @@ class ReforgeChanceDontEndTurnOnHeal(AffectReforge):
         
 
 
+class ReforgeChanceDontEndTurnOnUseStealth(AffectReforge):
+    def __init__(self,
+            affect_source_actor,
+            affect_target_actor,
+            name, description, turns,
+            source_item = None,
+            reforge_variables = None
+        ):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+        self.combat_round = -1 
+        self.combat_id = -1
+
+    def on_skill_used(self, skill_obj):
+        _p = self.affect_target_actor
+        _c = self.affect_target_actor.room.combat
+
+
+        if systems.utils.get_object_parent(skill_obj) != "Skill":
+            return skill_obj
+        
+        if skill_obj.skill_id != 'stealth':
+            return skill_obj
+
+        _succ = random.randint(0,100) <= float(self.reforge_variables["var_a"])*100
+
+        if not _succ:
+            return skill_obj
+        
+        if skill_obj.dont_finish_turn == False:
+            skill_obj.dont_finish_turn = True
+            #_p.send_line('success, skill wont end turn')
+            list_pretty_name_objects = [self.source_item]
+            _p.pretty_broadcast(f'Your {self.source_item.id} makes this turn last longer',None,list_pretty_name_objects = list_pretty_name_objects)
+            return skill_obj
+
+    def take_damage_before_calc(self, damage_obj):
+        if damage_obj.damage_type != DamageType.HEALING:
+            damage_obj.damage_value += int(damage_obj.damage_value*float(self.reforge_variables["var_b"]))
+        return damage_obj

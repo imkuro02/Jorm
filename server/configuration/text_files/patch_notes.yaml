@@ -29,6 +29,8 @@ versions:
       - Ascii map range increased
       - Character sheet tracks unique kills (how many out of total npcs have you killed?)
       - ALL EQUIPMENT STATS HALVED
+      - Stealth has been nerfed
+      - Stealthy reforge been added (to make nerf not as severe)
   "270526":
     id: "270526"
     title: Patch
