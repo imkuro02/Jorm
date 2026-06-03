@@ -761,13 +761,14 @@ def command_lore(self, line):
             LORE["enemies"].values(),
             key=lambda enemy: enemy["stats"]["lvl"]
         )
-        t = systems.utils.Table(2, 1)
+        t = systems.utils.Table(3, 1)
         for i in sorted_enemies:
             if i['dont_join_fights'] == True:
                 t.add_data(f'-',filler='-')
             else:
-                t.add_data(f'Lv {i["stats"]["lvl"]}')
-            t.add_data(f' {i["name"]}')
+                t.add_data(f'Lv {i["stats"]["lvl"]}', filler='.')
+            t.add_data(f' {i["name"]}',filler='.')
+            t.add_data(f' Killed {self.get_tracked_npcs_killed(i['npc_id'])}')
         self.send_line(t.get_table())
         self.send_line('#npcs is: '+str(len(sorted_enemies)))
         return

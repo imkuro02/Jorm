@@ -26,7 +26,7 @@ from systems.party import PartyManager
 from systems.quest import QuestManager
 from systems.utils import REFTRACKER, unload
 from systems.triggers import TriggerManager
-
+from configuration.config import LORE
 class ActorStatManager:
     def __init__(self, actor):
         self.actor = actor
@@ -771,6 +771,7 @@ class Actor:
             output += '\n' + t.get_table() + '\n'
 
             output += f'Total kills: {self.get_tracked_npcs_killed_total()}, most kills against: {self.get_tracked_npcs_killed_most_of()}\n'
+            output += f'Unique kills: {len(self.tracked_npcs_killed)}/{len([e for e in LORE["enemies"].values() if e['dont_join_fights'] == False])}\n'
             output += f'Rooms explored: {len(self.explored_rooms)}\n'
             output += f'Time in Game: {systems.utils.seconds_to_dhm(self.time_in_game)}'
 

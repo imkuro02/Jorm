@@ -27,6 +27,7 @@ versions:
       - Damp cave and hamlet added to map
       - Exp drop from all enemies is now Level*2
       - Ascii map range increased
+      - Character sheet tracks unique kills (how many out of total npcs have you killed?)
   "270526":
     id: "270526"
     title: Patch
