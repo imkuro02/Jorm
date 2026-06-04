@@ -5,19 +5,18 @@ from combat.damage_event import Damage
 from configuration.constants.damage_type import DamageType
 from configuration.constants.stat_type import StatType
 
-class beetle_tree_guard(Npc):
+class town_passage_thief(Npc):
     @classmethod
     def compare_replace(self, npc_object):
-        if "beetle_man" != npc_object.npc_id.lower():
+        if npc_object.room.id != 'overworld/c8783b2d-0b8f-49b8-8375-7fd72d7a5ec1':
             return False
         return True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.west_log = 'overworld/57e8dcb4-4c40-40e1-a7c9-33c261eb3ff3'
-        self.east_log = 'overworld/9beade9f-4e7e-4f65-b387-62f5d4e2d2e2'
-        self.yeet_room = 'overworld/a2c99cd0-ede4-4b9f-9857-ef099fe81482'
+        self.outside_of_lavoratory = 'overworld/c8783b2d-0b8f-49b8-8375-7fd72d7a5ec1'
+
 
         self.trigger_manager.trigger_add(trigger_key = 'command_go', trigger_action = self.trigger_command_go)
 
@@ -32,26 +31,26 @@ class beetle_tree_guard(Npc):
 
         if self.anger_levels[player] >= 4:
             player.pretty_broadcast(
-                f'{self.id} gets angry and wrestles you\nYou tumble into the water below the log\nSPLASH!',
-                f'{self.id} gets angry and wrestles {player.id}\n{player.id} tumbles into the water below the log\nSPLASH!',
+                f'{self.id} punches you in the stomach',
+                f'{self.id} punches {player.id} in the stomach',
                 list_pretty_name_objects=[self, player]
             )
-            player.move_party_leader(room_id = self.yeet_room, no_new_room_look = True)
             damage_obj = Damage(
                     damage_taker_actor=player,
                     damage_source_action=self,
                     combat_event=None,
                     damage_source_actor=self,
-                    damage_value=1000,
+                    damage_value=100,
                     damage_type=DamageType.PHYSICAL,
                     damage_to_stat=StatType.PHYARMOR
                 )
             damage_obj.run()
+            player.command_fight('')
             return True
         else:
             player.pretty_broadcast(
-                f'{self.id} stands in your way, looking annoyed',
-                f'{self.id} stands in {player.id}s way, looking annoyed',
+                f'{self.id} stands in your way, looking annoyed. "There is a line here, {player.id}"',
+                f'{self.id} stands in {player.id}s way, looking annoyed. "There is a line here, {player.id}"',
                 list_pretty_name_objects=[self, player]
             )
             return True
@@ -62,7 +61,7 @@ class beetle_tree_guard(Npc):
         if _dir == None:
             return False
         
-        if (self.room.id == self.west_log and _dir.direction == 'east') or (self.room.id == self.east_log and _dir.direction == 'west'):
+        if (self.room.id == self.outside_of_lavoratory and _dir.direction == 'east'):
             return self.anger_raise(player)
 
             
