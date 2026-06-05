@@ -701,6 +701,7 @@ class AffectBleed(Affect):
             resisted_by,
         )
         self.damage = damage
+        
 
     # def take_damage_after_calc(self, damage_obj):
     #    if damage_obj.damage_type == DamageType.HEALING:

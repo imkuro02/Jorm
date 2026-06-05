@@ -219,12 +219,10 @@ class CombatEvent:
         # get damage_obj first in queue
         damage_obj = self.queue[0]
         try:
-            if not damage_obj.dont_proc:
+            if damage_obj.dont_proc == False:
                 rand_dmg = 0
                 rand_dmg += damage_obj.damage_source_actor.calculate_damage_type_damage_bonus(damage_obj.damage_type)
-                damage_obj.damage_value += rand_dmg #random.randint(0, rand_dmg)
-
-                    
+                damage_obj.damage_value += rand_dmg #random.randint(0, rand_dmg)                    
         except Exception as e:
             systems.utils.debug_print('Something went wrong while applying stats to damage:')
             systems.utils.debug_print(f'"{e}"')

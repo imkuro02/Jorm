@@ -391,6 +391,7 @@ class Npc(Actor):
                 actor.add_tracked_npcs_killed(npc_id = self.npc_id, amount = 1)
 
                 drop_exp = self.stat_manager.stats[StatType.LVL] * 2
+                drop_exp = int(drop_exp * (1 + ((float(actor.settings_manager.get_value('ego'))-1)/4)))
                 actor.gain_exp(drop_exp)
                 self.drop_loot(actor, room)
                 

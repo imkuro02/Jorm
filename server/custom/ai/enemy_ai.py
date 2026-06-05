@@ -129,6 +129,7 @@ class BossRatAI(AI):
             self.actor.simple_broadcast("", f"{self.actor.pretty_name()} roars loudly!")
             for i in range(0, random.randint(1, 3)):
                 rat = create_npc(self.actor.room, "rat")
+                rat.can_drop_corpse = False
                 rat.room.join_combat(rat)
                 rat.stat_manager.stats[StatType.EXP] = 0
                 rat.loot = {}

@@ -1335,6 +1335,7 @@ class SkillSlimeSplit(Skill):
         stats[StatType.HPMAX] = stats[StatType.HP]
         # create npc is assigned in actors.npcs script
         clone = systems.utils.create_npc(self.user.room, self.user.npc_id)
+        clone.can_drop_corpse = False
         clone.stat_manager.stats[StatType.HPMAX] = stats[StatType.HP]
         clone.stat_manager.stats[StatType.HP] = stats[StatType.HP]
         #clone.simple_broadcast("", f"{self.user.pretty_name()} splits!")
@@ -1777,6 +1778,8 @@ class SkillMushroomSpawnSpore(Skill):
         super().use()
         from types import MethodType
         e = systems.utils.create_npc(self.user.room, 'spore')
+        e.stat_manager.stats[StatType].EXP = 0
+        e.can_drop_corpse = False
         e.party_manager.get_party_id = self.user.party_manager.get_party_id
         e.name = e.name.replace('The','The Summoned')
         e.loot = {}

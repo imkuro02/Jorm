@@ -544,7 +544,7 @@ class Player(Actor):
 
     def gain_exp(self, exp):
         exp = self.inventory_manager.gain_exp(exp)
-        exp = int(exp)
+        
         self.stat_manager.stats[StatType.EXP] += exp
         if self.stat_manager.stats[StatType.EXP] == 0:
             self.stat_manager.stats[StatType.EXP] = 0

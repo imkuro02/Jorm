@@ -81,7 +81,7 @@ class Damage:
                 new_damage = ego_damage
                 self.damage_value = new_damage
 
-            if type(taker).__name__ == 'Player':
+            if type(taker).__name__ == 'Player' :
                 ego = float(taker.settings_manager.get_value('ego'))
                 ego_damage = int(self.damage_value * (ego)) #- self.damage_value
                 self.damage_value = ego_damage

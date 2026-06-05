@@ -1,5 +1,6 @@
 from configuration.constants.color import Color
 from systems.utils import Table, match_word
+from configuration.constants.actor_status_type import ActorStatusType
 
 BANNED_ALIASES = [
     "settings",
@@ -69,7 +70,7 @@ class Settings:
             SETTINGS.VIEW_ASCII_ART: "Display icons for mobs",
             SETTINGS.DEBUG: "Debug information",
             SETTINGS.ALIAS: "Keyword shortcuts for long commands, \"help alias\" for more info",
-            SETTINGS.EGO: "Value between 1 and 10, manual difficulty scaling",
+            SETTINGS.EGO: "EXP gain increased by 25% of ego, damage taken +100% of ego, damage dealt is damage/ego",
             SETTINGS.PROMPT: "\"Help prompt\" for more info",
             SETTINGS.EMAIL: "Recovery email address",
             }
@@ -240,6 +241,10 @@ class Settings:
                     return
             
             case SETTINGS.EGO:
+                if self.actor.status == ActorStatusType.FIGHTING:
+                    self.actor.send_line('You cannot set ego while fighting')
+                    return
+
                 try:
                     value = line[1]
                     value = float(value)
@@ -453,7 +458,7 @@ def command_settings(self, line):
 
             
 
-        output = t.get_table() + 'Type "set <setting>" to view vlaue of "Special"'
+        output = t.get_table() + '\nType "set <setting>" to view vlaue of "Special"'
         output += '\nType "set username <new username>" to change your name'
         output += '\nType "set password <new password>" to change your name'
         output += '\nType "set logout" to log out of jorm'
