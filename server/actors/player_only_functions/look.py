@@ -252,8 +252,9 @@ def command_map(self, line, return_gmcp = False):
     top_border = f'{Color.NORMAL}<MAP START>'
     bot_border = f'{Color.NORMAL}<MAP END>'
     _map = top_border + '\n' + _map + bot_border
-
     _map = _map + '@normal'
+
+
     if return_gmcp:
         return str(_map)
     else:
