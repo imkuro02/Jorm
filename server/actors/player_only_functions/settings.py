@@ -27,7 +27,7 @@ class SETTINGS:
     USR = "Username"  # not in LIST_SETTINGS
     EMAIL = "Email"
     AUTO_BATTLER = "AutoBattler"
-    SHORT_ROOM_DESCRIPTIONS = 'ShortDescriptions'
+    SHORT_ROOM_DESCRIPTIONS = 'Brief'
     PROMPT = "Prompt"
     COLOR = "Color"
     ECHO = 'Echo'
@@ -441,13 +441,13 @@ class Settings:
             case SETTINGS.SHORT_ROOM_DESCRIPTIONS:
                 if len(line) == 1:
                     self.actor.send_line(
-                        "ShortDescriptions setting needs an argument (on or off?)"
+                        "Brief setting needs an argument (on or off?)"
                     )
                     return
                 value = line[1]
                 self.settings[SETTINGS.SHORT_ROOM_DESCRIPTIONS] = self.true_or_false(value)
                 self.actor.send_line(
-                    f"ShortDescriptions enabled: {self.settings[SETTINGS.SHORT_ROOM_DESCRIPTIONS]}"
+                    f"Brief enabled: {self.settings[SETTINGS.SHORT_ROOM_DESCRIPTIONS]}"
                 )
 
 
