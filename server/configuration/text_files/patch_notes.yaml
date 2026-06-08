@@ -15,6 +15,12 @@ versions:
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
   #    - Burden of Vitality - All enemies receive 25% max health at combat start'
   "010626":
+    id: "080626"
+    title: Qol
+    unixtime: 1775631568
+    features:
+      - Can now scrap items with full inventory
+  "010626":
     id: "010626"
     title: Map, stats and damage
     unixtime: 1775631568

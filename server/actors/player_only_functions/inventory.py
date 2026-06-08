@@ -138,9 +138,9 @@ def command_drop(self, line):
 def command_scrap(self, line):
     items_to_get = []
 
-    if self.inventory_manager.get_amount_of_free_item_slots() == 0:
-        self.send_line('You need atleast one free inventory slot to scrap items.')
-        return
+    #if self.inventory_manager.get_amount_of_free_item_slots() == 0:
+    #    self.send_line('You need atleast one free inventory slot to scrap items.')
+    #    return
     
     for item in self.inventory_manager.items.values():
         items_to_get.append(item)
@@ -170,7 +170,7 @@ def command_scrap(self, line):
         scrap.stack = item.stack
         if item.item_type == ItemType.EQUIPMENT:
             scrap.stack = item.stack * item.stat_manager.reqs[StatType.LVL]
-        self.inventory_manager.add_item(scrap)
+        self.inventory_manager.add_item(scrap, forced=True)
 
     self.simple_broadcast(
         f"You scrap {', '.join(items_pretty_name_before_pickup)}",
@@ -260,6 +260,10 @@ def command_split(self, line):
             continue
         all_words.remove(i)
         value = int(i)
+
+    if value == 0:
+        self.send_line('you must split away atleast 1 stack')
+        return
 
     item = self.get_item(" ".join(all_words))
 
