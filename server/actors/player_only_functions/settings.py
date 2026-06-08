@@ -1,7 +1,6 @@
 from configuration.constants.color import Color
 from systems.utils import Table, match_word
 from configuration.constants.actor_status_type import ActorStatusType
-
 BANNED_ALIASES = [
     "settings",
     "help",
@@ -11,26 +10,27 @@ BANNED_ALIASES = [
 
 
 class SETTINGS:
-    GMCP = "gmcp"
-    GODOT = "GODOT"
-    ALIAS = "alias"
-    EGO = 'ego'
-    LOOK = "look"
-    VIEW_ROOM = "viewroom"
-    VIEW_MAP = "viewmap"
-    VIEW_MAP_WALLS = 'viewmapwalls'
-    VIEW_ASCII_ART = "viewasciiart"
-    PVP = "pvp"
-    RESET = "reset"
-    LOGOUT = "logout"
-    DEBUG = "debug"
-    PWD = "password"
-    USR = "username"  # not in LIST_SETTINGS
-    EMAIL = "email"
-    AUTO_BATTLER = "autobattler"
-    PROMPT = "prompt"
-    COLOR = "color"
-    ECHO = 'echo'
+    GMCP = "Gmcp"
+    GODOT = "Godot"
+    ALIAS = "Alias"
+    EGO = 'Ego'
+    LOOK = "Look"
+    VIEW_ROOM = "ViewRoom"
+    VIEW_MAP = "ViewMap"
+    VIEW_MAP_WALLS = 'ViewMapWalls'
+    VIEW_ASCII_ART = "ViewAsciiArt"
+    PVP = "Pvp"
+    RESET = "Reset"
+    LOGOUT = "Logout"
+    DEBUG = "Debug"
+    PWD = "Password"
+    USR = "Username"  # not in LIST_SETTINGS
+    EMAIL = "Email"
+    AUTO_BATTLER = "AutoBattler"
+    SHORT_ROOM_DESCRIPTIONS = 'ShortDescriptions'
+    PROMPT = "Prompt"
+    COLOR = "Color"
+    ECHO = 'Echo'
     LIST_SETTINGS = [
         GMCP,
         GODOT,
@@ -50,6 +50,7 @@ class SETTINGS:
         EMAIL,
         PROMPT,
         AUTO_BATTLER,
+        SHORT_ROOM_DESCRIPTIONS,
         #COLOR,  
     ]
 
@@ -71,10 +72,14 @@ class Settings:
             SETTINGS.VIEW_ASCII_ART: "Display icons for mobs",
             SETTINGS.DEBUG: "Debug information",
             SETTINGS.ALIAS: "Keyword shortcuts for long commands, \"help alias\" for more info",
-            SETTINGS.EGO: "EXP gain increased by 25% of ego, damage taken +100% of ego, damage dealt is damage/ego",
+            #SETTINGS.EGO: "EXP gain increased by 25% of ego, damage taken +100% of ego, damage dealt is damage/ego",
+            SETTINGS.EGO: "Increase the difficulty (and rewards) for yourself only",
             SETTINGS.PROMPT: "\"Help prompt\" for more info",
             SETTINGS.EMAIL: "Recovery email address",
-            SETTINGS.AUTO_BATTLER: "Automatically use offensive skills in combat, disables itself if you do ANYTHING in combat",
+            #SETTINGS.AUTO_BATTLER: "Automatically use offensive skills in combat, disables itself if you do ANYTHING in combat",
+            SETTINGS.AUTO_BATTLER: "Automatically use offensive skills in combat",
+            SETTINGS.SHORT_ROOM_DESCRIPTIONS: 'Room descriptions are short unless specifically looking',
+
             }
         self.defaults = {
             SETTINGS.GMCP: True,
@@ -89,6 +94,7 @@ class Settings:
             SETTINGS.EGO: 1,
             SETTINGS.PROMPT: "p0",
             SETTINGS.AUTO_BATTLER: False,
+            SETTINGS.SHORT_ROOM_DESCRIPTIONS: True,
             SETTINGS.EMAIL: "",
             SETTINGS.COLOR: {
                 "@normal":              "",
@@ -155,6 +161,9 @@ class Settings:
         return value
 
     def get_value(self, key):
+        if key not in self.defaults:
+            return 0
+
         if key not in self.settings:
             val = self.defaults[key]
         else:
@@ -171,7 +180,9 @@ class Settings:
         match command:
             case SETTINGS.RESET:
                 self.actor.send_line("All settings reset to default")
+                email = self.actor.settings_manager.get_value(SETTINGS.EMAIL)
                 self.actor.settings_manager = Settings(self.actor)
+                self.actor.settings_manager.settings[SETTINGS.EMAIL] = email
                 return
             
             case SETTINGS.ECHO:
@@ -418,13 +429,25 @@ class Settings:
             case SETTINGS.AUTO_BATTLER:
                 if len(line) == 1:
                     self.actor.send_line(
-                        "Autobattler setting needs an argument (on or off?)"
+                        "AutoBattler setting needs an argument (on or off?)"
                     )
                     return
                 value = line[1]
                 self.settings[SETTINGS.AUTO_BATTLER] = self.true_or_false(value)
                 self.actor.send_line(
-                    f"Autobattler enabled: {self.settings[SETTINGS.AUTO_BATTLER]}"
+                    f"AutoBattler enabled: {self.settings[SETTINGS.AUTO_BATTLER]}"
+                )
+
+            case SETTINGS.SHORT_ROOM_DESCRIPTIONS:
+                if len(line) == 1:
+                    self.actor.send_line(
+                        "ShortDescriptions setting needs an argument (on or off?)"
+                    )
+                    return
+                value = line[1]
+                self.settings[SETTINGS.SHORT_ROOM_DESCRIPTIONS] = self.true_or_false(value)
+                self.actor.send_line(
+                    f"ShortDescriptions enabled: {self.settings[SETTINGS.SHORT_ROOM_DESCRIPTIONS]}"
                 )
 
 

@@ -126,6 +126,72 @@ class SkillManager:
     def __init__(self, actor):
         self.actor = actor
         self.skills = {"strike": 1, "guard": 1}
+        self.long_cooldowns = {}
+        self.cooldowns = {}
+        self.charges = {}
+        self.skill_script_values_modifiers = []
+
+    # modify skill script values
+    def add_skill_script_values_modifiers(self, skill_id, script_value, value):
+        self.skill_script_values_modifiers.append((skill_id, script_value, value))
+
+    def remove_skill_script_values_modifiers(self, skill_id, script_value, value):
+        self.skill_script_values_modifiers.remove((skill_id, script_value, value))
+
+    # charges
+    def add_charge_spent(self, charge, points):
+        if charge not in self.charges:
+            self.charges[charge] = points
+        else:
+            self.charges[charge] += points
+
+    def remove_charge_spent(self, charge):
+        if charge in self.charges:
+            del self.charges[charge]
+
+    def unload_all_charges(self, silent=False):
+        charge_to_del = []
+        for charge in self.charges:
+            charge_to_del.append(charge)
+        for charge in charge_to_del:
+            self.remove_charge_spent(charge)
+
+    # cooldowns
+    def add_cooldown(self, cooldown, turns):
+        if cooldown not in self.cooldowns:
+            self.cooldowns[cooldown] = turns
+        else:
+            self.cooldowns[cooldown] += turns
+        if turns >= 2:
+            self.long_cooldowns[cooldown] = 1
+
+    def remove_cooldown(self, cooldown):
+        if cooldown in self.cooldowns:
+            del self.cooldowns[cooldown]
+            if cooldown in self.long_cooldowns:
+                del self.long_cooldowns[cooldown]
+                self.actor.send_line(
+                    f"{Color.GOOD}{SKILLS[cooldown]['name']} is ready{Color.NORMAL}"
+                )
+
+    def unload_all_cooldowns(self, silent=False):
+        cool_to_delete = []
+        for cool in self.cooldowns:
+            cool_to_delete.append(cool)
+        for cool in cool_to_delete:
+            self.remove_cooldown(cool)
+
+    def finish_turn(self):
+        pass
+
+    def set_turn(self):
+        cooldowns_to_remove = []
+        for i in self.cooldowns:
+            self.cooldowns[i] -= 1
+            if self.cooldowns[i] <= 0:
+                cooldowns_to_remove.append(i)
+        for i in cooldowns_to_remove:
+            self.remove_cooldown(i)
 
     def delete_skills_at_0(self):
         to_del = []
@@ -150,7 +216,7 @@ class SkillManager:
             self.skills[skill_id] -= amount
         self.delete_skills_at_0()
 
-
+"""
 class CooldownManager:
     def __init__(self, actor):
         self.actor = actor
@@ -212,7 +278,7 @@ class CooldownManager:
                 cooldowns_to_remove.append(i)
         for i in cooldowns_to_remove:
             self.remove_cooldown(i)
-
+"""
 
 class SlotsManager:
     def __init__(self, actor):
@@ -259,7 +325,6 @@ class Actor:
         self.status = ActorStatusType.NORMAL
         self.affect_manager = AffectsManager(self)
         self.skill_manager = SkillManager(self)
-        self.cooldown_manager = CooldownManager(self)
 
         self.dialog_tree = None
 
@@ -894,7 +959,7 @@ class Actor:
             return
 
         self.affect_manager.unload_all_affects(silent=True, forced=False)
-        self.cooldown_manager.unload_all_cooldowns()
+        self.skill_manager.unload_all_cooldowns()
 
         #self.ai.die()
         self.status = ActorStatusType.DEAD
@@ -1145,11 +1210,11 @@ class Actor:
         # that would make all timers go down twice
         if force_cooldown:
             self.affect_manager.set_turn()
-            self.cooldown_manager.set_turn()
+            self.skill_manager.set_turn()
             self.inventory_manager.set_turn()
 
         self.affect_manager.finish_turn()
-        self.cooldown_manager.finish_turn()
+        self.skill_manager.finish_turn()
         self.inventory_manager.finish_turn()
 
         if self.room == None:
@@ -1273,7 +1338,7 @@ class Actor:
         # print(self.room.combat)
 
         self.affect_manager.set_turn()
-        self.cooldown_manager.set_turn()
+        self.skill_manager.set_turn()
         self.inventory_manager.set_turn()
         # self.stat_manager.stats[StatType.THREAT] = int(self.stat_manager.stats[StatType.THREAT]*.90)
 

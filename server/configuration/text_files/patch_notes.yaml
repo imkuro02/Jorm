@@ -16,11 +16,13 @@ versions:
   #    - Burden of Vitality - All enemies receive 25% max health at combat start'
   "080626":
     id: "080626"
-    title: Qol
+    title: Descriptions and settings
     unixtime: 1775631568
     features:
       - Can now scrap items with full inventory
       - Enabled "set autobattler on" again, for testing
+      - ShortDescriptions setting on by default 
+      - Fixed item and room description typoos
   "010626":
     id: "010626"
     title: Map, stats and damage

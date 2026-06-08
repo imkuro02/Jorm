@@ -352,11 +352,18 @@ class Room:
                 return i
         return False
 
-    def get_description(self):
+    def get_description(self, short = False):
         desc = self.description
+        if short:
+            desc = ''
+
         for i in self.inventory_manager.items.values():
             if i.description_room != None:
                 desc = desc + f" {i.description_room}."
+
+        if desc != '':
+            desc = desc + '\n'
+
         return desc
 
     def tick(self):

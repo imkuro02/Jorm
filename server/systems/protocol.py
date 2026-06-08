@@ -197,6 +197,7 @@ class Protocol(protocol.Protocol):
                     caller = self, tag = 'movement', delay = delay,
                     func=lambda: self.before_load_actor(),
                 )
+               
                 
 
             case self.PLAY_AS_GUEST:
@@ -213,12 +214,12 @@ class Protocol(protocol.Protocol):
         if self.actor == None:
             self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
             self.load_actor()
+            
             return
             
         if line:
             self.actor.last_line_sent = line
         self.actor.queue_handle(line)
-        return
 
     def PLAY_AS_GUEST(self, line):
         return
@@ -655,8 +656,13 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
             send_to = 'world', msg_type = [MessageType.SHOUT, MessageType.CHAT],
             #sound = 'notif1.wav'
         )
+        
         #self.actor.friend_manager.friend_broadcast_login()
         self.actor.finish_turn()
+
+        if self.guest == False:
+            if self.actor.settings_manager.get_value(SETTINGS.EMAIL) == '':
+                self.actor.send_line(f'{Color.IMPORTANT}You do not have an email set! set an email with "set email <your email>"{Color.NORMAL}')
 
     def save_actor(self):
         #return

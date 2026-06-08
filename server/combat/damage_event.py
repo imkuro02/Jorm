@@ -4,6 +4,8 @@ from combat.combat_event import CombatEvent
 from configuration.constants.damage_type import DamageType
 #from configuration.constants.message_type import MessageType
 from configuration.constants.stat_type import StatType
+from actors.player_only_functions.settings import SETTINGS
+
 
 class Damage:
     def __init__(
@@ -75,14 +77,14 @@ class Damage:
             taker = self.damage_taker_actor
             
             if type(source).__name__ == 'Player':
-                ego = float(source.settings_manager.get_value('ego'))
+                ego = float(source.settings_manager.get_value(SETTINGS.EGO))
                 ego_damage = (self.damage_value / ego)
                 ego_damage = int(ego_damage)
                 new_damage = ego_damage
                 self.damage_value = new_damage
 
             if type(taker).__name__ == 'Player' :
-                ego = float(taker.settings_manager.get_value('ego'))
+                ego = float(taker.settings_manager.get_value(SETTINGS.EGO))
                 ego_damage = int(self.damage_value * (ego)) #- self.damage_value
                 self.damage_value = ego_damage
        

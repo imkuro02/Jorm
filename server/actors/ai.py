@@ -11,6 +11,7 @@ from custom import loader
 from skills.manager import construct_skill, check_if_skill_can_be_used#, #use_skill, get_user_skill_level_as_index
 from systems.utils import REFTRACKER
 from configuration.constants.color import Color
+from actors.player_only_functions.settings import SETTINGS
 
 class AI:
     def __init__(self, actor):
@@ -136,12 +137,12 @@ class AI:
         for skill_id in self.actor.skill_manager.skills:
             if combat_only_skills and not SKILLS[skill_id]["can_use_in_combat"]:
                 continue
-            if skill_id in self.actor.cooldown_manager.cooldowns:
+            if skill_id in self.actor.skill_manager.cooldowns:
                 if (
                     for_prediction
-                    and self.actor.cooldown_manager.cooldowns[skill_id] > 1
+                    and self.actor.skill_manager.cooldowns[skill_id] > 1
                 ):
-                    # systems.utils.debug_print('WHAT,,',self.actor.cooldown_manager.cooldowns[skill_id])
+                    # systems.utils.debug_print('WHAT,,',self.actor.skill_manager.cooldowns[skill_id])
                     continue
                 if not for_prediction:
                     # systems.utils.debug_print('not for prediction!_')
@@ -270,7 +271,7 @@ class PlayerAI(AI):
         return
 
     def tick(self):
-        if self.actor.settings_manager.get_value('autobattler'):
+        if self.actor.settings_manager.get_value(SETTINGS.AUTO_BATTLER):
             if self.actor.room.combat != None:
                 if self.actor.room.combat.current_actor == self.actor:
                     if self.actor.room.combat.time_since_turn_finished >= 30*1:

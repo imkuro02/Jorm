@@ -83,6 +83,11 @@ class Skill:
             if val <= self.script_values[value][0]: val = self.script_values[value][0]
             if val >= self.script_values[value][1]: val = self.script_values[value][1]
 
+        for i in self.user.skill_manager.skill_script_values_modifiers:
+            if i[0] == self.skill_id:
+                if i[1] == value:
+                    val += i[2]
+
         self.users_skill_level -= next_level
         val = int(val)
 
@@ -261,10 +266,10 @@ class Skill:
         
 
         if not self.no_cooldown:
-            self.user.cooldown_manager.add_charge_spent(self.skill_id, 1)
+            self.user.skill_manager.add_charge_spent(self.skill_id, 1)
             cool = int(self.calculate_script_value(value = 'cooldown'))
             if cool != 0:
-                self.user.cooldown_manager.add_cooldown(self.skill_id, cool)
+                self.user.skill_manager.add_cooldown(self.skill_id, cool)
 
             
 
@@ -703,7 +708,7 @@ class SkillGuard(Skill):
 class SkillFinisher(SkillDamageByGritFlow):
     def pre_use(self, override_bounce_amount=None):
         super().pre_use(
-            override_bounce_amount=len(self.user.cooldown_manager.cooldowns.values())
+            override_bounce_amount=len(self.user.skill_manager.cooldowns.values())
         )
 
     def use(self):
@@ -781,7 +786,7 @@ class SkillCleave(SkillDamage):
                     damage_obj.damage_source_actor.room.combat.current_actor = (
                         damage_obj.damage_source_actor
                     )
-                    del damage_obj.damage_source_actor.cooldown_manager.cooldowns['cleave']
+                    del damage_obj.damage_source_actor.skill_manager.cooldowns['cleave']
 
         aff = CustomAffect(affect_source_actor=self.user, affect_target_actor=self.user, 
                           name = 'Cleaving', description = 'Get a free turn on kill with cleave', turns = 0, resisted_by= None, dispellable = False)
@@ -804,7 +809,7 @@ class SkillCleave(SkillDamage):
             self.user.room.combat.current_actor = (
                 self.user
             )
-            del self.user.cooldown_manager.cooldowns['cleave']
+            del self.user.skill_manager.cooldowns['cleave']
         #else:
         #    self.user.send_line('alive enemy')
 
@@ -1355,10 +1360,10 @@ class SkillSlimeApplyCooldown(Skill):
                 amount -= 1
 
                 x = 1
-                if skill_id not in self.other.cooldown_manager.cooldowns:
+                if skill_id not in self.other.skill_manager.cooldowns:
                     x = 2
 
-                self.other.cooldown_manager.add_cooldown(skill_id, x)
+                self.other.skill_manager.add_cooldown(skill_id, x)
                 msg_s = f'Your {SKILLS[skill_id]["name"]} is slimed'
                 msg_o = f'{self.other.id}\'s {SKILLS[skill_id]["name"]} is slimed'
                 list_pretty_name_objects = [self.other]
@@ -1368,7 +1373,7 @@ class SkillSlimeApplyCooldown(Skill):
 
             x = int(self.calculate_script_value(value = 'duration'))
 
-            self.other.cooldown_manager.add_cooldown(skill_id, x)
+            self.other.skill_manager.add_cooldown(skill_id, x)
             msg_s = f'Your {SKILLS[skill_id]["name"]} is slimed'
             msg_o = f'{self.other.id}\'s {SKILLS[skill_id]["name"]} is slimed'
             list_pretty_name_objects = [self.other]

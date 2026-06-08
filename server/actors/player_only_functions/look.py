@@ -9,7 +9,7 @@ random = random.Random()
 
 from collections import deque
 def command_map(self, line, return_gmcp = False):
-    setting_render_walls = self.settings_manager.get_value('viewmapwalls')
+    setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
     if self.room == None:
         return
     room_id = self.room.id
@@ -260,7 +260,7 @@ def command_map(self, line, return_gmcp = False):
     else:
         self.send_line(str(_map))
 def command_map3(self, line, return_gmcp=False):
-    setting_render_walls = self.settings_manager.get_value('viewmapwalls')
+    setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
     if self.room == None:
         return
     room_id = self.room.id
@@ -753,8 +753,8 @@ def command_scan(self, line):
     self.send_line(f"You scan your surroundings and see: \n{see[:-1:]}")
 
 
-def command_look(self, line, return_gmcp=False):
-    def look_room(self, room_id):
+def command_look(self, line, return_gmcp=False, short = False):
+    def look_room(self, room_id, short = False):
         room = self.factory.world.rooms[room_id]
 
         if room_id == self.room.id:
@@ -763,7 +763,7 @@ def command_look(self, line, return_gmcp=False):
             see = f"You look at {room.pretty_name(identifier = self)}\n"
         # see += draw_local_area(self, room_id)
         
-        see = see + f"{Color.DESCRIPTION}{room.get_description()}{Color.NORMAL}\n"
+        see = see + f"{Color.DESCRIPTION}{room.get_description(short = short)}{Color.NORMAL}"
 
         exits = self.protocol.factory.world.rooms[room.id].get_active_exits(self)
 
@@ -919,7 +919,7 @@ def command_look(self, line, return_gmcp=False):
     # self.send_line(look_at)
 
     if line == "":
-        see = look_room(self, self.room.id)
+        see = look_room(self, self.room.id, short = short)
         return see
     
     # this is here for "look [id of entity]"
@@ -1049,7 +1049,7 @@ def get_nearby_rooms(self, view_range=1):
 
 def new_room_look(self):
     if self.settings_manager.get_value(SETTINGS.VIEW_ROOM):
-        self.command_look("")
+        self.command_look("", short = True)
     if self.settings_manager.get_value(SETTINGS.VIEW_MAP):
         self.command_map("")
         self.update_checker.tick()

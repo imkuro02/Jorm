@@ -16,6 +16,7 @@ from items.misc import Item
 from systems.dialog import Dialog
 from systems.quest import OBJECTIVE_TYPES, ObjectiveCountProposal
 from systems.utils import unload
+from actors.player_only_functions.settings import SETTINGS
 
 
 def create_npc(room, npc_id, spawn_for_lore=False):
@@ -391,7 +392,7 @@ class Npc(Actor):
                 actor.add_tracked_npcs_killed(npc_id = self.npc_id, amount = 1)
 
                 drop_exp = self.stat_manager.stats[StatType.LVL] * 2
-                drop_exp = int(drop_exp * (1 + ((float(actor.settings_manager.get_value('ego'))-1)/4)))
+                drop_exp = int(drop_exp * (1 + ((float(actor.settings_manager.get_value(SETTINGS.EGO))-1)/4)))
                 actor.gain_exp(drop_exp)
                 self.drop_loot(actor, room)
                 

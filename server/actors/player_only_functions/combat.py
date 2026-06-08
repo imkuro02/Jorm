@@ -623,8 +623,8 @@ def rest_here(self, line):
         self.stat_manager.stats[StatType.MAGARMORMAX]
     )
     self.affect_manager.unload_all_affects(forced=False)
-    self.cooldown_manager.unload_all_cooldowns()
-    self.cooldown_manager.unload_all_charges()
+    self.skill_manager.unload_all_cooldowns()
+    self.skill_manager.unload_all_charges()
     # self.new_room_look()
     self.finish_turn()
 
@@ -652,7 +652,7 @@ def rest_here_request(self, line):
 
 def rest_home(self, line):
     self.sendSound(Audio.BUFF)
-    self.cooldown_manager.unload_all_charges()
+    self.skill_manager.unload_all_charges()
 
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL
@@ -681,7 +681,7 @@ def rest_home(self, line):
         '''
 
         self.affect_manager.unload_all_affects()
-        self.cooldown_manager.unload_all_cooldowns()
+        self.skill_manager.unload_all_cooldowns()
         self.simple_broadcast(None, f"{self.pretty_name()} ressurects")
 
         # tp home
@@ -728,7 +728,7 @@ def rest_home(self, line):
         self.stat_manager.stats[StatType.MAGARMORMAX]
     )
     self.affect_manager.unload_all_affects()
-    self.cooldown_manager.unload_all_cooldowns()
+    self.skill_manager.unload_all_cooldowns()
     '''
     self.finish_turn()
 

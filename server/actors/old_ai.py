@@ -146,12 +146,12 @@ class AI:
         for skill_id in self.actor.skill_manager.skills:
             if combat_only_skills and not SKILLS[skill_id]["can_use_in_combat"]:
                 continue
-            if skill_id in self.actor.cooldown_manager.cooldowns:
+            if skill_id in self.actor.skill_manager.cooldowns:
                 if (
                     for_prediction
-                    and self.actor.cooldown_manager.cooldowns[skill_id] > 1
+                    and self.actor.skill_manager.cooldowns[skill_id] > 1
                 ):
-                    # systems.utils.debug_print('WHAT,,',self.actor.cooldown_manager.cooldowns[skill_id])
+                    # systems.utils.debug_print('WHAT,,',self.actor.skill_manager.cooldowns[skill_id])
                     continue
                 if not for_prediction:
                     # systems.utils.debug_print('not for prediction!_')

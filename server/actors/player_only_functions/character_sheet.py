@@ -548,10 +548,10 @@ def command_skills(self, line, return_gmcp = False):
             _skill_pretty_name = systems.utils.add_godot_url_skill_pretty_name(identifier = self, skill_id = skill_id)
             t.add_data(_skill_pretty_name)
 
-            if skill_id not in self.cooldown_manager.cooldowns and diff >= 0:
+            if skill_id not in self.skill_manager.cooldowns and diff >= 0:
                 t.add_data("Ready", Color.GOOD)
-            elif skill_id in self.cooldown_manager.cooldowns and diff >= 0:
-                t.add_data(f"In {self.cooldown_manager.cooldowns[skill_id]}", Color.BAD)
+            elif skill_id in self.skill_manager.cooldowns and diff >= 0:
+                t.add_data(f"In {self.skill_manager.cooldowns[skill_id]}", Color.BAD)
             elif diff <= 0:
                 t.add_data(f"Never", Color.BAD)
 
@@ -560,8 +560,8 @@ def command_skills(self, line, return_gmcp = False):
             if charges_max >= 999:
                 t.add_data(f' ')
             else:
-                if skill_id in self.cooldown_manager.charges:
-                    t.add_data(f'({charges_max-self.cooldown_manager.charges[skill_id]}/{charges_max})')
+                if skill_id in self.skill_manager.charges:
+                    t.add_data(f'({charges_max-self.skill_manager.charges[skill_id]}/{charges_max})')
                 else:
                     t.add_data(f'({charges_max}/{charges_max})')
 

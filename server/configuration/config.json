@@ -1,5 +1,5 @@
 {
-    "SHA-256": "9a36bffedb13d5352b60ec108312bbb8a1e26f51636345090560e74754abeda0",
+    "SHA-256": "af651e2d3c15f803fd059ae62ac6d10b3b1adfbfa7d558129921f96c11bce23b",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -35,7 +35,7 @@
             "npc_id": "tutorial_enemy_1",
             "ai": "Enemy",
             "name": "Tiny mouse",
-            "description": "A tiny, round mouse the size of a palm. Its fur is white. It has a short, slightly upturned snout. Its ears are round and twitch at every sound. ",
+            "description": "A tiny mouse with bright, watchful eyes. It freeszes at every sound.",
             "stats": {
                 "hp": 15,
                 "phy_armor": 0,
@@ -508,7 +508,7 @@
             "npc_id": "wood_stump",
             "ai": "Enemy",
             "name": "Wood Stump",
-            "description": "A reanimated stump of a large tree. Its dirt-covered roots act like tentacles. It has one central eye. With each step, the stump creaks. It moves deliberately.",
+            "description": "A reanimated stump of a large tree. its dirt covered roots act as limbs. it stomps as it moves.",
             "stats": {
                 "hp": 30,
                 "phy_armor": 0,
@@ -809,7 +809,7 @@
             "npc_id": "orange_mushroom",
             "ai": "Enemy",
             "name": "Orange Mushroom",
-            "description": "A large, orange-capped mushroom, the size of a big dog. Its stem is the color of an eggshell. It has no arms or legs—its eyes glare at you while its mouth curves into a wide, uncomfortable smile. It hops when it moves, its body making a loud thud with each short jump.",
+            "description": "A mushroom the size of a child, its orange cap is big and soft, it has two small stubs that act as legs.",
             "stats": {
                 "hp": 50,
                 "phy_armor": 20,
@@ -1074,7 +1074,7 @@
             "npc_id": "pig",
             "ai": "Enemy",
             "name": "Pig",
-            "description": "Oink.",
+            "description": "The pig stands firmly in the soil, every snort sounds like a warning.",
             "stats": {
                 "hp": 50,
                 "phy_armor": 20,
@@ -1351,7 +1351,7 @@
             "npc_id": "red_cap",
             "ai": "Enemy",
             "name": "Red Cap",
-            "description": "The mushroom is 4 feet tall, it has a large red cap. It can move by hopping around, making a thud with each jump.",
+            "description": "A mushroom the size of a child, its red cap is big and soft, it has two small stubs that act as legs.",
             "stats": {
                 "hp": 80,
                 "phy_armor": 20,
@@ -1492,7 +1492,7 @@
             "npc_id": "blue_mushroom",
             "ai": "Enemy",
             "name": "Blue Mushroom",
-            "description": "The mushroom is 4 feet tall, it has a large blue cap. It can move by hopping around, making a thud with each jump.",
+            "description": "A mushroom the size of a child, its blue cap is big and soft, it has two small stubs that act as legs.",
             "stats": {
                 "hp": 80,
                 "phy_armor": 20,
@@ -1634,7 +1634,7 @@
             "npc_id": "wood_stump_large",
             "ai": "Enemy",
             "name": "Large Wood Stump",
-            "description": "A massive reanimated stump of a once-great tree, its gnarled, dirt-covered roots twisting and thrashing like monstrous tentacles. At the center of its jagged, bark-covered body sits a single, menacing eye, glowing with a fierce, malevolent light. With each deliberate step, the stump groans and creaks, sending splinters of wood into the air. It moves with a terrifying purpose, its roots slamming the ground as it advances, ready to crush anything in its path.",
+            "description": "A reanimated stump of a large tree. its dirt covered roots act as limbs. it stomps as it moves.",
             "stats": {
                 "hp": 60,
                 "phy_armor": 60,
@@ -1709,7 +1709,7 @@
             "npc_id": "beetle_man",
             "ai": "Enemy",
             "name": "Beetler",
-            "description": "A yellow worm the size of a child. It has two arms on each side. It drags itself forward, leaving a trail with its heavy tail. It has one central eye. Its mouth has several rows of square, yellowish teeth.",
+            "description": "A humanoid figure encased in a glossy black beetle shell, their dark eyes reflect the world like a mirror.",
             "stats": {
                 "hp": 125,
                 "phy_armor": 40,
@@ -1776,7 +1776,7 @@
             "npc_id": "evil_eye",
             "ai": "Enemy",
             "name": "Evil Eye",
-            "description": "A yellow worm the size of a child. It has two arms on each side. It drags itself forward, leaving a trail with its heavy tail. It has one central eye. Its mouth has several rows of square, yellowish teeth.",
+            "description": "A disturbing mass of yellow flesh, it has one central eye and two arms on each side of its body. it drags its slender snake like body as it moves around.",
             "stats": {
                 "hp": 100,
                 "phy_armor": 40,
@@ -1902,7 +1902,7 @@
             "npc_id": "horned_mushroom",
             "ai": "Enemy",
             "name": "Horned Mushroom",
-            "description": "The mushroom is 4 feet tall, it has a large cyan cap, which is covered in thorns. It can move by hopping around, making a thud with each jump.",
+            "description": "A mushroom the size of a child, its green cap is big and soft but covered in sharp horn like thorns, it has two small stubs that act as legs.",
             "stats": {
                 "hp": 100,
                 "phy_armor": 80,
@@ -2167,7 +2167,7 @@
             "npc_id": "mushroom_soldier",
             "ai": "Enemy",
             "name": "Mushroom Soldier",
-            "description": "The mushroom is 4 feet tall, it has a large red cap. It can move by hopping around, making a thud with each jump. It has no arms yet stands ready with a spear by its side.",
+            "description": "A mushroom the size of a child, its orange cap is big and soft, it has two small stubs that act as legs. It wields a long heavy spear.",
             "stats": {
                 "hp": 200,
                 "phy_armor": 120,
@@ -2227,7 +2227,7 @@
             "npc_id": "mushroom_thief",
             "ai": "Enemy",
             "name": "Mushroom Thief",
-            "description": "The mushroom is 4 feet tall, it has a large red cap. It can move by hopping around, making a thud with each jump. It has no arms yet you see a knife at the ready.",
+            "description": "A mushroom the size of a child, its orange cap is big and soft, it has two small stubs that act as legs. It wields two daggers.",
             "stats": {
                 "hp": 140,
                 "phy_armor": 80,
@@ -2282,7 +2282,7 @@
             "npc_id": "mushroom_mage",
             "ai": "Enemy",
             "name": "Mushroom Mage",
-            "description": "The mushroom is 4 feet tall, it has a large blue cap. It can move by hopping around, making a thud with each jump. It murmurs and chants, mycelium covers the lower part of its face, resembling a long white beard.",
+            "description": "A mushroom the size of a child, its orange cap is big and soft, it has two small stubs that act as legs. It brandishes a staff with a gem at the end. strands of mycelium covers the lower part of its face, resembling a long white beard.",
             "stats": {
                 "hp": 120,
                 "phy_armor": 60,
@@ -2342,7 +2342,7 @@
             "npc_id": "mushroom_cleric",
             "ai": "Enemy",
             "name": "Mushroom Cleric",
-            "description": "The mushroom is 4 feet tall, it has a large yellow cap. It can move by hopping around, making a thud with each jump.",
+            "description": "A mushroom the size of a child, its orange cap is big and soft, it has two small stubs that act as legs. They carry a cross.",
             "stats": {
                 "hp": 100,
                 "phy_armor": 100,
@@ -2403,7 +2403,7 @@
             "npc_id": "mushroom_zombie",
             "ai": "Enemy",
             "name": "Mushroom zombie",
-            "description": "The mushroom is 4 feet tall, it has a large purple cap. It can move by hopping around, making a thud with each jump. Its eyes are lifeless, and the stem partly rotted.",
+            "description": "A mushroom the size of a child, its orange cap is big and soft, it has two small stubs that act as legs. Its eyes are lifeless, and the stem partly rotted.",
             "stats": {
                 "hp": 300,
                 "phy_armor": 40,
@@ -2465,7 +2465,7 @@
             "npc_id": "zombie",
             "ai": "Enemy",
             "name": "Zombie",
-            "description": "A tall humanoid with purple skin, mottled and uneven in tone. Its body is gaunt, with skin stretched tight over protruding bones. Its movements are slow and jerky, accompanied by low, guttural groans.",
+            "description": "A tall humanoid with green skin, mottled and uneven in tone. Its body is gaunt, with skin stretched tight over protruding bones. Its movements are slow and jerky, accompanied by low, guttural groans.",
             "stats": {
                 "hp": 300,
                 "phy_armor": 40,
@@ -5992,7 +5992,7 @@
             "name": "Bee outfit",
             "style": "sneaky",
             "bonuses": "special:chance_dont_end_turn_on_use_stealth=1",
-            "stat_hp_max": "Applies Stealth for DURATION of turns.#END#Gain BONUS% Flow.#END#Using Stab will deal BONUS% extra damage.#END#Receiving any damage will instantly dispel Stealth.#END#Receive BONUS% less physical damage.#END#",
+            "stat_hp_max": "A sign is planted firmly into the soil.",
             "req_hp_max": 0,
             "stat_phy_armor_max": 25,
             "stat_mag_armor_max": 20,
@@ -14692,12 +14692,34 @@
             "drop_chance_range_under": 0,
             "drop_chance_range_over": 0,
             "drop_chance_stat_filter": "none",
-            "description_room": "A @tipsign@back is planted firmly into the soil.",
+            "description_room": "A sign is planted firmly into the soil.",
             "invisible": true,
             "ambience_sfx": null,
             "ambience": null,
             "can_pick_up": false,
             "description": "The sign points south... \"Town\", rather vague."
+        },
+        "tutorial_sign": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "tutorial_sign",
+            "name": "Tutorial Sign",
+            "stack_max_amount": 0,
+            "drop_tags": "none",
+            "drop_from_random": false,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "description_room": "There is a sign here, it says @tip\"type look\"@back",
+            "invisible": true,
+            "ambience_sfx": null,
+            "ambience": null,
+            "can_pick_up": false,
+            "description": "The sign says \"Type Look\"."
         },
         "tutorial_paper_1": {
             "item_type": "misc",
@@ -14719,7 +14741,7 @@
             "ambience_sfx": null,
             "ambience": "A piece of paper rustles along the ground",
             "can_pick_up": true,
-            "description": "This little note reads\"not all exits are obvious, some are hidden, go east to proceed\""
+            "description": "This little note reads \"not all exits are obvious, some are hidden, go east to proceed\""
         },
         "tutorial_paper_2": {
             "item_type": "misc",
@@ -14741,7 +14763,7 @@
             "ambience_sfx": null,
             "ambience": "A piece of paper rustles along the ground",
             "can_pick_up": true,
-            "description": "This little note reads“You probably already figured it out, but loot dropped from enemies goesdirectly into your inventory, you also got a weapon!Identify it and equip it with “equip [item name]” then proceed north\""
+            "description": "This little note reads “You probably already figured it out, but loot dropped from enemies goesdirectly into your inventory, you also got a weapon!Identify it and equip it with “equip [item name]” then proceed north\""
         },
         "tutorial_quest_item_1": {
             "item_type": "misc",
@@ -14846,7 +14868,7 @@
             "drop_chance_range_under": 1,
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
-            "description_room": "A empty mugged is tipped over",
+            "description_room": "A empty mug is tipped over",
             "invisible": true,
             "ambience_sfx": null,
             "ambience": null,

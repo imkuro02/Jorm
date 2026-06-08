@@ -69,7 +69,7 @@ class Combat:
                 #p.stat_manager.stats[StatType.INITIATIVE] = 0
                 #for skill_id in p.skill_manager.skills:
                 #    cool = SKILLS[skill_id]["script_values"]["cooldown"][0] - 1
-                #    p.cooldown_manager.add_cooldown(skill_id, cool)
+                #    p.skill_manager.add_cooldown(skill_id, cool)
                 # p.predict_use_best_skill()
             #p.ai.clear_prediction()
 
@@ -207,7 +207,7 @@ class Combat:
             if i.status != ActorStatusType.DEAD and i.reset_stats_after_combat == True:
                 i.stat_manager.stats[StatType.HP] = 9999999999999
                 # i.heal(value = 99999)
-                i.cooldown_manager.unload_all_cooldowns()
+                i.skill_manager.unload_all_cooldowns()
                 i.affect_manager.unload_all_affects()
                 i.heal(value=99999)
             if type(i).__name__ == "Player":
