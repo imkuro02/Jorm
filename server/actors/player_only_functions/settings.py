@@ -49,6 +49,7 @@ class SETTINGS:
         USR,
         EMAIL,
         PROMPT,
+        AUTO_BATTLER,
         #COLOR,  
     ]
 
@@ -73,6 +74,7 @@ class Settings:
             SETTINGS.EGO: "EXP gain increased by 25% of ego, damage taken +100% of ego, damage dealt is damage/ego",
             SETTINGS.PROMPT: "\"Help prompt\" for more info",
             SETTINGS.EMAIL: "Recovery email address",
+            SETTINGS.AUTO_BATTLER: "Automatically use offensive skills in combat, disables itself if you do ANYTHING in combat",
             }
         self.defaults = {
             SETTINGS.GMCP: True,
@@ -86,6 +88,7 @@ class Settings:
             SETTINGS.ALIAS: {},
             SETTINGS.EGO: 1,
             SETTINGS.PROMPT: "p0",
+            SETTINGS.AUTO_BATTLER: False,
             SETTINGS.EMAIL: "",
             SETTINGS.COLOR: {
                 "@normal":              "",
@@ -411,6 +414,18 @@ class Settings:
                 else:
                     self.settings[SETTINGS.PROMPT] = prompt
                 # proto.register_account_changes(username, password)
+            
+            case SETTINGS.AUTO_BATTLER:
+                if len(line) == 1:
+                    self.actor.send_line(
+                        "Autobattler setting needs an argument (on or off?)"
+                    )
+                    return
+                value = line[1]
+                self.settings[SETTINGS.AUTO_BATTLER] = self.true_or_false(value)
+                self.actor.send_line(
+                    f"Autobattler enabled: {self.settings[SETTINGS.AUTO_BATTLER]}"
+                )
 
 
 def command_settings(self, line):

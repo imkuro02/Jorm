@@ -10,7 +10,7 @@ from configuration.constants.stat_type import StatType
 from custom import loader
 from skills.manager import construct_skill, check_if_skill_can_be_used#, #use_skill, get_user_skill_level_as_index
 from systems.utils import REFTRACKER
-
+from configuration.constants.color import Color
 
 class AI:
     def __init__(self, actor):
@@ -270,6 +270,12 @@ class PlayerAI(AI):
         return
 
     def tick(self):
+        if self.actor.settings_manager.get_value('autobattler'):
+            if self.actor.room.combat != None:
+                if self.actor.room.combat.current_actor == self.actor:
+                    if self.actor.room.combat.time_since_turn_finished >= 30*1:
+                        self.predict_use_best_skill(offensive_only = True, for_prediction=False)
+
         if self.actor.status != ActorStatusType.FIGHTING:
             self.prediction_queue = []
 

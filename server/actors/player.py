@@ -609,6 +609,10 @@ class Player(Actor):
             print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
+        if line != 'set autobattler off':
+            if self.room.combat != None:
+                self.handle('set autobattler off')
+
         if not line:
             line = self.last_line_sent
             if not line:

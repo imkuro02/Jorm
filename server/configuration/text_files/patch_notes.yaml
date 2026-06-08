@@ -20,6 +20,7 @@ versions:
     unixtime: 1775631568
     features:
       - Can now scrap items with full inventory
+      - Enabled "set autobattler on" again, for testing
   "010626":
     id: "010626"
     title: Map, stats and damage
