@@ -313,22 +313,22 @@ class UpdateChecker:
 
         self.tick_send_exp()
 
-        _split = '********************************************************************************\n'
+        _split = '********************************************************************************' 
 
 
         if self.actor.status != ActorStatusType.FIGHTING:
-            _map = _split + self.actor.show_prompts(
+            _map = _split + '\n' + self.actor.show_prompts(
                 order=self.actor.room.actors.values(),
                 no_predictions=True,
                 return_gmcp=True,
-            )
+            ) + _split
         else:
-            _map = _split + self.actor.show_prompts(
+            _map = _split + '\n' + self.actor.show_prompts(
                 order=None, no_predictions=False, return_gmcp=True
-            )
+            ) + _split
 
             if self.actor.status == ActorStatusType.FIGHTING:
-                _map = _map + _split + self.actor.command_skills('', return_gmcp = True)
+                _map = _map + _split + '\n' + self.actor.command_skills('', return_gmcp = True) + _split
 
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
@@ -339,8 +339,8 @@ class UpdateChecker:
 
         self.actor.protocol.send_gmcp(self.actor.status, "ACTOR_STATUS")
 
-        # _look = self.actor.command_look("", return_gmcp=True)
-        # self.actor.protocol.send_gmcp(systems.utils.add_color(_look), "LOOK_ROOM")
+        #_look = self.actor.command_look("", return_gmcp=True)
+        #self.actor.protocol.send_gmcp(systems.utils.add_color(_look), "ROOM_DESCRIPTIONS")
 
         # self.tick_show_map()
         self.tick_send_time()

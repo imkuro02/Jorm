@@ -8,11 +8,12 @@ var socket = WebSocketPeer.new()
 # References to UI nodes
 @onready var INPUT = $canvas/input/input
 @onready var OUTPUT = $canvas/container/output/output
-@onready var SIDEBAR = $canvas/container/sidebar
+@onready var SIDEBAR = $canvas/sidebar
 @onready var DEBUG = $canvas/debug
 #@onready var SFX_MAN = $sfx_manager
-@onready var LOOK_ROOM = $canvas/container/sidebar/look_room
-@onready var ASCIIMAP = $canvas/container/sidebar/ascii_map
+@onready var ROOM_ICONS = $canvas/sidebar/room_icons
+@onready var ROOM_DESCRIPTIONS = $canvas/container/output/room_description
+@onready var ASCIIMAP = $canvas/sidebar/ascii_map
 @onready var OUTPUT_COMBAT = $canvas/container/output/output_combat
 @onready var MOUSE_CLICK_OPTIONS = $canvas/mouse_click_options
 @onready var EXPBAR = $canvas/smooth_exp_bar
@@ -50,8 +51,8 @@ func _ready():
 	# Connect the input signal for Enter key
 	INPUT.text_submitted.connect(_on_input_submitted)
 	# Try local WebSocket first, then fallback to remote
-	await try_connect_in_order([websocket_url, websocket_url_local])
-	#await try_connect_in_order([websocket_url_local, websocket_url])
+	#await try_connect_in_order([websocket_url, websocket_url_local])
+	await try_connect_in_order([websocket_url_local, websocket_url])
 
 
 # --- Connection Handling ---
@@ -167,6 +168,7 @@ func handle_gmcp(message: String):
 			EXPBAR.fill_exp(data_dict['exp_cur'], data_dict['exp_max'], data_dict['lvl'])
 			
 		'GAME_STATE':
+			var old_game_state = game_state
 			game_state = dict_string
 			ASCIIMAP.clear_log()
 			OUTPUT_COMBAT.clear_log()
@@ -177,6 +179,10 @@ func handle_gmcp(message: String):
 			
 			SIDEBAR.visible = 'PLAY' in game_state
 			EXPBAR.visible = 'PLAY' in game_state
+			print(game_state, '    ', old_game_state, '   ', 'PLAY' not in game_state and 'PLAY' in old_game_state)
+			if 'PLAY' not in game_state and 'PLAY' in old_game_state:
+				OUTPUT.lines.clear()
+				OUTPUT.clear()
 				
 		'Client.Media.Play':
 			#var sfx = load("res://audio/sfx/" + data_dict['name'])
@@ -209,9 +215,13 @@ func handle_gmcp(message: String):
 		'MMAAPP':
 			ASCIIMAP.clear_log()
 			ASCIIMAP.get_message(dict_string)
-		'LOOK_ROOM':
-			LOOK_ROOM.clear_log()
-			LOOK_ROOM.get_message(dict_string)
+		'ROOM_ICONS':
+			ROOM_ICONS.clear_log()
+			ROOM_ICONS.get_message(dict_string)
+		'ROOM_DESCRIPTIONS':
+			ROOM_DESCRIPTIONS.clear_log()
+			ROOM_DESCRIPTIONS.get_message(dict_string)
+			
 		#'Time':
 		#	CLOCK.get_message(data_dict)
 			#BACKGROUND_COLOR.get_message(data_dict)

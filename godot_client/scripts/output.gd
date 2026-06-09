@@ -24,31 +24,9 @@ func clear_log():
 	clear()
 	
 var lines: Array[String] = []
-const MAX_LINES := 100
+const MAX_LINES := 25
 func get_message(message):
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	if message == '':
 		return
 	var bbcode_line = add_ansi_text(message)
@@ -59,8 +37,11 @@ func get_message(message):
 		if lines.size() > MAX_LINES:
 			lines.pop_front()
 		clear()
+		self.append_text("".join(lines))
+	else:
+		self.append_text(bbcode_line)
 		
-	self.append_text("".join(lines))
+	
 
 	scroll_following = true
 	

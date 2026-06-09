@@ -171,6 +171,10 @@ class CombatEvent:
                 # if mag_arm_broke:
                 #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.MAGARMOR]}{Color.BACK} has broken'
                 #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MessageType.COMBAT])
+                
+                
+                
+                #print(summary)
 
 
             
@@ -204,7 +208,6 @@ class CombatEvent:
 
                 actor.stat_manager.hp_mp_clamp_update()
 
-            
         self.popped = []
 
     def run(self):
@@ -290,4 +293,5 @@ class CombatEvent:
         self.pop_from_queue()
 
         # rerun if any affect_manager functions triggered another attack to be added to queue
+        
         self.run()

@@ -1048,8 +1048,9 @@ def get_nearby_rooms(self, view_range=1):
 
 
 def new_room_look(self):
+    #self.send_line('\n'*3)
     if self.settings_manager.get_value(SETTINGS.VIEW_ROOM):
-        self.command_look("", short = True)
+        self.command_look("", short = self.settings_manager.get_value(SETTINGS.SHORT_ROOM_DESCRIPTIONS))
     if self.settings_manager.get_value(SETTINGS.VIEW_MAP):
         self.command_map("")
         self.update_checker.tick()

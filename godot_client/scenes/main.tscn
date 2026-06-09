@@ -207,7 +207,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
+offset_left = 384.0
 offset_top = -40.0
 offset_right = -8.0
 offset_bottom = -8.0
@@ -243,21 +243,14 @@ offset_bottom = 26.0
 theme_override_fonts/font = ExtResource("19_jxno8")
 text = " >"
 
-[node name="container" type="BoxContainer" parent="canvas"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="sidebar" type="VBoxContainer" parent="canvas"]
 offset_left = 8.0
 offset_top = 8.0
-offset_right = -8.0
-offset_bottom = -64.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 392.0
+offset_bottom = 960.0
 
-[node name="sidebar" type="VBoxContainer" parent="canvas/container"]
-layout_mode = 2
-
-[node name="look_room" type="RichTextLabel" parent="canvas/container/sidebar"]
+[node name="room_icons" type="RichTextLabel" parent="canvas/sidebar"]
+custom_minimum_size = Vector2(0, 374)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -268,8 +261,8 @@ bbcode_enabled = true
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
-[node name="ascii_map" type="RichTextLabel" parent="canvas/container/sidebar"]
-custom_minimum_size = Vector2(384, 392)
+[node name="ascii_map" type="RichTextLabel" parent="canvas/sidebar"]
+custom_minimum_size = Vector2(384, 374)
 layout_mode = 2
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
@@ -280,7 +273,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 metadata/_edit_group_ = true
 
-[node name="navigation2" type="RichTextLabel" parent="canvas/container/sidebar"]
+[node name="navigation2" type="RichTextLabel" parent="canvas/sidebar"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
@@ -303,7 +296,7 @@ fit_content = true
 meta_underlined = false
 script = ExtResource("3_gkcnj")
 
-[node name="navigation" type="RichTextLabel" parent="canvas/container/sidebar"]
+[node name="navigation" type="RichTextLabel" parent="canvas/sidebar"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
@@ -323,10 +316,36 @@ fit_content = true
 meta_underlined = false
 script = ExtResource("3_gkcnj")
 
+[node name="container" type="BoxContainer" parent="canvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 384.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="output" type="VBoxContainer" parent="canvas/container"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="room_description" type="RichTextLabel" parent="canvas/container/output"]
+visible = false
+custom_minimum_size = Vector2(0, 374)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+text = "client version: 240426
+"
+meta_underlined = false
+hint_underlined = false
+selection_enabled = true
+script = ExtResource("3_gkcnj")
 
 [node name="output" type="RichTextLabel" parent="canvas/container/output"]
 layout_mode = 2
@@ -416,7 +435,7 @@ anchors_preset = -1
 anchor_top = 0.996
 anchor_right = 1.0
 anchor_bottom = 0.996
-offset_left = 8.0
+offset_left = 384.0
 offset_top = -60.16
 offset_right = -8.0
 offset_bottom = -40.16
@@ -517,15 +536,18 @@ volume_db = -15.0
 autoplay = true
 script = ExtResource("16_vp8dw")
 
-[connection signal="meta_clicked" from="canvas/container/sidebar/ascii_map" to="." method="_on_ascii_map_meta_clicked"]
-[connection signal="meta_hover_ended" from="canvas/container/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_ended"]
-[connection signal="meta_hover_started" from="canvas/container/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_started"]
-[connection signal="meta_clicked" from="canvas/container/sidebar/navigation2" to="." method="_on_navigation_meta_clicked"]
-[connection signal="meta_hover_ended" from="canvas/container/sidebar/navigation2" to="." method="_on_navigation_meta_hover_ended"]
-[connection signal="meta_hover_started" from="canvas/container/sidebar/navigation2" to="." method="_on_navigation_meta_hover_started"]
-[connection signal="meta_clicked" from="canvas/container/sidebar/navigation" to="." method="_on_navigation_meta_clicked"]
-[connection signal="meta_hover_ended" from="canvas/container/sidebar/navigation" to="." method="_on_navigation_meta_hover_ended"]
-[connection signal="meta_hover_started" from="canvas/container/sidebar/navigation" to="." method="_on_navigation_meta_hover_started"]
+[connection signal="meta_clicked" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_clicked"]
+[connection signal="meta_hover_ended" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_ended"]
+[connection signal="meta_hover_started" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_started"]
+[connection signal="meta_clicked" from="canvas/sidebar/navigation2" to="." method="_on_navigation_meta_clicked"]
+[connection signal="meta_hover_ended" from="canvas/sidebar/navigation2" to="." method="_on_navigation_meta_hover_ended"]
+[connection signal="meta_hover_started" from="canvas/sidebar/navigation2" to="." method="_on_navigation_meta_hover_started"]
+[connection signal="meta_clicked" from="canvas/sidebar/navigation" to="." method="_on_navigation_meta_clicked"]
+[connection signal="meta_hover_ended" from="canvas/sidebar/navigation" to="." method="_on_navigation_meta_hover_ended"]
+[connection signal="meta_hover_started" from="canvas/sidebar/navigation" to="." method="_on_navigation_meta_hover_started"]
+[connection signal="meta_clicked" from="canvas/container/output/room_description" to="." method="_on_output_meta_clicked"]
+[connection signal="meta_hover_ended" from="canvas/container/output/room_description" to="." method="_on_output_meta_hover_ended"]
+[connection signal="meta_hover_started" from="canvas/container/output/room_description" to="." method="_on_output_meta_hover_started"]
 [connection signal="meta_clicked" from="canvas/container/output/output" to="." method="_on_output_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/container/output/output" to="." method="_on_output_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/container/output/output" to="." method="_on_output_meta_hover_started"]
