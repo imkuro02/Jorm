@@ -7,6 +7,12 @@ from configuration.constants.stat_type import StatType
 from configuration.constants.room_constant import RoomConstant
 from affects.affects import Affect
 
+def add_explored_room(actor):
+    if hasattr(actor, 'explored_rooms'):
+        if actor.room.get_real_id() not in actor.explored_rooms:
+            actor.explored_rooms.append(actor.room.get_real_id())
+
+            
 import random
 @check_not_in_party_or_is_party_leader
 @check_your_turn
@@ -51,16 +57,60 @@ def command_flee(self, line):
         par.send_line('You flee too!')
         #par.protocol.factory.world.rooms[self.recall_site].move_actor(par, silent = True)
 
-
-
-def move_party_leader(self, room_id, no_new_room_look = False):
+def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
     old_room = self.room
     new_room = room_id
     world = self.room.world
 
-    self.simple_broadcast(None,f'You follow {self.pretty_name()}', send_to = 'room_party', sound = Audio.walk())
+    world.rooms[new_room].move_actor(self, silent = False)
+    self.sendSound(Audio.walk())
+    self.new_room_look()
 
-    world.rooms[new_room].move_actor(self)
+    # move cringe followers
+    def move_followers(followed_actor):
+        for par in old_room.actors.copy().values():
+            if hasattr(par, 'trigger_go_follow_actor'):
+                if par.party_manager.party != None:
+                    if not par.is_not_in_party_or_is_party_leader():
+                        self.send_line('You can only follow your party leader')
+                        del par.trigger_go_follow_actor
+                        continue
+                if par.trigger_go_follow_actor != followed_actor:
+                    continue
+                if par == self:
+                    continue
+                if par.room != old_room:
+                    continue
+                followed_actor.room.move_actor(par, silent = False)
+                par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
+                par.finish_turn(force_cooldown = True)
+                par.sendSound(Audio.walk())
+                move_followers(par)
+
+
+        if followed_actor.party_manager.party != None:
+            if followed_actor.party_manager.party.actor == followed_actor:
+                for par in followed_actor.party_manager.party.participants.values():
+                    if par == followed_actor:
+                        continue
+                    if par.room != old_room:
+                        continue
+                    followed_actor.room.move_actor(par, silent = False)
+                    par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
+                    par.sendSound(Audio.walk())
+                    move_followers(par)
+
+    move_followers(self)
+
+'''
+def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
+    old_room = self.room
+    new_room = room_id
+    world = self.room.world
+
+    #self.simple_broadcast(None,f'You follow {self.pretty_name()}', send_to = 'room_party', sound = Audio.walk())
+
+    world.rooms[new_room].move_actor(self, silent = False)
     self.sendSound(Audio.walk())
 
     if self.recall_site != RoomConstant.TAVERN and self.recall_site != RoomConstant.CROSSROAD and self.room.id == RoomConstant.CROSSROAD:
@@ -69,53 +119,49 @@ def move_party_leader(self, room_id, no_new_room_look = False):
         self.rest_set('')
 
 
-    # move party members
-    if self.party_manager.party != None:
-        if self.party_manager.party.actor == self:
-            for par in self.party_manager.party.participants.values():
+    # move cringe followers
+    def move_followers(followed_actor):
+        for par in old_room.actors.copy().values():
+            if hasattr(par, 'trigger_go_follow_actor'):
+                if par.party_manager.party != None:
+                    if not par.is_not_in_party_or_is_party_leader():
+                        self.send_line('You can only follow your party leader')
+                        del par.trigger_go_follow_actor
+                        continue
+                if par.trigger_go_follow_actor != followed_actor:
+                    continue
                 if par == self:
                     continue
                 if par.room != old_room:
                     continue
                 #par.command_go(line)
-                self.room.move_actor(par, silent = True)
-                #par.send_line(f'You follow {self.pretty_name()}', sound = Audio.walk())
-                #par.finish_turn(force_cooldown = True)
+                followed_actor.room.move_actor(par, silent = True)
+                par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
+                #####################
+                par.finish_turn(force_cooldown = True)
                 par.sendSound(Audio.walk())
-
-    # move cringe followers
-    for par in old_room.actors.copy().values():
-        if hasattr(par, 'trigger_go_follow_actor'):
-            if par.trigger_go_follow_actor != self:
-                continue
-            if par == self:
-                continue
-            if par.room != old_room:
-                continue
-            #par.command_go(line)
-            self.room.move_actor(par, silent = True)
-            par.pretty_broadcast(f'You follow {self.id}',None, list_pretty_name_objects=[self], sound = Audio.walk())
-            #####################
-            par.finish_turn(force_cooldown = True)
-            par.sendSound(Audio.walk())
+                move_followers(par)
 
 
-    # move followers (currently moves EVERYTHING)
-    '''
-    potential_followers = old_room.actors.copy()
-
-    for par in potential_followers.values():
-        if par == self:
-            continue
-        if par.room != old_room:
-            continue
-        self.room.move_actor(par, silent = True)
-        par.finish_turn(force_cooldown = True)
-        par.sendSound(Audio.walk())
-        systems.utils.debug_print(par)
-    '''
-
+        if followed_actor.party_manager.party != None:
+            if followed_actor.party_manager.party.actor == followed_actor:
+                for par in followed_actor.party_manager.party.participants.values():
+                    if par == followed_actor:
+                        continue
+                    if par.room != old_room:
+                        continue
+                    #par.command_go(line)
+                    followed_actor.room.move_actor(par, silent = True)
+                    par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
+                    #par.finish_turn(force_cooldown = True)
+                    par.sendSound(Audio.walk())
+                    move_followers(par)
+    move_followers(self)
     
+
+    # move party members
+    
+
 
     # finish turns
     self.finish_turn(force_cooldown = True)
@@ -134,24 +180,21 @@ def move_party_leader(self, room_id, no_new_room_look = False):
             for par in self.party_manager.party.participants.values():
                 if par == self:
                     par.new_room_look()
-                if par.room.get_real_id() not in par.explored_rooms:
-                    par.explored_rooms.append(self.room.get_real_id())
+                add_explored_room(par)
     else:
         if not no_new_room_look: 
             self.new_room_look()
-        if self.room.get_real_id() not in self.explored_rooms:
-            self.explored_rooms.append(self.room.get_real_id())
+        add_explored_room(self)
 
     # do the rest with cringe followers
     for par in self.room.actors.copy().values():
         if hasattr(par, 'trigger_go_follow_actor'):
             if par.trigger_go_follow_actor != self:
                 continue
-            if par.room.get_real_id() not in par.explored_rooms:
-                par.explored_rooms.append(self.room.get_real_id())
+            add_explored_room(par)
             par.finish_turn(force_cooldown = True)
             self.pretty_broadcast(f'{par.id} is following you',None, list_pretty_name_objects=[par], sound = Audio.walk())
-
+'''
     
 
 
@@ -167,7 +210,7 @@ def find_direction_for_command_go(self, line):
 
     return direction
 
-
+@check_not_in_party_or_is_party_leader
 def command_follow(self, line = ''):
     _actor = self.get_actor(line)
 
@@ -179,7 +222,7 @@ def command_follow(self, line = ''):
 
     if _actor != None and line != '':
         self.trigger_go_follow_actor = _actor
-        self.pretty_broadcast(f'You follow {_actor.id}',None, list_pretty_name_objects=[_actor], sound = Audio.walk())
+        self.pretty_broadcast(f'You begin following {_actor.id}',None, list_pretty_name_objects=[_actor], sound = Audio.walk())
     else:
         if hasattr(self, 'trigger_go_follow_actor'):
             del self.trigger_go_follow_actor

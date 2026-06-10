@@ -819,9 +819,10 @@ class AffectSummoner(Affect):
     def __init__(self, *args, **kwargs):
         self.summoned_actor = kwargs['summoned_actor']
         del kwargs['summoned_actor']
-        self.stackable = kwargs['stackable']
-        del kwargs['stackable']
+        #self.stackable = kwargs['stackable']
+        #del kwargs['stackable']
         super().__init__(*args, **kwargs)
+        self.summoned_actor.trigger_go_follow_actor = self.affect_target_actor
         
     def summon_checks(self):
         if self.summoned_actor == None:
@@ -838,9 +839,12 @@ class AffectSummoner(Affect):
             self.on_finished()
             return
 
+        """
         if self.summoned_actor.room != self.affect_target_actor.room:
             self.affect_target_actor.room.move_actor(self.summoned_actor, silent = True)
             self.summoned_actor.finish_turn(force_cooldown = True)
+        """
+        
 
     # super hacky, but basically add a seperate affect with another name 
     # this is so that multiple summons can be active at once but have different timers

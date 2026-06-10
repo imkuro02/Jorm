@@ -692,7 +692,8 @@ def rest_home(self, line):
             rest_site = self.recall_site
         else:
             rest_site = self.party_manager.party.actor.recall_site
-        self.protocol.factory.world.rooms[rest_site].move_actor(self, silent=True)
+        #self.protocol.factory.world.rooms[rest_site].move_actor(self, silent=True)
+        self.move_party_leader(rest_site, no_new_room_look = False, silent = True)
 
         self.new_room_look()
         self.simple_broadcast("You ressurect", f"{self.pretty_name()} has ressurected")
@@ -711,7 +712,8 @@ def rest_home(self, line):
                 rest_site = self.recall_site
             else:
                 rest_site = self.party_manager.party.actor.recall_site
-            self.protocol.factory.world.rooms[rest_site].move_actor(self, silent=True)
+            #self.protocol.factory.world.rooms[rest_site].move_actor(self, silent=True)
+            self.move_party_leader(rest_site, no_new_room_look = False, silent = True)
 
             self.new_room_look()
             self.simple_broadcast(

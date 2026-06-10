@@ -473,11 +473,74 @@ class Room:
         self.remove_actor(actor)
 
         if not silent and actor.room != self:
+            actor.pretty_broadcast(
+                None,
+                f"{actor.id} leaves",
+                send_to="room",
+                sound=Audio.walk(),
+                list_pretty_name_objects = [actor]
+            )
+
+
+        actor.room = self
+        self.actors[actor.id] = actor
+
+        if not self.instanced:
+            if not dont_unload_instanced and not self.is_an_instance():
+                if type(actor).__name__ == "Player":
+                    for i in actor.instanced_rooms:
+                        if i in actor.room.world.rooms:
+                            actor.send_line(
+                                f"instanced room: {i} deleted", msg_type=[MessageType.DEBUG]
+                            )
+                            self.world.rooms_to_unload.append(i)
+
+                    actor.instanced_rooms = []
+        else:
+            if type(actor).__name__ == "Player":
+               
+                instanced_room_id = self.id + "#" + actor.party_manager.get_party_id()
+
+                if instanced_room_id not in self.world.rooms:
+                    self.world.rooms[instanced_room_id] = Room(
+                        self.world,
+                        instanced_room_id,
+                        self.name,
+                        self.description,
+                        self.from_file,
+                        self.exits,
+                        self.can_be_recall_site,
+                        self.doorway,
+                        instanced=False,
+                    )
+                    if type(actor).__name__ == "Player":
+                        actor.instanced_rooms.append(instanced_room_id)
+                instanced_room = self.world.rooms[instanced_room_id]
+                instanced_room.actors[actor.id] = actor
+                del self.actors[actor.id]
+                instanced_room = self.world.rooms[instanced_room_id]
+                actor.room = instanced_room
+
+        if not silent:
+            actor.pretty_broadcast(
+                None,
+                f"{actor.id} arrives",
+                send_to="room",
+                sound=Audio.walk(),
+                list_pretty_name_objects = [actor]
+            )
+
+    """
+    def move_actor(self, actor, silent=False, dont_unload_instanced=False):
+        actor.room_previous = actor.room.get_real_id()
+        self.remove_actor(actor)
+
+        if not silent and actor.room != self:
             if actor.party_manager.party == None:
                 actor.pretty_broadcast(
                     "",
                     f"{actor.id} leaves",
-                    send_to="room_not_party",
+                    send_to="room",
                     sound=Audio.walk(),
                     list_pretty_name_objects = [actor]
                 )
@@ -485,7 +548,7 @@ class Room:
                 actor.pretty_broadcast(
                     "",
                     f"{actor.id} and their party leaves",
-                    send_to="room_not_party",
+                    send_to="room",
                     sound=Audio.walk(),
                     list_pretty_name_objects = [actor]
                 )
@@ -534,7 +597,7 @@ class Room:
                 actor.pretty_broadcast(
                     "",
                     f"{actor.id} arrives",
-                    send_to="room_not_party",
+                    send_to="room",
                     sound=Audio.walk(),
                     list_pretty_name_objects = [actor]
                 )
@@ -542,11 +605,11 @@ class Room:
                 actor.pretty_broadcast(
                     "",
                     f"{actor.id} and their party arrives",
-                    send_to="room_not_party",
+                    send_to="room",
                     sound=Audio.walk(),
                     list_pretty_name_objects = [actor]
                 )
-
+    """
     def remove_actor(self, actor):
         if actor.room == None:
             return

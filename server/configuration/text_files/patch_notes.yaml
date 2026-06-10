@@ -23,6 +23,7 @@ versions:
       - Enabled "set autobattler on" again, for testing
       - ShortDescriptions setting on by default 
       - Fixed item and room description typoos
+      - Simpler movement printing (who follows who etc)
   "010626":
     id: "010626"
     title: Map, stats and damage
