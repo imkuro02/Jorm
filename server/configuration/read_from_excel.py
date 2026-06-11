@@ -573,7 +573,9 @@ def configure_ENEMIES(SHEET, ITEMS):
         x = SHEET["loot"]
         for index in range(0, len(x[row])):
             d_vals = {x["item_id"][index]: int(x["drop_rate"][index])}
-
+            if x["item_id"][index] not in ITEMS:
+                systems.utils.debug_print(f'{x["item_id"][index]} could not be added to {x["npc_id"][index]} drop table, check if item is not_loaded')
+                continue
             if x["npc_id"][index] in LOOT:
                 # concate the previous dict with new a new value
                 LOOT[x["npc_id"][index]] = LOOT[x["npc_id"][index]] | d_vals
