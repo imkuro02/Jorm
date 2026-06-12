@@ -1,0 +1,16 @@
+find_tree_stuck_citizen:
+  name: Find lost citizen
+  description: 
+    in_progress: |
+      The gate guard told me to go look for some citizen. 
+      The guard mentioned that they could not have gone far.
+    completed: |
+      I found them, they were stuck in a tree, I helped them get home safe.
+    turned_in: |
+      The guard seems satisfied with how the rescue mission went.
+  objectives:
+    Help Citizen:
+      type: conversation
+      objective: tree_stuck_citizen_0
+      completed_at: 1
+      

@@ -110,6 +110,51 @@ town_gate_guard_out:
             say "Ok"
           goto: start
 
+    find_tree_stuck_citizen:
+      append_to: start
+      options: 
+        - line: |
+            talk about quests
+          goto: find_tree_stuck_citizen_start
+          quest_start:
+            id: find_tree_stuck_citizen
+          quest_check:
+          - id: find_tree_stuck_citizen
+            state: not_started
+        - line: |
+            talk about quests
+          goto: find_tree_stuck_citizen_turn_in
+          quest_check:
+          - id: find_tree_stuck_citizen
+            state: completed
+          quest_turn_in:
+              id: find_tree_stuck_citizen
+              reward_exp: 10
+              reward:
+                - item: potion_hp_30
+                  amount: 3
+        - line: |
+            talk about quests
+          goto: find_tree_stuck_citizen_in_progress
+          quest_check:
+          - id: find_tree_stuck_citizen
+            state: in_progress
+
+    find_tree_stuck_citizen_turn_in:
+      dialog: 
+        - line: |
+            <npc> says "Wow, Im impressed, but a tree? really? oh well"
+          
+    find_tree_stuck_citizen_start:
+      dialog: 
+        - line: |
+            <npc> says "Yeah actually, A citizen is missing, could you go look for them? they couldn't have gone far"
+    
+    find_tree_stuck_citizen_in_progress:
+      dialog: 
+        - line: |
+            <npc> says "I told you, we have a citizen missing, they could not have gone far."
+
 npc_zone_1:
   tree:
     start:

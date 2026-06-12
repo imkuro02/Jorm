@@ -32,4 +32,17 @@ npc_shop:
             give_to_npc:
               - item: currency_0
                 amount: 100
+
+        - line: |
+            Trade one Tree branch and three Slime for one Torch
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: torch
+                amount: 1
+            give_to_npc:
+              - item: tree_branch
+                amount: 1
+              - item: slime
+                amount: 3
     

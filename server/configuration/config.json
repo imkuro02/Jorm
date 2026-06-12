@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e7e8ac8277151304bfe195c5ea50d777b56084a2f2a4d59a07bab62420173e5d",
+    "SHA-256": "c8cf9d5f7cb6fc17c2e2d1ea12839ed0d30246a0fdeb8db53eb07d3185c7bd8a",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -489,6 +489,7 @@
             "on_death_skills_use": null,
             "on_start_skills_use": "guard=1",
             "loot": {
+                "tree_branch": 10,
                 "potion_remove_armor": 100,
                 "potion_hp_30": 100,
                 "axe": 120,
@@ -874,7 +875,8 @@
                 "mind weapon 6": 225,
                 "mind weapon 9": 330,
                 "rock": 37,
-                "summoning_rock": 37
+                "summoning_rock": 37,
+                "slime": 40
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -1267,7 +1269,8 @@
                 "grit weapon 9": 225,
                 "grit weapon alt 3": 225,
                 "rock": 34,
-                "summoning_rock": 34
+                "summoning_rock": 34,
+                "slime": 40
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -1403,7 +1406,8 @@
                 "mind weapon 6": 120,
                 "mind weapon 9": 225,
                 "rock": 34,
-                "summoning_rock": 34
+                "summoning_rock": 34,
+                "slime": 40
             },
             "combat_loop": {},
             "can_start_fights": true,
@@ -1580,6 +1584,7 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
+                "tree_branch": 10,
                 "rusty_axe": 1,
                 "potion_remove_armor": 100,
                 "potion_hp_30": 100,
@@ -3001,6 +3006,7 @@
                 "grit weapon 9": 295,
                 "grit weapon alt 3": 155,
                 "rock": 36,
+                "tree_branch": 36,
                 "summoning_rock": 36
             },
             "combat_loop": {},
@@ -14727,6 +14733,28 @@
             "can_pick_up": true,
             "description": "A stickey slightly rusted key, it smells like ass."
         },
+        "torch": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "torch",
+            "name": "Torch",
+            "stack_max_amount": 1,
+            "drop_tags": "none",
+            "drop_from_random": false,
+            "drop_chance_base": 0,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 0,
+            "drop_chance_range_over": 0,
+            "drop_chance_stat_filter": "none",
+            "description_room": null,
+            "invisible": false,
+            "ambience_sfx": null,
+            "ambience": null,
+            "can_pick_up": true,
+            "description": "A stick with a rag soaked in slime goop."
+        },
         "mug": {
             "item_type": "misc",
             "dont_load": 0,
@@ -14859,6 +14887,28 @@
             "can_pick_up": false,
             "description": "The carving is spelling \"uck MSSP\", whatever that means"
         },
+        "tree_branch": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "tree_branch",
+            "name": "Tree branch",
+            "stack_max_amount": 9,
+            "drop_tags": "wood",
+            "drop_from_random": true,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "description_room": null,
+            "invisible": false,
+            "ambience_sfx": null,
+            "ambience": null,
+            "can_pick_up": true,
+            "description": "A gnarled, weathered tree branch. The bark is rough to the touch, and small splinters protrude from its surface."
+        },
         "scenery_ioizor_statue": {
             "item_type": "misc",
             "dont_load": 0,
@@ -14902,6 +14952,28 @@
             "ambience": null,
             "can_pick_up": true,
             "description": "Used for powerful spells"
+        },
+        "slime": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "slime",
+            "name": "Slime",
+            "stack_max_amount": 9,
+            "drop_tags": "slime",
+            "drop_from_random": true,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 0,
+            "drop_chance_over_bonus": 0,
+            "drop_chance_range_under": 100,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "description_room": null,
+            "invisible": false,
+            "ambience_sfx": null,
+            "ambience": null,
+            "can_pick_up": true,
+            "description": "Yucky slime goo. Smells flamable."
         },
         "orange_mushroom_cap": {
             "item_type": "misc",

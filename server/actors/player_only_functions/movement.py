@@ -86,6 +86,7 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
                 par.finish_turn(force_cooldown = True)
                 par.sendSound(Audio.walk())
                 move_followers(par)
+                add_explored_room(par)
 
 
         if followed_actor.party_manager.party != None:
@@ -99,8 +100,10 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
                     par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
                     par.sendSound(Audio.walk())
                     move_followers(par)
+                    add_explored_room(par)
 
     move_followers(self)
+    add_explored_room(self)
 
 '''
 def move_party_leader(self, room_id, no_new_room_look = False, silent = False):

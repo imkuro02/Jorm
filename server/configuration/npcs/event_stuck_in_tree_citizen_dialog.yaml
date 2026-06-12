@@ -1,0 +1,31 @@
+event_stuck_in_tree_citizen_dialog_0:
+  tree:
+    start:
+      dialog: 
+        - line: |
+            They are stuck in a tree and keep screaming while pointing down at the ground.
+
+event_stuck_in_tree_citizen_dialog_1:
+  tree:
+    start:
+      dialog: 
+        - line: |
+            <npc> says "Phew! you saved my life!"
+      options:
+        - line: |
+            say "Ok"
+          goto: farewell
+          npc_leaves: 1
+          quest_objective:
+            requirement_id: tree_stuck_citizen_0
+          #trade:
+          #  give_to_player:
+          #    - item: currency_0
+          #      amount: 10
+          
+
+    farewell:
+      dialog: 
+        - line: |
+            <npc> says "Thank you, I will return to the town now"
+      

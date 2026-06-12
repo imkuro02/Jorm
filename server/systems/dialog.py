@@ -4,7 +4,7 @@ from configuration.constants.color import Color
 from configuration.constants.stat_type import StatType
 from items.manager import load_item
 from systems.quest import QUEST_STATE_TYPES, ObjectiveCountProposal
-
+from configuration.constants.room_constant import RoomConstant
 
 class Dialog:
     def __init__(self, _player, _npc, _dialog_tree):
@@ -171,6 +171,9 @@ class Dialog:
                     "conversation", requirement_id, 1
                 )
                 dic["quest_objective_count_proposal"] = objective_count_proposal
+
+            if 'npc_leaves' in option:
+                dic['npc_leaves'] = 1
 
             options.append(dic)
 
@@ -439,9 +442,16 @@ class Dialog:
 
         if "quest_objective_count_proposal" in answer:
             # self.print_dialog()
-            self.player.quest_manager.propose_objective_count_addition(
+            
+            if self.player.party_manager.party == None:
+                self.player.quest_manager.propose_objective_count_addition(
                 answer["quest_objective_count_proposal"]
-            )
+                )
+            else:
+                for i in self.player.party_manager.party.participants.values():
+                    i.quest_manager.propose_objective_count_addition(
+                        answer["quest_objective_count_proposal"]
+                    )
             # return True
 
         if "quest_start" in answer:
@@ -507,6 +517,10 @@ class Dialog:
                 self.player.party_manager.party.actor.command_go(
                     line="", room_id=answer["teleport_player"]
                 )
+
+        if "npc_leaves" in answer:
+            self.npc.room.world.rooms[RoomConstant.LOADING].move_actor(self.npc)
+            self.npc.die()
 
         return True
 
