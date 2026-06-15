@@ -80,6 +80,11 @@ def command_get(self, line):
         return
 
     list_pretty_name_objects = [*items_gotten,*[self]]
+
+    if items_gotten == []:
+        self.send_line ('You get nothing')
+        return
+
     self.pretty_broadcast(
         line_self =     f"You get {', '.join(str(obj.id) for obj in items_gotten)}",
         line_others =   f"{self.id} gets {', '.join(str(obj.id) for obj in items_gotten)}",
@@ -107,6 +112,7 @@ def command_drop(self, line):
 
     items_pretty_name_before_pickup = []
     items_pretty_name_after = []
+    items_gotten = []
     for item in items_to_get:
         item_pretty_name_before_pickup = item.pretty_name(self)
 
@@ -116,16 +122,20 @@ def command_drop(self, line):
             )
             continue
 
-        items_pretty_name_before_pickup.append(item_pretty_name_before_pickup)
+        items_gotten.append(item)
         self.inventory_manager.remove_item(item)
         self.room.inventory_manager.add_item(item)
 
         items_pretty_name_after.append(item.pretty_name(self))
 
-    list_pretty_name_objects = [*items_to_get,*[self]]
+    list_pretty_name_objects = [*items_gotten,*[self]]
+    if items_gotten == []:
+        self.send_line ('You drop nothing')
+        return
+
     self.pretty_broadcast(
-        line_self =     f"You drop {', '.join(str(obj.id) for obj in items_to_get)}",
-        line_others =   f"{self.id} drops {', '.join(str(obj.id) for obj in items_to_get)}",
+        line_self =     f"You drop {', '.join(str(obj.id) for obj in items_gotten)}",
+        line_others =   f"{self.id} drops {', '.join(str(obj.id) for obj in items_gotten)}",
         list_pretty_name_objects =  list_pretty_name_objects  
     )
 
@@ -323,15 +333,17 @@ def command_inventory(self, line):
 
     num = 1
     for i in self.inventory_manager.items:
-        output = f"{num:2}. " + self.inventory_manager.items[i].pretty_name(self)
+        output = f"{num:2}. " + self.inventory_manager.items[i].pretty_name(self, show_affixes = True)
         num += 1
 
+        '''
         if self.trade_manager.trade != None:
             if (
                 i in self.trade_manager.trade.offers1
                 or i in self.trade_manager.trade.offers2
             ):
                 output = output + f" ({Color.ITEM_TRADING}T{Color.NORMAL})"
+        '''
 
         #if self.protocol.enabled_godot:
         #    url = f'Identify {self.inventory_manager.items[i].pretty_name()}:identify {self.inventory_manager.items[i].id}'
@@ -379,7 +391,7 @@ def command_keep(self, line):
         return
     item = item[0]
     item.keep = True
-    self.send_line(f"Keeping {item.pretty_name(self)}" if not item.keep else f"Unkeeping {item.pretty_name(self)}")
+    self.send_line(f"Keeping {item.pretty_name(self)}" if not item.keep else f"Keeping {item.pretty_name(self)}")
 
 
 @check_not_trading
@@ -390,7 +402,7 @@ def command_unkeep(self, line):
         return
     item = item[0]
     item.keep = False
-    self.send_line(f"Keeping {item.pretty_name(self)}" if not item.keep else f"Unkeeping {item.pretty_name(self)}")
+    self.send_line(f"Unkeeping {item.pretty_name(self)}" if not item.keep else f"Unkeeping {item.pretty_name(self)}")
 
 
 def command_identify(self, line):

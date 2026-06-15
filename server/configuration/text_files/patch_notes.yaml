@@ -14,6 +14,14 @@ versions:
   #    - Burden of Steel - All enemies guard at combat start
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
   #    - Burden of Vitality - All enemies receive 25% max health at combat start'
+  "150626":
+    id: "150626"
+    title: Items and inventory
+    unixtime: 1775631568
+    features:
+      - Prefixes like Kept Equipped New etc are displayed more cleanly
+      - Item types listed as an affix on items
+      - All item names are default color 
   "080626":
     id: "080626"
     title: Descriptions and settings

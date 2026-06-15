@@ -6,7 +6,7 @@ class ItemType:
     HEALING_CONSUMABLE = "healing_consumable"
     ERROR = "error_item"
     name = {
-        MISC: "Misc",
+        MISC: "Miscellaneous",
         EQUIPMENT: "Equipment",
         CONSUMABLE: "Consumable",
         HEALING_CONSUMABLE: "Consumable",

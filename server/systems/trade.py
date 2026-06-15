@@ -54,17 +54,21 @@ class TradeWindow:
 
     def offer(self, item, trader):
         if trader == self.trader1:
-            self.offers1[item.id] = item
             self.trader1.send_line(f"You offer {item.pretty_name(self.trader1)}")
             self.trader2.send_line(
                 f"{self.trader1.pretty_name(self.trader2)} offers {item.pretty_name(self.trader2)}"
             )
         if trader == self.trader2:
-            self.offers2[item.id] = item
             self.trader2.send_line(f"You offer {item.pretty_name(self.trader2)}")
             self.trader1.send_line(
                 f"{self.trader2.pretty_name(self.trader2)} offers {item.pretty_name(self.trader2)}"
             )
+
+        if trader == self.trader1:
+            self.offers1[item.id] = item
+        if trader == self.trader2:
+            self.offers2[item.id] = item
+           
 
 
 class TradeManager:

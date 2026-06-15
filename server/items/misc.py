@@ -95,7 +95,7 @@ class Item:
                     self.ambience, self.ambience, sound=self.ambience_sfx
                 )
 
-    def pretty_name(self, identifier = None, rank_only=False):
+    def pretty_name(self, identifier = None, rank_only=False, show_affixes=False):
         def get_article(word):  # chatGPT
             vowels = "aeiou"
             if word == "":
@@ -115,10 +115,10 @@ class Item:
                     col = "@white"
 
             case "equipment":
-                col = "@byellow"
+                col = "@white"
 
             case "consumable":
-                col = "@yellow"
+                col = "@white"
 
         output = f"{col}{self.name}@normal"
 
@@ -127,7 +127,8 @@ class Item:
             if reforge_id in EQUIPMENT_REFORGES:
                 reforge_name = EQUIPMENT_REFORGES[reforge_id]["name"]
                 if reforge_name != None:
-                    output = f"@yellow{reforge_name} {col}{self.name}@normal"
+                    #output = f"@byellow{reforge_name} {col}{self.name}@normal"
+                    output = f"{col}{reforge_name.lower().capitalize()} {self.name.lower()}@normal"
 
         if identifier != None:
             if identifier.ai.target == self:
@@ -142,31 +143,43 @@ class Item:
         #                output = output + f' (@red{self.rank}@normal)'
         #        return output
 
+        _equipped = False
+        _kept = False
+        _traded = False
+        _new = False
+
+
+        if self.inventory_manager.owner.trade_manager.trade != None:
+            if (
+                self.id in self.inventory_manager.owner.trade_manager.trade.offers1
+                or self.id in self.inventory_manager.owner.trade_manager.trade.offers2
+            ):
+                _traded = True
+        
         if self.item_type == ItemType.EQUIPMENT:
-            # if self.rank != 0:
-            #    if self.rank > 0:
-            #        output = output + f' (@green+{self.rank}@normal)'
-            #    else:
-            #        output = output + f' (@red{self.rank}@normal)'
+            _equipped = self.equiped
+
+        _kept = self.keep
+
+        _new = self.new
+
+        _prefixes = []
+
+        if _kept: _prefixes.append(f'{Color.ITEM_KEEP}K')
+        if _equipped: _prefixes.append(f'{Color.ITEM_EQUIPPED}E')
+        if _new: _prefixes.append(f'{Color.ITEM_NEW}N')
+        if _traded: _prefixes.append(f'{Color.ITEM_TRADING}Trading away')
+        prefix = f'@bblack({"@bblack/".join(_prefixes)}@bblack){Color.NORMAL} '
+
+        if _prefixes == []:
+            prefix = ''
+
+        output = prefix + '' + output
+        if self.item_type == ItemType.EQUIPMENT:
             lvl = self.stat_manager.reqs[StatType.LVL]
-            output = f"{Color.ITEM_EQUIPPED}{lvl:2}{Color.NORMAL}Lv " + output
-            if self.equiped:
-                output = output + f" ({Color.ITEM_EQUIPPED}E{Color.NORMAL})"
-            if self.keep:
-                output = output + f" ({Color.ITEM_KEEP}K{Color.NORMAL})"
-            if self.new:
-                output = output + f" ({Color.ITEM_NEW}N{Color.NORMAL})"
-            #if self.crafting_ingredient_for != []:
-            #    output = output + f" ({Color.ITEM_MATERIAL}M{Color.NORMAL})"
+            output = output + f" @bblack{lvl}Lv {self.slot.capitalize()}{Color.NORMAL}" 
         else:
-            if self.stack != 1:
-                output = output + f" x{self.stack}"
-            if self.keep:
-                output = output + f" ({Color.ITEM_KEEP}K{Color.NORMAL})"
-            if self.new:
-                output = output + f" ({Color.ITEM_NEW}N{Color.NORMAL})"
-            #if self.crafting_ingredient_for != []:
-            #    output = output + f" ({Color.ITEM_MATERIAL}M{Color.NORMAL})"
+            output = output + f" @bblack{ItemType.name[self.item_type]}{Color.NORMAL}" 
 
         output = add_godot_url_items(self, identifier, output)
             
