@@ -22,6 +22,8 @@ versions:
       - Prefixes like Kept Equipped New etc are displayed more cleanly
       - Item types listed as an affix on items
       - All item names are default color 
+      - Scrap is now a "currency" item_type
+      - Fixed autobattler turning off whenever you did ANYTHING 
   "080626":
     id: "080626"
     title: Descriptions and settings

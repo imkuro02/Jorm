@@ -142,44 +142,50 @@ class Item:
         #            else:
         #                output = output + f' (@red{self.rank}@normal)'
         #        return output
+        if show_affixes:
+            _equipped = False
+            _kept = False
+            _traded = False
+            _new = False
 
-        _equipped = False
-        _kept = False
-        _traded = False
-        _new = False
+            owner = self.inventory_manager.owner
+            if get_object_parent(owner) == "Player":
+                if owner.trade_manager.trade != None:
+                    if (
+                        self.id in owner.trade_manager.trade.offers1
+                        or self.id in owner.trade_manager.trade.offers2
+                    ):
+                        _traded = True
+            
+            if self.item_type == ItemType.EQUIPMENT:
+                _equipped = self.equiped
+
+            _kept = self.keep
+
+            _new = self.new
+
+            _prefixes = []
+
+            if _kept: _prefixes.append(f'{Color.ITEM_KEEP}K')
+            if _equipped: _prefixes.append(f'{Color.ITEM_EQUIPPED}E')
+            if _new: _prefixes.append(f'{Color.ITEM_NEW}N')
+            if _traded: _prefixes.append(f'{Color.ITEM_TRADING}Trading away')
+            prefix = f'@bblack({"@bblack/".join(_prefixes)}@bblack){Color.NORMAL} '
+
+            if _prefixes == [] or show_affixes == False:
+                prefix = ''
+
+            if self.stack != 1:
+                output = output + ' ' + f'x{self.stack}'
 
 
-        if self.inventory_manager.owner.trade_manager.trade != None:
-            if (
-                self.id in self.inventory_manager.owner.trade_manager.trade.offers1
-                or self.id in self.inventory_manager.owner.trade_manager.trade.offers2
-            ):
-                _traded = True
-        
-        if self.item_type == ItemType.EQUIPMENT:
-            _equipped = self.equiped
-
-        _kept = self.keep
-
-        _new = self.new
-
-        _prefixes = []
-
-        if _kept: _prefixes.append(f'{Color.ITEM_KEEP}K')
-        if _equipped: _prefixes.append(f'{Color.ITEM_EQUIPPED}E')
-        if _new: _prefixes.append(f'{Color.ITEM_NEW}N')
-        if _traded: _prefixes.append(f'{Color.ITEM_TRADING}Trading away')
-        prefix = f'@bblack({"@bblack/".join(_prefixes)}@bblack){Color.NORMAL} '
-
-        if _prefixes == []:
-            prefix = ''
-
-        output = prefix + '' + output
-        if self.item_type == ItemType.EQUIPMENT:
-            lvl = self.stat_manager.reqs[StatType.LVL]
-            output = output + f" @bblack{lvl}Lv {self.slot.capitalize()}{Color.NORMAL}" 
-        else:
-            output = output + f" @bblack{ItemType.name[self.item_type]}{Color.NORMAL}" 
+            output = prefix + '' + output
+            
+            if self.item_type == ItemType.EQUIPMENT:
+                lvl = self.stat_manager.reqs[StatType.LVL]
+                output = output + f" @bblack({lvl}Lv {self.slot.capitalize()}){Color.NORMAL}" 
+            else:
+                output = output + f" @bblack({ItemType.name[self.item_type]}){Color.NORMAL}" 
 
         output = add_godot_url_items(self, identifier, output)
             

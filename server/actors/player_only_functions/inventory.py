@@ -164,7 +164,14 @@ def command_scrap(self, line):
         items_to_get = item_found
 
     items_pretty_name_before_pickup = []
+    items_scrapped = []
     for item in items_to_get:
+        if item.item_type == ItemType.CURRENCY: 
+            self.send_line(
+                f"{item.pretty_name(self)} can\'t be scrapped"
+            )
+            continue
+
         item_pretty_name_before_pickup = item.pretty_name(self)
 
         if not item.can_tinker_with():
@@ -181,11 +188,18 @@ def command_scrap(self, line):
         if item.item_type == ItemType.EQUIPMENT:
             scrap.stack = item.stack * item.stat_manager.reqs[StatType.LVL]
         self.inventory_manager.add_item(scrap, forced=True)
+        items_scrapped.append(item)
 
+    if items_scrapped == []:
+        self.send_line('You scrap nothing')
+        return
+
+    self.send_line(f"You scrap {', '.join(items_pretty_name_before_pickup)}")
+    """
     self.simple_broadcast(
         f"You scrap {', '.join(items_pretty_name_before_pickup)}",
         f"{self.pretty_name(self)} scraps {', '.join(items_pretty_name_before_pickup)}",
-    )
+    )"""
 
 @check_quest_state(quest_id = 'blacksmith_reforge', required_state = 'turned_in')
 @check_not_trading
@@ -319,6 +333,11 @@ def command_sort(self, line):
     # raise equipped
     for key in reversed(list(self.slots_manager.slots.keys())):
         self.raise_item(self.slots_manager.slots[key])
+
+    # raise currency items
+    for key in reversed(list(self.inventory_manager.items.keys())):
+        if self.inventory_manager.items[key].item_type == ItemType.CURRENCY:
+            self.raise_item(key)
 
 
 def command_inventory(self, line):
