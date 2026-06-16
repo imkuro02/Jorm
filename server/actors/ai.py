@@ -211,6 +211,8 @@ class AI:
 
         for i in skills:
             skill_obj = construct_skill(i)(skill_id = i, user = self.actor)
+            skill_obj.evaluation += random.randint(0,1)
+
             #systems.utils.debug_print(self.actor.name, skill_obj.id, skill_obj.evaluation)
 
             if skill_override == None and skill_obj.evaluation <= 0:
@@ -218,7 +220,7 @@ class AI:
 
             if highest == None:
                 highest = skill_obj
-            if skill_obj.evaluation > highest.evaluation + random.randint(0,1):
+            if skill_obj.evaluation > highest.evaluation :
                 highest = skill_obj
 
         if highest == None:

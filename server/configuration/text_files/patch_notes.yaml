@@ -24,6 +24,7 @@ versions:
       - All item names are default color 
       - Scrap is now a "currency" item_type
       - Fixed autobattler turning off whenever you did ANYTHING 
+      - Bless has been reworked, and Hex (oppesite of bless) has been added
   "080626":
     id: "080626"
     title: Descriptions and settings

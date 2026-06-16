@@ -1,5 +1,5 @@
 {
-    "SHA-256": "c8cf9d5f7cb6fc17c2e2d1ea12839ed0d30246a0fdeb8db53eb07d3185c7bd8a",
+    "SHA-256": "2137fd31d9cccb00d268392e4ca8c4607b10924f3c0855606284d428d989f733",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -543,7 +543,7 @@
             "drop_corpse": true,
             "include_in_daily_quests": true,
             "skills": {
-                "magic_missile": 1
+                "strike": 1
             },
             "on_death_skills_use": "brain_sap=1",
             "on_start_skills_use": null,
@@ -841,7 +841,7 @@
             "drop_corpse": true,
             "include_in_daily_quests": true,
             "skills": {
-                "magic_missile": 1,
+                "strike": 1,
                 "slime_apply_cooldown": 1,
                 "slime_split": 1
             },
@@ -1099,7 +1099,8 @@
             "drop_corpse": true,
             "include_in_daily_quests": true,
             "skills": {
-                "magic_missile": 1,
+                "strike": 1,
+                "hex": 1,
                 "nudge": 1
             },
             "on_death_skills_use": null,
@@ -1507,7 +1508,8 @@
             "include_in_daily_quests": true,
             "skills": {
                 "smite": 1,
-                "cure_light_wounds": 1
+                "cure_light_wounds": 1,
+                "hex": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -1969,7 +1971,8 @@
             "drop_corpse": true,
             "include_in_daily_quests": true,
             "skills": {
-                "magic_missile": 1
+                "strike": 1,
+                "hex": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -2211,7 +2214,8 @@
             "drop_corpse": true,
             "include_in_daily_quests": true,
             "skills": {
-                "magic_missile": 1
+                "strike": 1,
+                "hex": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -2567,7 +2571,8 @@
             "include_in_daily_quests": true,
             "skills": {
                 "cure_light_wounds": 1,
-                "magic_missile": 1
+                "strike": 1,
+                "hex": 1
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
@@ -3167,39 +3172,6 @@
                 ]
             }
         },
-        "magic_missile": {
-            "skill_id": "magic_missile",
-            "name": "Magic Missile",
-            "description": "Deal magical damage based on your Mind.\n",
-            "script_to_run": "DamageByMind",
-            "target_others_is_valid": true,
-            "target_item_is_valid": false,
-            "target_self_is_valid": false,
-            "can_use_in_combat": true,
-            "can_use_out_of_combat": false,
-            "can_be_practiced": true,
-            "practice_cost": 1,
-            "level_req": 1.0,
-            "is_offensive": 1.0,
-            "end_turn": true,
-            "script_values": {
-                "levels": [
-                    1.0,
-                    3.0,
-                    0.0
-                ],
-                "damage": [
-                    10.0,
-                    99.0,
-                    2.5
-                ],
-                "cooldown": [
-                    1.0,
-                    1.0,
-                    0.0
-                ]
-            }
-        },
         "stab": {
             "skill_id": "stab",
             "name": "Stab",
@@ -3474,12 +3446,12 @@
         "bless": {
             "skill_id": "bless",
             "name": "Bless",
-            "description": "Boost Grit, Flow, Mind and Soul by BONUS\n",
-            "script_to_run": "BoostStats",
+            "description": "Boost Grit, Flow, Mind and Soul by a percent of your Soul\n",
+            "script_to_run": "Bless",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
             "target_self_is_valid": true,
-            "can_use_in_combat": false,
+            "can_use_in_combat": true,
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
@@ -3494,17 +3466,17 @@
                 ],
                 "duration": [
                     10.0,
-                    10.0,
-                    0.0
+                    30.0,
+                    5.0
                 ],
                 "cooldown": [
                     1.0,
                     1.0,
                     0.0
                 ],
-                "bonus": [
-                    25.0,
-                    25.0,
+                "old bonus": [
+                    1.0,
+                    1.0,
                     0.0
                 ],
                 "aoe": [
@@ -3514,6 +3486,54 @@
                 ],
                 "charges": [
                     1.0,
+                    10.0,
+                    1.0
+                ]
+            }
+        },
+        "hex": {
+            "skill_id": "hex",
+            "name": "Hex",
+            "description": "Nerf Grit, Flow, Mind and Soul by percent of your Mind\n",
+            "script_to_run": "Hex",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 1.0,
+            "is_offensive": 1.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1.0,
+                    3.0,
+                    0.0
+                ],
+                "duration": [
+                    3.0,
+                    3.0,
+                    0.0
+                ],
+                "cooldown": [
+                    2.0,
+                    2.0,
+                    0.0
+                ],
+                "old bonus": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "aoe": [
+                    1.0,
+                    4.0,
+                    0.0
+                ],
+                "charges": [
+                    3.0,
                     10.0,
                     1.0
                 ]
