@@ -304,7 +304,6 @@ class UpdateChecker:
         )
 
     def tick(self):
-        return
         if self.actor == None:
             return
 
