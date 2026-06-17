@@ -328,7 +328,7 @@ class UpdateChecker:
             ) + _split
 
             if self.actor.status == ActorStatusType.FIGHTING:
-                _map = _map + _split + '\n' + self.actor.command_skills('', return_gmcp = True) + _split
+                _map = _map + _split + '\n' + str(self.actor.command_skills('', return_gmcp = True)) + _split
 
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
