@@ -503,7 +503,6 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
-        import threading
 
         
         # if self.last_line_received == line:
