@@ -304,7 +304,7 @@ class UpdateChecker:
         )
 
     def tick(self):
-
+        return
         if self.actor == None:
             return
 
@@ -315,7 +315,7 @@ class UpdateChecker:
 
         _split = '********************************************************************************' 
 
-
+        # limit this somehow
         if self.actor.status != ActorStatusType.FIGHTING:
             _map = _split + '\n' + self.actor.show_prompts(
                 order=self.actor.room.actors.values(),
@@ -332,7 +332,6 @@ class UpdateChecker:
 
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
-
         
         _map = self.actor.command_map("", return_gmcp = True)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "MAP")
@@ -504,6 +503,9 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
+        import threading
+
+        
         # if self.last_line_received == line:
         #   return
 

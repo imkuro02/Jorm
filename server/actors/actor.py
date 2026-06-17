@@ -837,6 +837,7 @@ class Actor:
                 bonus_string_fatigue = f'(-{fat} from {StatType.name[StatType.FATIGUE]})'
 
             bonus_from_bag = self.stat_manager.stats[StatType.INVSLOTS]
+            bonus_string_bag = ''
             if bonus_from_bag >= 1:
                 bonus_string_bag = f'(+{bonus_from_bag} from items)' 
                 

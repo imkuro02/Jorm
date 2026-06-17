@@ -672,7 +672,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
     def save_actor(self):
         #return
         if self.guest:
-            systems.utils.debug_print("Not saving guest lol xd")
+            #systems.utils.debug_print("Not saving guest lol xd")
             return
 
         if self.actor == None:
