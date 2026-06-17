@@ -1,0 +1,38 @@
+ALTER TABLE stats RENAME TO stats_old;
+
+CREATE TABLE stats (
+    actor_id   TEXT NOT NULL,
+    stat_name  TEXT NOT NULL,
+    stat_value INT NOT NULL,
+    PRIMARY KEY (actor_id, stat_name),
+    FOREIGN KEY (actor_id) REFERENCES actors(actor_id)
+);
+
+INSERT INTO stats (actor_id, stat_name, stat_value)
+SELECT actor_id, 'hp_max', hp_max FROM stats_old
+UNION ALL
+SELECT actor_id, 'hp', hp FROM stats_old
+UNION ALL
+SELECT actor_id, 'grit', grit FROM stats_old
+UNION ALL
+SELECT actor_id, 'flow', flow FROM stats_old
+UNION ALL
+SELECT actor_id, 'mind', mind FROM stats_old
+UNION ALL
+SELECT actor_id, 'soul', soul FROM stats_old
+UNION ALL
+SELECT actor_id, 'phy_armor', phy_armor FROM stats_old
+UNION ALL
+SELECT actor_id, 'mag_armor', mag_armor FROM stats_old
+UNION ALL
+SELECT actor_id, 'phy_armor_max', phy_armor_max FROM stats_old
+UNION ALL
+SELECT actor_id, 'mag_armor_max', mag_armor_max FROM stats_old
+UNION ALL
+SELECT actor_id, 'exp', exp FROM stats_old
+UNION ALL
+SELECT actor_id, 'lvl', lvl FROM stats_old
+UNION ALL
+SELECT actor_id, 'pp', pp FROM stats_old;
+
+DROP TABLE stats_old;

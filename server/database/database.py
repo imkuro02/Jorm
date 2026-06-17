@@ -40,22 +40,12 @@ class Database:
 
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS stats (
-            actor_id TEXT PRIMARY KEY,
-            hp_max INT NOT NULL,
-            hp INT NOT NULL,
-            grit INT NOT NULL,
-            flow INT NOT NULL,
-            mind INT NOT NULL,
-            soul INT NOT NULL,
-            phy_armor INT NOT NULL,
-            mag_armor INT NOT NULL,
-            phy_armor_max INT NOT NULL,
-            mag_armor_max INT NOT NULL,
-            exp INT NOT NULL,
-            lvl INT NOT NULL,
-            pp INT NOT NULL,
-            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
-        )""")
+            actor_id   TEXT NOT NULL,
+            stat_name  TEXT NOT NULL,
+            stat_value INT NOT NULL,
+            PRIMARY KEY (actor_id, stat_name),
+            FOREIGN KEY (actor_id) REFERENCES actors(actor_id)
+        );""")
 
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS inventory (
@@ -217,9 +207,7 @@ class Database:
             # Create actor_obj and append to the list
             actor_obj = {
                 "name": acc[1],  # Assuming acc[1] is the account's name
-                "exp": actor["stats"][
-                    "exp"
-                ],  # Extract experience points from actor stats
+                "exp": actor["stats"]["exp"],  # Extract experience points from actor stats
                 "lvl": actor["stats"]["lvl"],  # Extract level from actor stats
                 "date_of_creation": actor["meta_data"]["date_of_creation"],
                 "date_of_last_login": actor["meta_data"]["date_of_last_login"],
@@ -340,34 +328,29 @@ class Database:
 
         self.cursor.execute(
             """
-            INSERT INTO stats (
-                actor_id, hp_max, hp,
-                phy_armor, mag_armor, phy_armor_max, mag_armor_max, grit, flow, mind, soul,
-                exp, lvl, pp
-            ) VALUES (
-                :actor_id, :hp_max, :hp,
-                :phy_armor, :mag_armor, :phy_armor_max, :mag_armor_max, :grit, :flow, :mind, :soul,
-                :exp, :lvl, :pp
+            DELETE FROM stats WHERE actor_id = ?
+            """,
+                (actor_id,),
             )
-            ON CONFLICT(actor_id) DO UPDATE SET
-                hp_max = excluded.hp_max,
 
-                hp = excluded.hp,
+        for stat in my_dict:
+            
+            key = stat
+            val = my_dict[key]
+            _dic = {}
+            _dic['actor_id'] = actor_id
+            _dic['stat_name'] = stat
+            _dic['stat_value'] = my_dict[key]
 
-                phy_armor = excluded.phy_armor,
-                mag_armor = excluded.mag_armor,
-                phy_armor_max = excluded.phy_armor_max,
-                mag_armor_max = excluded.mag_armor_max,
-                grit = excluded.grit,
-                flow = excluded.flow,
-                mind = excluded.mind,
-                soul = excluded.soul,
-                exp = excluded.exp,
-                lvl = excluded.lvl,
-                pp = excluded.pp
-        """,
-            my_dict,
-        )
+            self.cursor.execute(
+                """
+                INSERT INTO stats (
+                    actor_id, stat_name, stat_value
+                ) VALUES (
+                    :actor_id, :stat_name, :stat_value
+                )""",
+                _dic,
+            )
 
         my_dict = {}
         my_dict["actor_id"] = actor_id
@@ -673,7 +656,7 @@ class Database:
             (actor_id,),
         )
 
-        stats = self.cursor.fetchone()
+        stats = self.cursor.fetchall()
         # systems.utils.debug_print('stats',stats)
 
         self.cursor.execute(
@@ -781,23 +764,10 @@ class Database:
             "time_in_game": dates[2],
         }
 
-        my_dict["stats"] = {
-            "hp_max": stats[1],
-            #'mp_max': stats[2],
-            "hp": stats[2],
-            #'mp': stats[4],
-            "grit": stats[3],
-            "flow": stats[4],
-            "mind": stats[5],
-            "soul": stats[6],
-            "phy_armor": stats[7],
-            "mag_armor": stats[8],
-            "phy_armor_max": stats[9],
-            "mag_armor_max": stats[10],
-            "exp": stats[11],
-            "lvl": stats[12],
-            "pp": stats[13],
-        }
+        my_dict['stats'] = {}
+        for stat in stats:
+            my_dict["stats"][stat[1]] = stat[2]
+            
 
         my_dict["inventory"] = {}
         for item in inventory:

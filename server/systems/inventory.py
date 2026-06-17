@@ -1,5 +1,6 @@
 import systems.utils
 from configuration.constants.actor_status_type import ActorStatusType
+from configuration.constants.stat_type import StatType
 #from configuration.constants.item_type import ItemType
 from items.manager import load_item
 from systems.quest import OBJECTIVE_TYPES, ObjectiveCountProposal
@@ -136,10 +137,17 @@ class InventoryManager:
     def __init__(self, owner, limit=20 * 1):
         self.owner = owner
         self.triggerable_manager = TriggerableManager(self)
-        self.limit = limit
+        #self.get_inventory_limit() = limit
         self.base_limit = limit
         self.items = {}
         self.can_pick_up_anything = False
+
+    def get_inventory_limit(self):
+        limit = self.base_limit
+        if hasattr(self.owner, 'stat_manager'):
+            limit += self.owner.stat_manager.stats[StatType.INVSLOTS]
+            limit -= self.owner.stat_manager.stats[StatType.FATIGUE]
+        return limit
 
     # forward to triggerable manager
     def set_turn(self):
@@ -184,7 +192,7 @@ class InventoryManager:
         return len(self.items)
 
     def get_amount_of_free_item_slots(self):
-        return self.limit - len(self.items)
+        return self.get_inventory_limit() - len(self.items)
 
     def is_empty(self):
         if len(self.items) == 0:
@@ -248,7 +256,7 @@ class InventoryManager:
                 return True
 
         if not forced:
-            if len(self.items) >= self.limit:
+            if len(self.items) >= self.get_inventory_limit():
                 return False
 
         self.items[item.id] = item

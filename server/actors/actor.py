@@ -44,6 +44,7 @@ class ActorStatManager:
             StatType.MIND: 10 * 1,
             StatType.SOUL: 10 * 1,
             StatType.INVSLOTS: 0,
+            StatType.FATIGUE: 0,
             StatType.LVL: 0,
             StatType.EXP: 0,
             StatType.PP: 0,
@@ -829,7 +830,17 @@ class Actor:
             t.add_data("")
 
             t.add_data(StatType.name[StatType.INVSLOTS] + ":")
-            t.add_data(f"{self.stat_manager.stats[StatType.INVSLOTS]+20}")
+
+            bonus_string_fatigue = ''
+            fat = self.stat_manager.stats[StatType.FATIGUE]
+            if fat >= 1:
+                bonus_string_fatigue = f'(-{fat} from {StatType.name[StatType.FATIGUE]})'
+
+            bonus_from_bag = self.stat_manager.stats[StatType.INVSLOTS]
+            if bonus_from_bag >= 1:
+                bonus_string_bag = f'(+{bonus_from_bag} from items)' 
+                
+            t.add_data(f"{bonus_from_bag+20-fat} {bonus_string_bag} {bonus_string_fatigue}")
             t.add_data("")
             t.add_data("")
 

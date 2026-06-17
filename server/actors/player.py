@@ -425,6 +425,13 @@ class Player(Actor):
 
     def die(self, unload=False):
         super().die(unload=False)
+
+        '''
+        self.stat_manager.stats[StatType.FATIGUE] += 3
+        if self.stat_manager.stats[StatType.FATIGUE] >= 12:
+            self.stat_manager.stats[StatType.FATIGUE] = 12
+        ''' 
+
         #lost_exp = int(self.stat_manager.stats[StatType.EXP] * 0.025)
         #self.collect_lost_exp_rooms[self.room.id] = lost_exp
         #self.gain_exp(-lost_exp)
@@ -543,6 +550,15 @@ class Player(Actor):
         return
 
     def gain_exp(self, exp):
+
+        if self.stat_manager.stats[StatType.FATIGUE] >= 1:
+            self.stat_manager.stats[StatType.FATIGUE] -= 1
+            if self.stat_manager.stats[StatType.FATIGUE] >= 1:
+                self.send_line(f'{Color.GOOD}You lost one fatigue{Color.NORMAL}')
+            else:
+               self.send_line(f'{Color.GOOD}You are no longer fatigued{Color.NORMAL}')
+
+
         exp = self.inventory_manager.gain_exp(exp)
         
         self.stat_manager.stats[StatType.EXP] += exp

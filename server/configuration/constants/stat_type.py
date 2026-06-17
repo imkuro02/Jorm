@@ -15,9 +15,7 @@ class StatType:
     LVL =       'lvl'
     PP =        'pp'
     INVSLOTS = 'inv_slots'
-
-
-    # not saved in db
+    FATIGUE = 'fatigue'
     THREAT =    'threat'
     INITIATIVE = 'initiative'
 
@@ -41,8 +39,8 @@ class StatType:
         PP:     'Practice Points',
 
         INVSLOTS: 'Bag Space',
+        FATIGUE: 'Fatigue',
 
-        # not saved in db
         THREAT: 'Threat',
         INITIATIVE: 'Initiative'
     }

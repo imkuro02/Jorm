@@ -510,7 +510,12 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
             # self.actor.date_of_last_login = actor['meta_data']['date_of_last_login']
 
-            self.actor.stat_manager.stats.update(actor["stats"])
+            for stat in self.actor.stat_manager.stats:
+                if stat not in actor['stats']:
+                    systems.utils.debug_print(stat, 'stat is missing while loading')
+                    continue
+                self.actor.stat_manager.stats[stat] = actor['stats'][stat]
+
             self.actor.skill_manager.skills = actor["skills"]
             # remove removed skills
             tmp = copy.deepcopy(self.actor.skill_manager.skills)

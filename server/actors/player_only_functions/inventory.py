@@ -343,9 +343,9 @@ def command_sort(self, line):
 def command_inventory(self, line):
     columns = 1
     items = self.inventory_manager.item_count()
-    if self.inventory_manager.limit >= 21:
+    if self.inventory_manager.get_inventory_limit() >= 21:
         columns = 2
-    if self.inventory_manager.limit >= 41:
+    if self.inventory_manager.get_inventory_limit() >= 41:
         columns = 3
     columns = 1
     t = systems.utils.Table(columns)
@@ -374,7 +374,7 @@ def command_inventory(self, line):
         self.inventory_manager.items[i].new = False
 
     """
-    free_slot_amount = self.inventory_manager.limit - len(self.inventory_manager.items)
+    free_slot_amount = self.inventory_manager.get_inventory_limit() - len(self.inventory_manager.items)
     if free_slot_amount > 0:
         for i in range(0, free_slot_amount):
             t.add_data(f'{num:2}. ---')
@@ -382,7 +382,7 @@ def command_inventory(self, line):
     """
 
     self.send_line(
-        f"You carry ({self.inventory_manager.item_count()}/{self.inventory_manager.limit}):\n"
+        f"You carry ({self.inventory_manager.item_count()}/{self.inventory_manager.get_inventory_limit()}):\n"
         + t.get_table()
     )
 

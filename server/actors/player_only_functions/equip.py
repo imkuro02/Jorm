@@ -86,10 +86,10 @@ def inventory_equip(self, item, forced=False):
             # self.stat_manager.stats[stat_name] += stat_val
             # systems.utils.debug_print(self.stat_manager.stats[stat_name])
 
-        self.inventory_manager.limit = (
-            self.inventory_manager.base_limit
-            + self.stat_manager.stats[StatType.INVSLOTS]
-        )
+        #self.inventory_manager.get_inventory_limit() = (
+        #    self.inventory_manager.base_limit
+        #    + self.stat_manager.stats[StatType.INVSLOTS]
+        #)
 
         for skill in item.skill_manager.skills:
             self.skill_manager.learn(skill, item.skill_manager.skills[skill])
@@ -140,10 +140,10 @@ def inventory_unequip(self, item, silent=False):
             # if stat_name == StatType.MAGARMORMAX: self.stat_manager.stats[StatType.MAGARMOR] -= stat_val
             # self.stat_manager.stats[stat_name] -= stat_val
 
-        self.inventory_manager.limit = (
-            self.inventory_manager.base_limit
-            + self.stat_manager.stats[StatType.INVSLOTS]
-        )
+        #self.inventory_manager.get_inventory_limit() = (
+        #    self.inventory_manager.base_limit
+        #    + self.stat_manager.stats[StatType.INVSLOTS]
+        #)
 
         for skill in item.skill_manager.skills:
             self.skill_manager.unlearn(skill, item.skill_manager.skills[skill])
