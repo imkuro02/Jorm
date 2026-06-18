@@ -1,7 +1,7 @@
 import telnetlib3 as telnetlib
 import time
 import random
-HOST = "localhost"
+HOST = "jorm"
 PORT = 4001
 COMMANDS = [
 "guest",

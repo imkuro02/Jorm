@@ -398,6 +398,10 @@ class World:
         for i in self.rooms:
             rooms.append(self.rooms[i])
         for i in rooms:
+            if len(i.actors) > 10:
+                if self.factory.ticks_passed % len(i.actors) == 0:
+                    continue
+
             ##if i.name.lower() == 'South-west corner'.lower():
             #    systems.utils.debug_print(i.id)
             #    for x in i.actors.values():

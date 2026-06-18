@@ -367,7 +367,10 @@ class Room:
         return desc
 
     def tick(self):
+
         actors = {}
+        
+
         if not self.is_an_instance():
             if self.spawner != None:
                 self.spawner.tick()
