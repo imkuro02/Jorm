@@ -303,6 +303,10 @@ class UpdateChecker:
             {"hour": time["hour"], "minute": time["minute"]}, "Time"
         )
 
+    def map_tick(self):
+        _map = self.actor.command_map("", return_gmcp = True)
+        self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "MAP")
+
     def tick(self):
         if self.actor == None:
             return
@@ -311,16 +315,18 @@ class UpdateChecker:
             return
 
         self.tick_send_exp()
+        self.tick_send_time()
 
         _split = '********************************************************************************' 
 
         # limit this somehow
         if self.actor.status != ActorStatusType.FIGHTING:
-            _map = _split + '\n' + self.actor.show_prompts(
-                order=self.actor.room.actors.values(),
-                no_predictions=True,
-                return_gmcp=True,
-            ) + _split
+            _map = _split
+            #_map = _split + '\n' + self.actor.show_prompts(
+            #    order=self.actor.room.actors.values(),
+            #    no_predictions=True,
+            #    return_gmcp=True,
+            #) + _split
         else:
             _map = _split + '\n' + self.actor.show_prompts(
                 order=None, no_predictions=False, return_gmcp=True
@@ -332,16 +338,13 @@ class UpdateChecker:
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
         
-        _map = self.actor.command_map("", return_gmcp = True)
-        self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "MAP")
-
         self.actor.protocol.send_gmcp(self.actor.status, "ACTOR_STATUS")
 
         #_look = self.actor.command_look("", return_gmcp=True)
         #self.actor.protocol.send_gmcp(systems.utils.add_color(_look), "ROOM_DESCRIPTIONS")
 
-        # self.tick_show_map()
-        self.tick_send_time()
+        #self.tick_show_map()
+        
 
 
 class Player(Actor):

@@ -1053,6 +1053,6 @@ def new_room_look(self):
         self.command_look("", short = self.settings_manager.get_value(SETTINGS.SHORT_ROOM_DESCRIPTIONS))
     if self.settings_manager.get_value(SETTINGS.VIEW_MAP):
         self.command_map("")
-        self.update_checker.tick()
+        self.update_checker.map_tick()
     if self.protocol.enabled_gmcp:
-        self.update_checker.tick()
+        self.update_checker.map_tick()

@@ -930,27 +930,30 @@ class Actor:
         self.set_base_threat()
 
     def tick(self):
-       if self.status == ActorStatusType.NORMAL:
-            # every 60 seconds, one affliction tick passes
-            if self.factory.ticks_passed % (30 * 60) == 0:
-                self.finish_turn(force_cooldown=True)
+        if self.status != ActorStatusType.NORMAL:
+            return
 
-            # every 1 second, one heal tick passes
-            if self.factory.ticks_passed % (30 * 1) == 0:
-                if self.room == None:
-                    return
-                if self.room.combat == None:
-                    if self.status == ActorStatusType.DEAD:
-                        return
+        # every 60 seconds, one affliction tick passes
+        if self.factory.ticks_passed % (30 * 60) == 0:
+            self.finish_turn(force_cooldown=True)
 
-                    # if any debuffs then dont heal
-                    for val in self.affect_manager.affects.values():
-                        if val.dispellable and val.resisted_by != None:
-                            return
-                    #self.heal(value=self.stat_manager.stats[StatType.LVL] * 1)
-                    self.heal(value = 1, heal_armor = False, heal_marmor = False)
-                    self.heal(value = 30, heal_hp = False)
-                    return
+        # every 1 second, one heal tick passes
+        if self.factory.ticks_passed % (30 * 1) != 0:
+            return
+        if self.room == None:
+            return
+        if self.room.combat == None:
+            if self.status == ActorStatusType.DEAD:
+                return
+
+        # if any debuffs then dont heal
+        for val in self.affect_manager.affects.values():
+            if val.dispellable and val.resisted_by != None:
+                return
+        #self.heal(value=self.stat_manager.stats[StatType.LVL] * 1)
+        self.heal(value = 1, heal_armor = False, heal_marmor = False)
+        self.heal(value = 30, heal_hp = False)
+        return
         
 
     def gain_exp(self, exp):
@@ -1255,6 +1258,8 @@ class Actor:
                 _list = self.room.combat.participants.values()
             else:
                 _list = order
+
+            _list = list(_list)[:3]
 
             for par in _list:
                 if par.status == ActorStatusType.DEAD:

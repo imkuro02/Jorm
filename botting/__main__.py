@@ -5,7 +5,7 @@ HOST = "localhost"
 PORT = 4001
 COMMANDS = [
 "guest",
-"n","e","e","e","e","go c",
+"n","e","e","e","e","go c","n","e","e","e","e","go c","n","e","e","e","e","go c","n","e","e","e","e","go c","n","e","e","e","e","go c",
 "say cheese"
 ]
 DELAY = 0.2  # seconds between each run
@@ -24,3 +24,6 @@ if __name__ == "__main__":
     while True:
         send_telnet_command()
         time.sleep(DELAY)
+
+
+# seq 100 | xargs -n1 -P100 python3 .
