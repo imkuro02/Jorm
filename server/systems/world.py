@@ -394,26 +394,29 @@ class World:
 
         self.rooms_to_unload = []
 
+        
+
+        
+
+    def tick(self):
+        self.game_time.tick()
+        if self.factory.ticks_passed % 600 == 0:
+            self.unload_rooms()
+            systems.utils.unload_fr()
+
         rooms = []
         for i in self.rooms:
             rooms.append(self.rooms[i])
         for i in rooms:
-            if len(i.actors) > 10:
-                if self.factory.ticks_passed % len(i.actors) == 0:
-                    continue
+            #if len(i.actors) > 10:
+            #    if self.factory.ticks_passed % len(i.actors) == 0:
+            #        continue
 
             ##if i.name.lower() == 'South-west corner'.lower():
             #    systems.utils.debug_print(i.id)
             #    for x in i.actors.values():
             #        systems.utils.debug_print('>', x.name)
             i.tick()
-
-        
-
-    def tick(self):
-        self.game_time.tick()
-        self.unload_rooms()
-        systems.utils.unload_fr()
 
 
 from actors import ai

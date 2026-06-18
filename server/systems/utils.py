@@ -157,6 +157,7 @@ def unload_fr():
 
 def generate_name():
     names = [
+        "Electro",
         "Auxy",
         "Niymiae",
         "Tanni",
@@ -383,14 +384,9 @@ def print_colors():
         line = line + f"{colors[color_code]} {colors[color_code].replace('@', '@.')}  "
     return line
 
-
+"""
+_colors = copy.deepcopy(colors)
 def add_color(line, color_settings=None):
-    # return line
-    # for color_code in colors:
-    #    line = line.replace(color_code, colors[color_code])
-    # return line
-
-    _colors = copy.deepcopy(colors)
     if color_settings != None:
         for i in _colors:
             if i not in color_settings:
@@ -399,7 +395,6 @@ def add_color(line, color_settings=None):
                 continue
             # print(f'color "{i}" in settings')
             _colors[i] = color_settings[i]
-    # print(_colors)
 
     split = line.split("@")
     colors_used = []
@@ -423,6 +418,33 @@ def add_color(line, color_settings=None):
         line = line.replace("@color", _colors[col], 1)
 
     return line
+"""
+_colors = copy.deepcopy(colors)
+COLOR_PATTERN = re.compile("|".join(re.escape(c) for c in _colors))
+def add_color(line, color_settings=None):
+    colors = _colors  # local binding = faster lookup
+
+    # apply settings (small optimization: avoid repeated dict lookups)
+    if color_settings:
+        for k, v in color_settings.items():
+            if v:
+                colors[k] = v
+
+    used = []
+    back_stack = []
+
+    def repl(match):
+        code = match.group(0)
+
+        if code == "@back":
+            code = back_stack[-2] if len(back_stack) >= 2 else "@normal"
+
+        back_stack.append(code)
+        used.append(code)
+
+        return colors.get(code, "")
+
+    return COLOR_PATTERN.sub(repl, line)
 
 def add_godot_url_skill_pretty_name(identifier, skill_id):
     from configuration.config import SKILLS

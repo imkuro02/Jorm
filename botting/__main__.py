@@ -1,11 +1,11 @@
 import telnetlib3 as telnetlib
 import time
 import random
-HOST = "jorm"
+HOST = "localhost"
 PORT = 4001
 COMMANDS = [
 "guest",
-"n","e","e","e","e","go c","n","e","e","e","e","go c","n","e","e","e","e","go c","n","e","e","e","e","go c","n","e","e","e","e","go c",
+"e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e",
 "say cheese"
 ]
 DELAY = 0.2  # seconds between each run

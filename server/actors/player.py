@@ -506,7 +506,6 @@ class Player(Actor):
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
 
-        
         # if self.last_line_received == line:
         #   return
 
@@ -710,7 +709,11 @@ class Player(Actor):
             if ";" in line:
                 lines = line.split(";")
                 for l in lines:
-                    if l.lower().split()[0] in self.settings_manager.get_value(SETTINGS.ALIAS):
+                    _split_l = l.lower().split()
+                    if len(_split_l) <= 1:
+                        self.queued_lines.append(l)
+                        continue
+                    if _split_l[0] in self.settings_manager.get_value(SETTINGS.ALIAS):
                         self.send_line("An alias cannot trigger another alias")
                         continue
                     self.queued_lines.append(l)

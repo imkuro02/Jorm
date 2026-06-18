@@ -298,6 +298,9 @@ class Npc(Actor):
         return output
 
     def tick(self):
+        if not self.room.is_player_present():
+            return
+            
         super().tick()
         # try:
         if self.ai != None:
