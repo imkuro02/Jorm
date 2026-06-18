@@ -1090,6 +1090,9 @@ class Actor:
         send_to="room", sound=None, msg_type=None,
         list_pretty_name_objects = [],
     ):
+        #if len(self.room.actors) >= 10:
+        #    line_others = None
+
         if self.room == None:
                 return
 
@@ -1161,6 +1164,9 @@ class Actor:
         line_self = '', line_others = '', 
         send_to="room", sound=None, msg_type=None
     ):
+        #if len(self.room.actors) >= 10:
+        #    line_others = None
+
         if self.room == None:
             return
         
@@ -1259,7 +1265,7 @@ class Actor:
             else:
                 _list = order
 
-            _list = list(_list)[:3]
+            _list = list(_list)[:10]
 
             for par in _list:
                 if par.status == ActorStatusType.DEAD:

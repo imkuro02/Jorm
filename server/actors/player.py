@@ -318,22 +318,26 @@ class UpdateChecker:
         self.tick_send_time()
 
         _split = '********************************************************************************' 
+        _map = _split
 
         # limit this somehow
         if self.actor.status != ActorStatusType.FIGHTING:
-            _map = _split
-            #_map = _split + '\n' + self.actor.show_prompts(
-            #    order=self.actor.room.actors.values(),
-            #    no_predictions=True,
-            #    return_gmcp=True,
-            #) + _split
+            pass
+            
+            _map = _split + '\n' + self.actor.show_prompts(
+                #order=self.actor.room.actors.values(),
+                order=[self.actor],
+                no_predictions=True,
+                return_gmcp=True,
+            ) + _split
+            
         else:
             _map = _split + '\n' + self.actor.show_prompts(
                 order=None, no_predictions=False, return_gmcp=True
             ) + _split
 
-            if self.actor.status == ActorStatusType.FIGHTING:
-                _map = _map + _split + '\n' + str(self.actor.command_skills('', return_gmcp = True)) + _split
+        if self.actor.status == ActorStatusType.FIGHTING:
+            _map = _map + _split + '\n' + str(self.actor.command_skills('', return_gmcp = True)) + _split
 
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
         self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
