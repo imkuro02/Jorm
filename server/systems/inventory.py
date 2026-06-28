@@ -211,6 +211,9 @@ class InventoryManager:
 
         item.time_on_ground = 0
         
+        if self.get_amount_of_free_item_slots() <= 0:
+            return False
+
         if stack_items:
             for _i in self.items.values():
                 if item.premade_id != _i.premade_id:
@@ -338,6 +341,7 @@ class InventoryManager:
                 )
             self.items[item.id].inventory_manager = None
             del self.items[item.id]
+            return True
         if stack >= 1:
             if stack <= self.items[item.id].stack:
                 if type(self.owner).__name__ == "Player":
@@ -350,6 +354,8 @@ class InventoryManager:
                 if self.items[item.id].stack <= 0:
                     self.items[item.id].inventory_manager = None
                     del self.items[item.id]
+                return True
+        return False
 
     def split_stack(self, item, value):
         # dont split if you are trying to take more than what is there

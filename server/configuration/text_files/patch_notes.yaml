@@ -24,6 +24,8 @@ versions:
       - The hud for your health, commands and exp is now updated the instant you log in
       - Moved hud elements (prompts are under skills in combat now)
       - Target set / unset printed in correct order
+      - Room item limit increased from 20 to 50
+      - Fixed a bug where you could delete items by having a full inventory
   "150626":
     id: "150626"
     title: Items and inventory

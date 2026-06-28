@@ -287,7 +287,7 @@ class Room:
         )
         self.instanced = instanced  # is this room a private instance?
         self.doorway = doorway  # whether this room is a doorway, can you see thru it?
-        self.inventory_manager = self.inventory_manager_class(self, limit=20)
+        self.inventory_manager = self.inventory_manager_class(self, limit=50)
         self.inventory_manager.can_pick_up_anything = True
         self.combat = None  # placeholder for combat
         

@@ -225,13 +225,13 @@ class Npc(Actor):
         # if returned true, start dialog
         if not they_talk_to_you:
             talker.pretty_broadcast(
-                f"You approach {self.id}",
+                f"{talker.id} approach {self.id}",
                 f"{talker.id} approaches {self.id}",
                 list_pretty_name_objects = [self, talker]
             )
         else:
             talker.pretty_broadcast(
-                f"{self.id} approaches you",
+                f"{self.id} approaches {talker.id}",
                 f"{self.id} approaches {talker.id}",
                 list_pretty_name_objects = [self, talker]
             )
@@ -337,11 +337,11 @@ class Npc(Actor):
 
             if actor.inventory_manager.add_item(new_item):
                 actor.send_line(
-                    f"You loot {new_item.name} (1 in {self.loot[item]} chance)"
+                    f"{self.pretty_broadcast(identifier=self)} loot {new_item.name} (1 in {self.loot[item]} chance)"
                 )
             else:
                 actor.send_line(
-                    f"Your inventory is full, {new_item.name} has been dropped on the ground"
+                    f"{self.pretty_broadcast(identifier=self)}r inventory is full, {new_item.name} has been dropped on the ground"
                 )
                 room.inventory_manager.add_item(new_item)
 

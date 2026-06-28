@@ -576,11 +576,11 @@ class Player(Actor):
             self.stat_manager.stats[StatType.EXP] = 0
         if exp < 0:
             self.send_line(
-                f"You lost: {Color.BAD}" + str(abs(exp)) + f" experience{Color.BACK}"
+                f"{self.pretty_broadcast(identifier=self)} lost: {Color.BAD}" + str(abs(exp)) + f" experience{Color.BACK}"
             )
         if exp > 0:
             self.send_line(
-                f"You got: {Color.GOOD}" + str(abs(exp)) + f" experience{Color.BACK}"
+                f"{self.pretty_broadcast(identifier=self)} got: {Color.GOOD}" + str(abs(exp)) + f" experience{Color.BACK}"
             )
 
     def gain_practice_points(self, pp):

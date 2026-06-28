@@ -361,6 +361,19 @@ hint_underlined = false
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
+[node name="output" type="RichTextLabel" parent="canvas/container/output/output"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+text = "client version: 240426
+"
+meta_underlined = false
+hint_underlined = false
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+
 [node name="output_combat" type="RichTextLabel" parent="canvas/container/output"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -537,6 +550,7 @@ autoplay = true
 script = ExtResource("16_vp8dw")
 
 [node name="output" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 7.0
 offset_right = 8.0
 size_flags_horizontal = 3
@@ -552,6 +566,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="output" type="RichTextLabel" parent="output"]
+layout_mode = 0
 offset_left = 7.0
 offset_right = 8.0
 size_flags_horizontal = 3
@@ -567,6 +582,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="output2" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 7.0
 offset_right = 8.0
 size_flags_horizontal = 3
@@ -596,6 +612,9 @@ script = ExtResource("3_gkcnj")
 [connection signal="meta_clicked" from="canvas/container/output/output" to="." method="_on_output_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/container/output/output" to="." method="_on_output_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/container/output/output" to="." method="_on_output_meta_hover_started"]
+[connection signal="meta_clicked" from="canvas/container/output/output/output" to="." method="_on_output_meta_clicked"]
+[connection signal="meta_hover_ended" from="canvas/container/output/output/output" to="." method="_on_output_meta_hover_ended"]
+[connection signal="meta_hover_started" from="canvas/container/output/output/output" to="." method="_on_output_meta_hover_started"]
 [connection signal="meta_clicked" from="canvas/container/output/output_combat" to="." method="_on_output_combat_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/container/output/output_combat" to="." method="_on_output_combat_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/container/output/output_combat" to="." method="_on_output_combat_meta_hover_started"]
