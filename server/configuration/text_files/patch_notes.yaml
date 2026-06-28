@@ -14,6 +14,16 @@ versions:
   #    - Burden of Steel - All enemies guard at combat start
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
   #    - Burden of Vitality - All enemies receive 25% max health at combat start'
+  "280626":
+    id: "280626"
+    title: QOL
+    unixtime: 1775631568
+    features:
+      - Main menu changes slightly (return message is colored)
+      - Extended the asterisks splitting commands and who is fighting etc
+      - The hud for your health, commands and exp is now updated the instant you log in
+      - Moved hud elements (prompts are under skills in combat now)
+      - Target set / unset printed in correct order
   "150626":
     id: "150626"
     title: Items and inventory

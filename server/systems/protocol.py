@@ -144,6 +144,7 @@ class Protocol(protocol.Protocol):
         state_name = state.__name__
         self.send_gmcp(f"{state_name}", "GAME_STATE")
         self.send_gmcp('Menu', "ACTOR_STATUS")
+        return_msg = (' '*1)+'@bblack(type "!" to return to main menu)@normal '
         match state:
             case self.LOGIN_OR_REGISTER:
                 self.id = str(uuid.uuid4())
@@ -155,13 +156,13 @@ class Protocol(protocol.Protocol):
                 )
 
             case self.LOGIN_USERNAME:
-                self.send_line(f"Your {Color.GOOD}username{Color.BACK}:")
+                self.send_line(f"Your {Color.GOOD}username{Color.BACK}:"+return_msg)
 
             case self.RESET_USERNAME:
-                self.send_line(f"Your {Color.GOOD}username{Color.BACK}:")
+                self.send_line(f"Your {Color.GOOD}username{Color.BACK}:"+return_msg)
 
             case self.LOGIN_PASSWORD:
-                self.send_line(f"Your {Color.GOOD}password{Color.BACK}:")
+                self.send_line(f"Your {Color.GOOD}password{Color.BACK}:"+return_msg)
 
             case self.REGISTER_USERNAME:
                 self.send_line(
@@ -766,8 +767,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        if "LOGIN" in self.state.__name__ or "REGISTER" in self.state.__name__:
-            self.send_line('type "!" to return to main menu')
+        #if "LOGIN" in self.state.__name__ or "REGISTER" in self.state.__name__:
+        #    self.send_line('type "!" to return to main menu')
 
         self.state(line)
         return

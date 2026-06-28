@@ -15,6 +15,7 @@ from configuration.constants.bonus_type import BonusType
 from items.misc import Item
 from systems.utils import Table
 import copy
+
 class EquipSkillManager:
     def __init__(self, item):
         self.item = item

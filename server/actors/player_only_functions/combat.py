@@ -485,8 +485,9 @@ def command_target(self, line, slinet = False):
         self.send_line('Target unset')
         return
     if tar != None:
-        self.ai.target = tar
         self.send_line(f'Target set to {tar.pretty_name(self)}')
+        self.ai.target = tar
+
         return tar
 
     tar = self.get_item(line, search_mode = "self_and_room")
@@ -497,8 +498,9 @@ def command_target(self, line, slinet = False):
     return None
     if tar != None:
         tar = tar[0]
-        self.ai.target = tar
         self.send_line(f'Target set to {tar.pretty_name(self)}')
+        self.ai.target = tar
+        
         return tar
 
     self.ai.target = None

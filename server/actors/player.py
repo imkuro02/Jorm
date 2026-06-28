@@ -25,6 +25,8 @@ from configuration.constants.stat_type import StatType
 from systems.trade import TradeManager
 from systems.utils import unload
 
+_len = len('**********************************************************************************')
+
 
 class FriendManager:
     def __init__(self, owner):
@@ -317,14 +319,14 @@ class UpdateChecker:
         self.tick_send_exp()
         self.tick_send_time()
 
-        _split = '********************************************************************************' 
+        _split = '-' * _len
         _map = _split
 
         # limit this somehow
         if self.actor.status != ActorStatusType.FIGHTING:
-            pass
             
-            _map = _split + '\n' + self.actor.show_prompts(
+            
+            _map += '\n' + self.actor.show_prompts(
                 #order=self.actor.room.actors.values(),
                 order=[self.actor],
                 no_predictions=True,
@@ -332,15 +334,16 @@ class UpdateChecker:
             ) + _split
             
         else:
-            _map = _split + '\n' + self.actor.show_prompts(
+            _map += str(self.actor.command_skills('', return_gmcp = True)) + _split
+            _map += '\n' + self.actor.show_prompts(
                 order=None, no_predictions=False, return_gmcp=True
             ) + _split
 
-        if self.actor.status == ActorStatusType.FIGHTING:
-            _map = _map + _split + '\n' + str(self.actor.command_skills('', return_gmcp = True)) + _split
+        #if self.actor.status == ActorStatusType.FIGHTING:
+        #    _map = _map + '\n' + str(self.actor.command_skills('', return_gmcp = True)) + _split
 
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
-        self.actor.protocol.send_gmcp(systems.utils.add_color(_map), "OUTPUT_COMBAT")
+        self.actor.protocol.send_gmcp(systems.utils.add_color(_map)+'\n'+_split, "OUTPUT_COMBAT")
         
         self.actor.protocol.send_gmcp(self.actor.status, "ACTOR_STATUS")
 
@@ -395,6 +398,7 @@ class Player(Actor):
 
         self.loaded = True
 
+        self.update_checker.tick()
     def add_tracked_npcs_killed(self, npc_id, amount):
         if npc_id in self.tracked_npcs_killed:
             self.tracked_npcs_killed[npc_id] += amount

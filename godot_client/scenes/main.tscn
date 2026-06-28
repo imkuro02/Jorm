@@ -536,6 +536,51 @@ volume_db = -15.0
 autoplay = true
 script = ExtResource("16_vp8dw")
 
+[node name="output" type="RichTextLabel" parent="."]
+offset_left = 7.0
+offset_right = 8.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+text = "client version: 240426
+"
+meta_underlined = false
+hint_underlined = false
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+
+[node name="output" type="RichTextLabel" parent="output"]
+offset_left = 7.0
+offset_right = 8.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+text = "client version: 240426
+"
+meta_underlined = false
+hint_underlined = false
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+
+[node name="output2" type="RichTextLabel" parent="."]
+offset_left = 7.0
+offset_right = 8.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+text = "client version: 240426
+"
+meta_underlined = false
+hint_underlined = false
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+
 [connection signal="meta_clicked" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_started"]
@@ -557,3 +602,12 @@ script = ExtResource("16_vp8dw")
 [connection signal="meta_clicked" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_hover_started"]
+[connection signal="meta_clicked" from="output" to="." method="_on_output_meta_clicked"]
+[connection signal="meta_hover_ended" from="output" to="." method="_on_output_meta_hover_ended"]
+[connection signal="meta_hover_started" from="output" to="." method="_on_output_meta_hover_started"]
+[connection signal="meta_clicked" from="output/output" to="." method="_on_output_meta_clicked"]
+[connection signal="meta_hover_ended" from="output/output" to="." method="_on_output_meta_hover_ended"]
+[connection signal="meta_hover_started" from="output/output" to="." method="_on_output_meta_hover_started"]
+[connection signal="meta_clicked" from="output2" to="." method="_on_output_meta_clicked"]
+[connection signal="meta_hover_ended" from="output2" to="." method="_on_output_meta_hover_ended"]
+[connection signal="meta_hover_started" from="output2" to="." method="_on_output_meta_hover_started"]

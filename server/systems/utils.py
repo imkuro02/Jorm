@@ -494,7 +494,7 @@ def add_godot_url_fight_etc(object, identifier, output):
             _o += f'[url={__o}]{"Char ":<{spaces}}[/url]'
             _o += f'[url=Rest->rest,]{"Rest ":<{spaces}}[/url]'
             _o += f'[url=Log Out->set logout,]{"Quit ":<{spaces}}[/url]'
-            return output + '\n' + _o  
+            return output + '\n' + _o
 
     return output
 
@@ -590,6 +590,15 @@ def add_godot_url_actors(object, identifier, output):
 
             output = f'[url={url}]{output}[/url]'
             #print(output)
+            return output
+    return output
+
+def add_godot_url_actor_yourself(object, identifier, output):
+    if identifier != None:
+        if identifier.protocol.enabled_godot:
+            url = ''
+            url += f'Target Yourself->target {object.id},'
+            output = f'[url={url}]{output}[/url]'
             return output
     return output
 

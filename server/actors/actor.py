@@ -582,7 +582,7 @@ class Actor:
 
     def talk_to(self, talker, they_talk_to_you = False):
         if talker.current_dialog != None:
-            talker.send_line("You are already conversing")
+            talker.send_line(f"{talker.pretty_name(identifier=talker)} are already conversing")
             return False
         if self.dialog_tree == None:
             talker.send_line("There is nothing to talk about")
@@ -591,22 +591,27 @@ class Actor:
 
     def pretty_name(self, identifier = None):
         output = ""
+        name = self.name if identifier != self else 'You'
 
         match type(self).__name__:
             case "Player":
                 if self.admin:
-                    output = output + f"{Color.NAME_ADMIN}{self.name}{Color.BACK}"
+                    output = output + f"{Color.NAME_ADMIN}{name}{Color.BACK}"
                 else:
-                    output = output + f"{Color.NAME_PLAYER}{self.name}{Color.BACK}"
+                    output = output + f"{Color.NAME_PLAYER}{name}{Color.BACK}"
                 #output = output + f' (ego{self.settings_manager.get_value("ego")})'
             case _:
-                output = output + f"{Color.NORMAL}{self.name}{Color.BACK}"
+                output = output + f"{Color.NORMAL}{name}{Color.BACK}"
 
         if identifier != None:
             if identifier.ai.target == self:
                 output = f'@normal(target) {output}'
                 
-        output = systems.utils.add_godot_url_actors(self, identifier, output)
+        if self == identifier:
+            output = systems.utils.add_godot_url_actor_yourself(self, identifier, output)
+        else:
+            output = systems.utils.add_godot_url_actors(self, identifier, output)
+
         # if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
         # output = output + f'{self.party_manager.get_party_id()}'
@@ -1281,11 +1286,17 @@ class Actor:
                 new_line = " "  #'\n{_len}'
 
                 if par == self:
+                    #if _prediction.strip() == "":
+                    #    output += _prompt + " " + "You" + f" " + _prediction + "\n"
+                    #else:
+                    #    output += (
+                    #        _prompt + " " + "You" + f"{new_line}" + _prediction + "\n"
+                    #    )
                     if _prediction.strip() == "":
-                        output += _prompt + " " + "You" + f" " + _prediction + "\n"
+                        output += _prompt + " " + par.pretty_name(identifier = self) + f" " + _prediction + "\n"
                     else:
                         output += (
-                            _prompt + " " + "You" + f"{new_line}" + _prediction + "\n"
+                            _prompt + " " + par.pretty_name(identifier = self) + f"{new_line}" + _prediction + "\n"
                         )
                 else:
                     if _prediction.strip() == "":
