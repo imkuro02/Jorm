@@ -36,3 +36,55 @@ UNION ALL
 SELECT actor_id, 'pp', pp FROM stats_old;
 
 DROP TABLE stats_old;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Create the new table without the UNIQUE constraint
+CREATE TABLE actors_new (
+    unique_id TEXT NOT NULL,
+    actor_id TEXT PRIMARY KEY NOT NULL,
+    actor_name TEXT NOT NULL,
+    actor_recall_site TEXT NOT NULL,
+    actor_date_of_creation INT NOT NULL,
+    actor_date_of_last_login INT NOT NULL,
+    actor_time_in_game INT NOT NULL,
+    FOREIGN KEY(unique_id) REFERENCES users(unique_id)
+);
+
+-- Copy existing data
+INSERT INTO actors_new (
+    unique_id,
+    actor_id,
+    actor_name,
+    actor_recall_site,
+    actor_date_of_creation,
+    actor_date_of_last_login,
+    actor_time_in_game
+)
+SELECT
+    unique_id,
+    actor_id,
+    actor_name,
+    actor_recall_site,
+    actor_date_of_creation,
+    actor_date_of_last_login,
+    actor_time_in_game
+FROM actors;
+
+-- Replace the old table
+DROP TABLE actors;
+ALTER TABLE actors_new RENAME TO actors;

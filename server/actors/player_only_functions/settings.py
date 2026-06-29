@@ -25,6 +25,7 @@ class SETTINGS:
     DEBUG = "Debug"
     PWD = "Password"
     USR = "Username"  # not in LIST_SETTINGS
+    NAME = 'Name'
     EMAIL = "Email"
     AUTO_BATTLER = "AutoBattler"
     SHORT_ROOM_DESCRIPTIONS = 'Brief'
@@ -47,6 +48,7 @@ class SETTINGS:
         DEBUG,
         PWD,
         USR,
+        NAME,
         EMAIL,
         PROMPT,
         AUTO_BATTLER,
@@ -146,14 +148,15 @@ class Settings:
         self.settings = {}
 
     def true_or_false(self, value):
-        if value.lower() in LIST_ON:
+        _value = str(value)
+        if _value.lower() in LIST_ON:
             return True
-        if value.lower() in LIST_OFF:
+        if _value.lower() in LIST_OFF:
             return False
         return False
 
     def true_or_false_or_str(self, value):
-        _value = value
+        _value = str(value)
         if _value.lower() in LIST_ON:
             return True
         if _value.lower() in LIST_OFF:
@@ -355,57 +358,68 @@ class Settings:
                 proto.unload_actor()
                 proto.change_state(proto.LOGIN_OR_REGISTER)
 
-            case SETTINGS.USR:
-                proto = self.actor.protocol
-                password = proto.password
-                username = " ".join(original_line.split()[1:])
-                succ = proto.register_account_changes(username, password)
-                if succ and proto.guest:
-                    proto.guest = False
-                    proto.actor.send_line(
-                        f'{Color.GOOD}This account is no longer a guest account\n{Color.IMPORTANT}REMEMBER: You should set a password with "settings password <new password>"{Color.NORMAL}'
-                    )
-
-            case SETTINGS.PWD:
-                proto = self.actor.protocol
-                if proto.guest:
-                    proto.actor.send_line(
-                        f"{Color.BAD}You are currently a guest, you need to set a new username before changing your password{Color.NORMAL}"
-                    )
-                    return
-
-                password = " ".join(original_line.split()[1:])
-                username = proto.username
-                # proto.guest = False
-                proto.register_account_changes(username, password)
-
-            case SETTINGS.EMAIL:
-                proto = self.actor.protocol
-                if proto.guest:
-                    proto.actor.send_line(
-                        f"{Color.BAD}You are currently a guest, you need to set a new username before changing your email{Color.NORMAL}"
-                    )
-                    return
-
-                # print(original_line)
-                email = " ".join(original_line.split()[1:])
-                if email == "":
-                    if SETTINGS.EMAIL in self.settings:
-                        self.actor.send_line(
-                            f'Your current email is "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".'
+                """
+                case SETTINGS.USR:
+                    proto = self.actor.protocol
+                    password = proto.password
+                    username = " ".join(original_line.split()[1:])
+                    succ = proto.register_account_changes(username, password)
+                    if succ and proto.guest:
+                        proto.guest = False
+                        proto.actor.send_line(
+                            f'{Color.GOOD}This account is no longer a guest account\n{Color.IMPORTANT}REMEMBER: You should set a password with "settings password <new password>"{Color.NORMAL}'
                         )
-                    else:
-                        self.actor.send_line(
-                            f'You dont have email set, please set your email with "{Color.GOOD}settings email [your@email.com]{Color.NORMAL}".'
+                        
+                case SETTINGS.PWD:
+                    proto = self.actor.protocol
+                    if proto.guest:
+                        proto.actor.send_line(
+                            f"{Color.BAD}You are currently a guest, you need to set a new username before changing your password{Color.NORMAL}"
                         )
+                        return
+
+                    password = " ".join(original_line.split()[1:])
+                    username = proto.username
+                    # proto.guest = False
+                    proto.register_account_changes(username, password)
+
+                
+
+                case SETTINGS.EMAIL:
+                    proto = self.actor.protocol
+                    if proto.guest:
+                        proto.actor.send_line(
+                            f"{Color.BAD}You are currently a guest, you need to set a new username before changing your email{Color.NORMAL}"
+                        )
+                        return
+
+                    # print(original_line)
+                    email = " ".join(original_line.split()[1:])
+                    if email == "":
+                        if SETTINGS.EMAIL in self.settings:
+                            self.actor.send_line(
+                                f'Your current email is "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".'
+                            )
+                        else:
+                            self.actor.send_line(
+                                f'You dont have email set, please set your email with "{Color.GOOD}settings email [your@email.com]{Color.NORMAL}".'
+                            )
+                        return
+                    self.settings[SETTINGS.EMAIL] = email
+                    password = proto.password
+                    username = proto.username
+                    succ = proto.register_account_changes(username, password)
+                    self.actor.send_line(
+                        f'Your email is now "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".'
+                    )
+                """
+
+            case SETTINGS.NAME:
+                _name = line[1]
+                succ = self.actor.protocol.try_this_actor_name(_name)
+                if not succ:
                     return
-                self.settings[SETTINGS.EMAIL] = email
-                password = proto.password
-                username = proto.username
-                succ = proto.register_account_changes(username, password)
-                self.actor.send_line(
-                    f'Your email is now "{Color.GOOD}{self.settings[SETTINGS.EMAIL]}{Color.NORMAL}".'
-                )
+                self.actor.name = _name
 
             case SETTINGS.PROMPT:
                 prompt = " ".join(original_line.split()[1:])

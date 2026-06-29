@@ -28,7 +28,7 @@ class Database:
 
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS actors (
-            unique_id TEXT UNIQUE NOT NULL,
+            unique_id TEXT NOT NULL,
             actor_id TEXT PRIMARY KEY NOT NULL,
             actor_name TEXT NOT NULL,
             actor_recall_site TEXT NOT NULL,
@@ -183,6 +183,55 @@ class Database:
         to_return = self.cursor.fetchone()
         return to_return
 
+    def find_all_actors(self):
+        self.cursor.execute(
+            """
+                SELECT actor_id FROM actors
+            """
+        )
+
+        actors = self.cursor.fetchall()
+        actor_objs = []
+        # Iterate through each account and create the actor object
+        for acc in actors:
+            # Fetch account details
+            actor = self.read_actor(
+                actor_id = acc[0]
+            )  # Assuming acc[0] is the account ID or relevant identifier
+            # 'quests': {'tutorial_1': {'Get a corpse': 0, 'turned_in': 1}
+            if actor == None:
+                continue
+
+            # Create actor_obj and append to the list
+            actor_obj = {
+                "name": actor["actor_name"],
+                "exp": actor["stats"]["exp"],  # Extract experience points from actor stats
+                "lvl": actor["stats"]["lvl"],  # Extract level from actor stats
+                "date_of_creation": actor["meta_data"]["date_of_creation"],
+                "date_of_last_login": actor["meta_data"]["date_of_last_login"],
+                "time_in_game": actor["meta_data"]["time_in_game"],
+                #'quests_turned_in': len([q for q in actor['quests'] if actor['quests'][q]['turned_in'] == 1])
+                "quests_turned_in": len(
+                    [
+                        q
+                        for q in actor["quests"]
+                        if actor["quests"][q]["turned_in"]["count"] == 1
+                        and q != "daily_quest"
+                    ]
+                ),
+                "explored_rooms": len([q for q in actor["explored_rooms"]]),
+            }
+            # systems.utils.debug_print(actor['quests'], actor['quests'].values())
+            actor_objs.append(actor_obj)
+
+        # Sort actor_objs list from most experience to least experience
+        sorted_actor_objs = sorted(actor_objs, key=lambda x: x["exp"], reverse=True)
+
+        # systems.utils.debug_print the sorted list of actor objects
+        # for actor in sorted_actor_objs:
+        #    systems.utils.debug_print(actor)
+        return sorted_actor_objs
+
     def find_all_accounts(self):
         self.cursor.execute(
             """
@@ -253,7 +302,7 @@ class Database:
         my_dict = {}
         my_dict["unique_id"] = actor.protocol.id
         my_dict["actor_id"] = actor_id
-        my_dict["actor_name"] = actor.protocol.username
+        my_dict["actor_name"] = actor.name
         my_dict["actor_recall_site"] = actor.recall_site
         my_dict["actor_date_of_creation"] = actor.date_of_creation
         my_dict["actor_date_of_last_login"] = actor.date_of_last_login
@@ -264,18 +313,18 @@ class Database:
 
         self.cursor.execute(
             """
+            DELETE FROM actors WHERE actor_id = ?
+            """,
+                (actor_id,),
+        )
+
+        self.cursor.execute(
+            """
             INSERT INTO actors (
                 unique_id, actor_id, actor_name, actor_recall_site, actor_date_of_creation, actor_date_of_last_login, actor_time_in_game
             ) VALUES (
                 :unique_id, :actor_id, :actor_name, :actor_recall_site, :actor_date_of_creation, :actor_date_of_last_login, :actor_time_in_game
             )
-            ON CONFLICT(unique_id) DO UPDATE SET
-                actor_id = excluded.actor_id,
-                actor_name = excluded.actor_name,
-                actor_recall_site = excluded.actor_recall_site,
-                actor_date_of_creation = excluded.actor_date_of_creation,
-                actor_date_of_last_login = excluded.actor_date_of_last_login,
-                actor_time_in_game = excluded.actor_time_in_game
         """,
             my_dict,
         )
@@ -620,32 +669,47 @@ class Database:
         self.write_admins(actor)
         self.conn.commit()
 
-    def read_actor(self, unique_id):
+    def get_actor_ids_from_unique_id(self, unique_id):
         self.cursor.execute(
             """
             SELECT actor_id FROM actors WHERE unique_id = ?
         """,
             (unique_id,),
         )
+        actor_ids = self.cursor.fetchall()
+        if actor_ids == None:
+            actor_ids = []
+        return actor_ids
 
-        actor_id = self.cursor.fetchone()
-        if not actor_id:
-            return
-        actor_id = actor_id[0]
+    def read_actor(self, unique_id = None, actor_id = None):
+        if actor_id == None:
+
+            self.cursor.execute(
+                """
+                SELECT actor_id FROM actors WHERE unique_id = ?
+            """,
+                (unique_id,),
+            )
+
+            actor_id = self.cursor.fetchone()
+            if not actor_id:
+                return
+
+            actor_id = actor_id[0]
 
         self.cursor.execute(
             """
-            SELECT actor_name FROM actors WHERE unique_id = ?
+            SELECT actor_name FROM actors WHERE actor_id = ?
         """,
-            (unique_id,),
+            (actor_id,),
         )
         actor_name = self.cursor.fetchone()[0]
 
         self.cursor.execute(
             """
-            SELECT actor_recall_site FROM actors WHERE unique_id = ?
+            SELECT actor_recall_site FROM actors WHERE actor_id = ?
         """,
-            (unique_id,),
+            (actor_id,),
         )
         actor_recall_site = self.cursor.fetchone()[0]
 

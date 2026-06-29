@@ -67,7 +67,6 @@ class Protocol(protocol.Protocol):
         self.tick_since_last_message = self.factory.ticks_passed
 
         self.id = str(uuid.uuid4())
-        self.actor_id = None
 
     def clear_screen(self):
         self.send_line("\x1b[0m")
@@ -150,15 +149,11 @@ class Protocol(protocol.Protocol):
             case self.LOGIN_OR_REGISTER:
                 self.id = str(uuid.uuid4())
                 self.account = None
-                self.actor_id = None
                 self.username = None
                 self.password = None
                 self.send_line(
-f"""Type {Color.GOOD} new   {Color.BACK} to register.
-Type {Color.GOOD} login {Color.BACK} to log in.
-Type {Color.GOOD} reset {Color.BACK} to reset your password."""
+                    f"Type {Color.GOOD} new   {Color.BACK} to register.\nType {Color.GOOD} login {Color.BACK} to log in.\nType {Color.GOOD} reset {Color.BACK} to reset your password.\nType {Color.GOOD} guest {Color.NORMAL} to enter as guest."
                 )
-                #    \nType {Color.GOOD} guest {Color.NORMAL} to enter as guest."
 
             case self.LOGIN_USERNAME:
                 self.send_line(f"Your {Color.GOOD}username{Color.BACK}:"+return_msg)
@@ -193,7 +188,7 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
                 self.password = self.account[2]
                 delay = 0
                 for online_account in self.factory.protocols:
-                    if self.actor_id == online_account.actor_id and self != online_account:
+                    if self.id == online_account.id and self != online_account:
                         self.send_line('Logging you out of another window')
                         online_account.send_line('Logging in on another window, closing this connection')
                         delay = 30
@@ -214,32 +209,6 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
                 state = self.PLAY
                 self.before_load_actor()
 
-            case self.CHAR_SELECT:
-                if self.account == None:
-                    self.change_state(self.PLAY)
-                    return
-
-                self.account = self.factory.db.find_account_from_username(self.username)
-                self.id = self.account[0]
-                self.username = self.account[1]
-                self.password = self.account[2]
-
-                actor_ids = self.factory.db.get_actor_ids_from_unique_id(self.account[0])
-                _i = 1
-                output = 'Write your new characters name to create a character'
-                if len(actor_ids) > 0:
-                    output += '\n You can also select one from the list below:'
-                
-                self.send_line(f'Type a character name to create a new character, or select one from list below')
-                for actor_id in reversed(actor_ids):
-                    actor = self.factory.db.read_actor(actor_id = actor_id[0])
-                    self.send_line(f'   {_i}. {actor["actor_name"]}')
-                    _i += 1
-
-                self.send_line('\nType "reset" to change your username (login name) and password')
-                self.send_line('Type "!" to log out')
-
-
         self.state = state
 
     def PLAY(self, line):
@@ -257,13 +226,11 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
         return
 
     def REGISTER_USERNAME(self, line):
-        if self.username == None:
-            self.account = self.factory.db.find_account_from_username(line)
-            
-            if self.account != None:
-                self.send_line("This username is already taken")
-                self.change_state(self.REGISTER_USERNAME)
-                return
+        self.account = self.factory.db.find_account_from_username(line)
+        if self.account != None:
+            self.send_line("This username is already taken")
+            self.change_state(self.REGISTER_USERNAME)
+            return
 
         if len(line) >= 21 or len(line) <= 3:
             self.send_line("Username must be between 4 and 20 characters long")
@@ -296,8 +263,9 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
         self.factory.db.create_new_account(self.id, self.username, self.password)
         # self.send_line('Account created! you can now log in!')
         # self.change_state(self.LOGIN_OR_REGISTER)
+
         self.send_line("Account created! logging in!")
-        self.change_state(self.CHAR_SELECT)
+        self.change_state(self.PLAY)
 
     def LOGIN_PASSWORD(self, line):
         self.password = line
@@ -314,62 +282,7 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             return
 
         self.tmp_pwd = None
-        self.change_state(self.CHAR_SELECT)
-        
-
-    def try_this_actor_name(self, name):
-        _name = name
-        for char in self.factory.db.find_all_actors():
-            if char['name'] == _name:
-                self.send_line("Character name already taken")
-                return False
-
-        if len(_name) >= 21 or len(_name) <= 3:
-            self.send_line("Name must be between 4 and 20 characters long")
-            return False
-
-        if not _name.isalnum():
-            self.send_line("Name can only contain letters and numbers")
-            return False
-        return True
-
-    def CHAR_SELECT(self, line):
-        #actor = self.factory.db.read_actor(self.account[0])[0]
-        #print(actor)
-        actor_ids = self.factory.db.get_actor_ids_from_unique_id(self.account[0])
-            
-        _i = 1
-        for actor_id in reversed(actor_ids):
-            # if index in actor_ids then set self.actor_id and start
-            if str(_i) == line:
-                self.actor_id = actor_id[0]
-                self.change_state(self.PLAY)
-            _i += 1
-
-        if line.lower() == 'reset':
-            _id = self.id
-            _account = self.account
-            _actor_id = self.actor_id
-            _username = self.username
-            _password = self.password
-            self.change_state(self.REGISTER_USERNAME)
-            self.id = _id
-            self.account = _account
-            self.actor_id = _actor_id
-            self.username = _username
-            self.password = _password
-            return
-
-        # if username not here then create this guy!
-        if self.try_this_actor_name(line):
-            self.change_state(self.PLAY)
-            self.username = line
-
-        
-
-
-
-
+        self.change_state(self.PLAY)
 
     def LOGIN_USERNAME(self, line):
         self.account = self.factory.db.find_account_from_username(line)
@@ -429,7 +342,6 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         if line.lower() == "new".lower():
             self.change_state(self.REGISTER_USERNAME)
             return
-        """   
         if line.lower() == "guest".lower():
             _id = str(uuid.uuid4())
             titles = ["Goon", "Gamer", "Gold Farmer", "Noob", "Pro", "Mudder", "Smelly"]
@@ -440,8 +352,6 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
             self.change_state(self.PLAY_AS_GUEST)
 
             return
-        """
-
         self.change_state(self.LOGIN_OR_REGISTER)
         return
 
@@ -478,9 +388,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         self.username = username
         self.password = password
-        #if self.actor != None:
-        #    self.actor.name = self.username
-
+        if self.actor != None:
+            self.actor.name = self.username
         self.factory.db.create_new_account(self.id, username, password)
         _alert = f"{Color.BAD}[{Color.IMPORTANT}!{Color.BAD}]{Color.BACK}"
         self.send_line(
@@ -542,8 +451,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         
 
     def load_actor(self):
-
-        actor = self.factory.db.read_actor(actor_id = self.actor_id)
+        actor = self.factory.db.read_actor(self.account[0])
         # systems.utils.debug_print('>>>',actor)
 
         if actor == None:  # new actor

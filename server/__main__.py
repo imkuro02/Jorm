@@ -60,7 +60,7 @@ class ServerFactory(protocol.Factory):
                 if i.actor != None:
                     # self.db.write_actor(i.actor)
                     i.save_actor()
-            self.ranks = self.db.find_all_accounts()
+            self.ranks = self.db.find_all_actors()
 
         self.delayed_functions.tick()
 
