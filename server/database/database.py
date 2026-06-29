@@ -16,7 +16,8 @@ class Database:
         CREATE TABLE IF NOT EXISTS accounts (
             unique_id TEXT PRIMARY KEY,
             username TEXT NOT NULL,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            email TEXT
         )""")
 
         # Create admins table
@@ -149,7 +150,7 @@ class Database:
     def find_account_from_username(self, username):
         self.cursor.execute(
             """
-                SELECT unique_id, username, password
+                SELECT unique_id, username, password, email
                 FROM accounts WHERE username = ?
             """,
             (username,),
@@ -235,7 +236,7 @@ class Database:
     def find_all_accounts(self):
         self.cursor.execute(
             """
-                SELECT unique_id, username, password
+                SELECT unique_id, username, password, email
                 FROM accounts
             """
         )
@@ -283,16 +284,17 @@ class Database:
         #    systems.utils.debug_print(actor)
         return sorted_actor_objs
 
-    def create_new_account(self, unique_id, username, password):
+    def create_new_account(self, unique_id, username, password, email):
         self.cursor.execute(
             """
-            INSERT INTO accounts (unique_id, username, password)
-            VALUES (?, ?, ?)
+            INSERT INTO accounts (unique_id, username, password, email)
+            VALUES (?, ?, ?, ?)
             ON CONFLICT(unique_id) DO UPDATE SET
                 username = excluded.username,
-                password = excluded.password
+                password = excluded.password,
+                email = excluded.email
         """,
-            (unique_id, username, password),
+            (unique_id, username, password, email),
         )
         self.conn.commit()
 

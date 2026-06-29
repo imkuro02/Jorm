@@ -88,3 +88,5 @@ FROM actors;
 -- Replace the old table
 DROP TABLE actors;
 ALTER TABLE actors_new RENAME TO actors;
+
+ALTER TABLE accounts ADD COLUMN email TEXT;

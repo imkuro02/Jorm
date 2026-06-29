@@ -56,7 +56,7 @@ class Protocol(protocol.Protocol):
         self.guest = False
 
         self.actor = None
-
+        self.email = None
         self.account = None
         self.username = None
         self.password = None
@@ -145,7 +145,7 @@ class Protocol(protocol.Protocol):
         state_name = state.__name__
         self.send_gmcp(f"{state_name}", "GAME_STATE")
         self.send_gmcp('Menu', "ACTOR_STATUS")
-        return_msg = (' '*1)+'@bblack(type "!" to return to main menu)@normal '
+        return_msg = (' '*1)+'@bblack(type "back" to return to main menu)@normal '
         match state:
             case self.LOGIN_OR_REGISTER:
                 self.id = str(uuid.uuid4())
@@ -215,29 +215,34 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
                 self.before_load_actor()
 
             case self.CHAR_SELECT:
-                if self.account == None:
-                    self.change_state(self.PLAY)
-                    return
+                #if self.account == None:
+                #    self.change_state(self.PLAY)
+                #    return
 
                 self.account = self.factory.db.find_account_from_username(self.username)
                 self.id = self.account[0]
                 self.username = self.account[1]
                 self.password = self.account[2]
-
+                self.send_line(f'')
+                self.send_line(f'Type  {Color.GOOD}reset{Color.NORMAL}  to change your username (login name) and password')
+                self.send_line(f'Type  {Color.GOOD}email{Color.NORMAL}  to change/set your email (only used in account recovery)')
+                self.send_line(f'Type  {Color.GOOD}back{Color.NORMAL}   to go back.')
+                self.send_line(f'')
                 actor_ids = self.factory.db.get_actor_ids_from_unique_id(self.account[0])
                 _i = 1
-                output = 'Write your new characters name to create a character'
+                output = 'Type a new character name to create a character'
                 if len(actor_ids) > 0:
-                    output += '\n You can also select one from the list below:'
-                
-                self.send_line(f'Type a character name to create a new character, or select one from list below')
+                    output = output + '\nOr you can also select one from the list below:'
+                self.send_line(output)
+                self.send_line(f'')
+
+
                 for actor_id in reversed(actor_ids):
                     actor = self.factory.db.read_actor(actor_id = actor_id[0])
                     self.send_line(f'   {_i}. {actor["actor_name"]}')
                     _i += 1
 
-                self.send_line('\nType "reset" to change your username (login name) and password')
-                self.send_line('Type "!" to log out')
+               
 
 
         self.state = state
@@ -293,7 +298,7 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        self.factory.db.create_new_account(self.id, self.username, self.password)
+        self.factory.db.create_new_account(self.id, self.username, self.password, self.email)
         # self.send_line('Account created! you can now log in!')
         # self.change_state(self.LOGIN_OR_REGISTER)
         self.send_line("Account created! logging in!")
@@ -360,6 +365,10 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             self.password = _password
             return
 
+        if line.lower() == 'email':
+            self.change_state(self.SET_EMAIL)
+            return
+
         # if username not here then create this guy!
         if self.try_this_actor_name(line):
             self.change_state(self.PLAY)
@@ -377,6 +386,13 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
         self.change_state(self.LOGIN_PASSWORD)
         return
 
+    def SET_EMAIL(self, line):
+        self.email = line.strip()
+        self.send_line(f'{Color.IMPORTANT}email set to: "{line}"{Color.NORMAL}')
+        self.factory.db.create_new_account(self.id, self.username, self.password, line)
+        self.change_state(self.CHAR_SELECT)
+        return
+
     def RESET_USERNAME(self, line):
         self.account = self.factory.db.find_account_from_username(line)
         self.username = line
@@ -386,22 +402,24 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        actor = self.factory.db.read_actor(self.account[0])
-        if actor == None:
-            self.send_line("This account does not exist")
-            self.change_state(self.LOGIN_OR_REGISTER)
-            return
+        print(self.account)
+        email = self.account[3]
+        #actor = self.factory.db.read_actor(self.account[0])
+        #if actor == None:
+        #    self.send_line("This account does not exist")
+        #    self.change_state(self.LOGIN_OR_REGISTER)
+        #    return
+        #   
+        #if "email" not in actor["settings"]:
+        #    self.send_line("This account does not have an email")
+        #    self.change_state(self.LOGIN_OR_REGISTER)
+        #    return
 
-        if "email" not in actor["settings"]:
-            self.send_line("This account does not have an email")
-            self.change_state(self.LOGIN_OR_REGISTER)
-            return
-
-        email = actor["settings"]["email"]
-        if email == "":
-            self.send_line("This account does not have an email")
-            self.change_state(self.LOGIN_OR_REGISTER)
-            return
+        #email = actor["settings"]["email"]
+        #if email == "":
+        #    self.send_line("This account does not have an email")
+        #    self.change_state(self.LOGIN_OR_REGISTER)
+        #    return
 
         self.send_line(
             f"""
@@ -478,10 +496,11 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         self.username = username
         self.password = password
+        self.email = self.email
         #if self.actor != None:
         #    self.actor.name = self.username
 
-        self.factory.db.create_new_account(self.id, username, password)
+        self.factory.db.create_new_account(self.id, self.username, self.password, self.email)
         _alert = f"{Color.BAD}[{Color.IMPORTANT}!{Color.BAD}]{Color.BACK}"
         self.send_line(
             f'{Color.GOOD}Account information updated\n{_alert}   Your login username is: "{Color.IMPORTANT}{self.username}{Color.BACK}"   {_alert}{Color.NORMAL}'
@@ -855,7 +874,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         # if "@" in line:
         #    line = str(line) + Color.NORMAL
 
-        if line == "!":
+        if line == "back":
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
