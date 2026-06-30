@@ -14,6 +14,16 @@ versions:
   #    - Burden of Steel - All enemies guard at combat start
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
   #    - Burden of Vitality - All enemies receive 25% max health at combat start'
+  "300626":
+    id: "300626"
+    title: Multiple Characters
+    unixtime: 1775631568
+    features:
+      - One account can now support multiple characters
+      - Password, username, and email settings removed from "character" settings
+      - Password, username, and email can be changed in main menu after login
+      - Characters can be deleted
+      - Guest login disabled for now
   "280626":
     id: "280626"
     title: QOL
