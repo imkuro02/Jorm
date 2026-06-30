@@ -6,7 +6,7 @@ notestoself
 server/logs.log
 server/database/*.json
 server/database/*.txt
-.kateignore
+.kateproject
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
