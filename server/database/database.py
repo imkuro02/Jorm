@@ -298,6 +298,20 @@ class Database:
         )
         self.conn.commit()
 
+    def lock_actor(self, actor_id):
+        self.cursor.execute(
+            """
+            UPDATE actors
+                SET 
+                    unique_id = unique_id || ' DELETED ',
+                    actor_name = actor_name || ' DELETED'
+            WHERE actor_id = ?;
+            """,
+                actor_id,
+        )
+        self.conn.commit()
+
+
     def write_actor(self, actor):
         actor_id = actor.id
 

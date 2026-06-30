@@ -339,17 +339,16 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
         return True
 
     def CHAR_SELECT(self, line):
+        if self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'character-deletion') >= 1:
+            self.change_state(self.state)
+            self.send_line('Character deletion cancelled')
+            return
+
         #actor = self.factory.db.read_actor(self.account[0])[0]
         #print(actor)
         actor_ids = self.factory.db.get_actor_ids_from_unique_id(self.account[0])
             
-        _i = 1
-        for actor_id in reversed(actor_ids):
-            # if index in actor_ids then set self.actor_id and start
-            if str(_i) == line:
-                self.actor_id = actor_id[0]
-                self.change_state(self.PLAY)
-            _i += 1
+
 
         if line.lower() == 'reset':
             _id = self.id
@@ -369,8 +368,51 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             self.change_state(self.SET_EMAIL)
             return
 
+        if len(line.split(' ')) >= 1:
+            if line.split(' ')[0] == 'delete':
+                _i = 1
+                for actor_id in reversed(actor_ids):
+                    # if index in actor_ids then set self.actor_id and start
+                    if str(_i) == line.split(' ')[1]:
+                        self.actor_id = actor_id[0]
+                        actor = self.factory.db.read_actor(actor_id = self.actor_id)
+
+                        self.send_line(f'Deleting character {actor["actor_name"]}')
+                        for delete_i in range(0,6):
+                            self.factory.delayed_functions.add_delayed_function(
+                                caller = self, tag = 'character-deletion', delay = 30*(delete_i),
+                                func=lambda delete_i=delete_i: self.send_line(f'Character will be deleted in {6-delete_i} seconds... Type anything to cancel'),
+                            )
+                        
+                        self.factory.delayed_functions.add_delayed_function(
+                            caller = self, tag = 'character-deletion', delay = 30*6,
+                            func=lambda: self.factory.db.lock_actor(actor_id),
+                        )
+                        
+                        self.factory.delayed_functions.add_delayed_function(
+                            caller = self, tag = 'character-deletion', delay = (30*6)+1,
+                            func=lambda: self.change_state(self.state),
+                        )
+                        self.factory.delayed_functions.add_delayed_function(
+                            caller = self, tag = 'character-deletion', delay = (30*6)+2,
+                            func=lambda: self.send_line(f'{Color.GOOD}Character Deleted{Color.NORMAL}'),
+                        )
+
+                        return
+                    _i += 1
+
+        _i = 1
+        for actor_id in reversed(actor_ids):
+            # if index in actor_ids then set self.actor_id and start
+            if str(_i) == line:
+                self.actor_id = actor_id[0]
+                self.change_state(self.PLAY)
+                return
+            _i += 1
+
         # if username not here then create this guy!
         if self.try_this_actor_name(line):
+            self.actor_id = None
             self.change_state(self.PLAY)
             self.username = line
 
@@ -795,6 +837,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         a = self.factory.db.read_actor(self.id)
 
     def disconnect(self):
+        self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
         self.transport.abortConnection()
 
     def unload_actor(self):
@@ -831,7 +874,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
     # override
     def dataReceived(self, data):
-        self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
+        #self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
 
         self.tick_since_last_message = self.factory.ticks_passed
         
