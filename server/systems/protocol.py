@@ -356,7 +356,7 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             _actor_id = self.actor_id
             _username = self.username
             _password = self.password
-            self.change_state(self.RESET_USERNAME)
+            self.change_state(self.REGISTER_USERNAME)
             self.id = _id
             self.account = _account
             self.actor_id = _actor_id
