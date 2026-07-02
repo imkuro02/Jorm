@@ -25,6 +25,8 @@ class AI:
         # if its false then your turn ends regardless
         self.can_use_skills_without_ending_turn = False
         # all AI is set to false, except player AI'
+        
+        self.target = None # used only for players 
 
 
         REFTRACKER.add_ref(self)

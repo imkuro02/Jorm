@@ -607,10 +607,12 @@ class Actor:
             if identifier.ai.target == self:
                 output = f'@normal(target) {output}'
                 
-        if self == identifier:
-            output = systems.utils.add_godot_url_actor_yourself(self, identifier, output)
-        else:
-            output = systems.utils.add_godot_url_actors(self, identifier, output)
+        match type(self).__name__:
+            case "Player":
+                if self == identifier:
+                    output = systems.utils.add_godot_url_actor_yourself(self, identifier, output)
+                else:
+                    output = systems.utils.add_godot_url_actors(self, identifier, output)
 
         # if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
