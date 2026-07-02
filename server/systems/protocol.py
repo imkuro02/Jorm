@@ -356,7 +356,7 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             _actor_id = self.actor_id
             _username = self.username
             _password = self.password
-            self.change_state(self.REGISTER_USERNAME)
+            self.change_state(self.RESET_USERNAME)
             self.id = _id
             self.account = _account
             self.actor_id = _actor_id
@@ -364,8 +364,11 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             self.password = _password
             return
 
-        if line.lower() == 'email':
-            self.change_state(self.SET_EMAIL)
+        if line.startswith('email'):
+            if len(line.split(' ')) != 2:
+                self.send_line('Syntax: "email your_email@domain.pog"')
+                return
+            self.SET_EMAIL(line.split(' ')[1])
             return
 
         if len(line.split(' ')) >= 1:

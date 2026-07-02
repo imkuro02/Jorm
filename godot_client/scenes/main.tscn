@@ -362,6 +362,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="output" type="RichTextLabel" parent="canvas/container/output/output"]
+layout_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
