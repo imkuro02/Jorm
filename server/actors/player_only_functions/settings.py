@@ -73,7 +73,7 @@ class Settings:
             SETTINGS.VIEW_MAP_WALLS: "Currently broken",
             SETTINGS.VIEW_ASCII_ART: "Display icons for mobs",
             SETTINGS.DEBUG: "Debug information",
-            SETTINGS.ALIAS: "Keyword shortcuts for long commands, \"help alias\" for more info",
+            SETTINGS.ALIAS: "Shortcuts for long commands, \"help alias\" for more info",
             #SETTINGS.EGO: "EXP gain increased by 25% of ego, damage taken +100% of ego, damage dealt is damage/ego",
             SETTINGS.EGO: "Increase the difficulty (and rewards) for yourself only",
             SETTINGS.PROMPT: "\"Help prompt\" for more info",
