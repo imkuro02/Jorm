@@ -55,8 +55,10 @@ def command_pass_turn(self, line):
         return
     if self.room.combat.current_actor != self:
         return
-    self.simple_broadcast(
-        "You pass your turn", f"{self.pretty_name()} passes their turn."
+    list_pretty_name_objects = [self]
+    self.pretty_broadcast(
+        "You pass your turn", f"{self.id} passes their turn.",
+        list_pretty_name_objects = list_pretty_name_objects
     )
     self.finish_turn()
 
@@ -623,7 +625,9 @@ def rest_set(self, line):
 def rest_here(self, line):
     self.sendSound(Audio.BUFF)
 
-    self.simple_broadcast(f"You rest", f"{self.pretty_name()} rests")
+    list_pretty_name_objects = [self]
+    self.pretty_broadcast(f"You rest", f"{self.id} rests",
+    list_pretty_name_objects = list_pretty_name_objects)
 
     self.stat_manager.stats[StatType.HP] = int(self.stat_manager.stats[StatType.HPMAX])
     # self.stat_manager.stats[StatType.MP] = int(self.stat_manager.stats[StatType.MPMAX])
@@ -693,7 +697,9 @@ def rest_home(self, line):
 
         self.affect_manager.unload_all_affects()
         self.skill_manager.unload_all_cooldowns()
-        self.simple_broadcast(None, f"{self.pretty_name()} ressurects")
+        list_pretty_name_objects = [self]
+        self.pretty_broadcast(None, f"{self.id} ressurects",
+        list_pretty_name_objects = list_pretty_name_objects)
 
         # tp home
         if self.recall_site not in self.protocol.factory.world.rooms:
@@ -707,13 +713,19 @@ def rest_home(self, line):
         self.move_party_leader(rest_site, no_new_room_look = False, silent = True)
 
         self.new_room_look()
-        self.simple_broadcast("You ressurect", f"{self.pretty_name()} has ressurected")
+        list_pretty_name_objects = [self]
+        self.list_pretty_name_objects("You ressurect", f"{self.id} has ressurected",
+        list_pretty_name_objects = list_pretty_name_objects)
     else:
         
         if self.room.id == self.recall_site:
-            self.simple_broadcast(f"You rest", f"{self.pretty_name()} rests")
+            list_pretty_name_objects = [self]
+            self.pretty_broadcast(f"You rest", f"{self.id} rests",
+            list_pretty_name_objects = list_pretty_name_objects)
         else:
-            self.simple_broadcast(None, f"{self.pretty_name()} returns back to rest")
+            list_pretty_name_objects = [self]
+            self.pretty_broadcast(None, f"{self.id} returns back to rest",
+            list_pretty_name_objects = list_pretty_name_objects)
 
             # tp home
             if self.recall_site not in self.protocol.factory.world.rooms:
@@ -727,8 +739,10 @@ def rest_home(self, line):
             self.move_party_leader(rest_site, no_new_room_look = False, silent = True)
 
             self.new_room_look()
-            self.simple_broadcast(
-                "You returned to rest", f"{self.pretty_name()} has returned to rest"
+            list_pretty_name_objects = [self]
+            self.pretty_broadcast(
+                "You returned to rest", f"{self.id} has returned to rest",
+                list_pretty_name_objects = list_pretty_name_objects
             )
 
     '''
@@ -757,9 +771,9 @@ def command_rest(self, line):
             self.recall_site = "home"
 
         output = ""
-        output += f"Your resting spot is {self.room.world.rooms[self.recall_site].pretty_name()}"
+        output += f"{self.pretty_name(identifier=self)} resting spot is {self.room.world.rooms[self.recall_site].pretty_name()}"
         if self.status == ActorStatusType.DEAD:
-            output += f'\nYou need to use "rest home" to ressurect'
+            output += f'\n{self.pretty_name(identifier=self)} need to use "rest home" to ressurect'
         self.send_line(output)
         return
 

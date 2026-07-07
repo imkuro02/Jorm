@@ -812,19 +812,21 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         self.actor.get_any_new_patches()
         self.actor.new_room_look()
-        self.actor.simple_broadcast(
-            f'You logged on',
-            f'{self.actor.pretty_name()} has logged on',
+        list_pretty_name_objects = [self.actor]
+        self.actor.pretty_broadcast(
+            f'{self.actor.id} logged on',
+            f'{self.actor.id} has logged on',
             send_to = 'world', msg_type = [MessageType.SHOUT, MessageType.CHAT],
+            list_pretty_name_objects = list_pretty_name_objects
             #sound = 'notif1.wav'
         )
         
         #self.actor.friend_manager.friend_broadcast_login()
         self.actor.finish_turn()
 
-        if self.guest == False:
-            if self.actor.settings_manager.get_value(SETTINGS.EMAIL) == '':
-                self.actor.send_line(f'{Color.IMPORTANT}You do not have an email set! set an email with "set email <your email>"{Color.NORMAL}')
+        #if self.guest == False:
+        #    if self.actor.settings_manager.get_value(SETTINGS.EMAIL) == '':
+        #        self.actor.send_line(f'{Color.IMPORTANT}You do not have an email set! set an email with "set email <your email>"{Color.NORMAL}')
 
     def save_actor(self):
         #return
@@ -847,10 +849,12 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         self.actor.affect_manager.unload_all_affects(silent=False)
         self.save_actor()
 
-        self.actor.simple_broadcast(
-            f'You logged off',
-            f'{self.actor.pretty_name()} has logged off',
+        list_pretty_name_objects = [self.actor]
+        self.actor.pretty_broadcast(
+            f'{self.actor.id} logged off',
+            f'{self.actor.id} has logged off',
             send_to = 'world', msg_type = [MessageType.SHOUT, MessageType.CHAT],
+            list_pretty_name_objects = list_pretty_name_objects
             #sound = 'notif1.wav'
         )
         #self.actor.friend_manager.friend_broadcast_logout()

@@ -7,9 +7,11 @@ from configuration.constants.message_type import MessageType
 def command_say(self, line):
     line = line + '@back'
     #print(line)
-    self.simple_broadcast(
+    list_pretty_name_objects = [self]
+    self.pretty_broadcast(
         f'You say "@cyan{line}@normal"',
-        f'{self.pretty_name()} says "@cyan{line}@normal"@normal',
+        f'{self.id} says "@cyan{line}@normal"@normal',
+        list_pretty_name_objects = list_pretty_name_objects,
         msg_type = [MessageType.SAY, MessageType.CHAT],
         sound = 'notif1.wav')
 
@@ -17,9 +19,11 @@ def command_say(self, line):
 @check_not_spamming
 def command_shout(self, line):
     line = line + '@back'
-    self.simple_broadcast(
+    list_pretty_name_objects = [self]
+    self.pretty_broadcast(
         f'You shout "@cyan{line}@normal"',
-        f'{self.pretty_name()} shouts "@cyan{line}@normal" from "{self.room.pretty_name()}@normal"',
+        f'{self.id} shouts "@cyan{line}@normal" from "{self.room.pretty_name()}@normal"',
+        list_pretty_name_objects = list_pretty_name_objects,
         send_to = 'world', msg_type = [MessageType.SHOUT, MessageType.CHAT],
         sound = 'notif1.wav')
 
@@ -122,6 +126,7 @@ def command_roll(self, line):
         return
 
     roll = random.randint(rmin,rmax)
-    self.simple_broadcast(
+    list_pretty_name_objects = [self]
+    self.pretty_broadcast(
         f'You roll: @green{roll}/{rmax}@normal',
-        f'{self.pretty_name()} rolls: @green{roll}/{rmax}@normal')
+        f'{self.id} rolls: @green{roll}/{rmax}@normal')

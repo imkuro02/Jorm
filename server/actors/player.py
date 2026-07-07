@@ -110,8 +110,10 @@ class FriendManager:
                 continue
             if prot.actor.id in self.friends:
                 if self.owner.id in prot.actor.friend_manager.friends:
+                    list_pretty_name_objects = [self.owner]
                     prot.actor.send_line(
-                        f"Your friend {self.owner.pretty_name()} has logged in",
+                        f"Your friend {self.owner.id} has logged in",
+                        list_pretty_name_objects = list_pretty_name_objects,
                         msg_type=[MessageType.GOSSIP],
                     )
 
@@ -121,8 +123,10 @@ class FriendManager:
                 continue
             if prot.actor.id in self.friends:
                 if self.owner.id in prot.actor.friend_manager.friends:
+                    list_pretty_name_objects = [self.owner]
                     prot.actor.send_line(
-                        f"Your friend {self.owner.pretty_name()} has logged out",
+                        f"Your friend {self.owner.id} has logged out",
+                        list_pretty_name_objects = list_pretty_name_objects,
                         msg_type=[MessageType.GOSSIP],
                     )
 
@@ -136,8 +140,10 @@ class FriendManager:
                 continue
             if prot.actor.id in self.friends:
                 if self.owner.id in prot.actor.friend_manager.friends:
+                    list_pretty_name_objects = [self.owner]
                     prot.actor.send_line(
-                        f'{self.owner.pretty_name()} gossips "@important{line}@normal"',
+                        f'{self.owner.id} gossips "@important{line}@normal"',
+                        list_pretty_name_objects = list_pretty_name_objects,
                         msg_type=[MessageType.CHAT, MessageType.GOSSIP],
                     )
 

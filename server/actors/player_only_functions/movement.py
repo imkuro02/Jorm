@@ -40,7 +40,9 @@ def command_flee(self, line):
     #    self.send_line('You must be fighting to flee!')
     #    return
 
-    self.simple_broadcast('You flee!', f'{self.pretty_name()} flees!', sound = Audio.BUFF)
+    list_pretty_name_objects = [self]
+    self.pretty_broadcast('You flee!', f'{self.id} flees!', 
+        list_pretty_name_objects = list_pretty_name_objects, sound = Audio.BUFF)
 
     for par in self.room.combat.participants.values():
 
@@ -104,6 +106,13 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
 
     move_followers(self)
     add_explored_room(self)
+
+    if (self.recall_site != RoomConstant.TAVERN and self.recall_site != RoomConstant.CROSSROAD) and self.room.id == RoomConstant.CROSSROAD:
+        #self.rest_set('')
+        # crossroad is not a valid resting spot so doing this
+        self.recall_site = RoomConstant.CROSSROAD
+    if self.recall_site != RoomConstant.TAVERN and self.room.id == RoomConstant.TAVERN:
+        self.rest_set('')
 
 '''
 def move_party_leader(self, room_id, no_new_room_look = False, silent = False):

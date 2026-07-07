@@ -31,17 +31,22 @@ class rat(Npc):
         if player.get_actor(line) != self:
             return False
 
+        list_pretty_name_objects = [player, self]
+
         if self.status != ActorStatusType.NORMAL:
-            player.simple_broadcast(
-                f'You try to pet {self.pretty_name()} but they are busy skittering about!',
-                f'{player.pretty_name()} tries to pet {self.pretty_name()} but they are busy skittering about!',
+            player.pretty_broadcast(
+                f'{player.id} try to pet {self.id} but they are busy skittering about!',
+                f'{player.id} tries to pet {self.id} but they are busy skittering about!',
+                list_pretty_name_objects = list_pretty_name_objects
             )
             return True
 
-        player.simple_broadcast(
-            f'You pet {self.pretty_name()}',
-            f'{player.pretty_name()} pets {self.pretty_name()} ',
+        player.pretty_broadcast(
+            f'{player.id} pet {self.id}',
+            f'{player.id} pets {self.id} ',
+            list_pretty_name_objects = list_pretty_name_objects
         )
+
         self.skill_manager.learn('bite')
         self.ai.prediction_skill = 'bite'
         self.ai.prediction_target = player

@@ -15,10 +15,12 @@ class Dialog:
         self.current_line = "start"
 
     def send_output(self, output):
+
+        list_pretty_name_objects = [self.npc, self.player]
         # output = output.replace('<npc>',self.npc.pretty_name().replace('<player>',self.player.pretty_name()))
         self.player.send_line(
-            output.replace("<npc>", self.npc.pretty_name()).replace(
-                "<player>", self.player.pretty_name()
+            output.replace("<npc>", self.npc.pretty_name(identifier = self.player)).replace(
+                "<player>", self.player.pretty_name(identifier = self.player)
             )
         )
 
@@ -289,25 +291,30 @@ class Dialog:
             output_line += f"{Color.NORMAL}{i['index']}: {i['line']}"
 
         if output_line != None:
-            output_line = output_line.replace("<npc>", self.npc.pretty_name()).replace(
-                "<player>", self.player.pretty_name()
+            output_line = output_line.replace("<npc>", self.npc.pretty_name(identifier = self.player)).replace(
+                "<player>", self.player.pretty_name(identifier = self.player)
             )
             self.player.send_line(output_line.strip())
+
         if output_line_room_party != None:
+            list_pretty_name_objects = [self.npc, self.player]
             output_line_room_party = output_line_room_party.replace(
-                "<npc>", self.npc.pretty_name()
-            ).replace("<player>", self.player.pretty_name())
-            self.player.simple_broadcast(
-                None, output_line_room_party.strip(), send_to="room_party"
+                "<npc>", self.npc.id
+            ).replace("<player>", self.player.id)
+            self.player.pretty_broadcast(
+                None, output_line_room_party.strip(), send_to="room_party", list_pretty_name_objects = list_pretty_name_objects
             )
+
         if output_line_room_not_party != None:
+            list_pretty_name_objects = [self.npc, self.player]
             output_line_room_not_party = output_line_room_not_party.replace(
-                "<npc>", self.npc.pretty_name()
-            ).replace("<player>", self.player.pretty_name())
-            self.player.simple_broadcast(
+                "<npc>", self.npc.id
+            ).replace("<player>", self.player.id)
+            self.player.pretty_broadcast(
                 None,
                 output_line_room_not_party.strip().strip(),
                 send_to="room_not_party",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         # self.player.send_line(f'{output}')
         # ####################################################
@@ -374,23 +381,27 @@ class Dialog:
             )
 
         if output_line != None:
-            output_line = output_line.replace("<npc>", self.npc.pretty_name()).replace(
-                "<player>", self.player.pretty_name()
+            output_line = output_line.replace("<npc>", self.npc.pretty_name(identifier = self.player)).replace(
+                "<player>", self.player.pretty_name(identifier = self.player)
             )
             self.player.send_line(output_line.strip())
         if output_line_room_party != None:
+            list_pretty_name_objects = [self.npc, self.player]
             output_line_room_party = output_line_room_party.replace(
-                "<npc>", self.npc.pretty_name()
-            ).replace("<player>", self.player.pretty_name())
-            self.player.simple_broadcast(
-                None, output_line_room_party.strip(), send_to="room_party"
+                "<npc>", self.npc.id
+            ).replace("<player>", self.player.id)
+            self.player.pretty_broadcast(
+                None, output_line_room_party.strip(), send_to="room_party",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         if output_line_room_not_party != None:
+            list_pretty_name_objects = [self.npc, self.player]
             output_line_room_not_party = output_line_room_not_party.replace(
-                "<npc>", self.npc.pretty_name()
-            ).replace("<player>", self.player.pretty_name())
-            self.player.simple_broadcast(
-                None, output_line_room_not_party.strip(), send_to="room_not_party"
+                "<npc>", self.npc.id
+            ).replace("<player>", self.player.id)
+            self.player.pretty_broadcast(
+                None, output_line_room_not_party.strip(), send_to="room_not_party",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         # ####################################################
 
@@ -415,7 +426,7 @@ class Dialog:
 
             if escape:
                 self.player.send_line(
-                    "You either lack items to give or item slots to receive."
+                    f"{self.player.pretty_name(identifier = self.player)} either lack items to give or item slots to receive."
                 )
                 self.end_dialog()
                 return True
@@ -429,7 +440,7 @@ class Dialog:
                         self.player.send_line("Could not remove items requested")
                         self.end_dialog()
                         return True
-                self.player.send_line(f"You give away the items requested")
+                self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} give away the items requested")
 
             if "give_to_player" in answer["trade"]:
                 for i in answer["trade"]["give_to_player"]:
@@ -438,7 +449,7 @@ class Dialog:
                         continue
                     item.stack = i["amount"]
                     self.player.inventory_manager.add_item(item, stack_items=False)
-                    self.player.send_line(f"You got: {item.pretty_name()}")
+                    self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} got: {item.pretty_name(identifier = self.player)}")
 
         if "quest_objective_count_proposal" in answer:
             # self.print_dialog()
@@ -465,7 +476,7 @@ class Dialog:
                     len(answer["reward"])
                     > self.player.inventory_manager.get_amount_of_free_item_slots()
                 ):
-                    self.player.send_line("You need more space in your inventory")
+                    self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} need more space in your inventory")
                     self.end_dialog()
                     return True
 
@@ -493,18 +504,18 @@ class Dialog:
                         continue
                     item.stack = item_id["amount"]
                     self.player.inventory_manager.add_item(item, stack_items=True)
-                    self.player.send_line(f"You got: {item.pretty_name()}")
+                    self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} got: {item.pretty_name(identifier = self.player)}")
 
             if "reward_exp" in answer:
                 self.player.stat_manager.stats[StatType.EXP] += answer["reward_exp"]
-                self.player.send_line(f"You got: {answer['reward_exp']} Experience")
+                self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} got: {answer['reward_exp']} Experience")
 
             if "reward_practice_points" in answer:
                 self.player.stat_manager.stats[StatType.PP] += answer[
                     "reward_practice_points"
                 ]
                 self.player.send_line(
-                    f"You got: {answer['reward_practice_points']} Practice point"
+                    f"{self.player.pretty_name(identifier = self.player)}got: {answer['reward_practice_points']} Practice point"
                     + ("s" if answer["reward_practice_points"] >= 2 else "")
                 )
 

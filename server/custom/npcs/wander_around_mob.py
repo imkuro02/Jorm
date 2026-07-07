@@ -62,8 +62,9 @@ class wander_around_mob(Npc):
         self.footprints.append(corpse)
 
         for i in self.room.actors.values():
-            br = f'{self.pretty_name()} {Color.BAD}leaves a trail of footprints behind.{Color.BACK}'
-            i.simple_broadcast(br,br)
+            list_pretty_name_objects = [self]
+            br = f'{self.id} {Color.BAD}leaves a trail of footprints behind.{Color.BACK}'
+            i.pretty_broadcast(br,br, list_pretty_name_objects = list_pretty_name_objects)
             break
 
         if len(self.footprints)-1>=self.footprints_max:

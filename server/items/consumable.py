@@ -68,7 +68,8 @@ class Consumable(Item):
             attempting = old_line.split()[0]
 
             self.new = False
-            player.simple_broadcast(f'You {attempting} the {self.name}', f'{player.pretty_name()} {attempting}s the {self.name}')
+            list_pretty_name_objects = [self, player]
+            player.pretty_broadcast(f'{player.id} {attempting} the {self.name}', f'{player.id} {attempting}s the {self.id}', list_pretty_name_objects = list_pretty_name_objects)
 
             self.use(player, player)
             player.finish_turn()

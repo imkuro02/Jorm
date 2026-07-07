@@ -25,7 +25,7 @@ class AI:
         # if its false then your turn ends regardless
         self.can_use_skills_without_ending_turn = False
         # all AI is set to false, except player AI'
-        
+
         self.target = None # used only for players 
 
 
@@ -313,9 +313,10 @@ class EnemyAI(AI):
     def use_prediction(self, no_checks=False):
         if super().use_prediction(no_checks=no_checks):
             return True
-
-        self.actor.simple_broadcast(
-            "You do nothing!", f"{self.actor.pretty_name()} does nothing!"
+        list_pretty_name_objects = [self]
+        self.actor.pretty_broadcast(
+            "You do nothing!", f"{self.actor.id} does nothing!",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         # self.predict_use_best_skill()
         self.actor.finish_turn()

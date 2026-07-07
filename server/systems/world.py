@@ -250,11 +250,15 @@ class World:
 
         boss_mob = random.choice(all_mobs)
         boss_mob.name = "<!>" + boss_mob.name + "<!>"
-        boss_mob.simple_broadcast(
-            "",
-            f"{boss_mob.pretty_name()} is terrorizing {boss_mob.room.name}",
+
+        list_pretty_name_objects = [boss_mob]
+        boss_mob.pretty_broadcast(
+            None,
+            f"{boss_mob.id} is terrorizing {boss_mob.room.pretty_name()}",
             send_to="world",
+            list_pretty_name_objects = list_pretty_name_objects
         )
+
         for s in boss_mob.stat_manager.stats:
             boss_mob.stat_manager.stats[s] = boss_mob.stat_manager.stats[s] * 2
         boss_mob.stat_manager.stats[StatType.EXP] = (

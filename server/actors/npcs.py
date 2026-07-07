@@ -197,9 +197,13 @@ class Npc(Actor):
             if amount <= 0:
                 amount = 0
 
-            self.simple_broadcast('',
-            f'{self.pretty_name()} is adding temporary afflictions of AffectBoostStat for party balance, the boost is "{amount}"', 
-            msg_type = [MessageType.DEBUG])
+            list_pretty_name_objects = [self]
+            self.pretty_broadcast('',
+            f'{self.id} is adding temporary afflictions of AffectBoostStat for party balance, the boost is "{amount}"', 
+            list_pretty_name_objects = list_pretty_name_objects,
+            msg_type = [MessageType.DEBUG]
+            )
+
             for stat in [StatType.HPMAX, StatType.PHYARMORMAX, StatType.MAGARMORMAX, StatType.EXP]:
                 aff = AffectBoostStat(
                     affect_source_actor = self,
@@ -396,6 +400,8 @@ class Npc(Actor):
 
                 drop_exp = self.stat_manager.stats[StatType.LVL] * 2
                 drop_exp = int(drop_exp * (1 + ((float(actor.settings_manager.get_value(SETTINGS.EGO))-1)/4)))
+                if actor.stat_manager.stats[StatType.EXP] == 0:
+                    drop_exp = 0
                 actor.gain_exp(drop_exp)
                 self.drop_loot(actor, room)
                 

@@ -35,7 +35,9 @@ class scenery_tavern_keg(Item):
             player.send_line('You don\'t have a mug to fill')
             return True
         
-        player.simple_broadcast('You fill a mug of ale',f'{player.pretty_name()} fills a mug of ale')
+        list_pretty_name_objects = [player]
+        player.pretty_broadcast(f'{player.id} fill a mug of ale',f'{player.id} fills a mug of ale',
+            list_pretty_name_objects = list_pretty_name_objects)
         #player.inventory_manager.remove_item(items[0], 1)
         mug_of_ale = load_item('tavern_food_item_mug_of_ale')
         player.inventory_manager.add_item(mug_of_ale)

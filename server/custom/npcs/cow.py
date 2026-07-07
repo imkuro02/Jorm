@@ -41,19 +41,23 @@ class cow(Npc):
             return False
 
         if self.status != ActorStatusType.NORMAL:
-            player.simple_broadcast(
-                f'You try to milk {self.pretty_name()} but they are busy mooing about!',
-                f'{player.pretty_name()} tries to pet {self.pretty_name()} but they are busy mooing about!',
+            list_pretty_name_objects = [self, player]
+            player.pretty_broadcast(
+                f'{player.id} try to milk {self.id} but they are busy mooing about!',
+                f'{player.id} tries to pet {self.id} but they are busy mooing about!',
+                list_pretty_name_objects = list_pretty_name_objects
             )
             return True
 
-        player.simple_broadcast(
-            f'You milk {self.pretty_name()}, you soon come to regret this decision',
-            f'{player.pretty_name()} milks {self.pretty_name()}, they soon come to regret this decision',
+        list_pretty_name_objects = [self, player]
+        player.pretty_broadcast(
+            f'{player.id} milk {self.id}, you soon come to regret this decision',
+            f'{player.id} milks {self.id}, they soon come to regret this decision',
+            list_pretty_name_objects = list_pretty_name_objects
         )
 
         e = create_npc(self.room, 'mini_boss_bull')
-        e.pretty_broadcast('A raging bull charges at you!','A raging bull charges at you!')
+        e.pretty_broadcast(f'A raging bull charges at {e.id}!',f'A raging bull charges at {e.id}!', list_pretty_name_objects = [e])
         _pl = player
         if _pl.party_manager.party != None:
             _pl = _pl.party_manager.party.leader

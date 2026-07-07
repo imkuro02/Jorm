@@ -31,9 +31,11 @@ class Party:
         participant.party_manager.party = self
 
         if self.actor != participant:
-            participant.simple_broadcast(
-                f"You join {self.actor.pretty_name()}'s party. You will automatically follow, and fight with your party.\n(help party for more information)",
-                f"{participant.pretty_name()} joins the party",
+            list_pretty_name_objects = [self.actor, participant]
+            participant.pretty_broadcast(
+                f"{participant.id} join {self.actor.id}'s party. You will automatically follow, and fight with your party.\n(help party for more information)",
+                f"{participant.id} joins the party",
+                list_pretty_name_objects = list_pretty_name_objects,
                 send_to="room_party",
             )
 
@@ -41,9 +43,11 @@ class Party:
         if participant.id not in self.participants:
             return
 
-        participant.simple_broadcast(
-            "You leave the party",
-            f"{participant.pretty_name()} leaves the party",
+        list_pretty_name_objects = [participant]
+        participant.pretty_broadcast(
+            f"{participant.id} leave the party",
+            f"{participant.id} leaves the party",
+            list_pretty_name_objects = list_pretty_name_objects,
             send_to="room_party",
         )
         # for par in self.participants.values():
@@ -67,7 +71,7 @@ class Party:
             participant.protocol.factory.world.rooms[
                 participant.recall_site
             ].move_actor(participant)
-            participant.send_line("You were in an instance and have been kicked out")
+            participant.send_line(f"{participant.pretty_name(identifier = participant)} were in an instance and have been kicked out")
 
 
 class PartyManager:
@@ -111,10 +115,10 @@ class PartyManager:
 
     def party_create(self, line):
         if self.party != None:
-            self.actor.send_line("You are already in a party")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are already in a party")
             return
         self.party = Party(self.actor)
-        self.actor.send_line("You create a party")
+        self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} create a party")
         self.clear_invites()
 
     def party_invite(self, line):
@@ -123,7 +127,7 @@ class PartyManager:
             #self.actor.send_line("You are not in a party")
             #return
         if self.party.actor != self.actor:
-            self.actor.send_line("You are not the leader")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not the leader")
             return
         invited = self.actor.get_actor(line)
 
@@ -131,29 +135,29 @@ class PartyManager:
             self.actor.send_line("Invite who?")
             return
         if invited.party_manager.party != None:
-            self.actor.send_line(f"{invited.pretty_name()} is already in a party")
+            self.actor.send_line(f"{invited.pretty_name(identifier = self.actor)} is already in a party")
             return
         if invited == self.actor:
             self.actor.send_line("You can't invite yourself")
             return
         if self.party in invited.party_manager.invitations:
-            self.actor.send_line(f"{invited.pretty_name()} already invited.")
+            self.actor.send_line(f"{invited.pretty_name(identifier = self.actor)} already invited.")
             return
         # lazy way of making sure its a player you are inviting
         if type(invited).__name__ != "Player":
-            self.actor.send_line(f"{invited.pretty_name()} cannot be invited")
+            self.actor.send_line(f"{invited.pretty_name(identifier = self.actor)} cannot be invited")
             return
         invited.party_manager.invitations.append(self.party)
-        self.actor.send_line(f"{invited.pretty_name()} invited")
+        self.actor.send_line(f"{invited.pretty_name(identifier = self.actor)} invited")
         invited.send_line(
-            f'{self.actor.pretty_name()} invited you to their party, "party join {self.actor.pretty_name()}" to accept'
+            f'{self.actor.pretty_name(identifier = invited)} invited you to their party, "party join {self.actor.pretty_name(identifier = invited)}" to accept'
         )
 
         pass
 
     def party_join(self, line):
         if self.party != None:
-            self.actor.send_line("You are already in a party")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are already in a party")
             return
 
         inviter = self.actor.get_actor(line)
@@ -167,10 +171,10 @@ class PartyManager:
 
     def party_kick(self, line):
         if self.party == None:
-            self.actor.send_line("You are not in a party")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not in a party")
             return
         if self.party.actor != self.actor:
-            self.actor.send_line("You are not the leader")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not the leader")
             return
         best_match, best_score = systems.utils.match_word(
             line, [par.name for par in self.party.participants.values()], get_score=True
@@ -179,19 +183,21 @@ class PartyManager:
             self.actor.send_line("Kick who from party?")
             return
         if best_match == self.actor.name:
-            self.actor.send_line("You kick yourself in the butt!")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} kick yourself in the butt!")
             return
         par = systems.utils.get_match(line, self.party.participants)
         if par in self.party.participants.values():
-            par.simple_broadcast(
-                "You have been kicked from the party",
-                f"{par.pretty_name()} has been kicked from the party",
+            list_pretty_name_objects = [par]
+            par.pretty_broadcast(
+                f"{par.id} have been kicked from the party",
+                f"{par.id} has been kicked from the party",
+                list_pretty_name_objects = list_pretty_name_objects
             )
             self.party.remove_participant(par)
 
     def party_leave(self, line=""):
         if self.party == None:
-            self.actor.send_line("You are not in a party")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not in a party")
             return
         self.party.remove_participant(self.actor)
         # self.actor.send_line('You left the party')
@@ -199,10 +205,10 @@ class PartyManager:
 
     def party_leader(self, line):
         if self.party == None:
-            self.actor.send_line("You are not in a party")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not in a party")
             return
         if self.party.actor != self.actor:
-            self.actor.send_line("You are not the leader")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not the leader")
             return
         best_match, best_score = systems.utils.match_word(
             line, [par.name for par in self.party.participants.values()], get_score=True
@@ -211,13 +217,15 @@ class PartyManager:
             self.actor.send_line("Promote who to party leader?")
             return
         if best_match == self.actor.name:
-            self.actor.send_line("You are the party leader now... Good job...")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are the party leader now... Good job...")
             return
         par = systems.utils.get_match(line, self.party.participants)
         if par in self.party.participants.values():
-            par.simple_broadcast(
-                "You have been promoted to party leader",
-                f"{par.pretty_name()} has been promoted to party leader",
+            list_pretty_name_objects = [par]
+            par.pretty_broadcast(
+                f"{par.id} have been promoted to party leader",
+                f"{par.id} has been promoted to party leader",
+                list_pretty_name_objects = list_pretty_name_objects
             )
             transferred_rooms = []
             for i in self.party.actor.instanced_rooms:
@@ -230,7 +238,7 @@ class PartyManager:
 
     def party_look(self, line):
         if self.party == None:
-            self.actor.send_line("You are not in a party")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not in a party")
             self.actor.command_send_prompt("")
             return
 
@@ -263,7 +271,7 @@ class PartyManager:
         )
         if best_score < 75:
             self.actor.send_line(
-                f'You wrote "{command}" did you mean "{best_match}"?\nUse "help party" to learn more about this command.'
+                f'{self.actor.pretty_name(identifier = self.actor)} wrote "{command}" did you mean "{best_match}"?\nUse "help party" to learn more about this command.'
             )
             return
 

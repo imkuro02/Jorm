@@ -432,8 +432,10 @@ class EnemyAI(AI):
         if super().use_prediction(no_checks=no_checks):
             return True
 
+        list_pretty_name_objects = [self.actor]
         self.actor.simple_broadcast(
-            "You do nothing!", f"{self.actor.pretty_name()} does nothing!"
+            "You do nothing!", f"{self.actor.id} does nothing!",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         # self.predict_use_best_skill()
         self.actor.finish_turn()

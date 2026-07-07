@@ -34,7 +34,9 @@ class town_guard_npc(Npc):
             )
 
         if self.room.combat != None:
-            self.simple_broadcast(
-                "", f'"Cut that out at once!" yells {self.pretty_name()}'
+            list_pretty_name_objects = [self]
+            self.pretty_broadcast(
+                None, f'"Cut that out at once!" yells {self.id}',
+                list_pretty_name_objects = list_pretty_name_objects
             )
             self.room.combat.combat_over()

@@ -75,9 +75,11 @@ class Affect:
                 #    f'You resist {self.name} (rolled {roll}/100 when need under {chance})',
                 #    f'{self.affect_manager.actor.pretty_name()} resists {self.name} (rolled {roll}/100 when need under {chance})',
                 # )
-                self.affect_manager.actor.simple_broadcast(
-                    f"You resist {self.name}",
-                    f"{self.affect_manager.actor.pretty_name()} resists {self.name}",
+                list_pretty_name_objects = [self.affect_manager.actor, self]
+                self.affect_manager.actor.pretty_broadcast(
+                    f"{self.affect_manager.actor.id} resist {self.id}",
+                    f"{self.affect_manager.actor.id} resists {self.id}",
+                    list_pretty_name_objects = list_pretty_name_objects,
                 )
                 self.affect_manager.pop_affect(self)
                 return
@@ -88,17 +90,21 @@ class Affect:
         if self.hidden:
             return
 
-        self.affect_manager.actor.simple_broadcast(
+        list_pretty_name_objects = [self.affect_manager.actor, self]
+        self.affect_manager.actor.pretty_broadcast(
             f"You are {self.name}",
-            f"{self.affect_manager.actor.pretty_name()} is {self.name}",
+            f"{self.affect_manager.actor.id} is {self.id}",
+            list_pretty_name_objects = list_pretty_name_objects
         )
 
     # called when effect is over
     def on_finished(self, silent=False):
         if not silent and not self.hidden:
-            self.affect_manager.actor.simple_broadcast(
-                f"You are no longer {self.name}",
-                f"{self.affect_manager.actor.pretty_name()} is no longer {self.name}",
+            list_pretty_name_objects = [self.affect_manager.actor, self]
+            self.affect_manager.actor.pretty_broadcast(
+                f"{self.affect_manager.actor.id} are no longer {self.id}",
+                f"{self.affect_manager.actor.id} is no longer {self.id}",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         self.affect_manager.pop_affect(self)
 
@@ -226,9 +232,11 @@ class AffectStunned(Affect):
 
     def set_turn(self):
         super().set_turn()
-        self.affect_target_actor.simple_broadcast(
+        list_pretty_name_objects = [self.affect_target_actor]
+        self.affect_target_actor.pretty_broadcast(
             f"You are too stunned to act!",
-            f"{self.affect_target_actor.pretty_name()} is too stunned to act!",
+            f"{self.affect_target_actor.id} is too stunned to act!",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         self.affect_target_actor.finish_turn()
 
@@ -244,9 +252,11 @@ class AffectGuarding(Affect):
     def set_turn(self):
         super().set_turn()
         
-        self.affect_target_actor.simple_broadcast(
+        list_pretty_name_objects = [self.affect_target_actor]
+        self.affect_target_actor.pretty_broadcast(
             f"You are guarding and cannot act!",
-            f"{self.affect_target_actor.pretty_name()} is guarding and cannot act!",
+            f"{self.affect_target_actor.id} is guarding and cannot act!",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         self.affect_target_actor.finish_turn()
 
@@ -304,9 +314,11 @@ class AffectGuarding(Affect):
 class AffectNightmare(Affect):
     def set_turn(self):
         super().set_turn()
-        self.affect_target_actor.simple_broadcast(
+        list_pretty_name_objects = [self.affect_target_actor]
+        self.affect_target_actor.pretty_broadcast(
             f"You are sleeping and cannot act!",
-            f"{self.affect_target_actor.pretty_name()} is sleeping and cannot act!",
+            f"{self.affect_target_actor.id} is sleeping and cannot act!",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         self.affect_target_actor.finish_turn()
 
@@ -587,9 +599,11 @@ class AffectEthereal(Affect):
     def take_damage_before_calc(self, damage_obj: Damage):
         if damage_obj.damage_type == DamageType.PHYSICAL:
             damage_obj.damage_type = DamageType.CANCELLED
-            damage_obj.damage_taker_actor.simple_broadcast(
-                f"You take no damage because you are ethereal",
-                f"{damage_obj.damage_taker_actor.pretty_name()} takes no damage because they are ethereal",
+            list_pretty_name_objects = [damage_obj.damage_taker_actor]
+            damage_obj.damage_taker_actor.pretty_broadcast(
+                f"{damage_obj.damage_taker_actor.id} take no damage because you are ethereal",
+                f"{damage_obj.damage_taker_actor.id} takes no damage because they are ethereal",
+                list_pretty_name_objects = list_pretty_name_objects
             )
 
         if damage_obj.damage_type == DamageType.MAGICAL:
@@ -600,9 +614,11 @@ class AffectEthereal(Affect):
     def deal_damage(self, damage_obj: Damage):
         if damage_obj.damage_type == DamageType.PHYSICAL:
             damage_obj.damage_type = DamageType.CANCELLED
-            damage_obj.damage_source_actor.simple_broadcast(
+            list_pretty_name_objects = [damage_obj.damage_source_actor]
+            damage_obj.damage_source_actor.pretty_broadcast(
                 f"You cannot deal damage since you are ethereal",
-                f"{damage_obj.damage_source_actor.pretty_name()} cannot deal damage since they are ethereal",
+                f"{damage_obj.damage_source_actor.id} cannot deal damage since they are ethereal",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         return damage_obj
 

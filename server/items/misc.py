@@ -249,15 +249,18 @@ class Item:
         return output
 
     def use(self, user, target):
+        list_pretty_name_objects = [self, user]
         if user != target:
-            user.simple_broadcast(
-                f"You rub {self.pretty_name()} on {target.pretty_name()}... Nothing happens.",
-                f"{user.pretty_name()} rubs {self.pretty_name()} on {target.pretty_name()}... Nothing happens.",
+            user.pretty_broadcast(
+                f"You rub {self.id} on {target.id}... Nothing happens.",
+                f"{user.id} rubs {self.id} on {target.id}... Nothing happens.",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         else:
-            user.simple_broadcast(
-                f"You rub {self.pretty_name()} on yourself... Nothing happens.",
-                f"{user.pretty_name()} rubs {self.pretty_name()} on themselves... Nothing happens.",
+            user.pretty_broadcast(
+                f"You rub {self.id} on yourself... Nothing happens.",
+                f"{user.id} rubs {self.id} on themselves... Nothing happens.",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         return False
 

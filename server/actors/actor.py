@@ -636,12 +636,12 @@ class Actor:
             if target == self:
                 output = "You are not affected by anything"
             else:
-                output = f"{target.pretty_name()} is not affected by anything"
+                output = f"{target.pretty_name(self)} is not affected by anything"
         else:
             if target == self:
                 output = "You are affected with:\n"
             else:
-                output = f"{target.pretty_name()} is affected with:\n"
+                output = f"{target.pretty_name(self)} is affected with:\n"
             t = systems.utils.Table(3, 3)
             t.add_data("Aff")
             t.add_data("dur")
@@ -686,7 +686,7 @@ class Actor:
 
     def get_character_sheet(self, sheet_getter=None, is_glancing=False):
 
-        output = f"{self.pretty_name()} ({self.status})"
+        output = f"{self.pretty_name(sheet_getter)} ({self.status})"
 
         # if no description then ignore
 
@@ -1013,17 +1013,21 @@ class Actor:
 
         tooltip = tooltip_solo if self.party_manager.party == None else tooltip_party
 
-        self.simple_broadcast(
+        list_pretty_name_objects = [self]
+        self.pretty_broadcast(
             f"{Color.BAD}You died{Color.NORMAL}... {tooltip}",
-            f"{self.pretty_name()} {Color.BAD}{die_line}{Color.NORMAL}",
+            f"{self.id} {Color.BAD}{die_line}{Color.NORMAL}",
+            list_pretty_name_objects = list_pretty_name_objects,
             sound = sound,
             send_to = 'room'
         )
 
         if type(self).__name__ == 'Player':
-            self.simple_broadcast(
+            list_pretty_name_objects = [self]
+            self.pretty_broadcast(
                 f'You logged off',
-                f'{self.pretty_name()} {Color.BAD}{die_line}{Color.NORMAL} in {self.room.pretty_name()}{Color.NORMAL}',
+                f'{self.id} {Color.BAD}{die_line}{Color.NORMAL} in {self.room.pretty_name()}{Color.NORMAL}',
+                list_pretty_name_objects = list_pretty_name_objects,
                 send_to = 'world_not_room'
             )
 

@@ -53,7 +53,9 @@ class CowardAI(AI):
             # systems.utils.debug_print(roll)
             if roll > random.randint(1, 100):
                 # random_dir = random.choice(self.actor.room.exits)
-                self.actor.simple_broadcast("", f"{self.actor.pretty_name()} flees!")
+                list_pretty_name_objects = [self.actor]
+                self.actor.pretty_broadcast(None, f"{self.actor.id} flees!",
+                    list_pretty_name_objects = list_pretty_name_objects)
                 # new_room = random_dir.get_room_obj().id
 
                 world = self.actor.room.world
@@ -69,8 +71,10 @@ class CowardAI(AI):
     def use_prediction(self, no_checks=False):
         if super().use_prediction(no_checks=no_checks):
             return True
+        list_pretty_name_objects = [self.actor]
         self.actor.simple_broadcast(
-            "You do nothing!", f"{self.actor.pretty_name()} does nothing!"
+            f"{self.actor.id}", f"{self.actor.id} does nothing!",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         # self.predict_use_best_skill()
         self.actor.finish_turn()
@@ -117,8 +121,10 @@ class BossRatAI(AI):
                 par.die()
                 heal += 10
 
-            self.actor.simple_broadcast(
-                "", f"{self.actor.pretty_name()} Devours the rats! healing for {heal}"
+            list_pretty_name_objects = [self.actor]
+            self.actor.pretty_broadcast(
+                None, f"{self.actor.id} Devours the rats! healing for {heal}",
+                list_pretty_name_objects = list_pretty_name_objects
             )
             self.actor.heal(value=heal, silent=True)
 
@@ -126,7 +132,10 @@ class BossRatAI(AI):
             return
 
         if self.turn == 3:
-            self.actor.simple_broadcast("", f"{self.actor.pretty_name()} roars loudly!")
+            list_pretty_name_objects = [self.actor]
+            self.actor.pretty_broadcast(None, f"{self.actor.id} roars loudly!",
+                list_pretty_name_objects = list_pretty_name_objects)
+
             for i in range(0, random.randint(1, 3)):
                 rat = create_npc(self.actor.room, "rat")
                 rat.can_drop_corpse = False
@@ -142,8 +151,10 @@ class BossRatAI(AI):
     def use_prediction(self, no_checks=False):
         if super().use_prediction(no_checks=no_checks):
             return True
+        list_pretty_name_objects = [self.actor]
         self.actor.simple_broadcast(
-            "You do nothing!", f"{self.actor.pretty_name()} does nothing!"
+            f"{self.actor.id} do nothing!", f"{self.actor.id} does nothing!",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         # self.predict_use_best_skill()
         self.actor.finish_turn()
@@ -244,9 +255,11 @@ class VoreAI(AI):
             to_move.append(i)
 
         for i in to_move:
-            i.simple_broadcast(
-                f"{self.actor.pretty_name()} vores you!",
-                f"{self.actor.pretty_name()} vores {i.pretty_name()}!",
+            list_pretty_name_objects = [self.actor, i]
+            i.pretty_broadcast(
+                f"{self.actor.id} vores {i.id}!",
+                f"{self.actor.id} vores {i.id}!",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         for i in to_move:
             self.vore_room.move_actor(i, silent=True, dont_unload_instanced=True)
@@ -266,9 +279,11 @@ class VoreAI(AI):
             to_move.append(i)
 
         for i in to_move:
-            i.simple_broadcast(
-                f"{self.actor.pretty_name()} spits you out!",
-                f"{self.actor.pretty_name()} spits out {i.pretty_name()}!",
+            list_pretty_name_objects = [self.actor, i]
+            i.pretty_broadcast(
+                f"{self.actor.id} spits {i.id} out!",
+                f"{self.actor.id} spits out {i.id}!",
+                list_pretty_name_objects = list_pretty_name_objects
             )
         for i in to_move:
             self.original_room.move_actor(i, silent=True, dont_unload_instanced=True)

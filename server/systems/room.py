@@ -201,6 +201,7 @@ class Exit:
         if self.blocked:
             e = self.room.is_enemy_present()
             if e != False:
+                return f"{dir_name_and_room} is blocked by {e.name}"
                 return f"{dir_name_and_room} is blocked by {e.pretty_name()}"
 
         if self.item_required:

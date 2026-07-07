@@ -49,9 +49,10 @@ class robot_woodcutter(Npc):
         self.room.inventory_manager.add_item(corpse)
         self.footprints.append(corpse)
 
+        list_pretty_name_objects = [self]
         for i in self.room.actors.values():
-            br = f'{self.pretty_name()} {Color.BAD}leaves a trail of tire tracks behind.{Color.BACK}'
-            i.simple_broadcast(br,br)
+            br = f'{self.id} {Color.BAD}leaves a trail of tire tracks behind.{Color.BACK}'
+            i.pretty_broadcast(br, br, list_pretty_name_objects = list_pretty_name_objects)
             break
 
         if len(self.footprints)-1>=self.footprints_max:
@@ -60,8 +61,9 @@ class robot_woodcutter(Npc):
                 return
 
             for i in self.footprints[0].inventory_manager.owner.actors.values():
+                list_pretty_name_objects = [self]
                 br = f'{Color.BAD}The tire tracks leading {dir} dry up and the trail goes cold.{Color.BACK}'
-                i.simple_broadcast(br,br)
+                i.pretty_broadcast(br, br, list_pretty_name_objects = list_pretty_name_objects)
                 break
 
             self.footprints[0].inventory_manager.remove_item(self.footprints[0])

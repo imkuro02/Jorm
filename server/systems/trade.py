@@ -31,8 +31,10 @@ class TradeWindow:
         if trader == self.trader2:
             self.trader2_accepted = True
 
-        trader.simple_broadcast(
-            "You accept the trade", f"{trader.pretty_name()} accepts the trade"
+        list_pretty_name_objects = [trader]
+        trader.pretty_broadcast(
+            f"{trader.id} accept the trade", f"{trader.id} accepts the trade",
+            list_pretty_name_objects = list_pretty_name_objects
         )
 
         if self.trader1_accepted and self.trader2_accepted:
@@ -54,14 +56,14 @@ class TradeWindow:
 
     def offer(self, item, trader):
         if trader == self.trader1:
-            self.trader1.send_line(f"You offer {item.pretty_name(self.trader1)}")
+            self.trader1.send_line(f"{self.trader1.pretty_name(identifier = self.trader1)} offer {item.pretty_name(identifier = self.trader1)}")
             self.trader2.send_line(
-                f"{self.trader1.pretty_name(self.trader2)} offers {item.pretty_name(self.trader2)}"
+                f"{self.trader1.pretty_name(identifier = self.trader2)} offers {item.pretty_name(identifier = self.trader2)}"
             )
         if trader == self.trader2:
-            self.trader2.send_line(f"You offer {item.pretty_name(self.trader2)}")
+            self.trader2.send_line(f"{self.trader2.pretty_name(identifier = self.trader2)} offer {item.pretty_name(identifier = self.trader2)}")
             self.trader1.send_line(
-                f"{self.trader2.pretty_name(self.trader2)} offers {item.pretty_name(self.trader2)}"
+                f"{self.trader2.pretty_name(identifier = self.trader2)} offers {item.pretty_name(identifier = self.trader2)}"
             )
 
         if trader == self.trader1:
@@ -99,25 +101,27 @@ class TradeManager:
 
         # dont send more requests if you are already pending
         if other == self.pending:
-            self.actor.send_line(f"You already asked {other.pretty_name(self.actor)} to trade")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} already asked {other.pretty_name(identifier = self.actor)} to trade")
             return
 
         # dont send requests if they are busy trading
         if other.trade_manager.trade != None:
-            self.actor.send_line(f"{other.pretty_name()} is busy")
+            self.actor.send_line(f"{other.pretty_name(identifier = self.actor)} is busy")
             return
 
         if self.actor == other.trade_manager.pending:
             self.open_trade(other)
-            self.actor.send_line(f"You accept {other.pretty_name(self.actor)}'s trade")
-            other.send_line(f"{self.actor.pretty_name()} accepts your trade request!")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} accept {other.pretty_name(self.actor)}'s trade request")
+            #other.send_line(f"{self.actor.pretty_name(identifier = other)} accepts {other.pretty_name(identifier = other)}r trade request")
+            other.send_line(f"{self.actor.pretty_name(identifier = other)} accepts the trade request")
+
         else:
             self.pending = other
             self.actor.send_line(
-                f"You ask {other.pretty_name(self.actor)} to trade (waiting for response)"
+                f"{self.actor.pretty_name(identifier = self.actor)} ask {other.pretty_name(self.actor)} to trade (waiting for response)"
             )
             other.send_line(
-                f'{self.actor.pretty_name(other)} asks you to trade ("trade with {self.actor.pretty_name(other)}" or ignore to decline)'
+                f'{self.actor.pretty_name(identifier = other)} asks {other.pretty_name(identifier = other)} to trade ("trade with {self.actor.pretty_name(identifier = other)}" or ignore to decline)'
             )
 
     def open_trade(self, other):
@@ -133,14 +137,14 @@ class TradeManager:
 
     def trade_accept(self, line):
         if self.trade == None:
-            self.actor.send_line("You are not in a trade")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not in a trade")
             return
 
         self.trade.accept(self.actor)
 
     def trade_offer(self, line):
         if self.trade == None:
-            self.actor.send_line("You are not in a trade")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not in a trade")
             return
         self.trade.refresh()
 
@@ -170,7 +174,7 @@ class TradeManager:
 
     def trade_look(self, line):
         if self.trade == None:
-            self.actor.send_line("You are not trading right now")
+            self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} are not trading right now")
             return
 
         if self.actor == self.trade.trader1:
@@ -187,12 +191,12 @@ class TradeManager:
         output = "You will trade \n"
 
         for of in offers_me.values():
-            output += of.pretty_name(self.actor) + "\n"
+            output += of.pretty_name(identifier = self.actor) + "\n"
 
         output += "You will receive \n"
 
         for of in offers_other.values():
-            output += of.pretty_name(self.actor) + "\n"
+            output += of.pretty_name(identifier = self.actor) + "\n"
 
         # output += '"trade cancel" or "trade accept"?'
         trader_me.send_line(output)
@@ -225,7 +229,7 @@ class TradeManager:
         )
         if best_score < 75:
             self.actor.send_line(
-                f'You wrote "{command}" did you mean "{best_match}"?\nUse "help trade" to learn more about this command.'
+                f'{self.actor.pretty_name(identifier = self.actor)} wrote "{command}" did you mean "{best_match}"?\nUse "help trade" to learn more about this command.'
             )
             return
 

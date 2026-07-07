@@ -320,7 +320,8 @@ def command_send_prompt(self, line):
             self.send_line("Pormpt who?")
             return
 
-        self.send_line(f"Prompt for {actor.pretty_name()}:\n{actor.prompt(self)}")
+
+        self.send_line(f"Prompt for {actor.pretty_name(self)}:\n{actor.prompt(self)}")
 
 
 @check_is_admin
@@ -566,7 +567,7 @@ def command_teleport(self, line):
     if user != None:
         # user.room.move_actor(self)
         self.command_go(line="", room_id=user.room.id)
-        self.send_line(f"You teleport to {user.pretty_name()}")
+        self.send_line(f"You teleport to {user.pretty_name(identifier = self)}")
     else:
         self.send_line(f'Cant find "{line}"')
 
@@ -583,7 +584,7 @@ def command_kick(self, line):
             break
     if user != None:
         user.protocol.disconnect()
-        self.send_line(f"{user.pretty_name()} kicked")
+        self.send_line(f"{user.pretty_name(self)} kicked")
 
 
 def command_online(self, line):
@@ -861,7 +862,7 @@ def command_lore(self, line):
         for loot in e.loot:
             i = load_item(loot, max_stats=True)
             i.new = False
-            all_loot_they_drop[i.pretty_name()] = f"1:{e.loot[loot]}"
+            all_loot_they_drop[i.pretty_name(identifier = self)] = f"1:{e.loot[loot]}"
 
         t = systems.utils.Table(4, 3)
         for loot in all_loot_they_drop:

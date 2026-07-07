@@ -1652,7 +1652,10 @@ class SkillNecromancerRessurect(SkillTargetItem):
             self.other.inventory_manager.remove_item(self.other)
 
             # send_line
-            self.user.simple_broadcast(f'You resurrect {self.other.corpse_npc_name}',f'{self.user.pretty_name()} resurrects {self.other.corpse_npc_name}')
+            list_pretty_name_objects = [self.user]
+            self.user.pretty_broadcast(f'{self.user.id} resurrect {self.other.corpse_npc_name}',
+                f'{self.user.id} resurrects {self.other.corpse_npc_name}',
+                list_pretty_name_objects = list_pretty_name_objects)
 
             npc_class = Npc
             npc_id = self.other.corpse_npc_id
@@ -1698,9 +1701,11 @@ class SkillNecromancerRessurect(SkillTargetItem):
                 if tar != self:
                     return False
 
-                player.simple_broadcast(
-                    f'You dismiss {self.name}',
-                    f'{player.pretty_name()} dismisses {self.name}')
+                list_pretty_name_objects = [player, self]
+                player.pretty_broadcast(
+                    f'{player.id} dismiss {self.id}',
+                    f'{player.id} dismisses {self.id}',
+                    list_pretty_name_objects = list_pretty_name_objects)
 
                 self.die()
                 return True
@@ -1724,9 +1729,11 @@ class SkillNecromancerRessurect(SkillTargetItem):
                 if tar != self:
                     return False
 
-                player.simple_broadcast(
-                    f'You rename {self.name} to "{new_name}"',
-                    f'{player.pretty_name()} renames {self.name} to "{new_name}"')
+                list_pretty_name_objects = [player]
+                player.pretty_broadcast(
+                    f'{player.id} rename {self.name} to "{new_name}"',
+                    f'{player.id} renames {self.name} to "{new_name}"',
+                    list_pretty_name_objects = list_pretty_name_objects)
 
                 self.name = new_name
                 return True

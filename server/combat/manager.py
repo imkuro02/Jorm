@@ -96,9 +96,11 @@ class Combat:
         if participant.id in self.participants:
             return  # already participating in combat
         self.participants[participant.id] = participant
-        participant.simple_broadcast(
-            f"You join the combat",
-            f"{participant.pretty_name()} joins the combat",
+        list_pretty_name_objects = [participant]
+        participant.pretty_broadcast(
+            f"{participant.id} join the combat",
+            f"{participant.id} joins the combat",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         # reset threat to 0 at start of combat
         #participant.set_base_threat()
@@ -302,23 +304,21 @@ class Combat:
             self.combat_over()
             return
 
+        list_pretty_name_objects = []
         if show_turns_and_stuff:
             for par in self.participants.values():
                 if type(par).__name__ != "Player":
                     continue
                 order = ""
                 for i in self.order:
-                    if par == i:
-                        order = order + "YOU" + " -> "
-                    else:
-                        order = order + i.pretty_name() + " -> "
-
+                    order = order + i.id + " -> "
+                    list_pretty_name_objects.append(i)
                 order = (
                     f"{Color.COMBAT_TURN}ROUND {self.round+1}...{Color.NORMAL} "
                     + "".join(order.rsplit(" -> ", 1))
                 )
                 # par.send_line(('#'*80)+'\n'+order)
-                par.send_line(order, msg_type = [MessageType.COMBAT])
+        par.pretty_broadcast(order, order, list_pretty_name_objects = list_pretty_name_objects, msg_type = [MessageType.COMBAT])
 
         for i in self.order:
             if i.room != self.room:

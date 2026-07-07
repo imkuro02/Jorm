@@ -14,6 +14,12 @@ versions:
   #    - Burden of Steel - All enemies guard at combat start
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
   #    - Burden of Vitality - All enemies receive 25% max health at combat start'
+  "060726":
+    id: "060726"
+    title: Debug and colorful YOU tag
+    unixtime: 1775631568
+    features:
+      - Rest point is set on crossroads when you first exit tutorial
   "300626":
     id: "300626"
     title: Multiple Characters

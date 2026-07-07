@@ -20,9 +20,11 @@ class gambling_dialog(Dialog):
         if self in self.npc.dialogs:
             del self.npc.dialogs[self]
         if self.is_gambling:
-            self.npc.simple_broadcast(
+            list_pretty_name_objects = [self.npc, self.player]
+            self.npc.pretty_broadcast(
                 f"",
-                f'{self.npc.pretty_name()} says "{self.player.pretty_name()} I dont tolerate cheap tactics, im keeping your money"',
+                f'{self.npc.id} says "{self.player.id}, I dont tolerate cheap tactics, im keeping your money"',
+                list_pretty_name_objects = list_pretty_name_objects
             )
             return super().end_dialog()
         self.give_back_money()
@@ -73,9 +75,11 @@ class gambling_dialog(Dialog):
             return True
 
         if self.is_gambling:
-            self.npc.simple_broadcast(
+            list_pretty_name_objects = [self.npc, self.player]
+            self.npc.pretty_broadcast(
                 f"",
-                f'{self.npc.pretty_name()} says "{self.player.pretty_name()} You can\'t change your bid now"',
+                f'{self.npc.id} says "{self.player.id} You can\'t change your bid now"',
+                list_pretty_name_objects = list_pretty_name_objects
             )
             return True
 
@@ -85,22 +89,27 @@ class gambling_dialog(Dialog):
         ):
             # self.end_gambling()
             # super().end_dialog()
-            self.player.simple_broadcast(
-                f"You bid {self.to_gamble} scrap",
-                f"{self.player.pretty_name()} bids {self.to_gamble} scrap",
+            list_pretty_name_objects = [self.player, self.npc]
+            self.player.pretty_broadcast(
+                f"{self.player.id} bid {self.to_gamble} scrap",
+                f"{self.player.id} bids {self.to_gamble} scrap",
+                list_pretty_name_objects = list_pretty_name_objects
             )
-            self.npc.simple_broadcast(
-                "",
-                f'"{self.player.pretty_name()} Im not stupid.." says {self.npc.pretty_name()}. "You don\'t have enough scrap"',
+            self.npc.pretty_broadcast(
+                None,
+                f'"{self.player.id} Im not stupid.." says {self.npc.id}. "You don\'t have enough scrap"',
+                list_pretty_name_objects = list_pretty_name_objects
             )
             self.to_gamble = 0
             self.end_gambling()
             super().end_dialog()
             return True
 
-        self.player.simple_broadcast(
-            f"You bid {self.to_gamble} scrap",
-            f"{self.player.pretty_name()} bids {self.to_gamble} scrap",
+        list_pretty_name_objects = {self.player}
+        self.player.pretty_broadcast(
+            f"{self.player.id} bid {self.to_gamble} scrap",
+            f"{self.player.id} bids {self.to_gamble} scrap",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         self.is_gambling = True
         self.npc.earnings += self.to_gamble
@@ -121,9 +130,11 @@ class gambling_dialog(Dialog):
         self.ticks += 1
 
         if self.ticks == 0:
-            self.npc.simple_broadcast(
-                "",
-                f"{self.npc.pretty_name()} takes {self.to_gamble} scrap",
+            list_pretty_name_objects = [self.player, self.npc]
+            self.npc.pretty_broadcast(
+                None,
+                f"{self.npc.id} takes {self.to_gamble} scrap",
+                list_pretty_name_objects = list_pretty_name_objects
             )
             return
 
@@ -133,16 +144,20 @@ class gambling_dialog(Dialog):
             if len(self.rolls) >= 3:
                 return
 
-            self.player.simple_broadcast(
-                f"{self.npc.pretty_name()} rolls a {roll}!",
-                f"{self.npc.pretty_name()} rolls a {roll}",
+            list_pretty_name_objects = [self.player, self.npc]
+            self.player.pretty_broadcast(
+                f"{self.npc.id} rolls a {roll}!",
+                f"{self.npc.id} rolls a {roll}",
+                list_pretty_name_objects = list_pretty_name_objects
             )
             return
 
         if self.ticks >= pause_time * 3:
-            self.player.simple_broadcast(
-                f'{self.npc.pretty_name()} says "a {self.rolls[0]}, {self.rolls[1]} and a {self.rolls[2]}"!',
-                f'{self.npc.pretty_name()} says "a {self.rolls[0]}, {self.rolls[1]} and a {self.rolls[2]}"',
+            list_pretty_name_objects = [self.player, self.npc]
+            self.player.pretty_broadcast(
+                f'{self.npc.id} says "a {self.rolls[0]}, {self.rolls[1]} and a {self.rolls[2]}"!',
+                f'{self.npc.id} says "a {self.rolls[0]}, {self.rolls[1]} and a {self.rolls[2]}"',
+                list_pretty_name_objects = list_pretty_name_objects
             )
 
             duplicates = len(self.rolls) - len(set(self.rolls)) + 1
@@ -158,9 +173,11 @@ class gambling_dialog(Dialog):
 
             self.to_gamble = self.to_gamble * duplicates
 
-            self.player.simple_broadcast(
-                f"{self.npc.pretty_name()} {output}!",
-                f"{self.npc.pretty_name()} {output}",
+            list_pretty_name_objects = [self.npc]
+            self.player.pretty_broadcast(
+                f"{self.npc.id} {output}",
+                f"{self.npc.id} {output}",
+                list_pretty_name_objects = list_pretty_name_objects
             )
 
             self.give_back_money()
@@ -201,7 +218,9 @@ class gambling(Npc):
 
     def trigger_gamble(self, player, line):
         if len(line.split())!=2:
-            player.send_line(f'{self.pretty_name()} says "If you want to gamble, either talk to me, or "gamble <amount>""')
+            list_pretty_name_objects = [self]
+            player.send_line(f'{self.id} says "If you want to gamble, either talk to me, or "gamble <amount>""',
+            list_pretty_name_objects = list_pretty_name_objects)
             return True
         self.talk_to(player)
         player.current_dialog.answer('1')
@@ -235,7 +254,7 @@ class gambling(Npc):
                 item = random.choice(list(actor.inventory_manager.items.values()))
 
                 item_name = item.name
-                actor_name = actor.pretty_name()
+                actor_name = actor.pretty_name(identifier = actor)
                 self.simple_broadcast(
-                    "", f'"You wanna bet that {item_name}, {actor_name}?" {self.pretty_name()} asks'
+                    None, f'"You wanna bet that {item_name}, {actor_name}?" {self.pretty_name(identifier = actor)} asks'
                 )
