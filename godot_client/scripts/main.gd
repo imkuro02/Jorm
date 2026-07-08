@@ -51,8 +51,8 @@ func _ready():
 	# Connect the input signal for Enter key
 	INPUT.text_submitted.connect(_on_input_submitted)
 	# Try local WebSocket first, then fallback to remote
-	await try_connect_in_order([websocket_url, websocket_url_local])
-	#await try_connect_in_order([websocket_url_local, websocket_url])
+	#await try_connect_in_order([websocket_url, websocket_url_local])
+	await try_connect_in_order([websocket_url_local, websocket_url])
 
 
 # --- Connection Handling ---

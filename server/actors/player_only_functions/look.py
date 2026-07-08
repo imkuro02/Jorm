@@ -896,7 +896,7 @@ def command_look(self, line, return_gmcp=False, short = False):
         # self.send_line(see)
 
     def look_actor(actor):
-        sheet = actor.get_character_sheet(identifier=self)
+        sheet = actor.get_character_sheet(identifier = self)
         self.send_line(f"{self.pretty_name(identifier = self)} are looking at {sheet}")
         return
 

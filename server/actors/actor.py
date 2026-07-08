@@ -611,7 +611,7 @@ class Actor:
             if identifier.ai.target == self:
                 output = f'@normal(target) {output}'
                 
-        match type(self).__name__:
+        match type(identifier).__name__:
             case "Player":
                 if self == identifier:
                     output = systems.utils.add_godot_url_actor_yourself(self, identifier, output)
@@ -689,9 +689,7 @@ class Actor:
         return output
 
     def get_character_sheet(self, identifier=None, is_glancing=False):
-
         output = f"{self.pretty_name(identifier = identifier, text_override = f'{self.name}')} ({self.status})"
-
         # if no description then ignore
 
         if identifier != None:
