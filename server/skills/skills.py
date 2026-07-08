@@ -191,12 +191,22 @@ class Skill:
 
 
         perspectives = {
+            "you on you":       '#USER# used #SKILL#',
+            "you on other":     '#USER# used #SKILL# on #OTHER#',
+            "user on user":     '#USER# used #SKILL#',
+            "user on you":      '#USER# used #SKILL# on #USER#',
+            "user on other":    '#USER# used #SKILL# on #OTHER#',
+        }
+
+        '''
+        perspectives = {
             "you on you":       'You used #SKILL#',
             "you on other":     'You used #SKILL# on #OTHER#',
             "user on user":     '#USER# used #SKILL#',
             "user on you":      '#USER# used #SKILL# on you',
             "user on other":    '#USER# used #SKILL# on #OTHER#',
         }
+        '''
        
         '''
         for perspective in perspectives:

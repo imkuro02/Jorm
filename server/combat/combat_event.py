@@ -115,7 +115,7 @@ class CombatEvent:
                 output_self = output
                 output_other = output
 
-                output_self = output_self.replace("#A#", f"You have")
+                output_self = output_self.replace("#A#", f"{pop.damage_taker_actor.id} have")
                 output_self = output_self.replace("#G#", " healed")
                 output_self = output_self.replace("#L#", " lost")
 

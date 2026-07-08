@@ -92,7 +92,7 @@ class Affect:
 
         list_pretty_name_objects = [self.affect_manager.actor, self]
         self.affect_manager.actor.pretty_broadcast(
-            f"You are {self.name}",
+            f"{self.affect_manager.actor.id} are {self.id}",
             f"{self.affect_manager.actor.id} is {self.id}",
             list_pretty_name_objects = list_pretty_name_objects
         )
@@ -183,9 +183,11 @@ class AffectDelayedAction(Affect):
         super().set_turn()
         self.get_prediction_string_append = f"will {self.skills_to_use_objects[0].pretty_name()} in {self.turns + 1} turn{'s' if self.turns > 1 else ''}"
         self.get_prediction_string_clear = True
-        self.affect_target_actor.simple_broadcast(
-            f"You are Charging {self.skills_to_use_objects[0].pretty_name()}",
-            f"{self.affect_target_actor.pretty_name()} is Charging {self.skills_to_use_objects[0].pretty_name()}",
+        list_pretty_name_objects = [self.affect_target_actor, self.skills_to_use_objects[0]]
+        self.affect_target_actor.pretty_broadcast(
+            f"{self.affect_target_actor.id} are Charging {self.skills_to_use_objects[0].id}",
+            f"{self.affect_target_actor.id} is Charging {self.skills_to_use_objects[0].id}",
+            list_pretty_name_objects = list_pretty_name_objects
         )
         self.affect_target_actor.finish_turn()
 
@@ -234,7 +236,7 @@ class AffectStunned(Affect):
         super().set_turn()
         list_pretty_name_objects = [self.affect_target_actor]
         self.affect_target_actor.pretty_broadcast(
-            f"You are too stunned to act!",
+            f"{self.affect_target_actor.id} are too stunned to act!",
             f"{self.affect_target_actor.id} is too stunned to act!",
             list_pretty_name_objects = list_pretty_name_objects
         )
@@ -254,7 +256,7 @@ class AffectGuarding(Affect):
         
         list_pretty_name_objects = [self.affect_target_actor]
         self.affect_target_actor.pretty_broadcast(
-            f"You are guarding and cannot act!",
+            f"{self.affect_target_actor.id} are guarding and cannot act!",
             f"{self.affect_target_actor.id} is guarding and cannot act!",
             list_pretty_name_objects = list_pretty_name_objects
         )
@@ -316,7 +318,7 @@ class AffectNightmare(Affect):
         super().set_turn()
         list_pretty_name_objects = [self.affect_target_actor]
         self.affect_target_actor.pretty_broadcast(
-            f"You are sleeping and cannot act!",
+            f"{self.affect_target_actor.id} are sleeping and cannot act!",
             f"{self.affect_target_actor.id} is sleeping and cannot act!",
             list_pretty_name_objects = list_pretty_name_objects
         )
@@ -616,7 +618,7 @@ class AffectEthereal(Affect):
             damage_obj.damage_type = DamageType.CANCELLED
             list_pretty_name_objects = [damage_obj.damage_source_actor]
             damage_obj.damage_source_actor.pretty_broadcast(
-                f"You cannot deal damage since you are ethereal",
+                f"{damage_obj.damage_source_actor.id} cannot deal damage since you are ethereal",
                 f"{damage_obj.damage_source_actor.id} cannot deal damage since they are ethereal",
                 list_pretty_name_objects = list_pretty_name_objects
             )
