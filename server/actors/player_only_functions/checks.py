@@ -13,7 +13,7 @@ def check_is_admin(func):
         #    self.send_line('You are not an admin')
         #    return
         if self.admin == 0:
-            self.send_line('You are not an admin')
+            self.send_line(f'{self.pretty_name(identifier = self)} are not an admin')
             return
         return func(*args, **kwargs)
     return wrapper

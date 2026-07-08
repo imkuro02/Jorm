@@ -589,9 +589,13 @@ class Actor:
             return False
         return True  # return true if no errors
 
-    def pretty_name(self, identifier = None):
+    def pretty_name(self, identifier = None, text_override = None):
         output = ""
         name = self.name if identifier != self else 'You'
+
+        # if text_override is not empty, replace the name with whatever the text says
+        if text_override:
+            name = text_override
 
         match type(self).__name__:
             case "Player":
@@ -634,14 +638,14 @@ class Actor:
 
         if len(affs) == 0:
             if target == self:
-                output = "You are not affected by anything"
+                output = f"{self.pretty_name(identifier = self)} are not affected by anything"
             else:
-                output = f"{target.pretty_name(self)} is not affected by anything"
+                output = f"{target.pretty_name(identifier = self)} is not affected by anything"
         else:
             if target == self:
-                output = "You are affected with:\n"
+                output = f"{self.pretty_name(identifier = self)} are affected with:\n"
             else:
-                output = f"{target.pretty_name(self)} is affected with:\n"
+                output = f"{target.pretty_name(identifier = self)} is affected with:\n"
             t = systems.utils.Table(3, 3)
             t.add_data("Aff")
             t.add_data("dur")
@@ -684,15 +688,15 @@ class Actor:
         output = t.get_table()+'\n'
         return output
 
-    def get_character_sheet(self, sheet_getter=None, is_glancing=False):
+    def get_character_sheet(self, identifier=None, is_glancing=False):
 
-        output = f"{self.pretty_name(sheet_getter)} ({self.status})"
+        output = f"{self.pretty_name(identifier = identifier, text_override = f'{self.name}')} ({self.status})"
 
         # if no description then ignore
 
-        if sheet_getter != None:
-            if type(sheet_getter).__name__ == "Player":
-                if sheet_getter.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
+        if identifier != None:
+            if type(identifier).__name__ == "Player":
+                if identifier.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
                     if type(self).__name__ != "Player":
                         output += '\n'+get_icon(self.npc_id)
 

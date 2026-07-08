@@ -570,9 +570,9 @@ class Player(Actor):
         if self.stat_manager.stats[StatType.FATIGUE] >= 1:
             self.stat_manager.stats[StatType.FATIGUE] -= 1
             if self.stat_manager.stats[StatType.FATIGUE] >= 1:
-                self.send_line(f'{Color.GOOD}You lost one fatigue{Color.NORMAL}')
+                self.send_line(f'{Color.GOOD}{self.pretty_name(identifier = self)} lost one fatigue{Color.NORMAL}')
             else:
-               self.send_line(f'{Color.GOOD}You are no longer fatigued{Color.NORMAL}')
+               self.send_line(f'{Color.GOOD}{self.pretty_name(identifier = self)} are no longer fatigued{Color.NORMAL}')
 
 
         exp = self.inventory_manager.gain_exp(exp)

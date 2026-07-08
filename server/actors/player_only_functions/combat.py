@@ -39,7 +39,7 @@ def command_fight(self, line):
         if self.party_manager.party.actor == self:
             self.room.join_combat(self)
         else:
-            self.send_line("You are not the party leader")
+            self.send_line(f"{self.pretty_name(identifier = self)} are not the party leader")
 
     # self.ai.clear_prediction()
 

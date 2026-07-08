@@ -196,7 +196,7 @@ def check_if_skill_can_be_used(skill_object):
             user.status != ActorStatusType.FIGHTING
             and target.status == ActorStatusType.FIGHTING
         ):
-            error(user, f"{target.name} is in a fight you are not participating in!")
+            error(user, f"{target.name} is in a fight {self.pretty_name(identifier = self)} are not participating in!")
             return False
 
     if (

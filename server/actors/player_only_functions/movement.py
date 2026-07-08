@@ -22,7 +22,7 @@ def command_flee(self, line):
     #return
 
     if self.room.combat == None:
-        self.send_line('You are not in combat, you don\'t need to flee')
+        self.send_line(f'{self.pretty_name(identifier = self)} are not in combat, you don\'t need to flee')
         return
     #self.simple_broadcast(
     #    None,

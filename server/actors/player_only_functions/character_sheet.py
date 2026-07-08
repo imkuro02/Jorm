@@ -243,7 +243,7 @@ def command_practice(self, line):
 
         if self.stat_manager.stats[StatType.LVL] < SKILLS[skill_id]["level_req"]:
             self.send_line(
-                f"{Color.BAD}You are not high enough level to practice {skill_name}{Color.NORMAL}"
+                f"{Color.BAD}{self.pretty_name(identifier = self)} are not high enough level to practice {skill_name}{Color.NORMAL}"
             )
             return
         
@@ -621,7 +621,7 @@ def command_respec(self, line):
 
 
 def command_stats(self, line):
-    output = f"You are {self.get_character_sheet()}"
+    output = f"You are {self.get_character_sheet(identifier = self)}"
     self.send_line(output)
 
 

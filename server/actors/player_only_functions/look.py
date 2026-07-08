@@ -747,10 +747,10 @@ def command_scan(self, line):
                     see = see + "" + direction_name + " from here"
                 see = see + "\n"
     if see == "":
-        self.send_line("You scan your surroundings but see no one")
+        self.send_line(f"{self.pretty_name(identifier = self)} scan your surroundings but see no one")
         return
 
-    self.send_line(f"You scan your surroundings and see: \n{see[:-1:]}")
+    self.send_line(f"{self.pretty_name(identifier = self)} scan your surroundings and see: \n{see[:-1:]}")
 
 
 def command_look(self, line, return_gmcp=False, short = False):
@@ -758,9 +758,9 @@ def command_look(self, line, return_gmcp=False, short = False):
         room = self.factory.world.rooms[room_id]
 
         if room_id == self.room.id:
-            see = f"You are in {room.pretty_name()}\n"
+            see = f"{self.pretty_name(identifier = self)} are in {room.pretty_name()}\n"
         else:
-            see = f"You look at {room.pretty_name(identifier = self)}\n"
+            see = f"{self.pretty_name(identifier = self)} look at {room.pretty_name(identifier = self)}\n"
         # see += draw_local_area(self, room_id)
         
         see = see + f"{Color.DESCRIPTION}{room.get_description(short = short)}{Color.NORMAL}"
@@ -897,12 +897,12 @@ def command_look(self, line, return_gmcp=False, short = False):
 
     def look_actor(actor):
         sheet = actor.get_character_sheet(sheet_getter=self)
-        self.send_line(f"You are looking at {sheet}")
+        self.send_line(f"{self.pretty_name(identifier = self)} are looking at {sheet}")
         return
 
     def look_item(identifier, item):
         output = item.identify(identifier=identifier)
-        identifier.send_line("You look at: " + output)
+        identifier.send_line(f"{identifier.pretty_name(identifier = self)} look at: " + output)
         return
 
     if self.room == None:
