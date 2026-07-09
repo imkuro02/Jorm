@@ -714,7 +714,7 @@ def rest_home(self, line):
 
         self.new_room_look()
         list_pretty_name_objects = [self]
-        self.list_pretty_name_objects("You ressurect", f"{self.id} has ressurected",
+        self.pretty_broadcast("You ressurect", f"{self.id} has ressurected",
         list_pretty_name_objects = list_pretty_name_objects)
     else:
         

@@ -212,7 +212,10 @@ class AI:
             skills = [skill_override]
 
         for i in skills:
-            skill_obj = construct_skill(i)(skill_id = i, user = self.actor)
+            skill_obj = construct_skill(i)
+            if skill_obj == None:
+                continue
+            skill_obj = skill_obj(skill_id = i, user = self.actor)
             skill_obj.evaluation += random.randint(0,1)
 
             #systems.utils.debug_print(self.actor.name, skill_obj.id, skill_obj.evaluation)

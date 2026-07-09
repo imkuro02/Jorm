@@ -29,6 +29,7 @@ class Skill:
     ):
         self.skill_id = skill_id
         
+
         # used for pretty_name and pretty_broadcast 
         self.id = 'skill_id-'+skill_id
 
@@ -1170,7 +1171,7 @@ class SkillStealth(Skill):
 
 
 class SkillBoostStat(Skill):
-    def use(self, name_of_boost="affected", stat=StatType.GRIT, bonus = 0):
+    def use(self, name_of_boost="affected", stat=StatType.GRIT, bonus = 0, hidden = False):
         # super().use()
         if self.success:
             turns = int(self.calculate_script_value(value = 'duration'))
@@ -1190,6 +1191,8 @@ class SkillBoostStat(Skill):
                 turns=turns,
                 bonus=bonus,
                 stat=stat,
+                hidden = hidden,
+                dispellable = hidden #hmmmm
             )
             self.other.affect_manager.set_affect_object(aff)
 
@@ -1841,3 +1844,15 @@ class SkillMushroomSpawnSpore(Skill):
         
         if self.user.status == ActorStatusType.FIGHTING:
             self.user.room.combat.add_participant(e)
+
+
+class SkillAnglerTransform(SkillBoostStat):
+    def use(self):
+        self.silent_use = True
+        Skill.use(self)
+        list_pretty_name_objects = [self.user]
+        self.user.pretty_broadcast(None, f'{self.user.id}s pupils dilate and jaw dislocates, they grow taller.', list_pretty_name_objects = list_pretty_name_objects)
+        super().use(name_of_boost="Grit Blessed", stat=StatType.GRIT, bonus = 1, hidden = True)
+        super().use(name_of_boost="Flow Blessed", stat=StatType.FLOW, bonus = 0.5, hidden = True)
+        super().use(name_of_boost="Mind Blessed", stat=StatType.MIND, bonus = 0.5, hidden = True)
+        super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL, bonus = 0.5, hidden = True)

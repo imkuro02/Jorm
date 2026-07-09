@@ -6,6 +6,32 @@
  )/ \(
 [end]
 
+
+[id:angler]
+@normal    
+  _,m
+ (@yellowo.o@normal)
+-(   )-
+ )/ \(
+[end]
+[id:angler/Fighting]
+@normal  _,m
+ (@yellow@.@@normal)
+  @bredV"V@normal
+-(   )-
+ )/ \(
+[end]
+
+
+
+[id:uh something]
+@normal       _,m
+   @yellow( .)  (. )@normal
+  /  )@bblackVv.wv@normal(
+ |    @bblack^^'^'@normal )
+(__u______u__)
+[end]
+
 [id:tutorial_enemy_1]
 @white     ,--(@yellow?@white) (@yellow?@white)
 @white    /#####\@bredo o@white|

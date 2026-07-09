@@ -1,5 +1,5 @@
 {
-    "SHA-256": "aafbeb606d59de7c78100ffa5db0afc677aaac244f8ad3986c30ee17be3f984b",
+    "SHA-256": "25230363c38dac5ce57f43053a1f6d7c8c0026118b58668d227d34c25f707ad9",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -1902,6 +1902,70 @@
             "drop_tags": [
                 "all",
                 "evil_eye"
+            ]
+        },
+        "angler": {
+            "npc_id": "angler",
+            "ai": "Enemy",
+            "name": "Angler",
+            "description": "A humanoid figure encased in a glossy black beetle shell, their dark eyes reflect the world like a mirror.",
+            "stats": {
+                "hp": 100,
+                "phy_armor": 100,
+                "mag_armor": 0,
+                "grit": 20,
+                "flow": 20,
+                "mind": 5,
+                "soul": 2,
+                "exp": 9,
+                "lvl": 9
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {
+                "bite": 1
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": "angler_transform=1",
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "blessing_of_grit": 60,
+                "bag_1": 1750,
+                "bag_2": 1000,
+                "bag_3": 1750,
+                "grit body 12": 225,
+                "grit body 15 golem": 330,
+                "grit body 3": 330,
+                "grit body 6": 225,
+                "grit body 9": 120,
+                "grit head 12": 225,
+                "grit head 15 golem": 330,
+                "grit head 3": 330,
+                "grit head 6": 225,
+                "grit head 9": 120,
+                "grit trinket 12 shield ": 225,
+                "grit trinket 12 sword": 225,
+                "grit trinket 15 golem": 330,
+                "grit trinket 3": 330,
+                "grit trinket 6": 225,
+                "grit trinket 9": 120,
+                "grit weapon 12": 225,
+                "grit weapon 15 golem": 330,
+                "grit weapon 3": 330,
+                "grit weapon 6": 225,
+                "grit weapon 9": 120,
+                "grit weapon alt 3": 330,
+                "rock": 31,
+                "summoning_rock": 31
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "humanoid"
             ]
         },
         "thief": {
@@ -4223,6 +4287,39 @@
                 "bounce_amount": [
                     4.0,
                     4.0,
+                    0.0
+                ]
+            }
+        },
+        "angler_transform": {
+            "skill_id": "angler_transform",
+            "name": "Angler ",
+            "description": "When baiting, if attacked, instantly transform into the REAL angler.",
+            "script_to_run": "AnglerTransform",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "cooldown": [
+                    100.0,
+                    100.0,
+                    0.0
+                ],
+                "duration": [
+                    100.0,
+                    100.0,
                     0.0
                 ]
             }

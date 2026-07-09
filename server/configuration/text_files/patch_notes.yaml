@@ -34,6 +34,9 @@ versions:
     unixtime: 1775631568
     features:
       - Rest point is set on crossroads when you first exit tutorial
+      - Angler enemy added alongside alternative ascii art images depending on status
+      - Fireball bugfix, damage is not cancelled by enemy fireball anymore
+      - Fixed a bug where wrongly configured skills crash game
   "300626":
     id: "300626"
     title: Multiple Characters

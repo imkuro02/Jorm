@@ -696,7 +696,7 @@ class Actor:
             if type(identifier).__name__ == "Player":
                 if identifier.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
                     if type(self).__name__ != "Player":
-                        output += '\n'+get_icon(self.npc_id)
+                        output += '\n'+get_icon(self)
 
         if True: #if not is_glancing:
             if self.description != None:
@@ -1339,7 +1339,7 @@ class Actor:
                 return ""
 
         if type(self).__name__ != "Player":
-            _icon = get_icon(self.npc_id)
+            _icon = get_icon(self)
             return _icon
         else:
             # _icon = get_icon('citizen')

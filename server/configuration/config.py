@@ -36,18 +36,35 @@ for line in lines:
         buffer.append(line)
 
 
-def get_icon(icon_id):
-    if icon_id not in ICONS:
-        return ''
-        #return f"{icon_id}"
-    border = ""  #'@normal|  '
-    icon = ICONS[icon_id]
-    icon = icon.split("\n")
-    icon_art = ""
-    for i in icon:
-        icon_art += border + i + "\n"
+def get_icon(obj):
+    icon_id = obj.npc_id
+    icon_style = obj.status
 
-    return icon_art
+    icon_to_get = icon_id+'/'+icon_style
+
+    print(icon_to_get)
+    if icon_to_get in ICONS:
+        border = ""  #'@normal|  '
+        icon = ICONS[icon_to_get]
+        icon = icon.split("\n")
+        icon_art = ""
+        for i in icon:
+            icon_art += border + i + "\n"
+        return icon_art
+        
+        
+    icon_to_get = icon_id
+
+    if icon_to_get in ICONS:
+        border = ""  #'@normal|  '
+        icon = ICONS[icon_to_get]
+        icon = icon.split("\n")
+        icon_art = ""
+        for i in icon:
+            icon_art += border + i + "\n"
+        return icon_art
+
+    return ''
 
 def check_for_broken_icons():
     _e = ENEMIES

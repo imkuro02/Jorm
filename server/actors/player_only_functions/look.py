@@ -4,7 +4,7 @@ import systems.utils
 from actors.player_only_functions.settings import SETTINGS
 from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.color import Color
-from configuration.config import get_icon
+#from configuration.config import get_icon
 random = random.Random()
 
 from collections import deque
@@ -840,7 +840,7 @@ def command_look(self, line, return_gmcp=False, short = False):
                     continue
                 if len(icons) >= 3:
                     continue
-                icon = get_icon(i.npc_id)
+                icon = i.get_icon(who_checks = self) #get_icon(i.npc_id)
                 if icon == "":
                     continue
                 icons.append(icon.split("\n"))
