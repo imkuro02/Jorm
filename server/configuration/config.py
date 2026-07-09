@@ -42,7 +42,6 @@ def get_icon(obj):
 
     icon_to_get = icon_id+'/'+icon_style
 
-    print(icon_to_get)
     if icon_to_get in ICONS:
         border = ""  #'@normal|  '
         icon = ICONS[icon_to_get]

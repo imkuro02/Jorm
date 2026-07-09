@@ -47,11 +47,13 @@ class rat(Npc):
             list_pretty_name_objects = list_pretty_name_objects
         )
 
+        from skills.manager import construct_skill
         self.skill_manager.learn('bite')
-        self.ai.prediction_skill = 'bite'
-        self.ai.prediction_target = player
+        skill_obj = construct_skill('bite')
+        skill_obj = skill_obj(skill_id = 'bite', user = self, other = player)
+        self.ai.prediction = skill_obj
         self.ai.use_prediction(no_checks=True)
         self.skill_manager.unlearn('bite')
-        self.ai.clear_prediction
+        self.ai.clear_prediction()
         return True
 
