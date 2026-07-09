@@ -194,7 +194,7 @@ class Skill:
             "you on you":       '#USER# used #SKILL#',
             "you on other":     '#USER# used #SKILL# on #OTHER#',
             "user on user":     '#USER# used #SKILL#',
-            "user on you":      '#USER# used #SKILL# on #USER#',
+            "user on you":      '#USER# used #SKILL# on #OTHER#',
             "user on other":    '#USER# used #SKILL# on #OTHER#',
         }
 

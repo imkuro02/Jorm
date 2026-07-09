@@ -221,6 +221,8 @@ class AffectDelayedAction(Affect):
             if i.other.status != ActorStatusType.FIGHTING:
                 continue
             i.pre_use(no_delay=True)
+            i.combat_event.run()
+
 
         self.affect_target_actor.finish_turn()
 

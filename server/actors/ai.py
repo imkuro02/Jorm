@@ -313,7 +313,7 @@ class EnemyAI(AI):
     def use_prediction(self, no_checks=False):
         if super().use_prediction(no_checks=no_checks):
             return True
-        list_pretty_name_objects = [self]
+        list_pretty_name_objects = [self.actor]
         self.actor.pretty_broadcast(
             "You do nothing!", f"{self.actor.id} does nothing!",
             list_pretty_name_objects = list_pretty_name_objects

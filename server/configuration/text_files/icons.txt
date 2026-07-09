@@ -1,4 +1,10 @@
 
+[id:roommate]
+@normal  _,m
+ (@yellowo.o@normal)
+-(   )-
+ )/ \(
+[end]
 
 [id:tutorial_enemy_1]
 @white     ,--(@yellow?@white) (@yellow?@white)

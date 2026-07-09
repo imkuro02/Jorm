@@ -1,5 +1,5 @@
 {
-    "SHA-256": "5f1389abae5d945e3ff5bb22961e18d592149a008f62071f7ccf29ba11d322b5",
+    "SHA-256": "aafbeb606d59de7c78100ffa5db0afc677aaac244f8ad3986c30ee17be3f984b",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -35,7 +35,7 @@
             "npc_id": "tutorial_enemy_1",
             "ai": "Enemy",
             "name": "Tiny mouse",
-            "description": "A tiny mouse with bright, watchful eyes. It freeszes at every sound.",
+            "description": "A little person stands in the corner of the room, uninterested.",
             "stats": {
                 "hp": 15,
                 "phy_armor": 0,
@@ -85,6 +85,149 @@
             "no_random_loot": false,
             "drop_tags": [
                 "all"
+            ]
+        },
+        "tutorial_enemy_2": {
+            "npc_id": "tutorial_enemy_2",
+            "ai": "Enemy",
+            "name": "Tut2",
+            "description": "A little person stands in the corner of the room, uninterested.",
+            "stats": {
+                "hp": 1,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "grit": 10,
+                "flow": 0,
+                "mind": 5,
+                "soul": 2,
+                "exp": 0,
+                "lvl": 1
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": false,
+            "skills": {
+                "strike": 20
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": "guard=1",
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "axe": 120,
+                "bag_0": 1500,
+                "grit body 1": 120,
+                "grit body 3": 190,
+                "grit body 6": 295,
+                "grit body 9": 400,
+                "grit head 1": 120,
+                "grit head 3": 190,
+                "grit head 6": 295,
+                "grit head 9": 400,
+                "grit relic 1": 120,
+                "grit trinket 1": 120,
+                "grit trinket 3": 190,
+                "grit trinket 6": 295,
+                "grit trinket 9": 400,
+                "grit weapon 1": 120,
+                "grit weapon 3": 190,
+                "grit weapon 6": 295,
+                "grit weapon 9": 400,
+                "grit weapon alt 3": 190,
+                "rock": 39,
+                "summoning_rock": 39
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "tutorial_enemy_3": {
+            "npc_id": "tutorial_enemy_3",
+            "ai": "Enemy",
+            "name": "Tut3",
+            "description": "A little person stands in the corner of the room, uninterested.",
+            "stats": {
+                "hp": 1,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "grit": 2,
+                "flow": 0,
+                "mind": 10,
+                "soul": 2,
+                "exp": 0,
+                "lvl": 1
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": false,
+            "skills": {
+                "fireball": 5
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "axe": 120,
+                "bag_0": 1500,
+                "mind body 1": 120,
+                "mind body 3": 190,
+                "mind body 6": 295,
+                "mind body 9": 400,
+                "mind head 1": 120,
+                "mind head 3": 190,
+                "mind head 6": 295,
+                "mind head 9": 400,
+                "mind relic 1": 120,
+                "mind trinket 1": 120,
+                "mind trinket 3": 190,
+                "mind trinket 6": 295,
+                "mind trinket 9": 400,
+                "mind weapon 1": 120,
+                "mind weapon 3": 190,
+                "mind weapon 6": 295,
+                "mind weapon 9": 400,
+                "rock": 39,
+                "summoning_rock": 39
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "roommate": {
+            "npc_id": "roommate",
+            "ai": "Enemy",
+            "name": "Roommate",
+            "description": "The guard yawns as you pass by, spear in one hand, they lean against it.",
+            "stats": {
+                "hp": 1,
+                "phy_armor": 1,
+                "mag_armor": 1,
+                "grit": 1,
+                "flow": 1,
+                "mind": 1,
+                "soul": 1,
+                "exp": 1,
+                "lvl": 1
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": false,
+            "skills": {},
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {},
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": true,
+            "no_random_loot": true,
+            "drop_tags": [
+                "none"
             ]
         },
         "town_gate_guard_out": {
