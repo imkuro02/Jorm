@@ -14,6 +14,20 @@ versions:
   #    - Burden of Steel - All enemies guard at combat start
   #    - Burden of Bloom - All enemies heal 50% health on round 3 
   #    - Burden of Vitality - All enemies receive 25% max health at combat start'
+  #
+  #
+  #
+  #
+  #  1x1 area: introduction to look
+  #3x3 area: walk around a bit and find Secret exit
+  #1x1 area: pick up and equip items stuff
+  #1x1 area: kill tut3 (enemy that dies in 1 hit but deals massive damage turn 3)
+  #1x1 area: kill tut2 (enemy that dies in 1 hit but is guarding first turn, will kill you on turn 1 unless you also Block (you are always faster than them)
+  #1x1 area: tut2 and tut3 combined, basically kill tut2 first then kill tut3
+  #
+  #
+  #
+  #
   "060726":
     id: "060726"
     title: Debug and colorful YOU tag
