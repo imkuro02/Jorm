@@ -1,5 +1,5 @@
 {
-    "SHA-256": "2137fd31d9cccb00d268392e4ca8c4607b10924f3c0855606284d428d989f733",
+    "SHA-256": "5f1389abae5d945e3ff5bb22961e18d592149a008f62071f7ccf29ba11d322b5",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -3108,7 +3108,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 3.0,
+            "level_req": 6.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -3222,7 +3222,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 1.0,
+            "level_req": 3.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -3260,7 +3260,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 4.0,
+            "level_req": 3.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -3293,7 +3293,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 9.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3374,7 +3374,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
@@ -3417,7 +3417,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
@@ -3551,7 +3551,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": false,
             "practice_cost": 0,
-            "level_req": 1.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3589,7 +3589,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": false,
             "practice_cost": 0,
-            "level_req": 1.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3627,7 +3627,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": false,
             "practice_cost": 0,
-            "level_req": 1.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3665,7 +3665,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": false,
             "practice_cost": 0,
-            "level_req": 1.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3703,7 +3703,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": false,
             "practice_cost": 0,
-            "level_req": 1.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3731,7 +3731,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 9.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3769,7 +3769,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3812,7 +3812,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 9.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -3860,7 +3860,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 1.0,
             "end_turn": false,
             "script_values": {
@@ -4096,7 +4096,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -4129,7 +4129,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -4162,7 +4162,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 9.0,
+            "level_req": 6.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -4205,7 +4205,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -4286,7 +4286,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 1.0,
             "end_turn": false,
             "script_values": {
@@ -4324,7 +4324,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": false,
             "script_values": {
@@ -4352,7 +4352,7 @@
             "can_use_out_of_combat": false,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 9.0,
+            "level_req": 6.0,
             "is_offensive": 1.0,
             "end_turn": true,
             "script_values": {
@@ -4507,7 +4507,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 3,
-            "level_req": 3.0,
+            "level_req": 1.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
@@ -4568,7 +4568,7 @@
             "can_use_out_of_combat": true,
             "can_be_practiced": true,
             "practice_cost": 1,
-            "level_req": 6.0,
+            "level_req": 3.0,
             "is_offensive": 0.0,
             "end_turn": true,
             "script_values": {
