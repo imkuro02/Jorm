@@ -12,7 +12,7 @@ tutorial_1:
       They are by the south-west corner.
     turned_in: |
       I got them the corpse of a mouse, they told me to head to the 
-      south-east corner, and type "go crossroad" to get out of here.
+      south-east corner, and type "go up" to get out of here.
   objectives:
     Get a corpse:
       type: collect_x

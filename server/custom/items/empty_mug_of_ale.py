@@ -11,7 +11,8 @@ class empty_mug_for_filling(Item):
         self.trigger_manager.trigger_add('fill', self.trigger_fill)
 
     def trigger_fill(self, player, line):
-        item_found = player.get_item(line.replace('fill ',''))
+        item_name_or_id = line.replace('fill ','')
+        item_found = player.get_item(item_name_or_id)
         if item_found != [self]:
             return False
 

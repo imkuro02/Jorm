@@ -28,6 +28,14 @@ versions:
   #
   #
   #
+
+  "071026":
+    id: "071026"
+    title: Triggers and Map
+    unixtime: 1775631568
+    features:
+      - Triggers like "drink" work better now and show drinkable objects
+      - Map is slowly removing all instances of unique and hidden exits
   "060726":
     id: "060726"
     title: Debug and colorful YOU tag

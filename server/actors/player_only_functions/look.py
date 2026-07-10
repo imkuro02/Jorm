@@ -91,9 +91,9 @@ def command_map(self, line, return_gmcp = False):
             has_up = False
             has_down = False
             for _exit in room.exits:
-                if _exit.direction == 'up':
+                if _exit.direction == 'up' and not _exit.secret:
                     has_up = True
-                if _exit.direction == 'down':
+                if _exit.direction == 'down' and not _exit.secret:
                     has_down = True
 
             
@@ -120,7 +120,8 @@ def command_map(self, line, return_gmcp = False):
 
             if (x, y, z) == (0, 0, 0):
                 color = '@bgcyan'
-
+            
+            
             if has_up:
                 cell = '<'
             if has_down:
