@@ -16,8 +16,8 @@ class scenery_tavern_keg(Item):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.trigger_manager.trigger_add('fill', self.trigger_fill)
-        self.description += '\nYou can "fill" to fill one mug with ale.'
+        #self.trigger_manager.trigger_add('fill', self.trigger_fill)
+        #self.description += '\nYou can "fill" to fill one mug with ale.'
         self.ale_volume = {}
         
 

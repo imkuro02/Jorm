@@ -519,14 +519,16 @@ def add_godot_url_items(object, identifier, output):
                     url += f'Drop {object.name}->drop {object.id},'
                     url += f'Scrap {object.name}->scrap {object.id},'
 
-                for i in object.trigger_manager.triggers:
-                    if ' command_' not in ' '+i:
-                        url += f'{i.capitalize()} {object.name}->{i} {object.id},'   
+                
                         
             if object in identifier.room.inventory_manager.items.values():
                 url += f'Look {object.name}->look {object.id},'
                 if object.can_pick_up:
                     url += f'Get {object.name}->get {object.id},'
+
+            for i in object.trigger_manager.triggers:
+                if ' command_' not in ' '+i:
+                    url += f'{i.capitalize()} {object.name}->{i} {object.id},'   
 
             url += f'Lore {object.name}->lore {object.name},'
 

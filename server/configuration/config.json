@@ -1,5 +1,5 @@
 {
-    "SHA-256": "25230363c38dac5ce57f43053a1f6d7c8c0026118b58668d227d34c25f707ad9",
+    "SHA-256": "d55402ef937035851438dd95801ac0ba0d928137ee5a1cc471f87f9cd747d8ad",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -15019,7 +15019,7 @@
             "item_type": "misc",
             "dont_load": 0,
             "premade_id": "mug",
-            "name": "Mug",
+            "name": "Empty Mug",
             "stack_max_amount": 9,
             "drop_tags": "none",
             "drop_from_random": true,
