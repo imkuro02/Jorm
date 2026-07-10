@@ -24,7 +24,7 @@ class rat(Npc):
     #    self.simple_broadcast(_l,_l)
 
     def trigger_pet(self, player, line):
-        line = line.replace('pet','')
+        line = line.replace('pet ','')
         if not line:
             return False
 

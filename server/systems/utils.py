@@ -586,7 +586,9 @@ def add_godot_url_actors(object, identifier, output):
                 url += f'Talk {object.name}->talk {object.id},'
             if type(object).__name__ == 'Player':
                 url += f'Party-Invite {object.name}->party invite {object.id},'
-            
+            for i in object.trigger_manager.triggers:
+                if ' command_' not in ' '+i:
+                    url += f'{i.capitalize()} {object.name}->{i} {object.id},' 
 
             output = f'[url={url}]{output}[/url]'
             #print(output)
