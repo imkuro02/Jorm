@@ -26,6 +26,7 @@ func add_ansi_text(ansi_text: String) -> String:
 		"@purple": "#AA00AA", # magenta
 		"@cyan": "#00AAAA", # cyan
 		"@white": "#AAAAAA", # light gray / white
+		"@normal": "#AAAAAA", # light gray / white
 		
 		"@bblack": "#555555", # bright black / gray
 		"@bred": "#FF5555", # bright red
