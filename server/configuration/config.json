@@ -1,5 +1,5 @@
 {
-    "SHA-256": "d55402ef937035851438dd95801ac0ba0d928137ee5a1cc471f87f9cd747d8ad",
+    "SHA-256": "ef366fc527a7fe59dd49330b9c2deed057b306ca5cf680ae1119b0e10b1e3b16",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -1991,6 +1991,67 @@
             },
             "on_death_skills_use": null,
             "on_start_skills_use": null,
+            "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
+                "blessing_of_flow": 60,
+                "bag_1": 1750,
+                "bag_2": 1000,
+                "bag_3": 1750,
+                "flow body 12": 225,
+                "flow body 3": 330,
+                "flow body 6": 225,
+                "flow body 9": 120,
+                "flow head 12": 225,
+                "flow head 3": 330,
+                "flow head 6": 225,
+                "flow head 9": 120,
+                "flow trinket 15": 330,
+                "flow trinket 3": 330,
+                "flow trinket 6": 225,
+                "flow trinket 9": 120,
+                "flow weapon 12": 225,
+                "flow weapon 3": 330,
+                "flow weapon 6": 225,
+                "flow weapon 9": 120,
+                "rock": 31,
+                "summoning_rock": 31
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "humanoid"
+            ]
+        },
+        "bat": {
+            "npc_id": "bat",
+            "ai": "Enemy",
+            "name": "Bat",
+            "description": "A small rodent with black leathery wings, it glides silently through the air only to occasionally let out a screech",
+            "stats": {
+                "hp": 100,
+                "phy_armor": 60,
+                "mag_armor": 40,
+                "grit": 10,
+                "flow": 25,
+                "mind": 10,
+                "soul": 10,
+                "exp": 9,
+                "lvl": 9
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {
+                "bite": 3,
+                "leech": 3,
+                "refresh": 3,
+                "hex": 1
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": "leech=3",
             "loot": {
                 "potion_remove_armor": 100,
                 "potion_hp_30": 100,

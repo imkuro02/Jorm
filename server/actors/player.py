@@ -340,10 +340,12 @@ class UpdateChecker:
             ) + _split
             
         else:
-            _map += str(self.actor.command_skills('', return_gmcp = True)) + _split
+            
             _map += '\n' + self.actor.show_prompts(
                 order=None, no_predictions=False, return_gmcp=True
             ) + _split
+
+            _map += str(self.actor.command_skills('', return_gmcp = True)) + _split
 
         #if self.actor.status == ActorStatusType.FIGHTING:
         #    _map = _map + '\n' + str(self.actor.command_skills('', return_gmcp = True)) + _split
