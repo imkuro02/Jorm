@@ -101,9 +101,15 @@ func wait_for_connection(sock: WebSocketPeer, timeout: float) -> bool:
 # --- Input Handling ---
 
 func _on_input_submitted(text: String) -> void:
+	#var state = socket.get_ready_state()
+	#if state == WebSocketPeer.STATE_CLOSED:
+	#	await try_connect_in_order([websocket_url_local, websocket_url])
+	#	return
+		
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN and text.strip_edges() != "":
 		socket.send_text(text.strip_edges())
 		INPUT.select_all()
+		
 	else:
 		print("Socket not ready or input was empty.")
 
@@ -291,8 +297,16 @@ func _process(_delta):
 	elif state == WebSocketPeer.STATE_CLOSED:
 		var code = socket.get_close_code()
 		print("WebSocket closed. Code: %d. Clean: %s" % [code, code != -1])
-		OUTPUT.get_message("\n\n<--!-->\tYou have been disconnected! refresh the page to reconnect!\t<--!-->")
-		set_process(false)
+		if code == 1001:
+			OUTPUT.get_message("\n\n<--!-->\tYou have been disconnected! refresh the page to reconnect!\t<--!-->")
+			set_process(false)
+		#if code == 1001:
+			# RELOAD BUTTON
+		#	RELOAD_BANNER.visible = true
+		#else:
+		#	RELOAD_BANNER.visible = false	
+			#OUTPUT.get_message("\n\n<--!-->\tYou have been disconnected! refresh the page to reconnect!\t<--!-->")
+			#set_process(false)
 
 func handle_meta_clicked(meta, forced = false):
 	#print(meta)
@@ -401,3 +415,11 @@ func _on_output_combat_meta_hover_started(meta):
 	last_meta_hovered = meta
 func _on_output_combat_meta_hover_ended(meta):
 	last_meta_hovered = null
+
+
+func _on_reload_client_button_pressed():
+	set_process(true)
+	socket.close()
+	await get_tree().create_timer(1.0).timeout
+	await try_connect_in_order([websocket_url_local, websocket_url])
+	return

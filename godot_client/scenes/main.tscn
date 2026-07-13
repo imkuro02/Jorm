@@ -354,7 +354,7 @@ size_flags_vertical = 3
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-text = "client version: 240426
+text = "client version: 130726
 "
 meta_underlined = false
 hint_underlined = false
@@ -458,6 +458,13 @@ bbcode_enabled = true
 text = "[#############################################    1/10  (10%)             ############################################]"
 scroll_active = false
 script = ExtResource("10_flati")
+
+[node name="reload_client_button" type="Button" parent="canvas"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+text = "RELOAD"
 
 [node name="Node11" type="CanvasLayer" parent="."]
 visible = false
@@ -622,6 +629,7 @@ script = ExtResource("3_gkcnj")
 [connection signal="meta_clicked" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_hover_started"]
+[connection signal="pressed" from="canvas/reload_client_button" to="." method="_on_reload_client_button_pressed"]
 [connection signal="meta_clicked" from="output" to="." method="_on_output_meta_clicked"]
 [connection signal="meta_hover_ended" from="output" to="." method="_on_output_meta_hover_ended"]
 [connection signal="meta_hover_started" from="output" to="." method="_on_output_meta_hover_started"]

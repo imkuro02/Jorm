@@ -36,6 +36,9 @@ versions:
     features:
       - Triggers like "drink" work better now and show drinkable objects
       - Map is slowly removing all instances of unique and hidden exits
+      - Added teleport skill
+      - Client added reload button
+      - Added bat enemy
   "060726":
     id: "060726"
     title: Debug and colorful YOU tag
