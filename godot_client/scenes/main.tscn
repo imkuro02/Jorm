@@ -250,7 +250,7 @@ offset_right = 392.0
 offset_bottom = 960.0
 
 [node name="room_icons" type="RichTextLabel" parent="canvas/sidebar"]
-custom_minimum_size = Vector2(0, 374)
+custom_minimum_size = Vector2(0, 254)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -262,7 +262,7 @@ selection_enabled = true
 script = ExtResource("3_gkcnj")
 
 [node name="ascii_map" type="RichTextLabel" parent="canvas/sidebar"]
-custom_minimum_size = Vector2(384, 374)
+custom_minimum_size = Vector2(384, 398)
 layout_mode = 2
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
