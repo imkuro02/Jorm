@@ -29,12 +29,12 @@ versions:
   #
   #
 
-  "071026":
-    id: "071026"
+  "130726":
+    id: "130726"
     title: Triggers and Map
     unixtime: 1775631568
     features:
-      - Triggers like "drink" work better now and show drinkable objects
+      - Triggers now appear in clickable menu and show error message
       - Map is slowly removing all instances of unique and hidden exits
       - Added teleport skill
       - Client added reload button
