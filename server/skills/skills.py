@@ -62,6 +62,10 @@ class Skill:
         self.dont_finish_turn = dont_finish_turn
 
         self.evaluation = self.evaluate()
+
+        # if this is NOT False then the skill will fail regardless
+        # the fail occurs in skills.manager.check_if_skill_can_be_used and will print out message
+        self.skill_failed_on_purpose_error = False
     
     def calculate_script_value(self, value, next_level = False):
         if value not in self.script_values:
@@ -1486,6 +1490,56 @@ class SkillPortal(Skill):
             e.talk_to(self.user)
             e.die()
 
+class SkillTeleport(Skill):
+    def evaluate(self):
+        self.other = self.user
+
+
+        if hasattr(self, 'teleport_target'):
+            return
+
+        _dict = {}
+
+        line = self.user.last_line_sent
+        _target = None
+        line = line.split()
+
+        rooms = self.user.get_nearby_rooms(
+            view_range=10, 
+            ignore_if_secret = True,
+            ignore_if_doorway = False,
+            ignore_if_blocked = True,
+            ignore_if_item_required = True
+        )
+
+        for r in rooms:
+            for a in self.user.room.world.rooms[rooms[r]].actors.values():
+                _dict[a.id] = a
+
+        for i in range(0, len(line)):
+            if " ".join(line[len(line) - i : len(line)]).strip() == "":
+                continue
+
+            _l_bozo = line[-i:]  
+            best_match = systems.utils.get_match(
+                " ".join(_l_bozo), _dict
+            )
+
+            if best_match == None:
+                continue
+
+            _target = best_match
+
+        if _target != None:
+            self.teleport_target = _target
+
+        self.skill_failed_on_purpose_error = 'Teleport could not find a valid target'
+
+    def use(self):
+        if self.teleport_target == None:
+            return
+        super().use()
+        self.user.move_party_leader(room_id = self.teleport_target.room.id, no_new_room_look = False, silent = True)
 
 class SkillPromise(Skill):
     def evaluate(self):
@@ -1856,3 +1910,6 @@ class SkillAnglerTransform(SkillBoostStat):
         super().use(name_of_boost="Flow Blessed", stat=StatType.FLOW, bonus = 0.5, hidden = True)
         super().use(name_of_boost="Mind Blessed", stat=StatType.MIND, bonus = 0.5, hidden = True)
         super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL, bonus = 0.5, hidden = True)
+
+
+    

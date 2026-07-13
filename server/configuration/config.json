@@ -1,5 +1,5 @@
 {
-    "SHA-256": "ef366fc527a7fe59dd49330b9c2deed057b306ca5cf680ae1119b0e10b1e3b16",
+    "SHA-256": "adef3aa2e98610d81fcb3bcfbe21668c470133f05360f6985d5f4ed1603fce33",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -361,7 +361,8 @@
                 "scenery_fireplace": 39,
                 "scenery_leaky_ceiling": 39,
                 "scenery_tavern_table_carving": 39,
-                "scenery_ioizor_statue": 39
+                "scenery_ioizor_statue": 39,
+                "empty_plate": 39
             },
             "combat_loop": {},
             "can_start_fights": false,
@@ -3983,6 +3984,34 @@
                 "cooldown": [
                     1.0,
                     1.0,
+                    0.0
+                ]
+            }
+        },
+        "teleport": {
+            "skill_id": "teleport",
+            "name": "Teleport",
+            "description": "Teleport to any character you name within a 10 room distance.\n",
+            "script_to_run": "Teleport",
+            "target_others_is_valid": false,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": false,
+            "can_use_out_of_combat": true,
+            "can_be_practiced": true,
+            "practice_cost": 1,
+            "level_req": 3.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "cooldown": [
+                    0.0,
+                    0.0,
                     0.0
                 ]
             }
@@ -15339,6 +15368,28 @@
             "ambience": null,
             "can_pick_up": true,
             "description": "A Long rope"
+        },
+        "empty_plate": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "empty_plate",
+            "name": "Empty Plate",
+            "stack_max_amount": 9,
+            "drop_tags": "none",
+            "drop_from_random": true,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "description_room": null,
+            "invisible": false,
+            "ambience_sfx": null,
+            "ambience": null,
+            "can_pick_up": true,
+            "description": "Not even scraps remain."
         },
         "dont_use_key": {
             "item_type": "misc",

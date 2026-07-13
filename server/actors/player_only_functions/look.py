@@ -952,7 +952,12 @@ def command_look(self, line, return_gmcp=False, short = False):
     '''
         
 
-def get_nearby_rooms(self, view_range=1):
+def get_nearby_rooms(self, view_range=1, 
+        ignore_if_secret = True,
+        ignore_if_doorway = True,
+        ignore_if_blocked = False,
+        ignore_if_item_required = False
+    ):
     split = ","
     offsets = {
         "north": [0, -1, 0],
@@ -972,10 +977,15 @@ def get_nearby_rooms(self, view_range=1):
     for _exit in start_room.get_active_exits(self):
         if _exit.direction not in offsets:
             continue
-        if _exit.secret:
-            continue
-        if _exit.item_required != None:
-            continue
+        if ignore_if_blocked:
+            if _exit.blocked:
+                continue
+        if ignore_if_secret:
+            if _exit.secret:
+                continue
+        if ignore_if_item_required:
+            if _exit.item_required != None:
+                continue
         if _exit.to_room_id in grid.values():
             continue
 
@@ -999,9 +1009,6 @@ def get_nearby_rooms(self, view_range=1):
         for room_loc in _grid:
             room = self.protocol.factory.world.rooms[grid[room_loc]]
 
-            if room.doorway:
-                continue
-
             _x = int(room_loc.split(f"{split}")[0])
             _y = int(room_loc.split(f"{split}")[1])
             _z = int(room_loc.split(f"{split}")[2])
@@ -1009,8 +1016,18 @@ def get_nearby_rooms(self, view_range=1):
             for _exit in room.get_active_exits(self):
                 if _exit.direction not in offsets:
                     continue
-                if _exit.secret:
-                    continue
+                if ignore_if_blocked:
+                    if _exit.blocked:
+                        continue
+                if ignore_if_doorway:
+                    if _exit.doorway:
+                        continue
+                if ignore_if_secret:
+                    if _exit.secret:
+                        continue
+                if ignore_if_item_required:
+                    if _exit.item_required != None:
+                        continue
 
                 x = _x + offsets[_exit.direction][0]
                 y = _y + offsets[_exit.direction][1]

@@ -142,6 +142,10 @@ def check_if_skill_can_be_used(skill_object):
     skill = SKILLS[skill_id]
     skill_name = skill["name"]
 
+    if skill_object.skill_failed_on_purpose_error:
+        error(user, skill_object.skill_failed_on_purpose_error)
+        return False
+
     # return if learned skill does not actually exist
     if skill_id not in user.skill_manager.skills.keys():
         error(user, f"{skill_name} is not learned yet")

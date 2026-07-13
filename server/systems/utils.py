@@ -265,14 +265,22 @@ def get_matches(line, things):
 
     thing_names = []
     for thing in things.values():
-        thing_names.append(remove_color(thing.pretty_name(show_affixes = True)))
+        if get_object_parent(thing) == 'Item':
+            thing_names.append(remove_color(thing.pretty_name(show_affixes = True)))
+        else:
+            thing_names.append(remove_color(thing.pretty_name()))
 
     if index == "all":
         matches = match_word_get_list(line, thing_names)
         match_objects = []
         for val in things.values():
-            if line.lower() in remove_color(val.pretty_name(show_affixes = True)).lower():
-                match_objects.append(val)
+            if get_object_parent(thing) == 'Item':
+                if line.lower() in remove_color(val.pretty_name(show_affixes = True)).lower():
+                    match_objects.append(val)
+            else:
+                if line.lower() in remove_color(val.pretty_name()).lower():
+                    match_objects.append(val)
+
         # print(matches)
         # print(match_objects)
         return match_objects
