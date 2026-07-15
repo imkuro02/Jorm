@@ -28,7 +28,12 @@ versions:
   #
   #
   #
-
+  "150726":
+    id: "150726"
+    title: e
+    unixtime: 1775631568
+    features:
+      - Resting or ressurecting does not trigger new room look anymore
   "130726":
     id: "130726"
     title: Triggers and Map

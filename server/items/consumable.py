@@ -57,10 +57,16 @@ class Consumable(Item):
             return False
 
         old_line = line
-        items = player.get_item(line = line.replace('eat','').replace('drink','').replace('read','').strip(), search_mode='self')
+        items = player.get_item(line = line.replace('eat','').replace('drink','').replace('read','').strip(), search_mode='self_and_room')
         
         if items == None:
             return False
+
+        if items[0] not in player.inventory_manager.items.values():
+            attempting_var = 'can_'+old_line.split()[0]
+            attempting = old_line.split()[0]
+            player.send_line(f'{self.pretty_name(identifier = player)} must be in your inventory for you to {attempting} it.')
+            return True
             
 
         if items[0] == self:
@@ -69,7 +75,7 @@ class Consumable(Item):
 
             self.new = False
             list_pretty_name_objects = [self, player]
-            player.pretty_broadcast(f'{player.id} {attempting} the {self.name}', f'{player.id} {attempting}s the {self.id}', list_pretty_name_objects = list_pretty_name_objects)
+            player.pretty_broadcast(f'{player.id} {attempting} the {self.id}', f'{player.id} {attempting}s the {self.id}', list_pretty_name_objects = list_pretty_name_objects)
 
             self.use(player, player)
             player.finish_turn()

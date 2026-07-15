@@ -651,6 +651,7 @@ def rest_home_request(self, line):
             if par == self:
                 continue
             par.rest_home(line)
+        return
     self.rest_home(line)
 
 
@@ -662,6 +663,7 @@ def rest_here_request(self, line):
             if par == self:
                 continue
             par.rest_here(line)
+        return
     self.rest_here(line)
 
 
@@ -712,15 +714,15 @@ def rest_home(self, line):
         #self.protocol.factory.world.rooms[rest_site].move_actor(self, silent=True)
         self.move_party_leader(rest_site, no_new_room_look = False, silent = True)
 
-        self.new_room_look()
+        #self.new_room_look()
         list_pretty_name_objects = [self]
-        self.pretty_broadcast("You ressurect", f"{self.id} has ressurected",
+        self.pretty_broadcast(f"{self.id} ressurect", f"{self.id} has ressurected",
         list_pretty_name_objects = list_pretty_name_objects)
     else:
         
         if self.room.id == self.recall_site:
             list_pretty_name_objects = [self]
-            self.pretty_broadcast(f"You rest", f"{self.id} rests",
+            self.pretty_broadcast(f"{self.id} rest", f"{self.id} rests",
             list_pretty_name_objects = list_pretty_name_objects)
         else:
             list_pretty_name_objects = [self]
@@ -738,7 +740,7 @@ def rest_home(self, line):
             #self.protocol.factory.world.rooms[rest_site].move_actor(self, silent=True)
             self.move_party_leader(rest_site, no_new_room_look = False, silent = True)
 
-            self.new_room_look()
+            #self.new_room_look()
             list_pretty_name_objects = [self]
             self.pretty_broadcast(
                 "You returned to rest", f"{self.id} has returned to rest",

@@ -33,10 +33,12 @@ class TriggerManager:
         to_trigger_check.append(player.room)
 
         this_trigger_exists = False
+        this_trigger_key_exists = False
         for i in to_trigger_check:
             for x in i.trigger_manager.triggers.values():
                 if ('123'+x['trigger_key'] in '123'+line) and not x['trigger_key'].startswith('command_'):
                     this_trigger_exists = i.pretty_name(identifier=player)
+                    this_trigger_key_exists = x["trigger_key"]
                     break
 
         for i in to_trigger_check:
@@ -48,7 +50,7 @@ class TriggerManager:
             #    systems.utils.debug_print(e)
 
         if this_trigger_exists:
-            player.send_line(f'Maybe try "{x["trigger_key"]} {this_trigger_exists}"')
+            player.send_line(f'Maybe try "{this_trigger_key_exists} {this_trigger_exists}"')
             return True
 
         return False
