@@ -79,6 +79,13 @@ class PartyManager:
         self.actor = actor
         self.party = None
         self.invitations = []
+        self.actor_to_follow = None
+
+    def get_actor_to_follow(self):
+        if self.party != None:
+            if self.party.actor == self:
+                return None
+        return self.actor_to_follow
 
     def get_is_friendly(self, who_to_check):
         if self.actor.party_manager.get_party_id() == who_to_check.party_manager.get_party_id():

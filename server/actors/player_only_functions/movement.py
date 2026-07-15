@@ -70,39 +70,21 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
 
     # move cringe followers
     def move_followers(followed_actor):
-        for par in old_room.actors.copy().values():
-            if hasattr(par, 'trigger_go_follow_actor'):
-                if par.party_manager.party != None:
-                    if not par.is_not_in_party_or_is_party_leader():
-                        self.send_line('You can only follow your party leader')
-                        del par.trigger_go_follow_actor
-                        continue
-                if par.trigger_go_follow_actor != followed_actor:
-                    continue
-                if par == self:
-                    continue
-                if par.room != old_room:
-                    continue
-                followed_actor.room.move_actor(par, silent = False)
-                par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
-                par.finish_turn(force_cooldown = True)
-                par.sendSound(Audio.walk())
-                move_followers(par)
-                add_explored_room(par)
-
-
-        if followed_actor.party_manager.party != None:
-            if followed_actor.party_manager.party.actor == followed_actor:
-                for par in followed_actor.party_manager.party.participants.values():
-                    if par == followed_actor:
-                        continue
-                    if par.room != old_room:
-                        continue
-                    followed_actor.room.move_actor(par, silent = False)
-                    par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
-                    par.sendSound(Audio.walk())
-                    move_followers(par)
-                    add_explored_room(par)
+        pars = []
+        for par in old_room.actors.values():
+            pars.append(par)
+        for par in pars:
+            if par == followed_actor:
+                continue
+            if par.room != old_room:
+                continue
+            if par.party_manager.get_actor_to_follow() != followed_actor:
+                continue
+            followed_actor.room.move_actor(par, silent = False)
+            par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
+            par.sendSound(Audio.walk())
+            move_followers(par)
+            add_explored_room(par)
 
     move_followers(self)
     add_explored_room(self)
@@ -134,13 +116,13 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
     # move cringe followers
     def move_followers(followed_actor):
         for par in old_room.actors.copy().values():
-            if hasattr(par, 'trigger_go_follow_actor'):
+            if hasattr(par, 'party_manager.actor_to_follow'):
                 if par.party_manager.party != None:
                     if not par.is_not_in_party_or_is_party_leader():
                         self.send_line('You can only follow your party leader')
-                        del par.trigger_go_follow_actor
+                        del par.party_manager.actor_to_follow
                         continue
-                if par.trigger_go_follow_actor != followed_actor:
+                if par.party_manager.actor_to_follow != followed_actor:
                     continue
                 if par == self:
                     continue
@@ -200,8 +182,8 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
 
     # do the rest with cringe followers
     for par in self.room.actors.copy().values():
-        if hasattr(par, 'trigger_go_follow_actor'):
-            if par.trigger_go_follow_actor != self:
+        if hasattr(par, 'party_manager.actor_to_follow'):
+            if par.party_manager.actor_to_follow != self:
                 continue
             add_explored_room(par)
             par.finish_turn(force_cooldown = True)
@@ -227,17 +209,15 @@ def command_follow(self, line = ''):
     _actor = self.get_actor(line)
 
     if _actor == self:
-        if hasattr(self, 'trigger_go_follow_actor'):
-            del self.trigger_go_follow_actor
+        self.party_manager.actor_to_follow = None
         self.send_line('You follow no one.')
         return
 
     if _actor != None and line != '':
-        self.trigger_go_follow_actor = _actor
+        self.party_manager.actor_to_follow = _actor
         self.pretty_broadcast(f'You begin following {_actor.id}',None, list_pretty_name_objects=[_actor], sound = Audio.walk())
     else:
-        if hasattr(self, 'trigger_go_follow_actor'):
-            del self.trigger_go_follow_actor
+        self.party_manager.actor_to_follow = None
         self.send_line('You follow no one.')
     
 

@@ -842,7 +842,7 @@ class AffectSummoner(Affect):
         #self.stackable = kwargs['stackable']
         #del kwargs['stackable']
         super().__init__(*args, **kwargs)
-        self.summoned_actor.trigger_go_follow_actor = self.affect_target_actor
+        self.summoned_actor.party_manager.actor_to_follow = self.affect_target_actor
         
     def summon_checks(self):
         if self.summoned_actor == None:
