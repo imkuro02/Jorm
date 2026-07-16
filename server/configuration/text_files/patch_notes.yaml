@@ -35,6 +35,7 @@ versions:
     features:
       - Resting or ressurecting does not trigger new room look anymore
       - Better following code
+      - Shopkeeper sells green potions
   "130726":
     id: "130726"
     title: Triggers and Map
