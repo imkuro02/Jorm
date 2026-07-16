@@ -1,5 +1,5 @@
 {
-    "SHA-256": "adef3aa2e98610d81fcb3bcfbe21668c470133f05360f6985d5f4ed1603fce33",
+    "SHA-256": "f9e5dab252974a8a6f735017ad750999ec1b934886c9c6faf74295dfa7d10c42",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -81,119 +81,6 @@
             },
             "combat_loop": {},
             "can_start_fights": false,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "tutorial_enemy_2": {
-            "npc_id": "tutorial_enemy_2",
-            "ai": "Enemy",
-            "name": "Tut2",
-            "description": "A little person stands in the corner of the room, uninterested.",
-            "stats": {
-                "hp": 1,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "grit": 10,
-                "flow": 0,
-                "mind": 5,
-                "soul": 2,
-                "exp": 0,
-                "lvl": 1
-            },
-            "drop_corpse": true,
-            "include_in_daily_quests": false,
-            "skills": {
-                "strike": 20
-            },
-            "on_death_skills_use": null,
-            "on_start_skills_use": "guard=1",
-            "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
-                "axe": 120,
-                "bag_0": 1500,
-                "grit body 1": 120,
-                "grit body 3": 190,
-                "grit body 6": 295,
-                "grit body 9": 400,
-                "grit head 1": 120,
-                "grit head 3": 190,
-                "grit head 6": 295,
-                "grit head 9": 400,
-                "grit relic 1": 120,
-                "grit trinket 1": 120,
-                "grit trinket 3": 190,
-                "grit trinket 6": 295,
-                "grit trinket 9": 400,
-                "grit weapon 1": 120,
-                "grit weapon 3": 190,
-                "grit weapon 6": 295,
-                "grit weapon 9": 400,
-                "grit weapon alt 3": 190,
-                "rock": 39,
-                "summoning_rock": 39
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
-            "dont_join_fights": false,
-            "no_random_loot": false,
-            "drop_tags": [
-                "all"
-            ]
-        },
-        "tutorial_enemy_3": {
-            "npc_id": "tutorial_enemy_3",
-            "ai": "Enemy",
-            "name": "Tut3",
-            "description": "A little person stands in the corner of the room, uninterested.",
-            "stats": {
-                "hp": 1,
-                "phy_armor": 0,
-                "mag_armor": 0,
-                "grit": 2,
-                "flow": 0,
-                "mind": 10,
-                "soul": 2,
-                "exp": 0,
-                "lvl": 1
-            },
-            "drop_corpse": true,
-            "include_in_daily_quests": false,
-            "skills": {
-                "fireball": 5
-            },
-            "on_death_skills_use": null,
-            "on_start_skills_use": null,
-            "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
-                "axe": 120,
-                "bag_0": 1500,
-                "mind body 1": 120,
-                "mind body 3": 190,
-                "mind body 6": 295,
-                "mind body 9": 400,
-                "mind head 1": 120,
-                "mind head 3": 190,
-                "mind head 6": 295,
-                "mind head 9": 400,
-                "mind relic 1": 120,
-                "mind trinket 1": 120,
-                "mind trinket 3": 190,
-                "mind trinket 6": 295,
-                "mind trinket 9": 400,
-                "mind weapon 1": 120,
-                "mind weapon 3": 190,
-                "mind weapon 6": 295,
-                "mind weapon 9": 400,
-                "rock": 39,
-                "summoning_rock": 39
-            },
-            "combat_loop": {},
-            "can_start_fights": true,
             "dont_join_fights": false,
             "no_random_loot": false,
             "drop_tags": [
@@ -347,6 +234,8 @@
             "on_death_skills_use": "disorient=1",
             "on_start_skills_use": null,
             "loot": {
+                "potion_remove_armor": 100,
+                "potion_hp_30": 100,
                 "food_item_cheese": 39,
                 "tavern_food_item_dinner_0": 39,
                 "tavern_food_item_dinner_1": 39,
@@ -398,8 +287,6 @@
             "on_death_skills_use": "disorient=1",
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 225,
                 "bag_0": 1250,
                 "bag_1": 1500,
@@ -461,8 +348,6 @@
             "on_death_skills_use": "disorient=1",
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "soul body 1": 120,
@@ -517,8 +402,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "flow body 1": 120,
@@ -575,8 +458,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": "explode_on_finished=1",
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "mind body 1": 120,
@@ -634,8 +515,6 @@
             "on_start_skills_use": "guard=1",
             "loot": {
                 "tree_branch": 10,
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "grit body 1": 120,
@@ -692,8 +571,6 @@
             "on_death_skills_use": "brain_sap=1",
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "mind body 1": 120,
@@ -749,8 +626,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "flow body 1": 120,
@@ -808,8 +683,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "flow body 1": 120,
@@ -867,8 +740,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "grit body 1": 120,
@@ -928,8 +799,6 @@
             "on_start_skills_use": null,
             "loot": {
                 "orange_mushroom_cap": 10,
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 190,
                 "bag_0": 1000,
                 "bag_1": 1750,
@@ -992,8 +861,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 190,
                 "bag_0": 1000,
                 "bag_1": 1750,
@@ -1056,8 +923,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": "stealth=1",
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 190,
                 "bag_0": 1000,
                 "bag_1": 1750,
@@ -1119,8 +984,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": "guard=1",
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 190,
                 "bag_0": 1000,
                 "bag_1": 1750,
@@ -1184,8 +1047,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 190,
                 "bag_0": 1000,
                 "bag_1": 1750,
@@ -1250,8 +1111,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 190,
                 "bag_0": 1000,
                 "bag_1": 1750,
@@ -1314,8 +1173,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 190,
                 "bag_0": 1000,
                 "bag_1": 1750,
@@ -1379,8 +1236,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "axe": 295,
                 "bag_0": 1750,
@@ -1451,8 +1306,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_flow": 60,
                 "axe": 295,
                 "bag_0": 1750,
@@ -1517,8 +1370,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "axe": 295,
@@ -1588,8 +1439,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_soul": 60,
                 "axe": 295,
                 "bag_0": 1750,
@@ -1658,8 +1507,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "axe": 295,
                 "bag_0": 1750,
@@ -1732,8 +1579,6 @@
             "loot": {
                 "tree_branch": 10,
                 "rusty_axe": 1,
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "axe": 330,
                 "bag_1": 1250,
@@ -1803,8 +1648,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_2": 1250,
                 "bag_3": 1500,
@@ -1867,8 +1710,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_soul": 60,
                 "bag_1": 1750,
                 "bag_2": 1000,
@@ -1929,8 +1770,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": "angler_transform=1",
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_1": 1750,
                 "bag_2": 1000,
@@ -1993,8 +1832,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_flow": 60,
                 "bag_1": 1750,
                 "bag_2": 1000,
@@ -2054,8 +1891,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": "leech=3",
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_flow": 60,
                 "bag_1": 1750,
                 "bag_2": 1000,
@@ -2113,8 +1948,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": "thorns=99",
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_1": 1750,
                 "bag_2": 1000,
@@ -2177,8 +2010,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_1": 1750,
                 "bag_2": 1000,
@@ -2246,8 +2077,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "bag_1": 1750,
@@ -2312,8 +2141,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_2": 1250,
                 "bag_3": 1500,
@@ -2375,8 +2202,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_2": 1750,
                 "bag_3": 1000,
@@ -2434,8 +2259,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_flow": 60,
                 "bag_2": 1750,
                 "bag_3": 1000,
@@ -2489,8 +2312,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "bag_2": 1750,
@@ -2550,8 +2371,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_soul": 60,
                 "bag_2": 1750,
                 "bag_3": 1000,
@@ -2608,8 +2427,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_2": 1750,
                 "bag_3": 1000,
@@ -2669,8 +2486,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_2": 1750,
                 "bag_3": 1000,
@@ -2729,8 +2544,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_grit": 60,
                 "bag_2": 1750,
                 "bag_3": 1000,
@@ -2788,8 +2601,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "blessing_of_flow": 60,
                 "bag_2": 1750,
                 "bag_3": 1000,
@@ -2846,8 +2657,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "bag_2": 1750,
@@ -2903,8 +2712,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "grit body 1": 120,
@@ -2958,8 +2765,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "grit body 1": 120,
@@ -3013,8 +2818,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "grit body 1": 120,
@@ -3068,8 +2871,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 120,
                 "bag_0": 1500,
                 "grit body 1": 120,
@@ -3180,8 +2981,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": null,
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "translucent scroll": 100,
                 "blessing_of_mind": 60,
                 "axe": 295,
@@ -3251,8 +3050,6 @@
             "on_death_skills_use": null,
             "on_start_skills_use": "guard=1",
             "loot": {
-                "potion_remove_armor": 100,
-                "potion_hp_30": 100,
                 "axe": 225,
                 "bag_0": 1250,
                 "bag_1": 1500,
@@ -4930,7 +4727,7 @@
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "drink",
-            "drop_tags": "all",
+            "drop_tags": "none",
             "drop_from_random": 1,
             "drop_chance_base": 100,
             "drop_chance_level": 1,
@@ -4955,7 +4752,7 @@
             "del_on_use": true,
             "add_on_use": null,
             "triggers": "drink",
-            "drop_tags": "all",
+            "drop_tags": "none",
             "drop_from_random": 1,
             "drop_chance_base": 100,
             "drop_chance_level": 1,

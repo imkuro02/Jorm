@@ -21,9 +21,19 @@ npc_shop:
         - line: |
             <npc> says "Need anything?"
       options:
-     
         - line: |
-            purchase one Rope for 100 Scrap
+            Buy one Green Potion for 10 scrap
+          goto: shopping
+          trade:
+            give_to_player:
+              - item: potion_hp_30
+                amount: 1
+            give_to_npc:
+              - item: currency_0
+                amount: 10
+
+        - line: |
+            Buy one Rope for 100 Scrap
           goto: shopping
           trade:
             give_to_player:
@@ -45,4 +55,7 @@ npc_shop:
                 amount: 1
               - item: slime
                 amount: 3
+
+
+        
     
