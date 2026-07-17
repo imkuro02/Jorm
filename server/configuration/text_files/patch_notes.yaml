@@ -30,12 +30,14 @@ versions:
   #
   "150726":
     id: "150726"
-    title: e
+    title: Optimization
     unixtime: 1775631568
     features:
       - Resting or ressurecting does not trigger new room look anymore
       - Better following code
       - Shopkeeper sells green potions
+      - Map rendering is about 10x faster
+      - Debug mode now displays time for a command to run
   "130726":
     id: "130726"
     title: Triggers and Map
