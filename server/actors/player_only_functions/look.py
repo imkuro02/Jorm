@@ -9,82 +9,49 @@ random = random.Random()
 
 from collections import deque
 def command_map(self, line, return_gmcp = False):
+    #self.send_line(str(self.get_nearby_rooms(view_range=8)))
+    #return ''
+    
+    
+    #self.send_line(str(self.get_nearby_rooms(view_range=2)))
+    #return ''
+    
+
     setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
     if self.room == None:
         return
     room_id = self.room.id
     
-    
-    #GRID_SIZE = 15*1
-    GRID_SIZE_X = 3 * 1 * 11
-    GRID_SIZE_Y = 3 * 1* 5
-    GRID_CENTER_X = GRID_SIZE_X // 2
-    GRID_CENTER_Y = GRID_SIZE_Y // 2
-
-    DEPTH = 8#GRID_SIZE_X // 1
-
-    rooms = self.room.world.rooms
-    start_room = self.room
-
-    queue = deque()
-    queue.append((start_room, 0, 0, 0, 0))  # room, x, y, z, depth
-
-    visited = set([start_room])
-    coords = {start_room: (0, 0, 0, 0)}
-
     offsets = {
         "north":    (0, -1, 0),
         "west":     (-1, 0, 0),
         "south":    (0, 1, 0),
         "east":     (1, 0, 0),
     }
+    
+    
+    #GRID_SIZE = 15*1
+    GRID_SIZE_X = 11*3
+    GRID_SIZE_Y = 5*3
+    GRID_CENTER_X = GRID_SIZE_X // 2
+    GRID_CENTER_Y = GRID_SIZE_Y // 2
 
-    while queue:
-        room, x, y, z, depth = queue.popleft()
+    DEPTH = 8#GRID_SIZE_X // 1
 
-        if depth >= DEPTH:
-            continue
+    coords = {}
+    _coords = self.get_nearby_rooms(view_range = DEPTH, ignore_z_change = True)
+    for c in _coords:
+        coords[self.room.world.rooms[_coords[c]]] = c
 
-        if room.doorway and room != start_room:
-            continue
-
-        for _exit in rooms[room.id].exits:
-            
-            
-            next_room = rooms[_exit.to_room_id]
-
-            if next_room.get_real_id() not in self.explored_rooms:
-                continue
-
-
-            if next_room in visited:
-                continue
-
-            if _exit.direction not in offsets:
-                continue
-
-            if _exit.secret:
-                continue
-
-            dx, dy, dz = offsets[_exit.direction]
-
-            nx = x + dx
-            ny = y + dy
-            nz = z + dz
-
-
-
-            
-            if (nx, ny, nz, depth+1) not in coords.values():
-                visited.add(next_room)
-                coords[next_room] = (nx, ny, nz, depth+1)
-                queue.append((next_room, nx, ny, nz, depth+1))
-        
-        
-    grid = [[" " for _ in range(GRID_SIZE_X)] for _ in range(GRID_SIZE_Y)]
+    rooms = self.room.world.rooms
+    start_room = self.room
    
+    grid = [[" " for _ in range(GRID_SIZE_X)] for _ in range(GRID_SIZE_Y)]
+    #self.send_line(str(coords))
+    #self.send_line(str(self.get_nearby_rooms(view_range=8)))
+
     for room in coords:
-        x, y, z, depth = coords[room]
+        x, y, z = coords[room]
         gx = (x*2) + GRID_CENTER_X
         gy = (y*2) + GRID_CENTER_Y
         if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
@@ -129,6 +96,7 @@ def command_map(self, line, return_gmcp = False):
             if has_down and has_up:
                 cell = 'x'
 
+
             grid[gy][gx] = color + cell + Color.NORMAL
 
             '''
@@ -152,6 +120,7 @@ def command_map(self, line, return_gmcp = False):
                 
             
             for _exit in room.exits:
+
                 if _exit.direction in offsets:
                     _offset_gx = offsets[_exit.direction][0]
                     _offset_gy = offsets[_exit.direction][1]
@@ -166,6 +135,7 @@ def command_map(self, line, return_gmcp = False):
                             grid[_gy][_gx] = "@bblack-"
                         else:
                             grid[_gy][_gx] = "@bblack|"
+
     '''
     for room in coords:
         x, y, z, d= coords[room]
@@ -234,14 +204,15 @@ def command_map(self, line, return_gmcp = False):
                     grid[_gy+2][_gx-2] = f"{color}{texture}"
     '''
     
-            
-    
+    """
     _map = ''
     for y in grid:
         for x in y:
             _map += ''.join(x)
         _map += '\n'
- 
+    """
+    _map = "\n".join("".join(row) for row in grid)
+    
     col = '@bblack'
     tex = '#'
 
@@ -251,15 +222,15 @@ def command_map(self, line, return_gmcp = False):
 
     #top_border = f'{Color.NORMAL}<MAP START> {start_room.pretty_name()}'
     top_border = f'{Color.NORMAL}<MAP START>'
-    bot_border = f'{Color.NORMAL}<MAP END>'
+    bot_border = f'\n{Color.NORMAL}<MAP END>'
     _map = top_border + '\n' + _map + bot_border
     _map = _map + '@normal'
-
 
     if return_gmcp:
         return str(_map)
     else:
         self.send_line(str(_map))
+        
 def command_map3(self, line, return_gmcp=False):
     setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
     if self.room == None:
@@ -951,8 +922,87 @@ def command_look(self, line, return_gmcp=False, short = False):
         look_item(self, item[0])
     '''
         
+from collections import deque
 
-def get_nearby_rooms(self, view_range=1, 
+def get_nearby_rooms(
+    self,
+    view_range=1,
+    ignore_if_secret=True,
+    ignore_if_doorway=True,
+    ignore_if_blocked=False,
+    ignore_if_item_required=False,
+    ignore_z_change=False,
+):
+    offsets = {
+        "north":    (0, -1, 0),
+        "west":     (-1, 0, 0),
+        "south":    (0, 1, 0),
+        "east":     (1, 0, 0),
+        "up":        (0, 0, 1),
+        "down":     (0, 0, -1),
+    }
+
+    world = self.protocol.factory.world
+    start_id = self.room.id
+
+    found = {}
+    visited = {start_id}
+
+    queue = deque([
+        (start_id, (0, 0, 0), 0)
+    ])
+
+    while queue:
+        room_id, pos, depth = queue.popleft()
+
+        if ignore_z_change and pos[2] != 0:
+            continue
+
+        found[pos] = room_id
+
+        if depth >= view_range:
+            continue
+
+        room = world.rooms[room_id]
+
+        for _exit in room.get_active_exits(self):
+
+            if _exit.direction not in offsets:
+                continue
+            if ignore_if_blocked and _exit.blocked:
+                continue
+            if ignore_if_secret and _exit.secret:
+                continue
+            if ignore_if_doorway and room.doorway:
+                continue
+            if ignore_if_item_required and _exit.item_required is not None:
+                continue
+
+            if _exit.to_room_id in visited:
+                continue
+
+            dx, dy, dz = offsets[_exit.direction]
+
+            new_pos = (
+                pos[0] + dx,
+                pos[1] + dy,
+                pos[2] + dz
+            )
+
+            if max(abs(new_pos[0]), abs(new_pos[1]), abs(new_pos[2])) > view_range:
+                continue
+
+            visited.add(_exit.to_room_id)
+
+            queue.append((
+                _exit.to_room_id,
+                new_pos,
+                depth + 1
+            ))
+
+    return found
+'''
+def get_nearby_rooms2(self, view_range=1, 
         ignore_if_secret = True,
         ignore_if_doorway = True,
         ignore_if_blocked = False,
@@ -1009,6 +1059,7 @@ def get_nearby_rooms(self, view_range=1,
         for room_loc in _grid:
             room = self.protocol.factory.world.rooms[grid[room_loc]]
 
+            
             _x = int(room_loc.split(f"{split}")[0])
             _y = int(room_loc.split(f"{split}")[1])
             _z = int(room_loc.split(f"{split}")[2])
@@ -1020,7 +1071,7 @@ def get_nearby_rooms(self, view_range=1,
                     if _exit.blocked:
                         continue
                 if ignore_if_doorway:
-                    if _exit.doorway:
+                    if room.doorway:
                         continue
                 if ignore_if_secret:
                     if _exit.secret:
@@ -1063,7 +1114,7 @@ def get_nearby_rooms(self, view_range=1,
         _grid[r] = room.id
 
     return _grid
-
+'''
 
 def new_room_look(self):
     #self.send_line('\n'*3)

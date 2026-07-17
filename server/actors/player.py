@@ -27,7 +27,6 @@ from systems.utils import unload
 
 _len = len('**********************************************************************************')
 
-
 class FriendManager:
     def __init__(self, owner):
         self.owner = owner
@@ -507,7 +506,11 @@ class Player(Actor):
         if len(self.queued_lines) >= 1:
             to_handle = self.queued_lines[0]
             self.queued_lines.pop(0)
+
+            time_start = time.time()
             self.handle(to_handle)
+            runtime = time.time() - time_start
+            self.send_line(f'        last command took {float(runtime*1000):.3f}ms to execute', msg_type = [MessageType.DEBUG])
 
         if self.update_checker != None:
             if self.factory.ticks_passed % 10 == 0:
@@ -643,6 +646,8 @@ class Player(Actor):
             print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
+        
+
         if self.status == ActorStatusType.FIGHTING:
             if self.settings_manager.get_value(SETTINGS.AUTO_BATTLER):
                 if line != 'set autobattler off':
@@ -761,6 +766,7 @@ class Player(Actor):
             script(line)
             return
 
+        '''
         sorted_dict = dict(sorted(commands.items(), key=lambda item: len(item[0])))
         sorted_dict = dict(
             sorted(
@@ -772,6 +778,30 @@ class Player(Actor):
         best_match, best_score = systems.utils.match_word(
             command, sorted_dict.keys(), get_score=True
         )
+        '''
+
+        if not hasattr(self, 'best_cache'):
+            self.best_cache = {}
+
+        if command not in self.best_cache:
+            sorted_dict = dict(sorted(commands.items(), key=lambda item: len(item[0])))
+            sorted_dict = dict(
+                sorted(
+                    commands.items(),
+                    key=lambda item: (item[0].startswith("_"), len(item[0])),
+                )
+            )
+
+            best_match, best_score = systems.utils.match_word(
+                command, sorted_dict.keys(), get_score=True
+            )
+
+            self.best_cache[command] = [best_match, best_score]
+        else:
+            best_match = self.best_cache[command][0]
+            best_score = self.best_cache[command][1]
+            
+        
 
         if best_score < 90 or command[0] != best_match[0]:
             if self.status == ActorStatusType.FIGHTING:
@@ -794,6 +824,7 @@ class Player(Actor):
             return
 
         script(line)
+
 
     def set_turn(self):
         super().set_turn()

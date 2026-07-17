@@ -485,10 +485,10 @@ class Room:
                 list_pretty_name_objects = [actor]
             )
 
-
         actor.room = self
         self.actors[actor.id] = actor
-
+    
+        
         if not self.instanced:
             if not dont_unload_instanced and not self.is_an_instance():
                 if type(actor).__name__ == "Player":

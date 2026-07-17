@@ -237,7 +237,7 @@ def command_go(self, line = '', room_id = None):
             return
 
         direction = self.find_direction_for_command_go(line)
-
+        
         if direction == None:
             self.simple_broadcast(
                 f'You walk into a wall',

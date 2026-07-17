@@ -235,36 +235,6 @@ class World:
         self.kill_tracking = KillTracking(self.factory)
         self.reload()
 
-
-    def spawn_boss(self):
-        all_mobs = []
-        for i in self.rooms:
-            if self.rooms[i].instanced:
-                continue
-            for x in self.rooms[i].actors:
-                if type(self.rooms[i].actors[x]).__name__ != "Enemy":
-                    continue
-                if self.rooms[i].actors[x].status != ActorStatusType.NORMAL:
-                    continue
-                all_mobs.append(self.rooms[i].actors[x])
-
-        boss_mob = random.choice(all_mobs)
-        boss_mob.name = "<!>" + boss_mob.name + "<!>"
-
-        list_pretty_name_objects = [boss_mob]
-        boss_mob.pretty_broadcast(
-            None,
-            f"{boss_mob.id} is terrorizing {boss_mob.room.pretty_name()}",
-            send_to="world",
-            list_pretty_name_objects = list_pretty_name_objects
-        )
-
-        for s in boss_mob.stat_manager.stats:
-            boss_mob.stat_manager.stats[s] = boss_mob.stat_manager.stats[s] * 2
-        boss_mob.stat_manager.stats[StatType.EXP] = (
-            boss_mob.stat_manager.stats[StatType.EXP] * 5
-        )
-
     def reload(self):
         start = time.time()
         # systems.utils.debug_print(f"Reloading rooms: {time.time()} START")
@@ -398,16 +368,13 @@ class World:
 
         self.rooms_to_unload = []
 
-        
-
-        
-
     def tick(self):
         self.game_time.tick()
         if self.factory.ticks_passed % 600 == 0:
             self.unload_rooms()
             systems.utils.unload_fr()
 
+     
         rooms = []
         for i in self.rooms:
             rooms.append(self.rooms[i])
