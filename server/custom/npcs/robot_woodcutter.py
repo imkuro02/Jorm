@@ -2,6 +2,7 @@ from actors.npcs import Npc
 from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.color import Color
 from items.misc import Item
+from configuration.constants.tickrate import TICKRATE
 class robot_woodcutter(Npc):
     @classmethod
     def compare_replace(self, npc_object):
@@ -14,7 +15,7 @@ class robot_woodcutter(Npc):
         self.wander_directions_order = ['south', 'north']
         self.wander_direction_current = 0
         self.wander_ticks_passed = 0
-        self.wander_ticks_required = 30*3
+        self.wander_ticks_required = TICKRATE*3
         self.wander_ticks_warning_required = 10
         self.footprints = []
         self.pre_footprints = []

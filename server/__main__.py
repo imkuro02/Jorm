@@ -9,7 +9,7 @@ config.load()
 import time
 
 import systems.utils
-
+from configuration.constants.tickrate import TICKRATE
 
 class ServerFactory(protocol.Factory):
     def __init__(self):
@@ -22,7 +22,7 @@ class ServerFactory(protocol.Factory):
         
         self.runtime = time.time()
         self.start = time.time()
-        self.tickrate: int = 30 * 1
+        self.tickrate: int = TICKRATE * 1
         self.world = World(self)
         
 
@@ -40,7 +40,7 @@ class ServerFactory(protocol.Factory):
         self.world.tick()
         # for room in self.world.rooms.values():
         #    room.tick()
-        if self.ticks_passed % (30 * 120) == 0 or self.ticks_passed == 10:
+        if self.ticks_passed % (TICKRATE * 120) == 0 or self.ticks_passed == 10:
             for i in self.protocols:
                 if i.actor != None:
                     # self.db.write_actor(i.actor)

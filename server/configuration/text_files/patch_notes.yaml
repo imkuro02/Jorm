@@ -38,6 +38,9 @@ versions:
       - Shopkeeper sells green potions
       - Map rendering is about 10x faster
       - Debug mode now displays time for a command to run
+      - Tickrate is configurable now
+      - Tickrate changed from 30 to 10
+      - Loading of objects is less efficient but also easier to configure 
   "130726":
     id: "130726"
     title: Triggers and Map

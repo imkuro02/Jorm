@@ -1,6 +1,7 @@
 
 from items.misc import Item
 from items.manager import load_item
+from configuration.constants.tickrate import TICKRATE
 class scenery_tavern_keg(Item):
     @classmethod
     def compare_replace(self, item_object):
@@ -46,7 +47,7 @@ class scenery_tavern_keg(Item):
 
     def tick(self):
         #print(self.inventory_manager.owner.world)
-        if self.inventory_manager.owner.world.factory.ticks_passed % (30*60) == 0:
+        if self.inventory_manager.owner.world.factory.ticks_passed % (TICKRATE*60) == 0:
             self.add_volume()
 
 

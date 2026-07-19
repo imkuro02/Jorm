@@ -8,7 +8,7 @@ from items.manager import load_item
 from systems.inventory import InventoryManager
 from systems.room import Room
 from systems.utils import unload
-
+from configuration.constants.tickrate import TICKRATE
 
 class tavern_combat_manager(Combat):
     def combat_over(self):
@@ -73,13 +73,13 @@ class tavern_room(Room):
     def tick(self):
         super().tick()
         return
-        if self.world.factory.ticks_passed % (30 * 150) == 0:
+        if self.world.factory.ticks_passed % (TICKRATE * 150) == 0:
             output = f"You hear a loud thud"
             if len(self.actors.values()) <= 0:
                 return
             first_actor = next(iter(self.actors.values()))
             first_actor.simple_broadcast(output, output)
-        if self.world.factory.ticks_passed % (30 * 1) == 0:
+        if self.world.factory.ticks_passed % (TICKRATE * 1) == 0:
             for i in self.actors.values():
                 if i.status == ActorStatusType.DEAD and self.combat == None:
                     i.send_line(

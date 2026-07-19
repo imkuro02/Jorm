@@ -2,7 +2,7 @@ from actors.player_only_functions.checks import check_not_in_combat
 from configuration.config import StatType
 import random
 from items.manager import load_item
-
+from configuration.constants.tickrate import TICKRATE
 
 class ChargingMiniGame:
     def __init__(self, owner):
@@ -58,7 +58,7 @@ class ChargingMiniGame:
         self.ticks_passed = 0
         self.charging = False
 
-        self.ticks_to_seconds = 30
+        self.ticks_to_seconds = TICKRATE
         self.ticks_for_charge = 3 * self.ticks_to_seconds
 
         self.line_id = 0

@@ -12,7 +12,7 @@ from configuration.constants.stat_type import StatType
 from systems.utils import unload
 from systems.utils import REFTRACKER, unload
 from copy import deepcopy
-
+from configuration.constants.tickrate import TICKRATE
 import uuid
 
 class CombatHistoryPacket:
@@ -131,14 +131,14 @@ class Combat:
         #    return
 
         # systems.utils.debug_print(self.time_since_turn_finished, len(self.participants))
-        if self.time_since_turn_finished == 30 * 20:
+        if self.time_since_turn_finished == TICKRATE * 20:
             if type(self.current_actor).__name__ == "Player":
                 self.current_actor.simple_broadcast(
                     "@yellowYour turn is over in 10 seconds.@normal",
                     f"{self.current_actor.name}'s turn is over in 10 seconds.",
                 )
 
-        if self.time_since_turn_finished >= 30 * 30:
+        if self.time_since_turn_finished >= TICKRATE * 30:
             if type(self.current_actor).__name__ == "Player":
                 self.current_actor.simple_broadcast(
                     "@yellowYou missed your turn.@normal",

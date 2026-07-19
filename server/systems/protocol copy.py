@@ -23,6 +23,7 @@ from items.equipment import EquipmentBonus
 from items.manager import load_item, save_item
 from systems.quest import OBJECTIVE_TYPES
 from twisted.internet import protocol
+from configuration.constants.tickrate import TICKRATE
 
 IAC = b"\xff"  # Interpret as Command
 WILL = b"\xfb"  # Will Perform
@@ -423,23 +424,23 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         cutscene = False
         if cutscene:
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = 30*1,                                           
+                caller = self, tag = 'loading', delay = TICKRATE*1,                                           
                 func=lambda: self.send_line('A great forest stretches as far north as the eye can see'),
             )
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = 30*4,
+                caller = self, tag = 'loading', delay = TICKRATE*4,
                 func=lambda: self.send_line('Entire cities, swallowed by the forest'),
             )
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = 30*8,
+                caller = self, tag = 'loading', delay = TICKRATE*8,
                 func=lambda: self.send_line('It grows rapidly, the roots are climbing the walls, warping the gates, it is...'),
             )
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = 30*12,
+                caller = self, tag = 'loading', delay = TICKRATE*12,
                 func=lambda: self.send_line('...@bredSuffocating@normal'),
             )
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = (30*15),
+                caller = self, tag = 'loading', delay = (TICKRATE*15),
                 func=lambda: self.send_line('[Press enter to continue]'),
             )
         else:

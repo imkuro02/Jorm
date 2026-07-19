@@ -20,10 +20,10 @@ but sending a list of "players" will have it only broadcast to those players
 having multiple greet_message() functions will execute only the first one that runs succesfully
 if player is not in send_to they will be ignored and another greet_message might execute for them
 '''
-
+from configuration.constants.tickrate import TICKRATE
 
 def greet_message(self, message, send_to: list = [None]):
-    if self.factory.ticks_passed % (30 * 4) == 0:
+    if self.factory.ticks_passed % (TICKRATE * 4) == 0:
         if not hasattr(self,'actors_in_room'):
             self.actors_in_room = {}
         

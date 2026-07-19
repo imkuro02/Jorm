@@ -13,6 +13,7 @@ from configuration.constants.stat_type import StatType
 from configuration.constants.bonus_type import BonusType
 from systems.utils import REFTRACKER, get_object_parent, unload, add_godot_url_items
 from systems.triggers import TriggerManager
+from configuration.constants.tickrate import TICKRATE
 
 class Item:
     def __init__(self):
@@ -81,7 +82,7 @@ class Item:
         self.ticks_until_ambience -= 1
 
         if self.ticks_until_ambience <= 0:
-            self.ticks_until_ambience = random.randint(30 * 60, 30 * 120)
+            self.ticks_until_ambience = random.randint(TICKRATE * 60, TICKRATE * 120)
 
             owner = self.inventory_manager.owner
             if get_object_parent(owner) == "Room":

@@ -4,6 +4,7 @@ import json
 from actors.npcs import Npc
 from items.manager import load_item
 from systems.dialog import Dialog
+from configuration.constants.tickrate import TICKRATE
 
 EARNINGS_DATA_LOCATION = 'database/gambling_earnings.json'
 
@@ -122,7 +123,7 @@ class gambling_dialog(Dialog):
         #    super().end_dialog()
         #    return
 
-        pause_time = 30
+        pause_time = TICKRATE
         if self.is_gambling == False:
             self.ticks = 0
             return
@@ -234,7 +235,7 @@ class gambling(Npc):
             i.tick()
 
         self.time_exisiting += 1
-        if self.time_exisiting % (30 * 3) == 0:
+        if self.time_exisiting % (TICKRATE * 3) == 0:
             self.description = f'{self.original_description} They have {"made" if self.earnings >= 0 else "lost"} {abs(self.earnings)} scrap so far.'
             if self.actors != len(self.room.actors.values()):
                 self.actors = len(self.room.actors.values())

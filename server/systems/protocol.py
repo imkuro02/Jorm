@@ -23,6 +23,8 @@ from items.equipment import EquipmentBonus
 from items.manager import load_item, save_item
 from systems.quest import OBJECTIVE_TYPES
 from twisted.internet import protocol
+from configuration.constants.tickrate import TICKRATE
+
 
 IAC = b"\xff"  # Interpret as Command
 WILL = b"\xfb"  # Will Perform
@@ -196,7 +198,7 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
                     if self.actor_id == online_account.actor_id and self != online_account:
                         self.send_line('Logging you out of another window')
                         online_account.send_line('Logging in on another window, closing this connection')
-                        delay = 30
+                        delay = TICKRATE
                         online_account.disconnect()
 
                 self.factory.delayed_functions.add_delayed_function(
@@ -383,21 +385,21 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
                         self.send_line(f'Deleting character {actor["actor_name"]}')
                         for delete_i in range(0,6):
                             self.factory.delayed_functions.add_delayed_function(
-                                caller = self, tag = 'character-deletion', delay = 30*(delete_i),
+                                caller = self, tag = 'character-deletion', delay = TICKRATE*(delete_i),
                                 func=lambda delete_i=delete_i: self.send_line(f'Character will be deleted in {6-delete_i} seconds... Type anything to cancel'),
                             )
                         
                         self.factory.delayed_functions.add_delayed_function(
-                            caller = self, tag = 'character-deletion', delay = 30*6,
+                            caller = self, tag = 'character-deletion', delay = TICKRATE*6,
                             func=lambda: self.factory.db.lock_actor(actor_id),
                         )
                         
                         self.factory.delayed_functions.add_delayed_function(
-                            caller = self, tag = 'character-deletion', delay = (30*6)+1,
+                            caller = self, tag = 'character-deletion', delay = (TICKRATE*6)+1,
                             func=lambda: self.change_state(self.state),
                         )
                         self.factory.delayed_functions.add_delayed_function(
-                            caller = self, tag = 'character-deletion', delay = (30*6)+2,
+                            caller = self, tag = 'character-deletion', delay = (TICKRATE*6)+2,
                             func=lambda: self.send_line(f'{Color.GOOD}Character Deleted{Color.NORMAL}'),
                         )
 
@@ -578,23 +580,23 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         cutscene = False
         if cutscene:
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = 30*1,                                           
+                caller = self, tag = 'loading', delay = TICKRATE*1,                                           
                 func=lambda: self.send_line('A great forest stretches as far north as the eye can see'),
             )
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = 30*4,
+                caller = self, tag = 'loading', delay = TICKRATE*4,
                 func=lambda: self.send_line('Entire cities, swallowed by the forest'),
             )
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = 30*8,
+                caller = self, tag = 'loading', delay = TICKRATE*8,
                 func=lambda: self.send_line('It grows rapidly, the roots are climbing the walls, warping the gates, it is...'),
             )
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = 30*12,
+                caller = self, tag = 'loading', delay = TICKRATE*12,
                 func=lambda: self.send_line('...@bredSuffocating@normal'),
             )
             self.factory.delayed_functions.add_delayed_function(
-                caller = self, tag = 'loading', delay = (30*15),
+                caller = self, tag = 'loading', delay = (TICKRATE*15),
                 func=lambda: self.send_line('[Press enter to continue]'),
             )
         else:

@@ -2,6 +2,7 @@ from actors.npcs import Npc
 from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.color import Color
 from items.misc import Item
+from configuration.constants.tickrate import TICKRATE
 
 class wander_around_mob(Npc):
     @classmethod
@@ -16,7 +17,7 @@ class wander_around_mob(Npc):
         self.name = self.name.replace('The','The Wandering')
         self.wander_direction_current = 0
         self.wander_ticks_passed = 0
-        self.wander_ticks_required = 30*10
+        self.wander_ticks_required = TICKRATE*10
         self.wander_ticks_warning_required = 10
         self.footprints = []
         self.pre_footprints = []

@@ -24,6 +24,7 @@ from configuration.constants.message_type import MessageType
 from configuration.constants.stat_type import StatType
 from systems.trade import TradeManager
 from systems.utils import unload
+from configuration.constants.tickrate import TICKRATE
 
 _len = len('**********************************************************************************')
 
@@ -156,7 +157,7 @@ class UpdateChecker:
         self.last_grid = None
 
     def tick_show_actors(self):
-        if not self.actor.factory.ticks_passed % 30 / 10 == 0:
+        if not self.actor.factory.ticks_passed % TICKRATE / 10 == 0:
             return
 
         output = "Entities:\n"

@@ -3,6 +3,7 @@ import random
 import uuid
 from copy import deepcopy
 
+from configuration.constants.tickrate import TICKRATE
 import actors.ai
 import systems.utils
 from actors.player_only_functions.settings import SETTINGS
@@ -943,11 +944,11 @@ class Actor:
             return
 
         # every 60 seconds, one affliction tick passes
-        if self.factory.ticks_passed % (30 * 60) == 0:
+        if self.factory.ticks_passed % (TICKRATE * 60) == 0:
             self.finish_turn(force_cooldown=True)
 
         # every 1 second, one heal tick passes
-        if self.factory.ticks_passed % (30 * 1) != 0:
+        if self.factory.ticks_passed % (TICKRATE * 1) != 0:
             return
         if self.room == None:
             return

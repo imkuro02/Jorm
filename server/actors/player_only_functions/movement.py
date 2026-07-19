@@ -6,6 +6,7 @@ from configuration.constants.audio import Audio
 from configuration.constants.stat_type import StatType
 from configuration.constants.room_constant import RoomConstant
 from affects.affects import Affect
+from configuration.constants.tickrate import TICKRATE
 
 def add_explored_room(actor):
     if hasattr(actor, 'explored_rooms'):
@@ -315,23 +316,23 @@ def command_go(self, line = '', room_id = None):
 
     if direction.is_one_way_exit():
         self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'movement', delay = 30*0,
+            caller = self, tag = 'movement', delay = TICKRATE*0,
             func=lambda: self.send_line('Traveling somewhere with no return...'),
         )
         self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'movement', delay = 30*1,
+            caller = self, tag = 'movement', delay = TICKRATE*1,
             func=lambda: self.send_line('3...', sound = Audio.walk()),
         )
         self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'movement', delay = 30*2,
+            caller = self, tag = 'movement', delay = TICKRATE*2,
             func=lambda: self.send_line('2...', sound = Audio.walk()),
         )
         self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'movement', delay = 30*3,
+            caller = self, tag = 'movement', delay = TICKRATE*3,
             func=lambda: self.send_line('1...', sound = Audio.walk()),
         )
         self.factory.delayed_functions.add_delayed_function(
-            caller = self, tag = 'movement', delay = 30*4,
+            caller = self, tag = 'movement', delay = TICKRATE*4,
             func=lambda: self.move_party_leader(room_id=new_room),
         )
     else:

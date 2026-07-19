@@ -12,6 +12,7 @@ from skills.manager import construct_skill, check_if_skill_can_be_used#, #use_sk
 from systems.utils import REFTRACKER
 from configuration.constants.color import Color
 from actors.player_only_functions.settings import SETTINGS
+from configuration.constants.tickrate import TICKRATE
 
 class AI:
     def __init__(self, actor):
@@ -281,7 +282,7 @@ class PlayerAI(AI):
         if self.actor.settings_manager.get_value(SETTINGS.AUTO_BATTLER):
             if self.actor.room.combat != None:
                 if self.actor.room.combat.current_actor == self.actor:
-                    if self.actor.room.combat.time_since_turn_finished >= 30*1:
+                    if self.actor.room.combat.time_since_turn_finished >= TICKRATE*1:
                         self.predict_use_best_skill(offensive_only = True, for_prediction=False)
 
         if self.actor.status != ActorStatusType.FIGHTING:
