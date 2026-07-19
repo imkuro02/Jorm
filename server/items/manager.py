@@ -33,7 +33,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
     _item_class_to_check = item_override_class()
     _item_class_to_check.premade_id = item_premade_id
 
-    item_class = custom_loader.compare_replace_items(_item_class_to_check)
+    item_class = custom_loader.compare_replace(_item_class_to_check)
     if item_class != False:
         item_override_class = item_class 
 

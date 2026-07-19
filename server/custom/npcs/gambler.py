@@ -95,8 +95,8 @@ class gambling_dialog(Dialog):
                 f"{self.player.id} bids {self.to_gamble} scrap",
                 list_pretty_name_objects = list_pretty_name_objects
             )
-            self.npc.pretty_broadcast(
-                None,
+            self.player.pretty_broadcast(
+                f'"{self.player.pretty_name(identifier = self.player, text_override = self.player.name)} Im not stupid.." says {self.npc.id}. "{self.player.id} don\'t have enough scrap"',
                 f'"{self.player.id} Im not stupid.." says {self.npc.id}. "You don\'t have enough scrap"',
                 list_pretty_name_objects = list_pretty_name_objects
             )
@@ -254,7 +254,8 @@ class gambling(Npc):
                 item = random.choice(list(actor.inventory_manager.items.values()))
 
                 item_name = item.name
-                actor_name = actor.pretty_name(identifier = actor)
-                self.simple_broadcast(
-                    None, f'"You wanna bet that {item_name}, {actor_name}?" {self.pretty_name(identifier = actor)} asks'
+                list_pretty_name_objects = [actor, self]
+                actor.pretty_broadcast(
+                    f'"Wanna bet that {item_name}, {actor.pretty_name(identifier = actor, text_override = actor.name)}?" {self.id} asks', f'"Wanna bet that {item_name}, {actor.id}?" {self.id} asks',
+                    list_pretty_name_objects = list_pretty_name_objects
                 )

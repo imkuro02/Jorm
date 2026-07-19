@@ -75,7 +75,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         can_drop_corpse = can_drop_corpse,
     )
 
-    npc_class = custom_loader.compare_replace_npcs(my_npc)
+    npc_class = custom_loader.compare_replace(my_npc)
     my_npc.room.world.rooms["overworld/loading"].move_actor(my_npc, silent=True)
     my_npc.unload()
     unload(my_npc)
