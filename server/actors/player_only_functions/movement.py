@@ -81,9 +81,14 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
                 continue
             if par.party_manager.get_actor_to_follow() != followed_actor:
                 continue
+
             followed_actor.room.move_actor(par, silent = False)
-            par.pretty_broadcast(f'You follow {followed_actor.id}',None, list_pretty_name_objects=[followed_actor], sound = Audio.walk())
-            par.sendSound(Audio.walk())
+            #par.pretty_broadcast(f'You follow {followed_actor.id}', None, list_pretty_name_objects=[followed_actor])
+
+            if type(par).__name__ == 'Player':
+                par.sendSound(Audio.walk())
+                par.update_checker.map_tick()
+
             move_followers(par)
             add_explored_room(par)
 

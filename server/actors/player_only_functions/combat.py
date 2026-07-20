@@ -651,7 +651,6 @@ def rest_home_request(self, line):
             if par == self:
                 continue
             par.rest_home(line)
-        return
     self.rest_home(line)
 
 
@@ -663,7 +662,6 @@ def rest_here_request(self, line):
             if par == self:
                 continue
             par.rest_here(line)
-        return
     self.rest_here(line)
 
 

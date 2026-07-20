@@ -839,8 +839,12 @@ class AffectSummoner(Affect):
     def __init__(self, *args, **kwargs):
         self.summoned_actor = kwargs['summoned_actor']
         del kwargs['summoned_actor']
-        #self.stackable = kwargs['stackable']
-        #del kwargs['stackable']
+
+        self.stackable = False
+        if 'stackable' in kwargs:
+            self.stackable = kwargs['stackable']
+            del kwargs['stackable']
+
         super().__init__(*args, **kwargs)
         self.summoned_actor.party_manager.actor_to_follow = self.affect_target_actor
         

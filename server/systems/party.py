@@ -83,8 +83,8 @@ class PartyManager:
 
     def get_actor_to_follow(self):
         if self.party != None:
-            if self.party.actor == self:
-                return None
+            
+            return self.party.actor
         return self.actor_to_follow
 
     def get_is_friendly(self, who_to_check):

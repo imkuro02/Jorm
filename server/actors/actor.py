@@ -28,6 +28,7 @@ from systems.quest import QuestManager
 from systems.utils import REFTRACKER, unload
 from systems.triggers import TriggerManager
 from configuration.config import LORE
+
 class ActorStatManager:
     def __init__(self, actor):
         self.actor = actor
@@ -339,7 +340,6 @@ class Actor:
         # for npc char sheet
         self.dont_join_fights = False           # whether to block players from moving
         self.reset_stats_after_combat = True    # whether to heal to full after combat and reset cooldowns + affs
-        
 
         REFTRACKER.add_ref(self)
 
@@ -1146,6 +1146,14 @@ class Actor:
             else:
                 players = self.party_manager.party.participants.values()
 
+        # if A is following B, neither of them will broadcast to eachother, used for movement
+        if send_to == "room_different_actor_to_follow":
+            players = [
+                actor
+                for actor in self.room.actors.values()
+                if actor.party_manager.get_actor_to_follow() != self.party_manager.get_actor_to_follow()
+            ]
+            
         # delete duplicate entires (for example skill thats cast on yourself)
         list_pretty_name_objects = list(set(list_pretty_name_objects))
 
@@ -1368,6 +1376,7 @@ class Actor:
                 # self.show_prompts(self.room.combat.participants.values())
                 continue
 
+
             '''
             _icon = self.get_icon(who_checks=par)
             if _icon != "":
@@ -1377,6 +1386,7 @@ class Actor:
             )
             par.send_line(output_other)
             '''
+        self.pretty_broadcast(f'{self.pretty_name(identifier=self, text_override='Your')} turn',f'{self.id}s turn',list_pretty_name_objects = [self])
 
         # print(self.room.combat)
 
@@ -1392,7 +1402,6 @@ class Actor:
         self.ai.clear_prediction()
 
     def send_line(self, line, color=True, sound=None, msg_type=None):
-        return
         systems.utils.debug_print(
             f"send_line called in a object class Npc function? line: {line}"
         )

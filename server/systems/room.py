@@ -480,7 +480,7 @@ class Room:
             actor.pretty_broadcast(
                 None,
                 f"{actor.id} leaves",
-                send_to="room",
+                send_to="room_different_actor_to_follow",
                 sound=Audio.walk(),
                 list_pretty_name_objects = [actor]
             )
@@ -529,7 +529,7 @@ class Room:
             actor.pretty_broadcast(
                 None,
                 f"{actor.id} arrives",
-                send_to="room",
+                send_to="room_different_actor_to_follow",
                 sound=Audio.walk(),
                 list_pretty_name_objects = [actor]
             )

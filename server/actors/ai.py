@@ -254,8 +254,8 @@ class AI:
         if self.actor.room.combat.current_actor != self.actor:
             return False
 
-        if self.actor.room.combat.time_since_turn_finished <= int(10):
-            return False
+        #if self.actor.room.combat.time_since_turn_finished <= int(TICKRATE*1):
+        #    return False
 
         return True
 
@@ -328,7 +328,10 @@ class EnemyAI(AI):
 
     def tick(self):
         if not super().tick():
-            return
+            return False
+
+        if self.actor.room.combat.time_since_turn_finished <= int(TICKRATE*.5):
+            return False
 
         
         self.use_prediction()
