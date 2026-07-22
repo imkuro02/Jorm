@@ -36,7 +36,7 @@ def command_map(self, line, return_gmcp = False):
     GRID_CENTER_X = GRID_SIZE_X // 2
     GRID_CENTER_Y = GRID_SIZE_Y // 2
 
-    DEPTH = 8#GRID_SIZE_X // 1
+    DEPTH = 3#GRID_SIZE_X // 1
 
     coords = {}
     _coords = self.get_nearby_rooms(view_range = DEPTH, ignore_z_change = True)
