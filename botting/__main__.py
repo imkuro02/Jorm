@@ -6,6 +6,61 @@ HOST = "jorm.kurowski.xyz"
 PORT = 4001
 COMMANDS = [
 "guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest","guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest","guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest","guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest","guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
+"guest",
 "go _",
 "set debugmuted on",
 "set debugmuted on",
@@ -23,7 +78,9 @@ for i in range(0,1000):
     COMMANDS.append('s')
     COMMANDS.append('w')
     
-DELAY = 2  # seconds between each run
+
+    
+DELAY = 0.1  # seconds between each run
 
 def send_telnet_command():
     try:

@@ -511,7 +511,8 @@ class Player(Actor):
             time_start = time.time()
             self.handle(to_handle)
             runtime = time.time() - time_start
-            self.send_line(f'        last command took {float(runtime):.3f} to execute', msg_type = [MessageType.DEBUG])
+            if self.protocol != None:
+                self.send_line(f'        last command took {float(runtime):.5f} to execute', msg_type = [MessageType.DEBUG])
 
         if self.update_checker != None:
             if self.factory.ticks_passed % 10 == 0:
