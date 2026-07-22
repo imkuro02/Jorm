@@ -261,7 +261,7 @@ def command_go(self, line = '', room_id = None):
                     )
                 self.affect_manager.set_affect_object(aff)
             return
-        '''
+
         # check for combat
         yes_any_can_start_fights = False
         highest_can_start_fights_level = 0
@@ -318,13 +318,6 @@ def command_go(self, line = '', room_id = None):
     else:
         old_room = self.room
         new_room = room_id
-    '''
-    old_room = self.room
-    
-    if room_id != None: 
-        new_room = room_id
-    else:
-        new_room = direction.get_room_obj().id
 
     if direction == None:
         self.move_party_leader(room_id = new_room)
