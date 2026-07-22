@@ -6,8 +6,10 @@ PORT = 4001
 COMMANDS = [
 "guest",
 "go _",
+"set map off"
 ]
 for i in range(0,1000):
+    COMMANDS.append('set map off')
     COMMANDS.append('n')
     COMMANDS.append('e')
     COMMANDS.append('s')
