@@ -1402,11 +1402,13 @@ class Actor:
         self.ai.clear_prediction()
 
     def send_line(self, line, color=True, sound=None, msg_type=None):
+        return
         systems.utils.debug_print(
             f"send_line called in a object class Npc function? line: {line}"
         )
 
     def sendSound(self, sfx):
+        return
         systems.utils.debug_print(
             f"sendSound called in a object class Npc function? line: {sfx}"
         )

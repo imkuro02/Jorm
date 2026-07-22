@@ -23,7 +23,7 @@ for i in range(0,1000):
     COMMANDS.append('s')
     COMMANDS.append('w')
     
-DELAY = 0.1  # seconds between each run
+DELAY = 2  # seconds between each run
 
 def send_telnet_command():
     try:
@@ -31,7 +31,7 @@ def send_telnet_command():
             for i in COMMANDS:
                 time.sleep(DELAY)
                 tn.write(i.encode('utf-8'))
-            time.sleep(DELAY)
+            time.sleep(5)
     except Exception as e:
         print(f"Error: {e}")
 
