@@ -1,22 +1,27 @@
 import telnetlib3 as telnetlib
 import time
 import random
-HOST = "localhost"
+HOST = "jorm.kurowski.xyz"
 PORT = 4001
 COMMANDS = [
 "guest",
-"e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e","e",
-"say cheese"
+"go _",
 ]
+for i in range(0,1000):
+    COMMANDS.append('n')
+    COMMANDS.append('e')
+    COMMANDS.append('s')
+    COMMANDS.append('w')
+    
 DELAY = 0.2  # seconds between each run
 
 def send_telnet_command():
     try:
         with telnetlib.Telnet(HOST, PORT, timeout=5) as tn:
             for i in COMMANDS:
-                time.sleep(random.randint(3100,3900)/1000)
+                time.sleep(DELAY)
                 tn.write(i.encode('utf-8'))
-            time.sleep(random.randint(3100,3900)/1000)
+            time.sleep(DELAY)
     except Exception as e:
         print(f"Error: {e}")
 

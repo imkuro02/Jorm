@@ -494,7 +494,6 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         if line.lower() == "new".lower():
             self.change_state(self.REGISTER_USERNAME)
             return
-        """   
         if line.lower() == "guest".lower():
             _id = str(uuid.uuid4())
             titles = ["Goon", "Gamer", "Gold Farmer", "Noob", "Pro", "Mudder", "Smelly"]
@@ -505,7 +504,6 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
             self.change_state(self.PLAY_AS_GUEST)
 
             return
-        """
 
         self.change_state(self.LOGIN_OR_REGISTER)
         return

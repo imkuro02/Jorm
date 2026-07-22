@@ -319,6 +319,10 @@ def command_go(self, line = '', room_id = None):
         old_room = self.room
         new_room = room_id
 
+    if direction == None:
+        self.move_party_leader(room_id = new_room)
+        return
+        
     if direction.is_one_way_exit():
         self.factory.delayed_functions.add_delayed_function(
             caller = self, tag = 'movement', delay = TICKRATE*0,
