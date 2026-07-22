@@ -369,7 +369,6 @@ class Player(Actor):
         self.protocol = protocol
         self.admin = 0
         self.queued_lines = []
-        self.queued_lines_time_start = []
         self.msg_history = {}
         self.recently_send_message_count = 0
         self.instanced_rooms = []
@@ -509,13 +508,10 @@ class Player(Actor):
             to_handle = self.queued_lines[0]
             self.queued_lines.pop(0)
 
-            time_start = self.queued_lines_time_start[0]
-            self.queued_lines_time_start.pop(0)
-            
+            time_start = time.time()
             self.handle(to_handle)
-
             runtime = time.time() - time_start
-            self.send_line(f'        last command took {float(runtime):.10f}s to execute', msg_type = [MessageType.DEBUG])
+            self.send_line(f'        last command took {float(runtime):.3f} to execute', msg_type = [MessageType.DEBUG])
 
         if self.update_checker != None:
             if self.factory.ticks_passed % 10 == 0:
@@ -631,7 +627,6 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
-        self.queued_lines_time_start.append(time.time())
         self.queued_lines.append(line)
 
     def try_to_use(self, line):

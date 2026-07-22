@@ -13,7 +13,7 @@ COMMANDS = [
 "shout set!"
 ]
 for i in range(0,1000):
-    COMMANDS.append('map')
+    COMMANDS.append('stats')
     #COMMANDS.append('e')
     #COMMANDS.append('s')
     #COMMANDS.append('w')
@@ -24,9 +24,9 @@ def send_telnet_command():
     try:
         with telnetlib.Telnet(HOST, PORT, timeout=5) as tn:
             for i in COMMANDS:
-                time.sleep(DELAY)
+                time.sleep(3)
                 tn.write(i.encode('utf-8'))
-            time.sleep(DELAY)
+            time.sleep(3)
     except Exception as e:
         print(f"Error: {e}")
 
