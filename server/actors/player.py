@@ -483,6 +483,9 @@ class Player(Actor):
     #    return output
 
     def tick(self):
+        if self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
+            return
+            
         if not self.loaded:
             return
 
@@ -505,6 +508,7 @@ class Player(Actor):
             self.recently_send_message_count -= 1
 
         if len(self.queued_lines) >= 1:
+            
             to_handle = self.queued_lines[0]
             self.queued_lines.pop(0)
 
