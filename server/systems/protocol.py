@@ -497,7 +497,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         if line.lower() == "guest".lower():
             _id = str(uuid.uuid4())
             titles = ["Goon", "Gamer", "Gold Farmer", "Noob", "Pro", "Mudder", "Smelly"]
-            _usr = systems.utils.generate_name() + " The " + random.choice(titles)
+            _usr = systems.utils.generate_name() + " The " + random.choice(titles) + random.randint(0,10000)
             _pwd = str(uuid.uuid4())
             self.account = [_id, _usr, _pwd]
 
