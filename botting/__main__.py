@@ -7,9 +7,10 @@ PORT = 4001
 COMMANDS = [
 "guest",
 "go _",
-"set gmcp off",
-"set godot off",
-"set map off",
+"set debugmuted on",
+"set gmcp on",
+"set godot on",
+"set map on",
 "shout set!"
 ]
 for i in range(0,1000):

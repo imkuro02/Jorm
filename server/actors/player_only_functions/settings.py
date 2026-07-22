@@ -94,7 +94,7 @@ class Settings:
             SETTINGS.VIEW_MAP_WALLS: True,
             SETTINGS.VIEW_ASCII_ART: True,
             SETTINGS.DEBUG: False,
-            DEBUGMUTED: False,
+            SETTINGS.DEBUGMUTED: False,
             SETTINGS.ALIAS: {},
             SETTINGS.EGO: 1,
             SETTINGS.PROMPT: "p0",
@@ -362,7 +362,7 @@ class Settings:
                     return
                 value = line[1]
                 self.settings[SETTINGS.DEBUGMUTED] = self.true_or_false(value)
-                self.actor.send_line(f"DebugMuted enabled: {self.settings[SETTINGS.DEBUG]}")
+                self.actor.send_line(f"DebugMuted enabled: {self.settings[SETTINGS.DEBUGMUTED]}")
 
             case SETTINGS.LOGOUT:
                 proto = self.actor.protocol

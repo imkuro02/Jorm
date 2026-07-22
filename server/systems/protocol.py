@@ -795,10 +795,15 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 self.save_actor()
                 self.actor.recall_site = RoomConstant.TUTORIAL
 
+        # disable this debug thing
+        self.actor.settings_manager.settings[SETTINGS.DEBUGMUTED] = False
+
+
         self.actor.room.world.rooms[self.actor.recall_site].move_actor(self.actor)
 
         # disable / enable ascii map depending on gmcp settings
         self.actor.settings_manager.settings[SETTINGS.VIEW_MAP] = not self.enabled_gmcp
+
         # self.actor.settings_manager.view_room = not self.enabled_gmcp
         self.send_line(
             "You are now in JORM! ascii map has been turned "
