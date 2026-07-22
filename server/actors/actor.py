@@ -1151,7 +1151,7 @@ class Actor:
             players = [
                 actor
                 for actor in self.room.actors.values()
-                if actor.party_manager.get_actor_to_follow() != self.party_manager.get_actor_to_follow() and actor.party_manager.get_actor_to_follow() != None
+                if (actor.party_manager.get_actor_to_follow() != self) and (self.party_manager.get_actor_to_follow() != actor)
             ]
             
         # delete duplicate entires (for example skill thats cast on yourself)

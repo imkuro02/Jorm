@@ -23,6 +23,7 @@ class SETTINGS:
     RESET = "Reset"
     LOGOUT = "Logout"
     DEBUG = "Debug"
+    DEBUGMUTED = "DebugMuted"
     PWD = "Password"
     USR = "Username"  # not in LIST_SETTINGS
     NAME = 'Name'
@@ -53,6 +54,7 @@ class SETTINGS:
         PROMPT,
         AUTO_BATTLER,
         SHORT_ROOM_DESCRIPTIONS,
+        DEBUGMUTED,
         #COLOR,  
     ]
 
@@ -92,6 +94,7 @@ class Settings:
             SETTINGS.VIEW_MAP_WALLS: True,
             SETTINGS.VIEW_ASCII_ART: True,
             SETTINGS.DEBUG: False,
+            DEBUGMUTED: False,
             SETTINGS.ALIAS: {},
             SETTINGS.EGO: 1,
             SETTINGS.PROMPT: "p0",
@@ -352,6 +355,14 @@ class Settings:
                 value = line[1]
                 self.settings[SETTINGS.DEBUG] = self.true_or_false(value)
                 self.actor.send_line(f"Debug enabled: {self.settings[SETTINGS.DEBUG]}")
+
+            case SETTINGS.DEBUGMUTED:
+                if len(line) == 1:
+                    self.actor.send_line("DebugMuted setting needs an argument (on or off?)")
+                    return
+                value = line[1]
+                self.settings[SETTINGS.DEBUGMUTED] = self.true_or_false(value)
+                self.actor.send_line(f"DebugMuted enabled: {self.settings[SETTINGS.DEBUG]}")
 
             case SETTINGS.LOGOUT:
                 proto = self.actor.protocol
