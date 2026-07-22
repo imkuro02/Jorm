@@ -369,6 +369,7 @@ class Player(Actor):
         self.protocol = protocol
         self.admin = 0
         self.queued_lines = []
+        self.queued_lines_time_start = []
         self.msg_history = {}
         self.recently_send_message_count = 0
         self.instanced_rooms = []
