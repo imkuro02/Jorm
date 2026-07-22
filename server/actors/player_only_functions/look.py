@@ -9,6 +9,7 @@ random = random.Random()
 
 from collections import deque
 def command_map(self, line, return_gmcp = False):
+    print('map', self.name)
     #self.send_line(str(self.get_nearby_rooms(view_range=8)))
     #return ''
     
