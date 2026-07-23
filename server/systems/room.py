@@ -25,7 +25,7 @@ from items.manager import load_item
 from systems.inventory import InventoryManager
 from systems.utils import REFTRACKER, unload
 from systems.triggers import TriggerManager
-
+from configuration.constants.tickrate import TICKRATE
 
 RESPAWN_TIME_MOBS =     30 * 60
 DESPAWN_TIME_ITEMS =    30 * 60
@@ -370,7 +370,8 @@ class Room:
     def tick(self):
 
         actors = {}
-        
+        if not self.is_player_present() and self.world.factory.ticks_passed % TICKRATE != 0:
+            return
 
         if not self.is_an_instance():
             if self.spawner != None:

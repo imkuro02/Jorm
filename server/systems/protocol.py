@@ -250,10 +250,10 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
         self.state = state
 
     def PLAY(self, line):
-        #if self.actor == None:
-        #    self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
-        #    self.load_actor()
-        #    return
+        if self.actor == None:
+            self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
+            self.load_actor()
+            return
             
         if line:
             self.actor.last_line_sent = line

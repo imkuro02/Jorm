@@ -80,7 +80,7 @@ def send_telnet_command():
         with telnetlib.Telnet(HOST, PORT, timeout=5) as tn:
             for i in COMMANDS:
                 time.sleep(random.randint(100,1000)/1000)
-                tn.write(i.encode('utf-8'))
+                tn.write((i+'\r\n').encode('utf-8'))
             time.sleep(5)
     except Exception as e:
         print(f"Error: {e}")
