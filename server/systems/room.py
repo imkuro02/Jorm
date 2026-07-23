@@ -474,7 +474,6 @@ class Room:
             self.combat = combat_manager_class(self, participants)
 
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
-        silent = True
         
         actor.room_previous = actor.room.get_real_id()
         self.remove_actor(actor)

@@ -92,7 +92,7 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
             move_followers(par)
             add_explored_room(par)
 
-    move_followers(self)
+    #move_followers(self)
     add_explored_room(self)
 
     if (self.recall_site != RoomConstant.TAVERN and self.recall_site != RoomConstant.CROSSROAD) and self.room.id == RoomConstant.CROSSROAD:
