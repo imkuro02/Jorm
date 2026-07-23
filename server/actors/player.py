@@ -679,9 +679,9 @@ class Player(Actor):
 
         # systems.utils.debug_print(line)
 
-        #triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = line)
-        #if triggered:
-        #    return
+        triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = line)
+        if triggered:
+            return
 
         for trans in translations:
             if line.lower().startswith(trans):
