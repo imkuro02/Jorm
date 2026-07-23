@@ -67,8 +67,8 @@ class ServerFactory(protocol.Factory):
 #    print(systems.utils.add_color(config.ICONS[i]))
 #
 if __name__ == "__main__":
-    import tracemalloc
-    tracemalloc.start()
+    #import tracemalloc
+    #tracemalloc.start()
 
     
     factory = ServerFactory()
@@ -95,10 +95,10 @@ if __name__ == "__main__":
     factory.world.game_time.save_game_time()
     systems.utils.debug_print("Exiting...")
 
-    snapshot = tracemalloc.take_snapshot()
-    top_stats = snapshot.statistics("traceback")
+    #snapshot = tracemalloc.take_snapshot()
+    #top_stats = snapshot.statistics("traceback")
 
-    for stat in top_stats[:10]:
-        print(stat)
-        for line in stat.traceback.format():
-            print(line)
+    #for stat in top_stats[:10]:
+    #    print(stat)
+    #    for line in stat.traceback.format():
+    #        print(line)
