@@ -576,12 +576,12 @@ class Player(Actor):
 
             # send null byte several times to indicate new line
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
-            #self.protocol.transport.write(line.encode("utf-8"))
-            self.send_buffer.append(line.encode("utf-8"))
+            self.protocol.transport.write(line.encode("utf-8"))
+            #self.send_buffer.append(line.encode("utf-8"))
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
-            #self.protocol.transport.write(line.encode("utf-8"))
-            self.send_buffer.append(line.encode("utf-8"))
+            self.protocol.transport.write(line.encode("utf-8"))
+            #self.send_buffer.append(line.encode("utf-8"))
         return
 
     def gain_exp(self, exp):
