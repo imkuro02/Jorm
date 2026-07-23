@@ -370,6 +370,7 @@ class Player(Actor):
         self.admin = 0
         self.queued_lines = []
         self.msg_history = {}
+        self.send_buffer = []
         self.recently_send_message_count = 0
         self.instanced_rooms = []
         self.collect_lost_exp_rooms = {}
@@ -523,6 +524,9 @@ class Player(Actor):
             if self.factory.ticks_passed % 10 == 0:
                 self.update_checker.tick()
 
+        if self.send_buffer:
+            self.protocol.transport.write(b"".join(self.send_buffer))
+            self.send_buffer.clear()
         
         
 
@@ -572,10 +576,12 @@ class Player(Actor):
 
             # send null byte several times to indicate new line
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
-            self.protocol.transport.write(line.encode("utf-8"))
+            #self.protocol.transport.write(line.encode("utf-8"))
+            self.send_buffer.append(line.encode("utf-8"))
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
-            self.protocol.transport.write(line.encode("utf-8"))
+            #self.protocol.transport.write(line.encode("utf-8"))
+            self.send_buffer.append(line.encode("utf-8"))
         return
 
     def gain_exp(self, exp):
