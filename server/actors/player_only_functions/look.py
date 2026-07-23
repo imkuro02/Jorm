@@ -793,19 +793,16 @@ def command_look(self, line, return_gmcp=False, short = False):
         '''
         # see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         
-        if len(room.actors) >= 10:
-            see = 'A crowd is gathered here'
-        else:
-            for i in room.actors.values():
-                if i == self:
-                    pass
-                else:
-                    see = see + "" + i.pretty_name(identifier = self) + " is here"
-                    if i.status == ActorStatusType.DEAD:
-                        see = see + f" and is dead"
-                    if i.status == ActorStatusType.FIGHTING:
-                        see = see + f" and is fighting"
-                    see = see + "\n"
+        for i in room.actors.values():
+            if i == self:
+                pass
+            else:
+                see = see + "" + i.pretty_name(identifier = self) + " is here"
+                if i.status == ActorStatusType.DEAD:
+                    see = see + f" and is dead"
+                if i.status == ActorStatusType.FIGHTING:
+                    see = see + f" and is fighting"
+                see = see + "\n"
 
         # XD icons
         if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
