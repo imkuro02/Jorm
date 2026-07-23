@@ -1386,7 +1386,7 @@ class Actor:
             )
             par.send_line(output_other)
             '''
-        self.pretty_broadcast(f'{self.pretty_name(identifier=self, text_override='Your')} turn',f'{self.id}s turn',list_pretty_name_objects = [self])
+        #self.pretty_broadcast(f'{self.pretty_name(identifier=self, text_override='Your')} turn',f'{self.id}s turn',list_pretty_name_objects = [self])
 
         # print(self.room.combat)
 
