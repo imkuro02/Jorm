@@ -65,6 +65,7 @@ COMMANDS = [
 "set gmcp on",
 "set godot on",
 "set map on",
+"set room off"
 "shout set!"
 ]
 for i in range(0,1000):
