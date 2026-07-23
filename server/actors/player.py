@@ -531,8 +531,8 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
-        if not self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
-            return
+        #if not self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
+        #    return
         # if self.last_line_received == line:
         #   return
 
