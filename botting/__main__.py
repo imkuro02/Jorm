@@ -62,11 +62,6 @@ COMMANDS = [
 "guest",
 "guest",
 "go _",
-"set debugmuted on",
-"set debugmuted on",
-"set debugmuted on",
-"set debugmuted on",
-"set debugmuted on",
 "set gmcp on",
 "set godot on",
 "set map on",
@@ -78,15 +73,13 @@ for i in range(0,1000):
     COMMANDS.append('s')
     COMMANDS.append('w')
     
-
-    
 DELAY = 0.1  # seconds between each run
 
 def send_telnet_command():
     try:
         with telnetlib.Telnet(HOST, PORT, timeout=5) as tn:
             for i in COMMANDS:
-                time.sleep(DELAY)
+                time.sleep(random.randint(100,1000)/1000)
                 tn.write(i.encode('utf-8'))
             time.sleep(5)
     except Exception as e:

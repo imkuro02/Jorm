@@ -483,9 +483,8 @@ class Player(Actor):
     #    return output
 
     def tick(self):
-        if self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
-            return
-            
+        
+
         if not self.loaded:
             return
 
@@ -512,11 +511,13 @@ class Player(Actor):
             to_handle = self.queued_lines[0]
             self.queued_lines.pop(0)
 
-            time_start = time.time()
+            start = time.perf_counter()
+
             self.handle(to_handle)
-            runtime = time.time() - time_start
+
+            elapsed = time.perf_counter() - start
             if self.protocol != None:
-                self.send_line(f'        last command took {float(runtime):.5f} to execute', msg_type = [MessageType.DEBUG])
+                self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
 
         if self.update_checker != None:
             if self.factory.ticks_passed % 10 == 0:
@@ -530,7 +531,7 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
-        if self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
+        if not self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
             return
         # if self.last_line_received == line:
         #   return
