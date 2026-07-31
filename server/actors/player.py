@@ -525,8 +525,11 @@ class Player(Actor):
                 self.update_checker.tick()
 
         if self.send_buffer:
-            self.protocol.transport.write(b"".join(self.send_buffer))
-            self.send_buffer.clear()
+            try:
+                self.protocol.transport.write(b"".join(self.send_buffer))
+                self.send_buffer.clear()
+            except AttributeError:
+                pass
         
         
 
