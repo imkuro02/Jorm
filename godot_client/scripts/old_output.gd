@@ -25,75 +25,24 @@ func clear_log():
 	
 var lines: Array[String] = []
 const MAX_LINES := 25
-
-var padding_for_new_rooms = 35
-var padding_already_added = 0
-var last_padding = 0
-
-
 func get_message(message):
-	var line_count_after = 0
-	var line_count_before = 0
-	
-	if message == '' and not is_scrolled_to_bottom():
+
+	if message == '':
 		return
-	
-	
 	var bbcode_line = add_ansi_text(message)
 
-	#lines.append(bbcode_line)
+	lines.append(bbcode_line)
 	
-	line_count_before = self.get_line_count()
 	if is_scrolled_to_bottom():	
 		if lines.size() > MAX_LINES:
 			lines.pop_front()
 		clear()
 		self.append_text("".join(lines))
-		
-	line_count_before = self.get_line_count()
-	
-	self.append_text(bbcode_line)
-	if message != '':
-		lines.append(bbcode_line)
-	
-	
-	
-	line_count_after = self.get_line_count()
-	
-	
-
-	
-	#print(line_count_before, '-', line_count_after)
-	
-	
-	
-	
-	if is_scrolled_to_bottom():	
-		if name == 'output':
-			if 'are in' in message:
-				padding_already_added = 0
-			else:
-				padding_already_added += last_padding
-				
-			var _pad = ''
-			for i in padding_for_new_rooms-(line_count_after-line_count_before)-(padding_already_added):
-				#_pad += '_\n'+str(line_count_after-line_count_before) + ' / ' + str(padding_for_new_rooms-(line_count_after-line_count_before)) + '/' + str(padding_already_added)
-				_pad += '\n'
-			last_padding = line_count_after-line_count_before
-			
-			self.append_text(_pad)
-		
-	if name == 'output_combat':
-		var cp = line_count_after-line_count_before
-		$"../../../container/output/output".padding_for_new_rooms = padding_for_new_rooms+(5-self.get_line_count())
-		$"../../../container/output/output".get_message('')
+	else:
+		self.append_text(bbcode_line)
 		
 	
 
-	
-		
-	
-	
 	scroll_following = true
 	
 func add_ansi_text(ansi_text: String) -> String:
