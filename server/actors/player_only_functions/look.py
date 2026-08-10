@@ -1120,7 +1120,8 @@ def new_room_look(self):
     #self.send_line('\n'*3)
     if self.settings_manager.get_value(SETTINGS.VIEW_ROOM):
 
-        
+        # this is only used for the godot client
+        # what this does is it tells the output to "split"
         self.protocol.send_gmcp(
             'this can say anything', 'GODOT_CLIENT_OUTPUT_SPLIT_ADD_PADDING'
         )
