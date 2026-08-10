@@ -573,7 +573,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 )
 
     def before_load_actor(self):
-        self.send_line('\n'*50)
+        #self.send_line('\n'*50)
         cutscene = False
         if cutscene:
             self.factory.delayed_functions.add_delayed_function(
