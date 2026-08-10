@@ -1119,6 +1119,9 @@ def get_nearby_rooms2(self, view_range=1,
 def new_room_look(self):
     #self.send_line('\n'*3)
     if self.settings_manager.get_value(SETTINGS.VIEW_ROOM):
+        self.protocol.send_gmcp(
+            'SPLIT', 'SPLIT'
+        )
         self.command_look("", short = self.settings_manager.get_value(SETTINGS.SHORT_ROOM_DESCRIPTIONS))
     if self.settings_manager.get_value(SETTINGS.VIEW_MAP):
         self.command_map("")

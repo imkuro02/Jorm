@@ -227,6 +227,8 @@ func handle_gmcp(message: String):
 		'ROOM_DESCRIPTIONS':
 			ROOM_DESCRIPTIONS.clear_log()
 			ROOM_DESCRIPTIONS.get_message(dict_string)
+		'SPLIT':
+			OUTPUT.get_message('', true)
 			
 		#'Time':
 		#	CLOCK.get_message(data_dict)
