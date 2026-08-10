@@ -227,7 +227,7 @@ func handle_gmcp(message: String):
 		'ROOM_DESCRIPTIONS':
 			ROOM_DESCRIPTIONS.clear_log()
 			ROOM_DESCRIPTIONS.get_message(dict_string)
-		'SPLIT':
+		'GODOT_CLIENT_OUTPUT_SPLIT_ADD_PADDING':
 			OUTPUT.get_message('', true)
 			
 		#'Time':

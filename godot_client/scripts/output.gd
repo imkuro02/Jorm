@@ -31,7 +31,7 @@ var padding_already_added = 0
 var last_padding = 0
 
 
-func get_message(message, split = false):
+func get_message(message, GODOT_CLIENT_OUTPUT_SPLIT_ADD_PADDING = false):
 	var line_count_after = 0
 	var line_count_before = 0
 	
@@ -70,7 +70,7 @@ func get_message(message, split = false):
 	
 	if is_scrolled_to_bottom():	
 		if name == 'output':
-			if split:
+			if GODOT_CLIENT_OUTPUT_SPLIT_ADD_PADDING:
 				padding_already_added = 0
 			else:
 				padding_already_added += last_padding
