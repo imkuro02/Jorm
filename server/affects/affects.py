@@ -419,7 +419,6 @@ class AffectThorns(Affect):
             combat_event=damage_obj.combat_event,
             dont_proc = True,
         )
-
         return damage_obj
 
 

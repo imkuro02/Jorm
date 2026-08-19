@@ -1,5 +1,5 @@
 {
-    "SHA-256": "f9e5dab252974a8a6f735017ad750999ec1b934886c9c6faf74295dfa7d10c42",
+    "SHA-256": "10d01bce1d84fbb25cca8a5276a374a4d01c3a445d61067b4b24d3662735c16e",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -1943,7 +1943,7 @@
             "include_in_daily_quests": true,
             "skills": {
                 "strike": 1,
-                "thorns": 99
+                "thorns": 3
             },
             "on_death_skills_use": null,
             "on_start_skills_use": "thorns=99",
@@ -3474,7 +3474,7 @@
         "thorns": {
             "skill_id": "thorns",
             "name": "Thorns",
-            "description": "Reflect BONUS of physical damage received back to attacker.\n",
+            "description": "Reflect BONUS of physical damage received back to attacker.\nAdditionally, always reflect 2xLEVEL of PURE damage per physical attack received.\n",
             "script_to_run": "Thorns",
             "target_others_is_valid": false,
             "target_item_is_valid": false,

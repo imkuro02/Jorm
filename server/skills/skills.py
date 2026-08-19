@@ -124,6 +124,9 @@ class Skill:
         return best
 
     def get_valid_set_other_actors(self):
+        if self.user.room == None:
+            return []
+
         all_actors = list(self.user.room.actors.values())
         valid = []
         for i in all_actors:
@@ -548,6 +551,33 @@ class Skill:
                 _skill_object.use()
         '''
 
+    # called at start of turn
+    def set_turn(self):
+        return
+
+    # called at end of turn
+    def finish_turn(self):
+        return
+
+    # called whenever hp updates in any way
+    def take_damage_before_calc(self, damage_obj):
+        return damage_obj
+
+    def take_damage_after_calc(self, damage_obj):
+        return damage_obj
+
+    def deal_damage(self, damage_obj):
+        return damage_obj
+
+    def dealt_damage(self, damage_obj):
+        return damage_obj
+
+    def join_combat(self):
+        return
+    
+    def on_skill_used(self, skill_object):
+        return skill_object
+
 
 class SkillDamage(Skill):
     def use(
@@ -649,7 +679,6 @@ class SkillStrike(SkillDamage):
             return self.name
 
     def use(self):
-        
         highest_stat = StatType.GRIT
         dmg_type = DamageType.PHYSICAL
         prefix = 'Heavy'
@@ -1141,6 +1170,23 @@ class SkillThorns(Skill):
             
         # return 1 (by default)
         return 2
+
+    def take_damage_after_calc(self, damage_obj):
+        damage_reflected_power = (self.calculate_script_value(value = 'bonus')/100)
+        if damage_obj.damage_type == DamageType.PHYSICAL:
+            damage_obj3 = Damage(
+                damage_taker_actor=damage_obj.damage_source_actor,
+                damage_source_action=self,
+                combat_event=damage_obj.combat_event,
+                damage_source_actor=damage_obj.damage_taker_actor,
+                damage_value=self.users_skill_level*2,
+                damage_type=DamageType.PURE,
+                dont_proc = True,
+            )  
+           
+        return damage_obj
+
+
     def use(self):
         super().use()
         if self.success:
@@ -1500,8 +1546,10 @@ class SkillTeleport(Skill):
 
         _dict = {}
 
+        
         line = self.user.last_line_sent
         _target = None
+        if not line: line = ''
         line = line.split()
 
         rooms = self.user.get_nearby_rooms(

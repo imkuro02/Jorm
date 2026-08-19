@@ -29,6 +29,8 @@ from systems.utils import REFTRACKER, unload
 from systems.triggers import TriggerManager
 from configuration.config import LORE
 
+from skills.manager import construct_skill
+
 class ActorStatManager:
     def __init__(self, actor):
         self.actor = actor
@@ -123,6 +125,9 @@ class ActorStatManager:
             self.stats[StatType.HP] = 0
             if self.actor.status != ActorStatusType.DEAD:
                 self.actor.die()
+                return
+
+        
 
 
 class SkillManager:
@@ -184,17 +189,7 @@ class SkillManager:
         for cool in cool_to_delete:
             self.remove_cooldown(cool)
 
-    def finish_turn(self):
-        pass
-
-    def set_turn(self):
-        cooldowns_to_remove = []
-        for i in self.cooldowns:
-            self.cooldowns[i] -= 1
-            if self.cooldowns[i] <= 0:
-                cooldowns_to_remove.append(i)
-        for i in cooldowns_to_remove:
-            self.remove_cooldown(i)
+    
 
     def delete_skills_at_0(self):
         to_del = []
@@ -218,6 +213,75 @@ class SkillManager:
         else:
             self.skills[skill_id] -= amount
         self.delete_skills_at_0()
+
+    # called at start of turn
+    def set_turn(self):
+        cooldowns_to_remove = []
+        for i in self.cooldowns:
+            self.cooldowns[i] -= 1
+            if self.cooldowns[i] <= 0:
+                cooldowns_to_remove.append(i)
+        for i in cooldowns_to_remove:
+            self.remove_cooldown(i)
+
+        for i in self.skills:
+            skill_obj = construct_skill(i)
+            if skill_obj == None:
+                continue
+            skill_obj = skill_obj(skill_id = i, user = self.actor)
+            skill_obj.set_turn()
+
+    # called at end of turn
+    def finish_turn(self):
+        for i in self.skills:
+            skill_obj = construct_skill(i)
+            if skill_obj == None:
+                continue
+            skill_obj = skill_obj(skill_id = i, user = self.actor)
+            skill_obj.finish_turn()
+
+    # called whenever hp updates in any way
+    def take_damage_before_calc(self, damage_obj):
+        for i in self.skills:
+            skill_obj = construct_skill(i)
+            if skill_obj == None:
+                continue
+            skill_obj = skill_obj(skill_id = i, user = self.actor)
+            damage_obj =  skill_obj.take_damage_before_calc(damage_obj)
+        return damage_obj
+
+    def take_damage_after_calc(self, damage_obj):
+        for i in self.skills:
+            skill_obj = construct_skill(i)
+            if skill_obj == None:
+                continue
+            skill_obj = skill_obj(skill_id = i, user = self.actor)
+            damage_obj =  skill_obj.take_damage_after_calc(damage_obj)
+        return damage_obj
+
+    def deal_damage(self, damage_obj):
+        for i in self.skills:
+            skill_obj = construct_skill(i)
+            if skill_obj == None:
+                continue
+            skill_obj = skill_obj(skill_id = i, user = self.actor)
+            damage_obj =  skill_obj.deal_damage(damage_obj)
+        return damage_obj
+
+    def dealt_damage(self, damage_obj):
+        for i in self.skills:
+            skill_obj = construct_skill(i)
+            if skill_obj == None:
+                continue
+            skill_obj = skill_obj(skill_id = i, user = self.actor)
+            damage_obj = skill_obj.dealt_damage(damage_obj)
+        return damage_obj
+
+    #def join_combat(self):
+    #    return
+    
+    #def on_skill_used(self, skill_object):
+    #    return skill_object
 
 """
 class CooldownManager:

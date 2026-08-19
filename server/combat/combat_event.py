@@ -11,11 +11,9 @@ class CombatEvent:
     def __init__(self):
         self.queue = []
         self.popped = []
+        self.to_print = {}
 
     def add_to_queue(self, damage_event):
-        if self.queue != []:
-            if self.queue[0].damage_source_actor == damage_event.damage_source_actor and self.queue[0].damage_taker_actor == damage_event.damage_taker_actor:
-                damage_event.silent = True
         self.queue.append(damage_event)
 
     def pop_from_queue(self):
@@ -23,14 +21,30 @@ class CombatEvent:
         # systems.utils.debug_print(self.queue[0].damage_source_action)
         self.queue.pop(0)
 
+    def add_to_print(self, obj, diff):
+        pop = {'id': obj.damage_source_action.id, 'diff': diff, 'obj': obj}
+        if pop['id'] not in self.to_print:
+            self.to_print[pop['id']] = pop
+        else:
+            for i in diff:
+                self.to_print[pop['id']]['diff'][i] += diff[i]
+
     def print(self):
         output_other = ""
         output_self = ""
         sound = None
 
-        for pop in self.popped:
+        for pop in self.to_print.values():
+
+
+            obj = pop['obj']
+            if obj.silent: 
+                continue
+
+            diff = pop['diff']
+
             color = Color.ERROR
-            match pop.damage_type:
+            match obj.damage_type:
                 case DamageType.HEALING:
                     color = Color.DAMAGE_HEAL
                 case DamageType.PHYSICAL:
@@ -39,176 +53,32 @@ class CombatEvent:
                     color = Color.DAMAGE_MAG
                 case DamageType.PURE:
                     color = Color.DAMAGE_PURE
-
-            damage_snapshot2 = {
-                    StatType.HP: pop.damage_taker_actor.stat_manager.stats[StatType.HP],
-                    StatType.PHYARMOR: pop.damage_taker_actor.stat_manager.stats[
-                        StatType.PHYARMOR
-                    ],
-                    StatType.MAGARMOR: pop.damage_taker_actor.stat_manager.stats[
-                        StatType.MAGARMOR
-                    ],
-                }
-
-            if not pop.silent and pop.damage_type != DamageType.CANCELLED:
-                
-
-                """
-                summary = {
-                    StatType.HP: pop.damage_snapshot[StatType.HP] - damage_snapshot2[StatType.HP],
-                    StatType.PHYARMOR: pop.damage_snapshot[StatType.PHYARMOR] - damage_snapshot2[StatType.PHYARMOR],
-                    StatType.MAGARMOR: pop.damage_snapshot[StatType.MAGARMOR]- damage_snapshot2[StatType.MAGARMOR]
-                }"""
-
-                summary = {
-                    StatType.HP: damage_snapshot2[StatType.HP]
-                    - pop.damage_snapshot[StatType.HP],
-                    StatType.PHYARMOR: damage_snapshot2[StatType.PHYARMOR]
-                    - pop.damage_snapshot[StatType.PHYARMOR],
-                    StatType.MAGARMOR: damage_snapshot2[StatType.MAGARMOR]
-                    - pop.damage_snapshot[StatType.MAGARMOR],
-                }
-
-                if summary == pop.damage_snapshot:
-                    return
-
-                def lose_or_gain(val):
-                    if val <= -1:
-                        return "#L# " + Color.BAD + ""
-                    elif val >= 1:
-                        return "#G# " + Color.GOOD + "+"
-                    else:
-                        return None
-
-                # output_self = str(summary)
-                output = f"#A#"
-
-                for i in summary:
-                    _hp = lose_or_gain(summary[i])
-                    if _hp != None:
-                        output += f"{_hp}{abs(summary[i])}{Color.BACK} {Color.stat[i]}{StatType.name[i]}{Color.BACK},"
-
-                if "#L#" not in output and "#G#" not in output:
-                    return
-
-                phy_arm_broke = (
-                    pop.damage_snapshot[StatType.PHYARMOR] != 0
-                    and damage_snapshot2[StatType.PHYARMOR] == 0
-                )
-                mag_arm_broke = (
-                    pop.damage_snapshot[StatType.MAGARMOR] != 0
-                    and damage_snapshot2[StatType.MAGARMOR] == 0
-                )
-                
-
-
-                # if phy_arm_broke:
-                #    output += f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.PHYARMOR]}{Color.BACK} {Color.COMBAT_TURN}BROKE{Color.BACK},'
-                # if mag_arm_broke:
-                #    output += f'{Color.stat[StatType.MAGARMOR]}{StatType.name[StatType.MAGARMOR]}{Color.BACK} {Color.COMBAT_TURN}BROKE{Color.BACK},'
-                output = f"{output}{Color.NORMAL}"
-                output = f" from {pop.damage_source_action.id}".join(
-                    output.rsplit(",", 1)
-                )
-                output = " and".join(output.rsplit(",", 1))
-
-                output_self = output
-                output_other = output
-
-                output_self = output_self.replace("#A#", f"{pop.damage_taker_actor.id} have")
-                output_self = output_self.replace("#G#", " healed")
-                output_self = output_self.replace("#L#", " lost")
-
-                output_other = output_other.replace(
-                    "#A#", f"{pop.damage_taker_actor.id} has"
-                )
-                output_other = output_other.replace("#G#", " healed")
-                output_other = output_other.replace("#L#", " lost")
-
-                # output_raw = output_other = output_other.replace('#A#',f'')
-                # output_raw = output_other.replace('#G#','healed')
-                # output_raw = output_other.replace('#L#','lost')
-
-                """
-                _hp = lose_or_gain(summary[StatType.HP])
-                if _hp != None:
-                    output += f'{_hp}{summary[StatType.HP]}{Color.BACK} {StatType.name[StatType.HP]},'
-
-                _pa = lose_or_gain(summary[StatType.PHYARMOR])
-                if _pa != None:
-                    output += f'{_pa}{summary[StatType.PHYARMOR]}{Color.BACK}PA '
-
-                _ma = lose_or_gain(summary[StatType.MAGARMOR])
-                if _ma != None:
-                    output += f'{_ma}{summary[StatType.MAGARMOR]}{Color.BACK}{Color.MAGARM}MA '
-                """
-
-                #output_other += pop.damage_type
-
-                sound = Audio.HURT
-                # output = f'{pop.damage_taker_actor.name}  {pop.damage_hp}hp  {pop.damage_pa}pa {pop.damage_ma}ma'
-
-                list_pretty_name_objects = [pop.damage_taker_actor, pop.damage_source_actor, pop.damage_source_action]
-                pop.damage_taker_actor.pretty_broadcast(
-                    '   '+output_self, output_other, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = list_pretty_name_objects
-                )
-
-                if phy_arm_broke:
-                    output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.PHYARMOR]} has broken{Color.NORMAL}"
-                    pop.damage_taker_actor.send_line(
-                        f"{output}", sound=sound, msg_type=[MessageType.COMBAT]
-                    )
-
-                if mag_arm_broke:
-                    output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.MAGARMOR]} has broken{Color.NORMAL}"
-                    pop.damage_taker_actor.send_line(
-                        f"{output}", sound=sound, msg_type=[MessageType.COMBAT]
-                    )
-                
-                # if phy_arm_broke:
-                #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.PHYARMOR]}{Color.BACK} has broken'
-                #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MessageType.COMBAT])
-                # if mag_arm_broke:
-                #    output = f'{Color.stat[StatType.PHYARMOR]}{StatType.name[StatType.MAGARMOR]}{Color.BACK} has broken'
-                #    pop.damage_taker_actor.simple_broadcast(f'Your {output}', f'{pop.damage_taker_actor.pretty_name()}\'s {output}', sound = sound, msg_type = [MessageType.COMBAT])
-                
-                
-                
-                #print(summary)
-
-
             
 
-            hp_maxxed = (
-                pop.damage_snapshot[StatType.HP] < pop.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
-                and damage_snapshot2[StatType.HP] >= pop.damage_taker_actor.stat_manager.stats[StatType.HPMAX]
-            )
-            
-            if hp_maxxed:
-                sound = Audio.BUFF
-                output = f"{Color.COMBAT_IMPORTANT}Your {StatType.name[StatType.HP]} is full!{Color.NORMAL}"
-                pop.damage_taker_actor.send_line(
-                    f"{output}", sound=sound, msg_type=[MessageType.COMBAT]
-                )
+            msg = ''
+            #msg += f'{color} '
+            msg += f'{obj.damage_taker_actor.id} '
+            for i in diff:
+                if diff[i]>0:
+                    msg += f'lose#XD# ' + f'{abs(diff[i])} {StatType.name[i]} '
+
+                if diff[i]<0:
+                    msg += f'gain#XD# +' + f'{abs(diff[i])} {StatType.name[i]} '
+
+            msg += f'from '
+            msg += f'{obj.damage_source_action.id}'
 
             actors = []
-            actors = [pop.damage_taker_actor]
-            # if pop.damage_taker_actor.room != None:
-            # for actor in pop.damage_taker_actor.room.actors.values():
-            #    actors.append(actor)
+            actors = [obj.damage_taker_actor]
             for actor in actors:
                 if actor.status == ActorStatusType.DEAD:
                     continue
-
-                # do not clamp if actor is unloaded
-                # if actor.stat_manager == None:
-                #    systems.utils.debug_print(f'{actor} was unloaded but somehow took damage (probably a heal tick)')
-                #    systems.utils.debug_print(f'{actor.name} was unloaded but somehow took damage (probably a heal tick)')
-                #    continue
-
-                actor.stat_manager.hp_mp_clamp_update()
+                if self.queue == []:
+                    actor.pretty_broadcast(msg.replace('#XD#',''),msg.replace('#XD#','s'),list_pretty_name_objects = [obj.damage_taker_actor,obj.damage_source_actor,obj.damage_source_action])
+                    actor.stat_manager.hp_mp_clamp_update()
 
         self.popped = []
+        self.to_print = {}
 
     def run(self):
 
@@ -219,8 +89,15 @@ class CombatEvent:
             #    systems.utils.debug_print(f'Something went wrong while printing damage {e}')
             return
 
+        
+
         # get damage_obj first in queue
         damage_obj = self.queue[0]
+        self.pop_from_queue()
+        
+        snapshot_before = damage_obj.get_damage_snapshot()
+
+
         try:
             if damage_obj.dont_proc == False:
                 rand_dmg = 0
@@ -230,8 +107,16 @@ class CombatEvent:
             systems.utils.debug_print('Something went wrong while applying stats to damage:')
             systems.utils.debug_print(f'"{e}"')
 
-        try:
+        try:            
+            pa = damage_obj.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
+            ma = damage_obj.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
+
             if not damage_obj.dont_proc:
+                if damage_obj.damage_taker_actor.skill_manager != None:
+                    damage_obj = damage_obj.damage_taker_actor.skill_manager.take_damage_before_calc(
+                        damage_obj
+                    )
+                    
                 # before calc on damage_source_actor
                 if damage_obj.damage_source_actor.affect_manager != None:
                     damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(
@@ -244,6 +129,13 @@ class CombatEvent:
                         )
                     )
 
+                if damage_obj.damage_source_actor.skill_manager != None:
+                    damage_obj = damage_obj.damage_source_actor.skill_manager.deal_damage(
+                        damage_obj
+                    )
+
+
+
                 # before calc on damage_taker_actor
                 if damage_obj.damage_taker_actor.affect_manager != None:
                     damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_before_calc(
@@ -254,8 +146,23 @@ class CombatEvent:
                         damage_obj
                     )
 
+                
+
             # +/- armor calculation and hp removal
             damage_obj.calculate()
+            
+            '''for pop in self.popped:
+                if not pop.silent and not damage_obj.silent:
+                    if pop.damage_taker_actor == damage_obj.damage_taker_actor:
+                        if pop == damage_obj:
+                            continue
+                        #print(pop.damage_taker_actor, damage_obj.damage_taker_actor)
+                        #print(pop.damage_snapshot, damage_obj.damage_snapshot)
+                        diff = {k: pop.damage_snapshot[k] - damage_obj.damage_snapshot[k] for k in pop.damage_snapshot} 
+                        pop.damage_snapshot = {k: pop.damage_snapshot[k] - diff[k] for k in pop.damage_snapshot} 
+                        print(diff, pop.damage_snapshot)'''
+                        
+
 
             if not damage_obj.dont_proc:
                 # after calc on damage_taker_actor
@@ -270,11 +177,21 @@ class CombatEvent:
                         damage_obj
                     )
 
+                if damage_obj.damage_taker_actor.skill_manager != None:
+                    damage_obj = damage_obj.damage_taker_actor.skill_manager.take_damage_after_calc(
+                        damage_obj
+                    )
+
                 # after calc on damage_source_actor
                 if damage_obj.damage_source_actor.affect_manager != None:
                     damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
                 if damage_obj.damage_source_actor.inventory_manager != None:
                     damage_obj.damage_source_actor.inventory_manager.dealt_damage(
+                        damage_obj
+                    )
+
+                if damage_obj.damage_source_actor.skill_manager != None:
+                    damage_obj = damage_obj.damage_source_actor.skill_manager.dealt_damage(
                         damage_obj
                     )
 
@@ -286,11 +203,29 @@ class CombatEvent:
                     )
 
 
+            snapshot_after = damage_obj.get_damage_snapshot()
+
+            diff = {k: snapshot_before[k] - snapshot_after[k] for k in snapshot_after} 
+            self.add_to_print(damage_obj, diff)
+
+            pa1 = damage_obj.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
+            ma1 = damage_obj.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
+            sound = Audio.HURT
+            actor = damage_obj.damage_taker_actor
+            if pa > 0 and pa1 <1:
+                _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
+                _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
+                damage_obj.damage_taker_actor.pretty_broadcast(_s,_o, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = [actor])
+            if ma > 0 and ma1 <1:
+                _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.MAGARMOR]}{Color.NORMAL}"
+                _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.MAGARMOR]}{Color.NORMAL}"
+                damage_obj.damage_taker_actor.pretty_broadcast(_s,_o, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = [actor])
+        
+            
 
         except Exception as e:
             systems.utils.debug_print(f'Something went wrong while running damage calculations for {damage_obj} {e}')
 
-        self.pop_from_queue()
 
         # rerun if any affect_manager functions triggered another attack to be added to queue
         

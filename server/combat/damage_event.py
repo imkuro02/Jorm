@@ -65,9 +65,10 @@ class Damage:
     # if the damage is negative, this means that the damage has been blocked by armor or marmor
     # if its positive, assume that the armor is broken and damage is dealt directly to hp / whatever stat
     def calculate(self):
-    
+        # setting snapshot
         self.damage_snapshot = self.get_damage_snapshot()
-
+    
+        
         if self.damage_value <= 0:
             return self
 
@@ -188,5 +189,5 @@ class Damage:
         """
 
         # self.damage_taker_actor.stat_manager.hp_mp_clamp_update()
-
+        
         return self
