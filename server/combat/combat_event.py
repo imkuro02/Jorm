@@ -22,7 +22,7 @@ class CombatEvent:
         self.queue.pop(0)
 
     def add_to_print(self, obj, diff):
-        pop = {'id': obj.damage_source_action.id, 'diff': diff, 'obj': obj}
+        pop = {'id': obj.damage_source_actor.id + obj.damage_taker_actor.id, 'diff': diff, 'obj': obj}
         if pop['id'] not in self.to_print:
             self.to_print[pop['id']] = pop
         else:
@@ -44,14 +44,19 @@ class CombatEvent:
             diff = pop['diff']
 
             color = Color.ERROR
+            text = 'NOT VALID DAMAGE TYPE?'
             match obj.damage_type:
                 case DamageType.HEALING:
+                    text = 'Healing'
                     color = Color.DAMAGE_HEAL
                 case DamageType.PHYSICAL:
+                    text = 'Physical Damage'
                     color = Color.DAMAGE_PHY
                 case DamageType.MAGICAL:
+                    text = 'Magic Damage'
                     color = Color.DAMAGE_MAG
                 case DamageType.PURE:
+                    text = 'Pure Damage'
                     color = Color.DAMAGE_PURE
             
 
@@ -59,11 +64,17 @@ class CombatEvent:
             #msg += f'{color} '
             msg += f'{obj.damage_taker_actor.id} '
             for i in diff:
-                if diff[i]>0:
-                    msg += f'lose#XD# ' + f'{abs(diff[i])} {StatType.name[i]} '
-
-                if diff[i]<0:
-                    msg += f'gain#XD# +' + f'{abs(diff[i])} {StatType.name[i]} '
+                if diff[i] < 0:
+                    msg += f'{Color.GOOD}heal {abs(diff[i])} {Color.stat[i]}{StatType.name[i]}{Color.NORMAL}#XX# '
+                if diff[i] > 0:
+                    msg += f'take#XD# {color}{abs(diff[i])} {text}{Color.NORMAL} to {Color.stat[i]}{StatType.name[i]}{Color.NORMAL}#XX# '
+            
+            # poop gpt
+            s = msg
+            parts = s.split('#XX#')
+            s = ','.join(parts[:-2]) + (' and' if len(parts) > 1 else '') + parts[-2] + parts[-1]
+            msg = s
+                
 
             msg += f'from '
             msg += f'{obj.damage_source_action.id}'

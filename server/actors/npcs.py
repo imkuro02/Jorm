@@ -401,8 +401,11 @@ class Npc(Actor):
 
                 drop_exp = self.stat_manager.stats[StatType.LVL] * 2
                 drop_exp = int(drop_exp * (1 + ((float(actor.settings_manager.get_value(SETTINGS.EGO))-1)/4)))
-                if actor.stat_manager.stats[StatType.EXP] == 0:
-                    drop_exp = 0
+                #if actor.stat_manager.stats[StatType.EXP] == 0:
+                #    drop_exp = 0
+                #else:
+                #    if drop_exp <= 0:
+                #        drop_exp = 1
                 actor.gain_exp(drop_exp)
                 self.drop_loot(actor, room)
                 
