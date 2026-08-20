@@ -1,5 +1,5 @@
 {
-    "SHA-256": "10d01bce1d84fbb25cca8a5276a374a4d01c3a445d61067b4b24d3662735c16e",
+    "SHA-256": "283233a6406bcd98903e3246b1833719ed9f63eb0915233da01f829699f35205",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -3474,7 +3474,7 @@
         "thorns": {
             "skill_id": "thorns",
             "name": "Thorns",
-            "description": "Reflect BONUS of physical damage received back to attacker.\nAdditionally, always reflect 2xLEVEL of PURE damage per physical attack received.\n",
+            "description": "Passively reflect double the practice level of Thorns when taking physical damage.\nCan be activated to gain the Thorny affliction, which\nreflects BONUS of PHYSICAL damage received back to the attacker.\nAll damage reflected is converted to pure damage.\n",
             "script_to_run": "Thorns",
             "target_others_is_valid": false,
             "target_item_is_valid": false,
