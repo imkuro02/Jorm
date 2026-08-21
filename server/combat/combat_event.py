@@ -63,21 +63,20 @@ class CombatEvent:
             msg = ''
             #msg += f'{color} '
             msg += f'{obj.damage_taker_actor.id} '
+            sound = Audio.HURT
+
             for i in diff:
                 if diff[i] < 0:
-                    msg += f'{Color.GOOD}heal {abs(diff[i])} {Color.stat[i]}{StatType.name[i]}{Color.NORMAL}#XX# '
+                    sound = Audio.BUFF
+                    msg += f'{Color.GOOD}heal {abs(diff[i])} {Color.stat[i]}{StatType.name[i]}{Color.NORMAL} and '
                 if diff[i] > 0:
-                    msg += f'take#XD# {color}{abs(diff[i])} {text}{Color.NORMAL} to {Color.stat[i]}{StatType.name[i]}{Color.NORMAL}#XX# '
+                    msg += f'take#XD# {color}{abs(diff[i])} {text}{Color.NORMAL} to {Color.stat[i]}{StatType.name[i]}{Color.NORMAL} and '
             
-            # poop gpt
-            s = msg
-            parts = s.split('#XX#')
-            s = ','.join(parts[:-2]) + (' and' if len(parts) > 1 else '') + parts[-2] + parts[-1]
-            msg = s
-                
 
+            msg = ' '.join(msg.split()[:-1])+ ' '
             msg += f'from '
             msg += f'{obj.damage_source_action.id}'
+            
 
             actors = []
             actors = [obj.damage_taker_actor]
@@ -85,7 +84,7 @@ class CombatEvent:
                 if actor.status == ActorStatusType.DEAD:
                     continue
                 if self.queue == []:
-                    actor.pretty_broadcast(msg.replace('#XD#',''),msg.replace('#XD#','s'),list_pretty_name_objects = [obj.damage_taker_actor,obj.damage_source_actor,obj.damage_source_action])
+                    actor.pretty_broadcast(msg.replace('#XD#',''),msg.replace('#XD#','s'),sound=sound,list_pretty_name_objects = [obj.damage_taker_actor,obj.damage_source_actor,obj.damage_source_action])
                     actor.stat_manager.hp_mp_clamp_update()
 
         self.popped = []
