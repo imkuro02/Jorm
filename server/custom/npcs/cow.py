@@ -57,7 +57,7 @@ class cow(Npc):
         )
 
         e = create_npc(self.room, 'mini_boss_bull')
-        e.pretty_broadcast(f'A raging bull charges at {e.id}!',f'A raging bull charges at {e.id}!', list_pretty_name_objects = [e])
+        e.pretty_broadcast(f'A raging bull charges at {player.id}!',f'A raging bull charges at {player.id}!', list_pretty_name_objects = [player])
         _pl = player
         if _pl.party_manager.party != None:
             _pl = _pl.party_manager.party.leader
