@@ -27,8 +27,9 @@ from systems.utils import REFTRACKER, unload
 from systems.triggers import TriggerManager
 from configuration.constants.tickrate import TICKRATE
 
-RESPAWN_TIME_MOBS =     30 * 60
-DESPAWN_TIME_ITEMS =    30 * 60
+# one minute is 600 ticks
+RESPAWN_TIME_MOBS =     1 * 60 * 10
+DESPAWN_TIME_ITEMS =    1 * 60 * 10
 
 class Spawner:
     def __init__(self, room):
@@ -68,27 +69,29 @@ class Spawner:
             if s == None:
                 continue
 
+            s.unload()
+
             if systems.utils.get_object_parent(s) == 'Item':
                 if s not in self.room.inventory_manager.items.values():
                     self.spawn_points[i] = None
 
-            if s.name == None:
+            if s not in self.room.actors.values():
                 self.spawn_points[i] = None
 
-        
+
 
         # return
         if "spawner" in self.room_dict:
             for i, _list in enumerate(self.room_dict["spawner"]):
-                
-                
+
+
                 #if self.room.id == 'overworld/ddc67c0f-17be-47ca-9c01-ab323b9a0725':
                 #    try:
                 #        print(self.spawn_points[i].inventory_manager.owner.id)
                 #    except Exception as e:
                 #        pass
 
-                
+
 
                 _selected = random.choice(_list)
                 #if self.room.id == 'overworld/ddc67c0f-17be-47ca-9c01-ab323b9a0725':
@@ -115,20 +118,21 @@ class Spawner:
                     npc = create_npc(self.room, _selected)
                     self.spawn_points[i] = npc
                     npc.simple_broadcast("", f"{npc.name} has arrived")
-                    return
-
-                print(_selected)
-                
-                    
 
 
 
     def tick(self):
-        if self.room.is_player_present():
-            return
-        
         if self.room.world.factory.ticks_passed % RESPAWN_TIME_MOBS == 0:
-            for i in self.room.actors.values():
+            for e in self.room.actors.values():
+                e.simple_broadcast('tick','tick')
+                break
+
+        if self.room.is_player_present() != False:
+            return
+
+        if self.room.world.factory.ticks_passed % RESPAWN_TIME_MOBS == 0:
+            for e in self.room.actors.values():
+                e.simple_broadcast('tick','tick')
                 break
             self.respawn_all()
 
@@ -163,7 +167,7 @@ class Exit:
                 can_return = True
         # return true if one_way, return false otherwsie
         return not can_return
-        
+
     def is_active(self, player):
         if self.active_quest_state == None:
             return True
@@ -234,10 +238,10 @@ class Room:
         self.room = self # this is such utter shit what the fuck
         # this needs to be here to items can check for actors
         # in rooms even if the room itself is item owner
-        
+
         self.combat_manager_class = Combat  # some rooms might have a custom one
         self.inventory_manager_class = InventoryManager
-        
+
 
         self.world = world
         self.id = _id  # id of the room
@@ -293,7 +297,7 @@ class Room:
         self.inventory_manager = self.inventory_manager_class(self, limit=50)
         self.inventory_manager.can_pick_up_anything = True
         self.combat = None  # placeholder for combat
-        
+
         self.actors = {}  # actors in room dict
 
         self.trigger_manager = TriggerManager(self)
@@ -302,11 +306,11 @@ class Room:
         if not no_spawner:
             self.spawner = Spawner(self)  # spawner
 
-        
+
 
         REFTRACKER.add_ref(self)
 
-    
+
 
     def get_wall_data(self):
         wall_data = WORLD["world"][self.get_real_id()]["wall_data"].split(":")
@@ -372,7 +376,7 @@ class Room:
     def tick(self):
 
         actors = {}
-        if not self.is_player_present() and self.world.factory.ticks_passed % TICKRATE != 0:
+        if self.world.factory.ticks_passed <= TICKRATE:
             return
 
         if not self.is_an_instance():
@@ -407,7 +411,7 @@ class Room:
 
         if self.combat == None:
             return
-            
+
         self.combat.tick()
 
     def join_combat(self, participant):
@@ -446,10 +450,10 @@ class Room:
 
             # if players_here and npcs_here:
             self.combat = self.combat_manager_class(self, participants)
-            
+
             #participant.join_combat()
             self.combat.initiative()
-            
+
         else:
             self.combat.add_participant(participant)
 
@@ -476,7 +480,7 @@ class Room:
             self.combat = combat_manager_class(self, participants)
 
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
-        
+
         actor.room_previous = actor.room.get_real_id()
         self.remove_actor(actor)
 
@@ -491,8 +495,8 @@ class Room:
 
         actor.room = self
         self.actors[actor.id] = actor
-    
-        
+
+
         if not self.instanced:
             if not dont_unload_instanced and not self.is_an_instance():
                 if type(actor).__name__ == "Player":
@@ -506,7 +510,7 @@ class Room:
                     actor.instanced_rooms = []
         else:
             if type(actor).__name__ == "Player":
-               
+
                 instanced_room_id = self.id + "#" + actor.party_manager.get_party_id()
 
                 if instanced_room_id not in self.world.rooms:
@@ -577,7 +581,7 @@ class Room:
                     actor.instanced_rooms = []
         else:
             if type(actor).__name__ == "Player":
-               
+
                 instanced_room_id = self.id + "#" + actor.party_manager.get_party_id()
 
                 if instanced_room_id not in self.world.rooms:

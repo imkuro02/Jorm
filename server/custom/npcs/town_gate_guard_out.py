@@ -13,6 +13,8 @@ class town_guard_npc(Npc):
         super().__init__(*args, **kwargs)
 
     def tick(self):
+        if self.room == None:
+            return
         from custom.npcs import _utils
         send_to = [i for i in self.room.actors.values() if type(i).__name__ == 'Player' and 
                     i.recall_site != RoomConstant.TAVERN]

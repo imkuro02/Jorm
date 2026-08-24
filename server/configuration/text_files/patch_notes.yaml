@@ -36,6 +36,7 @@ versions:
       - Added ability for skills to be passive
       - Thorns is both a passive and active skill
       - Reworked how damage is printed and displayed
+      - Added a "nothing" item used for reserving empty spawn points
   "150726":
     id: "150726"
     title: Optimization

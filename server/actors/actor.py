@@ -1109,6 +1109,9 @@ class Actor:
                 self.unload()
 
     def unload(self):
+        if self.room == None:
+            return
+            
         self.room.world.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'all')
         # self.ai.die()
         silent = True

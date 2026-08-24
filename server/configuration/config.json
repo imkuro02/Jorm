@@ -1,5 +1,5 @@
 {
-    "SHA-256": "621794a048235db1bea88599a18feec60835712b1a14e56b1361c1ebe6c62c2f",
+    "SHA-256": "f547f0a3e1c7adc1b076373381ddec9f5f6d804bee469097f392388b536eb6f2",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -14683,6 +14683,28 @@
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
+        },
+        "empty_spawn": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "empty_spawn",
+            "name": "nothing",
+            "stack_max_amount": 1,
+            "drop_tags": "none",
+            "drop_from_random": false,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "description_room": null,
+            "invisible": true,
+            "ambience_sfx": null,
+            "ambience": null,
+            "can_pick_up": false,
+            "description": "Literally nothing"
         },
         "rock": {
             "item_type": "misc",
