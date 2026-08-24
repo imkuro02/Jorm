@@ -99,7 +99,7 @@ class Settings:
             SETTINGS.EGO: 1,
             SETTINGS.PROMPT: "p0",
             SETTINGS.AUTO_BATTLER: False,
-            SETTINGS.SHORT_ROOM_DESCRIPTIONS: True,
+            SETTINGS.SHORT_ROOM_DESCRIPTIONS: False,
             SETTINGS.EMAIL: "",
             SETTINGS.COLOR: {
                 "@normal":              "",

@@ -1,4 +1,27 @@
 commands:
+  newbie:
+    gorup: newbie
+    syntax: 
+      - help newbie
+    description: |
+      Welcome new player!
+
+      Here is a quick rundown on everything you need to know:
+      - You move with the commands n, e, s, w, u and d
+
+      - Go around and fight stuff, type "fight" to start a fight
+      Type "flee" when youve had enough! otherwise kill!
+      - Type "skills" to view your skills, use them in a fight 
+      to secure a win ("strike <enemy>" but just "strike" works aswell)
+
+      - Type "stats" to view your stats, if you have enough exp you can "level"
+      - Type "level <stat>" to level up, that will grant you +1 to the stat 
+      and +1 practice points
+      - Type "prac" to view ALL skills, and "prac <skill name>" to 
+      learn more skills
+
+      - You can view your inventory with "inv" and equip things with "eq <item>"
+      make sure to identify items with "id <item>"
   say:
     group: talking
     syntax:
