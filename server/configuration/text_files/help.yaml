@@ -1,6 +1,6 @@
 commands:
   newbie:
-    gorup: newbie
+    group: newbie
     syntax: 
       - help newbie
     description: |
