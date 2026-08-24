@@ -619,26 +619,26 @@ class Player(Actor):
         if pp < 0:
             if abs(pp) >= 2:
                 self.send_line(
-                    f"You lost: {Color.BAD}"
+                    f"You lost {Color.BAD}"
                     + str(abs(pp))
                     + f" Practice points{Color.BACK}"
                 )
             else:
                 self.send_line(
-                    f"You lost: {Color.BAD}"
+                    f"You lost {Color.BAD}"
                     + str(abs(pp))
                     + f" Practice point{Color.BACK}"
                 )
         if pp > 0:
             if abs(pp) >= 2:
                 self.send_line(
-                    f"You got: {Color.GOOD}"
+                    f"You got {Color.GOOD}"
                     + str(abs(pp))
                     + f" Practice points{Color.BACK}"
                 )
             else:
                 self.send_line(
-                    f"You got: {Color.GOOD}"
+                    f"You got {Color.GOOD}"
                     + str(abs(pp))
                     + f" Practice point{Color.BACK}"
                 )

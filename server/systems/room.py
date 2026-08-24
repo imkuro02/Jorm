@@ -115,7 +115,9 @@ class Spawner:
                     npc = create_npc(self.room, _selected)
                     self.spawn_points[i] = npc
                     npc.simple_broadcast("", f"{npc.name} has arrived")
+                    return
 
+                print(_selected)
                 
                     
 
