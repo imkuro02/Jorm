@@ -37,6 +37,8 @@ versions:
       - Thorns is both a passive and active skill
       - Reworked how damage is printed and displayed
       - Added a "nothing" item used for reserving empty spawn points
+      - Players that die in a party get up again post combat
+      - Followers are now visible in room description when moving
   "150726":
     id: "150726"
     title: Optimization

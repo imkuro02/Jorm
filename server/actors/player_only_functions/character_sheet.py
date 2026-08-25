@@ -644,7 +644,8 @@ def command_affects(self, line):
 def get_exp_needed_to_level(self):
     l = self.stat_manager.stats[StatType.LVL] + 1
     exp_needed = int(
-        3 + (l**3.5)
+        3 + (l**3.55075)
+        #3 + (l**3.5)
     )  # int(2 ** self.stat_manager.stats[StatType.LVL]) + (self.stat_manager.stats[StatType.LVL]*self.stat_manager.stats[StatType.LVL])
     return exp_needed
 '''

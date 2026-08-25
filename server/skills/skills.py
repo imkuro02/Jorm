@@ -1152,8 +1152,30 @@ class SkillLeech(Skill):
                 turns=int(self.calculate_script_value(value = 'duration')),
                 leech_power=leech_power,
             )
-
             self.other.affect_manager.set_affect_object(leech_affect)
+
+    ''' this should work just fine
+    def dealt_damage(self, damage_obj):
+        leech_power = (self.calculate_script_value(value = 'bonus')/100)
+        damage_value = round(damage_obj.damage_value * leech_power)
+        print(damage_value)
+        if damage_obj.damage_value <= 0:
+            return damage_obj
+        if damage_value <= 0:
+            return damage_obj
+
+        if damage_obj.damage_type == DamageType.PHYSICAL:
+            damage_obj3 = Damage(
+                damage_taker_actor=damage_obj.damage_source_actor,
+                damage_source_action=self,
+                combat_event=damage_obj.combat_event,
+                damage_source_actor=damage_obj.damage_source_actor,
+                damage_value=damage_value,
+                damage_type=DamageType.HEALING,
+                dont_proc = True,
+            )  
+        return damage_obj
+    '''
 
 
 class SkillThorns(Skill):
@@ -1171,6 +1193,7 @@ class SkillThorns(Skill):
         # return 1 (by default)
         return 2
 
+    
     def take_damage_after_calc(self, damage_obj):
         damage_reflected_power = (self.calculate_script_value(value = 'bonus')/100)
         if damage_obj.damage_type == DamageType.PHYSICAL:
@@ -1183,7 +1206,6 @@ class SkillThorns(Skill):
                 damage_type=DamageType.PURE,
                 dont_proc = True,
             )  
-           
         return damage_obj
 
 

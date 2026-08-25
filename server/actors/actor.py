@@ -838,8 +838,11 @@ class Actor:
             t = systems.utils.Table(4, 1)
             output += '@tipDamage:@normal\n'
             for dmg_type in _dmg_types:
+                _dmg = self.calculate_damage_type_damage_bonus(dmg_type)
+                if _dmg == 0: _dmg = '---'
+                else: _dmg = f'+{_dmg}'.rjust(3)
                 t.add_data(f'{DamageType.name[dmg_type][:4].capitalize()}')
-                t.add_data(f'+{self.calculate_damage_type_damage_bonus(dmg_type)}')
+                t.add_data(f'{_dmg}')
             output += t.get_table()+'\n'
             '''
 

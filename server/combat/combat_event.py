@@ -122,12 +122,8 @@ class CombatEvent:
             ma = damage_obj.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
 
             if not damage_obj.dont_proc:
-                if damage_obj.damage_taker_actor.skill_manager != None:
-                    damage_obj = damage_obj.damage_taker_actor.skill_manager.take_damage_before_calc(
-                        damage_obj
-                    )
-                    
                 # before calc on damage_source_actor
+                
                 if damage_obj.damage_source_actor.affect_manager != None:
                     damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(
                         damage_obj
@@ -138,13 +134,10 @@ class CombatEvent:
                             damage_obj
                         )
                     )
-
                 if damage_obj.damage_source_actor.skill_manager != None:
                     damage_obj = damage_obj.damage_source_actor.skill_manager.deal_damage(
                         damage_obj
                     )
-
-
 
                 # before calc on damage_taker_actor
                 if damage_obj.damage_taker_actor.affect_manager != None:
@@ -155,24 +148,16 @@ class CombatEvent:
                     damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_before_calc(
                         damage_obj
                     )
+                if damage_obj.damage_taker_actor.skill_manager != None:
+                    damage_obj = damage_obj.damage_taker_actor.skill_manager.take_damage_before_calc(
+                        damage_obj
+                    )
 
                 
 
             # +/- armor calculation and hp removal
             damage_obj.calculate()
             
-            '''for pop in self.popped:
-                if not pop.silent and not damage_obj.silent:
-                    if pop.damage_taker_actor == damage_obj.damage_taker_actor:
-                        if pop == damage_obj:
-                            continue
-                        #print(pop.damage_taker_actor, damage_obj.damage_taker_actor)
-                        #print(pop.damage_snapshot, damage_obj.damage_snapshot)
-                        diff = {k: pop.damage_snapshot[k] - damage_obj.damage_snapshot[k] for k in pop.damage_snapshot} 
-                        pop.damage_snapshot = {k: pop.damage_snapshot[k] - diff[k] for k in pop.damage_snapshot} 
-                        print(diff, pop.damage_snapshot)'''
-                        
-
 
             if not damage_obj.dont_proc:
                 # after calc on damage_taker_actor
@@ -186,24 +171,26 @@ class CombatEvent:
                     damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_after_calc(
                         damage_obj
                     )
-
                 if damage_obj.damage_taker_actor.skill_manager != None:
                     damage_obj = damage_obj.damage_taker_actor.skill_manager.take_damage_after_calc(
                         damage_obj
                     )
+                
 
                 # after calc on damage_source_actor
+                
                 if damage_obj.damage_source_actor.affect_manager != None:
                     damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
                 if damage_obj.damage_source_actor.inventory_manager != None:
                     damage_obj.damage_source_actor.inventory_manager.dealt_damage(
                         damage_obj
                     )
-
                 if damage_obj.damage_source_actor.skill_manager != None:
                     damage_obj = damage_obj.damage_source_actor.skill_manager.dealt_damage(
                         damage_obj
                     )
+
+                
 
             # add threat to the attacker
             if damage_obj.add_threat:
