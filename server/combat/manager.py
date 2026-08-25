@@ -221,6 +221,11 @@ class Combat:
                 for par in i.party_manager.party.participants.values():
                     if par.status != ActorStatusType.DEAD:
                         one_alive = True
+                if one_alive:
+                    for par in i.party_manager.party.participants.values():
+                        if i.status == ActorStatusType.DEAD:
+                            i.stat_manager.stats[StatType.HP] = 1
+                            i.status = ActorStatusType.NORMAL
 
                 # if one_alive and self.round:
                 #    if i.status == ActorStatusType.DEAD:

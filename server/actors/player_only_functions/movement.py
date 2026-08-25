@@ -67,7 +67,7 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
 
     world.rooms[new_room].move_actor(self, silent = False)
     self.sendSound(Audio.walk())
-    self.new_room_look()
+    
 
     # move cringe followers
     def move_followers(followed_actor):
@@ -94,6 +94,7 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
 
     move_followers(self)
     add_explored_room(self)
+    self.new_room_look()
 
     if (self.recall_site != RoomConstant.TAVERN and self.recall_site != RoomConstant.CROSSROAD) and self.room.id == RoomConstant.CROSSROAD:
         #self.rest_set('')
