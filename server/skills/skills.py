@@ -1239,6 +1239,36 @@ class SkillStealth(Skill):
             )
             self.other.affect_manager.set_affect_object(stealthed_affect)
 
+# XD passive only
+
+class SkillGuardianAngel(Skill):
+    def take_damage_after_calc(self, damage_obj):
+        if self.user.stat_manager.stats[StatType.PHYARMOR] >= 1:
+            return damage_obj
+
+        history = self.user.fetch_combat_history()
+        for packet in history:
+            if packet.actor_id == self.user.id and packet.skill_id == 'guardian_angel':
+                return
+                
+        
+        self.silent_use = True
+        self.use()
+
+        damage_reflected_power = (self.calculate_script_value(value = 'bonus')/100)
+        dmg = int(damage_reflected_power * self.user.stat_manager.stats[StatType.HPMAX])
+        print(dmg)
+        damage_obj3 = Damage(
+            damage_taker_actor=self.user,
+            damage_source_action=self,
+            combat_event=damage_obj.combat_event,
+            damage_source_actor=self.user,
+            damage_value = dmg,
+            damage_type=DamageType.HEALING,
+            dont_proc = True,
+        )  
+        return damage_obj
+
 # XD boost main stats skills
 
 

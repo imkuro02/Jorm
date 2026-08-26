@@ -214,6 +214,7 @@ def configure_SKILLS(SHEET, SKILL_SCRIPT_VALUES):
                 "target_self_is_valid": bool(x["target_self_is_valid"][index]),
                 "can_use_in_combat": bool(x["can_use_in_combat"][index]),
                 "can_use_out_of_combat": bool(x["can_use_out_of_combat"][index]),
+                "can_be_passive": bool(x["can_be_passive"][index]),
                 "can_be_practiced": bool(x["can_be_practiced"][index]),
                 "practice_cost": int(x["practice_cost"][index]),
                 "level_req": x["level_req"][index],

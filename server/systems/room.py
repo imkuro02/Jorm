@@ -122,18 +122,10 @@ class Spawner:
 
 
     def tick(self):
-        if self.room.world.factory.ticks_passed % RESPAWN_TIME_MOBS == 0:
-            for e in self.room.actors.values():
-                e.simple_broadcast('tick','tick')
-                break
-
         if self.room.is_player_present() != False:
             return
 
         if self.room.world.factory.ticks_passed % RESPAWN_TIME_MOBS == 0:
-            for e in self.room.actors.values():
-                e.simple_broadcast('tick','tick')
-                break
             self.respawn_all()
 
 

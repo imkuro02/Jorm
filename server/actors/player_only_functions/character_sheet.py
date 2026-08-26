@@ -328,6 +328,7 @@ def command_skills(self, line, return_gmcp = False):
         _target_items = skill["target_item_is_valid"]
         _can_use_in_combat = skill["can_use_in_combat"]
         _can_use_out_of_combat = skill["can_use_out_of_combat"]
+        _can_be_passive = skill["can_be_passive"]
         _can_practice = skill["can_be_practiced"]
         _is_offensive = skill["is_offensive"]
         _is_aoe = 0 if not "aoe" in skill["script_values"] else 1
@@ -365,6 +366,9 @@ def command_skills(self, line, return_gmcp = False):
                 _combat = "can only be used out of combat"
             case [1, 1]:
                 _combat = "can be used any time"
+
+        if _can_be_passive:
+            _combat += ', has a passive effect' 
 
         extra_info = ""
         if not _ends_turn:
