@@ -38,6 +38,7 @@ versions:
       - Changed smite behaviour
       - If a skill deals no damage, nothing is displayed
       - Some lower level enemies added
+      - Level up exp requirement SLIGHTLY changed
   "190826":
     id: "190826"
     title: Passives

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "3d8c788709543ad4e0cdb491c5d47eaebdcb3e8263bd7bac2053be0d5d97bf38",
+    "SHA-256": "609f9d7f56936bbe37860c5d8bdeca274a837e8ed59ad6b09df73b24f535c4d2",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -384,7 +384,7 @@
             "npc_id": "snake",
             "ai": "Enemy",
             "name": "Snecko",
-            "description": "A tiny little mushroom cap with little legs, it topples over whenever it moves.",
+            "description": "Slender danger noodle.",
             "stats": {
                 "hp": 20,
                 "phy_armor": 0,
