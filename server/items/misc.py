@@ -216,7 +216,14 @@ class Item:
         return my_dict
 
     def identify(self, identifier=None):
-        output = f"{self.pretty_name(identifier)}\n"
+        output = f"{self.pretty_name(identifier)}"
+        if identifier != None: 
+            if identifier.inventory_manager == self.inventory_manager:
+                output += ' (in your inventory)'
+            #if identifier.room.inventory_manager == self.inventory_manager:
+                #output += ' (in the room)'
+        output += '\n'
+
         # output += get_icon(self.premade_id)
 
         output += f"{Color.DESCRIPTION}{self.description}{Color.NORMAL}\n"

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "cb6881a25d0a22fd283cb611aac2f43bfc1446c54ecb062693e8771463340a76",
+    "SHA-256": "aaf17799200f4175a30410935c67c6b5699226d4673474c507eee61835c75896",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -3096,7 +3096,7 @@
         "strike": {
             "skill_id": "strike",
             "name": "Strike",
-            "description": "Deal damage based on your highest main stat.\nDamage type is determined by your highest stat between GRIT, FLOW, MIND or SOUL.\nUsing strike past the first round without using strike in previous round grants\n1/4 of FLOW as flat damage bonus.\n",
+            "description": "Deal damage based on your highest main stat.\nDamage type is determined by your highest stat between Grit, Flow, Mind or Soul.\nUsing strike past the first round without using strike in previous round grants\n1/4 of FLOW as flat damage bonus.\n",
             "script_to_run": "Strike",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
@@ -3208,8 +3208,8 @@
         "smite": {
             "skill_id": "smite",
             "name": "Smite",
-            "description": "Deal pure damage based on your Soul.\n",
-            "script_to_run": "DamageBySoul",
+            "description": "Deal pure damage based on your Soul.\nTargets take 3 less damage per smite they receive damage from.\nThe maximum damage penalty is the casters Level.\n",
+            "script_to_run": "Smite",
             "target_others_is_valid": true,
             "target_item_is_valid": false,
             "target_self_is_valid": false,

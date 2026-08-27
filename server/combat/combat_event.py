@@ -65,12 +65,16 @@ class CombatEvent:
             msg += f'{obj.damage_taker_actor.id} '
             sound = Audio.HURT
 
+            _nothing_ever_happens = True
             for i in diff:
                 if diff[i] < 0:
                     sound = Audio.BUFF
                     msg += f'{Color.GOOD}heal {abs(diff[i])} {Color.stat[i]}{StatType.name[i]}{Color.NORMAL} and '
+                    _nothing_ever_happens = False
                 if diff[i] > 0:
                     msg += f'take#XD# {color}{abs(diff[i])} {text}{Color.NORMAL} to {Color.stat[i]}{StatType.name[i]}{Color.NORMAL} and '
+                    _nothing_ever_happens = False
+            
             
 
             msg = ' '.join(msg.split()[:-1])+ ' '
@@ -84,7 +88,8 @@ class CombatEvent:
                 if actor.status == ActorStatusType.DEAD:
                     continue
                 if self.queue == []:
-                    actor.pretty_broadcast(msg.replace('#XD#',''),msg.replace('#XD#','s'),sound=sound,list_pretty_name_objects = [obj.damage_taker_actor,obj.damage_source_actor,obj.damage_source_action])
+                    if not _nothing_ever_happens:
+                        actor.pretty_broadcast(msg.replace('#XD#',''),msg.replace('#XD#','s'),sound=sound,list_pretty_name_objects = [obj.damage_taker_actor,obj.damage_source_actor,obj.damage_source_action])
                     actor.stat_manager.hp_mp_clamp_update()
 
         self.popped = []

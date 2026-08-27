@@ -79,7 +79,7 @@ def command_map(self, line, return_gmcp = False):
             
 
             if cell == ' ':
-                cell = 'O'
+                cell = '.'
                 color = '@bblack'
 
             if room.is_player_present():
@@ -94,7 +94,11 @@ def command_map(self, line, return_gmcp = False):
             if has_down:
                 cell = '>'
             if has_down and has_up:
-                cell = 'x'
+                cell = 'X'
+
+            if room.get_real_id() not in self.explored_rooms and self.room != room:
+                color = '@bblack'
+                cell = '?'
 
 
             grid[gy][gx] = color + cell + Color.NORMAL
@@ -874,7 +878,7 @@ def command_look(self, line, return_gmcp=False, short = False):
 
     def look_item(identifier, item):
         output = item.identify(identifier=identifier)
-        identifier.send_line(f"{identifier.pretty_name(identifier = self)} look at: " + output)
+        identifier.send_line(f"{identifier.pretty_name(identifier = self)} look at " + output)
         return
 
     if self.room == None:
@@ -901,7 +905,7 @@ def command_look(self, line, return_gmcp=False, short = False):
         look_actor(thing)
         return
     
-    thing = self.get_item(line, search_mode="room")
+    thing = self.get_item(line, search_mode="self_and_room")
     if thing != None:
         look_item(self, thing[0])
         return

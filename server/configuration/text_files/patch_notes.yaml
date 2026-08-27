@@ -28,6 +28,15 @@ versions:
   #
   #
   #
+  "270826":
+    id: "270826"
+    title: Patch
+    unixtime: 1775631568
+    features:
+      - Changed map drawing again
+      - Changed how exp and levels are displayed on character sheet
+      - Changed smite behaviour
+      
   "190826":
     id: "190826"
     title: Passives

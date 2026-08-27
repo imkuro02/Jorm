@@ -881,26 +881,18 @@ class Actor:
             """
 
             t.add_data("Experience:")
-            t.add_data(self.stat_manager.stats[StatType.EXP])
             if not self.stat_manager.is_max_level():
-                t.add_data("/")
-                t.add_data(self.get_exp_needed_to_level())
+                _str = f'{self.stat_manager.stats[StatType.EXP]}' + ' / ' + f'{self.get_exp_needed_to_level()}'
             else:
-                t.add_data("")
-                t.add_data("")
+                _str = f'{self.stat_manager.stats[StatType.EXP]}'
 
-            #    t.add_data(str(self.stat_manager.stats[StatType.EXP]-self.get_exp_needed_to_level()))
-            if not self.stat_manager.is_max_level():
-                t.add_data("Can level?:")
-                t.add_data(
-                    f"{Color.GOOD}YES{Color.NORMAL}"
-                    if self.stat_manager.stats[StatType.EXP]
-                    >= self.get_exp_needed_to_level()
-                    else f"{Color.BAD}NO{Color.NORMAL}"
-                )
-                t.add_data("")
-                t.add_data("")
+            if self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level():
+                _str += f' ({Color.GOOD}Can level up{Color.NORMAL})'
 
+            t.add_data(_str)
+            t.add_data("")
+            t.add_data("")
+            
             t.add_data("Practices:")
             t.add_data(self.stat_manager.stats[StatType.PP])
             t.add_data("")

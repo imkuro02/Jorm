@@ -730,6 +730,20 @@ class SkillStrike(SkillDamage):
 
         return _dmg_obj
 
+class SkillSmite(SkillDamage):
+    def use(self):
+        history = self.user.fetch_combat_history()
+
+        bonus = 0
+        for packet in history:
+            if packet.skill_id == 'smite' and packet.target_id == self.other:
+                bonus -= 3
+                
+        if bonus <= -self.user.stat_manager.stats[StatType.LVL]:
+            bonus = -self.user.stat_manager.stats[StatType.LVL]
+
+        return super().use(dmg_stat_scale=StatType.SOUL, dmg_type=DamageType.PURE, dmg_flat=bonus)
+
 class SkillGuard(Skill):
     def use(self):
         super().use()
