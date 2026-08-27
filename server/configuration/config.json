@@ -1,5 +1,5 @@
 {
-    "SHA-256": "aaf17799200f4175a30410935c67c6b5699226d4673474c507eee61835c75896",
+    "SHA-256": "3d8c788709543ad4e0cdb491c5d47eaebdcb3e8263bd7bac2053be0d5d97bf38",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -371,6 +371,61 @@
                 "soul weapon 9": 400,
                 "rock": 39,
                 "summoning_rock": 39
+            },
+            "combat_loop": {},
+            "can_start_fights": false,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all"
+            ]
+        },
+        "snake": {
+            "npc_id": "snake",
+            "ai": "Enemy",
+            "name": "Snecko",
+            "description": "A tiny little mushroom cap with little legs, it topples over whenever it moves.",
+            "stats": {
+                "hp": 20,
+                "phy_armor": 0,
+                "mag_armor": 0,
+                "grit": 5,
+                "flow": 15,
+                "mind": 25,
+                "soul": 5,
+                "exp": 2,
+                "lvl": 2
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {
+                "bite": 1,
+                "hex": 1
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "axe": 155,
+                "bag_0": 1250,
+                "mind body 1": 155,
+                "mind body 3": 155,
+                "mind body 6": 260,
+                "mind body 9": 365,
+                "mind head 1": 155,
+                "mind head 3": 155,
+                "mind head 6": 260,
+                "mind head 9": 365,
+                "mind relic 1": 155,
+                "mind trinket 1": 155,
+                "mind trinket 3": 155,
+                "mind trinket 6": 260,
+                "mind trinket 9": 365,
+                "mind weapon 1": 155,
+                "mind weapon 3": 155,
+                "mind weapon 6": 260,
+                "mind weapon 9": 365,
+                "rock": 38,
+                "summoning_rock": 38
             },
             "combat_loop": {},
             "can_start_fights": false,

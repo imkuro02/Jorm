@@ -6,6 +6,12 @@
  )/ \(
 [end]
 
+[id:snake]
+@green /@white*@green)@bred-<
+@green((
+@green )) @bgreen$@green
+@green((__)
+[end]
 
 [id:angler]
 @normal    
