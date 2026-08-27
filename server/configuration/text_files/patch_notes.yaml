@@ -36,7 +36,7 @@ versions:
       - Changed map drawing again
       - Changed how exp and levels are displayed on character sheet
       - Changed smite behaviour
-      
+      - If a skill deals no damage, nothing is displayed
   "190826":
     id: "190826"
     title: Passives
