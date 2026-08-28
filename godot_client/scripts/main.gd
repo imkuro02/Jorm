@@ -1,5 +1,9 @@
 extends Control
 
+# this needs to be set to false otherwise input.gd will 
+# fucking do the javascript eval bullshit 
+var mobile = false
+
 @export var websocket_url_local = "ws://localhost:8002"
 @export var websocket_url = "wss://jorm.kurowski.xyz:8001"
 
@@ -99,7 +103,6 @@ func wait_for_connection(sock: WebSocketPeer, timeout: float) -> bool:
 
 
 # --- Input Handling ---
-
 func _on_input_submitted(text: String) -> void:
 	#var state = socket.get_ready_state()
 	#if state == WebSocketPeer.STATE_CLOSED:
@@ -113,7 +116,9 @@ func _on_input_submitted(text: String) -> void:
 	else:
 		print("Socket not ready or input was empty.")
 
-
+func _on_input_text_submitted(new_text):
+	_on_input_submitted(new_text)
+	
 # --- GMCP / Telnet Logic ---
 
 func string_to_dict(source: String) -> Dictionary:
@@ -425,3 +430,6 @@ func _on_reload_client_button_pressed():
 	await get_tree().create_timer(1.0).timeout
 	await try_connect_in_order([websocket_url_local, websocket_url])
 	return
+
+
+

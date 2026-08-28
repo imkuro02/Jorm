@@ -5,8 +5,16 @@ var history_line = 0
 @onready var MAIN = $"../../.."
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	pass # Replace with function body.
+	focus_entered.connect(js_text_entry)
+
+func js_text_entry():
+	if MAIN.mobile:
+		text = JavaScriptBridge.eval(
+				"prompt('%s', '%s');" % ["Please enter text:", text], 
+				true
+				)
+		MAIN._on_input_submitted(text)
+		release_focus()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

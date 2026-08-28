@@ -464,10 +464,10 @@ scroll_active = false
 script = ExtResource("10_flati")
 
 [node name="reload_client_button" type="Button" parent="canvas"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 136.0
+offset_top = 104.0
+offset_right = 207.0
+offset_bottom = 136.0
 text = "RELOAD"
 
 [node name="Node11" type="CanvasLayer" parent="."]
@@ -609,6 +609,7 @@ hint_underlined = false
 selection_enabled = true
 script = ExtResource("3_gkcnj")
 
+[connection signal="text_submitted" from="canvas/HBoxContainer/input_output/input/input" to="." method="_on_input_text_submitted"]
 [connection signal="meta_clicked" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_started"]
