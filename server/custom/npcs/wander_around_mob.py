@@ -150,8 +150,6 @@ class wander_around_mob(Npc):
             self.wander_ticks_passed = 0
 
     def die(self):
-        self.despawn_footprints()
-        self.despawn_pre_footprints()
         super().die()
 
     def unload(self):
