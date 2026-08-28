@@ -36,6 +36,7 @@ class robot_woodcutter(Npc):
         self.pre_footprints = []
 
     def spawn_footprints(self, dir):
+        return
         corpse = Item()
         corpse.name = f'Footprints'
         corpse.description = f'There is a set of tire tracks leading {dir.lower()}, you wonder who they belong to.'
@@ -76,6 +77,7 @@ class robot_woodcutter(Npc):
         
 
     def spawn_pre_footprints(self, _exit):
+        return
         corpse = Item()
         corpse.name = _exit.direction
         corpse.description = f'{Color.BAD}There is something approaching from {_exit.direction}{Color.BACK}'
