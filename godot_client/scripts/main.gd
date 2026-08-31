@@ -23,6 +23,11 @@ var socket = WebSocketPeer.new()
 @onready var EXPBAR = $canvas/smooth_exp_bar
 @onready var BGM = $BackgroundMusicStreamPlayer
 
+
+var vol_master = 0
+var vol_effects = 0
+var vol_music = 0
+
 var game_state = 'none yet'
 
 const IAC      : int = 255
@@ -204,6 +209,8 @@ func handle_gmcp(message: String):
 			sound_player.stream = load("res://audio/sfx/" + data_dict['name'])
 			add_child(sound_player)
 			sound_player.volume_db -= 10
+			sound_player.volume_db += (vol_master/100) * sound_player.volume_db
+			sound_player.volume_db += (vol_effects/100) * sound_player.volume_db
 			sound_player.play()
 
 			# Wait for the sound to finish
@@ -234,7 +241,14 @@ func handle_gmcp(message: String):
 			ROOM_DESCRIPTIONS.get_message(dict_string)
 		'GODOT_CLIENT_OUTPUT_SPLIT_ADD_PADDING':
 			OUTPUT.get_message('', true)
-			
+		'Client.Media.VolumeMaster':
+			vol_master = data_dict['vol']
+			BGM.vol_master = vol_master
+		'Client.Media.VolumeEffects':
+			vol_effects = data_dict['vol']
+		'Client.Media.VolumeMusic':
+			vol_music = data_dict['vol']
+			BGM.vol_music = vol_music
 		#'Time':
 		#	CLOCK.get_message(data_dict)
 			#BACKGROUND_COLOR.get_message(data_dict)

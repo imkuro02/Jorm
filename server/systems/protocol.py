@@ -784,6 +784,14 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         self.actor.inventory_manager.all_items_set_new(False)
 
+        # set volume
+        _master = self.actor.settings_manager.get_value(SETTINGS.VOL_MASTER)
+        _effects = self.actor.settings_manager.get_value(SETTINGS.VOL_EFFECTS)
+        _music = self.actor.settings_manager.get_value(SETTINGS.VOL_MUSIC)
+        self.send_gmcp({"vol": _master},   "Client.Media.VolumeMaster")
+        self.send_gmcp({"vol": _effects},  "Client.Media.VolumeEffects")
+        self.send_gmcp({"vol": _music},    "Client.Media.VolumeMusic")
+
         self.state = self.PLAY
 
         if actor == None:

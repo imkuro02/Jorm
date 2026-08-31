@@ -33,6 +33,9 @@ class SETTINGS:
     PROMPT = "Prompt"
     COLOR = "Color"
     ECHO = 'Echo'
+    VOL_MASTER = 'MasterVolume'
+    VOL_EFFECTS = 'EffectsVolume'
+    VOL_MUSIC = 'MusicVolume'
     LIST_SETTINGS = [
         GMCP,
         GODOT,
@@ -55,6 +58,7 @@ class SETTINGS:
         AUTO_BATTLER,
         SHORT_ROOM_DESCRIPTIONS,
         DEBUGMUTED,
+        VOL_MASTER,VOL_EFFECTS,VOL_MUSIC
         #COLOR,  
     ]
 
@@ -83,6 +87,9 @@ class Settings:
             #SETTINGS.AUTO_BATTLER: "Automatically use offensive skills in combat, disables itself if you do ANYTHING in combat",
             SETTINGS.AUTO_BATTLER: "Automatically use offensive skills in combat",
             SETTINGS.SHORT_ROOM_DESCRIPTIONS: 'Room descriptions are short unless specifically looking',
+            SETTINGS.VOL_MASTER: "The Master volume, ranging from 0 to 100",
+            SETTINGS.VOL_EFFECTS: "The Sound Effect volume, ranging from 0 to 100",
+            SETTINGS.VOL_MUSIC: "The Music volume, ranging from 0 to 100",
 
             }
         self.defaults = {
@@ -101,6 +108,9 @@ class Settings:
             SETTINGS.AUTO_BATTLER: False,
             SETTINGS.SHORT_ROOM_DESCRIPTIONS: False,
             SETTINGS.EMAIL: "",
+            SETTINGS.VOL_MASTER: 50,
+            SETTINGS.VOL_EFFECTS: 100,
+            SETTINGS.VOL_MUSIC: 100,
             SETTINGS.COLOR: {
                 "@normal":              "",
                 #"@back":                "\x1b[0;00x",
@@ -426,6 +436,11 @@ class Settings:
                 """
 
             case SETTINGS.NAME:
+                if len(line) == 1:
+                    self.actor.send_line(
+                        "Name settings needs a new value for a name"
+                    )
+                    return
                 _name = line[1]
                 succ = self.actor.protocol.try_this_actor_name(_name)
                 if not succ:
@@ -474,6 +489,73 @@ class Settings:
                 self.actor.send_line(
                     f"Brief enabled: {self.settings[SETTINGS.SHORT_ROOM_DESCRIPTIONS]}"
                 )
+
+            case SETTINGS.VOL_MASTER:
+                if len(line) == 1:
+                    self.actor.send_line(
+                        "MasterVolume needs value 0-100"
+                    )
+                    return
+                try:
+                    value = int(line[1])
+                    if value < 0 or value > 100: value = int('lol')
+                except ValueError:
+                    self.actor.send_line(
+                        "MasterVolume needs value 0-100"
+                    )
+                    return
+                self.settings[SETTINGS.VOL_MASTER] = value
+                _master = self.actor.settings_manager.get_value(SETTINGS.VOL_MASTER)
+                _effects = self.actor.settings_manager.get_value(SETTINGS.VOL_EFFECTS)
+                _music = self.actor.settings_manager.get_value(SETTINGS.VOL_MUSIC)
+                self.actor.protocol.send_gmcp({"vol": _master},   "Client.Media.VolumeMaster")
+                self.actor.protocol.send_gmcp({"vol": _effects},  "Client.Media.VolumeEffects")
+                self.actor.protocol.send_gmcp({"vol": _music},    "Client.Media.VolumeMusic")
+                self.actor.send_line(f'MasterVolume set to: {value}')
+            case SETTINGS.VOL_EFFECTS:
+                if len(line) == 1:
+                    self.actor.send_line(
+                        "EffectsVolume needs value 0-100"
+                    )
+                    return
+                try:
+                    value = int(line[1])
+                    if value < 0 or value > 100: value = int('lol')
+                except ValueError:
+                    self.actor.send_line(
+                        "EffectsVolume needs value 0-100"
+                    )
+                    return
+                self.settings[SETTINGS.VOL_EFFECTS] = value
+                _master = self.actor.settings_manager.get_value(SETTINGS.VOL_MASTER)
+                _effects = self.actor.settings_manager.get_value(SETTINGS.VOL_EFFECTS)
+                _music = self.actor.settings_manager.get_value(SETTINGS.VOL_MUSIC)
+                self.actor.protocol.send_gmcp({"vol": _master},   "Client.Media.VolumeMaster")
+                self.actor.protocol.send_gmcp({"vol": _effects},  "Client.Media.VolumeEffects")
+                self.actor.protocol.send_gmcp({"vol": _music},    "Client.Media.VolumeMusic")
+                self.actor.send_line(f'EffectsVolume set to: {value}')
+            case SETTINGS.VOL_MUSIC:
+                if len(line) == 1:
+                    self.actor.send_line(
+                        "MusicVolume needs value 0-100"
+                    )
+                    return
+                try:
+                    value = int(line[1])
+                    if value < 0 or value > 100: value = int('lol')
+                except ValueError:
+                    self.actor.send_line(
+                        "MusicVolume needs value 0-100"
+                    )
+                    return
+                self.settings[SETTINGS.VOL_MUSIC] = value
+                _master = self.actor.settings_manager.get_value(SETTINGS.VOL_MASTER)
+                _effects = self.actor.settings_manager.get_value(SETTINGS.VOL_EFFECTS)
+                _music = self.actor.settings_manager.get_value(SETTINGS.VOL_MUSIC)
+                self.actor.protocol.send_gmcp({"vol": _master},   "Client.Media.VolumeMaster")
+                self.actor.protocol.send_gmcp({"vol": _effects},  "Client.Media.VolumeEffects")
+                self.actor.protocol.send_gmcp({"vol": _music},    "Client.Media.VolumeMusic")
+                self.actor.send_line(f'MusicVolume set to: {value}')
 
 
 def command_settings(self, line):
