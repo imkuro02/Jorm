@@ -6,6 +6,32 @@
  )/ \(
 [end]
 
+[id:goblin_merchant]
+@green   @bgreen(\@green.-@bgreen(\
+@green    \ @cyanO o 
+@yellow )@white-@yellow(@yellow ##@bgreen\)
+@yellow(_@green$@yellow_)@redd b 
+[end]
+
+[id:goblin_citizen]
+@green  @bgreen(\@green.-@bgreen(\
+@green   \ @cyanO o 
+@yellow    ##@bgreen\) 
+@red    d b
+[end]
+
+[id:goblin_bard]
+@green  @bgreen(\@green.-@bgreen(\@normal.=*
+@green   \ @cyanO o @normal|
+@yellow    ##@bgreen\)@normal|O|
+@red    d b @normal`"´
+[end]
+
+ )-( 
+(_$_)
+@bredO@yellow)@white-@yellow(@bred \
+@yellow(_@green$@yellow_)@bredO
+
 [id:snake]
 @green /@white*@green)@bred-<
 @green((
