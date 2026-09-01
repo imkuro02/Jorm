@@ -209,8 +209,7 @@ func handle_gmcp(message: String):
 			sound_player.stream = load("res://audio/sfx/" + data_dict['name'])
 			add_child(sound_player)
 			sound_player.volume_db -= 10
-			sound_player.volume_db += (vol_master/100) * sound_player.volume_db
-			sound_player.volume_db += (vol_effects/100) * sound_player.volume_db
+			sound_player.volume_db = (vol_master + vol_effects - 200) * 0.30
 			sound_player.play()
 
 			# Wait for the sound to finish

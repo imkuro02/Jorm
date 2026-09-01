@@ -20,7 +20,10 @@ var last_desired = 0
 func _process(_delta):
 	#vol_music = MAIN.vol_music
 	#vol_master = MAIN.vol_master
-	vol_desired = ((vol_master/10) + (vol_music/10)) - 15
+	var base = -15
+	vol_desired = (vol_master + vol_music - 200) * 0.30
+	if vol_music == 0:
+		vol_desired = -1000
 	if vol_desired == last_desired:
 		return
 	last_desired = vol_desired
