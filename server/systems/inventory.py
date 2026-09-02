@@ -211,8 +211,9 @@ class InventoryManager:
 
         item.time_on_ground = 0
         
-        if self.get_amount_of_free_item_slots() <= 0:
-            return False
+        if not forced:
+            if self.get_amount_of_free_item_slots() <= 0:
+                return False
 
         if stack_items:
             for _i in self.items.values():
@@ -277,6 +278,7 @@ class InventoryManager:
             )
 
         item.inventory_manager = self
+        item.room = self.owner.room
         return True
 
     # used for removing several stacks of an item by the premade_id

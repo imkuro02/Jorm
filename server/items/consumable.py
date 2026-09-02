@@ -57,7 +57,7 @@ class Consumable(Item):
             return False
 
         old_line = line
-        items = player.get_item(line = line.replace('eat','').replace('drink','').replace('read','').strip(), search_mode='self_and_room')
+        items = player.get_item(line = " ".join(line.split()[1:]).strip(), search_mode='self_and_room')
         
         if items == None:
             return False

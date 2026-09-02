@@ -8,7 +8,7 @@
 
 send_to = [i for i in self.room.actors.values() if type(i).__name__ == 'Player' and 
             i.recall_site != RoomConstant.TAVERN]
-_utils.greet_message(
+greet_message(
     self = self, 
     message = f'{self.id} says "You should check out the tavern, if you have not yet"',
     send_to = send_to
@@ -22,7 +22,10 @@ if player is not in send_to they will be ignored and another greet_message might
 '''
 from configuration.constants.tickrate import TICKRATE
 
-def greet_message(self, message, send_to: list = [None]):
+def greet_message(self, message, send_to: list = [None], sound = None):
+    if self.room == None:
+        return
+        
     if self.factory.ticks_passed % (TICKRATE * 4) == 0:
         if not hasattr(self,'actors_in_room'):
             self.actors_in_room = {}
@@ -49,7 +52,7 @@ def greet_message(self, message, send_to: list = [None]):
                 continue
             if i.current_dialog != None:
                 continue
-            i.pretty_broadcast(message, None, list_pretty_name_objects = [self])
+            i.pretty_broadcast(message, None, list_pretty_name_objects = [self], sound = sound)
 
         for i in self.actors_in_room:
             self.actors_in_room[i] = None

@@ -13,7 +13,7 @@ class rat(Npc):
        
         self.trigger_manager.trigger_add(trigger_key = 'pet', trigger_action = self.trigger_pet)
         self.description += '\nYou can "pet" the rat'
-
+        #self.trigger_manager.trigger_add(trigger_key = 'after_command_go', trigger_action = self.trigger_poop)
 
     #    self.trigger_manager.trigger_add(trigger_key = 'command_go', trigger_action = self.trigger_command_go)
 
@@ -22,6 +22,11 @@ class rat(Npc):
     #    _dir = player.find_direction_for_command_go(line)
     #    _l = f'{player.name} {line}... {_dir.__dict__}'
     #    self.simple_broadcast(_l,_l)
+
+    #def trigger_poop(self, player, line):
+    #    line = line.replace('after_command_go ','')
+    #    player.send_line('>>>>>this has been triggered RIGHT AFTER you entered the room... woa')
+    #    return True
 
     def trigger_pet(self, player, line):
         line = line.replace('pet ','')

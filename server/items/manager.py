@@ -7,8 +7,8 @@ import systems.utils
 from configuration.config import ITEMS
 from configuration.constants.item_type import ItemType
 random = random.Random()
-
 from custom import loader as custom_loader
+
 
 def load_item(item_premade_id, unique_id = None, max_stats = False):
     premade_id = item_premade_id
@@ -114,6 +114,9 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
     new_item.description_room = ITEMS[premade_id]["description_room"]
     new_item.invisible = ITEMS[premade_id]["invisible"]
     new_item.ambience = ITEMS[premade_id]["ambience"]
+
+    
+
     new_item.ambience_sfx = ITEMS[premade_id]["ambience_sfx"]
     new_item.can_pick_up = ITEMS[premade_id]["can_pick_up"]
     if "stack_max_amount" in ITEMS[premade_id]:
@@ -130,6 +133,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
     
     
     new_item.__init__()
+    #FACTORY.ecs_manager.add_ambience(obj=new_item, message=ITEMS[premade_id]["ambience"])
     
     
     return new_item

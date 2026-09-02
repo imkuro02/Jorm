@@ -15,22 +15,22 @@ class town_guard_npc(Npc):
     def tick(self):
         if self.room == None:
             return
-        from custom.npcs import _utils
+        from scripts.greet_message import greet_message
         send_to = [i for i in self.room.actors.values() if type(i).__name__ == 'Player' and 
                     i.recall_site != RoomConstant.TAVERN]
-        _utils.greet_message(
+        greet_message(
             self = self, 
             message = f'{self.id} says "You should check out the tavern, if you have not yet"',
             send_to = send_to
             )
         send_to = [i for i in self.room.actors.values() if type(i).__name__ == 'Player' and 
                     i.quest_manager.check_quest_state('blacksmith_reforge') == 'not_started']
-        _utils.greet_message(
+        greet_message(
             self = self, 
             message = f'{self.id} says "The blacksmith recently reforged my spear, nice fella just west of town square"',
             send_to = send_to
             )
-        _utils.greet_message(
+        greet_message(
             self = self, 
             message = f'{self.id} nods at you',
             )

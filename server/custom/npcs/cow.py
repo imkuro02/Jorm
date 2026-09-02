@@ -15,8 +15,8 @@ class cow(Npc):
 
     def tick(self):
         super().tick()
-        from custom.npcs import _utils
-        _utils.greet_message(
+        from scripts.greet_message import greet_message
+        greet_message(
             self = self, 
             message = f'{self.id} moo\'s at you',
             )

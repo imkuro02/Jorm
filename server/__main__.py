@@ -9,22 +9,27 @@ config.load()
 import time
 
 import systems.utils
+#from systems.ecs_manager import ECSManager
 from configuration.constants.tickrate import TICKRATE
+import context
+
 
 class ServerFactory(protocol.Factory):
     def __init__(self):
+        context.FACTORY = self
+        
         self.ticks_passed = 0
         self.delayed_functions = DelayedFunctionsManager(factory = self)
         self.protocols = set()
         
-
+        #self.ecs_manager = ECSManager(self)
+        
         self.db = Database(self)
         
         self.runtime = time.time()
         self.start = time.time()
         self.tickrate: int = TICKRATE * 1
         self.world = World(self)
-        
 
         tickloop = task.LoopingCall(self.tick)
         tickloop.start(1 / self.tickrate)
@@ -32,12 +37,13 @@ class ServerFactory(protocol.Factory):
         logging.info("Server started")
 
         # where the actors will be stored for rank command
-        self.ranks = {}
+        self.ranks = {}   
 
         
     def tick(self):
         self.ticks_passed += 1
         self.world.tick()
+        #self.ecs_manager.tick()
         # for room in self.world.rooms.values():
         #    room.tick()
         if self.ticks_passed % (TICKRATE * 120) == 0 or self.ticks_passed == 10:
@@ -66,12 +72,15 @@ class ServerFactory(protocol.Factory):
 #    print('\n\n')
 #    print(systems.utils.add_color(config.ICONS[i]))
 #
+
 if __name__ == "__main__":
     #import tracemalloc
     #tracemalloc.start()
 
     
     factory = ServerFactory()
+    print(context.FACTORY,'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx')
+
 
     ssl_context = ssl.DefaultOpenSSLContextFactory("server.key", "server.crt")
 

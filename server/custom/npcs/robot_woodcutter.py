@@ -129,8 +129,8 @@ class robot_woodcutter(Npc):
                     self.wander_direction_current = 0
                     
     def tick(self):
-        from custom.npcs import _utils
-        _utils.greet_message(self, f'{self.id} says "You are in the way"')
+        from scripts.greet_message import greet_message
+        greet_message(self, f'{self.id} says "You are in the way"')
         super().tick()
         self.wander_ticks_passed += 1
         if self.wander_ticks_passed == self.wander_ticks_warning_required:

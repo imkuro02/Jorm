@@ -15,8 +15,11 @@ from systems.utils import REFTRACKER, get_object_parent, unload, add_godot_url_i
 from systems.triggers import TriggerManager
 from configuration.constants.tickrate import TICKRATE
 
+import context
+
 class Item:
     def __init__(self):
+        self.factory = context.FACTORY
 
         if hasattr(self, 'id'):
             return
@@ -34,9 +37,11 @@ class Item:
         self.stack_max = 100
         self.keep = False
         self.inventory_manager = None  # the inventory manager of this item
+        self.room = None
         self.new = True  # show if item is newly added to inv
         self.time_on_ground = 0
         self.ambience = None
+
         self.ticks_until_ambience = 100
 
         # scenery stuff
@@ -75,7 +80,19 @@ class Item:
 
         return True
 
+    def broadcast_ambience(self):
+        if self.ambience == None:
+            return
+        from scripts.greet_message import greet_message
+        greet_message(
+            self = self, 
+            message = self.ambience,
+            sound = self.ambience_sfx
+        )
+        return
     def tick(self):
+        self.broadcast_ambience()
+        '''
         if self.ambience == None:
             return
 
@@ -95,6 +112,7 @@ class Item:
                 ac.simple_broadcast(
                     self.ambience, self.ambience, sound=self.ambience_sfx
                 )
+        '''
 
     def pretty_name(self, identifier = None, rank_only=False, show_affixes=False):
         def get_article(word):  # chatGPT

@@ -40,14 +40,14 @@ class citizen_stuck_in_tree(Npc):
         return is_stuck
 
     def tick(self):
-        from custom.npcs import _utils
+        from scripts.greet_message import greet_message
         if self.stuck_in_tree():
-            _utils.greet_message(
+            greet_message(
                 self = self, 
                 message = f'{self.id} yells "hey over here! im stuck in the tree!"',
             )
         else:
-            _utils.greet_message(
+            greet_message(
                 self = self, 
                 message = f'{self.id} nods at you',
             )
