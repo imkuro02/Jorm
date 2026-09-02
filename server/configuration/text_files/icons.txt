@@ -21,10 +21,10 @@
 [end]
 
 [id:goblin_bard]
-@green  @bgreen(\@green.-@bgreen(\@normal.=*
-@green   \ @cyanO o @normal|
-@yellow    ##@bgreen\)@normal|O|
-@red    d b @normal`"´
+@green  @bgreen(\@green.-@bgreen(\@yellow.=*
+@green   \ @cyanO o @yellow|
+@yellow    ##@bgreen\)@yellow|@bblackO@yellow|
+@red    d b @yellow`"´
 [end]
 
  )-( 
