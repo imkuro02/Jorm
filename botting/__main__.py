@@ -1,8 +1,8 @@
 import telnetlib3 as telnetlib
 import time
 import random
-HOST = "jorm.kurowski.xyz"
-#HOST = "localhost"
+#HOST = "jorm.kurowski.xyz"
+HOST = "localhost"
 PORT = 4001
 COMMANDS = [
 "guest",
@@ -12,7 +12,7 @@ COMMANDS = [
 "set gmcp on",
 "set godot on",
 "set map on",
-"set room in"
+"set room on"
 "set brief off"
 "shout set!"
 ]
@@ -29,7 +29,7 @@ def send_telnet_command():
     try:
         with telnetlib.Telnet(HOST, PORT, timeout=5) as tn:
             for i in COMMANDS:
-                time.sleep(random.randint(100,1000)/1000)
+                time.sleep(DELAY)
                 tn.write((i+'\r\n').encode('utf-8'))
             time.sleep(5)
     except Exception as e:

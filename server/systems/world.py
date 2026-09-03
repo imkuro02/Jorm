@@ -27,6 +27,7 @@ from systems.room import Exit, Room
 from systems.utils import REFTRACKER, unload
 import json
 from configuration.config import ENEMIES
+from configuration.constants.tickrate import TICKRATE
 
 class KillTracking:
     def __init__(self, factory):
@@ -370,14 +371,23 @@ class World:
 
     def tick(self):
         self.game_time.tick()
-        if self.factory.ticks_passed % 600 == 0:
+        if self.factory.ticks_passed % TICKRATE * 60 * 5 == 0:
             self.unload_rooms()
             systems.utils.unload_fr()
 
-     
         rooms = []
+        #for i in self.factory.protocols:
+        #    if i.actor == None:
+        #        continue
+        #    if i.actor.room in rooms:
+        #        continue
+        #    rooms.append(i.actor.room)
+        
         for i in self.rooms:
+            #if not self.rooms[i].is_player_present():
+            #    continue
             rooms.append(self.rooms[i])
+        
         for i in rooms:
             #if len(i.actors) > 10:
             #    if self.factory.ticks_passed % len(i.actors) == 0:

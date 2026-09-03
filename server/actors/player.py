@@ -484,8 +484,6 @@ class Player(Actor):
     #    return output
 
     def tick(self):
-        
-
         if not self.loaded:
             return
 
@@ -507,6 +505,8 @@ class Player(Actor):
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
 
+
+        
         if len(self.queued_lines) >= 1:
             
             to_handle = self.queued_lines[0]
@@ -521,8 +521,7 @@ class Player(Actor):
                 self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
 
         if self.update_checker != None:
-            if self.factory.ticks_passed % 10 == 0:
-                self.update_checker.tick()
+            self.update_checker.tick()
 
         if self.send_buffer:
             try:
@@ -563,6 +562,11 @@ class Player(Actor):
         #    line = '@bredX '+line.replace('\n','\n@bredX ')
             
         if color:
+            original_line = line
+            if line in self.room.world.factory.cached_colored_lines:
+                line = self.room.world.factory.cached_colored_lines[line]
+                self.send_buffer.append(line.encode("utf-8"))
+                return
             # start = time.time()
 
             # this line is responsible for making the length of text 28 chars or smth
@@ -581,6 +585,7 @@ class Player(Actor):
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
             #self.protocol.transport.write(line.encode("utf-8"))
             self.send_buffer.append(line.encode("utf-8"))
+            self.room.world.factory.cached_colored_lines[original_line] = line
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
             #self.protocol.transport.write(line.encode("utf-8"))
