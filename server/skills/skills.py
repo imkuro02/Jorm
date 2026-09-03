@@ -61,7 +61,7 @@ class Skill:
 
         self.dont_finish_turn = dont_finish_turn
 
-        self.evaluation = self.evaluate()
+        self.evaluation = 0#self.evaluate()
 
         # if this is NOT False then the skill will fail regardless
         # the fail occurs in skills.manager.check_if_skill_can_be_used and will print out message

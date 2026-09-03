@@ -217,6 +217,8 @@ class AI:
             if skill_obj == None:
                 continue
             skill_obj = skill_obj(skill_id = i, user = self.actor)
+            skill_obj.evaluation = skill_obj.evaluate()
+            
             skill_obj.evaluation += random.randint(0,1)
 
             #systems.utils.debug_print(self.actor.name, skill_obj.id, skill_obj.evaluation)

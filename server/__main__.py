@@ -17,6 +17,7 @@ import context
 class ServerFactory(protocol.Factory):
     def __init__(self):
         context.FACTORY = self
+        self.time_spent_calculating = 0
         
         self.ticks_passed = 0
         self.delayed_functions = DelayedFunctionsManager(factory = self)
@@ -38,9 +39,13 @@ class ServerFactory(protocol.Factory):
 
         # where the actors will be stored for rank command
         self.ranks = {}   
-
         
     def tick(self):
+        
+        tick_start = time.time()
+
+
+
         self.ticks_passed += 1
         self.world.tick()
         #self.ecs_manager.tick()
@@ -57,7 +62,16 @@ class ServerFactory(protocol.Factory):
 
         self.runtime = time.time() - self.start
         # if self.runtime > self.ticks_passed/30:
-        # systems.utils.debug_print(self.ticks_passed, self.runtime, self.ticks_passed/30 , '\r')
+        #systems.utils.debug_print(self.ticks_passed, self.runtime, self.ticks_passed/30 , '\r')
+
+
+        tick_end = time.time()
+        
+        self.time_spent_calculating += tick_end-tick_start
+        if self.ticks_passed % TICKRATE == 0:
+            systems.utils.debug_print(f'Time thinking: {self.time_spent_calculating}')
+            self.time_spent_calculating = 0
+
 
     def buildProtocol(self, addr):
         return Protocol(self)

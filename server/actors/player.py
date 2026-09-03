@@ -842,7 +842,8 @@ class Player(Actor):
 
         script(line)
 
-        triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'after_{commands[best_match]} {line}')
+        if self.loaded:
+            triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'after_{commands[best_match]} {line}')
 
 
     def set_turn(self):

@@ -6,66 +6,14 @@ HOST = "localhost"
 PORT = 4001
 COMMANDS = [
 "guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest","guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest","guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest","guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest","guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
-"guest",
+
 "guest",
 "go _",
 "set gmcp on",
 "set godot on",
 "set map on",
-"set room off"
+"set room in"
+"set brief off"
 "shout set!"
 ]
 for i in range(0,1000):
@@ -73,6 +21,7 @@ for i in range(0,1000):
     COMMANDS.append('e')
     COMMANDS.append('s')
     COMMANDS.append('w')
+    COMMANDS.append('say sup')
     
 DELAY = 0.1  # seconds between each run
 
