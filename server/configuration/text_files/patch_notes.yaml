@@ -28,17 +28,19 @@ versions:
   #
   #
   #
+  #
+  "270826":
+    id: "270826"
+    title: Sound!
+    unixtime: 1775631568
   "270826":
     id: "270826"
     title: Patch
     unixtime: 1775631568
     features:
-      - Changed map drawing again
-      - Changed how exp and levels are displayed on character sheet
-      - Changed smite behaviour
-      - If a skill deals no damage, nothing is displayed
-      - Some lower level enemies added
-      - Level up exp requirement SLIGHTLY changed
+      - Added volume settings "set master 25" etc
+      - Added goblins and goblin market
+      - 
   "190826":
     id: "190826"
     title: Passives
