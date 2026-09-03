@@ -56,7 +56,10 @@ class ServerFactory(protocol.Factory):
                 if i.actor != None:
                     # self.db.write_actor(i.actor)
                     i.save_actor()
+            print('IM DOING RANKS')
             self.ranks = self.db.find_all_actors()
+            print('IM DONE DOING RANKS')
+
 
         self.delayed_functions.tick()
 
@@ -66,7 +69,7 @@ class ServerFactory(protocol.Factory):
 
 
         tick_end = time.time()
-        
+
         self.time_spent_calculating += tick_end-tick_start
         if self.ticks_passed % TICKRATE == 0:
             systems.utils.debug_print(f'Time thinking: {self.time_spent_calculating}')
