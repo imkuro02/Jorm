@@ -1219,6 +1219,7 @@ class Actor:
         # delete duplicate entires (for example skill thats cast on yourself)
         list_pretty_name_objects = list(set(list_pretty_name_objects))
 
+        
         for player in players:
             if player == self:
                 if line_self == None:
@@ -1226,22 +1227,24 @@ class Actor:
 
                 custom_line = line_self
                 for obj in list_pretty_name_objects:
-                    custom_line = custom_line.replace(str(obj.id), obj.pretty_name(player))
+                    custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
                 player.send_line(f"@normal{custom_line}", msg_type=msg_type)
 
-                if sound != None:
-                    player.sendSound(sound)
+                
             else:
                 if line_others == None:
                     continue
 
-                if sound != None:
-                    player.sendSound(sound)
+               
                 
                 custom_line = line_others
                 for obj in list_pretty_name_objects:
-                    custom_line = custom_line.replace(str(obj.id), obj.pretty_name(player))
+                    custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
                 player.send_line(f"@normal{custom_line}", msg_type=msg_type)
+
+
+            if sound != None:
+                player.sendSound(sound)
 
     def simple_broadcast(
         self, 

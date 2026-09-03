@@ -42,6 +42,8 @@ class CombatHistory:
 
 class Combat:
     def __init__(self, room, participants):
+        systems.utils.debug_print("combat started")
+
         REFTRACKER.add_ref(self)
         self.id = str(uuid.uuid4())
         room.combat = self
@@ -58,6 +60,7 @@ class Combat:
         self.participants = participants
         for p in participants.values():
             self.add_participant(p)
+            
         # reset threat
         for p in self.participants.values():
             #self.add_participant(p)

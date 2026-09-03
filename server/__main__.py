@@ -40,7 +40,7 @@ class ServerFactory(protocol.Factory):
         logging.info("Server started")
 
         # where the actors will be stored for rank command
-        self.ranks = {}   
+        self.ranks = self.db.find_all_actors()
         
     def tick(self):
         self.cached_colored_lines = {}
@@ -58,7 +58,7 @@ class ServerFactory(protocol.Factory):
                 if i.actor != None:
                     # self.db.write_actor(i.actor)
                     i.save_actor()
-            self.ranks = self.db.find_all_actors()
+            #self.ranks = self.db.find_all_actors()
 
 
         self.delayed_functions.tick()
