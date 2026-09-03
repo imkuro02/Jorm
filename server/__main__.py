@@ -69,8 +69,13 @@ class ServerFactory(protocol.Factory):
         tick_end = time.time()
 
         self.time_spent_calculating += tick_end-tick_start
+        
+        if tick_end-tick_start >= 1:
+            systems.utils.debug_print(f'Tick thinking: {tick_end-tick_start}')
+            systems.utils.debug_print(f'ticks_passed : {self.ticks_passed}')
         if self.ticks_passed % TICKRATE == 0:
-            systems.utils.debug_print(f'Time thinking: {self.time_spent_calculating}')
+            if self.time_spent_calculating >= 1:
+                systems.utils.debug_print(f'Time thinking: {self.time_spent_calculating}')
             self.time_spent_calculating = 0
 
 
