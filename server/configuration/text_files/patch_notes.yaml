@@ -40,7 +40,7 @@ versions:
     features:
       - Added volume settings "set master 25" etc
       - Added goblins and goblin market
-      - 
+      - Server side lag tracker (tracks LAG)
   "190826":
     id: "190826"
     title: Passives
