@@ -94,6 +94,23 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
 
     move_followers(self)
     add_explored_room(self)
+
+    '''    
+    delay = 0
+    if self.factory.delayed_functions.remove_delayed_functions_by_caller_and_tag(caller = self, tag = 'new_room_look') >= 1:
+        delay = 2
+
+    self.factory.delayed_functions.add_delayed_function(
+        caller = self, tag = 'new_room_look', delay = delay,
+        func=lambda: self.new_room_look(),
+    )
+
+    self.factory.delayed_functions.add_delayed_function(
+        caller = self, tag = 'new_room_look', delay = 1,
+        func=lambda: None,
+    )
+    '''
+        
     self.new_room_look()
 
     if (self.recall_site != RoomConstant.TAVERN and self.recall_site != RoomConstant.CROSSROAD) and self.room.id == RoomConstant.CROSSROAD:

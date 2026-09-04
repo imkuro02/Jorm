@@ -270,6 +270,8 @@ class World:
         for r in world["world"]:
             room = world["world"][r]
 
+            
+
             if r in self.rooms:
                 players = [
                     actor
@@ -374,6 +376,7 @@ class World:
         if self.factory.ticks_passed % TICKRATE * 60 * 5 == 0:
             self.unload_rooms()
             systems.utils.unload_fr()
+            
 
         rooms = []
         #for i in self.factory.protocols:
@@ -389,15 +392,13 @@ class World:
             rooms.append(self.rooms[i])
         
         for i in rooms:
-            #if len(i.actors) > 10:
-            #    if self.factory.ticks_passed % len(i.actors) == 0:
-            #        continue
-
-            ##if i.name.lower() == 'South-west corner'.lower():
-            #    systems.utils.debug_print(i.id)
-            #    for x in i.actors.values():
-            #        systems.utils.debug_print('>', x.name)
+            if self.factory.ticks_passed % TICKRATE == 0:
+                if hasattr(i, 'get_nearby_rooms_cache'):
+                    del i.get_nearby_rooms_cache
+           
             i.tick()
+
+        
 
 
 from actors import ai

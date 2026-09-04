@@ -518,36 +518,34 @@ def command_skills(self, line, return_gmcp = False):
         t.add_data("") #charges
         #t.add_data("Level")
 
-        for skill_id in SKILLS:
-            equips = []
-            for item in self.slots_manager.slots.values():
-                if item == None:
-                    continue
-                equips.append(self.inventory_manager.items[item])
+        equips = []
+        for item in self.slots_manager.slots.values():
+            if item == None:
+                continue
+            equips.append(self.inventory_manager.items[item])
+        for item in equips:
+            self.inventory_unequip(item, silent=True)
 
+        for skill_id in self.skill_manager.skills:
+            
+
+
+            # THIS IS FUCKING EXPENSIVE!!!!!!!
             cur_lvl = 0
-            if skill_id in self.skill_manager.skills:
-                cur_lvl = self.skill_manager.skills[skill_id]
+            cur_lvl = self.skill_manager.skills[skill_id]
 
-            for item in equips:
-                self.inventory_unequip(item, silent=True)
+            
 
             nat_lvl = 0
-            if skill_id in self.skill_manager.skills:
-                nat_lvl = self.skill_manager.skills[skill_id]
+            nat_lvl = self.skill_manager.skills[skill_id]
 
-            for item in equips:
-                self.inventory_equip(item, forced=True)
-
-            # if skill_id not in self.skill_manager.skills:
-            #    continue # skip unknown skills
-            # if self.skill_manager.skills[skill_id] <= 0:
-            #    continue
+            
 
             if nat_lvl == 0 and cur_lvl == 0:
                 continue
 
             diff = cur_lvl - nat_lvl
+            # --------------------------------------------------
 
             _skill_pretty_name = systems.utils.add_godot_url_skill_pretty_name(identifier = self, skill_id = skill_id)
             t.add_data(_skill_pretty_name)
@@ -583,8 +581,12 @@ def command_skills(self, line, return_gmcp = False):
             #t.add_data(f"{cur_lvl} {diff}")
         
         if return_gmcp:
+            for item in equips:
+                self.inventory_equip(item, forced=True)
             return t.get_table()
         else:
+            for item in equips:
+                self.inventory_equip(item, forced=True)
             self.send_line(t.get_table())
 
 

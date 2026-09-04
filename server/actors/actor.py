@@ -31,6 +31,9 @@ from configuration.config import LORE
 
 from skills.manager import construct_skill
 
+
+
+
 class ActorStatManager:
     def __init__(self, actor):
         self.actor = actor
@@ -59,7 +62,6 @@ class ActorStatManager:
     def is_max_level(self):
         return self.stats[StatType.LVL] >= 15
             
-
     def gain_stat_points(self, stat=StatType.GRIT, points=1):
         hp_bonus = 0
         pa_bonus = 0

@@ -186,5 +186,7 @@ def load_map():
     return nodes
 
 
+'''
 if __name__ == "__main__":
     systems.utils.debug_print(load_map())
+'''

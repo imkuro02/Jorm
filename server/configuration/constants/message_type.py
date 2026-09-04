@@ -7,4 +7,5 @@ class MessageType:
     ALL = "all"
     DEBUG = "debug"
     GOSSIP = "gossip"
+    MOVEMENT = 'movement'
     #SPAM = 'spam'

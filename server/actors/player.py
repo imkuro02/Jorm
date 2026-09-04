@@ -371,6 +371,7 @@ class Player(Actor):
         self.queued_lines = []
         self.msg_history = {}
         self.send_buffer = []
+        self.last_line_handled = 0
         self.recently_send_message_count = 0
         self.instanced_rooms = []
         self.collect_lost_exp_rooms = {}
@@ -520,11 +521,19 @@ class Player(Actor):
             if self.protocol != None:
                 self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
 
+        #if self.room.world.factory.ticks_passed % TICKRATE == 0:
         if self.update_checker != None:
             self.update_checker.tick()
 
+        
+
         if self.send_buffer:
+            #if self.last_line_handled <= self.room.world.factory.ticks_passed - 2:
+            #    self.last_line_handled = self.room.world.factory.ticks_passed 
+            #else:
+            #    return
             try:
+                self.buffered_spam = 0
                 self.protocol.transport.write(b"".join(self.send_buffer))
                 self.send_buffer.clear()
             except AttributeError:
@@ -537,6 +546,9 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
+        
+        
+
         #if not self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
         #    return
         # if self.last_line_received == line:
@@ -815,7 +827,7 @@ class Player(Actor):
             )
 
             best_match, best_score = systems.utils.match_word(
-                command, sorted_dict.keys(), get_score=True
+                command, list(sorted_dict.keys()), get_score=True
             )
 
             self.best_cache[command] = [best_match, best_score]

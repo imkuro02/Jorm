@@ -67,7 +67,7 @@ class Party:
 
         if participant.room.is_an_instance():
             if participant.recall_site not in participant.protocol.factory.world.rooms:
-                sparticipant.recall_site = "tutorial"
+                participant.recall_site = "tutorial"
             participant.protocol.factory.world.rooms[
                 participant.recall_site
             ].move_actor(participant)

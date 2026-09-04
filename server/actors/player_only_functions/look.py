@@ -8,15 +8,14 @@ from configuration.constants.color import Color
 random = random.Random()
 
 from collections import deque
-def command_map(self, line, return_gmcp = False):
-    #self.send_line(str(self.get_nearby_rooms(view_range=8)))
-    #return ''
-    
-    
-    #self.send_line(str(self.get_nearby_rooms(view_range=2)))
-    #return ''
-    
+#from systems.utils import show_caller
+#@show_caller
+from collections import deque
 
+
+
+CLEANGRID = None
+def command_map(self, line, return_gmcp = False):
     setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
     if self.room == None:
         return
@@ -46,10 +45,15 @@ def command_map(self, line, return_gmcp = False):
     rooms = self.room.world.rooms
     start_room = self.room
    
-    grid = [[" " for _ in range(GRID_SIZE_X)] for _ in range(GRID_SIZE_Y)]
-    #self.send_line(str(coords))
-    #self.send_line(str(self.get_nearby_rooms(view_range=8)))
+    global CLEANGRID
 
+    if CLEANGRID is None:
+        CLEANGRID = [
+            [" " for _ in range(GRID_SIZE_X)]
+            for _ in range(GRID_SIZE_Y)
+        ]
+        
+    grid = [row.copy() for row in CLEANGRID]
     for room in coords:
         x, y, z = coords[room]
         gx = (x*2) + GRID_CENTER_X
@@ -63,20 +67,127 @@ def command_map(self, line, return_gmcp = False):
                 if _exit.direction == 'down' and not _exit.secret:
                     has_down = True
 
-            
-
-
             color = '@bblack'
-
-            #if setting_render_walls:
             _color, _texture, _priority = room.get_wall_data()
             color = _color
             cell = _texture
-            #cell = wall
 
-            
+            if cell == ' ':
+                cell = '.'
+                color = '@bblack'
 
+            if room.is_player_present():
+                color = "@cyan" 
+
+            if (x, y, z) == (0, 0, 0):
+                color = '@bgcyan'
             
+            
+            if has_up:
+                cell = '<'
+            if has_down:
+                cell = '>'
+            if has_down and has_up:
+                cell = 'X'
+
+            if room.get_real_id() not in self.explored_rooms and self.room != room:
+                color = '@bblack'
+                cell = '?'
+
+            grid[gy][gx] = color + cell + Color.NORMAL       
+            
+            for _exit in room.exits:
+
+                if _exit.direction in offsets:
+                    _offset_gx = offsets[_exit.direction][0]
+                    _offset_gy = offsets[_exit.direction][1]
+                    _gx = _offset_gx + gx
+                    _gy = _offset_gy + gy
+                    if not _exit.is_active(self):
+                        continue
+                    if _exit.secret:
+                        continue
+                    if 0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y:
+                        if _offset_gx != 0:
+                            grid[_gy][_gx] = "@bblack-"
+                        else:
+                            grid[_gy][_gx] = "@bblack|"
+    #'''
+    _map = "\n".join("".join(row) for row in grid)
+    
+    col = '@bblack'
+    tex = '#'
+
+    top_border = f'{Color.NORMAL}<MAP START>'
+    bot_border = f'\n{Color.NORMAL}<MAP END>'
+    _map = top_border + '\n' + _map + bot_border
+    _map = _map + '@normal'
+
+    if return_gmcp:
+        return str(_map)
+    else:
+        self.send_line(str(_map))
+
+
+def command_mapaaa(self, line, return_gmcp = False):
+    setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
+    if self.room == None:
+        return
+    room_id = self.room.id
+    
+    offsets = {
+        "north":    (0, -1, 0),
+        "west":     (-1, 0, 0),
+        "south":    (0, 1, 0),
+        "east":     (1, 0, 0),
+    }
+    
+    
+    #GRID_SIZE = 15*1
+    GRID_SIZE_X = 11*3
+    GRID_SIZE_Y = 5*3
+    GRID_CENTER_X = GRID_SIZE_X // 2
+    GRID_CENTER_Y = GRID_SIZE_Y // 2
+
+    DEPTH = 8#GRID_SIZE_X // 1
+
+    coords = {}
+    _coords = self.get_nearby_rooms(view_range = DEPTH, ignore_z_change = True)
+    for c in _coords:
+        coords[self.room.world.rooms[_coords[c]]] = c
+
+    rooms = self.room.world.rooms
+    start_room = self.room
+   
+    width = int(GRID_SIZE_X/3)
+
+    #grid = [" " for _ in range(GRID_SIZE_X * GRID_SIZE_Y)]
+    global CLEANGRID
+
+    if CLEANGRID is None:
+        CLEANGRID = [" " for _ in range(GRID_SIZE_X * GRID_SIZE_Y)]
+        print(CLEANGRID)
+    grid = CLEANGRID.copy()
+
+    #self.send_line(str(coords))
+    #self.send_line(str(self.get_nearby_rooms(view_range=8)))
+    for room in coords:
+        x, y, z = coords[room]
+        gx = (x*2) + GRID_CENTER_X
+        gy = (y*2) + GRID_CENTER_Y
+        if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
+            has_up = False
+            has_down = False
+            for _exit in room.exits:
+                if _exit.direction == 'up' and not _exit.secret:
+                    has_up = True
+                if _exit.direction == 'down' and not _exit.secret:
+                    has_down = True
+
+            color = '@bblack'
+            _color, _texture, _priority = room.get_wall_data()
+            color = _color
+            cell = _texture
 
             if cell == ' ':
                 cell = '.'
@@ -101,30 +212,9 @@ def command_map(self, line, return_gmcp = False):
                 cell = '?'
 
 
-            grid[gy][gx] = color + cell + Color.NORMAL
-
-            '''
-            if setting_render_walls:
-                color, texture, priority = room.get_wall_data()
-                wall = f'{color}{texture}'
-
-                grid[gy-1][gx-1] = wall
-                grid[gy+1][gx+1] = wall
-
-                grid[gy-1][gx+1] = wall
-                grid[gy+1][gx-1] = wall
-
-
-                grid[gy][gx+1] = wall
-                grid[gy][gx-1] = wall
-
-                grid[gy+1][gx] = wall
-                grid[gy-1][gx] = wall
-            '''
-                
+            grid[gy * GRID_SIZE_X + gx] = color + cell + Color.NORMAL       
             
             for _exit in room.exits:
-
                 if _exit.direction in offsets:
                     _offset_gx = offsets[_exit.direction][0]
                     _offset_gy = offsets[_exit.direction][1]
@@ -136,95 +226,27 @@ def command_map(self, line, return_gmcp = False):
                         continue
                     if 0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y:
                         if _offset_gx != 0:
-                            grid[_gy][_gx] = "@bblack-"
+                            grid[_gy * GRID_SIZE_X + _gx] = "@bblack-"
                         else:
-                            grid[_gy][_gx] = "@bblack|"
-
-    '''
-    for room in coords:
-        x, y, z, d= coords[room]
-        gx = (x*3) + GRID_CENTER_X
-        gy = (y*3) + GRID_CENTER_Y
-        if 0 <= gx < GRID_SIZE_X and 0 <= gy < GRID_SIZE_Y:
-            color, texture, priority = room.get_wall_data()
-
-            _gx = gx + 1
-            _gy = gy + 0
-            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                if grid[_gy][_gx] == " ":
-                    grid[_gy][_gx] = f"{color}{texture}"
-                    grid[_gy-1][_gx] = f"{color}{texture}"
-                    grid[_gy+1][_gx] = f"{color}{texture}"
-            
-            _gx = gx + 0
-            _gy = gy + 1
-            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                if grid[_gy][_gx] == " ":
-                    grid[_gy][_gx] = f"{color}{texture}"
-                    grid[_gy][_gx-1] = f"{color}{texture}"
-                    grid[_gy][_gx+1] = f"{color}{texture}"
-
-            _gx = gx - 1
-            _gy = gy - 0
-            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                if grid[_gy][_gx] == " ":
-                    grid[_gy][_gx] = f"{color}{texture}"
-                    grid[_gy-1][_gx] = f"{color}{texture}"
-                    grid[_gy+1][_gx] = f"{color}{texture}"
-                
-            _gx = gx - 0
-            _gy = gy - 1
-            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                if grid[_gy][_gx] == " ":
-                    grid[_gy][_gx] = f"{color}{texture}"
-                    grid[_gy][_gx-1] = f"{color}{texture}"
-                    grid[_gy][_gx+1] = f"{color}{texture}"
-
-            _gx = gx - 3
-            _gy = gy - 3
-            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                if grid[_gy][_gx] == " ":
-                    grid[_gy+2][_gx+2] = f"{color}{texture}"
+                            grid[_gy * GRID_SIZE_X + _gx] = "@bblack|"
 
 
-            _gx = gx - 3
-            _gy = gy + 3
-            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                if grid[_gy][_gx] == " ":
-                    grid[_gy-2][_gx+2] = f"{color}{texture}"
+    #from systems.utils import remove_color
+    #_map = "\n".join("".join(row) for row in grid)
+    #_map = remove_color(str(grid))
+    #self.send_line(_map)
 
+    grid = [
+        x
+        for i, x in enumerate(grid, 1)
+        for x in ((x, f"{x}\n") if i % 33 == 0 else (x,))
+    ]
 
-            _gx = gx + 3
-            _gy = gy + 3
-            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                if grid[_gy][_gx] == " ":
-                    grid[_gy-2][_gx-2] = f"{color}{texture}"
+    _map = ''.join(grid)
 
-
-            _gx = gx + 3
-            _gy = gy - 3
-            if (0 <= _gx < GRID_SIZE_X and 0 <= _gy < GRID_SIZE_Y):
-                if grid[_gy][_gx] == " ":
-                    grid[_gy+2][_gx-2] = f"{color}{texture}"
-    '''
-    
-    """
-    _map = ''
-    for y in grid:
-        for x in y:
-            _map += ''.join(x)
-        _map += '\n'
-    """
-    _map = "\n".join("".join(row) for row in grid)
-    
     col = '@bblack'
     tex = '#'
 
-
-    #top_border = f'{col}{tex*(GRID_SIZE_X+2)}'
-    #bot_border = f'{col}{tex*(GRID_SIZE_X+2)}'
-
-    #top_border = f'{Color.NORMAL}<MAP START> {start_room.pretty_name()}'
     top_border = f'{Color.NORMAL}<MAP START>'
     bot_border = f'\n{Color.NORMAL}<MAP END>'
     _map = top_border + '\n' + _map + bot_border
@@ -796,7 +818,6 @@ def command_look(self, line, return_gmcp=False, short = False):
 
         '''
         # see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
-        
         for i in room.actors.values():
             if i == self:
                 pass
@@ -937,6 +958,9 @@ def get_nearby_rooms(
     ignore_if_item_required=False,
     ignore_z_change=False,
 ):
+    if hasattr(self.room, 'get_nearby_rooms_cache'):
+        return self.room.get_nearby_rooms_cache
+    
     offsets = {
         "north":    (0, -1, 0),
         "west":     (-1, 0, 0),
@@ -1004,6 +1028,7 @@ def get_nearby_rooms(
                 depth + 1
             ))
 
+    self.room.get_nearby_rooms_cache = found
     return found
 '''
 def get_nearby_rooms2(self, view_range=1, 

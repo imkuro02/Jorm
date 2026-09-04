@@ -49,7 +49,6 @@ def command_equipment(self, line):
     """
     self.send_line(output)
 
-
 def inventory_equip(self, item, forced=False):
     if item.slot != None:
         req_not_met = False

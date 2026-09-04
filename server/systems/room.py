@@ -469,10 +469,10 @@ class Room:
                 npcs_here = True
 
         if players_here and npcs_here:
-            self.combat = combat_manager_class(self, participants)
+            self.combat = self.combat_manager_class(self, participants)
 
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
-
+        silent = False
         actor.room_previous = actor.room.get_real_id()
         self.remove_actor(actor)
 
@@ -482,7 +482,8 @@ class Room:
                 f"{actor.id} leaves",
                 send_to="room_different_actor_to_follow",
                 sound=Audio.walk(),
-                list_pretty_name_objects = [actor]
+                list_pretty_name_objects = [actor],
+                msg_type = MessageType.MOVEMENT
             )
 
         actor.room = self
@@ -531,7 +532,8 @@ class Room:
                 f"{actor.id} arrives",
                 send_to="room_different_actor_to_follow",
                 sound=Audio.walk(),
-                list_pretty_name_objects = [actor]
+                list_pretty_name_objects = [actor],
+                msg_type = MessageType.MOVEMENT
             )
 
     """

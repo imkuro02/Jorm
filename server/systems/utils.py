@@ -14,6 +14,25 @@ from configuration.constants.stat_type import StatType
 from fuzzywuzzy import process
 
 
+import inspect
+from functools import wraps
+CALLED = 0
+# this is a super cool decorator, just put it over a func and see what calls it
+def show_caller(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        global CALLED
+        CALLED += 1
+        print(CALLED)
+        caller = inspect.currentframe().f_back
+        print(f"{func.__name__} was called by {caller.f_code.co_name}")
+        return func(*args, **kwargs)
+    return wrapper
+'''
+from systems.utils import show_caller
+@show_caller
+'''
+
 def debug_print(*args, **kwargs):
     stack = traceback.extract_stack()
     filename, lineno, func, _ = stack[-2]
@@ -934,12 +953,12 @@ for i in range(0,101):
 
 if __name__ == "__main__":
     line = "@reda@backb@redhello@greenchat@backwhatsup"
-    systems.utils.debug_print(add_color(line))
+    debug_print(add_color(line))
 
     input_string = "This this is a test @redtest\n of the line breaking @greenwith\n color and @back new ttt lines wo. This is a test @redtest of the line breaking @greenwith color and @back new lines. This is a test @redtest of"
     formatted_string = add_color(add_line_breaks(input_string))
 
-    systems.utils.debug_print(formatted_string)
+    debug_print(formatted_string)
     strings = formatted_string.split("\n")
     for s in strings:
-        systems.utils.debug_print(len(s))
+        debug_print(len(s))
