@@ -548,7 +548,8 @@ class Player(Actor):
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
         
         
-
+        #if len(self.send_buffer) >= 3 and msg_type == MessageType.MOVEMENT:
+        #    return
         #if not self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
         #    return
         # if self.last_line_received == line:

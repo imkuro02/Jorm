@@ -10,7 +10,7 @@ COMMANDS = [
 "guest",
 "go _",
 "set gmcp on",
-"set godot on",
+"set godot off",
 "set map on",
 "set room on"
 "set brief off"
