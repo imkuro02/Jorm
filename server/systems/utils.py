@@ -604,7 +604,7 @@ def add_godot_url_items(object, identifier, output):
             return output
     return output
     '''
-
+'''
 def add_godot_url_actors(object, identifier, output):
     if identifier != None:
         if identifier.protocol.enabled_godot:
@@ -623,6 +623,32 @@ def add_godot_url_actors(object, identifier, output):
             #print(output)
             return output
     return output
+'''
+
+def add_godot_url_actors(obj, identifier, output):
+    if identifier is None or not identifier.protocol.enabled_godot:
+        return output
+
+    name = obj.name
+    obj_id = obj.id
+
+    parts = [
+        f"Target {name}->target {obj_id}",
+        f"Look {name}->look {obj_id}",
+    ]
+
+    if obj.dialog_tree is not None:
+        parts.append(f"Talk {name}->talk {obj_id}")
+
+    if type(obj).__name__ == "Player":
+        parts.append(f"Party-Invite {name}->party invite {obj_id}")
+
+    for trigger in obj.trigger_manager.triggers:
+        if not trigger.startswith("command_"):
+            parts.append(f"{trigger.capitalize()} {name}->{trigger} {obj_id}")
+
+    return f"[url]{','.join(parts)},[/url]" if parts else output
+
 
 def add_godot_url_actor_yourself(object, identifier, output):
     if identifier != None:
