@@ -392,9 +392,8 @@ class World:
             rooms.append(self.rooms[i])
         
         for i in rooms:
-            if self.factory.ticks_passed % TICKRATE == 0:
-                if hasattr(i, 'get_nearby_rooms_cache'):
-                    del i.get_nearby_rooms_cache
+            if self.factory.ticks_passed % TICKRATE * 60 == 0:
+                i.cached_get_nearby_rooms = {}
            
             i.tick()
 

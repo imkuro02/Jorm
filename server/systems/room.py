@@ -299,6 +299,7 @@ class Room:
             self.spawner = Spawner(self)  # spawner
 
 
+        self.cached_get_nearby_rooms = {}
 
         REFTRACKER.add_ref(self)
 

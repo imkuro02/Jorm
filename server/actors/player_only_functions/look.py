@@ -12,10 +12,30 @@ from collections import deque
 #@show_caller
 from collections import deque
 
+import time
 
 
+import json
+import hashlib
+
+def dict_checksum(data: dict) -> str:
+    serialized = json.dumps(
+        data,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+    return hashlib.sha256(serialized).hexdigest()
+
+#data = {"b": 2, "a": 1}
+#print(dict_checksum(data))
+
+
+# -0.00010395050048828125
 CLEANGRID = None
-def command_map(self, line, return_gmcp = False):
+def command_mapaaa(self, line, return_gmcp = False):
+    t_start = time.time()
+
     setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
     if self.room == None:
         return
@@ -123,13 +143,17 @@ def command_map(self, line, return_gmcp = False):
     _map = top_border + '\n' + _map + bot_border
     _map = _map + '@normal'
 
+    
+    print(t_start - time.time())
     if return_gmcp:
         return str(_map)
     else:
         self.send_line(str(_map))
 
 
-def command_mapaaa(self, line, return_gmcp = False):
+def command_map(self, line, return_gmcp = False):
+    t_start = time.time()
+
     setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
     if self.room == None:
         return
@@ -166,11 +190,12 @@ def command_mapaaa(self, line, return_gmcp = False):
 
     if CLEANGRID is None:
         CLEANGRID = [" " for _ in range(GRID_SIZE_X * GRID_SIZE_Y)]
-        print(CLEANGRID)
     grid = CLEANGRID.copy()
 
-    #self.send_line(str(coords))
-    #self.send_line(str(self.get_nearby_rooms(view_range=8)))
+    
+    
+    
+        
     for room in coords:
         x, y, z = coords[room]
         gx = (x*2) + GRID_CENTER_X
@@ -231,16 +256,25 @@ def command_mapaaa(self, line, return_gmcp = False):
                             grid[_gy * GRID_SIZE_X + _gx] = "@bblack|"
 
 
-    #from systems.utils import remove_color
-    #_map = "\n".join("".join(row) for row in grid)
-    #_map = remove_color(str(grid))
-    #self.send_line(_map)
+    _locals = grid
+    _checksum = dict_checksum(_locals)
+    if _checksum in self.room.cached_get_nearby_rooms:
+        _map = self.room.cached_get_nearby_rooms[_checksum]
+        if return_gmcp:
+            return str(_map)
+        else:
+            self.send_line(str(_map))
+            return
+
+    
 
     grid = [
         x
         for i, x in enumerate(grid, 1)
         for x in ((x, f"{x}\n") if i % 33 == 0 else (x,))
     ]
+
+    
 
     _map = ''.join(grid)
 
@@ -958,8 +992,11 @@ def get_nearby_rooms(
     ignore_if_item_required=False,
     ignore_z_change=False,
 ):
-    if hasattr(self.room, 'get_nearby_rooms_cache'):
-        return self.room.get_nearby_rooms_cache
+
+    _locals = {k: v for k, v in locals().items() if k != 'self'}
+    _checksum = dict_checksum(_locals)
+    if _checksum in self.room.cached_get_nearby_rooms:
+        return self.room.cached_get_nearby_rooms[_checksum]
     
     offsets = {
         "north":    (0, -1, 0),
@@ -1028,7 +1065,7 @@ def get_nearby_rooms(
                 depth + 1
             ))
 
-    self.room.get_nearby_rooms_cache = found
+    self.room.cached_get_nearby_rooms[_checksum] = found
     return found
 '''
 def get_nearby_rooms2(self, view_range=1, 
