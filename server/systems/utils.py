@@ -170,7 +170,7 @@ def unload_fr():
 
     REFTRACKER.refs[:] = [r for r in REFTRACKER.refs if r() is not None]
     #print(tmp)
-    debug_print(f'to unload: {TOUNLOAD}')
+    debug_print(f'to unload: {len(TOUNLOAD)}')
 
     
 
