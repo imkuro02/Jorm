@@ -17,7 +17,7 @@ COMMANDS = [
 "shout set!"
 ]
 for i in range(0,1000):
-    COMMANDS.append('i')
+    COMMANDS.append('l')
 
     
 DELAY = 0.1  # seconds between each run

@@ -647,7 +647,7 @@ def add_godot_url_actors(obj, identifier, output):
         if not trigger.startswith("command_"):
             parts.append(f"{trigger.capitalize()} {name}->{trigger} {obj_id}")
 
-    return f"[url]{','.join(parts)},[/url]" if parts else output
+    return f"[url={','.join(parts)}]{name},[/url]" if parts else output
 
 
 def add_godot_url_actor_yourself(object, identifier, output):
