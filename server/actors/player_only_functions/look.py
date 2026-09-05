@@ -255,7 +255,7 @@ def command_map(self, line, return_gmcp = False):
                         else:
                             grid[_gy * GRID_SIZE_X + _gx] = "@bblack|"
 
-
+    '''
     _locals = grid
     _checksum = dict_checksum(_locals)
     if _checksum in self.room.cached_get_nearby_rooms:
@@ -265,7 +265,7 @@ def command_map(self, line, return_gmcp = False):
         else:
             self.send_line(str(_map))
             return
-
+    '''
     
 
     grid = [
