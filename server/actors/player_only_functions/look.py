@@ -34,7 +34,6 @@ def dict_checksum(data: dict) -> str:
 # -0.00010395050048828125
 CLEANGRID = None
 def command_map(self, line, return_gmcp = False):
-    t_start = time.time()
 
     setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
     if self.room == None:
@@ -144,7 +143,6 @@ def command_map(self, line, return_gmcp = False):
     _map = _map + '@normal'
 
     
-    print(t_start - time.time())
     if return_gmcp:
         return str(_map)
     else:
