@@ -787,19 +787,20 @@ def command_look(self, line, return_gmcp=False, short = False):
     def look_room(self, room_id, short = False):
         room = self.factory.world.rooms[room_id]
 
+        see = []
         if room_id == self.room.id:
-            see = f"{self.pretty_name(identifier = self)} are in {room.pretty_name()}\n"
+            see.append(f"{self.pretty_name(identifier = self)} are in {room.pretty_name()}")
         else:
-            see = f"{self.pretty_name(identifier = self)} look at {room.pretty_name(identifier = self)}\n"
+            see.append(f"{self.pretty_name(identifier = self)} look at {room.pretty_name(identifier = self)}")
         # see += draw_local_area(self, room_id)
         
-        see = see + f"{Color.DESCRIPTION}{room.get_description(short = short)}{Color.NORMAL}"
+        see.append(f"{Color.DESCRIPTION}{room.get_description(short = short)}{Color.NORMAL}")
 
         exits = self.protocol.factory.world.rooms[room.id].get_active_exits(self)
 
         exit_count = 0
 
-        see_exits = ""
+        see_exits = []
         for _exit in exits:
             if _exit.secret:
                 continue
@@ -809,57 +810,29 @@ def command_look(self, line, return_gmcp=False, short = False):
             _exit_blocked = _exit.blocked and self.room.is_enemy_present()
             _exit_item_required = _exit.item_required
 
-            see_exits += f'{_exit_dir}, '
+            see_exits.append(f'{_exit_dir}, ')
 
 
 
             exit_count += 1
+        
 
         if exit_count == 0:
-            see = see + 'EXITS: You do not see a way out'
+            see.append('EXITS: You do not see a way out')
         else:
-            see_exits = see_exits[:-2]
-            see = see + "EXITS: [" + see_exits +']'
-        see += '\n'
+            #see_exits = see_exits[:-2]
+            see.append("EXITS: [" + ''.join(see_exits)[:-2] +']')
 
-        '''
-        # blocked_exits = self.protocol.factory.world.rooms[room.id].blocked_exits
-        exit_count = 0
-        see_exits = ""
-        for _exit in exits:
-            # if exit_name not in blocked_exits:
-            if _exit.secret:
-                continue
-            # if _exit.blocked and self.room.is_enemy_present():
-            #    continue
-            see_exits = see_exits + f"You can go {_exit.pretty_direction()}"
-            if _exit.is_one_way_exit():
-                see_exits = see_exits + '. You cannot return'
-            see_exits = see_exits + '\n'
-            exit_count += 1
-            # else:
-            #    see = see + f'@red{exit_name}@normal, '
-
-        see_exits = "\n".join(sorted(see_exits.split("\n"))) + "\n"
-        see_exits = see_exits[1::]
-        if exit_count == 0:
-            see = see + "You don't see any exits\n"
-        else:
-            see = see + "" + see_exits
-            # see = see + '\n'
-
-        '''
-        # see = see + f'You can go: @yellow{"@normal, @yellow".join([name for name in exits])}@normal.'
         for i in room.actors.values():
             if i == self:
                 pass
             else:
-                see = see + "" + i.pretty_name(identifier = self) + " is here"
+                _ = "" + i.pretty_name(identifier = self) + " is here"
                 if i.status == ActorStatusType.DEAD:
-                    see = see + f" and is dead"
+                    _ = _ + f" and is dead"
                 if i.status == ActorStatusType.FIGHTING:
-                    see = see + f" and is fighting"
-                see = see + "\n"
+                    _ = _ + f" and is fighting"
+                see.append(_)
 
         # XD icons
         if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
@@ -896,28 +869,20 @@ def command_look(self, line, return_gmcp=False, short = False):
                         except Exception as e:
                             t.add_data("XD")
 
-                see = see + "\n" + t.get_table() + '\n'
+                see.append(t.get_table())
 
         if not room.inventory_manager.is_empty():
-            see_items = ""
+            see_items = []
             for i in room.inventory_manager.items.values():
-                # see = see + f'{i.pretty_name()} @cyan{i.description}@back' + '\n'
                 if i.invisible:
                     continue
 
-                #if i.can_pick_up:
-                see_items = see_items + f"{i.pretty_name(identifier = self)} is here" + "\n"
+                see_items.append(f"{i.pretty_name(identifier = self)} is here")
 
-                # see_items = see_items + f'   {i.pretty_name()}' + '\n'
-                #if i.can_pick_up:
-                #    see_items = see_items + f"{i.pretty_name()} is here" + "\n"
-                # else:
-                #    see_items = see_items + f'   {i.description}' + '\n'
+            if see_items != []:
+                see.append('\n'.join(see_items))
 
-            if see_items != "":
-                see = see + "" + see_items
-
-        see = see[:-1] if see.endswith("\n") else see
+        see = '\n'.join(see)
         if not return_gmcp:
             self.send_line(see)
         else:

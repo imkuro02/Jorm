@@ -657,7 +657,8 @@ class Actor:
         return True  # return true if no errors
 
     def pretty_name(self, identifier = None, text_override = None):
-        output = ""
+
+        output = ''
         name = self.name if identifier != self else 'You'
 
         # if text_override is not empty, replace the name with whatever the text says

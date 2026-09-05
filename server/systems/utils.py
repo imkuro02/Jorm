@@ -397,7 +397,6 @@ def match_word_get_list(word: str, l: list):
     best_matches = [match for match in matches]
     return best_matches
 
-
 def remove_color(line):
     for color_code in colors:
         line = line.replace(color_code, "")
@@ -863,6 +862,7 @@ def chunkate(input_string, max_width=800*3):
 
 
 def add_line_breaks(input_string, max_width=10000):
+    return input_string + '\n'
     output = ""
     lines = input_string.split("\n")
     for l in lines:

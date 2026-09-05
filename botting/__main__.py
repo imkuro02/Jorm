@@ -1,14 +1,14 @@
 import telnetlib3 as telnetlib
 import time
 import random
-HOST = "jorm.kurowski.xyz"
-#HOST = "localhost"
+#HOST = "jorm.kurowski.xyz"
+HOST = "localhost"
 PORT = 4001
 COMMANDS = [
 "guest",
 
 "guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest",
-"go _",
+#"go _",
 "set gmcp on",
 "set godot off",
 "set map on",
@@ -21,6 +21,7 @@ for i in range(0,1000):
     COMMANDS.append('e')
     COMMANDS.append('s')
     COMMANDS.append('w')
+    COMMANDS.append('l')
     #COMMANDS.append('l')
     
 DELAY = 0.1  # seconds between each run
