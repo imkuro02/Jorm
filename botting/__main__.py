@@ -1,14 +1,14 @@
 import telnetlib3 as telnetlib
 import time
 import random
-#HOST = "jorm.kurowski.xyz"
-HOST = "localhost"
+HOST = "jorm.kurowski.xyz"
+#HOST = "localhost"
 PORT = 4001
 COMMANDS = [
 "guest",
 
 "guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest",
-#"go _",
+"go _",
 "set gmcp on",
 "set godot off",
 "set map on",
@@ -17,10 +17,10 @@ COMMANDS = [
 "shout set!"
 ]
 for i in range(0,1000):
-    COMMANDS.append('n')
-    COMMANDS.append('e')
-    COMMANDS.append('s')
-    COMMANDS.append('w')
+    #COMMANDS.append('n')
+    #COMMANDS.append('e')
+    #COMMANDS.append('s')
+    #COMMANDS.append('w')
     COMMANDS.append('l')
     #COMMANDS.append('l')
     
@@ -35,7 +35,7 @@ def send_telnet_command():
             time.sleep(5)
     except Exception as e:
         print(f"Error: {e}")
-
+3
 if __name__ == "__main__":
     while True:
         send_telnet_command()
