@@ -33,7 +33,7 @@ def dict_checksum(data: dict) -> str:
 
 # -0.00010395050048828125
 CLEANGRID = None
-def command_mapaaa(self, line, return_gmcp = False):
+def command_map(self, line, return_gmcp = False):
     t_start = time.time()
 
     setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
@@ -151,7 +151,7 @@ def command_mapaaa(self, line, return_gmcp = False):
         self.send_line(str(_map))
 
 
-def command_map(self, line, return_gmcp = False):
+def command_mapaaa(self, line, return_gmcp = False):
     t_start = time.time()
 
     setting_render_walls = self.settings_manager.get_value(SETTINGS.VIEW_MAP_WALLS)
