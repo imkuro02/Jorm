@@ -111,6 +111,7 @@ def unload(obj_to_unload):
 
 
 def unload_fr():
+    print('unloading fr')
     silent = True
     global TOUNLOAD  # <-- This is important
 
