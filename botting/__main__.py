@@ -8,7 +8,7 @@ COMMANDS = [
 "guest",
 
 "guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest",
-#"go _",
+"go _",
 "set gmcp on",
 "set godot off",
 "set map on",
@@ -17,11 +17,11 @@ COMMANDS = [
 "shout set!"
 ]
 for i in range(0,1000):
-    #COMMANDS.append('n')
-    #COMMANDS.append('e')
-    #COMMANDS.append('s')
-    #COMMANDS.append('w')
-    COMMANDS.append('l')
+    COMMANDS.append('n')
+    COMMANDS.append('e')
+    COMMANDS.append('s')
+    COMMANDS.append('w')
+    #COMMANDS.append('l')
     
 DELAY = 0.1  # seconds between each run
 
