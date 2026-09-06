@@ -11,7 +11,9 @@ import traceback
 import weakref
 
 from configuration.constants.stat_type import StatType
-from fuzzywuzzy import process
+#from fuzzywuzzy import process
+from rapidfuzz import fuzz, process
+
 
 
 import inspect

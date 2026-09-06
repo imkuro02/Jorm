@@ -823,7 +823,9 @@ def command_look(self, line, return_gmcp=False, short = False):
             #see_exits = see_exits[:-2]
             see.append("EXITS: [" + ''.join(see_exits)[:-2] +']')
 
+
         for i in room.actors.values():
+
             if i == self:
                 pass
             else:
@@ -833,6 +835,7 @@ def command_look(self, line, return_gmcp=False, short = False):
                 if i.status == ActorStatusType.FIGHTING:
                     _ = _ + f" and is fighting"
                 see.append(_)
+
 
         # XD icons
         if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
@@ -902,6 +905,10 @@ def command_look(self, line, return_gmcp=False, short = False):
     if self.room == None:
         return
 
+    if line == "":
+        see = look_room(self, self.room.id, short = short)
+        return see
+
     list_of_actors = [actor.name for actor in self.room.actors.values()]
     list_of_directions = []  # [_exit.direction for _exit in self.room.exits.values()]
     # list_of_items =        [item.name for item in self.inventory_manager.items.values()] + [item.name for item in self.room.inventory_manager.items.values()]
@@ -912,9 +919,7 @@ def command_look(self, line, return_gmcp=False, short = False):
     # print(line,look_at,whole_list)
     # self.send_line(look_at)
 
-    if line == "":
-        see = look_room(self, self.room.id, short = short)
-        return see
+    
     
     # this is here for "look [id of entity]"
     #if look_at not in list_of_actors and look_at not in list_of_items:
@@ -1158,6 +1163,5 @@ def new_room_look(self):
         self.command_look("", short = self.settings_manager.get_value(SETTINGS.SHORT_ROOM_DESCRIPTIONS))
     if self.settings_manager.get_value(SETTINGS.VIEW_MAP):
         self.command_map("")
-        self.update_checker.map_tick()
     if self.protocol.enabled_gmcp:
         self.update_checker.map_tick()
