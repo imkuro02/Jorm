@@ -841,16 +841,15 @@ class Player(Actor):
             "Command found: " + str(commands[best_match]), msg_type=[MessageType.DEBUG]
         )
 
-        triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'{commands[best_match]} {line}')
-        if triggered:
-            return
+        #triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'{commands[best_match]} {line}')
+        #if triggered:
+        #    return
 
         script(line)
 
-        if self.loaded:
-            triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'after_{commands[best_match]} {line}')
+        #if self.loaded:
+        #    triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'after_{commands[best_match]} {line}')
 
-        del self.best_cache
     def set_turn(self):
         super().set_turn()
         # self.send_line(self.prompt(self))
