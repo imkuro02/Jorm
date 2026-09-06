@@ -409,6 +409,9 @@ class Player(Actor):
         self.loaded = True
 
         self.update_checker.tick()
+
+        self.priority = 0
+
     def add_tracked_npcs_killed(self, npc_id, amount):
         if npc_id in self.tracked_npcs_killed:
             self.tracked_npcs_killed[npc_id] += amount
@@ -507,23 +510,28 @@ class Player(Actor):
             self.recently_send_message_count -= 1
 
 
+        if self.priority <= 10:
+            if len(self.queued_lines) >= 1:
+                self.priority += 3
+                
+                to_handle = self.queued_lines[0]
+                self.queued_lines.pop(0)
+
+                #start = time.perf_counter()
+
+                self.handle(to_handle)
+
+                #elapsed = time.perf_counter() - start
+                #if self.protocol != None:
+                #    self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
+
+            #if self.room.world.factory.ticks_passed % TICKRATE == 0:
+            if self.update_checker != None:
+                self.update_checker.tick()
         
-        if len(self.queued_lines) >= 1:
-            
-            to_handle = self.queued_lines[0]
-            self.queued_lines.pop(0)
-
-            #start = time.perf_counter()
-
-            self.handle(to_handle)
-
-            #elapsed = time.perf_counter() - start
-            #if self.protocol != None:
-            #    self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
-
-        #if self.room.world.factory.ticks_passed % TICKRATE == 0:
-        if self.update_checker != None:
-            self.update_checker.tick()
+        self.priority -= 1
+        if self.priority <= 0:
+            self.priority = 0
 
         
 
@@ -662,7 +670,7 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
-        self.queued_lines=[line]
+        self.queued_lines.append(line)
 
     def try_to_use(self, line):
         from skills.manager import get_skills
