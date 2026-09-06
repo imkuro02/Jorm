@@ -113,7 +113,8 @@ class Protocol(protocol.Protocol):
                 )
                 packet = packet.encode("utf-8")
                 self.transport.write(packet)
-                # return
+                return
+                
         # systems.utils.debug_print(packet)
         packet = (
             IAC
