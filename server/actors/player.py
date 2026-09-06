@@ -441,9 +441,8 @@ class Player(Actor):
                 print(str(e) + 'FUCK FUCK FUCK')
                 pass
         """
-        if self.send_buffer:
-            self.protocol.transport.write(self.send_buffer[0])
-            self.send_buffer.pop(0)
+        for _ in range(min(5, len(self.send_buffer))):
+            self.protocol.transport.write(self.send_buffer.pop(0))
         
 
     def sendSound(self, sfx):
