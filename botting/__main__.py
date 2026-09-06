@@ -17,6 +17,9 @@ COMMANDS = [
 "shout set!"
 ]
 for i in range(0,1000):
+    #COMMANDS.append('pass')
+
+    #continue
     COMMANDS.append('n')
     COMMANDS.append('e')
     COMMANDS.append('s')
