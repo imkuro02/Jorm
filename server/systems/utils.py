@@ -605,7 +605,6 @@ def add_godot_url_items(object, identifier, output):
             return output
     return output
     '''
-'''
 def add_godot_url_actors(object, identifier, output):
     if identifier != None:
         if identifier.protocol.enabled_godot:
@@ -625,7 +624,6 @@ def add_godot_url_actors(object, identifier, output):
             return output
     return output
 '''
-
 def add_godot_url_actors(obj, identifier, output):
     if identifier is None or not identifier.protocol.enabled_godot:
         return output
@@ -649,7 +647,7 @@ def add_godot_url_actors(obj, identifier, output):
             parts.append(f"{trigger.capitalize()} {name}->{trigger} {obj_id}")
 
     return f"[url={','.join(parts)}]{name},[/url]" if parts else output
-
+'''
 
 def add_godot_url_actor_yourself(object, identifier, output):
     if identifier != None:
