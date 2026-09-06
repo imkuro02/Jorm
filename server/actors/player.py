@@ -850,7 +850,7 @@ class Player(Actor):
         if self.loaded:
             triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'after_{commands[best_match]} {line}')
 
-
+        del self.best_cache
     def set_turn(self):
         super().set_turn()
         # self.send_line(self.prompt(self))

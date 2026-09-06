@@ -21,7 +21,8 @@ for i in range(0,1000):
     COMMANDS.append('e')
     COMMANDS.append('s')
     COMMANDS.append('w')
-    #COMMANDS.append('inv')
+    COMMANDS.append('inv')
+    COMMANDS.append('say hello')
 
     #COMMANDS.append('set log')
     #COMMANDS.append('guest')
