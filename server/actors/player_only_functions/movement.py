@@ -11,6 +11,7 @@ from configuration.constants.tickrate import TICKRATE
 def add_explored_room(actor):
     if hasattr(actor, 'explored_rooms'):
         if actor.room.get_real_id() not in actor.explored_rooms:
+            print('new')
             actor.explored_rooms.append(actor.room.get_real_id())
 
             
