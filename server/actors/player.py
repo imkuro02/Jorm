@@ -419,23 +419,31 @@ class Player(Actor):
             self.priority = 0
 
         
-
+        """
         if self.send_buffer:
             try:
-                
+                self.protocol.transport.write(b"".join(self.send_buffer))
+
+                #self.protocol.transport.write(b"".join(self.send_buffer))
+                self.send_buffer.clear()
+
+                '''
                 data = b"".join(self.send_buffer)
                 self.send_buffer.clear()
 
-                CHUNK_SIZE = 1 * 1024  # 16 KB
+                CHUNK_SIZE = 16 * 1024  # 16 KB
 
                 for i in range(0, len(data), CHUNK_SIZE):
                     self.protocol.transport.write(data[i:i + CHUNK_SIZE])
-
+                '''
 
             except AttributeError as e:
                 print(str(e) + 'FUCK FUCK FUCK')
                 pass
-        
+        """
+        if self.send_buffer:
+            self.protocol.transport.write(self.send_buffer[0])
+            self.send_buffer.pop(0)
         
 
     def sendSound(self, sfx):
