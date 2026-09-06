@@ -880,6 +880,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         self.actor.unload()
         self.actor.protocol = None
+        del self.actor
+
         self.actor = None
         # self.actor = None
 
