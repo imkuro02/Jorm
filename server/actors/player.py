@@ -541,8 +541,9 @@ class Player(Actor):
             try:
                 self.buffered_spam = 0
                 self.protocol.transport.write(b"".join(self.send_buffer))
-                self.send_buffer.clear()
-            except AttributeError:
+                self.send_buffer = []
+            except AttributeError as e:
+                print(e + 'FUCK FUCK FUCK')
                 pass
         
         
@@ -552,7 +553,6 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
-        return
         if msg_type != None:
             _msg_type = msg_type
             msg_type = " ".join(_msg_type)
