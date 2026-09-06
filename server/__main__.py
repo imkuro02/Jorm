@@ -53,13 +53,14 @@ class ServerFactory(protocol.Factory):
         #self.ecs_manager.tick()
         # for room in self.world.rooms.values():
         #    room.tick()
+        '''
         if self.ticks_passed % (TICKRATE * 60 * 60) == 0 or self.ticks_passed == 10:
             for i in self.protocols:
                 if i.actor != None:
                     # self.db.write_actor(i.actor)
                     i.save_actor()
             self.ranks = self.db.find_all_actors()
-
+        '''
 
 
         self.delayed_functions.tick()

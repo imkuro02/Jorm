@@ -16,7 +16,7 @@ COMMANDS = [
 "set brief off"
 "shout set!"
 ]
-for i in range(0,1000):
+for i in range(0,1000000):
     COMMANDS.append('n')
     COMMANDS.append('e')
     COMMANDS.append('s')
