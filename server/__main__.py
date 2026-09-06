@@ -55,7 +55,6 @@ class ServerFactory(protocol.Factory):
         #    room.tick()
         
         if self.ticks_passed % (TICKRATE * 60 * 60) == 0 or self.ticks_passed == 10:
-            print('saving db and stuff')
             for i in self.protocols:
                 if i.actor != None:
                     # self.db.write_actor(i.actor)
