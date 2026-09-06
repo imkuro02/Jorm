@@ -422,9 +422,14 @@ class Player(Actor):
 
         if self.send_buffer:
             try:
-                for i in range(0,100):
-                    self.protocol.transport.write(b"".join(self.send_buffer))
+                self.protocol.transport.write(b"".join(self.send_buffer))
                 self.send_buffer.clear()
+
+                buf = getattr(self.protocol.transport, "_writeBuffer", None)
+
+                if buf is not None:
+                    print("queued:", len(buf))
+                    
             except AttributeError as e:
                 print(e + 'FUCK FUCK FUCK')
                 pass
