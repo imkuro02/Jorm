@@ -668,7 +668,7 @@ class Player(Actor):
             print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
-        
+        return
 
         if self.status == ActorStatusType.FIGHTING:
             if self.settings_manager.get_value(SETTINGS.AUTO_BATTLER):
@@ -841,14 +841,14 @@ class Player(Actor):
             "Command found: " + str(commands[best_match]), msg_type=[MessageType.DEBUG]
         )
 
-        #triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'{commands[best_match]} {line}')
-        #if triggered:
-        #    return
+        triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'{commands[best_match]} {line}')
+        if triggered:
+            return
 
         script(line)
 
-        #if self.loaded:
-        #    triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'after_{commands[best_match]} {line}')
+        if self.loaded:
+            triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'after_{commands[best_match]} {line}')
 
     def set_turn(self):
         super().set_turn()
