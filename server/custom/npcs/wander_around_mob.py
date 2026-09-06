@@ -88,24 +88,29 @@ class wander_around_mob(Npc):
         
 
     def spawn_pre_footprints(self, _exit):
+        try:
         corpse = Item()
-        corpse.name = _exit.direction
-        corpse.description = f'{Color.BAD}There is something approaching from {_exit.direction}{Color.BACK}'
-        corpse.description_room = f'{Color.BAD}There is something approaching from {_exit.direction}{Color.BACK}'
-        corpse.stack_max = 1
-        corpse.keep = False
-        corpse.can_pick_up = False
-        corpse.footprint_leading_dir = _exit.direction
-        corpse.invisible = True
-        corpse.premade_id = 'footprints_something_blabla1'
-        
-        _exit.room.inventory_manager.add_item(corpse)
-        self.pre_footprints.append(corpse)
+            corpse.name = _exit.direction
+            corpse.description = f'{Color.BAD}There is something approaching from {_exit.direction}{Color.BACK}'
+            corpse.description_room = f'{Color.BAD}There is something approaching from {_exit.direction}{Color.BACK}'
+            corpse.stack_max = 1
+            corpse.keep = False
+            corpse.can_pick_up = False
+            corpse.footprint_leading_dir = _exit.direction
+            corpse.invisible = True
+            corpse.premade_id = 'footprints_something_blabla1'
+            
+            _exit.room.inventory_manager.add_item(corpse)
+            self.pre_footprints.append(corpse)
 
-        if len(self.pre_footprints)-1>=1:
-            self.pre_footprints[0].inventory_manager.remove_item(self.pre_footprints[0])
-            self.pre_footprints[0].unload()
-            self.pre_footprints.pop(0)
+            if len(self.pre_footprints)-1>=1:
+                self.pre_footprints[0].inventory_manager.remove_item(self.pre_footprints[0])
+                self.pre_footprints[0].unload()
+                self.pre_footprints.pop(0)
+        except Exception as e:
+            from systems.utils import debug_print
+            debug_print(e)
+            print(e)
 
 
     def wander(self, warning = False):
