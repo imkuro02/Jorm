@@ -13,8 +13,8 @@ import systems.utils
 from configuration.constants.tickrate import TICKRATE
 import context
 
-import tracemalloc
-tracemalloc.start(25)   
+#import tracemalloc
+#tracemalloc.start(25)   
 
 class ServerFactory(protocol.Factory):
     def __init__(self):
@@ -61,11 +61,13 @@ class ServerFactory(protocol.Factory):
 
         self.delayed_functions.tick()
 
+        '''
         if self.ticks_passed & (TICKRATE * 30) == 0:
             snapshot = tracemalloc.take_snapshot()
 
             for stat in snapshot.statistics("lineno")[:20]:
                 print(stat)
+        '''
 
         self.runtime = time.time() - self.start
 

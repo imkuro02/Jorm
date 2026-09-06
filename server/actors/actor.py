@@ -1249,8 +1249,8 @@ class Actor:
             if sound != None:
                 player.sendSound(sound)
 
-        del list_pretty_name_objects
-
+        del locals()
+        
     def simple_broadcast(
         self, 
         line_self = '', line_others = '', 
