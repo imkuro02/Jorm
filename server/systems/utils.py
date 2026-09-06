@@ -144,8 +144,6 @@ def unload_fr():
 
             try:
                 obj_to_unload.unload()
-                _unloaded.append(obj_to_unload)
-                continue
             except Exception as e:
                 if not silent:
                     debug_print(f'{e}, {obj_to_unload}')
@@ -155,13 +153,11 @@ def unload_fr():
             for key in obj_dict:
                 try:
                     obj_dict[key] = None
-                    _unloaded.append(obj_to_unload)
-                    continue
                 except Exception as e:
                     if not silent:
                         debug_print(e)
 
-            #_unloaded.append(obj_to_unload)
+            _unloaded.append(obj_to_unload)
 
         except Exception as e:
             if not silent:
@@ -169,8 +165,7 @@ def unload_fr():
         
 
     for i in _unloaded:
-        if i in TOUNLOAD:
-            del TOUNLOAD[i]
+        del TOUNLOAD[i]
 
     # check if any items are without inventory_managers
     
