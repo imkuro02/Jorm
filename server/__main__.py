@@ -44,6 +44,12 @@ class ServerFactory(protocol.Factory):
         self.ranks = self.db.find_all_actors()
         
     def tick(self):
+        _best_cache = 0
+        for p in self.protocols:
+            if p.actor == None:
+                continue
+            _best_cache += len(p.actor.best_cache)
+
         tick_start = time.time()
         self.ticks_passed += 1
         self.world.tick()

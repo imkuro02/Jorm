@@ -411,6 +411,7 @@ class Player(Actor):
         self.update_checker.tick()
 
         self.priority = 0
+        self.best_cache = {}
 
     def add_tracked_npcs_killed(self, npc_id, amount):
         if npc_id in self.tracked_npcs_killed:
@@ -668,7 +669,6 @@ class Player(Actor):
             print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
-        return
 
         if self.status == ActorStatusType.FIGHTING:
             if self.settings_manager.get_value(SETTINGS.AUTO_BATTLER):
@@ -802,8 +802,7 @@ class Player(Actor):
         )
         '''
 
-        if not hasattr(self, 'best_cache'):
-            self.best_cache = {}
+        
 
         if command not in self.best_cache:
             sorted_dict = dict(sorted(commands.items(), key=lambda item: len(item[0])))
