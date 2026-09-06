@@ -89,7 +89,7 @@ class wander_around_mob(Npc):
 
     def spawn_pre_footprints(self, _exit):
         try:
-        corpse = Item()
+            corpse = Item()
             corpse.name = _exit.direction
             corpse.description = f'{Color.BAD}There is something approaching from {_exit.direction}{Color.BACK}'
             corpse.description_room = f'{Color.BAD}There is something approaching from {_exit.direction}{Color.BACK}'
