@@ -263,9 +263,9 @@ def command_go(self, line = '', room_id = None):
         direction = self.find_direction_for_command_go(line)
         
         if direction == None:
-            self.simple_broadcast(
+            self.pretty_broadcast(
                 f'You walk into a wall',
-                f'{self.pretty_name()} walks into a wall',
+                f'{self.id} walks into a wall',
                 sound = Audio.ERROR, send_to = 'room'
                 )
             roll = random.randint(0,100)
