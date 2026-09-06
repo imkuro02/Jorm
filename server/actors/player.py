@@ -642,6 +642,8 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
+        if self.queued_lines >= 10:
+            return
         self.queued_lines.append(line)
 
     def try_to_use(self, line):
