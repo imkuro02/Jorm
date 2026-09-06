@@ -79,7 +79,9 @@ class ServerFactory(protocol.Factory):
         #    systems.utils.debug_print(f'ticks_passed : {self.ticks_passed}')
         if self.ticks_passed % TICKRATE == 0:
             if self.time_spent_calculating >= _threashold:
-                systems.utils.debug_print(f'Time thinking: {self.time_spent_calculating}')
+                _thinking = f'Time thinking: {self.time_spent_calculating}'.ljust(40)
+                _ = f'{_thinking}/  TICK: {self.ticks_passed }'
+                systems.utils.debug_print(_)
             self.time_spent_calculating = 0
 
 
