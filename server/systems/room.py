@@ -115,25 +115,27 @@ class Spawner:
 
 
     def tick(self):
-        if self.room.is_player_present() != False:
-            return
+        try:
+            if self.room.is_player_present() != False:
+                return
 
-        if self.room.world.factory.ticks_passed % (RESPAWN_TIME_MOBS + list(self.room.world.rooms.values()).index(self.room)) == 0:
-            self.room.world.factory.respawned_all = False
-            if list(self.room.world.rooms.values()).index(self.room) == 0:
-                systems.utils.debug_print(
-                    'Started respawning at room index 0'
-                )
+            if self.room.world.factory.ticks_passed % (RESPAWN_TIME_MOBS + list(self.room.world.rooms.values()).index(self.room)) == 0:
+                self.room.world.factory.respawned_all = False
+                if list(self.room.world.rooms.values()).index(self.room) == 0:
+                    systems.utils.debug_print(
+                        'Started respawning at room index 0'
+                    )
 
 
-            if list(self.room.world.rooms.values()).index(self.room) == len(list(self.room.world.rooms.values()))-1:
-                systems.utils.debug_print(
-                    'Started respawning at room index -1'
-                )
-            
-            
-            self.respawn_all()
-
+                if list(self.room.world.rooms.values()).index(self.room) == len(list(self.room.world.rooms.values()))-1:
+                    systems.utils.debug_print(
+                        'Started respawning at room index -1'
+                    )
+                
+                
+                self.respawn_all()
+        except Exception as e:
+            systems.utils.debug_print(e)
 
 class Exit:
     def __init__(
