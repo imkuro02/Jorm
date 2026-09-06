@@ -9,10 +9,10 @@ COMMANDS = [
 
 "guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest",
 "go _",
-"set gmcp off",
-"set godot off",
-"set map off",
-"set room off"
+"set gmcp on",
+"set godot on",
+"set map on",
+"set room on"
 "set brief off"
 "shout set!"
 ]
