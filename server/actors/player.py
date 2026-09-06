@@ -423,10 +423,13 @@ class Player(Actor):
         if self.send_buffer:
             try:
                 
-                self.protocol.transport.write(b"x")
-
-                #self.protocol.transport.write(b"".join(self.send_buffer))
+                data = b"".join(self.send_buffer)
                 self.send_buffer.clear()
+
+                CHUNK_SIZE = 16 * 1024  # 16 KB
+
+                for i in range(0, len(data), CHUNK_SIZE):
+                    self.protocol.transport.write(data[i:i + CHUNK_SIZE])
 
 
             except AttributeError as e:
