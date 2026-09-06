@@ -1,1 +1,1 @@
-TICKRATE = 2
+TICKRATE = 6
