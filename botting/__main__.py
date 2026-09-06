@@ -9,19 +9,18 @@ COMMANDS = [
 
 "guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest","guest",
 "go _",
-"set gmcp on",
+"set gmcp off",
 "set godot off",
-"set map on",
-"set room on"
+"set map off",
+"set room off"
 "set brief off"
 "shout set!"
 ]
 for i in range(0,1000000):
-    #COMMANDS.append('n')
-    #COMMANDS.append('e')
-    #COMMANDS.append('s')
-    #COMMANDS.append('w')
-    COMMANDS.append('go _')
+    COMMANDS.append('n')
+    COMMANDS.append('e')
+    COMMANDS.append('s')
+    COMMANDS.append('w')
     #COMMANDS.append('set log')
     #COMMANDS.append('guest')
     #COMMANDS.append('l')

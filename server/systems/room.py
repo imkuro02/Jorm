@@ -481,10 +481,10 @@ class Room:
             self.combat = self.combat_manager_class(self, participants)
 
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
+
         actor.room_previous = actor.room.get_real_id()
         self.remove_actor(actor)
-
-        '''
+        
         if not silent and actor.room != self:
             actor.pretty_broadcast(
                 None,
@@ -494,20 +494,19 @@ class Room:
                 list_pretty_name_objects = [actor],
                 msg_type = MessageType.MOVEMENT
             )
-        '''
+
         actor.room = self
         self.actors[actor.id] = actor
+
 
         if not self.instanced:
             if not dont_unload_instanced and not self.is_an_instance():
                 if type(actor).__name__ == "Player":
                     for i in actor.instanced_rooms:
                         if i in actor.room.world.rooms:
-                            '''
                             actor.send_line(
                                 f"instanced room: {i} deleted", msg_type=[MessageType.DEBUG]
                             )
-                            '''
                             self.world.rooms_to_unload.append(i)
 
                     actor.instanced_rooms = []
@@ -530,7 +529,6 @@ class Room:
                     )
                     if type(actor).__name__ == "Player":
                         actor.instanced_rooms.append(instanced_room_id)
-                        print('1')
                 instanced_room = self.world.rooms[instanced_room_id]
                 instanced_room.actors[actor.id] = actor
                 del self.actors[actor.id]
@@ -538,7 +536,6 @@ class Room:
                 actor.room = instanced_room
 
         if not silent:
-            '''
             actor.pretty_broadcast(
                 None,
                 f"{actor.id} arrives",
@@ -547,7 +544,6 @@ class Room:
                 list_pretty_name_objects = [actor],
                 msg_type = MessageType.MOVEMENT
             )
-            '''
 
     """
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
