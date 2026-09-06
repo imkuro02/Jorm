@@ -61,10 +61,11 @@ class ServerFactory(protocol.Factory):
 
         self.delayed_functions.tick()
 
-        snapshot = tracemalloc.take_snapshot()
+        self.ticks_passed & (TICKRATE * 30) == 0:
+            snapshot = tracemalloc.take_snapshot()
 
-        for stat in snapshot.statistics("lineno")[:5]:
-            print(stat)
+            for stat in snapshot.statistics("lineno")[:20]:
+                print(stat)
 
         self.runtime = time.time() - self.start
 
