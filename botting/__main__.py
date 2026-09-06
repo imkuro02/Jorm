@@ -17,11 +17,11 @@ COMMANDS = [
 "shout set!"
 ]
 for i in range(0,1000):
-    #COMMANDS.append('n')
-    #COMMANDS.append('e')
-    #COMMANDS.append('s')
-    #COMMANDS.append('w')
-    COMMANDS.append('inv')
+    COMMANDS.append('n')
+    COMMANDS.append('e')
+    COMMANDS.append('s')
+    COMMANDS.append('w')
+    #COMMANDS.append('inv')
 
     #COMMANDS.append('set log')
     #COMMANDS.append('guest')
