@@ -373,7 +373,7 @@ class World:
 
     def tick(self):
         self.game_time.tick()
-        if self.factory.ticks_passed % TICKRATE * 60 * 5 == 0:
+        if self.factory.ticks_passed % (TICKRATE * 60 * 5) == 0:
             print('unloading rooms')
             self.unload_rooms()
             print('rooms unloaded')
