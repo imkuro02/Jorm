@@ -53,7 +53,7 @@ class ServerFactory(protocol.Factory):
         # for room in self.world.rooms.values():
         #     room.tick()
 
-        if self.ticks_passed % (TICKRATE * 60 * 60) == 0 or self.ticks_passed == 10:
+        if self.ticks_passed % (TICKRATE * 3 * 1) == 0 or self.ticks_passed == 10:
             gc.collect()
             for i in self.protocols:
                 if i.actor != None:
