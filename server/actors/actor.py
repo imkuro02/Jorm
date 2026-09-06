@@ -1169,6 +1169,7 @@ class Actor:
         send_to="room", sound=None, msg_type=None,
         list_pretty_name_objects = [],
     ):
+        return
         #if len(self.room.actors) >= 10:
         #    line_others = None
 
@@ -1248,7 +1249,7 @@ class Actor:
 
             if sound != None:
                 player.sendSound(sound)
-                
+
         del list_pretty_name_objects
 
     def simple_broadcast(

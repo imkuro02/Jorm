@@ -17,11 +17,13 @@ COMMANDS = [
 "shout set!"
 ]
 for i in range(0,1000000):
-    #COMMANDS.append('n')
-    #COMMANDS.append('e')
-    #COMMANDS.append('s')
-    COMMANDS.append('set log')
-    COMMANDS.append('guest')
+    COMMANDS.append('n')
+    COMMANDS.append('e')
+    COMMANDS.append('s')
+    COMMANDS.append('w')
+
+    #COMMANDS.append('set log')
+    #COMMANDS.append('guest')
     #COMMANDS.append('l')
     
 DELAY = 0.1  # seconds between each run
