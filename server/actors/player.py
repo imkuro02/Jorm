@@ -529,7 +529,8 @@ class Player(Actor):
             #if self.room.world.factory.ticks_passed % TICKRATE == 0:
             if self.update_checker != None:
                 self.update_checker.tick()
-        
+
+        self.priority -= 0
         self.priority -= 1
         if self.priority <= 0:
             self.priority = 0
