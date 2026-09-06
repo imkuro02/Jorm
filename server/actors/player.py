@@ -513,13 +513,13 @@ class Player(Actor):
             to_handle = self.queued_lines[0]
             self.queued_lines.pop(0)
 
-            start = time.perf_counter()
+            #start = time.perf_counter()
 
             self.handle(to_handle)
 
             elapsed = time.perf_counter() - start
-            if self.protocol != None:
-                self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
+            #if self.protocol != None:
+            #    self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
 
         #if self.room.world.factory.ticks_passed % TICKRATE == 0:
         if self.update_checker != None:
@@ -662,6 +662,8 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
+        if len(self.queued_lines) > 3:
+            return
         self.queued_lines.append(line)
 
     def try_to_use(self, line):
