@@ -113,7 +113,6 @@ class Protocol(protocol.Protocol):
                 )
                 packet = packet.encode("utf-8")
                 self.transport.write(packet)
-                return
                 
         # systems.utils.debug_print(packet)
         packet = (
