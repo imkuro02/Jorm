@@ -382,20 +382,13 @@ class World:
             
 
         rooms = []
-        #for i in self.factory.protocols:
-        #    if i.actor == None:
-        #        continue
-        #    if i.actor.room in rooms:
-        #        continue
-        #    rooms.append(i.actor.room)
-        
+
         for i in self.rooms:
-            #if not self.rooms[i].is_player_present():
-            #    continue
             rooms.append(self.rooms[i])
         
         for i in rooms:
-            if self.factory.ticks_passed % TICKRATE * 60 == 0:
+            if self.factory.ticks_passed % (TICKRATE * 60) == 0:
+                print('clearing room cache')
                 i.cached_get_nearby_rooms = {}
            
             i.tick()
