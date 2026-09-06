@@ -13,13 +13,14 @@ import systems.utils
 from configuration.constants.tickrate import TICKRATE
 import context
 
+#import tracemalloc
+#tracemalloc.start(25)   
 
 class ServerFactory(protocol.Factory):
     def __init__(self):
         context.FACTORY = self
 
         self.time_spent_calculating = 0
-        self.cached_colored_lines = {}
 
         self.ticks_passed = 0
         self.delayed_functions = DelayedFunctionsManager(factory = self)
@@ -43,17 +44,15 @@ class ServerFactory(protocol.Factory):
         self.ranks = self.db.find_all_actors()
         
     def tick(self):
-        self.cached_colored_lines = {}
+        
+
         tick_start = time.time()
-
-
-
         self.ticks_passed += 1
         self.world.tick()
         #self.ecs_manager.tick()
         # for room in self.world.rooms.values():
-        #    room.tick()
-        
+        #     room.tick()
+
         if self.ticks_passed % (TICKRATE * 60 * 60) == 0 or self.ticks_passed == 10:
             for i in self.protocols:
                 if i.actor != None:
@@ -61,28 +60,46 @@ class ServerFactory(protocol.Factory):
                     i.save_actor()
             self.ranks = self.db.find_all_actors()
 
-
-
         self.delayed_functions.tick()
 
-        self.runtime = time.time() - self.start
-        # if self.runtime > self.ticks_passed/30:
-        #systems.utils.debug_print(self.ticks_passed, self.runtime, self.ticks_passed/30 , '\r')
+        '''
+        # ---------------------------------------------------------
+        if self.ticks_passed % (TICKRATE * 5) == 0:
 
+            snapshot = tracemalloc.take_snapshot()
+
+            if hasattr(self, "_previous_memory_snapshot"):
+                stats = snapshot.compare_to(
+                    self._previous_memory_snapshot,
+                    "lineno"
+                )
+
+                print("\n========== MEMORY GROWTH ==========")
+
+                for stat in stats[:20]:
+                    print(stat)
+
+                print("===================================\n")
+
+            self._previous_memory_snapshot = snapshot
+
+        # ---------------------------------------------------------
+        '''
+
+        self.runtime = time.time() - self.start
 
         tick_end = time.time()
 
         self.time_spent_calculating += tick_end-tick_start
-        
-        _threashold = 0 # usually 1 second
-        #if tick_end-tick_start >= _threashold:
-        #    systems.utils.debug_print(f'Tick thinking: {tick_end-tick_start}')
-        #    systems.utils.debug_print(f'ticks_passed : {self.ticks_passed}')
+
+        _threashold = 0
+
         if self.ticks_passed % TICKRATE == 0:
             if self.time_spent_calculating >= _threashold:
                 _thinking = f'Time thinking: {self.time_spent_calculating}'.ljust(40)
-                _ = f'{_thinking}/  TICK: {self.ticks_passed }'
+                _ = f'{_thinking}/  TICK: {self.ticks_passed}'
                 systems.utils.debug_print(_)
+
             self.time_spent_calculating = 0
 
 
