@@ -537,13 +537,9 @@ class Player(Actor):
         
 
         if self.send_buffer:
-            #if self.last_line_handled <= self.room.world.factory.ticks_passed - 2:
-            #    self.last_line_handled = self.room.world.factory.ticks_passed 
-            #else:
-            #    return
             try:
                 self.buffered_spam = 0
-                #self.protocol.transport.write(b"".join(self.send_buffer))
+                self.protocol.transport.write(b"".join(self.send_buffer))
                 self.send_buffer.clear()
             except AttributeError:
                 pass
@@ -555,16 +551,6 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
-        
-        
-        #if len(self.send_buffer) >= 3 and msg_type == MessageType.MOVEMENT:
-        #    return
-        #if not self.settings_manager.get_value(SETTINGS.DEBUGMUTED):
-        #    return
-        # if self.last_line_received == line:
-        #   return
-
-        # self.last_line_received = line
         if msg_type != None:
             _msg_type = msg_type
             msg_type = " ".join(_msg_type)
@@ -578,23 +564,11 @@ class Player(Actor):
 
         if sound != None:
             self.sendSound(sound)
-
-
-        #if msg_type == MessageType.COMBAT:
-        #    line = '@bredX '+line.replace('\n','\n@bredX ')
             
         if color:
-            original_line = line
-            if line in self.room.world.factory.cached_colored_lines:
-                line = self.room.world.factory.cached_colored_lines[line]
-                self.send_buffer.append(line.encode("utf-8"))
-                return
-            # start = time.time()
-
             # this line is responsible for making the length of text 28 chars or smth
             line = systems.utils.add_line_breaks(line)
 
-            # systems.utils.debug_print((time.time()-start)*1000)
             line = systems.utils.add_color(
                 line, color_settings=self.settings_manager.get_value(SETTINGS.COLOR)
             )
@@ -603,11 +577,8 @@ class Player(Actor):
                 line = str(msg_type) + '->' +line
             # line += f'\n'
 
-            # send null byte several times to indicate new line
-            # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
-            #self.protocol.transport.write(line.encode("utf-8"))
+           
             self.send_buffer.append(line.encode("utf-8"))
-            self.room.world.factory.cached_colored_lines[original_line] = line
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
             #self.protocol.transport.write(line.encode("utf-8"))
