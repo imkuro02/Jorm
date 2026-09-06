@@ -423,9 +423,11 @@ class Player(Actor):
         if self.send_buffer:
             try:
                 
-                self.protocol.transport.write(b"".join(self.send_buffer))
+                self.protocol.transport.write(b"x")
+
+                #self.protocol.transport.write(b"".join(self.send_buffer))
                 self.send_buffer.clear()
-                
+
 
             except AttributeError as e:
                 print(str(e) + 'FUCK FUCK FUCK')
