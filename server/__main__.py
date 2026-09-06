@@ -49,6 +49,7 @@ class ServerFactory(protocol.Factory):
             if p.actor == None:
                 continue
             _best_cache += len(p.actor.best_cache)
+        print(_best_cache)
 
         tick_start = time.time()
         self.ticks_passed += 1
