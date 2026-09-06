@@ -892,6 +892,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
             self.unload_actor()
 
         self.factory.protocols.remove(self)
+        self.transport.loseConnection()
+
 
     # override
     def dataReceived(self, data):
