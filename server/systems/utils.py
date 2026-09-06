@@ -123,7 +123,8 @@ def unload(obj_to_unload):
 
 
 def unload_fr():
-    silent = True
+    print('fr')
+    silent = False
     global TOUNLOAD  # <-- This is important
 
     for r in REFTRACKER.refs:
