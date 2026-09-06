@@ -513,7 +513,7 @@ class Player(Actor):
         
         if self.priority <= TICKRATE * 3:
             if len(self.queued_lines) >= 1:
-                self.priority += 3
+                #self.priority += 3
                 
                 to_handle = self.queued_lines[0]
                 self.queued_lines.pop(0)
