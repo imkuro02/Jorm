@@ -565,9 +565,9 @@ class Player(Actor):
         if sound != None:
             self.sendSound(sound)
             
-        if len(self.send_buffer) >= 100:
+        if len(self.send_buffer) >= 10:
             return
-            
+
         if color:
             # this line is responsible for making the length of text 28 chars or smth
             line = systems.utils.add_line_breaks(line)
