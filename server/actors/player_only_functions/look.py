@@ -951,10 +951,10 @@ def get_nearby_rooms(
     ignore_z_change=False,
 ):
 
-    #_locals = {k: v for k, v in locals().items() if k != 'self'}
-    #_checksum = dict_checksum(_locals)
-    #if _checksum in self.room.cached_get_nearby_rooms:
-    #    return self.room.cached_get_nearby_rooms[_checksum]
+    _locals = {k: v for k, v in locals().items() if k != 'self'}
+    _checksum = dict_checksum(_locals)
+    if _checksum in self.room.cached_get_nearby_rooms:
+        return self.room.cached_get_nearby_rooms[_checksum]
     
     offsets = {
         "north":    (0, -1, 0),
@@ -1023,7 +1023,7 @@ def get_nearby_rooms(
                 depth + 1
             ))
 
-    #self.room.cached_get_nearby_rooms[_checksum] = found
+    self.room.cached_get_nearby_rooms[_checksum] = found
     return found
 '''
 def get_nearby_rooms2(self, view_range=1, 
