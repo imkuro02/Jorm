@@ -1,8 +1,15 @@
 import systems
+from systems.utils import unload
+
 class TriggerManager:
     def __init__(self, trigger_owner):
         self.trigger_owner = trigger_owner
         self.triggers = {}
+
+    def unload(self):
+        self.triggers = {}
+        self.trigger_owner = None
+        unload(self)
 
     def trigger_add(self, trigger_key, trigger_action):
         self.triggers[trigger_key] = {'trigger_key': trigger_key, 'trigger_action': trigger_action}

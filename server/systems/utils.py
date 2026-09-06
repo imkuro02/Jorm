@@ -123,7 +123,6 @@ def unload(obj_to_unload):
 
 
 def unload_fr():
-    print('fr')
     silent = False
     global TOUNLOAD  # <-- This is important
 
@@ -162,7 +161,7 @@ def unload_fr():
 
         except Exception as e:
             if not silent:
-                debug_print(e)
+                debug_print('EPIC ERROR',e)
         
 
     for i in _unloaded:

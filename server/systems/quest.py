@@ -6,7 +6,7 @@ from configuration.constants.color import Color
 from configuration.constants.stat_type import StatType
 
 from items.manager import load_item
-
+from systems.utils import unload
 
 class OBJECTIVE_TYPES:
     KILL_X = "kill_x"  # kill x amount of mobs
@@ -25,6 +25,11 @@ class QuestManager:
     def __init__(self, actor):
         self.actor = actor
         self.quests = {}
+
+    def unload(self):
+        self.actor = None
+        self.quests = {}
+        unload(self)
 
     def get_quest_id_from_quest_name(self, quest_name):
         quest_id = None

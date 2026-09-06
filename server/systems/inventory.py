@@ -12,6 +12,12 @@ class TriggerableManager:
         self.actor = self.inventory.owner
         self.triggered = []
 
+    def unload(self):
+        self.inventory = None
+        self.actor = None
+        self.triggered = None
+        systems.utils.unload(self)
+        
     def get_items_sorted(self):
         unsorted_items = [item for item in self.inventory.items.values()]
         sorted_equipment_ids = [
