@@ -426,7 +426,7 @@ class Player(Actor):
                 data = b"".join(self.send_buffer)
                 self.send_buffer.clear()
 
-                CHUNK_SIZE = 16 * 1024  # 16 KB
+                CHUNK_SIZE = 1 * 1024  # 16 KB
 
                 for i in range(0, len(data), CHUNK_SIZE):
                     self.protocol.transport.write(data[i:i + CHUNK_SIZE])
