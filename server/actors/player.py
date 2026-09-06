@@ -441,7 +441,7 @@ class Player(Actor):
                 print(str(e) + 'FUCK FUCK FUCK')
                 pass
         """
-        for _ in range(min(1, len(self.send_buffer))):
+        for _ in range(min(10, len(self.send_buffer))):
             self.protocol.transport.write(self.send_buffer.pop(0))
         
 
