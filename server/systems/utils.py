@@ -14,7 +14,17 @@ from configuration.constants.stat_type import StatType
 #from fuzzywuzzy import process
 from rapidfuzz import fuzz, process
 
+import json
+import hashlib
 
+def dict_checksum(data: dict) -> str:
+    serialized = json.dumps(
+        data,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+    return hashlib.sha256(serialized).hexdigest()
 
 import inspect
 from functools import wraps

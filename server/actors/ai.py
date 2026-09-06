@@ -341,7 +341,7 @@ class EnemyAI(AI):
 
 def get_ai(ai_name):
     _ai = AI(None)
-    available_ai = loader.load_customs(path="custom.ai", object=_ai)
+    available_ai = loader.load_custom_object(object = _ai)
     available_ai.append(PlayerAI)
     available_ai.append(EnemyAI)
     for i in available_ai:

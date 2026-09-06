@@ -374,11 +374,11 @@ class World:
     def tick(self):
         self.game_time.tick()
         if self.factory.ticks_passed % (TICKRATE * 60 * 5) == 0:
-            print('unloading rooms')
+            #print('unloading rooms')
             self.unload_rooms()
-            print('rooms unloaded')
+            #print('rooms unloaded')
             systems.utils.unload_fr()
-            print('running fr fr')
+            #print('running fr fr')
             
 
         rooms = []
@@ -388,7 +388,7 @@ class World:
         
         for i in rooms:
             if self.factory.ticks_passed % (TICKRATE * 60) == 0:
-                print('clearing room cache')
+                #print('clearing room cache')
                 i.cached_get_nearby_rooms = {}
            
             i.tick()

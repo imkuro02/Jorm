@@ -15,17 +15,7 @@ from collections import deque
 import time
 
 
-import json
-import hashlib
-
-def dict_checksum(data: dict) -> str:
-    serialized = json.dumps(
-        data,
-        sort_keys=True,
-        separators=(",", ":"),
-    ).encode("utf-8")
-
-    return hashlib.sha256(serialized).hexdigest()
+from systems.utils import dict_checksum
 
 #data = {"b": 2, "a": 1}
 #print(dict_checksum(data))

@@ -28,8 +28,8 @@ from systems.triggers import TriggerManager
 from configuration.constants.tickrate import TICKRATE
 
 # one minute is 600 ticks
-RESPAWN_TIME_MOBS =     1 * 60 * 10
-DESPAWN_TIME_ITEMS =    1 * 60 * 10
+RESPAWN_TIME_MOBS =     TICKRATE * 60
+DESPAWN_TIME_ITEMS =    1 * 60 * 5
 
 class Spawner:
     def __init__(self, room):
@@ -51,6 +51,8 @@ class Spawner:
         # systems.utils.debug_print(self.spawn_points_items)
         self.respawn_all()
         REFTRACKER.add_ref(self)
+
+        self.last_respawn = 0
 
     def get_room_dict(self):
         room_id = self.room.id
@@ -84,15 +86,6 @@ class Spawner:
         if "spawner" in self.room_dict:
             for i, _list in enumerate(self.room_dict["spawner"]):
 
-
-                #if self.room.id == 'overworld/ddc67c0f-17be-47ca-9c01-ab323b9a0725':
-                #    try:
-                #        print(self.spawn_points[i].inventory_manager.owner.id)
-                #    except Exception as e:
-                #        pass
-
-
-
                 _selected = random.choice(_list)
                 #if self.room.id == 'overworld/ddc67c0f-17be-47ca-9c01-ab323b9a0725':
                 #    print(i,_list)
@@ -125,7 +118,20 @@ class Spawner:
         if self.room.is_player_present() != False:
             return
 
-        if self.room.world.factory.ticks_passed % RESPAWN_TIME_MOBS == 0:
+        if self.room.world.factory.ticks_passed % (RESPAWN_TIME_MOBS + list(self.room.world.rooms.values()).index(self.room)) == 0:
+            self.room.world.factory.respawned_all = False
+            if list(self.room.world.rooms.values()).index(self.room) == 0:
+                systems.utils.debug_print(
+                    'Started respawning at room index 0'
+                )
+
+
+            if list(self.room.world.rooms.values()).index(self.room) == len(list(self.room.world.rooms.values()))-1:
+                systems.utils.debug_print(
+                    'Started respawning at room index -1'
+                )
+            
+            
             self.respawn_all()
 
 

@@ -3,7 +3,7 @@ import inspect
 import pkgutil
 import os
 
-
+'''
 def load_customs_all(path):
     classes = []
 
@@ -20,9 +20,9 @@ def load_customs_all(path):
             classes.append(obj)
 
     return classes
+'''
 
-
-
+'''
 def load_customs(path, object):
     classes = []
 
@@ -40,7 +40,7 @@ def load_customs(path, object):
                 classes.append(obj)
 
     return classes
-
+'''
 
 # returns all objects of same base class as whatever inserted
 def load_custom_object(object):
@@ -75,28 +75,6 @@ def load_custom_object(object):
 
     return classes
 
-'''
-def compare_replace_rooms(room):
-    ROOMS = load_customs("custom.rooms", room)
-    for custom_room in ROOMS:
-        if custom_room.compare_replace(room):
-            return custom_room
-    return type(room)
-
-def compare_replace_npcs(npc):
-    NPCS = load_customs("custom.npcs", npc)
-    for custom_npc in NPCS:
-        if custom_npc.compare_replace(npc):
-            return custom_npc
-    return type(npc)
-
-def compare_replace_items(item):
-    ITEMS = load_customs("custom.items", item)
-    for custom_item in ITEMS:
-        if custom_item.compare_replace(item):
-            return custom_item
-    return type(item)
-'''
 
 # returns the first class that fits 
 def compare_replace(object):

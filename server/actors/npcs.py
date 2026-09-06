@@ -18,9 +18,11 @@ from systems.quest import OBJECTIVE_TYPES, ObjectiveCountProposal
 from systems.utils import unload
 from actors.player_only_functions.settings import SETTINGS
 
+CACHED = {}
 
 def create_npc(room, npc_id, spawn_for_lore=False):
     room = room
+    room_id = room.id
     name = "None"
     desc = None
     stats = None
@@ -48,6 +50,18 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         loot = _loot  # {}
         can_drop_corpse = ENEMIES[npc_id]["drop_corpse"]
 
+    '''
+    _locals = {k: v for k, v in locals().items() if k != 'self'}
+    _locals = {k: v for k, v in _locals.items() if k != 'room'}
+    _locals = {k: v for k, v in _locals.items() if k != 'name'}
+
+    global CACHED
+    _checksum = dict_checksum(_locals)
+    if _checksum in CACHED:
+            return CACHED
+    '''
+
+    
     if npc_id in NPCS:
         tree = copy.deepcopy(NPCS[npc_id]["tree"])
 
