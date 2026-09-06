@@ -662,9 +662,7 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
-        if len(self.queued_lines) > 3:
-            return
-        self.queued_lines.append(line)
+        self.queued_lines=[line]
 
     def try_to_use(self, line):
         from skills.manager import get_skills
