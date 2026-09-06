@@ -581,12 +581,12 @@ class Player(Actor):
                 line = str(msg_type) + '->' +line
             # line += f'\n'
 
-           
-            self.send_buffer.append(line.encode("utf-8"))
+            self.protocol.transport.write(line.encode("utf-8"))
+            #self.send_buffer.append(line.encode("utf-8"))
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
-            #self.protocol.transport.write(line.encode("utf-8"))
-            self.send_buffer.append(line.encode("utf-8"))
+            self.protocol.transport.write(line.encode("utf-8"))
+            #self.send_buffer.append(line.encode("utf-8"))
         return
 
     def gain_exp(self, exp):
