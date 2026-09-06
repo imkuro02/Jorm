@@ -169,7 +169,8 @@ def unload_fr():
         
 
     for i in _unloaded:
-        del TOUNLOAD[i]
+        if i in TOUNLOAD:
+            del TOUNLOAD[i]
 
     # check if any items are without inventory_managers
     
