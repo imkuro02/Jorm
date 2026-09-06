@@ -93,7 +93,7 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
             add_explored_room(par)
 
     move_followers(self)
-    add_explored_room(self)
+    #add_explored_room(self)
 
     '''    
     delay = 0
