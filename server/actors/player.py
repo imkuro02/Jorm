@@ -517,7 +517,7 @@ class Player(Actor):
 
             self.handle(to_handle)
 
-            elapsed = time.perf_counter() - start
+            #elapsed = time.perf_counter() - start
             #if self.protocol != None:
             #    self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
 
