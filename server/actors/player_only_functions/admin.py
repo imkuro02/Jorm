@@ -497,6 +497,53 @@ def command_kill(self, line):
     actor.die()
 
 
+import sys
+def deep_size(obj, seen=None):
+    if seen is None:
+        seen = set()
+
+    obj_id = id(obj)
+
+    if obj_id in seen:
+        return 0
+
+    seen.add(obj_id)
+
+    size = sys.getsizeof(obj)
+
+    if isinstance(obj, dict):
+        size += sum(
+            deep_size(k, seen) + deep_size(v, seen)
+            for k, v in obj.items()
+        )
+
+    elif isinstance(obj, (list, tuple, set, frozenset)):
+        size += sum(deep_size(x, seen) for x in obj)
+
+    elif hasattr(obj, "__dict__"):
+        size += deep_size(vars(obj), seen)
+
+    return size
+
+def print_largest_attributes(obj):
+    sizes = []
+
+    for name, value in vars(obj).items():
+        size = deep_size(value)
+        sizes.append((size, name, value))
+
+    sizes.sort(reverse=True)
+
+    #print(f"\nMemory usage for {type(obj).__name__}:")
+    _t = ''
+    for size, name, value in sizes:
+        _t += (
+            f"{size / 1024 / 1024:8.2f} MB  "
+            f"{name:30} "
+            f"{type(value).__name__}\n"
+        )
+    return _t 
+
 def command_export(self, line):
     if line == "":
         self.send_line(str(self.room) + '->' + str(self.room.__dict__))
@@ -542,7 +589,10 @@ def command_export(self, line):
         if 'msghistory' in _dict:
             del _dict['msg_history']
         _dict = str(_dict)
+        _dict += f'\n\n {print_largest_attributes(actor)}'
         self.send_line(str(actor) + '->' + _dict)
+
+        
 
 
 @check_is_admin
