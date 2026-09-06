@@ -41,7 +41,7 @@ class ServerFactory(protocol.Factory):
         logging.info("Server started")
 
         # where the actors will be stored for rank command
-        self.ranks = self.db.find_all_actors()
+        self.ranks = {}#self.db.find_all_actors()
         
     def tick(self):
         print(self.__dict__)
