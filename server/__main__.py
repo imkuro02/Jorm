@@ -44,6 +44,7 @@ class ServerFactory(protocol.Factory):
         self.ranks = self.db.find_all_actors()
         
     def tick(self):
+        print(self.__dict__)
         tick_start = time.time()
         self.ticks_passed += 1
         self.world.tick()
