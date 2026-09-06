@@ -530,7 +530,7 @@ class Player(Actor):
             if self.update_checker != None:
                 self.update_checker.tick()
 
-        self.priority -= 0
+        self.priority = 0
         self.priority -= 1
         if self.priority <= 0:
             self.priority = 0
