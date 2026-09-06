@@ -543,7 +543,7 @@ class Player(Actor):
             #    return
             try:
                 self.buffered_spam = 0
-                self.protocol.transport.write(b"".join(self.send_buffer))
+                #self.protocol.transport.write(b"".join(self.send_buffer))
                 self.send_buffer.clear()
             except AttributeError:
                 pass
