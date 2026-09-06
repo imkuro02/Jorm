@@ -893,7 +893,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
         self.factory.protocols.remove(self)
         self.transport.loseConnection()
-        del self.transport._tempDataBuffer
+        print(self.transport._tempDataBuffer)
 
 
     # override
