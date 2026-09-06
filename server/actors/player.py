@@ -510,9 +510,9 @@ class Player(Actor):
             self.recently_send_message_count -= 1
 
 
-        if self.priority <= 10:
+        if self.priority <= 30:
             if len(self.queued_lines) >= 1:
-                self.priority += 3
+                self.priority += 6
                 
                 to_handle = self.queued_lines[0]
                 self.queued_lines.pop(0)

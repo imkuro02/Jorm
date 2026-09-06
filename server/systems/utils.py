@@ -166,13 +166,13 @@ def unload_fr():
             if type(r) != str:
                 tmp.append(type(r))
         
-        debug_print(len(TOUNLOAD),len(REFTRACKER.refs))
+        #debug_print(len(TOUNLOAD),len(REFTRACKER.refs))
         if len(REFTRACKER.refs) > 1750:
             debug_print(REFTRACKER.refs[1750])
 
     REFTRACKER.refs[:] = [r for r in REFTRACKER.refs if r() is not None]
     #print(tmp)
-    debug_print(f'to unload: {len(TOUNLOAD)}')
+    #debug_print(f'to unload: {len(TOUNLOAD)}')
 
     
 
