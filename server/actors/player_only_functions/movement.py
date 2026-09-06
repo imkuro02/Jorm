@@ -266,7 +266,8 @@ def command_go(self, line = '', room_id = None):
             self.pretty_broadcast(
                 f'You walk into a wall',
                 f'{self.id} walks into a wall',
-                sound = Audio.ERROR, send_to = 'room'
+                sound = Audio.ERROR, send_to = 'room',
+                list_pretty_name_objects = [self]
                 )
             roll = random.randint(0,100)
             if roll == 0:
