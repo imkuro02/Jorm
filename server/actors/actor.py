@@ -1238,8 +1238,6 @@ class Actor:
                 if line_others == None:
                     continue
 
-               
-                
                 custom_line = line_others
                 for obj in list_pretty_name_objects:
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
@@ -1249,7 +1247,6 @@ class Actor:
             if sound != None:
                 player.sendSound(sound)
 
-        del locals()
         
     def simple_broadcast(
         self, 
