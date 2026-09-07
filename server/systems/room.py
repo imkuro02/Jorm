@@ -119,15 +119,18 @@ class Spawner:
             if self.room.is_player_present() != False:
                 return
 
-            if self.room.world.factory.ticks_passed % (RESPAWN_TIME_MOBS + list(self.room.world.rooms.values()).index(self.room)) == 0:
+            _room_index = list(self.room.world.rooms.values()).index(self.room)
+            _ticks = self.room.world.factory.ticks_passed
+            if (_ticks + _room_index) % RESPAWN_TIME_MOBS == 0:
+
                 self.room.world.factory.respawned_all = False
-                if list(self.room.world.rooms.values()).index(self.room) == 0:
+                if _room_index == 0:
                     systems.utils.debug_print(
                         'Started respawning at room index 0'
                     )
 
 
-                if list(self.room.world.rooms.values()).index(self.room) == len(list(self.room.world.rooms.values()))-1:
+                if _room_index == len(list(self.room.world.rooms.values()))-1:
                     systems.utils.debug_print(
                         'Started respawning at room index -1'
                     )

@@ -123,7 +123,7 @@ def unload(obj_to_unload):
 
 
 def unload_fr():
-    silent = False
+    silent = True
     global TOUNLOAD  # <-- This is important
 
     for r in REFTRACKER.refs:
@@ -182,8 +182,8 @@ def unload_fr():
 
     REFTRACKER.refs[:] = [r for r in REFTRACKER.refs if r() is not None]
     #print(tmp)
-    debug_print(f'to unload: {len(TOUNLOAD)}')
-    debug_print(f'REFS     : {len(REFTRACKER.refs)}')
+    #debug_print(f'to unload: {len(TOUNLOAD)}')
+    #debug_print(f'REFS     : {len(REFTRACKER.refs)}')
 
     
 
