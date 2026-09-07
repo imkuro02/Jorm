@@ -21,6 +21,7 @@ class ServerFactory(protocol.Factory):
         context.FACTORY = self
 
         self.time_spent_calculating = 0
+        self.ticks_too_slow = 0
 
         self.ticks_passed = 0
         self.delayed_functions = DelayedFunctionsManager(factory = self)
@@ -77,6 +78,9 @@ class ServerFactory(protocol.Factory):
 
         _threashold = 0
 
+        if tick_end-tick_start >= 1 / TICKRATE:
+            systems.utils.debug_print(f'tick {self.ticks_passed} spent {(tick_end-tick_start)}s executing')
+            self.ticks_too_slow += 1
         if self.ticks_passed % TICKRATE == 0:
             if self.time_spent_calculating >= _threashold:
                 _thinking = f'Time thinking: {self.time_spent_calculating}'.ljust(40)
@@ -130,6 +134,7 @@ if __name__ == "__main__":
 
     factory.world.game_time.save_game_time()
     systems.utils.debug_print("Exiting...")
+    systems.utils.debug_print(f"{factory.ticks_too_slow} out of {factory.ticks_passed} ticks spent too long executing")
 
     #snapshot = tracemalloc.take_snapshot()
     #top_stats = snapshot.statistics("traceback")

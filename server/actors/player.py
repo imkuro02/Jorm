@@ -391,29 +391,19 @@ class Player(Actor):
 
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
-
-
         
-        if self.priority <= TICKRATE * 3:
+        if self.priority <= 6:
             if len(self.queued_lines) >= 1:
                 self.priority += 3
                 
                 to_handle = self.queued_lines[0]
                 self.queued_lines.pop(0)
 
-                #start = time.perf_counter()
-
                 self.handle(to_handle)
 
-                #elapsed = time.perf_counter() - start
-                #if self.protocol != None:
-                #    self.send_line(f'        last command took {elapsed} to execute', msg_type = [MessageType.DEBUG])
-
-            #if self.room.world.factory.ticks_passed % TICKRATE == 0:
             if self.update_checker != None:
                 self.update_checker.tick()
 
-        self.priority = 0
         self.priority -= 1
         if self.priority <= 0:
             self.priority = 0
@@ -544,7 +534,7 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
-        if len(self.queued_lines) >= 10:
+        if len(self.queued_lines) >= 3:
             return
 
         self.queued_lines.append(line)
@@ -746,7 +736,6 @@ class Player(Actor):
         if self.loaded:
             triggered = self.trigger_manager.trigger_check_surrounding(player = self, line = f'after_{commands[best_match]} {line}')
 
-        self.best_cache.clear()
 
     def set_turn(self):
         super().set_turn()

@@ -523,21 +523,21 @@ def command_skills(self, line, return_gmcp = False):
             if item == None:
                 continue
             equips.append(self.inventory_manager.items[item])
+
         for item in equips:
             self.inventory_unequip(item, silent=True)
 
+        level_without_eq = {}
         for skill_id in self.skill_manager.skills:
-            
+            _skill_lvl = self.skill_manager.skills[skill_id]
+            level_without_eq[skill_id] = _skill_lvl
 
+        for item in equips:
+            self.inventory_equip(item, forced=True)
 
-            # THIS IS FUCKING EXPENSIVE!!!!!!!
-            cur_lvl = 0
+        for skill_id in self.skill_manager.skills:
             cur_lvl = self.skill_manager.skills[skill_id]
-
-            
-
-            nat_lvl = 0
-            nat_lvl = self.skill_manager.skills[skill_id]
+            nat_lvl = level_without_eq[skill_id]
 
             
 
@@ -581,12 +581,8 @@ def command_skills(self, line, return_gmcp = False):
             #t.add_data(f"{cur_lvl} {diff}")
         
         if return_gmcp:
-            for item in equips:
-                self.inventory_equip(item, forced=True)
             return t.get_table()
         else:
-            for item in equips:
-                self.inventory_equip(item, forced=True)
             self.send_line(t.get_table())
 
 
