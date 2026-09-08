@@ -23,13 +23,19 @@ if player is not in send_to they will be ignored and another greet_message might
 from configuration.constants.tickrate import TICKRATE
 
 def greet_message(self, message, send_to: list = [None], sound = None):
+
+
     if self.room == None:
         return
-        
-    if self.factory.ticks_passed % (TICKRATE * 4) == 0:
-        if not hasattr(self,'actors_in_room'):
-            self.actors_in_room = {}
-        
+
+    if not hasattr(self,'actors_in_room'):
+        self.actors_in_room = {}
+
+    if self.room.was_inactive_n_ticks_ago(TICKRATE * 2):
+        self.actors_in_room = {}
+
+    if self.factory.ticks_passed % (TICKRATE * 1) == 0:
+
         for i in self.room.actors.values():
             if i.id in self.actors_in_room:
                 continue

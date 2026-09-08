@@ -1,4 +1,8 @@
-
+[id:bunny]
+  (\(\
+  (OxO
+o(2nn|
+[end]
 [id:roommate]
 @normal  _,m
  (@yellowo.o@normal)
@@ -720,6 +724,8 @@ _ \O   o/ _
  @bblack__   __
   )@whiteV)@bblack/(
    @white"-'
+
+   
 [end]
 
        __

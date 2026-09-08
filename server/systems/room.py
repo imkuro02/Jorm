@@ -314,10 +314,12 @@ class Room:
 
 
         self.cached_get_nearby_rooms = {}
+        self.last_active_tick_timestamp = 0
 
         REFTRACKER.add_ref(self)
 
-
+    def was_inactive_n_ticks_ago(self, ticks_ago):
+        return self.world.factory.ticks_passed >= (self.last_active_tick_timestamp + ticks_ago)
 
     def get_wall_data(self):
         wall_data = WORLD["world"][self.get_real_id()]["wall_data"].split(":")
@@ -386,6 +388,8 @@ class Room:
 
         if not self.is_player_present():
             return
+        
+        
 
         for a in self.actors.values():
             actors[a.id] = a
@@ -417,6 +421,9 @@ class Room:
 
         if self.combat != None:
             self.combat.tick()
+
+        # set last active timestamp
+        self.last_active_tick_timestamp = self.world.factory.ticks_passed
 
     def join_combat(self, participant):
         if self.combat == None:

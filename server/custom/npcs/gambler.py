@@ -234,6 +234,13 @@ class gambling(Npc):
         for i in self.dialogs.values():
             i.tick()
 
+        if self.room == None:
+            return
+            
+        if self.room.world.factory.ticks_passed % (TICKRATE * 3) == 0:
+            self.description = f'{self.original_description} They have {"made" if self.earnings >= 0 else "lost"} {abs(self.earnings)} scrap so far.'
+        
+        '''
         self.time_exisiting += 1
         if self.time_exisiting % (TICKRATE * 3) == 0:
             self.description = f'{self.original_description} They have {"made" if self.earnings >= 0 else "lost"} {abs(self.earnings)} scrap so far.'
@@ -260,3 +267,4 @@ class gambling(Npc):
                     f'"Wanna bet that {item_name}, {actor.pretty_name(identifier = actor, text_override = actor.name)}?" {self.id} asks', f'"Wanna bet that {item_name}, {actor.id}?" {self.id} asks',
                     list_pretty_name_objects = list_pretty_name_objects
                 )
+        '''
