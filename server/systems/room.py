@@ -383,12 +383,9 @@ class Room:
     def tick(self):
 
         actors = {}
-        if self.world.factory.ticks_passed <= TICKRATE:
-            return
 
-        if not self.is_an_instance():
-            if self.spawner != None:
-                self.spawner.tick()
+        if not self.is_player_present():
+            return
 
         for a in self.actors.values():
             actors[a.id] = a
@@ -396,30 +393,30 @@ class Room:
         for e in actors.values():
             e.tick()
 
+        if (not self.is_an_instance()
+        and self.spawner != None):
+            self.spawner.tick()
+            
         # remove items that have been on the ground for too long
         items_to_remove = []
         for i in self.inventory_manager.items.values():
             i.tick()
-            if self.spawner != None:
-                if i in self.spawner.spawn_points.values():
-                    continue
 
-            if i.time_on_ground == None:
+            if (self.spawner != None
+            and i in self.spawner.spawn_points.values()):
+                continue
+
+            if i.time_dropped_on_ground == None:
                 items_to_remove.append(i)
             else:
-                i.time_on_ground += 1
-                if i.time_on_ground >= (DESPAWN_TIME_ITEMS):
-                    #if not self.room.is_player_present():
-                    #    items_to_remove.append(i)
+                if i.time_dropped_on_ground >= (self.factory.ticks_passed + DESPAWN_TIME_ITEMS):
                     items_to_remove.append(i)
 
         for i in items_to_remove:
             self.inventory_manager.remove_item(i)
 
-        if self.combat == None:
-            return
-
-        self.combat.tick()
+        if self.combat != None:
+            self.combat.tick()
 
     def join_combat(self, participant):
         if self.combat == None:

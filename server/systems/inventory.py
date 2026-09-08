@@ -205,6 +205,9 @@ class InventoryManager:
             return True
         return False
 
+    def reset_time_dropped_on_ground(self):
+        return self.owner.room.world.factory.ticks_passed
+
     def add_item(
         self, item, stack_items=True, dont_send_objective_proposal=False, forced=False
     ):
@@ -215,7 +218,7 @@ class InventoryManager:
             return False
 
 
-        item.time_on_ground = 0
+        item.time_dropped_on_ground = self.reset_time_dropped_on_ground()
         
         if not forced:
             if self.get_amount_of_free_item_slots() <= 0:
@@ -235,7 +238,7 @@ class InventoryManager:
 
                 if _i.stack + item.stack > _i.stack_max:
                     
-                    _i.time_on_ground = 0
+                    item.time_dropped_on_ground = self.reset_time_dropped_on_ground()
                     item.stack -= _i.stack_max - _i.stack
                     _i.stack = _i.stack_max
                     self.add_item(item, stack_items=stack_items, dont_send_objective_proposal=dont_send_objective_proposal, forced=forced)
@@ -252,7 +255,7 @@ class InventoryManager:
                         )
                     return True
 
-                _i.time_on_ground = 0
+                item.time_dropped_on_ground = self.reset_time_dropped_on_ground()
                 _i.stack += item.stack
                 if (
                     not dont_send_objective_proposal
