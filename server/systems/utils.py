@@ -458,6 +458,11 @@ def add_color(line, color_settings=None):
 
     return line
 """
+
+
+
+
+'''
 _colors = copy.deepcopy(colors)
 COLOR_PATTERN = re.compile("|".join(re.escape(c) for c in _colors))
 def add_color(line, color_settings=None):
@@ -480,6 +485,35 @@ def add_color(line, color_settings=None):
 
         back_stack.append(code)
         used.append(code)
+
+        return colors.get(code, "")
+
+    return COLOR_PATTERN.sub(repl, line)
+'''
+_colors = copy.deepcopy(colors)
+COLOR_PATTERN = re.compile("|".join(re.escape(c) for c in _colors))
+def add_color(line, color_settings=None):
+    colors = _colors
+
+    if color_settings:
+        colors = _colors.copy()
+        for k, v in color_settings.items():
+            if v:
+                colors[k] = v
+
+    previous = "@normal"
+    current = "@normal"
+
+    def repl(match):
+        nonlocal previous, current
+
+        code = match.group(0)
+
+        if code == "@back":
+            code = previous
+
+        previous = current
+        current = code
 
         return colors.get(code, "")
 
