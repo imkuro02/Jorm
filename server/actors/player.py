@@ -386,7 +386,7 @@ class Player(Actor):
         
         if self.priority <= 10:
             if len(self.queued_lines) >= 1:
-                self.priority += 4
+                self.priority += 1
                 
                 to_handle = self.queued_lines[0]
                 self.queued_lines.pop(0)
@@ -426,7 +426,20 @@ class Player(Actor):
             if self.protocol == None:
                 break
                 
+            '''
+            import time
+            __s = time.time()
+            self.send_buffer = ['fdsa fdsa fdsa' * 100]
+            __e = time.time()
+            self.protocol.factory.reactor.callFromThread(self.protocol.transport.write, self.send_buffer.pop(0).encode("utf-8"))
+            self.send_buffer = ['fdsa fdsa fdsa' * 100]
+            _s = time.time()
             self.protocol.transport.write(self.send_buffer.pop(0).encode("utf-8"))
+            _e = time.time()
+            print(_e-_s, __e-__s, (_e-_s)>(__e-__s))
+            '''
+            self.protocol.factory.reactor.callFromThread(self.protocol.transport.write, self.send_buffer.pop(0).encode("utf-8"))
+
 
             
         

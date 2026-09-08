@@ -110,6 +110,7 @@ if __name__ == "__main__":
 
     
     factory = ServerFactory()
+    factory.reactor = reactor
     print(context.FACTORY,'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx')
 
 
