@@ -315,8 +315,6 @@ class Room:
 
         self.cached_get_nearby_rooms = {}
 
-        self.player_count = 0
-
         REFTRACKER.add_ref(self)
 
 
@@ -363,11 +361,10 @@ class Room:
         return False
 
     def is_player_present(self):
-        return self.player_count >= 1
-        #for i in self.actors.values():
-        #    if type(i).__name__ == "Player":
-        #        return i
-        #return False
+        for i in self.actors.values():
+            if type(i).__name__ == "Player":
+                return i
+        return False
 
     def get_description(self, short = False):
         desc = self.description
@@ -490,8 +487,6 @@ class Room:
             self.combat = self.combat_manager_class(self, participants)
 
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
-        
-
         actor.room_previous = actor.room.get_real_id()
         self.remove_actor(actor)
         
@@ -554,9 +549,6 @@ class Room:
                 list_pretty_name_objects = [actor],
                 msg_type = MessageType.MOVEMENT
             )
-
-        if type(actor).__name__ == 'Player':
-            self.player_count += 1
 
     """
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
@@ -647,6 +639,3 @@ class Room:
             if actor in actor.room.combat.participants.values():
                 del actor.room.combat.participants[actor.id]
         del actor.room.actors[actor.id]
-
-        if type(actor).__name__ == 'Player':
-            self.player_count -= 1
