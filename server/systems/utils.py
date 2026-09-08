@@ -688,22 +688,20 @@ class Table:
             return ""
 
         index = 0
+        widths = [0] * self.columns
         i = 0
-        widths = {}
-        for i in range(0, len(self.data)):
-            widths[i] = 0
 
-        i = 0
+        elem_raw_list = []
         for elem in self.data:
             elem_raw = remove_color(elem["val"])
             pattern = r'\[url(?:=[^\]]*)?\](.*?)\[/url\]'
             elem_raw = re.sub(pattern, r'\1', elem_raw)
+            elem_raw_list.append(elem_raw)
+
 
 
             if widths[i] < len(elem_raw) + self.SPACE:
                 widths[i] = len(elem_raw) + self.SPACE
-            # systems.utils.debug_print(index)
-            # systems.utils.debug_print(i,index,elem,widths[index])
             i += 1
             if i == self.columns:
                 index += 1
@@ -713,25 +711,16 @@ class Table:
         i = 0
         index = 0
 
-        for elem in self.data:
-            elem_raw = remove_color(elem["val"])
-            pattern = r'\[url(?:=[^\]]*)?\](.*?)\[/url\]'
-            elem_raw = re.sub(pattern, r'\1', elem_raw)
+        for _, elem in enumerate(self.data):
+            #elem_raw = remove_color(elem["val"])
+            #pattern = r'\[url(?:=[^\]]*)?\](.*?)\[/url\]'
+            #elem_raw = re.sub(pattern, r'\1', elem_raw)
+            elem_raw = elem_raw_list[_]
 
-            #if 'Strike' in elem_raw:
-            #    print(elem_raw)
-
-            # systems.utils.debug_print(i,index,elem,widths[i])
-            #tmp_output = f"{remove_color(elem['val']):<{widths[i]}}"
             tmp_output = f"{elem_raw:<{widths[i]}}"
             tmp_output = tmp_output.replace(
                 elem_raw, elem["col"] + elem["val"] + f"@normal"
             )
-
-            #tmp_output = f"{remove_color(elem['val']):<{widths[i]}}"
-            #tmp_output = tmp_output.replace(
-            #    remove_color(elem["val"]), elem["col"] + elem["val"] + f"@normal"
-            #)
 
             tmp_output = tmp_output.rstrip().ljust(len(tmp_output), elem["fil"])
 
