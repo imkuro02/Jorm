@@ -470,9 +470,9 @@ class Player(Actor):
             # this line is responsible for making the length of text 28 chars or smth
             line = systems.utils.add_line_breaks(line)
 
-            #line = systems.utils.add_color(
-            #    line, color_settings=self.settings_manager.get_value(SETTINGS.COLOR)
-            #)
+            line = systems.utils.add_color(
+                line, color_settings=self.settings_manager.get_value(SETTINGS.COLOR)
+            )
 
             if self.settings_manager.get_value(SETTINGS.DEBUG):
                 line = str(msg_type) + '->' +line
