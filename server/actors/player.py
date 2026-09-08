@@ -431,8 +431,13 @@ class Player(Actor):
                 print(str(e) + 'FUCK FUCK FUCK')
                 pass
         """
-        for _ in range(min(10, len(self.send_buffer))):
-            self.protocol.transport.write(self.send_buffer.pop(0))
+        try:
+            for _ in range(min(10, len(self.send_buffer))):
+                self.protocol.transport.write(self.send_buffer.pop(0))
+        except Exception as e:
+            systems.utils.debug_print(e)
+
+            
         
 
     def sendSound(self, sfx):
