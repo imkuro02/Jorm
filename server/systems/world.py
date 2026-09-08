@@ -1,33 +1,17 @@
-# from actors.enemy import create_enemy
-import copy
+import json
 import os
-import random
 import time
 
-# from items import Item
-import uuid
-
 import systems.utils
-from actors.npcs import create_npc
-from actors.player import Player
-from combat.manager import Combat
 from configuration.config import (
     ENEMIES,
-    ITEMS,
-    NPCS,
     WORLD,
 )
-
-from configuration.constants.actor_status_type import ActorStatusType
-from configuration.constants.stat_type import StatType
-from custom import loader as custom_loader
-from items.manager import load_item
-from systems.inventory import InventoryManager
-from systems.room import Exit, Room
-from systems.utils import REFTRACKER, unload
-import json
-from configuration.config import ENEMIES
 from configuration.constants.tickrate import TICKRATE
+from custom import loader as custom_loader
+from systems.room import Exit, Room
+from systems.utils import unload
+
 
 class KillTracking:
     def __init__(self, factory):

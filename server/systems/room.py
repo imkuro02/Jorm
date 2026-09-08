@@ -64,7 +64,6 @@ class Spawner:
         return room
 
     def respawn_all(self, forced=True):
-
         for i in self.spawn_points:
             s = self.spawn_points[i]
 
@@ -73,16 +72,20 @@ class Spawner:
 
             s.unload()
 
-            if systems.utils.get_object_parent(s) == 'Item':
-                if s not in self.room.inventory_manager.items.values():
-                    self.spawn_points[i] = None
-
-            if s not in self.room.actors.values():
+            '''
+            if (systems.utils.get_object_parent(s) == 'Item'
+            and s not in self.room.inventory_manager.items.values()):
                 self.spawn_points[i] = None
 
+            if (systems.utils.get_object_parent(s) == 'Actor'
+            and s not in self.room.actors.values()):
+                self.spawn_points[i] = None
+            '''
+            
+            if (s not in self.room.actors.values()
+            and s not in self.room.inventory_manager.items.values()):
+                self.spawn_points[i] = None
 
-
-        # return
         if "spawner" in self.room_dict:
             for i, _list in enumerate(self.room_dict["spawner"]):
 
@@ -312,6 +315,8 @@ class Room:
 
         self.cached_get_nearby_rooms = {}
 
+        self.player_count = 0
+
         REFTRACKER.add_ref(self)
 
 
@@ -358,10 +363,11 @@ class Room:
         return False
 
     def is_player_present(self):
-        for i in self.actors.values():
-            if type(i).__name__ == "Player":
-                return i
-        return False
+        return self.player_count >= 1
+        #for i in self.actors.values():
+        #    if type(i).__name__ == "Player":
+        #        return i
+        #return False
 
     def get_description(self, short = False):
         desc = self.description
@@ -484,6 +490,8 @@ class Room:
             self.combat = self.combat_manager_class(self, participants)
 
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
+        
+
         actor.room_previous = actor.room.get_real_id()
         self.remove_actor(actor)
         
@@ -546,6 +554,9 @@ class Room:
                 list_pretty_name_objects = [actor],
                 msg_type = MessageType.MOVEMENT
             )
+
+        if type(actor).__name__ == 'Player':
+            self.player_count += 1
 
     """
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):
@@ -636,3 +647,6 @@ class Room:
             if actor in actor.room.combat.participants.values():
                 del actor.room.combat.participants[actor.id]
         del actor.room.actors[actor.id]
+
+        if type(actor).__name__ == 'Player':
+            self.player_count -= 1

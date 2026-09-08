@@ -1,5 +1,3 @@
-import gc
-import time
 
 # import the commands module so all functions can be imported and assigned to player class
 import actors.player_only_functions.commands
@@ -7,9 +5,9 @@ import systems.utils
 from actors.actor import Actor
 
 # from actors.enemy_ai import AIBasic
-from actors.ai import EnemyAI, PlayerAI
-#from actors.player_only_functions.charging_mini_game import ChargingMiniGame
+from actors.ai import PlayerAI
 
+#from actors.player_only_functions.charging_mini_game import ChargingMiniGame
 # import commands maps
 from actors.player_only_functions.commands import (
     commands,
@@ -22,9 +20,8 @@ from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.color import Color
 from configuration.constants.message_type import MessageType
 from configuration.constants.stat_type import StatType
-from systems.trade import TradeManager
-from systems.utils import unload
 from configuration.constants.tickrate import TICKRATE
+from systems.trade import TradeManager
 
 _len = len('**********************************************************************************')
 
@@ -66,7 +63,6 @@ class FriendManager:
 
     def friend_list(self):
         self.owner.send_line("Friend list:")
-        accs = []
         t = systems.utils.Table(2, 3)
         t.add_data("Name")
         t.add_data("Status")
@@ -377,17 +373,13 @@ class Player(Actor):
         super().tick()
 
         # regain lost exp
-        if self.status != ActorStatusType.DEAD:
-            if self.room.id in self.collect_lost_exp_rooms:
+        if (self.status != ActorStatusType.DEAD
+        and self.room.id in self.collect_lost_exp_rooms):
                 self.gain_exp(self.collect_lost_exp_rooms[self.room.id])
                 del self.collect_lost_exp_rooms[self.room.id]
 
-        # if self.settings_manager.autobattler:
         if self.ai != None:
             self.ai.tick()
-
-        #if self.charging_mini_game != None:
-        #    self.charging_mini_game.tick()
 
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
@@ -405,8 +397,7 @@ class Player(Actor):
                 self.update_checker.tick()
 
         self.priority -= 1
-        if self.priority <= 0:
-            self.priority = 0
+        self.priority = max(0, self.priority)
 
         
         """
@@ -431,11 +422,11 @@ class Player(Actor):
                 print(str(e) + 'FUCK FUCK FUCK')
                 pass
         """
-        try:
-            for _ in range(min(10, len(self.send_buffer))):
-                self.protocol.transport.write(self.send_buffer.pop(0))
-        except Exception as e:
-            systems.utils.debug_print(e)
+        for _ in range(min(10, len(self.send_buffer))):
+            if self.protocol == None:
+                break
+                
+            self.protocol.transport.write(self.send_buffer.pop(0).encode("utf-8"))
 
             
         
@@ -475,11 +466,11 @@ class Player(Actor):
             # line += f'\n'
 
            
-            self.send_buffer.append(line.encode("utf-8"))
+            self.send_buffer.append(line)
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
             #self.protocol.transport.write(line.encode("utf-8"))
-            self.send_buffer.append(line.encode("utf-8"))
+            self.send_buffer.append(line)
         return
 
     def gain_exp(self, exp):
@@ -562,12 +553,12 @@ class Player(Actor):
 
     def handle(self, line):
 
-        if self.status == ActorStatusType.FIGHTING:
-            if self.settings_manager.get_value(SETTINGS.AUTO_BATTLER):
-                if line != 'set autobattler off':
-                    if self.room.combat != None:
-                        self.send_line(Color.ERROR + 'Autobattler turning off' + Color.NORMAL)
-                        self.handle('set autobattler off')
+        if (self.status == ActorStatusType.FIGHTING
+        and self.settings_manager.get_value(SETTINGS.AUTO_BATTLER)
+        and line != 'set autobattler off'
+        and self.room.combat != None):
+            self.send_line(Color.ERROR + 'Autobattler turning off' + Color.NORMAL)
+            self.handle('set autobattler off')
 
         if not line:
             line = self.last_line_sent
