@@ -386,8 +386,8 @@ class Room:
 
         actors = {}
 
-        if not self.is_player_present():
-            return
+        #if not self.is_player_present():
+        #    return
         
         
 
@@ -413,7 +413,7 @@ class Room:
             if i.time_dropped_on_ground == None:
                 items_to_remove.append(i)
             else:
-                if i.time_dropped_on_ground >= (self.factory.ticks_passed + DESPAWN_TIME_ITEMS):
+                if i.time_dropped_on_ground >= (self.world.factory.ticks_passed + DESPAWN_TIME_ITEMS):
                     items_to_remove.append(i)
 
         for i in items_to_remove:
@@ -454,7 +454,11 @@ class Room:
                 #    if i.dont_join_fights:
                 #        continue
                 #    participants[i.id] = i
-                if i.party_manager.get_faction_id() == FactionType.ENEMY and i.party_manager.get_faction_id() == FactionType.ENEMY:
+                #if i.party_manager.get_faction_id() == FactionType.ENEMY and i.party_manager.get_faction_id() == FactionType.ENEMY:
+                #    if i.dont_join_fights:
+                #        continue
+                #    participants[i.id] = i
+                if i.party_manager.get_faction_id() != FactionType.PLAYER and i.party_manager.get_faction_id() != FactionType.PLAYER:
                     if i.dont_join_fights:
                         continue
                     participants[i.id] = i

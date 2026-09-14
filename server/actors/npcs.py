@@ -198,7 +198,7 @@ class Npc(Actor):
     def join_combat(self):
         super().join_combat()
         from configuration.constants.faction_type import FactionType
-        if self.party_manager.get_faction_id() == FactionType.ENEMY:
+        if self.party_manager.get_faction_id() != FactionType.PLAYER:
             
             from affects.affects import AffectBoostStat
             amount = -1

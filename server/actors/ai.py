@@ -219,12 +219,14 @@ class AI:
             skill_obj = skill_obj(skill_id = i, user = self.actor)
             skill_obj.evaluation = skill_obj.evaluate()
             
-            skill_obj.evaluation += random.randint(0,1)
+            
 
             #systems.utils.debug_print(self.actor.name, skill_obj.id, skill_obj.evaluation)
 
             if skill_override == None and skill_obj.evaluation <= 0:
                 continue
+
+            skill_obj.evaluation += random.randint(0,1)
 
             if highest == None:
                 highest = skill_obj

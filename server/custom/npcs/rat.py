@@ -10,7 +10,9 @@ class rat(Npc):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-       
+
+        # self.party_manager.override_faction_id = 'rats'
+        #self.party_manager.get_faction_id = self.get_faction_id
         self.trigger_manager.trigger_add(trigger_key = 'pet', trigger_action = self.trigger_pet)
         self.description += '\nYou can "pet" the rat'
         #self.trigger_manager.trigger_add(trigger_key = 'after_command_go', trigger_action = self.trigger_poop)
@@ -27,6 +29,9 @@ class rat(Npc):
     #    line = line.replace('after_command_go ','')
     #    player.send_line('>>>>>this has been triggered RIGHT AFTER you entered the room... woa')
     #    return True
+
+    #def get_faction_id(self):
+    #    return 'reee'
 
     def trigger_pet(self, player, line):
         line = line.replace('pet ','')

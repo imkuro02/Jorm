@@ -80,30 +80,44 @@ class PartyManager:
         self.party = None
         self.invitations = []
         self.actor_to_follow = None
+        self.override_faction_id = None
+        #self.override_party_id = None
 
     def get_actor_to_follow(self):
         if self.party != None:
-            
             return self.party.actor
         return self.actor_to_follow
 
     def get_is_friendly(self, who_to_check):
+        '''
+        The best way to explain party and faction ID
+        if you either share a party or a faction with an actor, you are allied
+        if you share neither, you are enemies
+        '''
         if self.actor.party_manager.get_party_id() == who_to_check.party_manager.get_party_id():
             return True
-        if self.actor.party_manager.get_faction_id() == who_to_check.party_manager.get_faction_id():
+        if self.actor.party_manager.get_faction_id() == who_to_check.party_manager.get_faction_id():  # noqa: SIM103
             return True
         return False
     
     def get_faction_id(self):
+        if self.override_faction_id:
+            return self.override_faction_id
+
         if type(self.actor).__name__ != "Player":
             return FactionType.ENEMY
         if type(self.actor).__name__ == "Player":
             return FactionType.PLAYER 
             
     def get_party_id(self):
+        #if self.override_party_id:
+        #    return self.override_party_id
+            
         if self.party != None:
             return self.party.party_id  # self.party.actor.id
         else:
+            return self.actor.id
+        '''
             # all enemies will get party id enemies
             # as their party id, this is so they dont
             # start whacking eachother
@@ -116,6 +130,7 @@ class PartyManager:
             if type(self.actor).__name__ == "Player":
                 # return 'party id players' #self.actor.id #'party id players'
                 return self.actor.id
+        '''
 
     def clear_invites(self):
         self.invitations = []

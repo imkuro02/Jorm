@@ -57,7 +57,7 @@ class Combat:
         self.combat_active = True
         self.combat_history = CombatHistory(self)
 
-        self.participants = participants
+        #self.participants = participants
         for p in participants.values():
             self.add_participant(p)
             
@@ -204,9 +204,13 @@ class Combat:
             self.combat_active = False
             return
 
-        participants = [] 
-        for i in self.participants.values():
-            participants.append(i)
+        for i in self.room.actors.values():
+            if type(i).__name__ == "Player":
+                i.send_line("@yellowCombat over!@normal")
+
+        participants = list(self.participants.values()).copy() 
+        #for i in self.participants.values():
+        #   participants.append(i)
         
         for i in participants:
             if i.status != ActorStatusType.DEAD and i.reset_stats_after_combat == True:
@@ -215,8 +219,7 @@ class Combat:
                 i.skill_manager.unload_all_cooldowns()
                 i.affect_manager.unload_all_affects()
                 i.heal(value=99999)
-            if type(i).__name__ == "Player":
-                i.send_line("@yellowCombat over!@normal")
+            
 
 
             if i.party_manager.party != None:
@@ -263,9 +266,9 @@ class Combat:
         for i in self.participants.values():
             if (
                 i.status == ActorStatusType.FIGHTING
-                and i.party_manager.get_party_id() not in participating_parties
+                and i.party_manager.get_faction_id() not in participating_parties
             ):
-                participating_parties.append(i.party_manager.get_party_id())
+                participating_parties.append(i.party_manager.get_faction_id())
 
         if len(participating_parties) <= 1:
             self.combat_over()
@@ -312,21 +315,25 @@ class Combat:
             self.combat_over()
             return
 
+
+        # this whole thing is weird
+        order = ""
         list_pretty_name_objects = []
         if show_turns_and_stuff:
             for par in self.participants.values():
                 if type(par).__name__ != "Player":
                     continue
-                order = ""
                 for i in self.order:
                     order = order + i.id + " -> "
                     list_pretty_name_objects.append(i)
+                
+                # par.send_line(('#'*80)+'\n'+order)
                 order = (
                     f"{Color.COMBAT_TURN}ROUND {self.round+1}...{Color.NORMAL} "
                     + "".join(order.rsplit(" -> ", 1))
                 )
-                # par.send_line(('#'*80)+'\n'+order)
-        par.pretty_broadcast(order, order, list_pretty_name_objects = list_pretty_name_objects, msg_type = [MessageType.COMBAT])
+                par.pretty_broadcast(order, order, list_pretty_name_objects = list_pretty_name_objects, msg_type = [MessageType.COMBAT])
+                break
 
         for i in self.order:
             if i.room != self.room:

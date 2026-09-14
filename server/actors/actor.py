@@ -386,8 +386,8 @@ class Actor:
 
         self.inventory_manager = InventoryManager(self)
         self.slots_manager = SlotsManager(self)
-
         self.party_manager = PartyManager(self)
+
         self.quest_manager = QuestManager(self)
 
         self.stat_manager = ActorStatManager(self)
@@ -1230,6 +1230,8 @@ class Actor:
 
                 custom_line = line_self
                 for obj in list_pretty_name_objects:
+                    if obj.id == None:
+                        continue
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
                 player.send_line(f"@normal{custom_line}", msg_type=msg_type)
 

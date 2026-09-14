@@ -139,10 +139,10 @@ class Skill:
                 continue
             
             if SKILLS[self.skill_id]['is_offensive']:
-                if self.user.party_manager.get_party_id() == i.party_manager.get_party_id():
+                if self.user.party_manager.get_is_friendly(i):
                     continue
             else:
-                if not self.user.party_manager.get_party_id() == i.party_manager.get_party_id():
+                if not self.user.party_manager.get_is_friendly(i):
                     continue
 
             valid.append(i)
@@ -195,9 +195,6 @@ class Skill:
             return self.name
 
     def use_broadcast(self):
-
-
-
         perspectives = {
             "you on you":       '#USER# used #SKILL#',
             "you on other":     '#USER# used #SKILL# on #OTHER#',
@@ -228,6 +225,7 @@ class Skill:
                 "#SKILL#", self.pretty_name()
             )
         '''
+        
 
         for receiver in self.user.room.actors.values():
             if type(receiver).__name__ != "Player":
@@ -277,6 +275,7 @@ class Skill:
         pass
 
     def use(self):
+
         self.user.add_to_combat_history(self)
 
         self.normalize_combat_event()
@@ -1922,6 +1921,11 @@ class SkillNecromancerRessurect(SkillTargetItem):
             
             # link get_party_id to master party id
             e.party_manager.get_party_id = self.user.party_manager.get_party_id
+            e.party_manager.get_faction_id = self.user.party_manager.get_faction_id
+
+            #e.party_manager.get_party_id = self.user.party_manager.get_party_id
+            #e.party_manager.override_faction_id = self.user.party_manager.get_faction_id()
+
             #e.party_manager.get_party_id = MethodType(
             #    type(self.user.party_manager).get_party_id,  # unbound function
             #    self.user.party_manager                      # bind to USER party manager

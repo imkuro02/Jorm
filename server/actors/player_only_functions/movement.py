@@ -66,6 +66,8 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
     world = self.room.world
 
     world.rooms[new_room].move_actor(self, silent = False)
+    self.finish_turn(force_cooldown=True)
+
     self.sendSound(Audio.walk())
     
 
@@ -83,6 +85,8 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
                 continue
 
             followed_actor.room.move_actor(par, silent = False)
+            followed_actor.finish_turn(force_cooldown=True)
+
             #par.pretty_broadcast(f'You follow {followed_actor.id}', None, list_pretty_name_objects=[followed_actor])
 
             if type(par).__name__ == 'Player':

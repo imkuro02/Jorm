@@ -29,10 +29,17 @@ versions:
   #
   #
   #
-  "270826":
-    id: "270826"
-    title: Sound!
+  "140926":
+    id: "140926"
+    title: Cleanup
     unixtime: 1775631568
+    features:
+      - Perfecly timing a flee command will not crash server anymore
+      - Fixed bugs regarding npcs fighting 
+      - Audio settings added
+      - Max history size on client increased from 25 to 100 
+      - Added override_faction_id to party_manager 
+      - Fixed bleeding proc on enemy unload crash
   "270826":
     id: "270826"
     title: Patch
