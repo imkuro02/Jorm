@@ -24,10 +24,10 @@ class SETTINGS:
     LOGOUT = "Logout"
     DEBUG = "Debug"
     DEBUGMUTED = "DebugMuted"
-    PWD = "Password"
-    USR = "Username"  # not in LIST_SETTINGS
+    #PWD = "Password"
+    #USR = "Username"  # not in LIST_SETTINGS
     NAME = 'Name'
-    EMAIL = "Email"
+    #EMAIL = "Email"
     AUTO_BATTLER = "AutoBattler"
     SHORT_ROOM_DESCRIPTIONS = 'Brief'
     PROMPT = "Prompt"
@@ -50,10 +50,10 @@ class SETTINGS:
         RESET,
         LOGOUT,
         DEBUG,
-        PWD,
-        USR,
+        #PWD,
+        #USR,
         NAME,
-        EMAIL,
+        #EMAIL,
         PROMPT,
         AUTO_BATTLER,
         SHORT_ROOM_DESCRIPTIONS,
@@ -83,7 +83,7 @@ class Settings:
             #SETTINGS.EGO: "EXP gain increased by 25% of ego, damage taken +100% of ego, damage dealt is damage/ego",
             SETTINGS.EGO: "Increase the difficulty (and rewards) for yourself only",
             SETTINGS.PROMPT: "\"Help prompt\" for more info",
-            SETTINGS.EMAIL: "Recovery email address",
+            #SETTINGS.EMAIL: "Recovery email address",
             #SETTINGS.AUTO_BATTLER: "Automatically use offensive skills in combat, disables itself if you do ANYTHING in combat",
             SETTINGS.AUTO_BATTLER: "Automatically use offensive skills in combat",
             SETTINGS.SHORT_ROOM_DESCRIPTIONS: 'Room descriptions are short unless specifically looking',
@@ -107,7 +107,7 @@ class Settings:
             SETTINGS.PROMPT: "p0",
             SETTINGS.AUTO_BATTLER: False,
             SETTINGS.SHORT_ROOM_DESCRIPTIONS: False,
-            SETTINGS.EMAIL: "",
+            #SETTINGS.EMAIL: "",
             SETTINGS.VOL_MASTER: 50,
             SETTINGS.VOL_EFFECTS: 100,
             SETTINGS.VOL_MUSIC: 100,
@@ -196,9 +196,9 @@ class Settings:
         match command:
             case SETTINGS.RESET:
                 self.actor.send_line("All settings reset to default")
-                email = self.actor.settings_manager.get_value(SETTINGS.EMAIL)
+                #email = self.actor.settings_manager.get_value(SETTINGS.EMAIL)
                 self.actor.settings_manager = Settings(self.actor)
-                self.actor.settings_manager.settings[SETTINGS.EMAIL] = email
+                #self.actor.settings_manager.settings[SETTINGS.EMAIL] = email
                 return
             
             case SETTINGS.ECHO:
@@ -444,7 +444,11 @@ class Settings:
                 _name = line[1]
                 succ = self.actor.protocol.try_this_actor_name(_name)
                 if not succ:
+                    
                     return
+                self.actor.send_line(
+                    f"New name set to \"{_name}\""
+                )
                 self.actor.name = _name
 
             case SETTINGS.PROMPT:
@@ -586,7 +590,7 @@ def command_settings(self, line):
 
             
                 
-            if i in [SETTINGS.COLOR, SETTINGS.ALIAS, SETTINGS.EMAIL, SETTINGS.PROMPT]:
+            if i in [SETTINGS.COLOR, SETTINGS.ALIAS, SETTINGS.PROMPT]:
                 t.add_data(f"Special")
                 if i in self.settings_manager.info:
                     t.add_data(self.settings_manager.info[i])
