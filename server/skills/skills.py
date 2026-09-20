@@ -1645,6 +1645,7 @@ class SkillTeleport(Skill):
 
         if _target != None:
             self.teleport_target = _target
+            return
 
         self.skill_failed_on_purpose_error = 'Teleport could not find a valid target'
 

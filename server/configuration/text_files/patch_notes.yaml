@@ -36,7 +36,9 @@ versions:
     unixtime: 1775631568
     features:
       - Corpses now despawn cleanly again
-      
+      - Fixed client audio resetting on login
+      - Fixed teleport skill
+
   "140926":
     id: "140926"
     title: Cleanup
