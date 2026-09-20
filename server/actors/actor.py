@@ -1404,7 +1404,7 @@ class Actor:
                             + "\n"
                         )
 
-            output = output[:-1] if output.endswith("\n") else output
+            #output = output[:-1] if output.endswith("\n") else output
 
             if return_gmcp:
                 return output

@@ -755,7 +755,7 @@ class SkillGuard(Skill):
                 name="Guarding",
                 description=f"Guarding from physical and magical damage",
                 turns=turns,
-                get_prediction_string_append="is guarding!",
+                get_prediction_string_append="(Guarding)",
                 get_prediction_string_clear=True,
                 heal_power = power,
                 dispellable = False,
@@ -821,7 +821,7 @@ class SkillBash(SkillDamageByGrit):
             description="Unable to act during combat turns",
             turns=int(self.calculate_script_value(value = 'duration')),
             resisted_by=StatType.PHYARMOR,
-            get_prediction_string_append="stunned!",
+            get_prediction_string_append="(Stunned)",
             get_prediction_string_clear=True,
         )
         self.other.affect_manager.set_affect_object(stunned_affect)
@@ -1038,7 +1038,7 @@ class SkillNightmare(Skill):
                 name="Nightmared",
                 description=f"Unable to act until affect wears off, damage will start your turn",
                 turns=turns,
-                get_prediction_string_append="is sleeping!",
+                get_prediction_string_append="(Sleeping)",
                 get_prediction_string_clear=True,
             )
             self.other.affect_manager.set_affect_object(affect)
