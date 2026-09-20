@@ -25,13 +25,9 @@
 
 [node name="main" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1152.0
-offset_bottom = -648.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 960.0
 script = ExtResource("1_2qhxg")
 
 [node name="canvas" type="CanvasLayer" parent="."]
@@ -203,28 +199,24 @@ size_flags_horizontal = 3
 
 [node name="input" type="ColorRect" parent="canvas"]
 custom_minimum_size = Vector2(0, 32)
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 384.0
-offset_top = -40.0
-offset_right = -8.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 0
+offset_top = 920.0
+offset_right = 1272.0
+offset_bottom = 952.0
 color = Color(0.775063, 0.775063, 0.775063, 1)
 metadata/_edit_group_ = true
 
 [node name="input" type="LineEdit" parent="canvas/input"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 1.25
-anchor_right = 1.0
-anchor_bottom = 1.25
-offset_left = 32.0
-offset_top = -44.0
-offset_bottom = -4.0
+anchor_left = -0.432
+anchor_top = -28.75
+anchor_right = -0.432
+anchor_bottom = -28.75
+offset_left = 415.616
+offset_top = 916.0
+offset_right = 1271.62
+offset_bottom = 956.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -237,21 +229,22 @@ script = ExtResource("20_c83m0")
 [node name="Label" type="Label" parent="canvas/input"]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 2
-offset_top = 4.0
-offset_right = 1264.0
-offset_bottom = 26.0
+anchor_left = -0.432
+anchor_top = -28.75
+anchor_right = -0.432
+anchor_bottom = -28.75
+offset_left = 383.616
+offset_top = 924.0
+offset_right = 1647.62
+offset_bottom = 946.0
 theme_override_fonts/font = ExtResource("19_jxno8")
 text = " >"
 
 [node name="sidebar" type="VBoxContainer" parent="canvas"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = -888.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 392.0
+offset_bottom = 952.0
 
 [node name="room_icons" type="RichTextLabel" parent="canvas/sidebar"]
 custom_minimum_size = Vector2(0, 254)
@@ -321,15 +314,10 @@ meta_underlined = false
 script = ExtResource("3_gkcnj")
 
 [node name="container" type="BoxContainer" parent="canvas"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 384.0
 offset_top = 16.0
-offset_right = -8.0
-offset_bottom = -64.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 1264.0
+offset_bottom = 896.0
 
 [node name="output" type="VBoxContainer" parent="canvas/container"]
 layout_mode = 2
@@ -367,6 +355,7 @@ script = ExtResource("3_gkcnj")
 
 [node name="output" type="RichTextLabel" parent="canvas/container/output/output"]
 layout_mode = 0
+offset_right = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
@@ -450,13 +439,10 @@ selection_enabled = true
 
 [node name="smooth_exp_bar" type="RichTextLabel" parent="canvas"]
 anchors_preset = -1
-anchor_top = 0.996
-anchor_right = 1.0
-anchor_bottom = 0.996
 offset_left = 384.0
-offset_top = -60.16
-offset_right = -8.0
-offset_bottom = -40.16
+offset_top = 896.0
+offset_right = 1272.0
+offset_bottom = 916.0
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 bbcode_enabled = true
 text = "[#############################################    1/10  (10%)             ############################################]"

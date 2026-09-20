@@ -170,11 +170,7 @@ class AI:
         self.prediction = self.actor.affect_manager.on_skill_used(self.prediction)
         self.prediction.pre_use()
         self.prediction.combat_event.run()
-        self.prediction.combat_event.run()
-        self.prediction.combat_event.run()
         self.prediction.after_use()
-        self.prediction.combat_event.run()
-        self.prediction.combat_event.run()
         self.prediction.combat_event.run()
         
 

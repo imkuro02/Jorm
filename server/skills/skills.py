@@ -304,8 +304,7 @@ class Skill:
             if self.other == i:
                 continue
             if (
-                i.party_manager.get_party_id()
-                == self.other.party_manager.get_party_id()
+                i.party_manager.get_is_friendly(self.other)
             ):
                 targets.append(i)
 
