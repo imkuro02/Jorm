@@ -1262,7 +1262,7 @@ class SkillGuardianAngel(Skill):
         history = self.user.fetch_combat_history()
         for packet in history:
             if packet.actor_id == self.user.id and packet.skill_id == 'guardian_angel':
-                return
+                return damage_obj
                 
         
         self.silent_use = True
