@@ -29,7 +29,7 @@ from configuration.constants.tickrate import TICKRATE
 
 # one minute is 600 ticks
 RESPAWN_TIME_MOBS =     TICKRATE * 60
-DESPAWN_TIME_ITEMS =    1 * 60 * 5
+DESPAWN_TIME_ITEMS =    TICKRATE * 60
 
 class Spawner:
     def __init__(self, room):
@@ -402,22 +402,23 @@ class Room:
             self.spawner.tick()
             
         # remove items that have been on the ground for too long
-        items_to_remove = []
-        for i in self.inventory_manager.items.values():
-            i.tick()
+        if self.world.factory.ticks_passed % DESPAWN_TIME_ITEMS == 0:
+            items_to_remove = []
+            for i in self.inventory_manager.items.values():
+                i.tick()
 
-            if (self.spawner != None
-            and i in self.spawner.spawn_points.values()):
-                continue
+                if (self.spawner != None
+                and i in self.spawner.spawn_points.values()):
+                    continue
 
-            if i.time_dropped_on_ground == None:
-                items_to_remove.append(i)
-            else:
-                if i.time_dropped_on_ground >= (self.world.factory.ticks_passed + DESPAWN_TIME_ITEMS):
+                if i.time_dropped_on_ground == None:
                     items_to_remove.append(i)
+                else:
+                    if i.time_dropped_on_ground + DESPAWN_TIME_ITEMS <= (self.world.factory.ticks_passed):
+                        items_to_remove.append(i)
 
-        for i in items_to_remove:
-            self.inventory_manager.remove_item(i)
+            for i in items_to_remove:
+                self.inventory_manager.remove_item(i)
 
         if self.combat != None:
             self.combat.tick()

@@ -29,6 +29,14 @@ versions:
   #
   #
   #
+
+  "200926":
+    id: "140926"
+    title: Cleanup
+    unixtime: 1775631568
+    features:
+      - Corpses now despawn cleanly again
+      
   "140926":
     id: "140926"
     title: Cleanup
