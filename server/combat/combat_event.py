@@ -6,6 +6,7 @@ from configuration.constants.damage_type import DamageType
 from configuration.constants.message_type import MessageType
 from configuration.constants.stat_type import StatType
 import random
+import traceback
 
 class CombatEvent:
     def __init__(self):
@@ -111,125 +112,111 @@ class CombatEvent:
         damage_obj = self.queue[0]
         self.pop_from_queue()
         
-        snapshot_before = damage_obj.get_damage_snapshot()
-
-
         try:
-            if damage_obj.dont_proc == False:
-                rand_dmg = 0
-                rand_dmg += damage_obj.damage_source_actor.calculate_damage_type_damage_bonus(damage_obj.damage_type)
-                damage_obj.damage_value += rand_dmg #random.randint(0, rand_dmg)                    
-        except Exception as e:
-            systems.utils.debug_print('Something went wrong while applying stats to damage:')
-            systems.utils.debug_print(f'"{e}"')
+            snapshot_before = damage_obj.get_damage_snapshot()
 
-        #try:            
-        pa = damage_obj.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
-        ma = damage_obj.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
+            try:
+                if damage_obj.dont_proc == False:
+                    rand_dmg = 0
+                    rand_dmg += damage_obj.damage_source_actor.calculate_damage_type_damage_bonus(damage_obj.damage_type)
+                    damage_obj.damage_value += rand_dmg #random.randint(0, rand_dmg)                    
+            except Exception as e:
+                systems.utils.debug_print('Something went wrong while applying stats to damage:')
+                systems.utils.debug_print(f'"{e}"')
 
-        if not damage_obj.dont_proc:
-            # before calc on damage_source_actor
-            
-            if damage_obj.damage_source_actor.affect_manager != None:
+            #try:            
+            pa = damage_obj.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
+            ma = damage_obj.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
+
+            if not damage_obj.dont_proc:
+                # before calc on damage_source_actor
+                
                 damage_obj = damage_obj.damage_source_actor.affect_manager.deal_damage(
                     damage_obj
                 )
-            if damage_obj.damage_source_actor.inventory_manager != None:
                 damage_obj = (
                     damage_obj.damage_source_actor.inventory_manager.deal_damage(
                         damage_obj
                     )
                 )
-            if damage_obj.damage_source_actor.skill_manager != None:
                 damage_obj = damage_obj.damage_source_actor.skill_manager.deal_damage(
                     damage_obj
                 )
 
-            # before calc on damage_taker_actor
-            if damage_obj.damage_taker_actor.affect_manager != None:
+                # before calc on damage_taker_actor
                 damage_obj = damage_obj.damage_taker_actor.affect_manager.take_damage_before_calc(
                     damage_obj
                 )
-            if damage_obj.damage_taker_actor.inventory_manager != None:
                 damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_before_calc(
                     damage_obj
                 )
-            if damage_obj.damage_taker_actor.skill_manager != None:
                 damage_obj = damage_obj.damage_taker_actor.skill_manager.take_damage_before_calc(
                     damage_obj
                 )
 
             
 
-        # +/- armor calculation and hp removal
-        damage_obj.calculate()
-        
+            # +/- armor calculation and hp removal
+            damage_obj.calculate()
+            
 
-        if not damage_obj.dont_proc:
-            # after calc on damage_taker_actor
-            if damage_obj.damage_taker_actor.affect_manager != None:
+            if not damage_obj.dont_proc:
+                # after calc on damage_taker_actor
                 damage_obj = (
                     damage_obj.damage_taker_actor.affect_manager.take_damage_after_calc(
                         damage_obj
                     )
                 )
-            if damage_obj.damage_taker_actor.inventory_manager != None:
                 damage_obj = damage_obj.damage_taker_actor.inventory_manager.take_damage_after_calc(
                     damage_obj
                 )
-            if damage_obj.damage_taker_actor.skill_manager != None:
                 damage_obj = damage_obj.damage_taker_actor.skill_manager.take_damage_after_calc(
                     damage_obj
                 )
             
 
-            # after calc on damage_source_actor
-            
-            if damage_obj.damage_source_actor.affect_manager != None:
+                # after calc on damage_source_actor
+                
                 damage_obj.damage_source_actor.affect_manager.dealt_damage(damage_obj)
-            if damage_obj.damage_source_actor.inventory_manager != None:
                 damage_obj.damage_source_actor.inventory_manager.dealt_damage(
                     damage_obj
                 )
-            if damage_obj.damage_source_actor.skill_manager != None:
                 damage_obj = damage_obj.damage_source_actor.skill_manager.dealt_damage(
                     damage_obj
                 )
 
-            
+                
 
-        # add threat to the attacker
-        if damage_obj.add_threat:
-            if damage_obj.damage_source_actor.stat_manager != None:
-                damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += (
-                    abs(damage_obj.damage_value)
-                )
+            # add threat to the attacker
+            if damage_obj.add_threat:
+                if damage_obj.damage_source_actor.stat_manager != None:
+                    damage_obj.damage_source_actor.stat_manager.stats[StatType.THREAT] += (
+                        abs(damage_obj.damage_value)
+                    )
 
 
-        snapshot_after = damage_obj.get_damage_snapshot()
+            snapshot_after = damage_obj.get_damage_snapshot()
 
-        diff = {k: snapshot_before[k] - snapshot_after[k] for k in snapshot_after} 
-        self.add_to_print(damage_obj, diff)
+            diff = {k: snapshot_before[k] - snapshot_after[k] for k in snapshot_after} 
+            self.add_to_print(damage_obj, diff)
 
-        pa1 = damage_obj.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
-        ma1 = damage_obj.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
-        sound = Audio.HURT
-        actor = damage_obj.damage_taker_actor
-        if pa > 0 and pa1 <1:
-            _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
-            _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
-            damage_obj.damage_taker_actor.pretty_broadcast(_s,_o, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = [actor])
-        if ma > 0 and ma1 <1:
-            _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.MAGARMOR]}{Color.NORMAL}"
-            _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.MAGARMOR]}{Color.NORMAL}"
-            damage_obj.damage_taker_actor.pretty_broadcast(_s,_o, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = [actor])
-    
-        
+            pa1 = damage_obj.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
+            ma1 = damage_obj.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
+            sound = Audio.HURT
+            actor = damage_obj.damage_taker_actor
+            if pa > 0 and pa1 <1:
+                _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
+                _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
+                damage_obj.damage_taker_actor.pretty_broadcast(_s,_o, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = [actor])
+            if ma > 0 and ma1 <1:
+                _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.MAGARMOR]}{Color.NORMAL}"
+                _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.MAGARMOR]}{Color.NORMAL}"
+                damage_obj.damage_taker_actor.pretty_broadcast(_s,_o, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = [actor])
 
-        #except Exception as e:
-        #    systems.utils.debug_print(f'Something went wrong while running damage calculations for {damage_obj} {e}')
+        except Exception as e:
+            t = traceback.print_exc()
+            systems.utils.debug_print('This exception was thrown here')
 
 
         # rerun if any affect_manager functions triggered another attack to be added to queue
-        
         self.run()
