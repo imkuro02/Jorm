@@ -22,7 +22,7 @@ func _process(_delta):
 	#vol_master = MAIN.vol_master
 	var base = 0
 	vol_desired = ((vol_master + vol_music - 200) * 0.30) + base
-	if vol_music == 0:
+	if (vol_master * vol_music == 0):
 		vol_desired = -1000
 	if vol_desired == last_desired:
 		return

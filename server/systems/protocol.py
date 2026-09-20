@@ -788,6 +788,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         _master = self.actor.settings_manager.get_value(SETTINGS.VOL_MASTER)
         _effects = self.actor.settings_manager.get_value(SETTINGS.VOL_EFFECTS)
         _music = self.actor.settings_manager.get_value(SETTINGS.VOL_MUSIC)
+        print(_master,_effects,_music)
         self.send_gmcp({"vol": _master},   "Client.Media.VolumeMaster")
         self.send_gmcp({"vol": _effects},  "Client.Media.VolumeEffects")
         self.send_gmcp({"vol": _music},    "Client.Media.VolumeMusic")

@@ -173,6 +173,7 @@ func handle_gmcp(message: String):
 	if "{" not in dict_string:
 		data_dict = null
 	else:
+		dict_string = dict_string.replace('False','false').replace('True','true')
 		data_dict = JSON.parse_string(dict_string.replace("'", '"'))
 
 	match prefix:
@@ -208,12 +209,15 @@ func handle_gmcp(message: String):
 			var sound_player = AudioStreamPlayer2D.new()
 			sound_player.stream = load("res://audio/sfx/" + data_dict['name'])
 			add_child(sound_player)
-			sound_player.volume_db -= 10
-			sound_player.volume_db = (vol_master + vol_effects - 200) * 0.30
+			sound_player.volume_db = -10
+			sound_player.volume_db = (int(vol_master) + int(vol_effects) - 200) * 0.30
+			if (int(vol_master) == 0) or (int(vol_effects == 0)):
+				return
 			sound_player.play()
 
 			# Wait for the sound to finish
 			await sound_player.finished
+			
 			sound_player.queue_free()
 
 		#'Actors':
@@ -242,12 +246,12 @@ func handle_gmcp(message: String):
 			OUTPUT.get_message('', true)
 		'Client.Media.VolumeMaster':
 			vol_master = data_dict['vol']
-			BGM.vol_master = vol_master
+			BGM.vol_master = int(vol_master)
 		'Client.Media.VolumeEffects':
-			vol_effects = data_dict['vol']
+			vol_effects = int(data_dict['vol'])
 		'Client.Media.VolumeMusic':
 			vol_music = data_dict['vol']
-			BGM.vol_music = vol_music
+			BGM.vol_music = int(vol_music)
 		#'Time':
 		#	CLOCK.get_message(data_dict)
 			#BACKGROUND_COLOR.get_message(data_dict)
