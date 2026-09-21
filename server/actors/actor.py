@@ -24,6 +24,7 @@ from items.manager import Item
 from systems.dialog import Dialog
 from systems.inventory import InventoryManager
 from systems.party import PartyManager
+from systems.duel import DuelManager
 from systems.quest import QuestManager
 from systems.utils import REFTRACKER, unload
 from systems.triggers import TriggerManager
@@ -387,6 +388,7 @@ class Actor:
         self.inventory_manager = InventoryManager(self)
         self.slots_manager = SlotsManager(self)
         self.party_manager = PartyManager(self)
+        self.duel_manager =  DuelManager(self)
 
         self.quest_manager = QuestManager(self)
 

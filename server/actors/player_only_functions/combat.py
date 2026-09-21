@@ -792,3 +792,7 @@ def command_rest(self, line):
 
 def command_party(self, line):
     self.party_manager.handle_party_message(line)
+
+@check_not_in_party_or_is_party_leader
+def command_duel(self, line):
+    self.duel_manager.handle_duel_message(line)

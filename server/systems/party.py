@@ -81,7 +81,6 @@ class PartyManager:
         self.invitations = []
         self.actor_to_follow = None
         self.override_faction_id = None
-        #self.override_party_id = None
 
     def get_actor_to_follow(self):
         if self.party != None:
@@ -96,8 +95,15 @@ class PartyManager:
         '''
         if self.actor.party_manager.get_party_id() == who_to_check.party_manager.get_party_id():
             return True
+
+        if (self.actor.room.combat != None
+        and self.actor in self.actor.room.combat.participants.values()
+        and self.actor.room.combat.pvp):
+            return False
+        
         if self.actor.party_manager.get_faction_id() == who_to_check.party_manager.get_faction_id():  # noqa: SIM103
             return True
+
         return False
     
     def get_faction_id(self):

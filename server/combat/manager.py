@@ -57,6 +57,9 @@ class Combat:
         self.combat_active = True
         self.combat_history = CombatHistory(self)
 
+        # if this is true, actors only see others as friendly / allies when sharing a party id
+        self.pvp = False
+
         #self.participants = participants
         for p in participants.values():
             self.add_participant(p)
@@ -221,6 +224,11 @@ class Combat:
                 i.heal(value=99999)
             
 
+            if (self.pvp
+            and i.status == ActorStatusType.DEAD):
+                i.stat_manager.stats[StatType.HP] = 1
+                i.status = ActorStatusType.NORMAL
+                i.send_line('The duel is over, and you get up again')
 
             if i.party_manager.party != None:
                 one_alive = False
@@ -232,6 +240,7 @@ class Combat:
                         if i.status == ActorStatusType.DEAD:
                             i.stat_manager.stats[StatType.HP] = 1
                             i.status = ActorStatusType.NORMAL
+                            i.send_line('A party member helps you get up')
 
                 # if one_alive and self.round:
                 #    if i.status == ActorStatusType.DEAD:
@@ -264,11 +273,18 @@ class Combat:
 
         participating_parties = []
         for i in self.participants.values():
-            if (
-                i.status == ActorStatusType.FIGHTING
-                and i.party_manager.get_faction_id() not in participating_parties
-            ):
-                participating_parties.append(i.party_manager.get_faction_id())
+            if not self.pvp:
+                if (
+                    i.status == ActorStatusType.FIGHTING
+                    and i.party_manager.get_faction_id() not in participating_parties
+                ):
+                    participating_parties.append(i.party_manager.get_faction_id())
+            else:
+                if (
+                    i.status == ActorStatusType.FIGHTING
+                    and i.party_manager.get_party_id() not in participating_parties
+                ):
+                    participating_parties.append(i.party_manager.get_party_id())
 
         if len(participating_parties) <= 1:
             self.combat_over()

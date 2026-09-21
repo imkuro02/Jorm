@@ -463,7 +463,7 @@ class Player(Actor):
         if sound != None:
             self.sendSound(sound)
             
-        if len(self.send_buffer) >= 10:
+        if len(self.send_buffer) >= 100:
             return
 
         if color:

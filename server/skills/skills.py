@@ -149,6 +149,7 @@ class Skill:
 
         msg = f'{self.user.name} valid targets = {valid} for skill {self.skill_id}'
         self.user.simple_broadcast(msg,msg, msg_type = ['debug'])
+        print(valid)
         return valid
 
     def evaluate(self):
