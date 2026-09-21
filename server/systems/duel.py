@@ -16,8 +16,7 @@ class DuelManager:
         self.trade = None
 
     def duel_stop(self):
-        if self.pending:
-            self.actor.send_line('You cancel all pending duels')
+        
         self.pending = None
 
     def duel_request(self, line):
@@ -49,6 +48,12 @@ class DuelManager:
 
         if self.actor == other.duel_manager.pending:
             '''self.open_trade(other)'''
+            if self.actor.room.combat != None:
+                self.actor.send_line('There is already a fight here, duel cancelled')
+                other.send_line('There is already a fight here, duel cancelled')
+                self.actor.duel_manager.duel_stop()
+                other.duel_manager.duel_stop()
+                return
             self.actor.send_line(f"{self.actor.pretty_name(identifier = self.actor)} accept {other.pretty_name(self.actor)}'s duel request")
             other.send_line(f"{self.actor.pretty_name(identifier = other)} accepts the duel request")
 
@@ -76,6 +81,8 @@ class DuelManager:
             )
 
     def handle_duel_message(self, line):
+        if self.pending:
+            self.actor.send_line('You cancel all pending duels')
         self.duel_stop()
 
         # empty lines are handled as resend last line
