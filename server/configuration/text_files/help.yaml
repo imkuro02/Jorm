@@ -171,6 +171,14 @@ commands:
 #    related:
 #      - stats
 #      - room
+  duel:
+    group: combat
+    syntax:
+      - duel 
+      - duel <player name>
+    description: |
+      Challenge a player to a duel using "duel <player name>".
+      Party leaders can challenge eachother for a multi participant fight.
   party:
     group: combat
     syntax:

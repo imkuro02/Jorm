@@ -29,7 +29,12 @@ versions:
   #
   #
   #
-
+  "210926":
+    id: "140926"
+    title: Duels
+    unixtime: 1775631568
+    features:
+      - duel command added (pvp)
   "200926":
     id: "140926"
     title: Cleanup
