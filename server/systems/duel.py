@@ -9,6 +9,10 @@ trade_commands = {
 
 }
 
+from configuration.constants.tickrate import TICKRATE
+
+TIMEOUT = TICKRATE * 20
+
 class DuelManager:
     def __init__(self, actor):
         self.actor = actor
@@ -16,10 +20,14 @@ class DuelManager:
         self.trade = None
 
     def duel_stop(self):
-        
         self.pending = None
 
     def duel_request(self, line):
+        self.actor.room.world.factory.delayed_functions.add_delayed_function(
+            caller = self, tag = 'duel', delay = TIMEOUT,
+            func=lambda: self.duel_stop(),
+        )
+
         other = self.actor.get_actor(line)
 
         # dont trade if no target found

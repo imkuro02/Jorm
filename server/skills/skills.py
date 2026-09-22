@@ -149,7 +149,6 @@ class Skill:
 
         msg = f'{self.user.name} valid targets = {valid} for skill {self.skill_id}'
         self.user.simple_broadcast(msg,msg, msg_type = ['debug'])
-        print(valid)
         return valid
 
     def evaluate(self):
@@ -1270,7 +1269,6 @@ class SkillGuardianAngel(Skill):
 
         damage_reflected_power = (self.calculate_script_value(value = 'bonus')/100)
         dmg = int(damage_reflected_power * self.user.stat_manager.stats[StatType.HPMAX])
-        print(dmg)
         damage_obj3 = Damage(
             damage_taker_actor=self.user,
             damage_source_action=self,

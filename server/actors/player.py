@@ -342,6 +342,8 @@ class Player(Actor):
         self.status = ActorStatusType.NORMAL
         self.affect_manager.unload_all_affects(silent=True)
         self.trade_manager.trade_stop()
+        self.duel_manager.duel_stop()
+
         self.party_manager.party_leave()
 
         super().unload()
@@ -751,7 +753,9 @@ class Player(Actor):
         # self.send_line(self.prompt(self))
 
     def finish_turn(self, force_cooldown=False):
-        self.trade_manager.trade_stop(silent=True)
+        #self.trade_manager.trade_stop(silent=True)
+        #self.duel_manager.duel_stop()
+        
         #self.charging_mini_game.stop()
         super().finish_turn(force_cooldown=force_cooldown)
         # self.send_line(self.prompt(self))

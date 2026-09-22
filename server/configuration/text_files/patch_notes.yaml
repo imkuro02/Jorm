@@ -35,6 +35,9 @@ versions:
     unixtime: 1775631568
     features:
       - duel command added (pvp)
+      - duel timeout
+      - emotes extra space removed
+      - removed redundant prints
   "200926":
     id: "140926"
     title: Cleanup
