@@ -1,13 +1,7 @@
 from actors.npcs import Npc
 from configuration.constants.actor_status_type import ActorStatusType
 
-class rat(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        if "rat" != npc_object.npc_id.lower():
-            return False
-        return True
-
+class CustomRat(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

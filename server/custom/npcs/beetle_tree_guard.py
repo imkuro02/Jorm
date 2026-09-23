@@ -5,13 +5,7 @@ from combat.damage_event import Damage
 from configuration.constants.damage_type import DamageType
 from configuration.constants.stat_type import StatType
 
-class beetle_tree_guard(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        if "beetle_man" != npc_object.npc_id.lower():
-            return False
-        return True
-
+class CustomBeetleTreeGuard(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

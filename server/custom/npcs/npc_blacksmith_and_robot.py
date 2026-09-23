@@ -1,14 +1,7 @@
 from actors.npcs import Npc
 
 
-class npc_robot(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        # return False
-        if "npc_robot" not in npc_object.npc_id.lower():
-            return False
-        return True
-
+class CustomNpcRobot(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
@@ -26,20 +19,13 @@ class blacksmith_dialog(Dialog):
         if self.current_line != 'scrap':
             return _answer
         for i in self.npc.room.actors.values():
-            if type(i) == npc_robot:
+            if type(i) == CustomNpcRobot:
                 self.player.send_line('...')
                 i.talk_to(self.player, they_talk_to_you = True)
                 return True
         
 
-class npc_blacksmith(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        # return False
-        if "npc_blacksmith" not in npc_object.npc_id.lower():
-            return False
-        return True
-
+class CustomNpcBlacksmith(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.dialog_manager = blacksmith_dialog

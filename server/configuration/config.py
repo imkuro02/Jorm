@@ -93,8 +93,6 @@ def check_for_not_spawnable_enemies():
 def check_for_not_droppable_or_spawnable_items():
     _e = ENEMIES
     _i = ITEMS
-
-    
     for i in _i:
         loot_not_droppable = True
         for e in _e:

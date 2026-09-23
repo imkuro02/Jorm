@@ -4,16 +4,7 @@ import copy
 from configuration.config import NPCS
 import random
 
-class citizen_stuck_in_tree(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        # return False
-        if "citizen" not in npc_object.npc_id.lower():
-            return False
-        if npc_object.room.id != 'overworld/445f4046-5383-4158-83e9-c9a911432ef0':
-            return False 
-        return True
-
+class CustomCitizenStruckInTree(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.dialog_0 = copy.deepcopy(NPCS['event_stuck_in_tree_citizen_dialog_0']["tree"])

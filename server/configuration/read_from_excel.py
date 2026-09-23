@@ -528,6 +528,7 @@ def configure_ENEMIES(SHEET, ITEMS):
                 continue
             ENEMIES[x["npc_id"][index]] = {
                 "npc_id": x["npc_id"][index],
+                "class": x["class"][index],
                 "ai": x["ai"][index],
                 "name": x["name"][index],
                 "description": x["description"][index],

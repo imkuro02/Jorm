@@ -70,7 +70,6 @@ class Spawner:
             if s == None:
                 continue
 
-            s.unload()
 
             '''
             if (systems.utils.get_object_parent(s) == 'Item'
@@ -85,6 +84,9 @@ class Spawner:
             if (s not in self.room.actors.values()
             and s not in self.room.inventory_manager.items.values()):
                 self.spawn_points[i] = None
+
+            s.unload()
+            
 
         if "spawner" in self.room_dict:
             for i, _list in enumerate(self.room_dict["spawner"]):
@@ -108,10 +110,8 @@ class Spawner:
                 if self.spawn_points[i] != None:
                     continue
 
-                if _selected in ENEMIES:
-                    #if self.room.id == 'overworld/ddc67c0f-17be-47ca-9c01-ab323b9a0725':
-                    #    print(i,_list)
-                    npc = create_npc(self.room, _selected)
+                npc = create_npc(self.room, _selected)
+                if npc != None:
                     self.spawn_points[i] = npc
                     npc.simple_broadcast("", f"{npc.name} has arrived")
 
@@ -137,7 +137,6 @@ class Spawner:
                     systems.utils.debug_print(
                         'Started respawning at room index -1'
                     )
-                
                 
                 self.respawn_all()
         except Exception as e:

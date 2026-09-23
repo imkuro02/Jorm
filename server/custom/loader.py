@@ -2,6 +2,7 @@ import importlib
 import inspect
 import pkgutil
 import os
+import systems.utils
 
 '''
 def load_customs_all(path):
@@ -43,7 +44,13 @@ def load_customs(path, object):
 '''
 
 # returns all objects of same base class as whatever inserted
+cached = {}
 def load_custom_object(object):
+    if type(object).__name__ in cached:
+        return cached[type(object).__name__]
+
+    systems.utils.debug_print(f'Loading in replacements for {type(object).__name__} classes')
+    
     path = "custom"
     classes = []
 
@@ -73,6 +80,7 @@ def load_custom_object(object):
                 if obj.__module__ == full_module_name and issubclass(obj, type(object)):
                     classes.append(obj)
 
+    cached[type(object).__name__] = classes
     return classes
 
 

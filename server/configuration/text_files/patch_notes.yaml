@@ -38,6 +38,7 @@ versions:
       - duel timeout
       - emotes extra space removed
       - removed redundant prints
+      - removed compare_replace for actors and items
   "200926":
     id: "140926"
     title: Cleanup

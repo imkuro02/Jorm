@@ -30,14 +30,19 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
         case ItemType.CONSUMABLE:
             item_override_class = Consumable
     
-    _item_class_to_check = item_override_class()
-    _item_class_to_check.premade_id = item_premade_id
+    #_item_class_to_check = item_override_class()
+    #_item_class_to_check.premade_id = item_premade_id
 
-    item_class = custom_loader.compare_replace(_item_class_to_check)
-    if item_class != False:
-        item_override_class = item_class 
+    #item_class = custom_loader.compare_replace(_item_class_to_check)
+    #if item_class != False:
+    #    item_override_class = item_class 
 
-    systems.utils.unload(_item_class_to_check)
+    #systems.utils.unload(_item_class_to_check)
+
+    for i in custom_loader.load_custom_object(item_override_class()):
+        if ITEMS[item_premade_id]["class"] == i.__name__:
+            item_override_class = i
+
     new_item = item_override_class()
 
     premade_id = item_premade_id
@@ -132,7 +137,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
     
     
     
-    new_item.__init__()
+    #new_item.__init__()
     #FACTORY.ecs_manager.add_ambience(obj=new_item, message=ITEMS[premade_id]["ambience"])
     
     
@@ -142,7 +147,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
 
 
 
-
+'''
 def load_item2(
     item_premade_id, unique_id=None, max_stats=False
 ):  # unique_id is used for equipment seeds
@@ -358,7 +363,7 @@ def load_item2(
     
     
     return new_item
-
+'''
 
 def save_item(item):
     return item.to_dict()

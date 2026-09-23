@@ -20,7 +20,33 @@ from actors.player_only_functions.settings import SETTINGS
 
 CACHED = {}
 
+import re
+def parse_npc_id(npc_id):
+    if '+' not in npc_id:
+        return npc_id, []
+    name, rest = npc_id.split("+", 1)
+
+    properties = dict(
+        re.findall(r'(\w+)=\[(.*?)\]', rest)
+    )
+
+    properties = {
+        key: value.split("+")
+        for key, value in properties.items()
+    }
+
+    return name, properties
+
+
+# creating a custom npc
+# _npcs rat+class=[CustomCow]:Attis The WereRatCow
 def create_npc(room, npc_id, spawn_for_lore=False):
+    npc_id, npc_properties = parse_npc_id(npc_id)
+    if npc_id not in ENEMIES:
+        return None
+        
+    #print(npc_id, npc_properties)
+
     room = room
     room_id = room.id
     name = "None"
@@ -66,12 +92,19 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         tree = copy.deepcopy(NPCS[npc_id]["tree"])
 
     npc_class = Npc
-    #npc_class = Enemy
-    #if npc_id in ENEMIES:
-    #    npc_class = Enemy
-    #if npc_id in NPCS:
-    #    npc_class = Npc
 
+    for i in custom_loader.load_custom_object(npc_class()):
+        if ENEMIES[npc_id]["class"] == i.__name__:
+            npc_class = i
+            break
+
+        if 'class' in npc_properties:
+            if i.__name__ in npc_properties['class']:
+                npc_class = i
+                break
+        
+            
+    
     my_npc = npc_class(
         npc_id=npc_id,
         ai=ai,
@@ -88,7 +121,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         on_start_skills_use=on_start_skills_use,
         can_drop_corpse = can_drop_corpse,
     )
-
+    '''
     npc_class = custom_loader.compare_replace(my_npc)
     my_npc.room.world.rooms["overworld/loading"].move_actor(my_npc, silent=True)
     my_npc.unload()
@@ -113,6 +146,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         on_start_skills_use=on_start_skills_use,
         can_drop_corpse = can_drop_corpse,
     )
+    '''
 
     return my_npc
 

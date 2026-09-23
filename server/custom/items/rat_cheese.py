@@ -1,11 +1,5 @@
 from items.consumable import Consumable
-class rat_cheese(Consumable):
-    @classmethod
-    def compare_replace(self, item_object):
-        if "food_item_cheese" != item_object.premade_id.lower():
-            return False
-        return True
-
+class CustomRatCheese(Consumable):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.trigger_manager.trigger_add('command_get', self.trigger_get)

@@ -1,13 +1,7 @@
 from actors.npcs import Npc, create_npc
 from configuration.constants.actor_status_type import ActorStatusType
 
-class cow(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        if "mini_boss_cow" != npc_object.npc_id.lower():
-            return False
-        return True
-
+class CustomCow(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.trigger_manager.trigger_add(trigger_key = 'milk', trigger_action = self.trigger_milk)
@@ -66,7 +60,7 @@ class cow(Npc):
         return True
 
 
-class bull(Npc):
+class CustomBull(Npc):
     @classmethod
     def compare_replace(self, npc_object):
         if "mini_boss_bull" != npc_object.npc_id.lower():

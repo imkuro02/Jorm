@@ -1,11 +1,5 @@
 from items.misc import Item
-class empty_mug_for_filling(Item):
-    @classmethod
-    def compare_replace(self, item_object):
-        if 'mug' != item_object.premade_id.lower():
-            return False
-        return True
-    
+class CustomEmptyMugForFilling(Item):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.trigger_manager.trigger_add('fill', self.trigger_fill)

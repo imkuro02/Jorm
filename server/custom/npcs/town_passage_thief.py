@@ -5,13 +5,7 @@ from combat.damage_event import Damage
 from configuration.constants.damage_type import DamageType
 from configuration.constants.stat_type import StatType
 
-class town_passage_thief(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        if npc_object.room.id != 'overworld/c8783b2d-0b8f-49b8-8375-7fd72d7a5ec1':
-            return False
-        return True
-
+class CustomPassageThief(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -1,14 +1,7 @@
 from actors.npcs import Npc
 from configuration.constants.room_constant import RoomConstant
 
-class town_guard_npc(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        # return False
-        if "town_gate_guard_out" not in npc_object.npc_id.lower():
-            return False
-        return True
-
+class CustomTownGuard(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

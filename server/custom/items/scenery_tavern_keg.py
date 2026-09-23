@@ -2,13 +2,7 @@
 from items.misc import Item
 from items.manager import load_item
 from configuration.constants.tickrate import TICKRATE
-class scenery_tavern_keg(Item):
-    @classmethod
-    def compare_replace(self, item_object):
-        if "scenery_tavern_keg" != item_object.premade_id.lower():
-            return False
-        return True
-
+class CustomSceneryTavernKeg(Item):
     def add_volume(self):
         for i in self.ale_volume:
             self.ale_volume[i] += 1

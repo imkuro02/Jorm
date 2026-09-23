@@ -378,6 +378,8 @@ class Actor:
             self.id = _id
 
         self.name = name
+        if self.name == None:
+            self.name = 'Unnamed'
         self.description = description
         self.room = room
         if self.room != None:

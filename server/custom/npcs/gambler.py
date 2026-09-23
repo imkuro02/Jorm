@@ -186,13 +186,7 @@ class gambling_dialog(Dialog):
             self.is_gambling = False
 
 
-class gambling(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        if "gambling_0" not in npc_object.npc_id.lower():
-            return False
-        return True
-
+class CustomGambler(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.time_exisiting = 0

@@ -89,7 +89,6 @@ class ServerFactory(protocol.Factory):
 
             self.time_spent_calculating = 0
 
-
     def buildProtocol(self, addr):
         return Protocol(self)
 
@@ -111,8 +110,6 @@ if __name__ == "__main__":
     
     factory = ServerFactory()
     factory.reactor = reactor
-    print(context.FACTORY,'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx')
-
 
     ssl_context = ssl.DefaultOpenSSLContextFactory("server.key", "server.crt")
 
@@ -122,6 +119,7 @@ if __name__ == "__main__":
     reactor.listenTCP(4001, factory)
     systems.utils.debug_print("Server started on port 4000 with SSL and 4001 non SSL")
 
+    '''
     from skills.manager import check_for_broken_skills
     check_for_broken_skills()
     from configuration.config import check_for_broken_icons
@@ -130,6 +128,7 @@ if __name__ == "__main__":
     check_for_not_spawnable_enemies()
     from configuration.config import check_for_not_droppable_or_spawnable_items
     check_for_not_droppable_or_spawnable_items()
+    '''
 
     reactor.run()
 

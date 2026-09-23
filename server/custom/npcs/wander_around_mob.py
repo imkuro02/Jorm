@@ -4,13 +4,7 @@ from configuration.constants.color import Color
 from items.misc import Item
 from configuration.constants.tickrate import TICKRATE
 
-class wander_around_mob(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        if "overworld/9cf4310e-9068-433a-acc6-a85c72f7069e" != npc_object.room.id:
-            return False
-        return True
-
+class CustomWanderAroundMob(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.wander_directions_order = ['north', 'east', 'south', 'west']
@@ -160,6 +154,8 @@ class wander_around_mob(Npc):
         super().die()
 
     def unload(self):
+        self.despawn_footprints()
+        self.despawn_pre_footprints()
         super().unload()
 
 from actors.npcs import Npc

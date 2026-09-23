@@ -3,14 +3,7 @@ from configuration.constants.actor_status_type import ActorStatusType
 from configuration.constants.color import Color
 from items.misc import Item
 from configuration.constants.tickrate import TICKRATE
-class robot_woodcutter(Npc):
-    @classmethod
-    def compare_replace(self, npc_object):
-        if "robot_woodcutter" != npc_object.npc_id:
-            return False
-        return True
-
-
+class CustomWoodcutterRobot(Npc):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.wander_directions_order = ['north', 'south']
@@ -162,6 +155,8 @@ class robot_woodcutter(Npc):
         super().die()
 
     def unload(self):
+        self.despawn_footprints()
+        self.despawn_pre_footprints()
         super().unload()
 
 from actors.npcs import Npc
