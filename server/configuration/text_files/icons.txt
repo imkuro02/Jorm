@@ -1,3 +1,33 @@
+[id:fdsaf]
+@green       ___
+@green     _(   )_
+@green    (       )
+@green   (_       _)
+@green    (__; :__)
+@yellow       | (@bcyano@yellow) 
+@yellow       (@bcyano@yellow) __@green,
+@yellow       |  ;  @green`
+@yellow     @green.@yellow_j  @greenm
+@yellow     @green´@yellow \ | 
+@yellow      /   \   
+[end]
+[id:dd]
+@green       ___
+@green     _(   )_
+@green    (       )
+@green   (_       _)
+@green    (__; :__)
+@yellow       | (@bcyano@yellow) 
+@yellow       (@bcyano@yellow) __@green,
+@yellow       |  ;  @green`
+@yellow     @green.@yellow_j  @greenm
+@yellow     @green´ \ | 
+@yellow      /   \   
+@yellow     _'-__''_
+@yellow    (/ \(  )/
+@yellow     ' ;/  '
+[end]
+
 [id:bunny]
   (\(\
   (OxO
@@ -354,6 +384,7 @@ big_rat
 @yellow  |   @brednmn@yellow |
 @yellow    W   W
 [end]
+
 
 kerning_trainer
 
