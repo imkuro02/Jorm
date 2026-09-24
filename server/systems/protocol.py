@@ -405,6 +405,9 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
                         return
                     _i += 1
 
+
+
+
         _i = 1
         for actor_id in reversed(actor_ids):
             # if index in actor_ids then set self.actor_id and start
@@ -413,6 +416,8 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
                 self.change_state(self.PLAY)
                 return
             _i += 1
+
+
 
         # if username not here then create this guy!
         if self.try_this_actor_name(line):
@@ -573,7 +578,6 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 )
 
     def before_load_actor(self):
-        #self.send_line('\n'*50)
         cutscene = False
         if cutscene:
             self.factory.delayed_functions.add_delayed_function(
@@ -605,7 +609,6 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         
 
     def load_actor(self):
-
         actor = self.factory.db.read_actor(actor_id = self.actor_id)
         # systems.utils.debug_print('>>>',actor)
 

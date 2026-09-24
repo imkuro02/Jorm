@@ -39,6 +39,7 @@ versions:
       - emotes extra space removed
       - removed redundant prints
       - removed compare_replace for actors and items
+      - delayed functions are optimized
   "200926":
     id: "140926"
     title: Cleanup
