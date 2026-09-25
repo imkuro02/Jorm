@@ -31,7 +31,9 @@ bartender:
             Ok
           goto: start
 
-
+    
+    
+    
 
     start_shopping:
       append_to: start
@@ -148,3 +150,34 @@ bartender:
       dialog:
         - line: |
             <npc> says "MmmmMmm Cheemse..."
+
+
+
+
+
+
+
+
+
+    bartender_sample_1:
+      append_to: start
+      options:
+        - line: |
+            ask for a free beer
+          goto: bartender_sample_2
+          quest_check:
+          - id: speak_with_bartender
+            state: turned_in
+            NOT: 1
+          quest_start: 
+            id: speak_with_bartender
+          quest_turn_in:
+            id: speak_with_bartender
+            reward_exp: 1
+            reward:
+              - item: potion_hp_30
+                amount: 1
+    bartender_sample_2:
+      dialog:
+        - line: |
+            "Cheapskate..." <npc> mutters

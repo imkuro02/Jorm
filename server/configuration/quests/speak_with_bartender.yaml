@@ -1,0 +1,14 @@
+speak_with_bartender:
+  name: Cheapskate
+  description: 
+    in_progress: |
+    completed: |
+      I asked the bartender for a beer.
+    turned_in: |
+      They gave me a potion instead.
+  #objectives:
+  #  Get Cheese:
+  #    type: conversation
+  #    objective: bartender_speak_with
+  #    completed_at: 1
+      

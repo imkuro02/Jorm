@@ -144,11 +144,11 @@ class Dialog:
 
             if "quest_turn_in" in option:
                 quest_id = option["quest_turn_in"]["id"]
-                if (
-                    not self.player.quest_manager.check_quest_state(quest_id)
-                    == QUEST_STATE_TYPES.COMPLETED
-                ):
-                    continue
+                #if (
+                #    not self.player.quest_manager.check_quest_state(quest_id)
+                #    == QUEST_STATE_TYPES.COMPLETED
+                #):
+                #    continue
 
                 dic["quest_turn_in"] = {"id": quest_id}
                 if "reward" in option["quest_turn_in"]:
@@ -451,6 +451,12 @@ class Dialog:
                     self.player.inventory_manager.add_item(item, stack_items=False)
                     self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} got: {item.pretty_name(identifier = self.player)}")
 
+
+        if "quest_start" in answer:
+            # self.print_dialog()
+            self.player.quest_manager.start_quest(answer["quest_start"]["id"])
+            # return True
+
         if "quest_objective_count_proposal" in answer:
             # self.print_dialog()
             
@@ -465,10 +471,7 @@ class Dialog:
                     )
             # return True
 
-        if "quest_start" in answer:
-            # self.print_dialog()
-            self.player.quest_manager.start_quest(answer["quest_start"]["id"])
-            # return True
+        
 
         if "quest_turn_in" in answer:
             if "reward" in answer:

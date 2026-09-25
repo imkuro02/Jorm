@@ -301,8 +301,13 @@ class Quest:
                 # this is buggy cuz it displays quest completed BEFORE stuff actually happnes
                 # like before loot is displayed as picked up for example
                 self.quest_manager.actor.send_line(
-                    f"{Color.GOOD}{QUESTS[objective.quest_id]['name']}{Color.BACK}: {objective.name} completed{Color.NORMAL}"
+                    f"{Color.GOOD}Task completed{Color.BACK}: {objective.name}"
                 )
+                if self.is_completed():
+                    self.quest_manager.actor.send_line(
+                        f"{Color.GOOD}Quest completed{Color.BACK}: {QUESTS[objective.quest_id]['name']}"
+                    )
+                    
             if proposal_accepted:
                 continue
 
@@ -425,20 +430,23 @@ def create_quest(quest_id, actor):
 
     objectives = {}
     quest = Quest(quest_id, QUESTS[quest_id]["name"], QUESTS[quest_id]["description"])
-    for objective_name in quest_dict["objectives"]:
-        objective = quest_dict["objectives"][objective_name]
-        quest.add_objective(
-            Objective(
-                quest_id,
-                objective_name,
-                objective["type"],
-                objective["objective"],
-                objective["completed_at"],
-                bool(objective["hidden_objective_until_completed"])
-                if "hidden_objective_until_completed" in objective
-                else False,
+    
+    if 'objectives' in quest_dict:
+
+        for objective_name in quest_dict["objectives"]:
+            objective = quest_dict["objectives"][objective_name]
+            quest.add_objective(
+                Objective(
+                    quest_id,
+                    objective_name,
+                    objective["type"],
+                    objective["objective"],
+                    objective["completed_at"],
+                    bool(objective["hidden_objective_until_completed"])
+                    if "hidden_objective_until_completed" in objective
+                    else False,
+                )
             )
-        )
 
     quest.add_objective(
         Objective(

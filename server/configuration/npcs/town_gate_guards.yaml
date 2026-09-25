@@ -196,6 +196,9 @@ npc_zone_1:
         - line: |
             say "Yes"
           goto: turn_in_quest
+          quest_check:
+            - id: quest_zone_1
+              state: completed
           quest_turn_in:
             id: quest_zone_1
             reward_exp: 25
@@ -256,6 +259,9 @@ npc_zone_2:
         - line: |
             say "Yes"
           goto: turn_in_quest
+          quest_check:
+            - id: quest_zone_2
+              state: completed
           quest_turn_in:
             id: quest_zone_2
             reward_exp: 200
@@ -316,6 +322,9 @@ npc_zone_3:
         - line: |
             say "Yes"
           goto: turn_in_quest
+          quest_check:
+            - id: quest_zone_3
+              state: completed
           quest_turn_in:
             id: quest_zone_3
             reward_exp: 200
