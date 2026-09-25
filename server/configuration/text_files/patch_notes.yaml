@@ -40,6 +40,7 @@ versions:
       - removed redundant prints
       - removed compare_replace for actors and items
       - delayed functions are optimized
+      - quests related code reworked
   "200926":
     id: "140926"
     title: Cleanup
