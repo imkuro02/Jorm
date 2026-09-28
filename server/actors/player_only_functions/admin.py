@@ -764,7 +764,7 @@ def command_lore(self, line):
             LORE["enemies"].values(),
             key=lambda enemy: enemy["stats"]["lvl"]
         )
-        t = systems.utils.Table(3, 1)
+        t = systems.utils.Table(3*2, 3)
         for i in sorted_enemies:
             if i['dont_join_fights'] == True:
                 t.add_data(f'-',filler='-')

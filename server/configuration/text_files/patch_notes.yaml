@@ -39,8 +39,10 @@ versions:
       - emotes extra space removed
       - removed redundant prints
       - removed compare_replace for actors and items
-      - delayed functions are optimized
-      - quests related code reworked
+      - delayed_functions optimized  
+      - quests related code reworked (prints etc)
+      - npc_properties for wandering mobs (custom walk cycles)
+      - some quests slightly changed
   "200926":
     id: "140926"
     title: Cleanup

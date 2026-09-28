@@ -45,10 +45,8 @@ def create_npc(room, npc_id, spawn_for_lore=False):
     if npc_id not in ENEMIES:
         return None
         
-    #print(npc_id, npc_properties)
-
-    room = room
-    room_id = room.id
+    # room = room
+    # room_id = room.id
     name = "None"
     desc = None
     stats = None
@@ -93,18 +91,16 @@ def create_npc(room, npc_id, spawn_for_lore=False):
 
     npc_class = Npc
 
-    for i in custom_loader.load_custom_object(npc_class()):
+    _npc_classes = custom_loader.load_custom_object(npc_class())
+    for i in _npc_classes:
+        if ('class' in npc_properties
+        and i.__name__ in npc_properties['class']):
+            npc_class = i
+            break
         if ENEMIES[npc_id]["class"] == i.__name__:
             npc_class = i
             break
-
-        if 'class' in npc_properties:
-            if i.__name__ in npc_properties['class']:
-                npc_class = i
-                break
         
-            
-    
     my_npc = npc_class(
         npc_id=npc_id,
         ai=ai,
@@ -120,7 +116,9 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         on_death_skills_use=on_death_skills_use,
         on_start_skills_use=on_start_skills_use,
         can_drop_corpse = can_drop_corpse,
+        npc_properties = npc_properties,
     )
+
     '''
     npc_class = custom_loader.compare_replace(my_npc)
     my_npc.room.world.rooms["overworld/loading"].move_actor(my_npc, silent=True)
@@ -168,6 +166,7 @@ class Npc(Actor):
         on_death_skills_use=None,
         on_start_skills_use=None,
         can_drop_corpse = False,
+        npc_properties = None,
     ):
         super().__init__(
             name=name,
@@ -177,6 +176,9 @@ class Npc(Actor):
         )
 
         self.can_drop_corpse = can_drop_corpse
+        self.npc_properties = npc_properties
+        if self.npc_properties == None:
+            self.npc_properties = {}
 
         self.on_death_skills_use = on_death_skills_use
         self.on_start_skills_use = on_start_skills_use
@@ -228,6 +230,8 @@ class Npc(Actor):
 
         self.dialog_manager = Dialog
         #self.following_actor = None
+
+        
 
     def join_combat(self):
         super().join_combat()

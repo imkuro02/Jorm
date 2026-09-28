@@ -4,9 +4,6 @@ town_gate_guard_out:
       dialog:
         - line: |
             <npc> says "Going somewhere?"
-        - line: |
-            <npc> says "Remember, I can guide you to your destination, but not back"
-
     end:
       dialog:
         - line: |
@@ -95,7 +92,7 @@ town_gate_guard_out:
     how_to_recall:
       dialog:
         - line: |
-            <npc> says "You will have to "@tiprest@normal" to return, resting will bring you back to the tavern."
+            <npc> says "You can backtrack, or you can "@tiprest@normal" to return, resting will bring you back to your resting spot."
       options:
         - line: |
             say "Ok"

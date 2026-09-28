@@ -374,7 +374,7 @@ big_rat
 @yellow</@bpurple"uu"@yellow\>
 [end]
 
-[id:wood_stump_large]
+[id:wood_stump_large1]
 @yellow     _
 @yellow  ,-_/ ',
 @yellow  |      \
@@ -384,7 +384,14 @@ big_rat
 @yellow  |   @brednmn@yellow |
 @yellow    W   W
 [end]
-
+[id:wood_stump_large]
+@yellow  |   (@bcyan o@yellow)
+@yellow  (@bcyano @yellow)  __@green,
+@yellow  |     ;  @green`
+@yellow@green.@yellow_j     @greenm
+@yellow@green´@yellow \     |
+@yellow /       \
+[end]
 
 kerning_trainer
 

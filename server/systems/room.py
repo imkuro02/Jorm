@@ -28,7 +28,7 @@ from systems.triggers import TriggerManager
 from configuration.constants.tickrate import TICKRATE
 
 # one minute is 600 ticks
-RESPAWN_TIME_MOBS =     TICKRATE * 60
+RESPAWN_TIME_MOBS =     TICKRATE * 60 * 1
 DESPAWN_TIME_ITEMS =    TICKRATE * 60
 
 class Spawner:
@@ -70,22 +70,22 @@ class Spawner:
             if s == None:
                 continue
 
-
-            '''
+            
             if (systems.utils.get_object_parent(s) == 'Item'
             and s not in self.room.inventory_manager.items.values()):
                 self.spawn_points[i] = None
+                #s.unload()
 
             if (systems.utils.get_object_parent(s) == 'Actor'
-            and s not in self.room.actors.values()):
+            and s.name == None):
                 self.spawn_points[i] = None
-            '''
-            
-            if (s not in self.room.actors.values()
-            and s not in self.room.inventory_manager.items.values()):
-                self.spawn_points[i] = None
+                #s.unload()
 
-            s.unload()
+            
+            #if (s not in self.room.actors.values()
+            #and s not in self.room.inventory_manager.items.values()):
+            #    self.spawn_points[i] = None
+
             
 
         if "spawner" in self.room_dict:

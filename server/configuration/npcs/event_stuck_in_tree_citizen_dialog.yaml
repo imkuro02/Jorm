@@ -16,16 +16,14 @@ event_stuck_in_tree_citizen_dialog_1:
             say "Ok"
           goto: farewell
           npc_leaves: 1
+          quest_check:
+            - id: find_tree_stuck_citizen
+              state: in_progress
           quest_objective:
             requirement_id: tree_stuck_citizen_0
-          #trade:
-          #  give_to_player:
-          #    - item: currency_0
-          #      amount: 10
-          
-
+     
     farewell:
       dialog: 
         - line: |
-            <npc> says "Thank you, I will return to the town now"
+            <npc> says "Thank you for getting me out of that pickle! farewell!"
       
