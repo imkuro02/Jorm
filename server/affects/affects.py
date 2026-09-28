@@ -1199,26 +1199,19 @@ class ReforgeChanceDontEndTurnOnHeal(AffectReforge):
             #_p.send_line('dealt damage, but not healing')
             return damage_obj
         
+
+        # this magic snipped of code makes sure to only try to continue once per round
+        to_return = damage_obj
         if _c == None:
-            #_p.send_line('no combat')
-            return damage_obj
-        
+            return to_return
         if self.affect_target_actor not in _c.participants.values():
-            #_p.send_line('not in combat')
-            return damage_obj
-        
+            return to_return
         if _c.id != self.combat_id:
             self.combat_round = -1
             self.combat_id = _c.id
-            #_p.send_line('set correct combat id and reset combat round')
-
-
         if self.combat_round == _c.round:
-            #_p.send_line('already checked this round')
-            return damage_obj
-        
+            return to_return
         self.combat_round = _c.round
-        #_p.send_line('round set')
 
         if systems.utils.get_object_parent(damage_obj.damage_source_action) != "Skill":
             #_p.send_line('healing not from skill')
@@ -1254,7 +1247,7 @@ class ReforgeChanceDontEndTurnOnUseStealth(AffectReforge):
     def on_skill_used(self, skill_obj):
         _p = self.affect_target_actor
         _c = self.affect_target_actor.room.combat
-
+    
 
         if systems.utils.get_object_parent(skill_obj) != "Skill":
             return skill_obj
@@ -1271,10 +1264,58 @@ class ReforgeChanceDontEndTurnOnUseStealth(AffectReforge):
             skill_obj.dont_finish_turn = True
             #_p.send_line('success, skill wont end turn')
             list_pretty_name_objects = [self.source_item]
-            _p.pretty_broadcast(f'Your {self.source_item.id} makes this turn last longer',None,list_pretty_name_objects = list_pretty_name_objects)
+            _p.pretty_broadcast(f'Your {self.source_item.id} makes this turn last longer', None, list_pretty_name_objects = list_pretty_name_objects)
             return skill_obj
 
     def take_damage_before_calc(self, damage_obj):
         if damage_obj.damage_type != DamageType.HEALING:
             damage_obj.damage_value += int(damage_obj.damage_value*float(self.reforge_variables["var_b"]))
         return damage_obj
+
+class ReforgeChanceToUseSkill(AffectReforge):
+    def __init__(self,
+            affect_source_actor,
+            affect_target_actor,
+            name, description, turns,
+            source_item = None,
+            reforge_variables = None
+        ):
+        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+        self.combat_round = -1 
+        self.combat_id = -1
+        self.used = False
+
+    def on_skill_used(self, skill_obj):
+        _s = self.affect_source_actor
+        _p = self.affect_target_actor
+        _c = self.affect_target_actor.room.combat
+
+       # this magic snipped of code makes sure to only try to continue once per round
+        to_return = skill_obj
+        if _c == None:
+            return to_return
+        if self.affect_target_actor not in _c.participants.values():
+            return to_return
+        if _c.id != self.combat_id:
+            self.combat_round = -1
+            self.combat_id = _c.id
+        if self.combat_round == _c.round:
+            return to_return
+        self.combat_round = _c.round
+
+        _succ = random.randint(0,100) <= float(self.reforge_variables["var_a"])*100
+        if _succ:
+            from skills.manager import construct_skill
+            _skill_obj = construct_skill(self.reforge_variables["var_b"])
+            _skill_obj = _skill_obj(skill_id = self.reforge_variables["var_b"], user = _s, other = skill_obj.other)
+            br = f'{self.source_item.id} used {_skill_obj.id} on {skill_obj.other.id}'
+            _s.pretty_broadcast(br, br, list_pretty_name_objects = [self.source_item, _skill_obj, skill_obj.other])
+
+            _skill_obj.dont_finish_turn = True
+            _skill_obj.no_cooldown = True
+            _skill_obj.silent_use = True
+            _s.ai.prediction = _skill_obj
+            _s.ai.use_prediction(no_checks=True)
+        return skill_obj
+
+

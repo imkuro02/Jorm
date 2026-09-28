@@ -43,6 +43,7 @@ versions:
       - quests related code reworked (prints etc)
       - npc_properties for wandering mobs (custom walk cycles)
       - some quests slightly changed
+      - new reforge; faithless, added
   "200926":
     id: "140926"
     title: Cleanup

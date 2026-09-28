@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e2e36727c5449f4fd190ab9408d6735efa73ff0c0c9d87dc441c312fb2ff2800",
+    "SHA-256": "e8eb4a356e7738f5e1c70adbb631fcb298a2ae5eb514f1d4d01116d89bdf25f7",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -4820,7 +4820,7 @@
             "practice_cost": 1,
             "level_req": 3.0,
             "is_offensive": 0.0,
-            "end_turn": false,
+            "end_turn": true,
             "script_values": {
                 "levels": [
                     1.0,
@@ -16233,6 +16233,25 @@
             "vars": {
                 "var_a": "0.2",
                 "var_b": "0.1",
+                "var_c": "0.0",
+                "var_d": "0.0"
+            }
+        },
+        "chance_to_use_skill_dispel": {
+            "reforge_id": "chance_to_use_skill_dispel",
+            "name": "Faithless",
+            "slot_weapon": true,
+            "slot_body": false,
+            "slot_head": false,
+            "slot_trinket": false,
+            "slot_relic": false,
+            "slot_bag": false,
+            "roll_chance": 100,
+            "affliction_to_create": "ChanceToUseSkill",
+            "description": "Using a skill on a target has a 33% to use Dispel on that target for free once per turn.",
+            "vars": {
+                "var_a": "0.33",
+                "var_b": "dispel",
                 "var_c": "0.0",
                 "var_d": "0.0"
             }
