@@ -24,7 +24,7 @@ func clear_log():
 	clear()
 	
 var lines: Array[String] = []
-const MAX_LINES := 25
+const MAX_LINES := 130
 
 var padding_for_new_rooms = 35
 var padding_already_added = 0
@@ -44,8 +44,13 @@ func get_message(message, GODOT_CLIENT_OUTPUT_SPLIT_ADD_PADDING = false):
 	#lines.append(bbcode_line)
 	
 	line_count_before = self.get_line_count()
+	
+	var total_lines = lines.size()
+	for line in lines:
+		total_lines += line.count("\n")
+
 	if is_scrolled_to_bottom():	
-		if lines.size() > MAX_LINES:
+		if total_lines > MAX_LINES:
 			lines.pop_front()
 		clear()
 		self.append_text("".join(lines))
@@ -56,17 +61,8 @@ func get_message(message, GODOT_CLIENT_OUTPUT_SPLIT_ADD_PADDING = false):
 	if message != '':
 		lines.append(bbcode_line)
 	
-	
-	
 	line_count_after = self.get_line_count()
-	
-	
 
-	
-	#print(line_count_before, '-', line_count_after)
-	
-	
-	
 	
 	if is_scrolled_to_bottom():	
 		if name == 'output':

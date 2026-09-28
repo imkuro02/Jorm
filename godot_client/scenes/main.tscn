@@ -438,7 +438,6 @@ test"
 selection_enabled = true
 
 [node name="smooth_exp_bar" type="RichTextLabel" parent="canvas"]
-anchors_preset = -1
 offset_left = 384.0
 offset_top = 896.0
 offset_right = 1272.0
