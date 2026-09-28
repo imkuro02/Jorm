@@ -947,25 +947,6 @@ def command_lore(self, line):
 
     return
 
-    # target yourself if not trying to target anything else
-    if " on " not in line and " at " not in line:
-        action = line
-        action = systems.utils.match_word(action, list_of_items + list_of_skill_names)
-        target = self
-
-    # if you are targetting something else set target to that
-    else:
-        action, target = line.replace(" on ", " | ").replace(" at ", " | ").split(" | ")
-        action = systems.utils.match_word(action, list_of_items + list_of_skill_names)
-        # target = systems.utils.match_word(target, list_of_items + list_of_actors)
-
-    _action = None
-    _target = None
-
-    if action in list_of_items:
-        _action = self.get_item(action)
-    if action in list_of_skill_names:
-        _action = name_to_id[action]
 
 
 @check_no_empty_line
