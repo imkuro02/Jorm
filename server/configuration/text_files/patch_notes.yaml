@@ -29,8 +29,14 @@ versions:
   #
   #
   #
+  "300926":
+    id: "300926"
+    title: items
+    unixtime: 1775631568
+    features:
+      - item_properties saved in database
   "210926":
-    id: "140926"
+    id: "210926"
     title: Duels
     unixtime: 1775631568
     features:
@@ -45,7 +51,7 @@ versions:
       - some quests slightly changed
       - new reforge; faithless, added
   "200926":
-    id: "140926"
+    id: "200926"
     title: Cleanup
     unixtime: 1775631568
     features:

@@ -410,18 +410,10 @@ class Npc(Actor):
         if self.npc_id not in ENEMIES:
             return
 
-        corpse = Item()
-        corpse.name = f'Corpse of {self.name}'
-        corpse.description = f'Corpse of {self.name}'
-        corpse.stack_max = 1
-        corpse.keep = False
-        corpse.can_pick_up = False
-        
-        corpse.invisible = False
-        corpse.premade_id = 'corpse_premade_id_dont_use_ever'
-
-        corpse.corpse_npc_name = self.name
-        corpse.corpse_npc_id = self.npc_id
+        corpse = load_item(item_premade_id = 'corpse')
+        corpse.item_properties['corpse_npc_name'] = self.name
+        corpse.item_properties['corpse_npc_id'] = self.npc_id
+        corpse.after_init()
         
         self.room.inventory_manager.add_item(corpse)
 

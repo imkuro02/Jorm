@@ -139,8 +139,7 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
     
     #new_item.__init__()
     #FACTORY.ecs_manager.add_ambience(obj=new_item, message=ITEMS[premade_id]["ambience"])
-    
-    
+    new_item.after_init()    
     return new_item
 
     

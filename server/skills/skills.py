@@ -1728,7 +1728,7 @@ class SkillConsumeCorpse(SkillTargetItem):
             items.append(i)
 
         for i in items:
-            if hasattr(i, 'corpse_npc_id'):
+            if 'corpse_npc_id' in i.item_properties:
                 return i
 
         return None
@@ -1802,7 +1802,7 @@ class SkillNecromancerRessurect(SkillTargetItem):
             items.append(i)
 
         for i in items:
-            if hasattr(i, 'corpse_npc_id'):
+            if 'corpse_npc_id' in i.item_properties:
                 return i
 
         return None
@@ -1820,28 +1820,28 @@ class SkillNecromancerRessurect(SkillTargetItem):
             self.user.send_line(f'There are no corpses to ressurect')
             return
   
-        if not hasattr(self.other, 'corpse_npc_id'):
+        if 'corpse_npc_id' not in self.other.item_properties:
             self.user.send_line(f'You cannot resurrect {self.other.name}')
             return False
 
         super().use()
 
-        if hasattr(self.other, 'corpse_npc_id'):
+        if 'corpse_npc_id' in self.other.item_properties:
             # remove corpse item on ground
             self.other.inventory_manager.remove_item(self.other)
 
             # send_line
             list_pretty_name_objects = [self.user]
-            self.user.pretty_broadcast(f'{self.user.id} resurrect {self.other.corpse_npc_name}',
-                f'{self.user.id} resurrects {self.other.corpse_npc_name}',
+            self.user.pretty_broadcast(f'{self.user.id} resurrect {self.other.item_properties['corpse_npc_id']}',
+                f'{self.user.id} resurrects {self.other.item_properties['corpse_npc_id']}',
                 list_pretty_name_objects = list_pretty_name_objects)
 
             npc_class = Npc
-            npc_id = self.other.corpse_npc_id
+            npc_id = self.other.item_properties['corpse_npc_id']
             e = npc_class(
                 npc_id = f'summoned_{npc_id}',
                 ai = EnemyAI,
-                name = self.other.corpse_npc_name.replace('The','The resurrected'),
+                name = self.other.item_properties['corpse_npc_name'].replace('The','The resurrected'),
                 description = ENEMIES[npc_id]["description"],
                 room = self.user.room,
                 stats = ENEMIES[npc_id]["stats"],

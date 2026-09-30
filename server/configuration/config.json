@@ -1,5 +1,5 @@
 {
-    "SHA-256": "e8eb4a356e7738f5e1c70adbb631fcb298a2ae5eb514f1d4d01116d89bdf25f7",
+    "SHA-256": "ab41ae698036a35239faceb4f98c51d0132c873a892fd53bd888bbfa2545d94b",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -15328,6 +15328,29 @@
             "ambience": null,
             "can_pick_up": false,
             "description": "Literally nothing"
+        },
+        "corpse": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "corpse",
+            "name": "Corpse",
+            "class": "CustomCorpse",
+            "stack_max_amount": 1,
+            "drop_tags": "none",
+            "drop_from_random": false,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "description_room": null,
+            "invisible": false,
+            "ambience_sfx": null,
+            "ambience": null,
+            "can_pick_up": true,
+            "description": "Corpse"
         },
         "rock": {
             "item_type": "misc",

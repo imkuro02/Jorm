@@ -77,6 +77,15 @@ class Database:
         )""")
 
         self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS item_properties (
+            actor_id TEXT NOT NULL,
+            item_id TEXT NOT NULL,
+            key TEXT NOT NULL,
+            val TEXT NOT NULL,
+            FOREIGN KEY(actor_id) REFERENCES actors(actor_id)
+        )""")
+
+        self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS skills (
             actor_id TEXT NOT NULL,
             skill_id TEXT NOT NULL,
@@ -498,6 +507,35 @@ class Database:
         for eq_id in unequiped:
             actor.inventory_equip(actor.inventory_manager.items[eq_id], forced=True)
 
+
+        my_dict = {}
+        my_dict["actor_id"] = actor_id
+
+        self.cursor.execute(
+            """
+            DELETE FROM item_properties WHERE actor_id = ?
+        """,
+            (actor_id,),
+        )
+
+        for item in actor.inventory_manager.items.values():
+            if item.item_properties == {}:
+                continue
+            for prop in item.item_properties:
+                my_dict["item_id"] = item.id
+                my_dict["key"] = prop
+                my_dict["val"] = item.item_properties[prop]
+                self.cursor.execute(
+                    """
+                    INSERT INTO item_properties (
+                        actor_id, item_id, key, val
+                    ) VALUES (
+                        :actor_id, :item_id, :key, :val
+                    )
+                    """,
+                    my_dict,
+                )
+
         my_dict = {}
         my_dict["actor_id"] = actor_id
 
@@ -790,6 +828,14 @@ class Database:
 
         self.cursor.execute(
             """
+            SELECT * FROM item_properties WHERE actor_id = ?
+        """,
+            (actor_id,),
+        )
+        item_properties = self.cursor.fetchall()
+
+        self.cursor.execute(
+            """
             SELECT * FROM settings WHERE actor_id = ?
         """,
             (actor_id,),
@@ -870,6 +916,15 @@ class Database:
             else:
                 my_dict["equipment_bonuses"][bonus[1]] = []
                 my_dict["equipment_bonuses"][bonus[1]].append(boon_dict)
+
+        my_dict["item_properties"] = {}
+        for prop in item_properties:
+            _prop = {'key': prop[2], 'val': prop[3]}
+            if prop[1] in my_dict['item_properties']:
+                my_dict['item_properties'][prop[1]].append(_prop)
+            else:
+                my_dict['item_properties'][prop[1]] = []
+                my_dict['item_properties'][prop[1]].append(_prop)
 
         my_dict["skills"] = {}
         for skill in skills:

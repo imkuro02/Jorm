@@ -26,7 +26,7 @@ class Item:
         
         self.id = str(uuid.uuid4())
         
-        
+        self.item_properties = {}
 
         self.premade_id = None
         self.item_type = ItemType.MISC
@@ -57,6 +57,10 @@ class Item:
         self.trigger_manager = TriggerManager(self)
 
         REFTRACKER.add_ref(self)
+
+    # some objects use this (corpses)
+    def after_init(self):
+        return
 
     def unload(self):
         #self.name = None

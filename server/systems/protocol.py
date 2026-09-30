@@ -719,10 +719,17 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                 new_item = load_item(
                     item_premade_id=item["premade_id"], unique_id=item["item_id"]
                 )
+
                 new_item.keep = item["item_keep"]
                 new_item.id = item["item_id"]
                 new_item.stack = item["item_stack"]
 
+                if new_item.id in actor['item_properties']:
+                    props = actor['item_properties'][new_item.id]
+                    for prop in props:
+                        new_item.item_properties[prop['key']] = prop['val']
+                        print('set:', new_item.id, new_item.premade_id, prop)
+                    print(new_item.__dict__)
                 """
                 item_id TEXT NOT NULL,
                 type TEXT NOT NULL,
@@ -738,7 +745,9 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                         )
                         new_item.manager.add_bonus(boon)
 
+                new_item.after_init()
                 self.actor.inventory_manager.add_item(new_item, forced=True)
+                
             self.compare_slots_to_items()
 
             # actor is loaded without equipment stats on
