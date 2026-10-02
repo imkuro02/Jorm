@@ -672,7 +672,7 @@ class SkillStrike(SkillDamage):
 
     def pretty_name(self, identifier = None):
         if self.name == None:
-            return self.name_prefix + ' ' + systems.utils.add_godot_url_skill_pretty_name(identifier, self.skill_id)
+            return self.name_prefix + systems.utils.add_godot_url_skill_pretty_name(identifier, self.skill_id)
         else:
             return self.name
 
@@ -704,7 +704,7 @@ class SkillStrike(SkillDamage):
                 prefix = 'Sacred'
 
         #self.name = f'{prefix} {self.name}'
-        self.name_prefix = prefix
+        self.name_prefix = prefix + ' '
         #super().use()
         history = self.user.fetch_combat_history()
         bonus = 0
