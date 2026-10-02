@@ -35,6 +35,7 @@ versions:
     unixtime: 1775631568
     features:
       - item_properties saved in database
+      - Minor bugfixes (strike name prefix)
   "210926":
     id: "210926"
     title: Duels
