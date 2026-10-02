@@ -10,6 +10,22 @@
   <title>JORM</title>
   <style>
 
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 600px;
+    border: 0;
+
+    /* subtle CRT bend */
+    transform: perspective(1200px)
+              rotateX(0.6deg)
+              rotateY(-0.6deg)
+              scale(1.01);
+
+    border-radius: 10px;
+  }
+
   @font-face {
     font-family: myFont; /* set name */
     src: url(font.ttf); /* url of the font */
