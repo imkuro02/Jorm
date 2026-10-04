@@ -453,7 +453,7 @@ Type {Color.GOOD} reset {Color.BACK} to reset your password."""
             self.change_state(self.LOGIN_OR_REGISTER)
             return
 
-        print(self.account)
+        #print(self.account)
         email = self.account[3]
         #actor = self.factory.db.read_actor(self.account[0])
         #if actor == None:
@@ -728,8 +728,8 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
                     props = actor['item_properties'][new_item.id]
                     for prop in props:
                         new_item.item_properties[prop['key']] = prop['val']
-                        print('set:', new_item.id, new_item.premade_id, prop)
-                    print(new_item.__dict__)
+                        #systems.utils.debug_print('set:', new_item.id, new_item.premade_id, prop)
+                    #systems.utils.debug_print(new_item.__dict__)
                 """
                 item_id TEXT NOT NULL,
                 type TEXT NOT NULL,
@@ -800,7 +800,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         _master = self.actor.settings_manager.get_value(SETTINGS.VOL_MASTER)
         _effects = self.actor.settings_manager.get_value(SETTINGS.VOL_EFFECTS)
         _music = self.actor.settings_manager.get_value(SETTINGS.VOL_MUSIC)
-        print(_master,_effects,_music)
+        #print(_master,_effects,_music)
         self.send_gmcp({"vol": _master},   "Client.Media.VolumeMaster")
         self.send_gmcp({"vol": _effects},  "Client.Media.VolumeEffects")
         self.send_gmcp({"vol": _music},    "Client.Media.VolumeMusic")
