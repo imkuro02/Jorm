@@ -1,0 +1,15 @@
+letter:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc> says "You here to make bets?"
+
+    write:
+      append_to: start
+      options:
+        - line: |
+            write
+          goto: start
+
+  
