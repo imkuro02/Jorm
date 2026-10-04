@@ -270,7 +270,7 @@ class Item:
             # output = output[:-2]
             output += "\n"
         """
-
+        output = output.strip()
         self.new = False
 
         # just an idea im floating around but might not get implemented

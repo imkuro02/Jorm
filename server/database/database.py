@@ -723,6 +723,19 @@ class Database:
         self.write_admins(actor)
         self.conn.commit()
 
+    def get_actor_name_from_id(self, actor_id):
+        self.cursor.execute(
+            """
+            SELECT actor_name FROM actors WHERE actor_id = ?
+        """,
+            (actor_id,),
+        )
+        name = self.cursor.fetchall()
+        if name == None:
+            name = 'ERROR no name in get_actor_name_from_id'
+        name = name[0][0]
+        return name
+
     def get_actor_ids_from_unique_id(self, unique_id):
         self.cursor.execute(
             """
