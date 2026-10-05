@@ -31,7 +31,7 @@ versions:
   #
   "300926":
     id: "300926"
-    title: items
+    title: items and bugfixes
     unixtime: 1775631568
     features:
       - item_properties saved in database
