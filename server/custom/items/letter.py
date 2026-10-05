@@ -15,8 +15,8 @@ class CustomLetter(Item):
         if len(dialog_obj.answers['title']) >= 30:
             dialog_obj.player.send_line('The title of this letter is too long (max 30)')
             return
-        if len(dialog_obj.answers['message']) >= 200:
-            dialog_obj.player.send_line('The content of this letter is too long (max 200)')
+        if len(dialog_obj.answers['message']) >= 600:
+            dialog_obj.player.send_line('The content of this letter is too long (max 600)')
             return
 
         self.item_properties['letter_title'] = dialog_obj.answers['title']
