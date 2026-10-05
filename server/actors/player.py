@@ -327,6 +327,33 @@ class Player(Actor):
     def die(self, unload=False):
         super().die(unload=False)
 
+        _last_words = False
+        if _last_words:
+            questions = {
+                'last words':    'What are your last words?',
+            }
+            from custom.utils import CustomDialogQuestionList
+            class DeathDialog(CustomDialogQuestionList):
+                def question_list_dialog_answers(self, dialog_obj):
+                    if self.player.status != ActorStatusType.DEAD:
+                        return True
+                    br = f'"{dialog_obj.answers['last words']}" - {self.player.id}'
+                    self.player.pretty_broadcast(br, br, list_pretty_name_objects = [self.player], send_to = 'world')
+                    self.player.command_rest('')
+                    return True
+
+
+                def answer(self, line):
+                    if self.player.status != ActorStatusType.DEAD:
+                        return False
+                    super().answer(line)
+                    return True
+                    
+            self.current_dialog = DeathDialog(self, _npc = self, _dialog_tree = None, questions = questions)
+            self.current_dialog.npc = self.current_dialog
+            self.current_dialog.print_dialog()
+        
+
         '''
         self.stat_manager.stats[StatType.FATIGUE] += 3
         if self.stat_manager.stats[StatType.FATIGUE] >= 12:

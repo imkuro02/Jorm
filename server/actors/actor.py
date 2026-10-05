@@ -1039,8 +1039,6 @@ class Actor:
         pass
 
     def die(self, unload=True):
-            
-
         if self.room == None:
             systems.utils.debug_print(
                 self.id,

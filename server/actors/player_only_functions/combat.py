@@ -664,14 +664,12 @@ def rest_here_request(self, line):
             par.rest_here(line)
     self.rest_here(line)
 
-
 def rest_home(self, line):
     self.sendSound(Audio.BUFF)
     self.skill_manager.unload_all_charges()
 
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL
-
 
         self.stat_manager.stats[StatType.HP] = int(
             30
