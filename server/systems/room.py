@@ -378,8 +378,10 @@ class Room:
 
         if desc != '':
             desc = desc + '\n'
+        else:
+            desc = 'Nothing stands out.'
 
-        return desc
+        return desc.strip()
 
     def tick(self):
 
@@ -389,7 +391,7 @@ class Room:
         #    return
         
         
-
+        
         for a in self.actors.values():
             actors[a.id] = a
 
@@ -400,12 +402,15 @@ class Room:
         and self.spawner != None):
             self.spawner.tick()
             
+        for i in self.inventory_manager.items.values():
+            i.tick()
+
         # remove items that have been on the ground for too long
         if self.world.factory.ticks_passed % DESPAWN_TIME_ITEMS == 0:
             items_to_remove = []
             for i in self.inventory_manager.items.values():
-                i.tick()
 
+                # dont despawn if spawner controlled item
                 if (self.spawner != None
                 and i in self.spawner.spawn_points.values()):
                     continue

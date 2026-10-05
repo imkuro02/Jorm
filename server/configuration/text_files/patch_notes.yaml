@@ -37,6 +37,8 @@ versions:
       - item_properties saved in database
       - Letter item added
       - Minor bugfixes (strike name prefix)
+      - Room descriptions are stripped (no leading spaces)
+      - Scenery items like campfires now always show ambient text
   "210926":
     id: "210926"
     title: Duels
