@@ -200,8 +200,8 @@ class UpdateChecker:
         if self.actor.protocol == None:
             return
 
-        self.tick_send_exp()
-        self.tick_send_time()
+        #self.tick_send_exp()
+        #self.tick_send_time()
 
         _split = '-' * _len
         _map = _split
@@ -511,6 +511,9 @@ class Player(Actor):
             self.send_line(
                 f"{self.pretty_name(identifier=self)} got {Color.GOOD}" + str(abs(exp)) + f" experience{Color.BACK}"
             )
+
+        self.update_checker.tick_send_exp()
+        
 
     def gain_practice_points(self, pp):
         self.stat_manager.stats[StatType.PP] += pp

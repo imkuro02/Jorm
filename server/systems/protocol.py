@@ -610,6 +610,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
 
     def load_actor(self):
         actor = self.factory.db.read_actor(actor_id = self.actor_id)
+
         # systems.utils.debug_print('>>>',actor)
 
         if actor == None:  # new actor
@@ -848,6 +849,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         
         #self.actor.friend_manager.friend_broadcast_login()
         self.actor.finish_turn()
+        self.actor.update_checker.tick_send_exp()
 
         #if self.guest == False:
         #    if self.actor.settings_manager.get_value(SETTINGS.EMAIL) == '':
