@@ -14,6 +14,7 @@ from collections import deque
 
 import time
 
+import re
 
 from systems.utils import dict_checksum
 
@@ -833,7 +834,7 @@ def command_look(self, line, return_gmcp=False, short = False):
             for i in room.actors.values():
                 if type(i).__name__ == "Player":
                     continue
-                if len(icons) >= 3:
+                if len(icons) >= 10:
                     continue
                 icon = i.get_icon(who_checks = self) #get_icon(i.npc_id)
                 if icon == "":
@@ -849,20 +850,101 @@ def command_look(self, line, return_gmcp=False, short = False):
                 while len(i) < max_height:
                     i.insert(0,' ')
 
-            amount = len(icons)
-            if amount != 0:
+            widths = [0] * len(icons)
+            index = 0
+            columns = len(icons)
+            for elem in icons:
+                for line in elem:
+                    elem_raw = systems.utils.remove_color(line)
+                    pattern = r'\[url(?:=[^\]]*)?\](.*?)\[/url\]'
+                    elem_raw = re.sub(pattern, r'\1', elem_raw)
+                    if widths[index] <= len(elem_raw):
+                        widths[index] = len(elem_raw)
+                index += 1
+
+            # _npcs rat;_npcs spore;_npcs rat;_npcs skeleton_soldier;l
+            # _npcs green_slime;_npcs skeleton_soldier;_npcs red_slime;_npcs blue_slime;_npcs rat;l
+            '''
+            def pack_counts(nums, limit=82):
+                #_len = len('**********************************************************************************')
+                #print(_len)
+                nums = sorted(nums, reverse=False)
+                groups = []
+
+                for num in nums:
+                    for group in groups:
+                        if sum(group) + num <= limit:
+                            group.append(num)
+                            break
+                        continue
+                    else:
+                        groups.append([num])
+                
+                
+                return [len(group) for group in groups]
+            '''
+            
+            '''
+            def pack_counts(nums, limit=82):
+                #_len = len('**********************************************************************************')
+                #print(_len)
+                nums = sorted(nums, reverse=False)
+                groups = []
+
+                for num in nums:
+                    for group in groups:
+                        if sum(group) + num <= limit:
+                            group.append(num)
+                        continue
+                    else:
+                        groups.append([num])
+                
+                
+                
+                return [len(group) for group in groups]
+            '''
+
+            def pack_counts(nums, limit=82):
+                groups = []
+                current = []
+                total = 0
+
+                for num in nums:
+                    if total + num > limit:
+                        groups.append(current)
+                        current = []
+                        total = 0
+
+                    current.append(num)
+                    total += num
+
+                if current:
+                    groups.append(current)
+
+                return [len(group) for group in groups]
+
+
+
+
+            
+            columns = pack_counts(widths)
+            print(widths, columns)
+            start = 0
+            for amount in range(start, start+len(columns)):
+                amount = columns[amount]
                 t = systems.utils.Table(amount)
-                # column = 0
-                row = 0
                 for row in range(0, max_height):
-                    for column in range(0, amount):
+                    for column in range(start, start+amount):
                         try:
                             t.add_data(icons[column][row])
-
                         except Exception as e:
-                            t.add_data("XD")
+                            t.add_data("ERR")
+                        
 
+                start += amount
                 see.append(t.get_table())
+                
+            
 
         if not room.inventory_manager.is_empty():
             see_items = []

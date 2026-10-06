@@ -717,7 +717,9 @@ class Table:
         else:
             self.data.append(data)
 
+
     def get_table(self):
+        
         if not self.data:
             # systems.utils.debug_print("No data available to display.")
             return ""
