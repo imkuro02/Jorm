@@ -1839,7 +1839,7 @@ class SkillNecromancerRessurect(SkillTargetItem):
             npc_class = Npc
             npc_id = self.other.item_properties['corpse_npc_id']
             e = npc_class(
-                npc_id = f'summoned_{npc_id}',
+                npc_id = f'{npc_id}',
                 ai = EnemyAI,
                 name = self.other.item_properties['corpse_npc_name'].replace('The','The resurrected'),
                 description = ENEMIES[npc_id]["description"],
@@ -1853,6 +1853,7 @@ class SkillNecromancerRessurect(SkillTargetItem):
                 on_death_skills_use = ENEMIES[npc_id]["on_death_skills_use"],
                 on_start_skills_use = ENEMIES[npc_id]["on_start_skills_use"],
             )
+            e.npc_id = 'summoned_'+e.npc_id
 
             #self.user.room.move_actor(e, silent=True)
 

@@ -537,7 +537,7 @@ def command_skills(self, line, return_gmcp = False):
 
         for skill_id in self.skill_manager.skills:
             cur_lvl = self.skill_manager.skills[skill_id]
-            nat_lvl = level_without_eq[skill_id]
+            nat_lvl = 0 if skill_id not in level_without_eq else level_without_eq[skill_id]
 
             
 

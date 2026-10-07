@@ -816,24 +816,28 @@ def command_look(self, line, return_gmcp=False, short = False):
 
 
         for i in room.actors.values():
+            #if i == self:
+            #    continue
+
+            _ = "" + i.pretty_name(identifier = self) + " is here"
+            if i.status == ActorStatusType.DEAD:
+                _ = _ + f" and is dead"
+            if i.status == ActorStatusType.FIGHTING:
+                _ = _ + f" and is fighting"
 
             if i == self:
-                pass
-            else:
-                _ = "" + i.pretty_name(identifier = self) + " is here"
-                if i.status == ActorStatusType.DEAD:
-                    _ = _ + f" and is dead"
-                if i.status == ActorStatusType.FIGHTING:
-                    _ = _ + f" and is fighting"
-                see.append(_)
+                _ = _.replace('is','are')
+            see.append(_)
 
 
         # XD icons
         if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
             icons = []
             for i in room.actors.values():
-                if type(i).__name__ == "Player":
-                    continue
+                #if i == self:
+                #    continue
+                #if type(i).__name__ == "Player":
+                #    continue
                 if len(icons) >= 10:
                     continue
                 icon = i.get_icon(who_checks = self) #get_icon(i.npc_id)
@@ -928,7 +932,7 @@ def command_look(self, line, return_gmcp=False, short = False):
 
             
             columns = pack_counts(widths)
-            print(widths, columns)
+            #print(widths, columns)
             start = 0
             for amount in range(start, start+len(columns)):
                 amount = columns[amount]

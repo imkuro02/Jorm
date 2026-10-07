@@ -2,8 +2,8 @@
 import telnetlib3 as telnetlib
 import time
 import random
-HOST = "jorm.kurowski.xyz"
-#HOST = "localhost"
+#HOST = "jorm.kurowski.xyz"
+HOST = "localhost"
 PORT = 4001
 COMMANDS = [
 "guest",
@@ -57,8 +57,8 @@ import telnetlib3 as telnetlib
 import time
 import threading
 
-HOST = "jorm.kurowski.xyz"
-# HOST = "localhost"
+#HOST = "jorm.kurowski.xyz"
+HOST = "localhost"
 PORT = 4001
 
 COMMANDS = [

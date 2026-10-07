@@ -1,0 +1,109 @@
+  _____
+ //////)
+ G O >O
+ |    |
+ |____|
+  u  u
+12345678
+   ,
+   )\
+._/__\_, @
+ G O >O  |
+ /  : \  |
+/___:__\ | 
+  u  u   |
+12345678
+
+  .--.  .
+ |__  | |\ 
+ | O\/O ||
+ /"  "\ ==
+ |+__+| u
+  u  u   
+12345678
+
+[id:eq_head]
+
+@yellow  _____ 
+@yellow //////)
+@normal G O >O 
+[end]
+[id:eq_body]
+@green |    | 
+@green |____| 
+@yellow  u  u  
+[end]
+[id:eq_weapon]
+
+
+
+
+@normal,O
+
+
+[end]
+
+
+[id:eq_head_grit]
+        
+@normal  .--.  
+@normal |__  | 
+@normal | @normalO@normal\/@normalO 
+[end]
+[id:eq_body_grit]
+@normal /@bcyan"@cyan  @bcyan"@normal\ 
+@normal |@bcyan+@normal__@bcyan+@normal| 
+@normal  u  u  
+[end]
+[id:eq_weapon_grit]
+@normal.
+@normal|\ 
+@normal||
+@yellow==
+@yellowu 
+
+
+[end]
+
+
+[id:eq_head_mind]
+@red   ,    
+@red   )\   
+@red._/__\_,
+@normal G O >O 
+[end]
+[id:eq_body_mind]
+@red /  @bred:@red \ 
+@red/___@bred:@red__\
+@bred  u  u  
+[end]
+[id:eq_weapon_mind]
+
+
+@bred@
+@yellow|
+@yellow|
+@yellow| 
+@yellow|
+[end]
+
+[id:eq_head_mind_2]
+@cyan   ,    
+@cyan   )\   
+@cyan._/__\_,
+@normal G O >O 
+[end]
+[id:eq_body_mind_2]
+@cyan /  @cyan:@cyan \ 
+@cyan/___@cyan:@cyan__\
+@yellow  u  u  
+[end]
+[id:eq_weapon_mind_2]
+
+
+@cyan@
+@yellow|
+@yellow|
+@yellow| 
+@yellow|
+[end]

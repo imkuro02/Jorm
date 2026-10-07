@@ -29,6 +29,16 @@ versions:
   #
   #
   #
+  "071026":
+    id: "071026"
+    title: icons
+    unixtime: 1775631568
+    features:
+      - most weapons and armor have icons
+      - players now have icons rendered
+      - increased icon render limit from 3 to 10 in one room
+      # fixed level_without_eq[skill_id] crash, where not having any points in a skill naturally, but having 
+      # skill points in it from items, would crash server upon checking skills
   "300926":
     id: "300926"
     title: items and bugfixes

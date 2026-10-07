@@ -21,6 +21,9 @@ class Item:
     def __init__(self):
         self.factory = context.FACTORY
 
+        self.icon_id = 'eq_body'
+        self.icon_scheme = '@red @red @red'
+        
         if hasattr(self, 'id'):
             return
         

@@ -203,6 +203,7 @@ class Npc(Actor):
                             self.dialog_tree[location]["options"].append(i)
 
         self.npc_id = npc_id
+        self.icon_id = npc_id
 
         self.can_start_fights = can_start_fights
         self.dont_join_fights = dont_join_fights

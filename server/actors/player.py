@@ -779,7 +779,9 @@ class Player(Actor):
 
 
     def set_turn(self):
-        super().set_turn()
+        if super().set_turn():
+            output_self = f"{self.prompt(self)} {Color.COMBAT_TURN}Your turn{Color.NORMAL}"
+            self.send_line(output_self)
         # self.send_line(self.prompt(self))
 
     def finish_turn(self, force_cooldown=False):

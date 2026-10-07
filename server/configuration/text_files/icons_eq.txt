@@ -1,0 +1,159 @@
+[id:eq_head1]
+       
+@c2  _____ 
+@c2 //////)
+@c1 G O >O 
+[end]
+[id:eq_head]
+       
+@c2   ____ 
+@c2 /     `
+@c1 G O >O 
+[end]
+[id:eq_body]
+@c2 |    | 
+@c2 |____| 
+@c1  u  u  
+[end]
+[id:eq_weapon]
+
+
+
+
+@c1,O
+
+
+[end]
+
+
+[id:eq_head_helmet]
+        
+@c2  .--.  
+@c2 |__  | 
+@c2 | @c1O@c2\/@c1O 
+[end]
+[id:eq_body_armor]
+@c2 /@c3"@c2  @c3"@c2\ 
+@c2 |@c3+@c2__@c3+@c2| 
+@c1  u  u  
+[end]
+[id:eq_weapon_sword]
+@c1.
+@c1|\ 
+@c1||
+@c2==
+@c2u 
+
+
+[end]
+
+
+[id:eq_head_pointy_hat]
+@c2   ,    
+@c2   )\   
+@c2._/__\_,
+@c1 G O >O 
+[end]
+[id:eq_body_robe]
+@c2 /  @c2:@c2 \ 
+@c2/___@c2:@c2__\
+@c1  u  u  
+[end]
+[id:eq_weapon_staff]
+
+
+@c1@
+@c2|
+@c2|
+@c2| 
+@c2|
+[end]
+
+
+
+[id:eq_head_hood]
+@c2        
+@c2  ___   
+@c2.'´ _`\ 
+@c2  )@c1O >O@c2)
+[end]
+[id:eq_body_coat]
+@c2 |@c2  : @c2| 
+@c2 |@c2  : @c2| 
+@c1  u  u  
+[end]
+[id:eq_weapon_dagger]
+
+
+
+@c2n 
+@c2==
+@c1|/
+
+[end]
+
+
+
+[id:eq_weapon_spear]
+@c1^
+@c2|
+@c2|
+@c2|
+@c2|
+@c2| 
+@c2|
+[end]
+
+[id:eq_weapon_axe]
+
+
+@c1^
+@c2|@c1-)
+@c2|
+@c2T
+
+[end]
+
+[id:eq_weapon_halberd]
+@c1^
+@c2|@c1-)
+@c2|
+@c2|
+@c2|
+@c2| 
+@c2|
+[end]
+
+[id:eq_weapon_mace]
+
+
+@c3 H
+@c1 |
+@c2 T 
+
+
+[end]
+[id:eq_weapon_flail]
+
+
+@c2 /\
+@c1 |@c3*
+@c2 T 
+
+
+[end]
+
+
+[id:eq_head_overhead_thing]
+@c3 <(__`)>
+@c2   ____ 
+@c2 /     `
+@c1 G O >O 
+[end]
+
+[id:eq_head_mask]
+        
+@c2   ____ 
+@c2 /     `
+@c1 @c3-<@c1O@c3><@c1O@c3-
+[end]

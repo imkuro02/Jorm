@@ -764,11 +764,17 @@ class Actor:
         output = f"{self.pretty_name(identifier = identifier, text_override = f'{self.name}')} ({self.status})"
         # if no description then ignore
 
+        '''
         if identifier != None:
             if type(identifier).__name__ == "Player":
                 if identifier.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
                     if type(self).__name__ != "Player":
                         output += '\n'+get_icon(self)
+        '''
+        if identifier != None:
+            if type(identifier).__name__ == "Player":
+                if identifier.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
+                    output += '\n'+get_icon(self)
 
         if True: #if not is_glancing:
             if self.description != None:
@@ -1418,53 +1424,20 @@ class Actor:
             if not who_checks.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
                 return ""
 
-        if type(self).__name__ != "Player":
-            _icon = get_icon(self)
-            return _icon
-        else:
-            # _icon = get_icon('citizen')
-            _icon = ""
-            return _icon
-
-        return ""
+        _icon = get_icon(self)
+        return _icon
 
     def set_turn(self):
         if self.room == None:
-            return
+            return False
         if self.room.combat == None:
-            return
-
-        for par in self.room.combat.participants.values():
-            if type(par).__name__ != "Player":
-                continue
-
-            if par == self:
-                _icon = self.get_icon(who_checks=par)
-                if _icon != "":
-                    _icon = "\n" + _icon
-                output_self = f"{par.prompt(par)} {Color.COMBAT_TURN}Your turn{Color.NORMAL}{_icon}"
-                par.send_line(output_self)
-                # self.show_prompts(self.room.combat.participants.values())
-                continue
-
-
-            '''
-            _icon = self.get_icon(who_checks=par)
-            if _icon != "":
-                _icon = "\n" + _icon
-            output_other = (
-                f"{self.prompt(par)} {self.pretty_name()}'s turn{Color.NORMAL}{_icon}"
-            )
-            par.send_line(output_other)
-            '''
-        #self.pretty_broadcast(f'{self.pretty_name(identifier=self, text_override='Your')} turn',f'{self.id}s turn',list_pretty_name_objects = [self])
-
-        # print(self.room.combat)
-
+            return False
+        
         self.affect_manager.set_turn()
         self.skill_manager.set_turn()
         self.inventory_manager.set_turn()
-        # self.stat_manager.stats[StatType.THREAT] = int(self.stat_manager.stats[StatType.THREAT]*.90)
+        
+        return True
 
     def join_combat(self):
         self.affect_manager.join_combat()
