@@ -16,6 +16,7 @@ from systems.triggers import TriggerManager
 from configuration.constants.tickrate import TICKRATE
 
 import context
+from actors.player_only_functions.settings import SETTINGS
 
 class Item:
     def __init__(self):
@@ -245,8 +246,11 @@ class Item:
         if identifier != None: 
             if identifier.inventory_manager == self.inventory_manager:
                 output += ' (in your inventory)'
-            #if identifier.room.inventory_manager == self.inventory_manager:
-                #output += ' (in the room)'
+
+            if identifier.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
+                icon = get_icon(self)
+                if icon != '':
+                    output += '\n'+icon
         output += '\n'
 
         # output += get_icon(self.premade_id)

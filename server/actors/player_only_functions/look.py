@@ -936,7 +936,7 @@ def command_look(self, line, return_gmcp=False, short = False):
             start = 0
             for amount in range(start, start+len(columns)):
                 amount = columns[amount]
-                t = systems.utils.Table(amount)
+                t = systems.utils.Table(amount,0)
                 for row in range(0, max_height):
                     for column in range(start, start+amount):
                         try:

@@ -357,7 +357,7 @@ class Room:
 
     def is_enemy_present(self):
         for i in self.actors.values():
-            if i.party_manager.get_party_id() == FactionType.ENEMY:
+            if i.party_manager.get_faction_id() == FactionType.ENEMY:
                 return i
         return False
 

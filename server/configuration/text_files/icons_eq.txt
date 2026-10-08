@@ -8,7 +8,7 @@
        
 @c2   ____ 
 @c2 /     `
-@c1 G O >O 
+@c1 ø æ åæ
 [end]
 [id:eq_body]
 @c2 |    | 
@@ -27,10 +27,10 @@
 
 
 [id:eq_head_helmet]
-        
-@c2  .--.  
-@c2 |__  | 
-@c2 | @c1O@c2\/@c1O 
+
+@c2  .--. 
+@c2 |__  |
+@c2 | @c1æ@c2\/@c1æ
 [end]
 [id:eq_body_armor]
 @c2 /@c3"@c2  @c3"@c2\ 
@@ -52,7 +52,7 @@
 @c2   ,    
 @c2   )\   
 @c2._/__\_,
-@c1 G O >O 
+@c1 ø æ åæ 
 [end]
 [id:eq_body_robe]
 @c2 /  @c2:@c2 \ 
@@ -75,7 +75,7 @@
 @c2        
 @c2  ___   
 @c2.'´ _`\ 
-@c2  )@c1O >O@c2)
+@c2  )@c1æ åæ@c2)
 [end]
 [id:eq_body_coat]
 @c2 |@c2  : @c2| 
@@ -148,12 +148,38 @@
 @c3 <(__`)>
 @c2   ____ 
 @c2 /     `
-@c1 G O >O 
+@c1 ø æ åæ 
 [end]
 
 [id:eq_head_mask]
         
 @c2   ____ 
 @c2 /     `
-@c1 @c3-<@c1O@c3><@c1O@c3-
+@c1 @c3-<@c1æ@c3><@c1æ@c3-
 [end]
+
+
+[id:item_potion]
+@c2 *,
+@c1 )(
+@c1(__)
+[end]
+
+[id:item_scroll]
+@c1  _____
+@c1 O     )
+@c1  )@c2swag@c1)
+@c1 (____(
+[end]
+
+[id:item_cheese]
+@c1  ___
+@c1."  @c2o@c1\
+@c1\@c2O@c1_@c28@c1__\
+[end]
+
+[id:apple]
+@c2     y
+@c1 .- | -.
+@c1| @c3#     |   
+@c1 `._._.´

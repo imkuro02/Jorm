@@ -898,7 +898,7 @@ def command_lore(self, line):
             item_id = LORE["items"][to_find]["premade_id"]
             i = load_item(item_id, max_stats=True)
             i.new = False
-            output += i.identify(self)
+            output += i.identify(identifier = self)
 
             all_dropped_from = []
             for e in LORE["enemies"]:

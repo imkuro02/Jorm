@@ -38,43 +38,76 @@ for line in lines:
     if current_id:
         buffer.append(line)
 
-def get_icon_player(obj, head = None, body = None, weapon = None):
+def icon_ear_eye_nose(icon, remove = False):
+    if remove:
+        return icon.replace('ø',' ').replace('æ',' ').replace('å',' ')
+    return icon.replace('ø','G').replace('æ','O').replace('å','>')
+
+def icon_normalize(icon, center = False, width = 8):
+    new_icon = []
+    if center:
+        width = int(width / 2)
+
+    for row in icon.split('\n'):
+        if center:
+            row = (' '*width)+row
+
+        length = len(systems.utils.remove_color(row))
+        if width > length:
+            new_icon.append(row+(' '*(width-length)))
+        else:
+            new_icon.append(row)
+    return new_icon
+
+def get_icon_item(obj):
+    if obj.icon_id not in ICONS:
+        return ''
+
+    icon = '\n'+ICONS[obj.icon_id]+'\n'
+    icon += '\nscheme '+obj.icon_scheme
+
+    index = 1
+    icon = '\n'.join(icon_normalize(icon, center = True, width = 8))
+
+    if icon.split('\n')[-1].strip().startswith('scheme'):
+        colors = icon.split('\n')[-1].strip().split(' ')
+        for color in colors:
+            if color == 'scheme':
+                continue
+            icon = icon.replace(f'@c{index}', color)
+            index += 1
+        icon = "\n".join(icon.split("\n")[:-1])
+
+    return icon
+
+def get_icon_player(obj):
     from configuration.constants.equipment_slot_type import EquipmentSlotType
 
-    if obj == None:
-        icon_head =     ICONS['eq_head']    if head == None else ICONS[head]
-        icon_body =     ICONS['eq_body']    if body == None else ICONS[body]
-        icon_weapon =   ICONS['eq_weapon']  if weapon == None else ICONS[weapon]
+    slots = obj.slots_manager.slots
+    inv = obj.inventory_manager.items
 
-        icon_head += '\nscheme @normal @normal @normal'
-        icon_body += '\nscheme @normal @normal @normal'
-        icon_weapon += '\nscheme @normal @normal @normal'
+    if slots[EquipmentSlotType.HEAD] != None and inv[slots[EquipmentSlotType.HEAD]].icon_id in ICONS:
+        icon_head = ICONS[inv[slots[EquipmentSlotType.HEAD]].icon_id]
+        icon_head += '\nscheme '+inv[slots[EquipmentSlotType.HEAD]].icon_scheme
     else:
-        slots = obj.slots_manager.slots
-        inv = obj.inventory_manager.items
+        icon_head =  ICONS['eq_head']    
+        icon_head += '\nscheme @normal @normal @normal'
 
-        if slots[EquipmentSlotType.HEAD] != None and inv[slots[EquipmentSlotType.HEAD]].icon_id in ICONS:
-            icon_head = ICONS[inv[slots[EquipmentSlotType.HEAD]].icon_id]
-            icon_head += '\nscheme '+inv[slots[EquipmentSlotType.HEAD]].icon_scheme
-        else:
-            icon_head =  ICONS['eq_head']    
-            icon_head += '\nscheme @normal @normal @normal'
+    
+    if slots[EquipmentSlotType.BODY] != None and inv[slots[EquipmentSlotType.BODY]].icon_id in ICONS:
+        icon_body = ICONS[inv[slots[EquipmentSlotType.BODY]].icon_id]
+        icon_body += '\nscheme '+inv[slots[EquipmentSlotType.BODY]].icon_scheme
+    else:
+        icon_body =  ICONS['eq_body']    
+        icon_body += '\nscheme @normal @normal @normal'
+    
 
-        
-        if slots[EquipmentSlotType.BODY] != None and inv[slots[EquipmentSlotType.BODY]].icon_id in ICONS:
-            icon_body = ICONS[inv[slots[EquipmentSlotType.BODY]].icon_id]
-            icon_body += '\nscheme '+inv[slots[EquipmentSlotType.BODY]].icon_scheme
-        else:
-            icon_body =  ICONS['eq_body']    
-            icon_body += '\nscheme @normal @normal @normal'
-        
-
-        if slots[EquipmentSlotType.WEAPON] != None and inv[slots[EquipmentSlotType.WEAPON]].icon_id in ICONS:
-            icon_weapon = ICONS[inv[slots[EquipmentSlotType.WEAPON]].icon_id]
-            icon_weapon += '\nscheme '+inv[slots[EquipmentSlotType.WEAPON]].icon_scheme
-        else:
-            icon_weapon =  ICONS['eq_weapon']  
-            icon_weapon += '\nscheme @normal @red @red'
+    if slots[EquipmentSlotType.WEAPON] != None and inv[slots[EquipmentSlotType.WEAPON]].icon_id in ICONS:
+        icon_weapon = ICONS[inv[slots[EquipmentSlotType.WEAPON]].icon_id]
+        icon_weapon += '\nscheme '+inv[slots[EquipmentSlotType.WEAPON]].icon_scheme
+    else:
+        icon_weapon =  ICONS['eq_weapon']  
+        icon_weapon += '\nscheme @normal @red @red'
 
 
     index = 1
@@ -107,11 +140,17 @@ def get_icon_player(obj, head = None, body = None, weapon = None):
             index += 1
         icon_weapon = "\n".join(icon_weapon.split("\n")[:-1])
     
-
-    icon_body_head = icon_head +'\n'+ icon_body
-    list_body_head = icon_body_head.split('\n')
     
-    list_weapon = icon_weapon.split('\n')
+
+    icon_head = icon_normalize(icon_head, width = 8)
+    icon_body = icon_normalize(icon_body, width = 8)
+    icon_weapon = icon_normalize(icon_weapon, width = 0)
+
+
+    icon_body_head = '\n'.join(icon_head) +'\n'+ '\n'.join(icon_body)
+    list_body_head = icon_body_head.split('\n')
+    list_weapon = icon_weapon
+    #list_weapon = icon_weapon.split('\n')
 
     icon = []
     for i, _ in enumerate(list_weapon):
@@ -122,35 +161,11 @@ def get_icon_player(obj, head = None, body = None, weapon = None):
     icon_compiled = ''.join(icon)
     return icon_compiled
 
-from itertools import product
-def create_equipment_combinations(items):
-    heads = [x for x in items if x.startswith("eq_head")]
-    bodies = [x for x in items if x.startswith("eq_body")]
-    weapons = [x for x in items if x.startswith("eq_weapon")]
-
-    combinations = [
-        {
-            "head": head,
-            "body": body,
-            "weapon": weapon,
-        }
-        for head, body, weapon in product(heads, bodies, weapons)
-    ]
-
-    return {
-        "heads": heads,
-        "bodies": bodies,
-        "weapons": weapons,
-        "combinations": combinations,
-    }
-result = create_equipment_combinations(ICONS)
-print(result['combinations'])
-for i in result['combinations']:
-    print(systems.utils.add_color(get_icon_player(None, i['head'], i['body'], i['weapon'])))
-
 def get_icon(obj):
     if type(obj).__name__ == 'Player':
-        return get_icon_player(obj)
+        return icon_ear_eye_nose(get_icon_player(obj))
+    if systems.utils.get_object_parent(obj) == 'Item':
+        return icon_ear_eye_nose(get_icon_item(obj), remove = True)
     #icon_id = obj.npc_id
     icon_id = obj.icon_id
     icon_style = obj.status
