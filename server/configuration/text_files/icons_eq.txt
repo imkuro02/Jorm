@@ -13,7 +13,7 @@
 [id:eq_body]
 @c2 |    | 
 @c2 |____| 
-@c1  u  u  
+@c1  L  L  
 [end]
 [id:eq_weapon]
 
@@ -35,7 +35,7 @@
 [id:eq_body_armor]
 @c2 /@c3"@c2  @c3"@c2\ 
 @c2 |@c3+@c2__@c3+@c2| 
-@c1  u  u  
+@c1  L  L  
 [end]
 [id:eq_weapon_sword]
 @c1.
@@ -57,7 +57,7 @@
 [id:eq_body_robe]
 @c2 /  @c2:@c2 \ 
 @c2/___@c2:@c2__\
-@c1  u  u  
+@c1  L  L  
 [end]
 [id:eq_weapon_staff]
 
@@ -80,7 +80,7 @@
 [id:eq_body_coat]
 @c2 |@c2  : @c2| 
 @c2 |@c2  : @c2| 
-@c1  u  u  
+@c1  L  L  
 [end]
 [id:eq_weapon_dagger]
 
@@ -107,10 +107,10 @@
 [id:eq_weapon_axe]
 
 
-@c1^
-@c2|@c1-)
+@c2.@c1_,
+@c2|@c1-/
 @c2|
-@c2T
+@c2|
 
 [end]
 
