@@ -143,26 +143,30 @@ class Dialog:
                 dic["teleport_player"] = option["teleport_player"]
 
             if "quest_turn_in" in option:
-                quest_id = option["quest_turn_in"]["id"]
+                quest_ids = option["quest_turn_in"]
                 #if (
                 #    not self.player.quest_manager.check_quest_state(quest_id)
                 #    == QUEST_STATE_TYPES.COMPLETED
                 #):
                 #    continue
-
-                dic["quest_turn_in"] = {"id": quest_id}
-                if "reward" in option["quest_turn_in"]:
-                    dic["reward"] = option["quest_turn_in"]["reward"]
-                if "reward_exp" in option["quest_turn_in"]:
-                    dic["reward_exp"] = option["quest_turn_in"]["reward_exp"]
-                if "reward_practice_points" in option["quest_turn_in"]:
-                    dic["reward_practice_points"] = option["quest_turn_in"][
-                        "reward_practice_points"
-                    ]
+                for quest_id in quest_ids:
+                    dic["quest_turn_in"] = {"id": quest_id}
+                    if "reward" in option["quest_turn_in"]:
+                        dic["reward"] = option["quest_turn_in"]["reward"]
+                    if "reward_exp" in option["quest_turn_in"]:
+                        dic["reward_exp"] = option["quest_turn_in"]["reward_exp"]
+                    if "reward_practice_points" in option["quest_turn_in"]:
+                        dic["reward_practice_points"] = option["quest_turn_in"][
+                            "reward_practice_points"
+                        ]
 
             if "quest_start" in option:
-                quest_id = option["quest_start"]["id"]
-                dic["quest_start"] = {"id": quest_id}
+                #quest_id = option["quest_start"]["id"]
+                dic["quest_start"] = option["quest_start"]
+
+            if "quest_drop" in option:
+                #quest_id = option["quest_start"]["id"]
+                dic["quest_drop"] = option["quest_drop"]
 
             if "quest_objective" in option:
                 # self.type =             _type               # what kind of objective this is
@@ -453,9 +457,13 @@ class Dialog:
 
 
         if "quest_start" in answer:
-            # self.print_dialog()
-            self.player.quest_manager.start_quest(answer["quest_start"]["id"])
-            # return True
+            for i in answer['quest_start']:
+                print('......',i['id'])
+                self.player.quest_manager.start_quest(i['id'])
+
+        if "quest_drop" in answer:
+            for i in answer['quest_drop']:
+                self.player.quest_manager.drop_quest(i['id'])
 
         if "quest_objective_count_proposal" in answer:
             # self.print_dialog()
@@ -474,53 +482,54 @@ class Dialog:
         
 
         if "quest_turn_in" in answer:
-            if "reward" in answer:
-                if (
-                    len(answer["reward"])
-                    > self.player.inventory_manager.get_amount_of_free_item_slots()
-                ):
-                    self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} need more space in your inventory")
+            for _answer in answer['quest_turn_in'].values():
+                if "reward" in _answer:
+                    if (
+                        len(_answer["reward"])
+                        > self.player.inventory_manager.get_amount_of_free_item_slots()
+                    ):
+                        self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} need more space in your inventory")
+                        self.end_dialog()
+                        return True
+
+                # self.print_dialog()
+                turned_in_successfully = self.player.quest_manager.turn_in_quest(
+                    _answer["id"]
+                )
+
+                if turned_in_successfully:
+                    self.player.send_line(
+                        f"{Color.GOOD}Quest turned in{Color.NORMAL}: {self.player.quest_manager.quests[_answer['id']].name}"
+                    )
+                else:
+                    self.player.send_line(
+                        f"{Color.BAD}Quest failed to turn in{Color.NORMAL}: {self.player.quest_manager.quests[_answer['id']].name}"
+                    )
                     self.end_dialog()
                     return True
 
-            # self.print_dialog()
-            turned_in_successfully = self.player.quest_manager.turn_in_quest(
-                answer["quest_turn_in"]["id"]
-            )
+                if "reward" in _answer:
+                    for item_id in _answer["reward"]:
+                        item = load_item(item_id["item"])
 
-            if turned_in_successfully:
-                self.player.send_line(
-                    f"{Color.GOOD}Quest turned in{Color.NORMAL}: {self.player.quest_manager.quests[answer['quest_turn_in']['id']].name}"
-                )
-            else:
-                self.player.send_line(
-                    f"{Color.BAD}Quest failed to turn in{Color.NORMAL}: {self.player.quest_manager.quests[answer['quest_turn_in']['id']].name}"
-                )
-                self.end_dialog()
-                return True
+                        if item == None:
+                            continue
+                        item.stack = item_id["amount"]
+                        self.player.inventory_manager.add_item(item, stack_items=True)
+                        self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} got: {item.pretty_name(identifier = self.player)}")
 
-            if "reward" in answer:
-                for item_id in answer["reward"]:
-                    item = load_item(item_id["item"])
+                if "reward_exp" in _answer:
+                    self.player.stat_manager.stats[StatType.EXP] += _answer["reward_exp"]
+                    self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} got: {_answer['reward_exp']} Experience")
 
-                    if item == None:
-                        continue
-                    item.stack = item_id["amount"]
-                    self.player.inventory_manager.add_item(item, stack_items=True)
-                    self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} got: {item.pretty_name(identifier = self.player)}")
-
-            if "reward_exp" in answer:
-                self.player.stat_manager.stats[StatType.EXP] += answer["reward_exp"]
-                self.player.send_line(f"{self.player.pretty_name(identifier = self.player)} got: {answer['reward_exp']} Experience")
-
-            if "reward_practice_points" in answer:
-                self.player.stat_manager.stats[StatType.PP] += answer[
-                    "reward_practice_points"
-                ]
-                self.player.send_line(
-                    f"{self.player.pretty_name(identifier = self.player)}got: {answer['reward_practice_points']} Practice point"
-                    + ("s" if answer["reward_practice_points"] >= 2 else "")
-                )
+                if "reward_practice_points" in _answer:
+                    self.player.stat_manager.stats[StatType.PP] += _answer[
+                        "reward_practice_points"
+                    ]
+                    self.player.send_line(
+                        f"{self.player.pretty_name(identifier = self.player)}got: {_answer['reward_practice_points']} Practice point"
+                        + ("s" if _answer["reward_practice_points"] >= 2 else "")
+                    )
 
         self.print_dialog()
 

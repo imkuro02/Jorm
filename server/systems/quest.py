@@ -14,7 +14,6 @@ class OBJECTIVE_TYPES:
     CONVERSATION = "conversation"  # npcs can trigger this upon correct dialogue
     TURNED_IN = "turned_in"  # whether this quest has been turned_in or not
 
-
 class QUEST_STATE_TYPES:
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -54,6 +53,12 @@ class QuestManager:
             self.actor.send_line("Drop what quest?")
             return
 
+        self.actor.send_line(f"You drop {self.quests[quest_id].name}")
+        del self.quests[quest_id]
+
+    def drop_quest(self, quest_id):
+        if quest_id not in self.quests:
+            return
         self.actor.send_line(f"You drop {self.quests[quest_id].name}")
         del self.quests[quest_id]
 

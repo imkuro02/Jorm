@@ -12,7 +12,7 @@ daily_quest_board:
           - id: daily_quest
             state: not_started
           quest_start:
-            id: daily_quest
+          - id: daily_quest
 
         - line: |
             grab a quest leaflet from the board
@@ -21,7 +21,7 @@ daily_quest_board:
           - id: daily_quest
             state: turned_in
           quest_start:
-            id: daily_quest
+          - id: daily_quest
 
         - line: |
             grab a quest leaflet from the board
@@ -30,7 +30,7 @@ daily_quest_board:
           - id: daily_quest
             state: in_progress
           quest_start:
-            id: daily_quest
+          - id: daily_quest
 
         - line: |
             say "I would like to turn in my quest"
@@ -39,7 +39,7 @@ daily_quest_board:
             - id: daily_quest
               state: completed
           quest_turn_in:
-            id: daily_quest
+          - id: daily_quest
             reward_practice_points: 1
        
     daily_quest_new:

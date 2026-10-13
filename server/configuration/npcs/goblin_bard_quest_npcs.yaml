@@ -53,7 +53,8 @@ goblin_bard_quest_npcs_0:
           - id: goblin_bard_quest
             state: not_started
           quest_start: 
-            id: goblin_bard_quest
+          - id:  goblin_bard_quest
+          
 
         - line: |
             tell them their friend is dead (lie)
@@ -67,11 +68,11 @@ goblin_bard_quest_npcs_0:
           - id: goblin_bard_quest_lie
             state: turned_in
             NOT: 1
-          quest_start: 
-            id: goblin_bard_quest_lie
           quest_turn_in:
-            id: goblin_bard_quest_lie
+          - id: goblin_bard_quest_lie
             reward_exp: 200
+          quest_drop:
+          - id: goblin_bard_quest_truth
             #reward:
             #  - item: currency_0
             #    amount: 50
@@ -88,13 +89,13 @@ goblin_bard_quest_npcs_0:
           - id: goblin_bard_quest_lie
             state: turned_in
             NOT: 1
-          quest_start: 
-            id: goblin_bard_quest_truth
           quest_turn_in:
-            id: goblin_bard_quest_truth
+          - id: goblin_bard_quest_truth
             reward:
               - item: currency_0
                 amount: 200
+          quest_drop:
+          - id: goblin_bard_quest_lie
 
 
     goblin_bard_quest_turned_in_lie:
@@ -149,10 +150,12 @@ goblin_bard_quest_npcs_1:
             say "I will tell them what I want"
           goto: farewell
           npc_leaves: 0
+          quest_start:
+          - id: goblin_bard_quest_lie
+          - id: goblin_bard_quest_truth
           quest_check:
           - id: goblin_bard_quest
-            state: turned_in
-            NOT: 1
+            state: in_progress
           - id: goblin_bard_quest_truth
             state: turned_in
             NOT: 1
@@ -160,7 +163,8 @@ goblin_bard_quest_npcs_1:
             state: turned_in
             NOT: 1
           quest_turn_in:
-            id: goblin_bard_quest
+          - id: goblin_bard_quest
+          
           
      
     farewell:

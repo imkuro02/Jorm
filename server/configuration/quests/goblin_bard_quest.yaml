@@ -21,9 +21,22 @@ goblin_bard_quest_truth:
   description: 
     turned_in: |
       I have made my choice, I told them the truth, the friend ran away.
+  objectives:
+    DontShowCompleted:
+      type: conversation
+      objective: goblin_bard_quest
+      completed_at: 1
+      hidden_objective_forever: 1
+
 
 goblin_bard_quest_lie:
   name: Missing bard, Hide the bard
   description: 
     turned_in: |
       I have made my choice, I told them the lie, the friend is dead.
+  objectives:
+    DontShowCompleted:
+      type: conversation
+      objective: goblin_bard_quest
+      completed_at: 1
+      hidden_objective_forever: 1

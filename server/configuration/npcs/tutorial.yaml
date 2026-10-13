@@ -42,7 +42,7 @@ tutorial_1:
             - id: tutorial_1
               state: completed
           quest_turn_in:
-            id: tutorial_1
+          - id: tutorial_1
             reward_exp: 4
             reward:
               - item: currency_0
@@ -195,7 +195,7 @@ tutorial_1:
             - id: tutorial_1
               state: not_started
           quest_start:
-            id: tutorial_1
+          - id: tutorial_1
     end:
       dialog: |
         <npc> turns away from you.
