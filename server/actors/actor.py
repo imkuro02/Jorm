@@ -896,20 +896,19 @@ class Actor:
             t.add_data("Experience:")
             if not self.stat_manager.is_max_level():
                 _str = f'{self.stat_manager.stats[StatType.EXP]}' + ' / ' + f'{self.get_exp_needed_to_level()}'
+                if self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level():
+                    _str += f' ({Color.GOOD}Can level up{Color.NORMAL})'
             else:
                 _str = f'{self.stat_manager.stats[StatType.EXP]}'
-
-            if self.stat_manager.stats[StatType.EXP] >= self.get_exp_needed_to_level():
-                _str += f' ({Color.GOOD}Can level up{Color.NORMAL})'
 
             t.add_data(_str)
             t.add_data("")
             t.add_data("")
             
-            t.add_data("Practices:")
-            t.add_data(self.stat_manager.stats[StatType.PP])
-            t.add_data("")
-            t.add_data("")
+            #t.add_data("Practices:")
+            #t.add_data(self.stat_manager.stats[StatType.PP])
+            #t.add_data("")
+            #t.add_data("")
 
             '''
             t.add_data(StatType.name[StatType.INVSLOTS] + ":")
@@ -929,11 +928,13 @@ class Actor:
             t.add_data("")
             '''
 
-            output += '\n' + t.get_table() + '\n'
+            #output += '\n' + t.get_table() + '\n'
 
-            output += f'Total kills: {self.get_tracked_npcs_killed_total()}, most kills against: {self.get_tracked_npcs_killed_most_of()}, '
-            output += f'Unique kills: {len(self.tracked_npcs_killed)}/{len([e for e in LORE["enemies"].values() if e['dont_join_fights'] == False])}\n'
-            output += f'Rooms explored: {len(self.explored_rooms)}\n'
+            output += f', Experience: {_str}\n'
+            output += f'Total kills: {self.get_tracked_npcs_killed_total()}, '
+            output += f'Unique kills: {len(self.tracked_npcs_killed)} / {len([e for e in LORE["enemies"].values() if e['dont_join_fights'] == False])}, '
+            output += f'Most kills: {self.get_tracked_npcs_killed_most_of()}\n'
+            output += f'Rooms explored: {len(self.explored_rooms)}, '
             output += f'Time in Game: {systems.utils.seconds_to_dhm(self.time_in_game)}'
 
 

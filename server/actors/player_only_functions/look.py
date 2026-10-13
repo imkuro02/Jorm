@@ -1008,6 +1008,8 @@ def command_look(self, line, return_gmcp=False, short = False):
     if thing != None:
         look_item(self, thing[0])
         return
+
+    self.send_line('Look at what?')
         
     '''
     if look_at in list_of_actors:
