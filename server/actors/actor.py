@@ -911,6 +911,7 @@ class Actor:
             t.add_data("")
             t.add_data("")
 
+            '''
             t.add_data(StatType.name[StatType.INVSLOTS] + ":")
 
             bonus_string_fatigue = ''
@@ -926,10 +927,11 @@ class Actor:
             t.add_data(f"{bonus_from_bag+20-fat} {bonus_string_bag} {bonus_string_fatigue}")
             t.add_data("")
             t.add_data("")
+            '''
 
             output += '\n' + t.get_table() + '\n'
 
-            output += f'Total kills: {self.get_tracked_npcs_killed_total()}, most kills against: {self.get_tracked_npcs_killed_most_of()}\n'
+            output += f'Total kills: {self.get_tracked_npcs_killed_total()}, most kills against: {self.get_tracked_npcs_killed_most_of()}, '
             output += f'Unique kills: {len(self.tracked_npcs_killed)}/{len([e for e in LORE["enemies"].values() if e['dont_join_fights'] == False])}\n'
             output += f'Rooms explored: {len(self.explored_rooms)}\n'
             output += f'Time in Game: {systems.utils.seconds_to_dhm(self.time_in_game)}'
