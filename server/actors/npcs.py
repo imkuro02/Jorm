@@ -89,6 +89,11 @@ def create_npc(room, npc_id, spawn_for_lore=False):
     if npc_id in NPCS:
         tree = copy.deepcopy(NPCS[npc_id]["tree"])
 
+    # override basic dialog with npc_properties 
+    if 'dialog_tree' in npc_properties:
+        if npc_properties['dialog_tree'][0] in NPCS:
+            tree = copy.deepcopy(NPCS[npc_properties['dialog_tree'][0]]["tree"])
+
     npc_class = Npc
 
     _npc_classes = custom_loader.load_custom_object(npc_class())

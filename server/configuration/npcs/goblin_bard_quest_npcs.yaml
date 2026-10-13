@@ -1,0 +1,170 @@
+goblin_bard_quest_npcs_0:
+  tree:
+    start:
+      dialog: 
+        - line: |
+            <npc> says "My friend is stuck at the top of the dreadful gate guarded by undead!"
+          quest_check:
+          - id: goblin_bard_quest
+            state: not_started
+
+        - line: |
+            <npc> says "Oh may my friend return safely!"
+          quest_check:
+          - id: goblin_bard_quest
+            state: in_progress
+
+        - line: |
+            <npc> says "Do you bear any news of my friend?"
+          quest_check:
+          - id: goblin_bard_quest
+            state: completed
+
+        - line: |
+            <npc> looks up at you "well? did you find them?"
+          quest_check:
+          - id: goblin_bard_quest
+            state: turned_in
+          - id: goblin_bard_quest_lie
+            state: turned_in
+            NOT: 1
+          - id: goblin_bard_quest_truth
+            state: turned_in
+            NOT: 1
+
+        - line: |
+            <npc> says "Thank you for your help traveler, I wish my friend was still here..."
+          quest_check:
+          - id: goblin_bard_quest_lie
+            state: turned_in
+
+        - line: |
+            <npc> says "Thanks traveler, the truth hurts.."
+          quest_check:
+          - id: goblin_bard_quest_truth
+            state: turned_in
+        
+
+      options:
+        - line: |
+            say "I can help"
+          goto: thanks_for_helping
+          quest_check:
+          - id: goblin_bard_quest
+            state: not_started
+          quest_start: 
+            id: goblin_bard_quest
+
+        - line: |
+            tell them their friend is dead (lie)
+          goto: goblin_bard_quest_turned_in_lie
+          quest_check:
+          - id: goblin_bard_quest
+            state: turned_in
+          - id: goblin_bard_quest_truth
+            state: turned_in
+            NOT: 1
+          - id: goblin_bard_quest_lie
+            state: turned_in
+            NOT: 1
+          quest_start: 
+            id: goblin_bard_quest_lie
+          quest_turn_in:
+            id: goblin_bard_quest_lie
+            reward_exp: 200
+            #reward:
+            #  - item: currency_0
+            #    amount: 50
+
+        - line: |
+            tell them their friend ran away (truth)
+          goto: goblin_bard_quest_turned_in_truth
+          quest_check:
+          - id: goblin_bard_quest
+            state: turned_in
+          - id: goblin_bard_quest_truth
+            state: turned_in
+            NOT: 1
+          - id: goblin_bard_quest_lie
+            state: turned_in
+            NOT: 1
+          quest_start: 
+            id: goblin_bard_quest_truth
+          quest_turn_in:
+            id: goblin_bard_quest_truth
+            reward:
+              - item: currency_0
+                amount: 200
+
+
+    goblin_bard_quest_turned_in_lie:
+      dialog:
+        - line: |
+            <npc> turns pale and says "I- I see... I will miss you.. my friend"
+
+    goblin_bard_quest_turned_in_truth:
+      dialog:
+        - line: |
+            <npc> turns pale and says "I- I see, that soggy fish! take your reward! I will handle the rest!"
+
+    thanks_for_helping:
+      dialog:
+        - line: |
+            <npc> has a glint of hope in their eyes
+
+          
+goblin_bard_quest_npcs_1:
+  tree:
+    start:
+      dialog: 
+        - line: |
+            <npc> says "Oh no! has the bard sent you? listen closely!"
+            They lean in "I do not wish to be found!-
+            Please tell my friend I am dead, or else they might kill me for real!"
+          quest_check:
+          - id: goblin_bard_quest
+            state: turned_in
+            NOT: 1
+          - id: goblin_bard_quest_truth
+            state: turned_in
+            NOT: 1
+          - id: goblin_bard_quest_lie
+            state: turned_in
+            NOT: 1
+
+        - line: |
+            <npc> says "Hello again! Im glad you covered for me!"
+          quest_check:
+          - id: goblin_bard_quest_lie
+            state: turned_in
+
+        - line: |
+            <npc> says "Scumbag..."
+          quest_check:
+          - id: goblin_bard_quest_truth
+            state: turned_in
+
+      options:
+        - line: |
+            say "I will tell them what I want"
+          goto: farewell
+          npc_leaves: 0
+          quest_check:
+          - id: goblin_bard_quest
+            state: turned_in
+            NOT: 1
+          - id: goblin_bard_quest_truth
+            state: turned_in
+            NOT: 1
+          - id: goblin_bard_quest_lie
+            state: turned_in
+            NOT: 1
+          quest_turn_in:
+            id: goblin_bard_quest
+          
+     
+    farewell:
+      dialog: 
+        - line: |
+            <npc> says "Meet me again sometime, but please do not tell them I am alive"
+      

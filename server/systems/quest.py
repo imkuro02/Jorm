@@ -182,32 +182,39 @@ class Quest:
     def view(self):
         output = ""
         output += f"{Color.IMPORTANT}" + self.name + f"{Color.NORMAL}" + "\n"
-        output += (
-            f"{Color.DESC_QUEST}"
-            + self.description["in_progress"]
-            + f"{Color.NORMAL}\n"
-        )
+        if 'in_progress' in self.description:
+            output += (
+                f"{Color.DESC_QUEST}"
+                + self.description["in_progress"]
+                + f"{Color.NORMAL}\n"
+            )
         if self.is_completed() and not self.is_turned_in():
-            output += (
-                f"{Color.DESC_QUEST}"
-                + self.description["completed"]
-                + f"{Color.NORMAL}\n"
-            )
+            if 'completed' in self.description:
+                output += (
+                    f"{Color.DESC_QUEST}"
+                    + self.description["completed"]
+                    + f"{Color.NORMAL}\n"
+                )
         if self.is_turned_in():
-            output += (
-                f"{Color.DESC_QUEST}"
-                + self.description["completed"]
-                + f"{Color.NORMAL}\n"
-            )
-            output += (
-                f"{Color.DESC_QUEST}"
-                + self.description["turned_in"]
-                + f"{Color.NORMAL}\n"
-            )
+            if 'completed' in self.description:
+                output += (
+                    f"{Color.DESC_QUEST}"
+                    + self.description["completed"]
+                    + f"{Color.NORMAL}\n"
+                )
+            if 'turned_in' in self.description:
+                output += (
+                    f"{Color.DESC_QUEST}"
+                    + self.description["turned_in"]
+                    + f"{Color.NORMAL}\n"
+                )
 
         for objective in self.objectives.values():
             # systems.utils.debug_print(objective.__dict__)
             if objective.type == OBJECTIVE_TYPES.TURNED_IN:
+                continue
+
+            if objective.hidden_objective_forever:
                 continue
 
             if not self.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
@@ -220,24 +227,24 @@ class Quest:
                             enemy_name = ENEMIES[objective.requirement_id]["name"]
                             output += (
                                 f"{objective.name}; Kill {Color.IMPORTANT}{enemy_name}{Color.NORMAL}: {objective.count}/{objective.goal}"
-                                + "\n"
+                                + ""
                             )
                         case OBJECTIVE_TYPES.COLLECT_X:
                             enemy_name = ITEMS[objective.requirement_id]["name"]
                             output += (
                                 f"{objective.name}; Collect {Color.IMPORTANT}{enemy_name}{Color.NORMAL}: {objective.count}/{objective.goal}"
-                                + "\n"
+                                + ""
                             )
                         case OBJECTIVE_TYPES.CONVERSATION:
                             # npc = NPCS[objective.requirement_id]['name']
                             output += (
                                 f"{objective.name}: {f'{Color.GOOD}Completed{Color.NORMAL}' if objective.count >= objective.goal else f'{Color.IMPORTANT}In Progress{Color.NORMAL}'}"
-                                + "\n"
+                                + ""
                             )
                 else:
                     pass
                     output += f"{objective.name}; Uknown Objective\n"
-        output += "\nQuest state: " + self.get_state(as_string=True) + "\n"
+        output += "Quest state: " + self.get_state(as_string=True) + ""
         return output
 
     def get_state(self, as_string=False):
@@ -336,7 +343,8 @@ class Objective:
         _type,
         _requirement_id,
         _goal,
-        _hidden_objective_until_completed=False,
+        _hidden_objective_until_completed = False,
+        _hidden_objective_forever = False, 
     ):
         self.quest_id = _quest_id  # the quest id for the quest
         self.manager = None  # quest manager
@@ -346,6 +354,7 @@ class Objective:
         self.goal = _goal  # the value of when this objective is is_completed
         self.count = 0  # the current value of the objective
         self.hidden_objective_until_completed = _hidden_objective_until_completed
+        self.hidden_objective_forever = _hidden_objective_forever
 
     def is_completed(self):
         if self.goal <= self.count:
@@ -399,6 +408,7 @@ def create_daily_quest(quest_id, actor):
                 objective["objective"],
                 objective["completed_at"],
                 False,
+                False,
             )
         )
 
@@ -409,6 +419,7 @@ def create_daily_quest(quest_id, actor):
             OBJECTIVE_TYPES.TURNED_IN,
             OBJECTIVE_TYPES.TURNED_IN,
             1,
+            False,
             False,
         )
     )
@@ -444,6 +455,9 @@ def create_quest(quest_id, actor):
                     objective["completed_at"],
                     bool(objective["hidden_objective_until_completed"])
                     if "hidden_objective_until_completed" in objective
+                    else False,
+                    bool(objective["hidden_objective_forever"])
+                    if "hidden_objective_forever" in objective
                     else False,
                 )
             )

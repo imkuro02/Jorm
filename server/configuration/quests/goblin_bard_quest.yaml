@@ -1,0 +1,29 @@
+goblin_bard_quest:
+  name: Missing bard, Find the bard
+  description: 
+    in_progress: |
+      The goblin bard from the goblin market has asked me to help them find their bandmate.
+      They told me the other bard is stuck at the top of the gate, guarded by the undead.
+    turned_in: |
+      I found the friend of the goblin bard, they are a runaway.
+      They told me to lie to the goblin bard, and tell them they died.
+      What should I do?
+  objectives:
+    DontShowCompleted:
+      type: conversation
+      objective: goblin_bard_quest
+      completed_at: 1
+      hidden_objective_forever: 1
+
+
+goblin_bard_quest_truth:
+  name: Missing bard, Expose the bard
+  description: 
+    turned_in: |
+      I have made my choice, I told them the truth, the friend ran away.
+
+goblin_bard_quest_lie:
+  name: Missing bard, Hide the bard
+  description: 
+    turned_in: |
+      I have made my choice, I told them the lie, the friend is dead.

@@ -29,6 +29,14 @@ versions:
   #
   #
   #
+  "131026":
+    id: "131026"
+    title: Quests
+    unixtime: 1775631568
+    features:
+      - New quests added (1)
+      - Quest view redone
+      - Stats view redone
   "071026":
     id: "071026"
     title: icons
