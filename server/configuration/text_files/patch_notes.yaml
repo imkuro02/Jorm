@@ -37,6 +37,7 @@ versions:
       - New quests added (1)
       - Quest view redone
       - Stats view redone
+      - Players are now first in list of characters in a room 
   "071026":
     id: "071026"
     title: icons

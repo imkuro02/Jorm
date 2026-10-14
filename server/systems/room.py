@@ -367,6 +367,26 @@ class Room:
                 return i
         return False
 
+    def get_actors(self, reverse = False, players_first = False):
+        mydict = self.actors.copy()
+
+        if players_first:
+            mydict = dict(sorted(
+            mydict.items(),
+            key=lambda item: 
+                type(item[1]).__name__ != 'Player'
+        ))
+
+        if not reverse:
+            return mydict
+
+        _dic = {}
+        for i in reversed(mydict):
+            _dic[i] = mydict[i]
+
+        return _dic
+
+
     def get_description(self, short = False):
         desc = self.description
         if short:

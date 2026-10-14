@@ -7,10 +7,10 @@ def get_actor(self, line):
     if line in 'self myself me'.split():
         return self
          
-    if line in self.room.actors:
+    if line in self.room.get_actors(players_first = True):
         return self.room.actors[line]
     
-    return systems.utils.get_match(line, self.room.actors)
+    return systems.utils.get_match(line, self.room.get_actors(players_first = True))
 
     # Return if you cant find a target
     if not isinstance(target, Actor):

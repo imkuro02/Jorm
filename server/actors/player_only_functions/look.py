@@ -605,7 +605,7 @@ def command_map3(self, line, return_gmcp=False):
             quest_not_started = False
             quest_turn_in = False
 
-            for actor in room.actors.values():
+            for actor in room.get_actors(players_first = True).values():
                 important_dialog_dict = actor.get_important_dialog(
                     actor_to_compare=self, return_dict=True
                 )
@@ -815,7 +815,7 @@ def command_look(self, line, return_gmcp=False, short = False):
             see.append("EXITS: [" + ''.join(see_exits)[:-2] +']')
 
 
-        for i in room.actors.values():
+        for i in room.get_actors(players_first = True).values():
             #if i == self:
             #    continue
 
@@ -833,7 +833,7 @@ def command_look(self, line, return_gmcp=False, short = False):
         # XD icons
         if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
             icons = []
-            for i in room.actors.values():
+            for i in room.get_actors(players_first = True).values():
                 #if i == self:
                 #    continue
                 #if type(i).__name__ == "Player":
@@ -985,7 +985,7 @@ def command_look(self, line, return_gmcp=False, short = False):
         see = look_room(self, self.room.id, short = short)
         return see
 
-    list_of_actors = [actor.name for actor in self.room.actors.values()]
+    list_of_actors = [actor.name for actor in self.room.get_actors(players_first = True).values()]
     list_of_directions = []  # [_exit.direction for _exit in self.room.exits.values()]
     # list_of_items =        [item.name for item in self.inventory_manager.items.values()] + [item.name for item in self.room.inventory_manager.items.values()]
     list_of_items = [item.name for item in self.room.inventory_manager.items.values()]
