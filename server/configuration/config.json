@@ -8949,7 +8949,7 @@
             "premade_id": "grit head 1",
             "name": "Leather hat",
             "class": "Equipment",
-            "icon_id": "eq_head_helmet",
+            "icon_id": "eq_head_helmet_2",
             "icon_scheme": "@normal @yellow @yellow",
             "style": 0,
             "bonuses": 0,

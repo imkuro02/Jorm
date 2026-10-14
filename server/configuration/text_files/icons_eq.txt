@@ -32,6 +32,12 @@
 @c2 |__  |
 @c2 | @c1æ@c2\/@c1æ
 [end]
+[id:eq_head_helmet_2]
+
+@c2  .--. 
+@c2 | ___|
+@c2 (/@c1æ åæ
+[end]
 [id:eq_body_armor]
 @c2 /@c3"@c2  @c3"@c2\ 
 @c2 |@c3+@c2__@c3+@c2| 
