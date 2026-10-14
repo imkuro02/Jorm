@@ -842,7 +842,7 @@ def command_look(self, line, return_gmcp=False, short = False):
                     continue
                 icon = i.get_icon(who_checks = self) #get_icon(i.npc_id)
 
-                if self.settings_manager.get_value(SETTINGS.GODOT):
+                if self.protocol.enabled_godot:
                     import configuration.config
                     icon = configuration.config.envelope_icon(i, icon)
 
