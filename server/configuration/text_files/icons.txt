@@ -138,7 +138,7 @@ o(2nn|
 [id:rat]
 @white     ,--(@yellow?@white) (@yellow?@white)
 @white    /#####\@bredo o@white|
-@white    |######>@yellowo@white<
+@white    |######[jump]>@yellow[jump]o[/jump]@white<[/jump]
 @purple '-,_@white\###@yellow)@white#@yellow(@white|
 @yellow      w   w
 [end]

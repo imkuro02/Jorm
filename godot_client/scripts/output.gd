@@ -93,6 +93,8 @@ func get_message(message, GODOT_CLIENT_OUTPUT_SPLIT_ADD_PADDING = false):
 	
 	scroll_following = true
 	
+
+	
 func add_ansi_text(ansi_text: String) -> String:
 	var ansi_to_fg = {
 		"30": "#000000", # black
@@ -157,19 +159,14 @@ func add_ansi_text(ansi_text: String) -> String:
 		var pre_text := ansi_text.substr(last_index, start - last_index)
 		if pre_text != "":
 			var wrapped := pre_text
-			var has_jump_end := wrapped.contains("[/jump]")
-
-			if has_jump_end:
-				wrapped = wrapped.replace("[/jump]", "")
-
 			if current_fg != "":
-				wrapped = "[color=%s]%s[/color]" % [current_fg, wrapped]
-
+				wrapped = wrapped.replace("[jump]", "[/color][jump][color=%s]" % current_fg)
+				wrapped = wrapped.replace("[/jump]", "[/color][/jump][color=%s]" % current_fg)
+				wrapped = "[color=%s]" % current_fg + wrapped + "[/color]"
 			if current_bg != "":
-				wrapped = "[bgcolor=%s]%s[/bgcolor]" % [current_bg, wrapped]
-
-			if has_jump_end:
-				wrapped += "[/jump]"
+				wrapped = wrapped.replace("[jump]", "[/bgcolor][jump][bgcolor=%s]" % current_bg)
+				wrapped = wrapped.replace("[/jump]", "[/bgcolor][/jump][bgcolor=%s]" % current_bg)
+				wrapped = "[bgcolor=%s]" % current_bg + wrapped + "[/bgcolor]"
 
 			output += wrapped
 
@@ -204,7 +201,7 @@ func add_ansi_text(ansi_text: String) -> String:
 	if remaining != "":
 		var wrapped := remaining
 
-		var has_jump_end := wrapped.contains("[/jump]")
+		var has_jump_end := wrapped.ends_with("[/jump]")
 
 		if has_jump_end:
 			wrapped = wrapped.replace("[/jump]", "")

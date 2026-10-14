@@ -173,9 +173,11 @@ def envelope_icon(obj, icon):
 
 def get_icon(obj):
     if type(obj).__name__ == 'Player':
-        return icon_ear_eye_nose(get_icon_player(obj))
+        _icon = icon_ear_eye_nose(get_icon_player(obj))
+        return _icon
     if systems.utils.get_object_parent(obj) == 'Item':
-        return icon_ear_eye_nose(get_icon_item(obj), remove = True)
+        _icon = icon_ear_eye_nose(get_icon_item(obj), remove = True)
+        return _icon
     #icon_id = obj.npc_id
     icon_id = obj.icon_id
     icon_style = obj.status

@@ -478,6 +478,8 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
+        if not self.protocol.enabled_godot:
+            line = systems.utils.remove_jump(line)
 
         if msg_type != None:
             _msg_type = msg_type
