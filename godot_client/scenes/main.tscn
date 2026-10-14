@@ -346,8 +346,13 @@ size_flags_vertical = 3
 focus_mode = 2
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
 text = "client version: 310826
-"
+[url=id1] O O O [url=id2] O O O
+[url=id1] O O O [url=id2] O O O
+[url=id1] O O O [url=id2] O O O
+
+[jump phase=\"test\"][color=red]AAAAA[/jump][jump phase=\"test\"][color=blue]AAAAA[/color][/jump]"
 meta_underlined = false
 hint_underlined = false
 selection_enabled = true

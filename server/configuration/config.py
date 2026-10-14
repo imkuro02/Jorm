@@ -161,6 +161,16 @@ def get_icon_player(obj):
     icon_compiled = ''.join(icon)
     return icon_compiled
 
+
+def envelope_icon(obj, icon):
+    _list = []
+    for i in icon.split('\n'):
+        #_a = f'[/color][/jump][jump phase="{obj.name}"]{i}[/color][/jump]'
+        _a = f'[jump phase="{obj.name}"]{i}[/jump]'
+        #print(_a)
+        _list.append(_a)
+    return '\n'.join(_list)
+
 def get_icon(obj):
     if type(obj).__name__ == 'Player':
         return icon_ear_eye_nose(get_icon_player(obj))

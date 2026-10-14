@@ -413,7 +413,9 @@ def match_word_get_list(word: str, l: list):
 def remove_color(line):
     for color_code in colors:
         line = line.replace(color_code, "")
-
+        
+    # regex remove [jump] tags
+    line = re.sub(r'\[/?jump(?:\s+[^\]]*)?\]', '', line)
     return line
 
 

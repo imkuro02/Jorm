@@ -478,6 +478,7 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
+
         if msg_type != None:
             _msg_type = msg_type
             msg_type = " ".join(_msg_type)

@@ -4,6 +4,7 @@ extends RichTextLabel
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	install_effect(JumpEffect.new())
 	pass # Replace with function body.
 
 
@@ -156,10 +157,20 @@ func add_ansi_text(ansi_text: String) -> String:
 		var pre_text := ansi_text.substr(last_index, start - last_index)
 		if pre_text != "":
 			var wrapped := pre_text
+			var has_jump_end := wrapped.contains("[/jump]")
+
+			if has_jump_end:
+				wrapped = wrapped.replace("[/jump]", "")
+
 			if current_fg != "":
 				wrapped = "[color=%s]%s[/color]" % [current_fg, wrapped]
+
 			if current_bg != "":
 				wrapped = "[bgcolor=%s]%s[/bgcolor]" % [current_bg, wrapped]
+
+			if has_jump_end:
+				wrapped += "[/jump]"
+
 			output += wrapped
 
 		# Parse ANSI codes
@@ -188,13 +199,25 @@ func add_ansi_text(ansi_text: String) -> String:
 		last_index = end
 
 	# Remaining text
+	# Remaining text
 	var remaining := ansi_text.substr(last_index)
 	if remaining != "":
 		var wrapped := remaining
+
+		var has_jump_end := wrapped.contains("[/jump]")
+
+		if has_jump_end:
+			wrapped = wrapped.replace("[/jump]", "")
+
 		if current_fg != "":
 			wrapped = "[color=%s]%s[/color]" % [current_fg, wrapped]
+
 		if current_bg != "":
 			wrapped = "[bgcolor=%s]%s[/bgcolor]" % [current_bg, wrapped]
+
+		if has_jump_end:
+			wrapped += "[/jump]"
+
 		output += wrapped
 
 	return output
