@@ -180,11 +180,11 @@ big_rat
 [end]
 
 [id:green_slime]
-[jump]@green  *-'-.
-[jump]@green     _/'\_
-[jump]@green    /    @yellowv@green\
-[jump]@green   |  @yellow> @yellowO  @green|
-[jump]@green    ',___.'[/jump][/jump][/jump][/jump][/jump]
+[jump][jump][jump]@green  *-'-.[/jump][/jump][/jump]
+[jump][jump][jump]@green     _/'\_[/jump][/jump]
+[jump][jump]@green    /    @yellowv@green\[/jump]
+[jump]@green   |  @yellow> @yellowO  @green|[/jump]
+[jump]@green    ',___.'[/jump]
 [end]
 
 [id:spider]
