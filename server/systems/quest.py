@@ -53,13 +53,15 @@ class QuestManager:
             self.actor.send_line("Drop what quest?")
             return
 
-        self.actor.send_line(f"You drop {self.quests[quest_id].name}")
+        self.actor.send_line(f"{Color.BAD}Quest failed{Color.NORMAL}: {self.quests[quest_id].name}")
+        #self.actor.send_line(f"You drop {self.quests[quest_id].name}")
         del self.quests[quest_id]
 
     def drop_quest(self, quest_id):
         if quest_id not in self.quests:
             return
-        self.actor.send_line(f"You drop {self.quests[quest_id].name}")
+        self.actor.send_line(f"{Color.BAD}Quest failed{Color.NORMAL}: {self.quests[quest_id].name}")
+        #self.actor.send_line(f"You drop {self.quests[quest_id].name}")
         del self.quests[quest_id]
 
     def check_quest_state(self, quest_id):
