@@ -180,7 +180,7 @@ big_rat
 [end]
 
 [id:green_slime]
-[jump][jump][jump]@green  *-'-.[/jump][/jump][/jump]
+[jump][jump][jump]@green  [jump]*[jump]-[jump]'[jump]-[/jump][/jump][/jump][/jump].[/jump][/jump][/jump]
 [jump][jump][jump]@green     _/'\_[/jump][/jump][/jump]
 [jump][jump]@green    /    @yellowv@green\[/jump][/jump]
 [jump]@green   |  @yellow> @yellowO  @green|[/jump]
