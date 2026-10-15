@@ -209,11 +209,11 @@ big_rat
 [end]
 
 [id:red_slime]
-@red  *-'-.
-@red     _/'\_
-@red    /    @yellowv@red\
-@red   |  @yellow> @yellowO  @red|
-@red    ',___.'
+[jump][jump][jump]@red  [jump][jump][jump]*[/jump]-[/jump]'[/jump]-.[/jump][/jump][/jump]
+[jump][jump][jump]@red     _/'\_[/jump][/jump][/jump]
+[jump][jump]@red    /    @yellowv@red\[/jump][/jump]
+[jump]@red   |  @yellow> @yellowO  @red|[/jump]
+[jump]@red    ',___.'[/jump]
 [end]
 
 [id:red_cap]
@@ -226,11 +226,11 @@ big_rat
 [end]
 
 [id:blue_slime]
-@blue  *-'-.
-@blue     _/'\_
-@blue    /    @yellowv@blue\
-@blue   |  @yellow> @yellowO  @blue|
-@blue    ',___.'
+[jump][jump][jump]@blue  [jump][jump][jump]*[/jump]-[/jump]'[/jump]-.[/jump][/jump][/jump]
+[jump][jump][jump]@blue     _/'\_[/jump][/jump][/jump]
+[jump][jump]@blue    /    @yellowv@blue\[/jump][/jump]
+[jump]@blue   |  @yellow> @yellowO  @blue|[/jump]
+[jump]@blue    ',___.'[/jump]
 [end]
 
 [id:blue_mushroom]
