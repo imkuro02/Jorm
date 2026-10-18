@@ -1013,6 +1013,10 @@ def progress_bar(size, cur_value, max_value, color="@white", style=0):
     return output
 
 
+def sanitize_player_input(line):
+    matches = re.findall(r'\[/?jump(?:\s+[^\]]*)?\]', line)
+    line = line + ('[/jump]'*len(matches))
+    return line
 """
 import random
 for i in range(0,101):

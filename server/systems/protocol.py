@@ -963,6 +963,7 @@ This ONE TIME password will not work next time you try to log in.{Color.NORMAL}
         #if "LOGIN" in self.state.__name__ or "REGISTER" in self.state.__name__:
         #    self.send_line('type "!" to return to main menu')
 
+        line = systems.utils.sanitize_player_input(line)
         self.state(line)
         return
 
