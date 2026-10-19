@@ -1,0 +1,36 @@
+tutorial_1_tavern:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc> says "You got out I see"
+      options:
+        - line: |
+            ask "What do I do now?"
+          goto: what_quests_are_there
+        - line: |
+            ask "How do I do *things*"
+          goto: help_command
+        - line: |
+            offer a mysterious apple
+          player_has_astleast_x_of_item_id_check:
+            - item: cursed_fruit_apple
+              amount: 1
+          goto: offer_mysterious_apple
+    
+    offer_mysterious_apple:
+      dialog: 
+        - line: |
+            <npc> says "thanks, but no thanks. You can keep it"
+
+    what_quests_are_there:
+      dialog: 
+        - line: |
+            <npc> says "You should speak with the locals, they might have things to say"
+
+    help_command:
+      dialog: 
+        - line: |
+            <npc> says "You should try the "@tiphelp@normal" command.. Try it, do it now"
+
+    

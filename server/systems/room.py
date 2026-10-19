@@ -341,7 +341,7 @@ class Room:
                 active_exits.append(i)
         return active_exits
 
-    def pretty_name(self):
+    def pretty_name(self, *args, **kwargs):
         col = "@yellow"
         if self.is_an_instance():
             col = "@bad"
@@ -582,6 +582,9 @@ class Room:
                 list_pretty_name_objects = [actor],
                 msg_type = MessageType.MOVEMENT
             )
+
+    def move_actor_after(self, actor):
+        return True
 
     """
     def move_actor(self, actor, silent=False, dont_unload_instanced=False):

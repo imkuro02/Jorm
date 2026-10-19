@@ -85,6 +85,7 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
                 continue
 
             followed_actor.room.move_actor(par, silent = False)
+            followed_actor.room.move_actor_after(par)
             followed_actor.finish_turn(force_cooldown=True)
 
             #par.pretty_broadcast(f'You follow {followed_actor.id}', None, list_pretty_name_objects=[followed_actor])
@@ -116,6 +117,8 @@ def move_party_leader(self, room_id, no_new_room_look = False, silent = False):
     '''
         
     self.new_room_look()
+    self.room.move_actor_after(self)
+
 
     if (self.recall_site != RoomConstant.TAVERN and self.recall_site != RoomConstant.CROSSROAD) and self.room.id == RoomConstant.CROSSROAD:
         #self.rest_set('')

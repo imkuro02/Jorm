@@ -184,8 +184,16 @@
 @c1\@c2O@c1_@c28@c1__\
 [end]
 
-[id:apple]
+[id:item_apple]
 @c2     y
 @c1 .- | -.
-@c1| @c3#     |   
+@c1| @c3#     @c1|   
 @c1 `._._.´
+[end]
+
+[id:eq_head_slime_antenna]
+@c2    /`[jump]*[/jump]
+@c2   _|_
+@c1 /     `
+@c1 ø æ åæ
+[end]
