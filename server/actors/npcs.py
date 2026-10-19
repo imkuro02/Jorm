@@ -41,38 +41,42 @@ def parse_npc_id(npc_id):
 # creating a custom npc
 # _npcs rat+class=[CustomCow]:Attis The WereRatCow
 def create_npc(room, npc_id, spawn_for_lore=False):
-    npc_id, npc_properties = parse_npc_id(npc_id)
-    if npc_id not in ENEMIES:
+    loc = {}
+    loc['npc_id'] = npc_id
+    loc['room'] = room    
+
+    loc['npc_id'], loc['npc_properties'] = parse_npc_id(loc['npc_id'])
+    if loc['npc_id'] not in ENEMIES:
         return None
         
     # room = room
     # room_id = room.id
-    name = "None"
-    desc = None
-    stats = None
-    loot = None
-    skills = None
-    tree = None
-    ai = None
-    can_start_fights = False
-    dont_join_fights = False
-    on_death_skills_use = None
-    on_start_skills_use = None
-    can_drop_corpse = True
+    loc['name'] =                   None
+    loc['desc'] =                   None
+    loc['stats'] =                  None
+    loc['loot'] =                   None
+    loc['skills'] =                 None
+    loc['tree'] =                   None
+    loc['ai'] =                     None
+    loc['can_start_fights'] =       False
+    loc['dont_join_fights'] =       False
+    loc['on_death_skills_use'] =    None
+    loc['on_start_skills_use'] =    None
+    loc['can_drop_corpse'] =        True
 
-    if npc_id in ENEMIES:
-        name = systems.utils.generate_name() + " The " + ENEMIES[npc_id]["name"]
-        desc = ENEMIES[npc_id]["description"]
-        stats = ENEMIES[npc_id]["stats"]
-        _loot = ENEMIES[npc_id]["loot"]
-        skills = ENEMIES[npc_id]["skills"]
-        ai = ENEMIES[npc_id]["ai"]
-        can_start_fights = ENEMIES[npc_id]["can_start_fights"]
-        dont_join_fights = ENEMIES[npc_id]["dont_join_fights"]
-        on_death_skills_use = ENEMIES[npc_id]["on_death_skills_use"]
-        on_start_skills_use = ENEMIES[npc_id]["on_start_skills_use"]
-        loot = _loot  # {}
-        can_drop_corpse = ENEMIES[npc_id]["drop_corpse"]
+    if loc['npc_id'] in ENEMIES:
+        loc['name'] =                   systems.utils.generate_name() + " The " + ENEMIES[loc['npc_id']]["name"]
+        loc['desc'] =                   ENEMIES[loc['npc_id']]["description"]
+        loc['stats'] =                  ENEMIES[loc['npc_id']]["stats"]
+        loc['_loot'] =                  ENEMIES[loc['npc_id']]["loot"]
+        loc['skills'] =                 ENEMIES[loc['npc_id']]["skills"]
+        loc['ai'] =                     ENEMIES[loc['npc_id']]["ai"]
+        loc['can_start_fights'] =       ENEMIES[loc['npc_id']]["can_start_fights"]
+        loc['dont_join_fights'] =       ENEMIES[loc['npc_id']]["dont_join_fights"]
+        loc['on_death_skills_use'] =    ENEMIES[loc['npc_id']]["on_death_skills_use"]
+        loc['on_start_skills_use'] =    ENEMIES[loc['npc_id']]["on_start_skills_use"]
+        loc['loot'] =                   loc['_loot']
+        loc['can_drop_corpse'] =        ENEMIES[loc['npc_id']]["drop_corpse"]
 
     '''
     _locals = {k: v for k, v in locals().items() if k != 'self'}
@@ -85,72 +89,53 @@ def create_npc(room, npc_id, spawn_for_lore=False):
             return CACHED
     '''
 
-    
-    if npc_id in NPCS:
-        tree = copy.deepcopy(NPCS[npc_id]["tree"])
 
-    # override basic dialog with npc_properties 
-    if 'dialog_tree' in npc_properties:
-        if npc_properties['dialog_tree'][0] in NPCS:
-            tree = copy.deepcopy(NPCS[npc_properties['dialog_tree'][0]]["tree"])
+    # _npcs rat+name=[fAT]+npc_id=[green_slime]
+
+    for prop in loc['npc_properties']:
+        if prop in loc['npc_properties']:
+            loc[prop] = loc['npc_properties'][prop][0]
+            
+    if loc['tree'] != None:
+        if loc['tree'] in NPCS:
+            loc['tree'] = copy.deepcopy(NPCS[loc['tree']]["tree"])
+
+    if loc['tree'] == None:
+        if loc['npc_id'] in NPCS:
+            loc['tree'] = copy.deepcopy(NPCS[loc['npc_id']]["tree"])
 
     npc_class = Npc
-
     _npc_classes = custom_loader.load_custom_object(npc_class())
     for i in _npc_classes:
-        if ('class' in npc_properties
-        and i.__name__ in npc_properties['class']):
+        if ENEMIES[loc['npc_id']]["class"] == i.__name__:
             npc_class = i
             break
-        if ENEMIES[npc_id]["class"] == i.__name__:
+    for i in _npc_classes:
+        if 'npc_class' not in loc:
+            break
+        if loc['npc_class'] == i.__name__:
             npc_class = i
             break
 
 
     my_npc = npc_class(
-        npc_id=npc_id,
-        ai=ai,
-        name=name,
-        description=desc,
-        room=room,#room.world.rooms["overworld/loading"],
-        stats=stats,
-        loot=loot,
-        skills=skills,
-        dialog_tree=tree,
-        can_start_fights=can_start_fights,
-        dont_join_fights=dont_join_fights,
-        on_death_skills_use=on_death_skills_use,
-        on_start_skills_use=on_start_skills_use,
-        can_drop_corpse = can_drop_corpse,
-        npc_properties = npc_properties,
+        npc_id =                loc['npc_id'],
+        ai =                    loc['ai'],
+        name =                  loc['name'],
+        description =           loc['desc'],
+        room =                  loc['room'], 
+        stats =                 loc['stats'],
+        loot =                  loc['loot'],
+        skills =                loc['skills'],
+        dialog_tree =           loc['tree'],
+        can_start_fights =      loc['can_start_fights'],
+        dont_join_fights =      loc['dont_join_fights'],
+        on_death_skills_use =   loc['on_death_skills_use'],
+        on_start_skills_use =   loc['on_start_skills_use'],
+        can_drop_corpse =       loc['can_drop_corpse'],
+        npc_properties =        loc['npc_properties'],
     )
 
-    '''
-    npc_class = custom_loader.compare_replace(my_npc)
-    my_npc.room.world.rooms["overworld/loading"].move_actor(my_npc, silent=True)
-    my_npc.unload()
-    unload(my_npc)
-
-    if npc_id in NPCS:
-        tree = copy.deepcopy(NPCS[npc_id]["tree"])
-
-    my_npc = npc_class(
-        npc_id=npc_id,
-        ai=ai,
-        name=name,
-        description=desc,
-        room=room,
-        stats=stats,
-        loot=loot,
-        skills=skills,
-        dialog_tree=tree,
-        can_start_fights=can_start_fights,
-        dont_join_fights=dont_join_fights,
-        on_death_skills_use=on_death_skills_use,
-        on_start_skills_use=on_start_skills_use,
-        can_drop_corpse = can_drop_corpse,
-    )
-    '''
 
     return my_npc
 
@@ -194,6 +179,7 @@ class Npc(Actor):
         self.dialog_tree = dialog_tree
         if self.dialog_tree != None:
             for d in self.dialog_tree:
+                print(self.dialog_tree,d)
                 if "append_to" in self.dialog_tree[d]:
                     location = self.dialog_tree[d]["append_to"]
                     if "dialog" in self.dialog_tree[d]:
