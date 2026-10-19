@@ -39,6 +39,7 @@ versions:
       - Fixed lore command, now prioritizes npcs then items
       - Shadowy figure added to tavern
       - Apple icon
+      - Damp cave and torch interactions
   "131026":
     id: "131026"
     title: Quests
