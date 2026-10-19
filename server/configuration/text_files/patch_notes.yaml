@@ -36,6 +36,7 @@ versions:
     features:
       - Failed quest state added
       - Talk to command picks first relevant character
+      - Fixed lore command, now prioritizes npcs then items
   "131026":
     id: "131026"
     title: Quests

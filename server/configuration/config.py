@@ -283,7 +283,7 @@ def load_lore():
         LORE["items_name_to_id"][ITEMS[i]["premade_id"]] = ITEMS[i]["name"]
 
     for i in ENEMIES:
-        LORE["enemies"][ENEMIES[i]["name"]] = ENEMIES[i]
+        LORE["enemies"][ENEMIES[i]["name"].lower()] = ENEMIES[i]
 
     for i in SKILLS:
         LORE["skills"][SKILLS[i]["name"]] = SKILLS[i]

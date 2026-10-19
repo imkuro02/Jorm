@@ -845,7 +845,6 @@ def command_lore(self, line):
     to_find = systems.utils.match_word(line, whole_list)
 
     # self.send_line(to_find)
-
     if to_find in list_of_enemies:
         e_id = LORE["enemies"][to_find]["npc_id"]
         e = create_npc(
