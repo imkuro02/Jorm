@@ -260,23 +260,24 @@ class Quest:
                             enemy_name = ENEMIES[objective.requirement_id]["name"]
                             output += (
                                 f"{objective.name}; Kill {Color.IMPORTANT}{enemy_name}{Color.NORMAL}: {objective.count}/{objective.goal}"
-                                + ""
+                                + "\n"
                             )
                         case OBJECTIVE_TYPES.COLLECT_X:
                             enemy_name = ITEMS[objective.requirement_id]["name"]
                             output += (
                                 f"{objective.name}; Collect {Color.IMPORTANT}{enemy_name}{Color.NORMAL}: {objective.count}/{objective.goal}"
-                                + ""
+                                + "\n"
                             )
                         case OBJECTIVE_TYPES.CONVERSATION:
                             # npc = NPCS[objective.requirement_id]['name']
                             output += (
                                 f"{objective.name}: {f'{Color.GOOD}Completed{Color.NORMAL}' if objective.count >= objective.goal else f'{Color.IMPORTANT}In Progress{Color.NORMAL}'}"
-                                + ""
+                                + "\n"
                             )
                 else:
                     pass
                     output += f"{objective.name}; Uknown Objective\n"
+
         output += "Quest state: " + self.get_state(as_string=True) + ""
         return output
 
@@ -325,6 +326,8 @@ class Quest:
     def is_completed(self):
         for objective in self.objectives.values():
             if objective.type == OBJECTIVE_TYPES.TURNED_IN:
+                continue
+            if objective.type == OBJECTIVE_TYPES.FAILED:
                 continue
             if not objective.is_completed():
                 return False

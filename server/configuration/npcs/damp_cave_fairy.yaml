@@ -1,0 +1,57 @@
+damp_cave_fairy:
+  tree:
+    start:
+      dialog:
+        - line: |
+            <npc> says "Will you help me?"
+          quest_check:
+            - id: damp_cave_fairy_quest
+              state: not_started
+        - line: |
+            <npc> says "Is it done?"
+          quest_check:
+            - id: damp_cave_fairy_quest
+              state: completed
+
+        - line: |
+            <npc> stays silent, and just floats in the air
+          quest_check:
+            - id: damp_cave_fairy_quest
+              state: turned_in
+        - line: |
+            <npc> stays silent, and just floats in the air
+          quest_check:
+            - id: damp_cave_fairy_quest
+              state: in_progress
+          
+      options:
+        - line: |
+            say "Sure"
+          goto: start_damp_cave_fairy_quest
+          quest_check:
+            - id: damp_cave_fairy_quest
+              state: not_started
+          quest_start:
+            - id: damp_cave_fairy_quest
+        - line: |
+            say "Yes"
+          goto: turn_in_damp_cave_fairy_quest
+          quest_check:
+            - id: damp_cave_fairy_quest
+              state: completed
+          quest_turn_in:
+            - id: damp_cave_fairy_quest
+
+    start_damp_cave_fairy_quest:
+      dialog:
+        - line: |
+            <npc> says "You need to save the cave, it is too dangerous there for us fairies, you will need to find a torch"
+
+    turn_in_damp_cave_fairy_quest:
+      dialog:
+        - line: |
+            <npc> says "Now that the cave is safe for us fairies again, we will accompany you inside, you will no longer need a torch here"
+        
+
+
+       

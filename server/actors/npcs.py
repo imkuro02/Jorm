@@ -105,7 +105,8 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         if ENEMIES[npc_id]["class"] == i.__name__:
             npc_class = i
             break
-        
+
+
     my_npc = npc_class(
         npc_id=npc_id,
         ai=ai,
@@ -283,7 +284,8 @@ class Npc(Actor):
 
     def talk_to(self, talker, they_talk_to_you = False):
         if not super().talk_to(talker):
-            return
+            return False
+
         # if returned true, start dialog
         if not they_talk_to_you:
             talker.pretty_broadcast(
@@ -299,7 +301,7 @@ class Npc(Actor):
             )
         talker.current_dialog = self.dialog_manager(talker, self, self.dialog_tree)
         talker.current_dialog.print_dialog()
-        # return True
+        return True
 
     # this function returns whether the npc has a quest to hand out or turn in / both
     # actor_to_compare is the player that is checking

@@ -28,6 +28,8 @@ class damp_cave(Room):
         damage = True
         has_torch = False
 
+        quest_completed = actor.quest_manager.check_quest_state('damp_cave_fairy_quest') == 'turned_in'
+
         if damage and actor.room_previous == None:
             damage = False
         if damage and actor.room_previous not in actor.room.world.rooms:
@@ -38,14 +40,19 @@ class damp_cave(Room):
             damage = False
             has_torch = True
 
-        if not has_torch:
-            br = f'{actor.id} can\'t see without a torch!'
-            actor.pretty_broadcast(br,br,list_pretty_name_objects=[actor])
-        else:
-            br = f'{actor.id} use a torch to keep the darkness away.'
+        if quest_completed:
+            br = f'Small fairies circle you in joy, glowing up your path'
             actor.pretty_broadcast(br,None,list_pretty_name_objects=[actor])
+        else:
 
-        if damage:
+            if not has_torch:
+                br = f'{actor.id} can\'t see without a torch!'
+                actor.pretty_broadcast(br,br,list_pretty_name_objects=[actor])
+            else:
+                br = f'{actor.id} use a torch to keep the darkness away.'
+                actor.pretty_broadcast(br,None,list_pretty_name_objects=[actor])
+
+        if damage and not quest_completed:
             damage_obj = Damage(
                 damage_taker_actor= actor,
                 damage_source_actor= actor,
