@@ -13,12 +13,14 @@ class OBJECTIVE_TYPES:
     COLLECT_X = "collect_x"  # collect x amount of y items
     CONVERSATION = "conversation"  # npcs can trigger this upon correct dialogue
     TURNED_IN = "turned_in"  # whether this quest has been turned_in or not
+    FAILED = 'failed'
 
 class QUEST_STATE_TYPES:
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     TURNED_IN = "turned_in"
     NOT_STARTED = "not_started"
+    FAILED = "failed"
 
 class QuestManager:
     def __init__(self, actor):
@@ -47,6 +49,30 @@ class QuestManager:
 
         return quest_id
 
+    def fail(self, quest_name):
+        quest_id = self.get_quest_id_from_quest_name(quest_name)
+
+        if quest_id not in self.quests:
+            return False
+
+        proposal = ObjectiveCountProposal(
+            OBJECTIVE_TYPES.FAILED, OBJECTIVE_TYPES.FAILED, 1
+        )
+        proposal_accepted = self.quests[quest_id].propose_objective_count_addition(
+            proposal
+        )
+
+    def quest_fail(self, quest_id):
+        if quest_id not in self.quests:
+            return False
+
+        proposal = ObjectiveCountProposal(
+            OBJECTIVE_TYPES.FAILED, OBJECTIVE_TYPES.FAILED, 1
+        )
+        proposal_accepted = self.quests[quest_id].propose_objective_count_addition(
+            proposal
+        )
+
     def drop(self, quest_name):
         quest_id = self.get_quest_id_from_quest_name(quest_name)
         if quest_id == None:
@@ -71,7 +97,7 @@ class QuestManager:
 
     def turn_in_quest(self, quest_id):
         if quest_id not in self.quests:
-            self.actor.send_line("You can't turn in a quest you dont have")
+            #self.actor.send_line("You can't turn in a quest you dont have")
             return False
 
         proposal = ObjectiveCountProposal(
@@ -255,6 +281,12 @@ class Quest:
         return output
 
     def get_state(self, as_string=False):
+        if self.objectives[OBJECTIVE_TYPES.FAILED].is_completed():
+            if as_string:
+                return f"{Color.BAD}Failed{Color.NORMAL}"
+            else:
+                return QUEST_STATE_TYPES.FAILED
+
         if as_string:
             if self.objectives[OBJECTIVE_TYPES.TURNED_IN].is_completed():
                 return f"{Color.GOOD}Turned in{Color.NORMAL}"
@@ -310,7 +342,8 @@ class Quest:
             if (
                 completed == False
                 and objective.is_completed()
-                and objective.type != OBJECTIVE_TYPES.TURNED_IN
+                and objective.type != OBJECTIVE_TYPES.TURNED_IN 
+                and objective.type != OBJECTIVE_TYPES.FAILED 
             ):
                 # this is buggy cuz it displays quest completed BEFORE stuff actually happnes
                 # like before loot is displayed as picked up for example
@@ -430,6 +463,18 @@ def create_daily_quest(quest_id, actor):
             False,
         )
     )
+
+    quest.add_objective(
+        Objective(
+            quest_id,
+            OBJECTIVE_TYPES.FAILED,
+            OBJECTIVE_TYPES.FAILED,
+            OBJECTIVE_TYPES.FAILED,
+            1,
+            False,
+        )
+    )
+
     return quest
 
 
@@ -469,12 +514,26 @@ def create_quest(quest_id, actor):
                 )
             )
 
+    # these objectives get added regardless
+    # they are meta objectives
+    # so even if a quest is out of date this gets created upon player joining
     quest.add_objective(
         Objective(
             quest_id,
             OBJECTIVE_TYPES.TURNED_IN,
             OBJECTIVE_TYPES.TURNED_IN,
             OBJECTIVE_TYPES.TURNED_IN,
+            1,
+            False,
+        )
+    )
+
+    quest.add_objective(
+        Objective(
+            quest_id,
+            OBJECTIVE_TYPES.FAILED,
+            OBJECTIVE_TYPES.FAILED,
+            OBJECTIVE_TYPES.FAILED,
             1,
             False,
         )

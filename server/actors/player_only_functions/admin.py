@@ -624,6 +624,9 @@ from systems.quest import OBJECTIVE_TYPES, QUEST_STATE_TYPES
 def command_quest(self, line="list"):
     if line == '':
         line = 'all'
+    else:
+        line = 'view '+line
+        
     lines = line.split(" ")
     command = lines[0]
 
@@ -681,10 +684,16 @@ def command_quest(self, line="list"):
     if command.lower() in "view":
         self.quest_manager.view(quest_name)
         return
-    if command.lower() in "drop":
-        self.quest_manager.drop(quest_name)
-        return
-
+        
+@check_is_admin
+def command_quest_drop(self, line):
+    quest_name = line
+    self.quest_manager.drop(quest_name)
+    
+@check_is_admin
+def command_quest_fail(self, line):
+    quest_name = line
+    self.quest_manager.fail(quest_name)
 
 @check_is_admin
 def command_force_build(self, line):

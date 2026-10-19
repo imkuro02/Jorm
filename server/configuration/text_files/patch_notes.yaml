@@ -29,6 +29,13 @@ versions:
   #
   #
   #
+  "191026":
+    id: "191026"
+    title: Quests
+    unixtime: 1775631568
+    features:
+      - Failed quest state added
+      - Talk to command picks first relevant character
   "131026":
     id: "131026"
     title: Quests

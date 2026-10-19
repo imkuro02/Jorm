@@ -168,6 +168,10 @@ class Dialog:
                 #quest_id = option["quest_start"]["id"]
                 dic["quest_drop"] = option["quest_drop"]
 
+            if "quest_fail" in option:
+                #quest_id = option["quest_start"]["id"]
+                dic["quest_fail"] = option["quest_fail"]
+
             if "quest_objective" in option:
                 # self.type =             _type               # what kind of objective this is
                 # self.requirement_id =   _requirement_id     # the id of whatever is required
@@ -465,6 +469,10 @@ class Dialog:
             for i in answer['quest_drop']:
                 self.player.quest_manager.drop_quest(i['id'])
 
+        if "quest_fail" in answer:
+            for i in answer['quest_fail']:
+                self.player.quest_manager.quest_fail(i['id'])
+
         if "quest_objective_count_proposal" in answer:
             # self.print_dialog()
             
@@ -503,7 +511,7 @@ class Dialog:
                     )
                 else:
                     self.player.send_line(
-                        f"{Color.BAD}Quest failed to turn in{Color.NORMAL}: {self.player.quest_manager.quests[_answer['id']].name}"
+                        f"{Color.BAD}Quest failed to turn in{Color.NORMAL}: {_answer['id']}"
                     )
                     self.end_dialog()
                     return True

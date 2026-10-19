@@ -71,7 +71,7 @@ goblin_bard_quest_npcs_0:
           quest_turn_in:
           - id: goblin_bard_quest_lie
             reward_exp: 200
-          quest_drop:
+          quest_fail:
           - id: goblin_bard_quest_truth
             #reward:
             #  - item: currency_0
@@ -94,7 +94,7 @@ goblin_bard_quest_npcs_0:
             reward:
               - item: currency_0
                 amount: 200
-          quest_drop:
+          quest_fail:
           - id: goblin_bard_quest_lie
 
 

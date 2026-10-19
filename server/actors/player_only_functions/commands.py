@@ -31,7 +31,7 @@ from actors.player_only_functions.character_sheet import (
 from actors.player_only_functions.admin import (
     command_gain_exp, command_teleport, command_online, command_kick, command_grant_admin, command_show_ref_all,
     command_load_item, command_load_npcs, command_export, command_help, command_ranks,
-    command_send_prompt, command_reload_config, command_force_build, command_lore, command_quest, command_bonus,
+    command_send_prompt, command_reload_config, command_force_build, command_lore, command_quest, command_quest_drop, command_quest_fail, command_bonus,
     command_kill, command_sethp, command_history, command_get_time, command_set_time,
     command_patch_notes, get_any_new_patches,
     command_friend_add, command_friend_remove, command_friend_list, command_friend_broadcast,
@@ -76,6 +76,9 @@ commands = {
     'bonus':    'command_bonus',
 
     'quest':    'command_quest',
+    'questdrop':    'command_quest_drop',
+    'questfail':    'command_quest_fail',
+
     'help':     'command_help',
     'history':  'command_history',
     'ranks':    'command_ranks',
