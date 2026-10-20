@@ -10,6 +10,7 @@ BANNED_ALIASES = [
 
 
 class SETTINGS:
+    GODMODE = 'Godmode'
     GMCP = "Gmcp"
     GODOT = "Godot"
     ALIAS = "Alias"
@@ -37,6 +38,7 @@ class SETTINGS:
     VOL_EFFECTS = 'EffectsVolume'
     VOL_MUSIC = 'MusicVolume'
     LIST_SETTINGS = [
+        GODMODE,
         GMCP,
         GODOT,
         ECHO,
@@ -71,6 +73,7 @@ class Settings:
     def __init__(self, actor):
         self.actor = actor
         self.info = {
+            SETTINGS.GODMODE: "only for admins, obviously",
             SETTINGS.GMCP: "Use gmcp",
             SETTINGS.GODOT: "Use godot client features",
             SETTINGS.ECHO: "Echo the last input sent",
@@ -93,6 +96,7 @@ class Settings:
 
             }
         self.defaults = {
+            SETTINGS.GODMODE: False,
             SETTINGS.GMCP: True,
             SETTINGS.GODOT: False,
             SETTINGS.ECHO: True,
@@ -200,6 +204,15 @@ class Settings:
                 self.actor.settings_manager = Settings(self.actor)
                 #self.actor.settings_manager.settings[SETTINGS.EMAIL] = email
                 return
+
+            case SETTINGS.GODMODE:
+                if len(line) == 1:
+                    self.actor.send_line("GODMODE setting needs an argument (on or off?)")
+                    return
+                value = line[1]
+                self.settings[SETTINGS.GODMODE] = self.true_or_false(value)
+                self.actor.protocol.enabled_gmcp = self.true_or_false(value)
+                self.actor.send_line(f"GODMODE enabled: {self.true_or_false(value)}")
             
             case SETTINGS.ECHO:
                 if len(line) == 1:

@@ -272,7 +272,9 @@ class Player(Actor):
         self.date_of_last_login_previous = systems.utils.get_unix_timestamp()
         self.date_of_last_login = systems.utils.get_unix_timestamp()
         self.time_in_game = 0
+
         self.explored_rooms = []
+        self.explored_rooms_this_session = []
 
         self.settings_manager = Settings(self)
         self.ai = PlayerAI(self)
@@ -290,6 +292,8 @@ class Player(Actor):
 
         self.priority = 0
         self.best_cache = {}
+
+
 
     def add_tracked_npcs_killed(self, npc_id, amount):
         if npc_id in self.tracked_npcs_killed:
@@ -375,9 +379,12 @@ class Player(Actor):
 
         super().unload()
 
+    def check_if_godmode(self):
+        return self.admin > 0 and self.settings_manager.get_value(SETTINGS.GODMODE)
+
     def check_if_admin(self):
         if self.protocol == None:
-            return
+            return False
 
         admins = self.protocol.factory.db.read_admins(self)
 
@@ -387,6 +394,7 @@ class Player(Actor):
             self.admin = admins[1]
 
         self.inventory_manager.can_pick_up_anything = self.admin >= 1
+
 
     def set_admin(self, admin_level):
         self.admin = admin_level

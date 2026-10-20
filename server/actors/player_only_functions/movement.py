@@ -13,6 +13,10 @@ def add_explored_room(actor):
         if actor.room.get_real_id() not in actor.explored_rooms:
             actor.explored_rooms.append(actor.room.get_real_id())
 
+    if hasattr(actor, 'explored_rooms_this_session'):
+        if actor.room.get_real_id() not in actor.explored_rooms_this_session:
+            actor.explored_rooms_this_session.append(actor.room.get_real_id())
+
             
 import random
 @check_not_in_party_or_is_party_leader
@@ -304,15 +308,22 @@ def command_go(self, line = '', room_id = None):
 
 
         # if aggressive enemies are present while you cannot go to a new room, but you can still return to previous room
-        if yes_any_can_start_fights and direction.get_room_obj().get_real_id() != self.room_previous:
-            roll = 0
-            if self.stat_manager.stats[StatType.LVL] < (highest_can_start_fights_level+3):
-                roll = 1#random.randint(0,5)
-            if self.room.is_an_instance():
-                roll = 1
+        if yes_any_can_start_fights:
+            roll = 1
+            if direction.get_room_obj().get_real_id() == self.room_previous:
+                roll = 0
+            #if direction.get_room_obj().get_real_id() in self.explored_rooms_this_session:
+            #    roll = 0
+            #if self.stat_manager.stats[StatType.LVL] < (highest_can_start_fights_level+3):
+            #    roll = 1#random.randint(0,5)
+            #if self.room.is_an_instance():
+            #    roll = 1
             #if self.room.world.game_time.TIME_OF_DAY['night']:
             #    roll = random.randint(0,2)
             #print(self.room.is_enemy_present())
+            if self.check_if_godmode():
+                roll = 0
+
             if roll == 1:
                 if self.party_manager.party != None:
                     if self.party_manager.party.actor == self:
