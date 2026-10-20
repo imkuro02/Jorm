@@ -45,12 +45,12 @@ damp_cave_fairy:
     start_damp_cave_fairy_quest:
       dialog:
         - line: |
-            <npc> says "You need to save the cave, it is too dangerous there for us fairies, you will need to find a torch"
+            <npc> says "You need to save the cave, it is too dangerous there for us fairies now that the octopuses reside there, you will need to find a torch!"
 
     turn_in_damp_cave_fairy_quest:
       dialog:
         - line: |
-            <npc> says "Now that the cave is safe for us fairies again, we will accompany you inside, you will no longer need a torch here"
+            <npc> says "Now that the cave is safe for us fairies again, we will accompany you inside, you will no longer need a torch here!"
         
 
 

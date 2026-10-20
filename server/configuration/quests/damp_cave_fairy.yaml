@@ -2,14 +2,15 @@ damp_cave_fairy_quest:
   name: Cave Glowup
   description: 
     in_progress: |
-      The blacksmith offered to teach me the art of reforging, if I can defeat the shroomtrio
+      The fairy outside the cave has asked me to get rid of the octopuses in the cave.
+      The cave is very dark, I will need a torch to move around properly.
     completed: |
-      I managed to bea- I mean I defeated the shroomtrio and should return to the blacksmith
+      I killed the octpuses in the cave.
     turned_in: |
-      I dont want to ever speak of this again
+      The fairy said now that the cave is octopus free, I will no longer need a torch to walk there.
   objectives:
     Murder:
       type: kill_x
-      objective: shroom_trio
-      completed_at: 1
+      objective: octopus
+      completed_at: 3
       
