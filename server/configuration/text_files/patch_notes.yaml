@@ -42,6 +42,7 @@ versions:
       - Damp cave and torch interactions
       - More customizable npc variables
       - All aggressive enemies stand in your way regardless of level
+      - NPC greetings are faster, and more consistent
   "131026":
     id: "131026"
     title: Quests
