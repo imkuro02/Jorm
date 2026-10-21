@@ -22,8 +22,13 @@ if player is not in send_to they will be ignored and another greet_message might
 '''
 from configuration.constants.tickrate import TICKRATE
 
-def greet_message(self, message, send_to: list = [None], sound = None):
 
+    
+def greet_message(self, message, send_to: list = [None], sound = None):
+    if message == None:
+        return
+        
+    message = message.replace('#SELF#', self.id)
 
     if self.room == None:
         return
@@ -31,9 +36,9 @@ def greet_message(self, message, send_to: list = [None], sound = None):
     if not hasattr(self,'actors_in_room'):
         self.actors_in_room = {}
 
-    if self.room.was_inactive_n_ticks_ago(TICKRATE * 2):
-        self.actors_in_room = {}
-
+    #if self.room.was_inactive_n_ticks_ago(TICKRATE * 20):
+    #    self.actors_in_room = {}
+    
     if self.factory.ticks_passed % (TICKRATE * 1) == 0:
 
         for i in self.room.actors.values():
@@ -58,7 +63,35 @@ def greet_message(self, message, send_to: list = [None], sound = None):
                 continue
             if i.current_dialog != None:
                 continue
-            i.pretty_broadcast(message, None, list_pretty_name_objects = [self], sound = sound)
+            _msg = message.replace('#OTHER#', i.id)
+            i.pretty_broadcast(_msg, None, list_pretty_name_objects = [self, i], sound = sound)
 
         for i in self.actors_in_room:
             self.actors_in_room[i] = None
+
+
+def greet_message(self, message, send_to: list = [None], sound = None):
+    if self.room == None:
+        return
+    if message == None:
+        return
+    if len(send_to) == 0:
+        return    
+    
+    i = send_to[0]
+
+    if type(i).__name__ != 'Player':
+        return
+    if i == None:
+        return
+    if i.current_dialog != None:
+        return
+    
+    message = message.replace('#SELF#', self.id)
+    message = message.replace('#OTHER#', i.id)
+
+    
+    i.pretty_broadcast(message, None, list_pretty_name_objects = [self, i], sound = sound)
+    
+
+    

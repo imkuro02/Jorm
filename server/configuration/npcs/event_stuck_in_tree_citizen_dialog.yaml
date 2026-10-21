@@ -1,5 +1,9 @@
 event_stuck_in_tree_citizen_dialog_0:
   tree:
+    intro:
+      dialog: 
+        - line: |
+            <npc> is yelling "hey over here! im stuck in the tree!"
     start:
       dialog: 
         - line: |
@@ -7,6 +11,11 @@ event_stuck_in_tree_citizen_dialog_0:
 
 event_stuck_in_tree_citizen_dialog_1:
   tree:
+    intro:
+      dialog: 
+        - line: |
+            <npc> is dusting off their clothes
+    start:
     start:
       dialog: 
         - line: |

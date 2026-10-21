@@ -24,7 +24,7 @@ class damp_cave(Room):
         super().__init__(*args, **kwargs)
 
     def move_actor_after(self, actor):
-
+        super().move_actor_after(actor)
         damage = True
         has_torch = False
 
@@ -57,7 +57,7 @@ class damp_cave(Room):
                 damage_taker_actor= actor,
                 damage_source_actor= actor,
                 damage_source_action= self,
-                damage_value=10,
+                damage_value= int(actor.stat_manager.stats[StatType.HPMAX] * .25),
                 damage_type=DamageType.PURE,
                 add_threat=False,
                 silent=False,

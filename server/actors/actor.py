@@ -651,13 +651,22 @@ class Actor:
     def get_important_dialog(self, actor_to_compare, return_dict=False):
         return False
 
-    def talk_to(self, talker, they_talk_to_you = False):
+
+    def talk_to(self, talker, they_talk_to_you = False, start = 'start'):
         if talker.current_dialog != None:
             talker.send_line(f"{talker.pretty_name(identifier=talker)} are already conversing")
             return False
+
+       
+
         if self.dialog_tree == None:
-            talker.send_line("There is nothing to talk about")
+            
+            print(start)
+            if start == 'start': 
+                talker.send_line("There is nothing to talk about...")
             return False
+
+
         return True  # return true if no errors
 
     def pretty_name(self, identifier = None, text_override = None):

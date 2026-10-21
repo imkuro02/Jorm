@@ -7,12 +7,12 @@ from systems.quest import QUEST_STATE_TYPES, ObjectiveCountProposal
 from configuration.constants.room_constant import RoomConstant
 
 class Dialog:
-    def __init__(self, _player, _npc, _dialog_tree):
+    def __init__(self, _player, _npc, _dialog_tree, start = 'start'):
         self.player = _player
         self.npc = _npc
         self.dialog_tree = _dialog_tree
 
-        self.current_line = "start"
+        self.current_line = start
 
     def send_output(self, output):
 
@@ -214,6 +214,17 @@ class Dialog:
                 if not this_option_is_good:
                     continue
 
+            #if 'check_tavern_is_recall_spot' in option:
+            #    _invert = 'NOT' in option['tavern_is_recall_spot']
+            #    _correct = self.player.recall_site == RoomConstant.TAVERN
+            #    if _correct == _invert:
+            #        continue
+            if 'check_tavern_is_recall_spot' in option:
+                _is_true = self.player.recall_site == RoomConstant.TAVERN
+                if _is_true != option['check_tavern_is_recall_spot']:
+                    continue
+                    
+
             if "quest_check" in option:
                 this_option_is_good = True
                 for check in option["quest_check"]:
@@ -280,7 +291,12 @@ class Dialog:
             available_dialogs.append(option)
 
         # ####################################################
-        _line = random.choice(available_dialogs)
+        _line = ''
+        top_first = 'top_first' in self.dialog_tree[self.current_line]
+        if available_dialogs != []:
+            _line = random.choice(available_dialogs)
+            if top_first:
+                _line = available_dialogs[0]
 
         output_line = None
         output_line_room_party = None
@@ -462,7 +478,6 @@ class Dialog:
 
         if "quest_start" in answer:
             for i in answer['quest_start']:
-                print('......',i['id'])
                 self.player.quest_manager.start_quest(i['id'])
 
         if "quest_drop" in answer:

@@ -1,5 +1,19 @@
 damp_cave_fairy:
   tree:
+    intro:
+      dialog:
+        - line: |
+            The fairy swirls around happily
+          quest_check:
+          - id: damp_cave_fairy_quest
+            state: turned_in
+
+        - line: |
+            The fairy swirls around anxiously
+          quest_check:
+          - id: damp_cave_fairy_quest
+            state: turned_in
+            NOT: 1
     start:
       dialog:
         - line: |

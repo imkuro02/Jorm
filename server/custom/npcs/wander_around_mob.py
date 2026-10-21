@@ -247,10 +247,6 @@ class CustomWanderAroundMob(Npc):
     def tick(self):
         super().tick()
 
-        if self.wander_in_the_way_warning:
-            from scripts.greet_message import greet_message
-            greet_message(self, self.wander_in_the_way_warning.replace('#SELF#', self.id))
-
         self.wander_ticks_passed += 1
         if self.wander_ticks_passed == self.wander_ticks_warning_required:
             self.wander(warning = True)

@@ -8,6 +8,7 @@ class CustomTownGuard(Npc):
     def tick(self):
         if self.room == None:
             return
+        '''
         from scripts.greet_message import greet_message
         send_to = [i for i in self.room.actors.values() if type(i).__name__ == 'Player' and 
                     i.recall_site != RoomConstant.TAVERN]
@@ -27,6 +28,7 @@ class CustomTownGuard(Npc):
             self = self, 
             message = f'{self.id} nods at you',
             )
+        '''
 
         if self.room.combat != None:
             list_pretty_name_objects = [self]

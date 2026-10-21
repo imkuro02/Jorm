@@ -7,7 +7,7 @@ def command_talk(self, line):
                 continue
             actor = i
             talked_to_someone = actor.talk_to(self)
-            print(talked_to_someone)
+            #print(talked_to_someone)
             if talked_to_someone: 
                 break
         if not talked_to_someone:

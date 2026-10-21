@@ -1,0 +1,6 @@
+robot_woodcutter:
+  tree:
+    intro:
+      dialog:
+        - line: |
+            <npc> beeps loudly "move out of my way PEASANT"

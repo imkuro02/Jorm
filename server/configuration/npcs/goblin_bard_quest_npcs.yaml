@@ -1,5 +1,30 @@
 goblin_bard_quest_npcs_0:
   tree:
+    intro:
+      top_first: 1
+      dialog:
+        - line: |
+            <npc> plays a very sad tune, slowly
+          quest_check:
+          - id: goblin_bard_quest_lie
+            state: turned_in
+
+        - line: |
+            <npc> plays a very angry tune, strumming too hard!
+          quest_check:
+          - id: goblin_bard_quest_truth
+            state: turned_in
+
+        - line: |
+            <npc> plays a tune of anticipation, "well?"
+          quest_check:
+          - id: goblin_bard_quest
+            state: turned_in
+
+        - line: |
+            <npc> plays a tune and says "Hello traveler"
+    
+        
     start:
       dialog: 
         - line: |
@@ -116,6 +141,10 @@ goblin_bard_quest_npcs_0:
           
 goblin_bard_quest_npcs_1:
   tree:
+    intro:
+      dialog:
+        - line: |
+            <npc> plays a very sad tune and says "Hello traveler"
     start:
       dialog: 
         - line: |

@@ -37,7 +37,7 @@ def show_caller(func):
         CALLED += 1
         print(CALLED)
         caller = inspect.currentframe().f_back
-        print(f"{func.__name__} was called by {caller.f_code.co_name}")
+        print(f"{func.__name__} was called by {caller.f_code}")
         return func(*args, **kwargs)
     return wrapper
 '''

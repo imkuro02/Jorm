@@ -404,14 +404,9 @@ class Room:
         return desc.strip()
 
     def tick(self):
-
+        
         actors = {}
 
-        #if not self.is_player_present():
-        #    return
-        
-        
-        
         for a in self.actors.values():
             actors[a.id] = a
 
@@ -584,6 +579,12 @@ class Room:
             )
 
     def move_actor_after(self, actor):
+        for i in self.room.actors.values():
+            i.talk_to(actor, start = 'intro')
+
+        for i in self.room.inventory_manager.items.values():
+            from scripts.greet_message import greet_message
+            greet_message(i, message = i.ambience, sound = i.ambience_sfx, send_to=[actor])
         return True
 
     """

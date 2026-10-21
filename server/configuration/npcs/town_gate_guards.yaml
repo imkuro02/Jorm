@@ -1,5 +1,25 @@
 town_gate_guard_out:
   tree:
+    intro:
+      top_first: 1
+      dialog:
+        - line: |
+            <npc> says "You should head to the tavern and rest, you look... not good"
+          check_tavern_is_recall_spot: 0
+        
+        - line: |
+            <npc> says "The blacksmith recently reforged my spear, nice fella just west of town square"
+          check_tavern_is_recall_spot: 1
+          quest_check:
+            - id: blacksmith_reforge
+              state: not_started
+
+        - line: |
+            <npc> nods at you
+
+
+
+
     start:
       dialog:
         - line: |

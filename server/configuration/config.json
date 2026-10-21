@@ -1,5 +1,5 @@
 {
-    "SHA-256": "7247bc39806e17bf3d7e30cb55bbebcaa5a20ad1bf522d161f9a8f1d5946266a",
+    "SHA-256": "1291da71b451e446cc8258153675d86424fd40ea1aa8ed866c2f92c4de6fd107",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -16175,7 +16175,7 @@
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "description_room": "A campfire is lit here",
-            "invisible": false,
+            "invisible": true,
             "ambience_sfx": "fireplace.wav",
             "ambience": "@redThe fire crackles gently, its warm light dancing across nearby surfaces and casting soft, shifting shadows. The steady glow brings a sense of calm and comfort, pushing back the surrounding darkness.@back",
             "can_pick_up": false,
@@ -16200,7 +16200,7 @@
             "drop_chance_range_over": 100,
             "drop_chance_stat_filter": "none",
             "description_room": "A fireplace is lit here",
-            "invisible": false,
+            "invisible": true,
             "ambience_sfx": "fireplace.wav",
             "ambience": "@redThe fire crackles gently, its warm light dancing across nearby surfaces and casting soft, shifting shadows. The steady glow brings a sense of calm and comfort, pushing back the surrounding darkness.@back",
             "can_pick_up": false,

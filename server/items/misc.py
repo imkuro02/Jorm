@@ -44,9 +44,9 @@ class Item:
         self.room = None
         self.new = True  # show if item is newly added to inv
         self.time_dropped_on_ground = 0
-        self.ambience = None
 
-        self.ticks_until_ambience = 100
+        self.ambience = None
+        self.ambience_sfx = None
 
         # scenery stuff
         self.can_pick_up = True
@@ -88,18 +88,8 @@ class Item:
 
         return True
 
-    def broadcast_ambience(self):
-        if self.ambience == None:
-            return
-        from scripts.greet_message import greet_message
-        greet_message(
-            self = self, 
-            message = self.ambience,
-            sound = self.ambience_sfx
-        )
-        return
     def tick(self):
-        self.broadcast_ambience()
+        return True
         '''
         if self.ambience == None:
             return

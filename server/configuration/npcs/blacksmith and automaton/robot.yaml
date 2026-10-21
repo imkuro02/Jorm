@@ -1,5 +1,9 @@
 npc_robot:
   tree:
+    intro:
+      dialog:
+        - line: |
+            <npc>'s mechanical arm waves at you "Hell-o"
     start:
       dialog:
         - line: |

@@ -126,7 +126,7 @@ npc_blacksmith:
             accept
           goto: reforging_accept
           quest_start: 
-              id: blacksmith_reforge
+            - id: blacksmith_reforge
           quest_check:
           - id: blacksmith_reforge
             state: not_started

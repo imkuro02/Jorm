@@ -64,6 +64,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
     loc['on_start_skills_use'] =    None
     loc['can_drop_corpse'] =        True
 
+
     if loc['npc_id'] in ENEMIES:
         loc['name'] =                   systems.utils.generate_name() + " The " + ENEMIES[loc['npc_id']]["name"]
         loc['desc'] =                   ENEMIES[loc['npc_id']]["description"]
@@ -134,6 +135,7 @@ def create_npc(room, npc_id, spawn_for_lore=False):
         on_start_skills_use =   loc['on_start_skills_use'],
         can_drop_corpse =       loc['can_drop_corpse'],
         npc_properties =        loc['npc_properties'],
+
     )
 
 
@@ -158,6 +160,7 @@ class Npc(Actor):
         on_start_skills_use=None,
         can_drop_corpse = False,
         npc_properties = None,
+
     ):
         super().__init__(
             name=name,
@@ -179,7 +182,6 @@ class Npc(Actor):
         self.dialog_tree = dialog_tree
         if self.dialog_tree != None:
             for d in self.dialog_tree:
-                print(self.dialog_tree,d)
                 if "append_to" in self.dialog_tree[d]:
                     location = self.dialog_tree[d]["append_to"]
                     if "dialog" in self.dialog_tree[d]:
@@ -224,6 +226,7 @@ class Npc(Actor):
         self.dialog_manager = Dialog
         #self.following_actor = None
 
+
         
 
     def join_combat(self):
@@ -267,25 +270,29 @@ class Npc(Actor):
                 aff.set_turn = set_turn
                 self.affect_manager.set_affect_object(aff)
 
-
-    def talk_to(self, talker, they_talk_to_you = False):
-        if not super().talk_to(talker):
+    def talk_to(self, talker, they_talk_to_you = False, start = 'start'):
+        if not super().talk_to(talker, start = start):
             return False
 
         # if returned true, start dialog
-        if not they_talk_to_you:
-            talker.pretty_broadcast(
-                f"{talker.id} approach {self.id}",
-                f"{talker.id} approaches {self.id}",
-                list_pretty_name_objects = [self, talker]
-            )
-        else:
-            talker.pretty_broadcast(
-                f"{self.id} approaches {talker.id}",
-                f"{self.id} approaches {talker.id}",
-                list_pretty_name_objects = [self, talker]
-            )
-        talker.current_dialog = self.dialog_manager(talker, self, self.dialog_tree)
+        if start == 'start':
+            if not they_talk_to_you:
+                talker.pretty_broadcast(
+                    f"{talker.id} approach {self.id}",
+                    f"{talker.id} approaches {self.id}",
+                    list_pretty_name_objects = [self, talker]
+                )
+            else:
+                talker.pretty_broadcast(
+                    f"{self.id} approaches {talker.id}",
+                    f"{self.id} approaches {talker.id}",
+                    list_pretty_name_objects = [self, talker]
+                )
+
+        if start not in self.dialog_tree:
+            return False
+
+        talker.current_dialog = self.dialog_manager(talker, self, self.dialog_tree, start = start)
         talker.current_dialog.print_dialog()
         return True
 
@@ -347,12 +354,16 @@ class Npc(Actor):
 
         return output
 
+    
+
     def tick(self):
+
         if self.room != None:
             if not self.room.is_player_present():
                 return
-                
+        
         super().tick()
+
         # try:
         if self.ai != None:
             self.ai.tick()

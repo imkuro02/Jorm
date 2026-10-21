@@ -43,10 +43,10 @@ class CustomCitizenStruckInTree(Npc):
                 message = f'{self.id} nods at you',
             )
 
-    def talk_to(self, talker):
+    def talk_to(self, talker, start = 'start'):
         self.stuck_in_tree()
             
-        super().talk_to(talker)
+        super().talk_to(talker, start = start)
 
 #event_stuck_in_tree_citizen_dialog_1
 #tree = copy.deepcopy(NPCS[npc_id]["tree"])

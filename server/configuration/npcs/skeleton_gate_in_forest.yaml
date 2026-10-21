@@ -1,0 +1,6 @@
+skeleton_gate_in_forest:
+  tree:
+    intro:
+      dialog:
+        - line: |
+            <npc> cackles "I would not go further!"

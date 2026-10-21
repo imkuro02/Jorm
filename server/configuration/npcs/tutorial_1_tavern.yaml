@@ -1,5 +1,10 @@
 tutorial_1_tavern:
   tree:
+    intro: 
+      dialog: 
+        - line: |
+            <npc> coughs quietly and lets out a sigh.
+
     start:
       dialog:
         - line: |
