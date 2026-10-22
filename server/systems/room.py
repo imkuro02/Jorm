@@ -122,7 +122,8 @@ class Spawner:
             if self.room.is_player_present() != False:
                 return
 
-            _room_index = list(self.room.world.rooms.values()).index(self.room)
+            #_room_index = list(self.room.world.rooms.values()).index(self.room)
+            _room_index = self.room.room_index
             _ticks = self.room.world.factory.ticks_passed
             if (_ticks + _room_index) % RESPAWN_TIME_MOBS == 0:
 
@@ -240,6 +241,7 @@ class Room:
         instanced,
         no_spawner=False,
     ):
+        self.room_index = 0
         self.room = self # this is such utter shit what the fuck
         # this needs to be here to items can check for actors
         # in rooms even if the room itself is item owner
@@ -578,13 +580,21 @@ class Room:
                 msg_type = MessageType.MOVEMENT
             )
 
-    def move_actor_after(self, actor):
+    def delayed_move_actor_after(self, actor):
         for i in self.room.actors.values():
             i.talk_to(actor, start = 'intro')
+            actor.talk_to(i, start = 'intro')
 
         for i in self.room.inventory_manager.items.values():
             from scripts.greet_message import greet_message
             greet_message(i, message = i.ambience, sound = i.ambience_sfx, send_to=[actor])
+        return True
+
+    def move_actor_after(self, actor):
+        self.world.factory.delayed_functions.add_delayed_function(
+            caller = actor, tag = 'movement', delay = TICKRATE*1,
+            func=lambda: self.delayed_move_actor_after(actor)
+        )
         return True
 
     """

@@ -371,12 +371,15 @@ class World:
         for i in self.rooms:
             rooms.append(self.rooms[i])
         
+        index = 0
         for i in rooms:
             if self.factory.ticks_passed % (TICKRATE * 60) == 0:
                 #print('clearing room cache')
                 i.cached_get_nearby_rooms = {}
-           
+            i.room_index = index
+            index += 1
             i.tick()
+            
 
         
 

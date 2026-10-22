@@ -411,6 +411,8 @@ class Actor:
         self.dont_join_fights = False           # whether to block players from moving
         self.reset_stats_after_combat = True    # whether to heal to full after combat and reset cooldowns + affs
 
+        self.current_dialog = None
+
         REFTRACKER.add_ref(self)
 
     def remove_equips_for_raw_stats(self):
@@ -653,19 +655,22 @@ class Actor:
 
 
     def talk_to(self, talker, they_talk_to_you = False, start = 'start'):
-        if talker.current_dialog != None:
-            talker.send_line(f"{talker.pretty_name(identifier=talker)} are already conversing")
-            return False
+        
 
-       
+        if start == 'start': 
+            if talker.current_dialog != None:
+                talker.send_line(f"{talker.pretty_name(identifier=talker)} are already conversing")
+                return False
+
+            if self.dialog_tree == None:
+                talker.send_line("There is nothing to talk about...")
+                return False
+
+        if talker.current_dialog != None:
+            return False
 
         if self.dialog_tree == None:
-            
-            print(start)
-            if start == 'start': 
-                talker.send_line("There is nothing to talk about...")
             return False
-
 
         return True  # return true if no errors
 

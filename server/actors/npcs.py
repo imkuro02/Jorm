@@ -292,8 +292,13 @@ class Npc(Actor):
         if start not in self.dialog_tree:
             return False
 
-        talker.current_dialog = self.dialog_manager(talker, self, self.dialog_tree, start = start)
-        talker.current_dialog.print_dialog()
+        if 'options' not in self.dialog_tree[start]:
+            temp_convo = self.dialog_manager(talker, self, self.dialog_tree, start = start)
+            temp_convo.print_dialog()
+            del temp_convo
+        else:
+            talker.current_dialog = self.dialog_manager(talker, self, self.dialog_tree, start = start)
+            talker.current_dialog.print_dialog()
         return True
 
     # this function returns whether the npc has a quest to hand out or turn in / both

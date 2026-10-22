@@ -29,6 +29,13 @@ versions:
   #
   #
   #
+  "221026":
+    id: "221026"
+    title: Optimization
+    unixtime: 1775631568
+    features:
+      - Room indexing is less intensive
+      - Ambience / intros of npcs are now on a 1sec delay
   "191026":
     id: "191026"
     title: Quests

@@ -238,6 +238,7 @@ class CustomWanderAroundMob(Npc):
                         continue
                     br = self.wander_pre_footprint_despawn_text.replace('#SELF#', self.id).replace('#DIR#', i.direction)
                     self.pretty_broadcast(br,br, list_pretty_name_objects = [self])
+                self.room.world.rooms[exits[self.wander_directions_order[self.wander_direction_current]]].move_actor_after(self)
         else:
             if not warning:
                 self.wander_direction_current += 1
