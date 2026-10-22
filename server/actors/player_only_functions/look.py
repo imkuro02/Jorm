@@ -833,6 +833,7 @@ def command_look(self, line, return_gmcp=False, short = False):
         # XD icons
         if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
             icons = []
+            #icons.append(self.command_map('',return_gmcp = True).split('\n'))
             for i in room.get_actors(players_first = True).values():
                 #if i == self:
                 #    continue
@@ -850,16 +851,10 @@ def command_look(self, line, return_gmcp=False, short = False):
                     continue
                 icons.append(icon.split("\n"))
 
-            max_height = 0
-            for i in icons:
-                if len(i) >= max_height:
-                    max_height = len(i)
+            
 
-            for i in icons:
-                while len(i) < max_height:
-                    i.insert(0,' ')
-
-            widths = [0] * len(icons)
+            widths =  [0] * len(icons)
+            heights = [0] * len(icons)
             index = 0
             columns = len(icons)
             for elem in icons:
@@ -869,8 +864,18 @@ def command_look(self, line, return_gmcp=False, short = False):
                     elem_raw = re.sub(pattern, r'\1', elem_raw)
                     if widths[index] <= len(elem_raw):
                         widths[index] = len(elem_raw)
+
+                    heights[index] += 1
                 index += 1
 
+            max_height = 0
+            for i in icons:
+                if len(i) >= max_height:
+                    max_height = len(i)
+
+            for i in icons:
+                while len(i) < max_height:
+                    i.insert(0,' ')
             # _npcs rat;_npcs spore;_npcs rat;_npcs skeleton_soldier;l
             # _npcs green_slime;_npcs skeleton_soldier;_npcs red_slime;_npcs blue_slime;_npcs rat;l
             '''
@@ -913,36 +918,50 @@ def command_look(self, line, return_gmcp=False, short = False):
                 return [len(group) for group in groups]
             '''
 
-            def pack_counts(nums, limit=82):
-                groups = []
+            def pack_counts(widths, heights, limit=82):
+                _widths = []
+                _heights = []
                 current = []
+                current2 = []
                 total = 0
 
-                for num in nums:
+                for num in widths:
                     if total + num > limit:
-                        groups.append(current)
+                        _widths.append(current)
                         current = []
                         total = 0
 
                     current.append(num)
                     total += num
 
-                if current:
-                    groups.append(current)
 
-                return [len(group) for group in groups]
+                if current:
+                    _widths.append(current)
+                
+
+                _widths = [len(w) for w in _widths]
+                index = 0
+                for w in _widths:
+                    #print(heights[index:index+w])
+                    _heights.append(max(heights[index:index+w]))
+                    index += w
+
+                return _widths, _heights
 
 
 
 
             
-            columns = pack_counts(widths)
+            columns, heights = pack_counts(widths, heights)
+            print(columns, 'XD', heights)
             #print(widths, columns)
             start = 0
             for amount in range(start, start+len(columns)):
+                height = heights[amount]
                 amount = columns[amount]
+                
                 t = systems.utils.Table(amount,0)
-                for row in range(0, max_height):
+                for row in range(max_height-height, max_height):
                     for column in range(start, start+amount):
                         try:
                             t.add_data(icons[column][row])

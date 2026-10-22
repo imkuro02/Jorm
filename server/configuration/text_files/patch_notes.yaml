@@ -36,6 +36,7 @@ versions:
     features:
       - Room indexing is less intensive
       - Ambience / intros of npcs are now on a 1sec delay
+      - Icon max height per row of ascii art
   "191026":
     id: "191026"
     title: Quests
