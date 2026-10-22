@@ -48,7 +48,7 @@ for enemy_id, enemy in enemies.items():
                     t.add_data("XD")
 
         see = see + "\n" + t.get_table() + '\n'
-        print(add_color(see))
+        #print(add_color(see))
         icons = []
         see = ''
 

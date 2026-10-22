@@ -591,6 +591,9 @@ class Room:
         return True
 
     def move_actor_after(self, actor):
+        self.delayed_move_actor_after(actor)
+        return True
+        
         self.world.factory.delayed_functions.add_delayed_function(
             caller = actor, tag = 'movement', delay = TICKRATE*1,
             func=lambda: self.delayed_move_actor_after(actor)

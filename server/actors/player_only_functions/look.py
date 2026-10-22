@@ -953,7 +953,7 @@ def command_look(self, line, return_gmcp=False, short = False):
 
             
             columns, heights = pack_counts(widths, heights)
-            print(columns, 'XD', heights)
+            #print(columns, 'XD', heights)
             #print(widths, columns)
             start = 0
             for amount in range(start, start+len(columns)):

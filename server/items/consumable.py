@@ -6,6 +6,7 @@ from items.misc import Item
 from skills.manager import get_skills, construct_skill #use_skill_from_consumable, 
 from systems.utils import get_object_parent
 from items.manager import load_item
+from configuration.constants.audio import Audio
 
 class Consumable(Item):
     def __init__(self):
@@ -24,6 +25,11 @@ class Consumable(Item):
         self.item_del_on_use = True
         # if not none, add one of premade_id item to inv
         self.item_add_on_use = None
+
+        self.sounds = {
+            'eat': Audio.EAT,
+            'drink': Audio.DRINK,
+        }
 
     def identify(self, identifier=None):
         output = super().identify(identifier)
@@ -74,8 +80,16 @@ class Consumable(Item):
             attempting = old_line.split()[0]
 
             self.new = False
+
+            sound = self.sounds.get(attempting, None)
+
             list_pretty_name_objects = [self, player]
-            player.pretty_broadcast(f'{player.id} {attempting} the {self.id}', f'{player.id} {attempting}s the {self.id}', list_pretty_name_objects = list_pretty_name_objects)
+            
+            player.pretty_broadcast(
+                f'{player.id} {attempting} the {self.id}', 
+                f'{player.id} {attempting}s the {self.id}', 
+                list_pretty_name_objects = list_pretty_name_objects,
+                sound = sound)
 
             self.use(player, player)
             player.finish_turn()

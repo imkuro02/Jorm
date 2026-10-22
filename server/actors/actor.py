@@ -1259,6 +1259,8 @@ class Actor:
                         continue
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
                 player.send_line(f"@normal{custom_line}", msg_type=msg_type)
+                if sound != None: player.sendSound(sound)
+
 
                 
             else:
@@ -1269,10 +1271,10 @@ class Actor:
                 for obj in list_pretty_name_objects:
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
                 player.send_line(f"@normal{custom_line}", msg_type=msg_type)
+                if sound != None: player.sendSound(sound)
 
 
-            if sound != None:
-                player.sendSound(sound)
+            
 
         
     def simple_broadcast(

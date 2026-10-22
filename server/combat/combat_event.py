@@ -47,25 +47,31 @@ class CombatEvent:
 
             color = Color.ERROR
             text = 'NOT VALID DAMAGE TYPE?'
+            sound = Audio.HURT
+
+
             match obj.damage_type:
                 case DamageType.HEALING:
                     text = 'Healing'
                     color = Color.DAMAGE_HEAL
+                    sound = Audio.DAMAGE_HEALING_DEALT
                 case DamageType.PHYSICAL:
                     text = 'Physical Damage'
                     color = Color.DAMAGE_PHY
+                    sound = Audio.DAMAGE_PHYSICAL_DEALT
                 case DamageType.MAGICAL:
                     text = 'Magic Damage'
                     color = Color.DAMAGE_MAG
+                    sound = Audio.DAMAGE_MAGIC_DEALT
                 case DamageType.PURE:
                     text = 'Pure Damage'
                     color = Color.DAMAGE_PURE
+                    sound = Audio.DAMAGE_MAGIC_DEALT
             
 
             msg = ''
             #msg += f'{color} '
             msg += f'{obj.damage_taker_actor.id} '
-            sound = Audio.HURT
 
             _nothing_ever_happens = True
             for i in diff:
@@ -192,8 +198,10 @@ class CombatEvent:
         if pa > 0 and pa1 <1:
             _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
             _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
+            sound = Audio.BREAK_PHYARMOR
             damage_obj.damage_taker_actor.pretty_broadcast(_s,_o, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = [actor])
         if ma > 0 and ma1 <1:
+            sound = Audio.BREAK_MAGARMOR
             _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.MAGARMOR]}{Color.NORMAL}"
             _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.MAGARMOR]}{Color.NORMAL}"
             damage_obj.damage_taker_actor.pretty_broadcast(_s,_o, sound=sound, msg_type=[MessageType.COMBAT], list_pretty_name_objects = [actor])

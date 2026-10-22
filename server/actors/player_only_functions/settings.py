@@ -112,9 +112,9 @@ class Settings:
             SETTINGS.AUTO_BATTLER: False,
             SETTINGS.SHORT_ROOM_DESCRIPTIONS: False,
             #SETTINGS.EMAIL: "",
-            SETTINGS.VOL_MASTER: 50,
-            SETTINGS.VOL_EFFECTS: 100,
-            SETTINGS.VOL_MUSIC: 100,
+            SETTINGS.VOL_MASTER: 100,
+            SETTINGS.VOL_EFFECTS: 75,
+            SETTINGS.VOL_MUSIC: 50,
             SETTINGS.COLOR: {
                 "@normal":              "",
                 #"@back":                "\x1b[0;00x",

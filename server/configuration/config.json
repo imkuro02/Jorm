@@ -1,5 +1,5 @@
 {
-    "SHA-256": "1291da71b451e446cc8258153675d86424fd40ea1aa8ed866c2f92c4de6fd107",
+    "SHA-256": "97ced14607583af0f8408b4e1f1d475f31b9ef6b6818ccd931134303cd672ce7",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -5559,7 +5559,7 @@
             "can_pick_up": true,
             "description": "A heavy axe, ideal for chopping wood or foes",
             "name again (its a reminder)": "Axe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -5608,7 +5608,7 @@
             "can_pick_up": true,
             "description": "This abomination of stitched rat fur creates a small pouch, you can even tie the tail to your belt for easy carrying.",
             "name again (its a reminder)": "Rat Pouch",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -5657,9 +5657,9 @@
             "can_pick_up": true,
             "description": "The spiders of kerning are known for their sturdy webs, the web spun into silk creates a lightweight and durable sack.",
             "name again (its a reminder)": "Spider Silk Sack",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "bag_2": {
@@ -5706,9 +5706,9 @@
             "can_pick_up": true,
             "description": "A spider silk sack rubbed in some slime renders the silk even more durable and flexible.",
             "name again (its a reminder)": "Slimy Silk Sack",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "bag_3": {
@@ -5755,9 +5755,9 @@
             "can_pick_up": true,
             "description": "The hide of evil eyes stitched together, reinforced with the caps from horned mushrooms.",
             "name again (its a reminder)": "Evil Knapsack",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "bag_4": {
@@ -5804,9 +5804,9 @@
             "can_pick_up": true,
             "description": "Hardened crocodile scales and stitched reanimated flesh, this pack pulses faintly with unholy energy.",
             "name again (its a reminder)": "Undead Crocodile Backpack",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "beer_stein": {
@@ -5853,7 +5853,7 @@
             "can_pick_up": true,
             "description": "A thick mug with a lid",
             "name again (its a reminder)": "Beer stein",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:beer_stein_chug=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:beer_stein_chug=1"
@@ -5902,7 +5902,7 @@
             "can_pick_up": true,
             "description": "A waterproof coat for braving harsh weather conditions",
             "name again (its a reminder)": "Black raincoat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "a black raincoat",
             "bonuses_old": 0
@@ -5951,7 +5951,7 @@
             "can_pick_up": true,
             "description": "A robust chainmail offering solid defense against attacks.",
             "name again (its a reminder)": "Bronze chainmail",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "a bronze chainmail",
             "bonuses_old": 0
@@ -6000,7 +6000,7 @@
             "can_pick_up": true,
             "description": "A durable koif that offers basic protection for the head",
             "name again (its a reminder)": "Bronze koif",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -6049,7 +6049,7 @@
             "can_pick_up": true,
             "description": "A pointy hat favored by novice spellcasters",
             "name again (its a reminder)": "Brown pointy hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -6098,7 +6098,7 @@
             "can_pick_up": true,
             "description": "A flowing robe, perfect for those seeking to channel magical energy.",
             "name again (its a reminder)": "Brown robe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "a brown robe",
             "bonuses_old": 0
@@ -6147,7 +6147,7 @@
             "can_pick_up": true,
             "description": "A simple stick with a curved end, useful for training or basic combat",
             "name again (its a reminder)": "Curved stick",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -6196,7 +6196,7 @@
             "can_pick_up": true,
             "description": "Made from several tree branches fused together, its perfect for a beginner mage.",
             "name again (its a reminder)": "Branchy wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1,skill_level:alchemy=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=1,skill_level:alchemy=1"
@@ -6245,7 +6245,7 @@
             "can_pick_up": true,
             "description": "Made from several tree branches fused together, its perfect for intermediate mages.",
             "name again (its a reminder)": "Refined branchy wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=2,skill_level:alchemy=2",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=2,skill_level:alchemy=2"
@@ -6294,7 +6294,7 @@
             "can_pick_up": true,
             "description": "Masterfully crafted from the roots of a tree, this wand is perfect for adept mages.",
             "name again (its a reminder)": "Tree root wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=3,skill_level:alchemy=3",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=3,skill_level:alchemy=3"
@@ -6343,7 +6343,7 @@
             "can_pick_up": true,
             "description": "Holding this tarnished coin fills you with an unsettling sense of both luck and dread.#END#«And he who sailed never reached the harbor, for the harbor was yet to come in a future patch.»#END#    - kuro february 3rd 2025",
             "name again (its a reminder)": "Old coin",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -6392,7 +6392,7 @@
             "can_pick_up": true,
             "description": "A lightweight dagger, perfect for quick, precise strikes",
             "name again (its a reminder)": "Field dagger",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -6441,7 +6441,7 @@
             "can_pick_up": true,
             "description": "A once fine common shirt, probably endured a dozen different owners.",
             "name again (its a reminder)": "Ragged tunic",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "this neded ?0",
             "name wip": "a ragged shirt",
             "bonuses_old": 0
@@ -6490,7 +6490,7 @@
             "can_pick_up": true,
             "description": "Night cloth absorbs 80% of all light this dose not cover your big 4head..",
             "name again (its a reminder)": "Night cloth uniform",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "a nightcloth uniform",
             "bonuses_old": "skill_level:stab=1"
@@ -6735,7 +6735,7 @@
             "can_pick_up": true,
             "description": "An iconic piece of cloth specialized for ease of movement utilizing leather straps and buckles.",
             "name again (its a reminder)": "Rogue uniform",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "a rogue uniform",
             "bonuses_old": "skill_level:stab=1"
@@ -6784,9 +6784,9 @@
             "can_pick_up": true,
             "description": "A rugged rat hide vest.",
             "name again (its a reminder)": "Rat hide tunic",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "flow body c3": {
@@ -6833,9 +6833,9 @@
             "can_pick_up": true,
             "description": "The carapace of spider legs used as arm protection.",
             "name again (its a reminder)": "Spider bracers",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "flow body c6": {
@@ -6882,9 +6882,9 @@
             "can_pick_up": true,
             "description": "A tunic with a very strong blood red color.",
             "name again (its a reminder)": "Red cap tunic",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "flow head 1": {
@@ -6931,7 +6931,7 @@
             "can_pick_up": true,
             "description": "A ragged hood, its so beat up it looks like a mesh",
             "name again (its a reminder)": "Ragged hood",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:leech=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -6980,7 +6980,7 @@
             "can_pick_up": true,
             "description": "Night cloth absorbs 80% of all light this is only the hood tho.",
             "name again (its a reminder)": "Night cloth hood",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:leech=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -7029,7 +7029,7 @@
             "can_pick_up": true,
             "description": 0,
             "name again (its a reminder)": "NOT FINISHED",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:leech=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -7078,7 +7078,7 @@
             "can_pick_up": true,
             "description": "An all black domino mask with the texture of a honeycomb",
             "name again (its a reminder)": "Bee mask",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -7127,7 +7127,7 @@
             "can_pick_up": true,
             "description": "A cloth hood dyed a dark gray color",
             "name again (its a reminder)": "Cloth hood",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:leech=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -7176,7 +7176,7 @@
             "can_pick_up": true,
             "description": "A black hood of excellent quality",
             "name again (its a reminder)": "Fine cloth hood",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:leech=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:leech=1"
@@ -7225,7 +7225,7 @@
             "can_pick_up": true,
             "description": "Now you can look cool whilst brooding in the corner of the tavern",
             "name again (its a reminder)": "Rogue hood",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:leech=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:leech=1"
@@ -7274,9 +7274,9 @@
             "can_pick_up": true,
             "description": "A big shroom cap with its core scraped out to fit your head.",
             "name again (its a reminder)": "Shroom cap hood",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "flow head c3": {
@@ -7323,9 +7323,9 @@
             "can_pick_up": true,
             "description": "The eye lenses of a spider. Not sure if you see more or less.",
             "name again (its a reminder)": "Spider googles",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "flow head c6": {
@@ -7372,9 +7372,9 @@
             "can_pick_up": true,
             "description": "A red hood with gray spots along its back",
             "name again (its a reminder)": "Red cap hood",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "flow relic 1": {
@@ -7421,7 +7421,7 @@
             "can_pick_up": true,
             "description": "You have proved your worth, and are now an apprentice rogue",
             "name again (its a reminder)": "Apprentice rogue emblem",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -7470,7 +7470,7 @@
             "can_pick_up": true,
             "description": "A campers favoret tool",
             "name again (its a reminder)": "Pocket knife",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -7519,7 +7519,7 @@
             "can_pick_up": true,
             "description": "A sleek pendant shaped like a dagger, symbolizing stealth and precision.",
             "name again (its a reminder)": "Dagger necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -7568,7 +7568,7 @@
             "can_pick_up": true,
             "description": "A small charm of a golden bee with its wings spread out, it glitters as it swings on a thin golden chain.",
             "name again (its a reminder)": "Bee medallion",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -7617,7 +7617,7 @@
             "can_pick_up": true,
             "description": "A small knife perfect for offhand",
             "name again (its a reminder)": "Dagger",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -7666,7 +7666,7 @@
             "can_pick_up": true,
             "description": "A lightweight dagger, perfect for quick, precise strikes",
             "name again (its a reminder)": "Field dagger",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -7715,7 +7715,7 @@
             "can_pick_up": true,
             "description": "A leather bag full of glass marbles",
             "name again (its a reminder)": "Bag of marbles",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=1"
@@ -7764,9 +7764,9 @@
             "can_pick_up": true,
             "description": "A smooth necklace made with rat tails.",
             "name again (its a reminder)": "Rat tail necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "flow trinket c3": {
@@ -7813,9 +7813,9 @@
             "can_pick_up": true,
             "description": "A large spiders fang, wrapped in a leather strap",
             "name again (its a reminder)": "Spider dagger",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:stab=1"
         },
         "flow trinket c6": {
@@ -7862,9 +7862,9 @@
             "can_pick_up": true,
             "description": "A buckler shield made of a red caps cap",
             "name again (its a reminder)": "Red cap buckler",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:bash=1"
         },
         "flow weapon 1": {
@@ -7911,7 +7911,7 @@
             "can_pick_up": true,
             "description": "All stabby no slashy",
             "name again (its a reminder)": "Dirk",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -7960,7 +7960,7 @@
             "can_pick_up": true,
             "description": "A curved, single-edged sword known for swift and deadly slashes.",
             "name again (its a reminder)": "Scimitar",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -8009,7 +8009,7 @@
             "can_pick_up": true,
             "description": "A dagger carved from bone, lightweight yet deadly in skilled hands.",
             "name again (its a reminder)": "Bone dirk",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -8058,7 +8058,7 @@
             "can_pick_up": true,
             "description": "The previous master died from using it",
             "name again (its a reminder)": "Bee stinger",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -8107,7 +8107,7 @@
             "can_pick_up": true,
             "description": "Both stabby and slashy",
             "name again (its a reminder)": "Knife",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -8156,7 +8156,7 @@
             "can_pick_up": true,
             "description": "A perfect weapon for close combat",
             "name again (its a reminder)": "Short sword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1"
@@ -8205,7 +8205,7 @@
             "can_pick_up": true,
             "description": "A high-quality tactical knife with a tanto blade",
             "name again (its a reminder)": "Rogue knife",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:stab=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=2"
@@ -8254,9 +8254,9 @@
             "can_pick_up": true,
             "description": "A simple shiv made with rat teeth.",
             "name again (its a reminder)": "Rat tooth shiv",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:stab=1"
         },
         "flow weapon c3": {
@@ -8303,9 +8303,9 @@
             "can_pick_up": true,
             "description": "A wooden plank, the edges are decorated with several rows of spider fangs",
             "name again (its a reminder)": "Spider short sword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:stab=2"
         },
         "flow weapon c3_1": {
@@ -8352,9 +8352,9 @@
             "can_pick_up": true,
             "description": "A pair of fingerless, orange gloves. Fitted with rat teeth for knuckles",
             "name again (its a reminder)": "rat tooth knuckles",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:double_whack=1"
         },
         "flow weapon c6": {
@@ -8401,9 +8401,9 @@
             "can_pick_up": true,
             "description": "A flat long chisseled rock with a red mushroom cap for a guard.",
             "name again (its a reminder)": "Red capped stone short sword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:stab=2,skill_level:bash=1"
         },
         "grit body 1": {
@@ -8450,7 +8450,7 @@
             "can_pick_up": true,
             "description": "A tunic made of cow hide, you count six spots!",
             "name again (its a reminder)": "Leather vest",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "a leather tunic",
             "bonuses_old": 0
@@ -8499,7 +8499,7 @@
             "can_pick_up": true,
             "description": "Solid metal plates for chest, back, arms, and legs, thank god they have some padding.",
             "name again (its a reminder)": "Plate armour",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "a platemail",
             "bonuses_old": 0
@@ -8548,7 +8548,7 @@
             "can_pick_up": true,
             "description": "Armor made of high quality chitin, ethically sourced ofcourse",
             "name again (its a reminder)": "Ant armor",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -8597,7 +8597,7 @@
             "can_pick_up": true,
             "description": "A heavy breastplate made of rock and debree",
             "name again (its a reminder)": "Golem armor",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -8646,7 +8646,7 @@
             "can_pick_up": true,
             "description": "A thick tunic with fastened straps.",
             "name again (its a reminder)": "Hard leather vest",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "a hard leather tunic",
             "bonuses_old": 0
@@ -8695,7 +8695,7 @@
             "can_pick_up": true,
             "description": "A long shirt made of small iron rings.",
             "name again (its a reminder)": "Iron chainmail",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "a iron chainmail",
             "bonuses_old": "skill_level:adrenaline=1"
@@ -8744,7 +8744,7 @@
             "can_pick_up": true,
             "description": "A solid steel chestplate, glad it fits so well.",
             "name again (its a reminder)": "Steel chestplate",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "a steel chestplate",
             "bonuses_old": "skill_level:thorns=1"
@@ -8793,7 +8793,7 @@
             "can_pick_up": true,
             "description": "The ribcage of a large animal that elegantly envelopes the user.",
             "name again (its a reminder)": "Bonemail",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:bash=1",
             "name wip": "a ribguard",
             "bonuses_old": "skill_level:bash=1"
@@ -8842,9 +8842,9 @@
             "can_pick_up": true,
             "description": "A wooden board straped to your chest, not so confortable.",
             "name again (its a reminder)": "Wood armor",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "grit body c3": {
@@ -8891,9 +8891,9 @@
             "can_pick_up": true,
             "description": "A leather vest made from cured pig hide.",
             "name again (its a reminder)": "Leather vest",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "grit body c6": {
@@ -8940,9 +8940,9 @@
             "can_pick_up": true,
             "description": "A vest of sun-dried red sludge, its flexible, durable, and fashionable",
             "name again (its a reminder)": "Red sludge vest",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "grit head 1": {
@@ -8989,7 +8989,7 @@
             "can_pick_up": true,
             "description": "A hat made of cow hide.. moo!",
             "name again (its a reminder)": "Leather hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9038,7 +9038,7 @@
             "can_pick_up": true,
             "description": "A metal box with some eyeholes",
             "name again (its a reminder)": "Bucket helmet",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:enrage=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9087,7 +9087,7 @@
             "can_pick_up": true,
             "description": "A sturdy helmet made of interlocked chitin plates, shaped in the shape of a giant ants head, the antennas twitch rapidly as the wearer speaks.",
             "name again (its a reminder)": "Ant helm",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9136,7 +9136,7 @@
             "can_pick_up": true,
             "description": "A hollowed out rock in the shape of a square. It has a stern face engraved on each side of the helmet, the face in the front is pourous and enables visibility, the top is covered in moss",
             "name again (its a reminder)": "Golem helm",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9185,7 +9185,7 @@
             "can_pick_up": true,
             "description": "The leather covers the face, kinky",
             "name again (its a reminder)": "Hard leather helmet",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:enrage=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9234,7 +9234,7 @@
             "can_pick_up": true,
             "description": "A polished iron cap, it distorts your face when you use it like a mirror",
             "name again (its a reminder)": "Iron helm",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:enrage=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9283,7 +9283,7 @@
             "can_pick_up": true,
             "description": "A steel helmet fit for a knight",
             "name again (its a reminder)": "Steel helmet",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:enrage=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9332,7 +9332,7 @@
             "can_pick_up": true,
             "description": "This macabre helmet is made of the skull of a unidentifiable creature.",
             "name again (its a reminder)": "Skull mask",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:enrage=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9381,9 +9381,9 @@
             "can_pick_up": true,
             "description": "A wooden bowl used like a helmet. Better than nothing.",
             "name again (its a reminder)": "Wood helm",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "grit head c3": {
@@ -9430,9 +9430,9 @@
             "can_pick_up": true,
             "description": "A leather helm made from cured pig hide.",
             "name again (its a reminder)": "Leather helm",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "grit head c6": {
@@ -9479,9 +9479,9 @@
             "can_pick_up": true,
             "description": "A helmet of sun-dried red sludge, its flexible, durable, and fashionable",
             "name again (its a reminder)": "Red sludge helm",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "grit relic 1": {
@@ -9528,7 +9528,7 @@
             "can_pick_up": true,
             "description": "You have proved your worth, and are now an apprentice fighter",
             "name again (its a reminder)": "Apprentice fighter emblem",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9577,7 +9577,7 @@
             "can_pick_up": true,
             "description": "A plank with a handle",
             "name again (its a reminder)": "Wood shield",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9626,7 +9626,7 @@
             "can_pick_up": true,
             "description": "A pendant shaped like a sword, representing strength and valor.",
             "name again (its a reminder)": "Shield necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9675,7 +9675,7 @@
             "can_pick_up": true,
             "description": "A protective charm shaped like a shield, symbolizing defense and resilience.",
             "name again (its a reminder)": "Sword necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:bash=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=1"
@@ -9724,7 +9724,7 @@
             "can_pick_up": true,
             "description": "A tiny ant mandible tied with a string",
             "name again (its a reminder)": "Ant medallion",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9773,7 +9773,7 @@
             "can_pick_up": true,
             "description": "A small amethyst gem hangs from a long copper chain",
             "name again (its a reminder)": "Golem medallion",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -9822,7 +9822,7 @@
             "can_pick_up": true,
             "description": "A wooden shield.",
             "name again (its a reminder)": "Shield",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=1"
@@ -9871,7 +9871,7 @@
             "can_pick_up": true,
             "description": "An iron shield, strong yet balanced. It feels solid in hand",
             "name again (its a reminder)": "Iron shield",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=1"
@@ -9920,7 +9920,7 @@
             "can_pick_up": true,
             "description": "The pan lid of a skilled armor smith",
             "name again (its a reminder)": "Steel Buckler",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=1"
@@ -9969,9 +9969,9 @@
             "can_pick_up": true,
             "description": "A wooden sword decorated with the teeth of your fallen rat enemies.",
             "name again (its a reminder)": "Rat slayer ornament",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "grit trinket c3": {
@@ -10018,9 +10018,9 @@
             "can_pick_up": true,
             "description": "A decorative pin, it depicts a rat atop an orange mushroom.",
             "name again (its a reminder)": "Pig slayer pin",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "grit trinket c3_1": {
@@ -10067,9 +10067,9 @@
             "can_pick_up": true,
             "description": "A flat rock with leather straps",
             "name again (its a reminder)": "Stone shield",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:bash=1"
         },
         "grit trinket c6": {
@@ -10116,9 +10116,9 @@
             "can_pick_up": true,
             "description": "A wooden buckler, dipped in red sludge, then sun-dried.",
             "name again (its a reminder)": "Red sludge shield",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "grit trinket c6_1": {
@@ -10165,9 +10165,9 @@
             "can_pick_up": true,
             "description": "Crafted from the remains of several fallen slimes, this emblem is proof of your expertise in slime extermination",
             "name again (its a reminder)": "Slime slayer emblem",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "grit weapon 1": {
@@ -10214,7 +10214,7 @@
             "can_pick_up": true,
             "description": "Landlubber trident",
             "name again (its a reminder)": "Handaxe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:slash=1,skill_level:swing=1"
@@ -10263,7 +10263,7 @@
             "can_pick_up": true,
             "description": "A polearm with an axe blade and spear tip, perfect for versatile strikes.",
             "name again (its a reminder)": "Halberd",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:slash=1,skill_level:swing=3,skill_level:stab=2"
@@ -10312,7 +10312,7 @@
             "can_pick_up": true,
             "description": "A large and long ant mandible thats been sharpened, the sides are reinforced with thin steel plates and bolts",
             "name again (its a reminder)": "Ant mandible",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:swing=3,skill_level:slash=3"
@@ -10361,7 +10361,7 @@
             "can_pick_up": true,
             "description": "A hollowed out rock, molded and chiseled to resemble a locked fist, it is quiet heavy, and the knuckles are cracked",
             "name again (its a reminder)": "Golem gauntlets",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:swing=4,skill_level:bash=2"
@@ -10410,7 +10410,7 @@
             "can_pick_up": true,
             "description": "A long stick with a triangular steel tip",
             "name again (its a reminder)": "Spear",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:stab=1,skill_level:slash=1,skill_level:swing=1"
@@ -10459,7 +10459,7 @@
             "can_pick_up": true,
             "description": "A sword forged of iron with a handle wrapped in a red cloth",
             "name again (its a reminder)": "Longsword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:slash=2,skill_level:swing=2"
@@ -10508,7 +10508,7 @@
             "can_pick_up": true,
             "description": "The steel sword a knights favored instrument",
             "name again (its a reminder)": "Steel longsword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:slash=2,skill_level:swing=2"
@@ -10557,7 +10557,7 @@
             "can_pick_up": true,
             "description": "A spiked flail with a skull as its head, striking fear and bone-crushing blows.",
             "name again (its a reminder)": "Skull flail",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:bash=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=1,skill_level:swing=3"
@@ -10606,9 +10606,9 @@
             "can_pick_up": true,
             "description": "A sword with rusted edges",
             "name again (its a reminder)": "Rusty sword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:slash=1"
         },
         "grit weapon c1": {
@@ -10655,9 +10655,9 @@
             "can_pick_up": true,
             "description": "A simple wooden sword. cearfull you might get a splinter.",
             "name again (its a reminder)": "Wood sword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:slash=1,skill_level:swing=1"
         },
         "grit weapon c3": {
@@ -10704,9 +10704,9 @@
             "can_pick_up": true,
             "description": "A big rock on a stick.",
             "name again (its a reminder)": "Stone club",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:swing=2,skill_level:bash=1"
         },
         "grit weapon c3_1": {
@@ -10753,9 +10753,9 @@
             "can_pick_up": true,
             "description": "A pointy rock on a long stick",
             "name again (its a reminder)": "Stone spear",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:stab=1,skill_level:swing=1"
         },
         "grit weapon c3_2": {
@@ -10802,9 +10802,9 @@
             "can_pick_up": true,
             "description": "A long rock on a stick",
             "name again (its a reminder)": "Stone sword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:slash=1,skill_level:swing=2"
         },
         "grit weapon c6": {
@@ -10851,9 +10851,9 @@
             "can_pick_up": true,
             "description": "The harderened core of a red slime attached to a chain",
             "name again (its a reminder)": "Red slime flail",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:swing=2,skill_level:bash=2"
         },
         "grit weapon c6_1": {
@@ -10900,9 +10900,9 @@
             "can_pick_up": true,
             "description": "The hardened core of a red slime attached at the end of a club",
             "name again (its a reminder)": "Red slime club",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:swing=3,skill_level:bash=1"
         },
         "grit weapon c6_2": {
@@ -10949,9 +10949,9 @@
             "can_pick_up": true,
             "description": "The hardened core of a red slime, refined and sharpened into a spear",
             "name again (its a reminder)": "Red slime spear",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:swing=1,skill_level:stab=2"
         },
         "grit weapon c6_3": {
@@ -10998,9 +10998,9 @@
             "can_pick_up": true,
             "description": "A steel blade with the hardened core of a red slime at the pommel",
             "name again (its a reminder)": "Red slime sword",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:swing=2,skill_level:slash=2"
         },
         "mind body 1": {
@@ -11047,7 +11047,7 @@
             "can_pick_up": true,
             "description": "A long thin dark gray coat.",
             "name again (its a reminder)": "Coat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "a simple robe",
             "bonuses_old": 0
@@ -11096,7 +11096,7 @@
             "can_pick_up": true,
             "description": "A light purple suit with night black buttons, very stylish.",
             "name again (its a reminder)": "Enchanted mage suit",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "a stylish uniform",
             "bonuses_old": 0
@@ -11145,7 +11145,7 @@
             "can_pick_up": true,
             "description": "A traditional pixie robe, except its been sewn for a humanoid, the robe shimmers",
             "name again (its a reminder)": "Pixie outfit",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -11194,7 +11194,7 @@
             "can_pick_up": true,
             "description": "A light blue tinted coat.",
             "name again (its a reminder)": "Fine coat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "a fine robe",
             "bonuses_old": 0
@@ -11243,7 +11243,7 @@
             "can_pick_up": true,
             "description": "A blue coat with golden threads",
             "name again (its a reminder)": "Apprentice coat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "a apprentice robe",
             "bonuses_old": "skill_level:mage_armor=1"
@@ -11292,7 +11292,7 @@
             "can_pick_up": true,
             "description": "A deep blue robe with gold engraved patterns having jewels neatly embellished ",
             "name again (its a reminder)": "Mage coat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "a mage's robe",
             "bonuses_old": "skill_level:mage_armor=1"
@@ -11341,7 +11341,7 @@
             "can_pick_up": true,
             "description": 0,
             "name again (its a reminder)": "NOT FINISHED",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:leech=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -11390,9 +11390,9 @@
             "can_pick_up": true,
             "description": "A fluffy coat.",
             "name again (its a reminder)": "Fluff coat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "mind body c3": {
@@ -11439,9 +11439,9 @@
             "can_pick_up": true,
             "description": "A green coat made of green jell. Not as sticky as it looks.",
             "name again (its a reminder)": "Green slime coat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "mind body c6": {
@@ -11488,9 +11488,9 @@
             "can_pick_up": true,
             "description": "A rubbery coat form the remains of a blue slime",
             "name again (its a reminder)": "Blue slime coat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "mind head 1": {
@@ -11537,7 +11537,7 @@
             "can_pick_up": true,
             "description": "A oversized pointed hat, a little crooked at the tip",
             "name again (its a reminder)": "Pointy hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -11586,7 +11586,7 @@
             "can_pick_up": true,
             "description": "A light purple top hat for the smartest and finest of gentlemen.",
             "name again (its a reminder)": "Enchanted mage hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -11635,7 +11635,7 @@
             "can_pick_up": true,
             "description": "A clean white disk, it has a has a face with red blush painted on it, the eyes are hollowed out, with thin black fabric going over the holes to conceal the eyes",
             "name again (its a reminder)": "Pixie mask",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -11684,7 +11684,7 @@
             "can_pick_up": true,
             "description": "A light blue tinted pointed hat",
             "name again (its a reminder)": "Fine pointy hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -11733,7 +11733,7 @@
             "can_pick_up": true,
             "description": "A large pointy hat, it is blue with golden threads",
             "name again (its a reminder)": "Apprentice hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:mana_feed=1"
@@ -11782,7 +11782,7 @@
             "can_pick_up": true,
             "description": "A deep blue pointy hat with a wide brim embellished with gold and a sapphire connected to the tip, making it curve back",
             "name again (its a reminder)": "Mage hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:mana_feed=1"
@@ -11831,7 +11831,7 @@
             "can_pick_up": true,
             "description": "The skull of a deer, with flowers and beautiful colorful rocks attached with a series of strings made from blonde hair.",
             "name again (its a reminder)": "Bone headdress",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mage_armor=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -11880,9 +11880,9 @@
             "can_pick_up": true,
             "description": "A fluffy hat.",
             "name again (its a reminder)": "Fluff hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "mind head c3": {
@@ -11929,9 +11929,9 @@
             "can_pick_up": true,
             "description": "A green slime antena. Could it be a reference?",
             "name again (its a reminder)": "Green slime antenna",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "mind head c6": {
@@ -11978,9 +11978,9 @@
             "can_pick_up": true,
             "description": "A rubbery hat from the remains of a blue slime",
             "name again (its a reminder)": "Blue slime hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "mind relic 1": {
@@ -12027,7 +12027,7 @@
             "can_pick_up": true,
             "description": "You have proved your worth, and are now an apprentice mage",
             "name again (its a reminder)": "Apprentice mage emblem",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -12076,7 +12076,7 @@
             "can_pick_up": true,
             "description": "Now you can write down your spells",
             "name again (its a reminder)": "Piece of paper",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:mana_feed=1"
@@ -12125,7 +12125,7 @@
             "can_pick_up": true,
             "description": "An enchanted pendant imbued with arcane energy, enhancing mystical powers.",
             "name again (its a reminder)": "Enchanted necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -12174,7 +12174,7 @@
             "can_pick_up": true,
             "description": "A small oval of glass filled with shining liquid hangs from a string",
             "name again (its a reminder)": "Pixie medallion",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -12223,7 +12223,7 @@
             "can_pick_up": true,
             "description": "Now you can write down lots of spells",
             "name again (its a reminder)": "Notebook",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:mana_feed=1"
@@ -12272,7 +12272,7 @@
             "can_pick_up": true,
             "description": "A hard leather book with quality paper",
             "name again (its a reminder)": "Book",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=1"
@@ -12321,7 +12321,7 @@
             "can_pick_up": true,
             "description": "A bottle of magic ink and a quill made with a large colorful feather",
             "name again (its a reminder)": "Ink and quill",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=1"
@@ -12370,9 +12370,9 @@
             "can_pick_up": true,
             "description": "A fluffy scarf.",
             "name again (its a reminder)": "Fluff scarf",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "mind trinket c3": {
@@ -12419,9 +12419,9 @@
             "can_pick_up": true,
             "description": "A pair of green gloves made of green jell. Not as sticky as it looks.",
             "name again (its a reminder)": "Green slime gloves",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "mind trinket c6": {
@@ -12468,9 +12468,9 @@
             "can_pick_up": true,
             "description": "A rubbery pair of gloves made from the remains of a blue slime",
             "name again (its a reminder)": "Blue slime gloves",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "mind weapon 1": {
@@ -12517,7 +12517,7 @@
             "can_pick_up": true,
             "description": "Nothing more magical than finding a cool stick",
             "name again (its a reminder)": "Stick",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=1"
@@ -12566,7 +12566,7 @@
             "can_pick_up": true,
             "description": "A long slender stick adorned with intricate carvings, glowing runes and a gemstone at the top.",
             "name again (its a reminder)": "Staff",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=1"
@@ -12615,7 +12615,7 @@
             "can_pick_up": true,
             "description": "A polished wooden stick, with the tip of the wand capped off with pure gold",
             "name again (its a reminder)": "Pixie wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=1"
@@ -12664,7 +12664,7 @@
             "can_pick_up": true,
             "description": "A piece of driftwood that has been cleaned and carved into a wand.",
             "name again (its a reminder)": "Simple wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=1"
@@ -12713,7 +12713,7 @@
             "can_pick_up": true,
             "description": "A copper rod with silver lined engravings",
             "name again (its a reminder)": "Refined wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=2"
@@ -12762,7 +12762,7 @@
             "can_pick_up": true,
             "description": "A gold engraved sliver rod with strange symbols engraved in the gold",
             "name again (its a reminder)": "Mage wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:magic_missile=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=2"
@@ -12811,7 +12811,7 @@
             "can_pick_up": true,
             "description": 0,
             "name again (its a reminder)": "NOT FINISHED",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:magic_missile=2"
@@ -12860,9 +12860,9 @@
             "can_pick_up": true,
             "description": "Just a shroom cap on a stick.",
             "name again (its a reminder)": "Shroom capped stick",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:magic_missile=1"
         },
         "mind weapon c1_2": {
@@ -12909,9 +12909,9 @@
             "can_pick_up": true,
             "description": "Just a shroom cap on a stick.",
             "name again (its a reminder)": "Shroom capped stick",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:magic_missile=1"
         },
         "mind weapon c3": {
@@ -12958,9 +12958,9 @@
             "can_pick_up": true,
             "description": "A green sphere of slime with a rock in the center.",
             "name again (its a reminder)": "Green slime sphere",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:magic_missile=1,skill_level:alchemy=1"
         },
         "mind weapon c3_2": {
@@ -13007,9 +13007,9 @@
             "can_pick_up": true,
             "description": "A blue musroom cap on a simple wand. Good job.",
             "name again (its a reminder)": "Blue capped simple wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:magic_missile=1,skill_level:mana_feed=1,skill_level:alchemy=1"
         },
         "mind weapon c6": {
@@ -13056,9 +13056,9 @@
             "can_pick_up": true,
             "description": "A solidified slime molded into the shape of a orb, it is shinyy and partly see through.",
             "name again (its a reminder)": "Blue slime orb",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:magic_missile=1"
         },
         "mind weapon c6_1": {
@@ -13105,9 +13105,9 @@
             "can_pick_up": true,
             "description": "A stick covered in slime and goop",
             "name again (its a reminder)": "Blue slime wand",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:magic_missile=1"
         },
         "mushroom_zombie_behemoth_shield": {
@@ -13154,9 +13154,9 @@
             "can_pick_up": true,
             "description": "This large, weathered mushroom cap has hardened through decay and dark magic into a durable shield, its ragged surface still laced with faint, toxic spores.",
             "name again (its a reminder)": "Behemoth Cap",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "notebook": {
@@ -13203,7 +13203,7 @@
             "can_pick_up": true,
             "description": "A bound notebook for jotting down spells or thoughts",
             "name again (its a reminder)": "Notebook",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -13252,7 +13252,7 @@
             "can_pick_up": true,
             "description": "A mysterious mask with eerie overtones, often worn by healers",
             "name again (its a reminder)": "Plague doctor mask",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -13301,7 +13301,7 @@
             "can_pick_up": true,
             "description": "A string of beads for meditation and spiritual focus",
             "name again (its a reminder)": "Prayer beads",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -13350,7 +13350,7 @@
             "can_pick_up": true,
             "description": "A stylish red cap that adds a dash of flair to your attire",
             "name again (its a reminder)": "Red cap",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -13399,7 +13399,7 @@
             "can_pick_up": true,
             "description": "A scarf made of red silk",
             "name again (its a reminder)": "Red scarf",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -13448,7 +13448,7 @@
             "can_pick_up": true,
             "description": "A casual t-shirt, more for fashion than function",
             "name again (its a reminder)": "Red t-shirt",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "a red t-shirt",
             "bonuses_old": 0
@@ -13497,7 +13497,7 @@
             "can_pick_up": true,
             "description": "This massive axe is rusted at its blade, yet sharper than most swords, your face distorts in the reflection of its rusted blade.",
             "name again (its a reminder)": "Rusty axe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=2,skill_level:enrage=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:slash=1"
@@ -13546,7 +13546,7 @@
             "can_pick_up": true,
             "description": "A single earing, kinda quirky to only wear one",
             "name again (its a reminder)": "Single earing",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -13595,7 +13595,7 @@
             "can_pick_up": true,
             "description": "A brown robe with a hint of orange.",
             "name again (its a reminder)": "Brown monk robe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "a brown monk robe",
             "bonuses_old": 0
@@ -13644,7 +13644,7 @@
             "can_pick_up": true,
             "description": "Plastic wings that are somehow better than the fine white robes.",
             "name again (its a reminder)": "Plastic wings",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "a set of plastic wings",
             "bonuses_old": 0
@@ -13693,7 +13693,7 @@
             "can_pick_up": true,
             "description": "A thick and heavy white robe",
             "name again (its a reminder)": "Bishop robe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:smite=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -13742,7 +13742,7 @@
             "can_pick_up": true,
             "description": "A robe made of the finest silk",
             "name again (its a reminder)": "Fine silk robe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "a fine silk robe",
             "bonuses_old": 0
@@ -13791,7 +13791,7 @@
             "can_pick_up": true,
             "description": "A blindingly white robe of silk",
             "name again (its a reminder)": "White robe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "a white robe",
             "bonuses_old": 0
@@ -13840,7 +13840,7 @@
             "can_pick_up": true,
             "description": "A fine white cloak with gold linings",
             "name again (its a reminder)": "White cloak",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:smite=1",
             "name wip": "a white cloak",
             "bonuses_old": 0
@@ -13889,7 +13889,7 @@
             "can_pick_up": true,
             "description": 0,
             "name again (its a reminder)": "NOT FINISHED",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:leech=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -13938,9 +13938,9 @@
             "can_pick_up": true,
             "description": "A robe made with white fluffy fur",
             "name again (its a reminder)": "White rat fur robe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "soul body c3": {
@@ -13987,9 +13987,9 @@
             "can_pick_up": true,
             "description": "A orange vest made from crudely stitching some mushroom caps together.",
             "name again (its a reminder)": "Orange mushroom robe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "soul body c6": {
@@ -14036,9 +14036,9 @@
             "can_pick_up": true,
             "description": "A silk robe dyed blue.",
             "name again (its a reminder)": "Blue silk robe",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "soul head 1": {
@@ -14085,7 +14085,7 @@
             "can_pick_up": true,
             "description": "Baldy!",
             "name again (its a reminder)": "Bald cap",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:ethereal=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -14134,7 +14134,7 @@
             "can_pick_up": true,
             "description": "A shiny warm to the touch halo that somehow stays atop your head.",
             "name again (its a reminder)": "Plastic halo",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:ethereal=1,skill_level:mana_feed=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -14183,7 +14183,7 @@
             "can_pick_up": true,
             "description": "A tall and pointy hat with golden threads",
             "name again (its a reminder)": "Bishop hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:ethereal=1,skill_level:mana_feed=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -14232,7 +14232,7 @@
             "can_pick_up": true,
             "description": "A hood made of the finest silk",
             "name again (its a reminder)": "Fine silk hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:mana_feed=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -14281,7 +14281,7 @@
             "can_pick_up": true,
             "description": "A circlet made of silver",
             "name again (its a reminder)": "Circlet",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:ethereal=1,skill_level:mana_feed=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:cure_light_wounds=1"
@@ -14330,7 +14330,7 @@
             "can_pick_up": true,
             "description": "A hat symbolizing faith",
             "name again (its a reminder)": "Mitre",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:ethereal=1,skill_level:mana_feed=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:cure_light_wounds=1"
@@ -14379,7 +14379,7 @@
             "can_pick_up": true,
             "description": 0,
             "name again (its a reminder)": "NOT FINISHED",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:ethereal=1,skill_level:mana_feed=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -14428,9 +14428,9 @@
             "can_pick_up": true,
             "description": "A cap made with white fluffy fur",
             "name again (its a reminder)": "White rat fur hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": 0
         },
         "soul head c3": {
@@ -14477,9 +14477,9 @@
             "can_pick_up": true,
             "description": "A orange mushroom cap hollowed out to fit your head and a string to keep it on.",
             "name again (its a reminder)": "Orange mushroom hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "soul head c6": {
@@ -14526,9 +14526,9 @@
             "can_pick_up": true,
             "description": "A silk hood dyed blue.",
             "name again (its a reminder)": "Blue silk hat",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "soul relic 1": {
@@ -14575,7 +14575,7 @@
             "can_pick_up": true,
             "description": "You have proved your worth, and are now an apprentice cleric",
             "name again (its a reminder)": "Apprentice cleric emblem",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -14624,7 +14624,7 @@
             "can_pick_up": true,
             "description": "Doesn't sound quite right",
             "name again (its a reminder)": "Tiny bell",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": 0,
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:cure_light_wounds=1"
@@ -14673,7 +14673,7 @@
             "can_pick_up": true,
             "description": "A sacred pendant blessed with divine energy, offering protection and guidance.",
             "name again (its a reminder)": "Holy necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -14722,7 +14722,7 @@
             "can_pick_up": true,
             "description": "A large golden crescent hangs off of a thin chain",
             "name again (its a reminder)": "Bishop medallion",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -14771,7 +14771,7 @@
             "can_pick_up": true,
             "description": "May your faith protect you",
             "name again (its a reminder)": "Sigil",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:cure_light_wounds=1"
@@ -14820,7 +14820,7 @@
             "can_pick_up": true,
             "description": "An intricately designed symbol with both elegance and power",
             "name again (its a reminder)": "Embellished Sigil",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:cure_light_wounds=1"
@@ -14869,7 +14869,7 @@
             "can_pick_up": true,
             "description": "It looks like a mandrake",
             "name again (its a reminder)": "Totem of undying",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:cure_light_wounds=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:cure_light_wounds=1"
@@ -14918,9 +14918,9 @@
             "can_pick_up": true,
             "description": "A long string with Wooden beads ornamenting it.",
             "name again (its a reminder)": "Prayer beads necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:cure_light_wounds=1"
         },
         "soul trinket c1_2": {
@@ -14967,9 +14967,9 @@
             "can_pick_up": true,
             "description": "A long string with Wooden beads ornamenting it.",
             "name again (its a reminder)": "Prayer beads necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:cure_light_wounds=1"
         },
         "soul trinket c1_3": {
@@ -15016,9 +15016,9 @@
             "can_pick_up": true,
             "description": "A long string with Wooden beads ornamenting it.",
             "name again (its a reminder)": "Prayer beads necklace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:cure_light_wounds=1"
         },
         "soul trinket c3": {
@@ -15065,9 +15065,9 @@
             "can_pick_up": true,
             "description": "A cross made out of a orange mushroom cap.",
             "name again (its a reminder)": "Orange mushroom cross",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:cure_light_wounds=1"
         },
         "soul trinket c6": {
@@ -15114,9 +15114,9 @@
             "can_pick_up": true,
             "description": "A cross made out of a blue mushroom cap.",
             "name again (its a reminder)": "Blue mushroom corss",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:cure_light_wounds=1"
         },
         "soul weapon 1": {
@@ -15163,7 +15163,7 @@
             "can_pick_up": true,
             "description": "Wooden beads on a thin thread",
             "name again (its a reminder)": "Prayer beads",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:smite=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:smite=1,skill_level:cure_light_wounds=1"
@@ -15212,7 +15212,7 @@
             "can_pick_up": true,
             "description": "A sanctified mace imbued with divine power to smite the wicked.",
             "name again (its a reminder)": "Holy mace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:smite=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=1,skill_level:cure_light_wounds=1"
@@ -15261,7 +15261,7 @@
             "can_pick_up": true,
             "description": "A long metallic rod with a golden crescent",
             "name again (its a reminder)": "Bishop staff",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:smite=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:smite=1,skill_level:cure_light_wounds=1"
@@ -15310,7 +15310,7 @@
             "can_pick_up": true,
             "description": "The emblem of a long forgotten god, whether they exist or not.. only god knows",
             "name again (its a reminder)": "Holy emblem",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:smite=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:smite=1,skill_level:cure_light_wounds=1"
@@ -15359,7 +15359,7 @@
             "can_pick_up": true,
             "description": "Who is cleric?",
             "name again (its a reminder)": "Clerics mace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:bash=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=1,skill_level:smite=1"
@@ -15408,7 +15408,7 @@
             "can_pick_up": true,
             "description": "A silver staff with an emblem of the sun on top",
             "name again (its a reminder)": "White scepter",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:smite=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:smite=2,skill_level:cure_light_wounds=1"
@@ -15457,9 +15457,9 @@
             "can_pick_up": true,
             "description": "Wooden beads on a thin thread",
             "name again (its a reminder)": "Prayer beads",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:smite=1"
         },
         "soul weapon c1_2": {
@@ -15506,9 +15506,9 @@
             "can_pick_up": true,
             "description": "Wooden beads on a thin thread",
             "name again (its a reminder)": "Prayer beads",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:smite=1"
         },
         "soul weapon c3": {
@@ -15555,9 +15555,9 @@
             "can_pick_up": true,
             "description": "A bell. Not much to it.",
             "name again (its a reminder)": "Hand bell",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:smite=1,skill_level:cure_light_wounds=1"
         },
         "soul weapon c6": {
@@ -15604,9 +15604,9 @@
             "can_pick_up": true,
             "description": "A mace crafted from the remains of a blue slime, and a blue mushroom.",
             "name again (its a reminder)": "Blue slime mace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": "skill_level:smite=2,skill_level:swing=2,skill_level:cure_light_wounds=1"
         },
         "soul wepaon 9 bone": {
@@ -15653,7 +15653,7 @@
             "can_pick_up": true,
             "description": "A heavy mace crafted from a reinforced femur, brutal in combat.",
             "name again (its a reminder)": "Femur mace",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:smite=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": "skill_level:bash=3,skill_level:cure_light_wounds=1"
@@ -15701,10 +15701,10 @@
             "ambience": null,
             "can_pick_up": true,
             "description": "This is a test item kuro will be using for fucking around",
-            "name again (its a reminder)": null,
-            "unnamed.1": null,
+            "name again (its a reminder)": NaN,
+            "unnamed.1": NaN,
             "bonuses old": null,
-            "name wip": null,
+            "name wip": NaN,
             "bonuses_old": null
         },
         "wooden mallet": {
@@ -15751,7 +15751,7 @@
             "can_pick_up": true,
             "description": "A hamer with a quiet large wooden head",
             "name again (its a reminder)": "Wooden mallet",
-            "unnamed.1": null,
+            "unnamed.1": NaN,
             "bonuses old": "skill_level:swing=1",
             "name wip": "NOT FINISHED",
             "bonuses_old": 0
@@ -16255,6 +16255,31 @@
             "ambience": null,
             "can_pick_up": false,
             "description": "The carving is spelling \"uck MSSP\", whatever that means"
+        },
+        "scenery_store_bells": {
+            "item_type": "misc",
+            "dont_load": 0,
+            "premade_id": "scenery_store_bells",
+            "name": "Store Bells",
+            "class": "Item",
+            "icon_id": 0,
+            "icon_scheme": 0,
+            "stack_max_amount": 9,
+            "drop_tags": "none",
+            "drop_from_random": false,
+            "drop_chance_base": 40,
+            "drop_chance_level": 0,
+            "drop_chance_under_bonus": 20,
+            "drop_chance_over_bonus": -1,
+            "drop_chance_range_under": 1,
+            "drop_chance_range_over": 100,
+            "drop_chance_stat_filter": "none",
+            "description_room": null,
+            "invisible": true,
+            "ambience_sfx": "store_bells.mp3",
+            "ambience": "A bell rings softly as you enter",
+            "can_pick_up": false,
+            "description": "A bell hanging by the door"
         },
         "tree_branch": {
             "item_type": "misc",
