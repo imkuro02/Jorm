@@ -207,6 +207,7 @@ def configure_SKILLS(SHEET, SKILL_SCRIPT_VALUES):
                 "name": x["name"][index],
                 "description": str_with_newlines(x["description"][index]),
                 "script_to_run": x["script_to_run"][index],
+                "sound": x["sound"][index],
                 #'aoe':                      bool(x['aoe'][index]),
                 #'bounce':                   int(x['bounce'][index]),
                 "target_others_is_valid": bool(x["target_others_is_valid"][index]),

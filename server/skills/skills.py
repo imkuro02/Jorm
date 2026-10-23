@@ -11,6 +11,7 @@ from configuration.constants.damage_type import DamageType
 from configuration.constants.room_constant import RoomConstant
 from configuration.constants.stat_type import StatType
 from configuration.constants.message_type import MessageType
+from configuration.constants.audio import Audio
 
 class Skill:
     def __init__(
@@ -18,6 +19,7 @@ class Skill:
         skill_id,
         user,
         script_values = None,
+        sound = None,
         other = None,
         name = None,
         success=True,
@@ -40,6 +42,13 @@ class Skill:
         self.script_values = script_values
         if self.script_values == None:
             self.script_values = SKILLS[skill_id]["script_values"]
+
+        if sound == None:
+            self.sound = SKILLS[skill_id]['sound']
+        self.sound = Audio.load(self.sound)
+        
+        #if hasattr(Audio, self.sound):
+        #    self.sound = getattr(Audio, self.sound)
 
         self.user = user
         self.other = other
@@ -263,7 +272,8 @@ class Skill:
             receiver.pretty_broadcast(
                 line_self = _line_to_send,
                 line_others = None,
-                list_pretty_name_objects =  list_pretty_name_objects  
+                list_pretty_name_objects =  list_pretty_name_objects  ,
+                sound = self.sound,
             )
 
     # runs in delay affliction if the affliction gets cancelled
@@ -1263,9 +1273,13 @@ class SkillGuardianAngel(Skill):
             if packet.actor_id == self.user.id and packet.skill_id == 'guardian_angel':
                 return damage_obj
                 
+        if self.skill_id in self.user.skill_manager.cooldowns:
+            br = f'{self.user.id} failed to use {self.id}, its on cooldown!'
+            self.user.pretty_broadcast(br,br,list_pretty_name_objects=[self, self.user], sound = Audio.ERROR)
+            return damage_obj
         
         self.silent_use = True
-        self.use()
+        self.pre_use()
 
         damage_reflected_power = (self.calculate_script_value(value = 'bonus')/100)
         dmg = int(damage_reflected_power * self.user.stat_manager.stats[StatType.HPMAX])

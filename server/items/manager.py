@@ -123,7 +123,8 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
     new_item.icon_id = None if ITEMS[premade_id]["icon_id"] == '0' else ITEMS[premade_id]["icon_id"]
     new_item.icon_scheme = None if ITEMS[premade_id]["icon_scheme"] == '0' else ITEMS[premade_id]["icon_scheme"]
 
-    new_item.ambience_sfx = ITEMS[premade_id]["ambience_sfx"]
+    from configuration.constants.audio import Audio
+    new_item.ambience_sfx = Audio.load(ITEMS[premade_id]["ambience_sfx"])
     new_item.can_pick_up = ITEMS[premade_id]["can_pick_up"]
     if "stack_max_amount" in ITEMS[premade_id]:
         new_item.stack_max = ITEMS[premade_id]["stack_max_amount"]

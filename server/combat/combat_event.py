@@ -47,36 +47,40 @@ class CombatEvent:
 
             color = Color.ERROR
             text = 'NOT VALID DAMAGE TYPE?'
-            sound = Audio.HURT
-
-
+            
             match obj.damage_type:
                 case DamageType.HEALING:
                     text = 'Healing'
                     color = Color.DAMAGE_HEAL
-                    sound = Audio.DAMAGE_HEALING_DEALT
                 case DamageType.PHYSICAL:
                     text = 'Physical Damage'
                     color = Color.DAMAGE_PHY
-                    sound = Audio.DAMAGE_PHYSICAL_DEALT
                 case DamageType.MAGICAL:
                     text = 'Magic Damage'
                     color = Color.DAMAGE_MAG
-                    sound = Audio.DAMAGE_MAGIC_DEALT
                 case DamageType.PURE:
                     text = 'Pure Damage'
                     color = Color.DAMAGE_PURE
-                    sound = Audio.DAMAGE_MAGIC_DEALT
+            
+            if systems.utils.get_object_parent(obj.damage_source_action) != 'Skill':
+                match obj.damage_type:
+                    case DamageType.HEALING:
+                        sound = Audio.DAMAGE_HEALING_DEALT
+                    case DamageType.PHYSICAL:
+                        sound = Audio.DAMAGE_PHYSICAL_DEALT
+                    case DamageType.MAGICAL:
+                        sound = Audio.DAMAGE_MAGIC_DEALT
+                    case DamageType.PURE:
+                        sound = Audio.DAMAGE_MAGIC_DEALT
             
 
             msg = ''
             #msg += f'{color} '
             msg += f'{obj.damage_taker_actor.id} '
-
+            
             _nothing_ever_happens = True
             for i in diff:
                 if diff[i] < 0:
-                    sound = Audio.BUFF
                     msg += f'{Color.GOOD}heal {abs(diff[i])} {Color.stat[i]}{StatType.name[i]}{Color.NORMAL} and '
                     _nothing_ever_happens = False
                 if diff[i] > 0:
@@ -193,8 +197,10 @@ class CombatEvent:
 
         pa1 = damage_obj.damage_taker_actor.stat_manager.stats[StatType.PHYARMOR]
         ma1 = damage_obj.damage_taker_actor.stat_manager.stats[StatType.MAGARMOR]
-        sound = Audio.HURT
+
+        #sound = systems.utils.get_object_parent(obj.damage_source_action) == 'Skill'
         actor = damage_obj.damage_taker_actor
+
         if pa > 0 and pa1 <1:
             _s = f"{actor.id} {Color.COMBAT_IMPORTANT}have no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"
             _o = f"{actor.id} {Color.COMBAT_IMPORTANT}has no more {StatType.name[StatType.PHYARMOR]}{Color.NORMAL}"

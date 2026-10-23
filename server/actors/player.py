@@ -483,6 +483,7 @@ class Player(Actor):
 
     def sendSound(self, sfx):
         self.protocol.send_gmcp({"name": sfx}, "Client.Media.Play")
+        #self.send_line(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  {sfx}')
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
