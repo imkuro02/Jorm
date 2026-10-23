@@ -39,6 +39,7 @@ versions:
       - Icon max height per row of ascii art
       - Added more sound effects
       - Fixed Daimon skill being slimed and still triggering
+      - Skills have unique sound effects independant of damage
   "191026":
     id: "191026"
     title: Quests
