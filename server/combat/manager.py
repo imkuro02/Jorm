@@ -344,9 +344,11 @@ class Combat:
                     list_pretty_name_objects.append(i)
                 
                 # par.send_line(('#'*80)+'\n'+order)
+                
                 order = (
+                    '\n\n' +
                     f"{Color.COMBAT_TURN}ROUND {self.round+1}...{Color.NORMAL} "
-                    + "".join(order.rsplit(" -> ", 1))
+                    + "".join(order.rsplit(" -> ", 1)) 
                 )
                 par.pretty_broadcast(order, order, list_pretty_name_objects = list_pretty_name_objects, msg_type = [MessageType.COMBAT])
                 break

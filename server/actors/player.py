@@ -21,9 +21,10 @@ from configuration.constants.color import Color
 from configuration.constants.message_type import MessageType
 from configuration.constants.stat_type import StatType
 from configuration.constants.tickrate import TICKRATE
+from configuration.constants.screen import SCREEN
 from systems.trade import TradeManager
 
-_len = len('**********************************************************************************')
+_len = SCREEN.WIDTH #len('**********************************************************************************')
 
 class FriendManager:
     def __init__(self, owner):
@@ -483,7 +484,7 @@ class Player(Actor):
 
     def sendSound(self, sfx):
         self.protocol.send_gmcp({"name": sfx}, "Client.Media.Play")
-        self.send_line(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  {sfx}')
+        #self.send_line(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  {sfx}')
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
