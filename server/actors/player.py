@@ -249,6 +249,9 @@ class Player(Actor):
         self.admin = 0
         self.queued_lines = []
         self.msg_history = {}
+        # right now, nothing but plain text uses send buffer
+        # so gmcp messages using send_gmcp deliver instantly, and if there is text in send_buffer
+        # that text might be delivered out of sync from the gmcp 
         self.send_buffer = []
         self.last_line_handled = 0
         self.recently_send_message_count = 0
@@ -520,12 +523,13 @@ class Player(Actor):
                 line = str(msg_type) + '->' +line
             # line += f'\n'
 
+            self.protocol.transport.write(line.encode("utf-8"))
            
-            self.send_buffer.append(line)
+            #self.send_buffer.append(line)
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
-            #self.protocol.transport.write(line.encode("utf-8"))
-            self.send_buffer.append(line)
+            self.protocol.transport.write(line.encode("utf-8"))
+            s#elf.send_buffer.append(line)
         return
 
     def gain_exp(self, exp):

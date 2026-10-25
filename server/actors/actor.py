@@ -1379,7 +1379,7 @@ class Actor:
 
             # output = par.prompt(self)+' '+par.pretty_name()+' '+par.ai.get_prediction_string(who_checks=self) + '\n'
             if order == None:
-                _list = self.room.combat.participants.values()
+                _list = self.room.get_actors(players_first = True).values() #self.room.combat.participants.values()
             else:
                 _list = order
 
