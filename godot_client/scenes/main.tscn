@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=21 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
 [ext_resource type="FontFile" uid="uid://j0dgjvr3dkdp" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://1dr83i66rvhg" path="res://images/kuro/down.png" id="7_1kjrd"]
 [ext_resource type="Texture2D" uid="uid://bylljk260s7hn" path="res://images/kuro/bg.png" id="9_2qqwb"]
 [ext_resource type="Script" path="res://scripts/smooth_exp_bar.gd" id="10_flati"]
+[ext_resource type="Material" uid="uid://8a6wp5frnvwd" path="res://shaders/grayscale.tres" id="11_i8xob"]
 [ext_resource type="AudioStream" uid="uid://b2ea6m7xpr27v" path="res://audio/music/alvin/N A W A K - FOREST.mp3" id="15_77trc"]
 [ext_resource type="Script" path="res://scripts/BackgroundMusic.gd" id="16_vp8dw"]
 [ext_resource type="FontFile" uid="uid://31bqc5l53wq1" path="res://fonts/PixelCode-Medium.ttf" id="19_jxno8"]
@@ -444,6 +445,16 @@ offset_top = 8.0
 offset_right = 79.0
 offset_bottom = 40.0
 text = "RELOAD"
+
+[node name="GrayscaleShader" type="ColorRect" parent="canvas"]
+visible = false
+material = ExtResource("11_i8xob")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="Node11" type="CanvasLayer" parent="."]
 visible = false

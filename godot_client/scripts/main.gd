@@ -22,7 +22,7 @@ var socket = WebSocketPeer.new()
 @onready var MOUSE_CLICK_OPTIONS = $canvas/mouse_click_options
 @onready var EXPBAR = $canvas/smooth_exp_bar
 @onready var BGM = $BackgroundMusicStreamPlayer
-
+@onready var GRAYSCALE_SHADER = $canvas/GrayscaleShader
 
 var vol_master = 0
 var vol_effects = 0
@@ -179,7 +179,7 @@ func handle_gmcp(message: String):
 	match prefix:
 		'ACTOR_STATUS':
 			BGM.change_state(dict_string)
-			
+			GRAYSCALE_SHADER.visible = 'Dead' in dict_string
 			
 		'ExpBar':
 			EXPBAR.fill_exp(data_dict['exp_cur'], data_dict['exp_max'], data_dict['lvl'])
