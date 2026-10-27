@@ -64,7 +64,8 @@ def get_icon_item(obj):
         return ''
 
     icon = '\n'+ICONS[obj.icon_id]+'\n'
-    icon += '\nscheme '+obj.icon_scheme
+    
+    icon += '\nscheme '+str(obj.icon_scheme)
 
     index = 1
     icon = '\n'.join(icon_normalize(icon, center = True, width = 8))

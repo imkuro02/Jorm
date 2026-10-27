@@ -197,3 +197,71 @@
 @c1 /     `
 @c1 ø æ åæ
 [end]
+
+[id:torch]
+
+@c1   @c2,@c2`
+@c1    @c2)
+@c1  @c2(@c1+ 
+@c1  /
+@c1 /
+
+[end]
+
+[id:summoning_rock]
+@green     _.---,@yellow|
+@white   ,'  @bred.  @yellow- + -
+@white   \   @bredY     @yellow|
+@white    '-,___x-'
+[end]
+
+[id:key]
+ .-.      __,
+( O )===´o o)
+ '-'    `u'U´
+[end]
+
+[id:beer]
+
+
+
+@c1   @c2___
+@c1(´| @c2Uu@c1|
+@c1  |___|
+
+
+[end]
+[id:mug]
+
+
+
+@c1   
+@c1(´|   |
+@c1  |___|
+
+
+[end]
+
+[id:dinner0]
+    
+@c2   oO
+@c1`""""""´
+[end]
+
+[id:dinner1]
+    
+@c2 ( x  )@c1=3
+@c1`""""""´
+[end]
+
+[id:dinner2]
+@c2  ____    
+@c2(  X   )@c1=3
+@c1`""""""´
+[end]
+
+[id:empty_plate]
+@bblack -o´
+@bblack    `o-
+@normal`""""""´
+[end]
