@@ -1,16 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://5ctsi71d6l6"]
+[gd_scene load_steps=13 format=3 uid="uid://5ctsi71d6l6"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"]
-[ext_resource type="FontFile" uid="uid://j0dgjvr3dkdp" path="res://fonts/FiraCode-VariableFont_wght.ttf" id="2_ckiy7"]
-[ext_resource type="Texture2D" uid="uid://df2ebbo0dvn83" path="res://images/kuro/clock.png" id="2_x7r0c"]
-[ext_resource type="Script" path="res://scripts/Clock.gd" id="3_2rld8"]
 [ext_resource type="Script" path="res://scripts/output.gd" id="3_gkcnj"]
-[ext_resource type="Texture2D" uid="uid://dg7byixeo7bd2" path="res://images/kuro/node.png" id="4_5ypyn"]
 [ext_resource type="Script" path="res://scripts/background_color.gd" id="4_6wn6w"]
-[ext_resource type="Texture2D" uid="uid://o1mw3m4ep0fb" path="res://images/kuro/door.png" id="5_kopq2"]
-[ext_resource type="Texture2D" uid="uid://bnk0ueibbm4yq" path="res://images/kuro/up.png" id="6_d5hl4"]
-[ext_resource type="Texture2D" uid="uid://1dr83i66rvhg" path="res://images/kuro/down.png" id="7_1kjrd"]
-[ext_resource type="Texture2D" uid="uid://bylljk260s7hn" path="res://images/kuro/bg.png" id="9_2qqwb"]
 [ext_resource type="Script" path="res://scripts/smooth_exp_bar.gd" id="10_flati"]
 [ext_resource type="Material" uid="uid://8a6wp5frnvwd" path="res://shaders/grayscale.tres" id="11_i8xob"]
 [ext_resource type="AudioStream" uid="uid://b2ea6m7xpr27v" path="res://audio/music/alvin/N A W A K - FOREST.mp3" id="15_77trc"]
@@ -18,11 +10,11 @@
 [ext_resource type="FontFile" uid="uid://31bqc5l53wq1" path="res://fonts/PixelCode-Medium.ttf" id="19_jxno8"]
 [ext_resource type="Script" path="res://scripts/input.gd" id="20_c83m0"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_723ol"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujqkk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bwqeb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_723ol"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -41,162 +33,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("4_6wn6w")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="canvas"]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.585, 1.585)
-
-[node name="side_panel" type="Panel" parent="canvas/HBoxContainer"]
-custom_minimum_size = Vector2(416, 0)
-layout_mode = 2
-
-[node name="Clock" type="Sprite2D" parent="canvas/HBoxContainer/side_panel"]
-visible = false
-texture_filter = 1
-position = Vector2(128, 376)
-scale = Vector2(16.6602, 16.6602)
-texture = ExtResource("2_x7r0c")
-script = ExtResource("3_2rld8")
-metadata/_edit_group_ = true
-
-[node name="background_color" type="ColorRect" parent="canvas/HBoxContainer/side_panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0, 0, 0, 1)
-
-[node name="Background" type="TextureRect" parent="canvas/HBoxContainer/side_panel"]
-modulate = Color(0, 0, 0, 1)
-texture_filter = 1
-layout_mode = 0
-offset_top = 512.0
-offset_right = 112.0
-offset_bottom = 624.0
-scale = Vector2(4, 4)
-texture = ExtResource("9_2qqwb")
-stretch_mode = 1
-
-[node name="look_room" type="RichTextLabel" parent="canvas/HBoxContainer/side_panel"]
-layout_mode = 2
-offset_right = 638.0
-offset_bottom = 392.0
-size_flags_horizontal = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("19_jxno8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-bbcode_enabled = true
-selection_enabled = true
-script = ExtResource("3_gkcnj")
-
-[node name="ascii_map" type="RichTextLabel" parent="canvas/HBoxContainer/side_panel"]
-layout_mode = 2
-offset_left = 912.0
-offset_right = 1280.0
-offset_bottom = 344.0
-size_flags_horizontal = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("19_jxno8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-bbcode_enabled = true
-selection_enabled = true
-script = ExtResource("3_gkcnj")
-metadata/_edit_group_ = true
-
-[node name="input_output" type="Control" parent="canvas/HBoxContainer"]
-custom_minimum_size = Vector2(800, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="input" type="Control" parent="canvas/HBoxContainer/input_output"]
-layout_mode = 1
-anchor_left = 0.004
-anchor_top = 1.0
-anchor_right = 0.991
-anchor_bottom = 1.0
-offset_left = 0.432
-offset_top = -40.0
-offset_right = 0.0279541
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_group_ = true
-
-[node name="ColorRect" type="ColorRect" parent="canvas/HBoxContainer/input_output/input"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.25
-anchor_right = 1.0
-anchor_bottom = 1.25
-offset_left = -8.0
-offset_top = -40.0
-offset_right = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.775063, 0.775063, 0.775063, 1)
-
-[node name="input" type="LineEdit" parent="canvas/HBoxContainer/input_output/input"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.25
-anchor_right = 1.0
-anchor_bottom = 1.25
-offset_left = 64.0
-offset_top = -40.0
-offset_right = 6.10352e-05
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("19_jxno8")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ujqkk")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bwqeb")
-flat = true
-
-[node name="Label" type="Label" parent="canvas/HBoxContainer/input_output/input"]
-modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.25
-anchor_right = 1.009
-anchor_bottom = 1.25
-offset_top = -32.0
-offset_right = -826.92
-theme_override_fonts/font = ExtResource("19_jxno8")
-text = "INPUT:
-"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="canvas/HBoxContainer/input_output"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.479
-anchor_top = 0.333
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -0.059967
-offset_top = 0.320007
-offset_right = -8.0
-offset_bottom = -48.0
-
-[node name="output" type="RichTextLabel" parent="canvas/HBoxContainer/input_output/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("19_jxno8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-bbcode_enabled = true
-selection_enabled = true
-script = ExtResource("3_gkcnj")
-
-[node name="Panel" type="Panel" parent="canvas/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(224, 0)
-layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="input" type="ColorRect" parent="canvas"]
 custom_minimum_size = Vector2(0, 32)
@@ -402,32 +238,6 @@ grow_vertical = 2
 mouse_filter = 1
 color = Color(0.243137, 0, 0.243137, 1)
 
-[node name="TextureRect" type="TextureRect" parent="canvas"]
-visible = false
-modulate = Color(1, 1, 1, 0.101961)
-texture_filter = 1
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 106.0
-offset_bottom = 234.0
-scale = Vector2(4, 4)
-texture = ExtResource("9_2qqwb")
-stretch_mode = 1
-
-[node name="debug" type="RichTextLabel" parent="canvas"]
-visible = false
-offset_left = 16.0
-offset_top = 56.0
-offset_right = 367.0
-offset_bottom = 544.0
-size_flags_horizontal = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_ckiy7")
-bbcode_enabled = true
-text = "test         
-test"
-selection_enabled = true
-
 [node name="smooth_exp_bar" type="RichTextLabel" parent="canvas"]
 offset_left = 384.0
 offset_top = 896.0
@@ -456,146 +266,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Node11" type="CanvasLayer" parent="."]
-visible = false
-scale = Vector2(4, 4)
-transform = Transform2D(4, 0, 0, 4, 0, 0)
-
-[node name="Node" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(16, 24)
-texture = ExtResource("4_5ypyn")
-
-[node name="Node2" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(32, 24)
-texture = ExtResource("4_5ypyn")
-
-[node name="Node3" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(48, 24)
-texture = ExtResource("4_5ypyn")
-
-[node name="Node4" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(32, 8)
-texture = ExtResource("4_5ypyn")
-
-[node name="Door" type="Sprite2D" parent="Node11"]
-modulate = Color(0.666667, 0.34902, 0.0392157, 1)
-texture_filter = 1
-position = Vector2(32, 8)
-texture = ExtResource("5_kopq2")
-metadata/_edit_group_ = true
-
-[node name="Node5" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(16, 40)
-texture = ExtResource("4_5ypyn")
-
-[node name="Node6" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(32, 40)
-texture = ExtResource("4_5ypyn")
-
-[node name="Node7" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(48, 40)
-texture = ExtResource("4_5ypyn")
-
-[node name="Node8" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(16, 56)
-texture = ExtResource("4_5ypyn")
-
-[node name="Node9" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(32, 56)
-texture = ExtResource("4_5ypyn")
-
-[node name="Node10" type="Sprite2D" parent="Node11"]
-modulate = Color(0.211765, 0.0784314, 0, 1)
-texture_filter = 1
-position = Vector2(48, 56)
-texture = ExtResource("4_5ypyn")
-
-[node name="Up" type="Sprite2D" parent="Node11"]
-modulate = Color(0.666667, 0.34902, 0.0392157, 1)
-texture_filter = 1
-position = Vector2(16, 56)
-texture = ExtResource("6_d5hl4")
-metadata/_edit_group_ = true
-
-[node name="Down" type="Sprite2D" parent="Node11"]
-modulate = Color(0.666667, 0.34902, 0.0392157, 1)
-texture_filter = 1
-position = Vector2(48, 56)
-texture = ExtResource("7_1kjrd")
-
 [node name="BackgroundMusicStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_77trc")
 volume_db = -80.0
 autoplay = true
 script = ExtResource("16_vp8dw")
 
-[node name="output" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 7.0
-offset_right = 8.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("19_jxno8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-text = "client version: 240426
-"
-meta_underlined = false
-hint_underlined = false
-selection_enabled = true
-script = ExtResource("3_gkcnj")
-
-[node name="output" type="RichTextLabel" parent="output"]
-layout_mode = 0
-offset_left = 7.0
-offset_right = 8.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("19_jxno8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-text = "client version: 240426
-"
-meta_underlined = false
-hint_underlined = false
-selection_enabled = true
-script = ExtResource("3_gkcnj")
-
-[node name="output2" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 7.0
-offset_right = 8.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 2
-theme_override_fonts/normal_font = ExtResource("19_jxno8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
-text = "client version: 240426
-"
-meta_underlined = false
-hint_underlined = false
-selection_enabled = true
-script = ExtResource("3_gkcnj")
-
-[connection signal="text_submitted" from="canvas/HBoxContainer/input_output/input/input" to="." method="_on_input_text_submitted"]
 [connection signal="meta_clicked" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_clicked"]
 [connection signal="meta_hover_ended" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_hover_started"]
@@ -618,12 +294,3 @@ script = ExtResource("3_gkcnj")
 [connection signal="meta_hover_ended" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_hover_ended"]
 [connection signal="meta_hover_started" from="canvas/mouse_click_options" to="." method="_on_mouse_click_options_meta_hover_started"]
 [connection signal="pressed" from="canvas/reload_client_button" to="." method="_on_reload_client_button_pressed"]
-[connection signal="meta_clicked" from="output" to="." method="_on_output_meta_clicked"]
-[connection signal="meta_hover_ended" from="output" to="." method="_on_output_meta_hover_ended"]
-[connection signal="meta_hover_started" from="output" to="." method="_on_output_meta_hover_started"]
-[connection signal="meta_clicked" from="output/output" to="." method="_on_output_meta_clicked"]
-[connection signal="meta_hover_ended" from="output/output" to="." method="_on_output_meta_hover_ended"]
-[connection signal="meta_hover_started" from="output/output" to="." method="_on_output_meta_hover_started"]
-[connection signal="meta_clicked" from="output2" to="." method="_on_output_meta_clicked"]
-[connection signal="meta_hover_ended" from="output2" to="." method="_on_output_meta_hover_ended"]
-[connection signal="meta_hover_started" from="output2" to="." method="_on_output_meta_hover_started"]

@@ -262,7 +262,7 @@ func extract_gmcp(int_data: Array[int]) -> void:
 	for i in int_data:
 		if i == SE:
 			var data = PackedByteArray(segment).get_string_from_utf8()
-			DEBUG.append_text(data + '\n')
+			#DEBUG.append_text(data + '\n')
 			if len(data) > 0:
 				handle_gmcp(data)
 			segment = []
@@ -303,7 +303,7 @@ func _process(_delta):
 				if doing_sb and i not in telnet_stuff:
 					int_subnegotiation.append(i)
 					to_remove.append(idx)
-			DEBUG.append_text('\n')
+			#DEBUG.append_text('\n')
 
 			to_remove.reverse()
 			for idx in to_remove:

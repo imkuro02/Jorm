@@ -322,6 +322,7 @@ class Database:
 
 
     def write_actor(self, actor):
+        print('writing')
         actor_id = actor.id
 
         my_dict = {}
