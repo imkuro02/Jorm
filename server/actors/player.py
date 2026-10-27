@@ -560,6 +560,8 @@ class Player(Actor):
         
 
     def gain_practice_points(self, pp):
+        self.update_checker.tick_send_exp()
+        
         self.stat_manager.stats[StatType.PP] += pp
         if self.stat_manager.stats[StatType.PP] == 0:
             self.stat_manager.stats[StatType.PP] = 0
