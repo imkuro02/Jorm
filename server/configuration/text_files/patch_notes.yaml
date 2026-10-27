@@ -40,6 +40,7 @@ versions:
       - Added more sound effects
       - Fixed Daimon skill being slimed and still triggering
       - Skills have unique sound effects independant of damage
+      - Combat overview added to non godot enabled clients
   "191026":
     id: "191026"
     title: Quests

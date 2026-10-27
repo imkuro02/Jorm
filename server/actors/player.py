@@ -529,7 +529,7 @@ class Player(Actor):
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
             self.protocol.transport.write(line.encode("utf-8"))
-            s#elf.send_buffer.append(line)
+            #self.send_buffer.append(line)
         return
 
     def gain_exp(self, exp):
@@ -797,8 +797,36 @@ class Player(Actor):
 
     def set_turn(self):
         if super().set_turn():
-            output_self = f"{self.prompt(self)} {Color.COMBAT_TURN}Your turn{Color.NORMAL}"
+            #output_self = f"{self.prompt(self)} {Color.COMBAT_TURN}Your turn{Color.NORMAL}"
+            #self.show_prompts()
+            #self.send_line(output_self)
+
+            #text = f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
+            #self.send_line(text)
+
+            if self.status != ActorStatusType.FIGHTING:
+                return
+
+            '''
+            _text = f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
+            _order = list(self.room.get_actors(players_first = True).values()).copy()
+            _order.remove(self)
+            _prompts = self.show_prompts(order = _order, return_gmcp=True).strip()
+            _prompt = self.prompt(self)
+            output_self = f"{_prompts}\n{_prompt} {_text}"
             self.send_line(output_self)
+            '''
+            if not self.settings_manager.get_value(SETTINGS.GODOT):
+                _text0 = f'{Color.COMBAT_TURN}Your turn Overview{Color.NORMAL}'
+                _text1 = ''#f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
+                _prompts = self.show_prompts(return_gmcp=True).strip()
+                output_self = f"{_text0}\n{_prompts}"
+                self.send_line(output_self)
+            else:
+                _text1 = f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
+                output_self = f"{_text1}"
+                self.send_line(output_self)
+
         # self.send_line(self.prompt(self))
 
     def finish_turn(self, force_cooldown=False):

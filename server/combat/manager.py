@@ -346,7 +346,7 @@ class Combat:
                 # par.send_line(('#'*80)+'\n'+order)
                 
                 order = (
-                    '\n\n' +
+                    '\n' +
                     f"{Color.COMBAT_TURN}ROUND {self.round+1}...{Color.NORMAL} "
                     + "".join(order.rsplit(" -> ", 1)) 
                 )
