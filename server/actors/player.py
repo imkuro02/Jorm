@@ -153,6 +153,8 @@ class UpdateChecker:
         self.last_room = None
         self.last_grid = None
 
+        self.cache = {}
+
     def tick_show_actors(self):
         if not self.actor.factory.ticks_passed % TICKRATE / 10 == 0:
             return
@@ -230,9 +232,13 @@ class UpdateChecker:
         #    _map = _map + '\n' + str(self.actor.command_skills('', return_gmcp = True)) + _split
 
         _map = systems.utils.add_godot_url_fight_etc(self.actor, self.actor, _map)
-        self.actor.protocol.send_gmcp(systems.utils.add_color(_map)+'\n'+_split, "OUTPUT_COMBAT")
+        if self.cache.get('prompts', None) != _map:
+            self.actor.protocol.send_gmcp(systems.utils.add_color(_map)+'\n'+_split, "OUTPUT_COMBAT")
+            self.cache['prompts'] = _map
         
-        self.actor.protocol.send_gmcp(self.actor.status, "ACTOR_STATUS")
+        if self.cache.get('status', None) != self.actor.status:
+            self.actor.protocol.send_gmcp(self.actor.status, "ACTOR_STATUS")
+            self.cache['status'] = self.actor.status
 
         #_look = self.actor.command_look("", return_gmcp=True)
         #self.actor.protocol.send_gmcp(systems.utils.add_color(_look), "ROOM_DESCRIPTIONS")
@@ -819,7 +825,7 @@ class Player(Actor):
             output_self = f"{_prompts}\n{_prompt} {_text}"
             self.send_line(output_self)
             '''
-            if not self.settings_manager.get_value(SETTINGS.GODOT):
+            if not self.protocol.enabled_godot:
                 _text0 = f'{Color.COMBAT_TURN}Your turn Overview{Color.NORMAL}'
                 _text1 = ''#f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
                 _prompts = self.show_prompts(return_gmcp=True).strip()

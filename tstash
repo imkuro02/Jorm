@@ -1,0 +1,814 @@
+[1mdiff --git a/godot_client/fonts/Altima.ttf.import b/godot_client/fonts/Altima.ttf.import[m
+[1mindex 7d3cf72..e09adfc 100644[m
+[1m--- a/godot_client/fonts/Altima.ttf.import[m
+[1m+++ b/godot_client/fonts/Altima.ttf.import[m
+[36m@@ -15,13 +15,16 @@[m [mdest_files=["res://.godot/imported/Altima.ttf-c2707c39b7e5b716733cf7274d20fbe5.f[m
+ Rendering=null[m
+ antialiasing=1[m
+ generate_mipmaps=false[m
+[32m+[m[32mdisable_embedded_bitmaps=true[m
+ multichannel_signed_distance_field=false[m
+ msdf_pixel_range=8[m
+ msdf_size=48[m
+ allow_system_fallback=true[m
+ force_autohinter=false[m
+[32m+[m[32mmodulate_color_glyphs=false[m
+ hinting=1[m
+ subpixel_positioning=1[m
+[32m+[m[32mkeep_rounding_remainders=true[m
+ oversampling=0.0[m
+ Fallbacks=null[m
+ fallbacks=[][m
+[1mdiff --git a/godot_client/fonts/FiraCode-VariableFont_wght.ttf.import b/godot_client/fonts/FiraCode-VariableFont_wght.ttf.import[m
+[1mindex c1b4d33..430079a 100644[m
+[1m--- a/godot_client/fonts/FiraCode-VariableFont_wght.ttf.import[m
+[1m+++ b/godot_client/fonts/FiraCode-VariableFont_wght.ttf.import[m
+[36m@@ -15,13 +15,16 @@[m [mdest_files=["res://.godot/imported/FiraCode-VariableFont_wght.ttf-566d83dd444e0d[m
+ Rendering=null[m
+ antialiasing=1[m
+ generate_mipmaps=false[m
+[32m+[m[32mdisable_embedded_bitmaps=true[m
+ multichannel_signed_distance_field=false[m
+ msdf_pixel_range=8[m
+ msdf_size=48[m
+ allow_system_fallback=true[m
+ force_autohinter=false[m
+[32m+[m[32mmodulate_color_glyphs=false[m
+ hinting=1[m
+ subpixel_positioning=1[m
+[32m+[m[32mkeep_rounding_remainders=true[m
+ oversampling=0.0[m
+ Fallbacks=null[m
+ fallbacks=[][m
+[1mdiff --git a/godot_client/fonts/Igiari.ttf.import b/godot_client/fonts/Igiari.ttf.import[m
+[1mindex d16de35..72cb039 100644[m
+[1m--- a/godot_client/fonts/Igiari.ttf.import[m
+[1m+++ b/godot_client/fonts/Igiari.ttf.import[m
+[36m@@ -15,13 +15,16 @@[m [mdest_files=["res://.godot/imported/Igiari.ttf-45710520084d1ed7a3e42330b90d2731.f[m
+ Rendering=null[m
+ antialiasing=1[m
+ generate_mipmaps=false[m
+[32m+[m[32mdisable_embedded_bitmaps=true[m
+ multichannel_signed_distance_field=false[m
+ msdf_pixel_range=8[m
+ msdf_size=48[m
+ allow_system_fallback=true[m
+ force_autohinter=false[m
+[32m+[m[32mmodulate_color_glyphs=false[m
+ hinting=1[m
+ subpixel_positioning=1[m
+[32m+[m[32mkeep_rounding_remainders=true[m
+ oversampling=0.0[m
+ Fallbacks=null[m
+ fallbacks=[][m
+[1mdiff --git a/godot_client/fonts/PixelCode-Medium.ttf.import b/godot_client/fonts/PixelCode-Medium.ttf.import[m
+[1mindex 0df33b7..08c8630 100644[m
+[1m--- a/godot_client/fonts/PixelCode-Medium.ttf.import[m
+[1m+++ b/godot_client/fonts/PixelCode-Medium.ttf.import[m
+[36m@@ -15,13 +15,16 @@[m [mdest_files=["res://.godot/imported/PixelCode-Medium.ttf-21f3dd4171c00c66354c2123[m
+ Rendering=null[m
+ antialiasing=1[m
+ generate_mipmaps=false[m
+[32m+[m[32mdisable_embedded_bitmaps=true[m
+ multichannel_signed_distance_field=false[m
+ msdf_pixel_range=8[m
+ msdf_size=48[m
+ allow_system_fallback=true[m
+ force_autohinter=false[m
+[32m+[m[32mmodulate_color_glyphs=false[m
+ hinting=1[m
+ subpixel_positioning=1[m
+[32m+[m[32mkeep_rounding_remainders=true[m
+ oversampling=0.0[m
+ Fallbacks=null[m
+ fallbacks=[][m
+[1mdiff --git a/godot_client/fonts/PixeloidMono.ttf.import b/godot_client/fonts/PixeloidMono.ttf.import[m
+[1mindex 03dfb84..5f4466b 100644[m
+[1m--- a/godot_client/fonts/PixeloidMono.ttf.import[m
+[1m+++ b/godot_client/fonts/PixeloidMono.ttf.import[m
+[36m@@ -15,13 +15,16 @@[m [mdest_files=["res://.godot/imported/PixeloidMono.ttf-04f3a3c76fe481d79b8e713c46f8[m
+ Rendering=null[m
+ antialiasing=1[m
+ generate_mipmaps=false[m
+[32m+[m[32mdisable_embedded_bitmaps=true[m
+ multichannel_signed_distance_field=false[m
+ msdf_pixel_range=8[m
+ msdf_size=48[m
+ allow_system_fallback=true[m
+ force_autohinter=false[m
+[32m+[m[32mmodulate_color_glyphs=false[m
+ hinting=1[m
+ subpixel_positioning=1[m
+[32m+[m[32mkeep_rounding_remainders=true[m
+ oversampling=0.0[m
+ Fallbacks=null[m
+ fallbacks=[][m
+[1mdiff --git a/godot_client/images/kuro/bg.png.import b/godot_client/images/kuro/bg.png.import[m
+[1mindex 3ae94bd..cffd30e 100644[m
+[1m--- a/godot_client/images/kuro/bg.png.import[m
+[1m+++ b/godot_client/images/kuro/bg.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/bg.png-9b90ed0f270a4fce04be0d888dfcb917.ctex"[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/clock.png.import b/godot_client/images/kuro/clock.png.import[m
+[1mindex 9e0a91b..1088e06 100644[m
+[1m--- a/godot_client/images/kuro/clock.png.import[m
+[1m+++ b/godot_client/images/kuro/clock.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/clock.png-59e160bd45c622f62bd50c5f95df2646.ct[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/connection.png.import b/godot_client/images/kuro/connection.png.import[m
+[1mindex ebbd531..9e6bc1b 100644[m
+[1m--- a/godot_client/images/kuro/connection.png.import[m
+[1m+++ b/godot_client/images/kuro/connection.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/connection.png-8a3dc491b13e75aca09492b3c0de4e[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/connection2.png.import b/godot_client/images/kuro/connection2.png.import[m
+[1mindex 749e278..c0468c7 100644[m
+[1m--- a/godot_client/images/kuro/connection2.png.import[m
+[1m+++ b/godot_client/images/kuro/connection2.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/connection2.png-f2d8647e93d5263b1d414404886da[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/connection3.png.import b/godot_client/images/kuro/connection3.png.import[m
+[1mindex 10b8827..0932af2 100644[m
+[1m--- a/godot_client/images/kuro/connection3.png.import[m
+[1m+++ b/godot_client/images/kuro/connection3.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/connection3.png-46944b9e32c15d0d18168f896d293[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/connection4.png.import b/godot_client/images/kuro/connection4.png.import[m
+[1mindex 622db84..6f6bcc7 100644[m
+[1m--- a/godot_client/images/kuro/connection4.png.import[m
+[1m+++ b/godot_client/images/kuro/connection4.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/connection4.png-8980a350e9adabeef70ccef2c9d3a[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/door.png.import b/godot_client/images/kuro/door.png.import[m
+[1mindex 543a327..3f40472 100644[m
+[1m--- a/godot_client/images/kuro/door.png.import[m
+[1m+++ b/godot_client/images/kuro/door.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/door.png-572c0096fdd81e9ce9e367970e2bace5.cte[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/down.png.import b/godot_client/images/kuro/down.png.import[m
+[1mindex e797403..e66f76a 100644[m
+[1m--- a/godot_client/images/kuro/down.png.import[m
+[1m+++ b/godot_client/images/kuro/down.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/down.png-1f69eb96da908d9ba87c051e63f0030d.cte[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/enemy.png.import b/godot_client/images/kuro/enemy.png.import[m
+[1mindex 25e27c4..8270d21 100644[m
+[1m--- a/godot_client/images/kuro/enemy.png.import[m
+[1m+++ b/godot_client/images/kuro/enemy.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/enemy.png-7c64dc56972a713600fe3e0468e014b7.ct[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/node.png.import b/godot_client/images/kuro/node.png.import[m
+[1mindex 9a2b8d8..e207a00 100644[m
+[1m--- a/godot_client/images/kuro/node.png.import[m
+[1m+++ b/godot_client/images/kuro/node.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/node.png-124198fcc029228712793ccce52ae17e.cte[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/node2.png.import b/godot_client/images/kuro/node2.png.import[m
+[1mindex 95995df..0cb2042 100644[m
+[1m--- a/godot_client/images/kuro/node2.png.import[m
+[1m+++ b/godot_client/images/kuro/node2.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/node2.png-3f25227071af3bd8339e3bee42c912c3.ct[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/node3.png.import b/godot_client/images/kuro/node3.png.import[m
+[1mindex a5502db..118e846 100644[m
+[1m--- a/godot_client/images/kuro/node3.png.import[m
+[1m+++ b/godot_client/images/kuro/node3.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/node3.png-5237982bd4a6c1b15f8b35470b1c43fa.ct[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/node4.png.import b/godot_client/images/kuro/node4.png.import[m
+[1mindex 2ed8f34..2100624 100644[m
+[1m--- a/godot_client/images/kuro/node4.png.import[m
+[1m+++ b/godot_client/images/kuro/node4.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/node4.png-93ae05d08028c3fb4d1b126b6f9139f1.ct[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/quest_not_started.png.import b/godot_client/images/kuro/quest_not_started.png.import[m
+[1mindex 3d3deef..4b75872 100644[m
+[1m--- a/godot_client/images/kuro/quest_not_started.png.import[m
+[1m+++ b/godot_client/images/kuro/quest_not_started.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/quest_not_started.png-a3ed0e1c3705f836fe61f74[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/quest_turn_in.png.import b/godot_client/images/kuro/quest_turn_in.png.import[m
+[1mindex 6f5cdfe..9ca77a9 100644[m
+[1m--- a/godot_client/images/kuro/quest_turn_in.png.import[m
+[1m+++ b/godot_client/images/kuro/quest_turn_in.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/quest_turn_in.png-42c3b9ae49e3a6aa6b78f6a832a[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/up.png.import b/godot_client/images/kuro/up.png.import[m
+[1mindex 31f48d0..b8a29ab 100644[m
+[1m--- a/godot_client/images/kuro/up.png.import[m
+[1m+++ b/godot_client/images/kuro/up.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/up.png-c7de2b9af546ba633d9823d87b489c42.ctex"[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/you.png.import b/godot_client/images/kuro/you.png.import[m
+[1mindex e2c8ac2..4c25ad1 100644[m
+[1m--- a/godot_client/images/kuro/you.png.import[m
+[1m+++ b/godot_client/images/kuro/you.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/you.png-dec0d10365365f90d34b10d809d0b965.ctex[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/you2.png.import b/godot_client/images/kuro/you2.png.import[m
+[1mindex fd91540..5a469b0 100644[m
+[1m--- a/godot_client/images/kuro/you2.png.import[m
+[1m+++ b/godot_client/images/kuro/you2.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/you2.png-a23d1490cf67a0a75bdbc899104631d0.cte[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/images/kuro/you4.png.import b/godot_client/images/kuro/you4.png.import[m
+[1mindex f3e0b45..a6646d4 100644[m
+[1m--- a/godot_client/images/kuro/you4.png.import[m
+[1m+++ b/godot_client/images/kuro/you4.png.import[m
+[36m@@ -18,6 +18,8 @@[m [mdest_files=["res://.godot/imported/you4.png-a9824895dcb20dcfc51ea150d284cc73.cte[m
+ compress/mode=0[m
+ compress/high_quality=false[m
+ compress/lossy_quality=0.7[m
+[32m+[m[32mcompress/uastc_level=0[m
+[32m+[m[32mcompress/rdo_quality_loss=0.0[m
+ compress/hdr_compression=1[m
+ compress/normal_map=0[m
+ compress/channel_pack=0[m
+[36m@@ -25,6 +27,10 @@[m [mmipmaps/generate=false[m
+ mipmaps/limit=-1[m
+ roughness/mode=0[m
+ roughness/src_normal=""[m
+[32m+[m[32mprocess/channel_remap/red=0[m
+[32m+[m[32mprocess/channel_remap/green=1[m
+[32m+[m[32mprocess/channel_remap/blue=2[m
+[32m+[m[32mprocess/channel_remap/alpha=3[m
+ process/fix_alpha_border=true[m
+ process/premult_alpha=false[m
+ process/normal_map_invert_y=false[m
+[1mdiff --git a/godot_client/project.godot b/godot_client/project.godot[m
+[1mindex 1468571..a65e186 100644[m
+[1m--- a/godot_client/project.godot[m
+[1m+++ b/godot_client/project.godot[m
+[36m@@ -8,11 +8,15 @@[m
+ [m
+ config_version=5[m
+ [m
+[32m+[m[32m[animation][m
+[32m+[m
+[32m+[m[32mcompatibility/default_parent_skeleton_in_mesh_instance_3d=true[m
+[32m+[m
+ [application][m
+ [m
+ config/name="JormClient"[m
+ run/main_scene="res://scenes/main.tscn"[m
+[31m-config/features=PackedStringArray("4.2", "GL Compatibility")[m
+[32m+[m[32mconfig/features=PackedStringArray("4.7", "GL Compatibility")[m
+ config/icon="res://icon.svg"[m
+ [m
+ [audio][m
+[1mdiff --git a/godot_client/scenes/main.tscn b/godot_client/scenes/main.tscn[m
+[1mindex 7251b5c..6aee6d5 100644[m
+[1m--- a/godot_client/scenes/main.tscn[m
+[1m+++ b/godot_client/scenes/main.tscn[m
+[36m@@ -1,14 +1,14 @@[m
+[31m-[gd_scene load_steps=13 format=3 uid="uid://5ctsi71d6l6"][m
+[32m+[m[32m[gd_scene format=3 uid="uid://5ctsi71d6l6"][m
+ [m
+[31m-[ext_resource type="Script" path="res://scripts/main.gd" id="1_2qhxg"][m
+[31m-[ext_resource type="Script" path="res://scripts/output.gd" id="3_gkcnj"][m
+[31m-[ext_resource type="Script" path="res://scripts/background_color.gd" id="4_6wn6w"][m
+[31m-[ext_resource type="Script" path="res://scripts/smooth_exp_bar.gd" id="10_flati"][m
+[32m+[m[32m[ext_resource type="Script" uid="uid://mqrdhapn4gnp" path="res://scripts/main.gd" id="1_2qhxg"][m
+[32m+[m[32m[ext_resource type="Script" uid="uid://c6i7a7k4kqb5c" path="res://scripts/output.gd" id="3_gkcnj"][m
+[32m+[m[32m[ext_resource type="Script" uid="uid://c7llqxjwgcc8g" path="res://scripts/background_color.gd" id="4_6wn6w"][m
+[32m+[m[32m[ext_resource type="Script" uid="uid://bo5wirc1quwc8" path="res://scripts/smooth_exp_bar.gd" id="10_flati"][m
+ [ext_resource type="Material" uid="uid://8a6wp5frnvwd" path="res://shaders/grayscale.tres" id="11_i8xob"][m
+ [ext_resource type="AudioStream" uid="uid://b2ea6m7xpr27v" path="res://audio/music/alvin/N A W A K - FOREST.mp3" id="15_77trc"][m
+[31m-[ext_resource type="Script" path="res://scripts/BackgroundMusic.gd" id="16_vp8dw"][m
+[32m+[m[32m[ext_resource type="Script" uid="uid://deymwlaeaxps2" path="res://scripts/BackgroundMusic.gd" id="16_vp8dw"][m
+ [ext_resource type="FontFile" uid="uid://31bqc5l53wq1" path="res://fonts/PixelCode-Medium.ttf" id="19_jxno8"][m
+[31m-[ext_resource type="Script" path="res://scripts/input.gd" id="20_c83m0"][m
+[32m+[m[32m[ext_resource type="Script" uid="uid://b43t6fwuqovct" path="res://scripts/input.gd" id="20_c83m0"][m
+ [m
+ [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujqkk"][m
+ [m
+[36m@@ -16,16 +16,16 @@[m
+ [m
+ [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_723ol"][m
+ [m
+[31m-[node name="main" type="Control"][m
+[32m+[m[32m[node name="main" type="Control" unique_id=1836324951][m
+ layout_mode = 3[m
+ anchors_preset = 0[m
+ offset_right = 1280.0[m
+ offset_bottom = 960.0[m
+ script = ExtResource("1_2qhxg")[m
+ [m
+[31m-[node name="canvas" type="CanvasLayer" parent="."][m
+[32m+[m[32m[node name="canvas" type="CanvasLayer" parent="." unique_id=1995066053][m
+ [m
+[31m-[node name="background_color" type="ColorRect" parent="canvas"][m
+[32m+[m[32m[node name="background_color" type="ColorRect" parent="canvas" unique_id=258322265][m
+ anchors_preset = 15[m
+ anchor_right = 1.0[m
+ anchor_bottom = 1.0[m
+[36m@@ -34,7 +34,7 @@[m [mgrow_vertical = 2[m
+ color = Color(0, 0, 0, 1)[m
+ script = ExtResource("4_6wn6w")[m
+ [m
+[31m-[node name="input" type="ColorRect" parent="canvas"][m
+[32m+[m[32m[node name="input" type="ColorRect" parent="canvas" unique_id=350906989][m
+ custom_minimum_size = Vector2(0, 32)[m
+ offset_left = 384.0[m
+ offset_top = 920.0[m
+[36m@@ -43,7 +43,7 @@[m [moffset_bottom = 952.0[m
+ color = Color(0.775063, 0.775063, 0.775063, 1)[m
+ metadata/_edit_group_ = true[m
+ [m
+[31m-[node name="input" type="LineEdit" parent="canvas/input"][m
+[32m+[m[32m[node name="input" type="LineEdit" parent="canvas/input" unique_id=1278411746][m
+ layout_mode = 1[m
+ anchors_preset = -1[m
+ anchor_left = -0.432[m
+[36m@@ -63,9 +63,9 @@[m [mtheme_override_styles/focus = SubResource("StyleBoxEmpty_bwqeb")[m
+ flat = true[m
+ script = ExtResource("20_c83m0")[m
+ [m
+[31m-[node name="Label" type="Label" parent="canvas/input"][m
+[32m+[m[32m[node name="Label" type="Label" parent="canvas/input" unique_id=1240675879][m
+ modulate = Color(0, 0, 0, 1)[m
+[31m-layout_mode = 2[m
+[32m+[m[32mlayout_mode = 0[m
+ anchor_left = -0.432[m
+ anchor_top = -28.75[m
+ anchor_right = -0.432[m
+[36m@@ -77,13 +77,13 @@[m [moffset_bottom = 946.0[m
+ theme_override_fonts/font = ExtResource("19_jxno8")[m
+ text = " >"[m
+ [m
+[31m-[node name="sidebar" type="VBoxContainer" parent="canvas"][m
+[32m+[m[32m[node name="sidebar" type="VBoxContainer" parent="canvas" unique_id=1237742020][m
+ offset_left = 8.0[m
+ offset_top = 8.0[m
+ offset_right = 392.0[m
+ offset_bottom = 952.0[m
+ [m
+[31m-[node name="room_icons" type="RichTextLabel" parent="canvas/sidebar"][m
+[32m+[m[32m[node name="room_icons" type="RichTextLabel" parent="canvas/sidebar" unique_id=407257165][m
+ custom_minimum_size = Vector2(0, 254)[m
+ layout_mode = 2[m
+ size_flags_horizontal = 3[m
+[36m@@ -95,7 +95,7 @@[m [mbbcode_enabled = true[m
+ selection_enabled = true[m
+ script = ExtResource("3_gkcnj")[m
+ [m
+[31m-[node name="ascii_map" type="RichTextLabel" parent="canvas/sidebar"][m
+[32m+[m[32m[node name="ascii_map" type="RichTextLabel" parent="canvas/sidebar" unique_id=478276443][m
+ custom_minimum_size = Vector2(384, 398)[m
+ layout_mode = 2[m
+ focus_mode = 2[m
+[36m@@ -107,7 +107,7 @@[m [mselection_enabled = true[m
+ script = ExtResource("3_gkcnj")[m
+ metadata/_edit_group_ = true[m
+ [m
+[31m-[node name="navigation2" type="RichTextLabel" parent="canvas/sidebar"][m
+[32m+[m[32m[node name="navigation2" type="RichTextLabel" parent="canvas/sidebar" unique_id=1346093516][m
+ visible = false[m
+ layout_mode = 2[m
+ size_flags_horizontal = 3[m
+[36m@@ -130,7 +130,7 @@[m [mfit_content = true[m
+ meta_underlined = false[m
+ script = ExtResource("3_gkcnj")[m
+ [m
+[31m-[node name="navigation" type="RichTextLabel" parent="canvas/sidebar"][m
+[32m+[m[32m[node name="navigation" type="RichTextLabel" parent="canvas/sidebar" unique_id=787702895][m
+ layout_mode = 2[m
+ size_flags_horizontal = 3[m
+ theme_override_fonts/normal_font = ExtResource("19_jxno8")[m
+[36m@@ -150,18 +150,18 @@[m [mfit_content = true[m
+ meta_underlined = false[m
+ script = ExtResource("3_gkcnj")[m
+ [m
+[31m-[node name="container" type="BoxContainer" parent="canvas"][m
+[32m+[m[32m[node name="container" type="BoxContainer" parent="canvas" unique_id=934001179][m
+ offset_left = 384.0[m
+ offset_top = 16.0[m
+ offset_right = 1264.0[m
+ offset_bottom = 896.0[m
+ [m
+[31m-[node name="output" type="VBoxContainer" parent="canvas/container"][m
+[32m+[m[32m[node name="output" type="VBoxContainer" parent="canvas/container" unique_id=1455543733][m
+ layout_mode = 2[m
+ size_flags_horizontal = 3[m
+ size_flags_vertical = 3[m
+ [m
+[31m-[node name="room_description" type="RichTextLabel" parent="canvas/container/output"][m
+[32m+[m[32m[node name="room_description" type="RichTextLabel" parent="canvas/container/output" unique_id=957060266][m
+ visible = false[m
+ custom_minimum_size = Vector2(0, 374)[m
+ layout_mode = 2[m
+[36m@@ -176,7 +176,7 @@[m [mhint_underlined = false[m
+ selection_enabled = true[m
+ script = ExtResource("3_gkcnj")[m
+ [m
+[31m-[node name="output" type="RichTextLabel" parent="canvas/container/output"][m
+[32m+[m[32m[node name="output" type="RichTextLabel" parent="canvas/container/output" unique_id=1763032205][m
+ layout_mode = 2[m
+ size_flags_horizontal = 3[m
+ size_flags_vertical = 3[m
+[36m@@ -195,7 +195,7 @@[m [mhint_underlined = false[m
+ selection_enabled = true[m
+ script = ExtResource("3_gkcnj")[m
+ [m
+[31m-[node name="output_combat" type="RichTextLabel" parent="canvas/container/output"][m
+[32m+[m[32m[node name="output_combat" type="RichTextLabel" parent="canvas/container/output" unique_id=555380966][m
+ layout_mode = 2[m
+ size_flags_horizontal = 3[m
+ focus_mode = 2[m
+[36m@@ -207,7 +207,7 @@[m [mmeta_underlined = false[m
+ selection_enabled = true[m
+ script = ExtResource("3_gkcnj")[m
+ [m
+[31m-[node name="mouse_click_options" type="RichTextLabel" parent="canvas"][m
+[32m+[m[32m[node name="mouse_click_options" type="RichTextLabel" parent="canvas" unique_id=1456036666][m
+ clip_contents = false[m
+ offset_left = -304.0[m
+ offset_top = 448.0[m
+[36m@@ -223,7 +223,7 @@[m [mmeta_underlined = false[m
+ script = ExtResource("3_gkcnj")[m
+ metadata/_edit_group_ = true[m
+ [m
+[31m-[node name="Panel" type="ColorRect" parent="canvas/mouse_click_options"][m
+[32m+[m[32m[node name="Panel" type="ColorRect" parent="canvas/mouse_click_options" unique_id=1348326130][m
+ show_behind_parent = true[m
+ layout_mode = 1[m
+ anchors_preset = 15[m
+[36m@@ -238,7 +238,7 @@[m [mgrow_vertical = 2[m
+ mouse_filter = 1[m
+ color = Color(0.243137, 0, 0.243137, 1)[m
+ [m
+[31m-[node name="smooth_exp_bar" type="RichTextLabel" parent="canvas"][m
+[32m+[m[32m[node name="smooth_exp_bar" type="RichTextLabel" parent="canvas" unique_id=348114820][m
+ offset_left = 384.0[m
+ offset_top = 896.0[m
+ offset_right = 1272.0[m
+[36m@@ -249,14 +249,14 @@[m [mtext = "[#############################################    1/10  (10%)[m
+ scroll_active = false[m
+ script = ExtResource("10_flati")[m
+ [m
+[31m-[node name="reload_client_button" type="Button" parent="canvas"][m
+[32m+[m[32m[node name="reload_client_button" type="Button" parent="canvas" unique_id=1144779088][m
+ offset_left = 8.0[m
+ offset_top = 8.0[m
+ offset_right = 79.0[m
+ offset_bottom = 40.0[m
+ text = "RELOAD"[m
+ [m
+[31m-[node name="GrayscaleShader" type="ColorRect" parent="canvas"][m
+[32m+[m[32m[node name="GrayscaleShader" type="ColorRect" parent="canvas" unique_id=1922503140][m
+ visible = false[m
+ material = ExtResource("11_i8xob")[m
+ anchors_preset = 15[m
+[36m@@ -266,7 +266,7 @@[m [mgrow_horizontal = 2[m
+ grow_vertical = 2[m
+ mouse_filter = 2[m
+ [m
+[31m-[node name="BackgroundMusicStreamPlayer" type="AudioStreamPlayer" parent="."][m
+[32m+[m[32m[node name="BackgroundMusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1094354738][m
+ stream = ExtResource("15_77trc")[m
+ volume_db = -80.0[m
+ autoplay = true[m
+[1mdiff --git a/godot_client/scripts/input.gd b/godot_client/scripts/input.gd[m
+[1mindex 932831e..bee6272 100644[m
+[1m--- a/godot_client/scripts/input.gd[m
+[1m+++ b/godot_client/scripts/input.gd[m
+[36m@@ -54,4 +54,3 @@[m [mfunc _input(event):[m
+ 			text = ''[m
+ 		await get_tree().create_timer(0.1).timeout[m
+ 		set_caret_column(len(text))[m
+[31m-[m
+[1mdiff --git a/godot_client/scripts/main.gd b/godot_client/scripts/main.gd[m
+[1mindex 84d8a1a..c51453e 100644[m
+[1m--- a/godot_client/scripts/main.gd[m
+[1m+++ b/godot_client/scripts/main.gd[m
+[36m@@ -447,6 +447,3 @@[m [mfunc _on_reload_client_button_pressed():[m
+ 	await get_tree().create_timer(1.0).timeout[m
+ 	await try_connect_in_order([websocket_url_local, websocket_url])[m
+ 	return[m
+[31m-[m
+[31m-[m
+[31m-[m
