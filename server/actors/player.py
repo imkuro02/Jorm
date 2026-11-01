@@ -691,9 +691,10 @@ class Player(Actor):
                 # line = ' '.join(lines)
             # line = line.strip()
             line = alias_text.strip()
+            command = line.split()[0]
+            command = command.lower()
 
-        #command = line.split()[0]
-        #command = command.lower()
+        
 
         if command not in "settings":
             if ";" in line:
