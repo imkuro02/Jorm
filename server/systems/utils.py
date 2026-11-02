@@ -420,7 +420,8 @@ def remove_color(line):
         line = line.replace(color_code, "")
 
     # regex remove [jump] tags
-    line = re.sub(r'\[/?jump(?:\s+[^\]]*)?\]', '', line)
+    line = remove_jump(line)
+    
     return line
 
 

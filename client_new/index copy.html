@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="JORM (A multi user dungeon)">
+  <meta property="og:description" content="A multi user dungeon focused on tough, turn based combat alongside your friends! Now with mouse support!🐭">
+  <meta property="og:image" content="https://jorm.kurowski.xyz/imgs/jormascii1.png">
+  <meta property="og:url" content="https://jorm.kurowski.xyz">
+  <title>JORM</title>
+  <style>
+
+  @font-face {
+    font-family: myFont; /* set name */
+    src: url(font.ttf); /* url of the font */
+  }
+
+  body {
+        
+    margin: 0;
+    padding: 0;
+    /*font-family: sans-serif; */
+    font-family: myFont; /* use font */
+    display: flex;
+    justify-content: center;
+    color: white;
+    /*https://jorm.kurowski.xyz/*/
+    background-image: url("imgs/Brick_12-128x128.png");
+    background-color: #373131;
+    background-repeat: repeat;  
+    background-position: top left; 
+    position: relative; /* needed for overlay */
+    
+  }
+
+/* Black tint overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background-color: rgba(0, 0, 0, 0.6); /* adjust opacity for darkness */
+  pointer-events: none; /* allows clicks through overlay */
+  z-index: -1; /* behind all content */
+}
+
+
+    a:link {
+      color: #4ecaff;
+    }
+
+    a:visited {
+      color: #c38aff;
+    }
+
+    .container {
+      width: 1280px;
+      margin: 0px;
+      padding: 0px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .iframe-wrapper {
+      margin-top: 48px;
+
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25%;
+
+      /* Creates a stacking context so ::before can go behind iframe */
+      z-index: 0;
+    }
+
+    .iframe-wrapper iframe {
+      width: 1280px;
+      max-width: 1280px;
+      height: 960px;
+      border: none;
+      display: block;
+
+      position: relative;
+      z-index: 2;   /* iframe IN FRONT */
+      
+    }
+
+    .iframe-wrapper::before {
+      content: "";
+      position: absolute;
+
+      
+      /* Expand outside iframe for overflowing border */
+      top: -96px;
+      left: -96px;
+      right: -96px;
+      bottom: -96px;
+
+      border: 96px solid transparent;
+      border-image-source: url("https://jorm.kurowski.xyz/imgs/s18.png");
+      border-image-slice: 32 fill;
+      border-image-repeat: repeat;
+
+      pointer-events: none; /* clicks go through */
+
+      z-index: 1;   /* border BEHIND iframe but above wrapper background */
+      image-rendering: pixelated;
+    }
+
+    .content {
+      display: flex;
+      gap: 20px;
+      min-height: auto;
+    }
+
+    .text-section {
+      flex: 1;
+      font-size: Large;
+      background-color: black;/* rgba(4, 12, 2, 0.8); */
+      padding: 10px;
+
+    }
+
+    .text-section span {
+      color: yellow;
+    }
+
+    .image-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .image-section img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="iframe-wrapper">
+      <iframe src="https://jorm.kurowski.xyz/play"></iframe>
+    </div>
+    <div class="content">
+      <div class="text-section">
+        <h2>Jorm </h2><p>...Is a multi user dungeon (MUD)</p>
+        <p>
+          Explore a compact tightly danger filled world alongside your friends or alone!<br>
+          Features a simplistic <span>classless</span> skill system where you are never punished.<br>
+          Official web client supports <span>mouse controls</span>! play it like you would play an old school dungeon crawler!<br>
+          All createures and npcs have unique and original <span>ascii art</span>!<br>
+          <br>
+          <!--A friendly onboarding experience for non mudders and veterans.<br> THIS IS A LIE!!!!-->
+          The world is a linear obstacle course of <span>turn based combat</span> encounters and hidden paths.<br>
+          Will you ever reach the end of the world and discover what lies there?<br>
+          Good luck!<br>
+          <br>
+          Feel free to contact me on Discord about any questions, or join our Discord server to contribute
+          ideas, report bugs, or hang out.
+          <br><br>
+          Fullscreen client: <a href="https://jorm.kurowski.xyz/play">https://jorm.kurowski.xyz/play</a>
+          <br>
+          Discord server: <a href="https://discord.gg/AZ98axtXc6">https://discord.gg/AZ98axtXc6</a>
+        </p>
+      <img src="imgs/jormascii2.png" alt="Example Image 1"><img src="imgs/jormascii1.png" alt="Example Image 1">
+      
+      </div>
+      <!--
+      <div class="image-section">
+        <img src="https://jorm.kurowski.xyz/imgs/image.webp" alt="Example Image 1">
+        <img src="https://jorm.kurowski.xyz/imgs/image3.webp" alt="Example Image 2">
+      </div>
+    -->
+    </div>
+  </div>
+</body>
+</html>
+
