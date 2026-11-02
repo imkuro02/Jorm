@@ -109,6 +109,7 @@ func wait_for_connection(sock: WebSocketPeer, timeout: float) -> bool:
 
 # --- Input Handling ---
 func _on_input_submitted(text: String) -> void:
+	OUTPUT.add_text("enter")
 	#var state = socket.get_ready_state()
 	#if state == WebSocketPeer.STATE_CLOSED:
 	#	await try_connect_in_order([websocket_url_local, websocket_url])
@@ -121,8 +122,8 @@ func _on_input_submitted(text: String) -> void:
 	else:
 		print("Socket not ready or input was empty.")
 
-func _on_input_text_submitted(new_text):
-	_on_input_submitted(new_text)
+#func _on_input_text_submitted(new_text):
+#	_on_input_submitted(new_text)
 	
 # --- GMCP / Telnet Logic ---
 
