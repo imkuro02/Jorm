@@ -41,24 +41,24 @@ o(2nn|
 [end]
 
 [id:goblin_merchant]
-@green   @bgreen(\@green.-@bgreen(\
-@green    \ @cyanO o 
-@yellow )@white-@yellow(@yellow ##@bgreen\)
-@yellow(_@green$@yellow_)@redd b 
+    @green/)-./)
+    @cyano O
+@yellow )-( @normal"@green##
+@yellow(_$_)@redd b 
 [end]
 
 [id:goblin_citizen]
-@green  @bgreen(\@green.-@bgreen(\
-@green   \ @cyanO o 
-@yellow    ##@bgreen\) 
-@red    d b
+@green/)-./)
+@cyano O 
+ @normal"@green##
+ @redd b 
 [end]
 
 [id:goblin_bard]
-@green  @bgreen(\@green.-@bgreen(\@yellow.=*
-@green   \ @cyanO o @yellow|
-@yellow    ##@bgreen\)@yellow|@bblackO@yellow|
-@red    d b @yellow`"´
+@yellow.=*@green/)-./)
+@yellow | @cyano O 
+@yellow|@bblackO@yellow| @normal"@green##
+@yellow`"´ @redd b 
 [end]
 
  )-( 
@@ -66,29 +66,29 @@ o(2nn|
 @bredO@yellow)@white-@yellow(@bred \
 @yellow(_@green$@yellow_)@bredO
 
-[id:snake]
-@green /@white*@green)@bred-<
-@green((
-@green )) @bgreen$@green
-@green((__)
-[end]
+
 
 [id:snake]
 @green /@white*@green)@bred-<
 @green((
 @green )) @bgreen$@green
 @green((__)
+[end]
+[id:snake]
+ @green@red>-@green(@normal*@green\
+ @green   )) @bgreen$@green
+ @green  ((__)
 [end]
 
 [id:angler]
 @normal    
-  _,m
+  m,_
  (@yellowo.o@normal)
 -(   )-
  )/ \(
 [end]
 [id:angler/Fighting]
-@normal  _,m
+@normal  m,_
  (@yellow@.@@normal)
   @bredV"V@normal
 -(   )-
@@ -106,11 +106,10 @@ o(2nn|
 [end]
 
 [id:tutorial_enemy_1]
-@white     ,--(@yellow?@white) (@yellow?@white)
-@white    /#####\@bredo o@white|
-@white    |######>@yellowo@white<
-@purple '-,_@white\###@yellow)@white#@yellow(@white|
-@yellow      w   w
+   @normal() ()
+    /@yellowoO
+  @normal>@bredo@normal<´ @normal|b
+     @normaldb 
 [end]
 
 [id:shroom]
@@ -136,11 +135,10 @@ o(2nn|
 [end]
 
 [id:rat]
-@white     ,--(@yellow?@white) (@yellow?@white)
-@white    /#####\@bredo o@white|
-@white    |######[jump]>@yellow[jump]o[/jump]@white<[/jump]
-@purple '-,_@white\###@yellow)@white#@yellow(@white|
-@yellow      w   w
+   @normal() ()
+    /@yellowoO
+  @normal>@bredo@normal<´ @normal|b
+     @normaldb 
 [end]
 
 
@@ -153,14 +151,19 @@ big_rat
 @white @yellow(@white,   @yelloww@white.@yellow)
 @white  \,@yellow_@white'@yellow_@white/
 [end]
+[id:spore]
+@normal(@redo@normal)
+ @normal *(@redo@normal)
+ @normal(@redo@normal)
+[end]
 
 [id:wood_stump]
 @yellow     _
 @yellow  ,-_/ ',
-@yellow  | @green @   @
-@yellow  [ @bred  vwv@yellow ]
-@yellow  |   @brednmn@yellow|
-@yellow    u   u
+@yellow |      |
+@yellow @redO@yellow`´@redO   @yellow|
+@yellow,|      \
+@yellow|/`´|/´`\|
 [end]
 
 [id:snail]
@@ -170,13 +173,17 @@ big_rat
 @green \.________.@bgreen/
 [end]
 
+[id:snail]
+@bgreen Y_@green(@yellow?@green)
+[end]
+
 [id:orange_mushroom]
 @yellow    _,-"'-,_
 @yellow ,-"   @redo  .8@yellow'\
 @yellow \,.@red8@yellow_,,,_:._/
-@white    \ @yellowO  O@white/
+@white    \@yellowO  O@white /
 @white     |   |
-@white      @yellowu u
+@white      @yellowd d
 [end]
 
 [id:green_slime]
@@ -185,6 +192,22 @@ big_rat
 [jump][jump]@green    /    @yellowv@green\[/jump][/jump]
 [jump]@green   |  @yellow> @yellowO  @green|[/jump]
 [jump]@green    ',___.'[/jump]
+[end]
+
+[id:green_slime]
+   *-'-.
+     _/'\_
+    /    v\
+   |  > O  |
+    ',___.'
+[end]
+
+[id:green_slime]
+@green       .-'-*
+@green     _/'\_
+@green    /@yellowv     @green\
+@green   |  @yellowO <  @green|
+@green    ',___.'
 [end]
 
 [id:spider]
@@ -209,37 +232,37 @@ big_rat
 [end]
 
 [id:red_slime]
-[jump][jump][jump]@red  [jump][jump][jump]*[/jump]-[/jump]'[/jump]-.[/jump][/jump][/jump]
-[jump][jump][jump]@red     _/'\_[/jump][/jump][/jump]
-[jump][jump]@red    /    @yellowv@red\[/jump][/jump]
-[jump]@red   |  @yellow> @yellowO  @red|[/jump]
-[jump]@red    ',___.'[/jump]
+@bred       .-'-*
+@bred     _/'\_
+@bred    /@yellowv     @bred\
+@bred   |  @yellowO <  @bred|
+@bred    ',___.'
 [end]
 
 [id:red_cap]
 @red    _,-"'-,_
 @red ,-"   @purpleo  .8@red'\
 @red \,.@purple8@red_,,,_:._/
-@white    \ @purpleO  O@white/
+@white    \@purpleO  O@white /
 @white     |   |
-@white      @purpleu u
+@white      @purpled d
 [end]
 
 [id:blue_slime]
-[jump][jump][jump]@blue  [jump][jump][jump]*[/jump]-[/jump]'[/jump]-.[/jump][/jump][/jump]
-[jump][jump][jump]@blue     _/'\_[/jump][/jump][/jump]
-[jump][jump]@blue    /    @yellowv@blue\[/jump][/jump]
-[jump]@blue   |  @yellow> @yellowO  @blue|[/jump]
-[jump]@blue    ',___.'[/jump]
+@bcyan       .-'-*
+@bcyan     _/'\_
+@bcyan    /@yellowv     @bcyan\
+@bcyan   |  @yellowO <  @bcyan|
+@bcyan    ',___.'
 [end]
 
 [id:blue_mushroom]
 @blue    _,-"'-,_
 @blue ,-"   @redo  .8@blue'\
 @blue \,.@red8@blue_,,,_:._/
-@white    \ @bcyanO  O@white/
+@white    \@bcyanO  O@white /
 @white     |   |
-@white      @bcyanu u
+@white      @bcyand d
 [end]
 
 [id:octopus]
@@ -250,27 +273,38 @@ big_rat
 [end]
 
 [id:evil_eye]
-@yellow,-,  ,--_,
-@yellow / /    < @white0@yellow>.
-@yellow \|_      (@whiteuuu@yellow)
-@yellow    '""'-@"""'-@
+    ,----,
+   /      \
+   | (o  (o|
+  + ') .^ (
+-+--  v'uuv
+-+-   nnn,
+[end]
+
+[id:evil_eye]
+@purple      ,----,
+@purple     /      \
+@purple     | @bred<O>@purple   |
+@purple      ) ^. ('
+@purple\@redo@purple\,_) / \ \ (_,/@redo@purple/
+@purple  \@redo8@purple\_@red8@purple/\_@red8@purple/\@red8o@purple/
 [end]
 
 [id:thief]
-@white   ,-'"/"\,
-@white   |  /@yellowo o@white\
-@white   /   ;  \
-@white   |')'-'(|
-@white   |   :  |
+@white   ,/"\"'-,
+@white   /@yellowo o@white\ |
+@white   /  ;   \
+@white   |)'-'('|
+@white   |  :   |
 [end]
 
 [id:horned_mushroom]
 @green    ,@white^@green,-,-@white^@green,
 @green  @white<@white@green"@white^ ^  @green.@whitev >
 @green @white<@green_@white<@green_,,@whitev@green_:.@white>@green.@white>
-@white    \ @yellowO  O@white/
+@white    \@yellowO  O@white /
 @white     |   |
-@white      @yellowu u
+@white      @yellowd d
 [end]
 
 [id:skeleton_1]
@@ -304,26 +338,26 @@ big_rat
 @yellow    _,-"'-,_
 @yellow ,-"   @redo  .8@yellow'\
 @yellow \,.@red8@yellow_,,,_:._/
-@white    \ @yellowO  O@white/
-@white   --|   |.-->
-@white      @yellowu u
+@white    \@yellowO  O@white /
+@white <--.|   |--
+@white      @yellowd d
 [end]
 
 [id:mushroom_thief]
 @yellow    _,-"'-,_
 @yellow ,-"   @redo  .8@yellow'\
 @yellow \,.@red8@yellow_,,,_:._/
-@white    \@yellow\+\\+@white/
+@white    \@yellow+\\+\@white/
 @white   -+|   |+-
-@white      @yellowu u
+@white      @yellowd d
 [end]
 
 [id:mushroom_mage]
 @yellow    _,-"'-,_
 @yellow ,-"   @redo  .8@yellow'\
 @yellow \,.@red8@yellow_,,,_:._/
-@white    \@yellow u  u@white/
-@white   --|   |.---@cyan@
+@white    \@yellow u  u@white /
+@white @cyan@--.|   |--
 @white      @yellowu u
 [end]
 
@@ -331,9 +365,9 @@ big_rat
 @yellow    _,-"'-,_
 @yellow ,-"   @redo  .8@yellow'\
 @yellow \,.@red8@yellow_,,,_:._/
-@white    \@yellow _  _@white/  ,
-@white     |   |  -+-
-@white      @yellowu u  @white  |
+@white    \@yellow_  _@white /  
+@white  +  |   |  
+@white      @yellowd d
 [end]
 
 [id:mushroom_zombie]
@@ -392,12 +426,20 @@ big_rat
 @yellow@green´@yellow \     |
 @yellow /       \
 [end]
+[id:wood_stump_large]
+@yellow   |  @green( @redo@green)
+@yellow@green(@redo @green)  @yellow|
+@yellow @green.@yellow_j  |  
+@yellow @green´@yellow ;  |
+@yellow   |  | 
+@yellow  /    \
+[end]
 
 kerning_trainer
 
 [id:bartender]
 @yellow  /"@,
-@yellow |@yellowo o
+@yellow @yellowo o|
 @white/    \ @cyan?
 @white|@yellow)@white'-'|@yellow)@bcyanu
 @white|  : |
@@ -405,7 +447,7 @@ kerning_trainer
 
 [id:bar_drunk_0]
 @green  /"@,
-@green |@yellow@ @
+@green @yellow@ @@green|
 @white/    \ @cyan?
 @white|@yellow)@white'-'|@yellow)@bcyanu
 @white|  : |
@@ -413,7 +455,7 @@ kerning_trainer
 
 [id:bar_drunk_1]
 @bred  /"@,
-@bred |@yellow@ @
+@bred @yellow@ @@bred|
 @white/    \ @cyan?
 @white|@yellow)@white'-'|@yellow)@bcyanu
 @white|  : |
@@ -438,9 +480,9 @@ guard_coward
 
 [id:citizen]
 @bred  /"@,
-@bred |@yellow0 0
+@bred @yellow0 0@bred|
 @white/    \
-@white|@yellow)@white'-'|@yellow)
+@white|'-' |
 @white|  : |
 [end]
 

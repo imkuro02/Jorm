@@ -231,6 +231,9 @@ class Item:
         }
         return my_dict
 
+    #def get_icon(self, who_checks = None):
+    #    return get_icon(self)
+
     def identify(self, identifier=None):
         output = f"{self.pretty_name(identifier)}"
         if identifier != None: 

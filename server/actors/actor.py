@@ -1366,7 +1366,7 @@ class Actor:
         
         self.room.combat.next_turn()
 
-    def show_prompts(self, order=None, no_predictions=False, return_gmcp=False):
+    def show_prompts(self, order=None, no_predictions=False, return_gmcp=False, status = None):
         # return if received a empty list of orders
         # if order == None:
         #    return
@@ -1386,8 +1386,12 @@ class Actor:
             _list = list(_list)[:10]
 
             for par in _list:
-                if par.status == ActorStatusType.DEAD:
+
+                if status != None and par.status != status:
                     continue
+
+                #if par.status == ActorStatusType.DEAD:
+                #    continue
 
                 _prompt = par.prompt(self)
                 if not no_predictions:
@@ -1430,6 +1434,7 @@ class Actor:
                             + _prediction
                             + "\n"
                         )
+                    
 
             #output = output[:-1] if output.endswith("\n") else output
 

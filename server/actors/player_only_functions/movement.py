@@ -7,7 +7,7 @@ from configuration.constants.stat_type import StatType
 from configuration.constants.room_constant import RoomConstant
 from affects.affects import Affect
 from configuration.constants.tickrate import TICKRATE
-
+from configuration.constants.message_type import MessageType
 def add_explored_room(actor):
     if hasattr(actor, 'explored_rooms'):
         if actor.room.get_real_id() not in actor.explored_rooms:
@@ -278,7 +278,8 @@ def command_go(self, line = '', room_id = None):
                 f'You walk into a wall',
                 f'{self.id} walks into a wall',
                 sound = Audio.ERROR, send_to = 'room',
-                list_pretty_name_objects = [self]
+                list_pretty_name_objects = [self],
+                msg_type = [MessageType.MOVEMENT],
                 )
             roll = random.randint(0,100)
             if roll == 0:

@@ -369,7 +369,7 @@ class Room:
                 return i
         return False
 
-    def get_actors(self, reverse = False, players_first = False):
+    def get_actors(self, reverse = False, players_first = False, status = None):
         mydict = self.actors.copy()
 
         if players_first:
@@ -378,6 +378,14 @@ class Room:
             key=lambda item: 
                 type(item[1]).__name__ != 'Player'
         ))
+
+        to_del = []
+        for i in mydict:
+            if status == None: continue
+            if mydict[i].status != status:
+                to_del.append(i)
+        for i in to_del:
+            del mydict[i]
 
         if not reverse:
             return mydict
@@ -527,7 +535,7 @@ class Room:
                 send_to="room_different_actor_to_follow",
                 sound=Audio.walk(),
                 list_pretty_name_objects = [actor],
-                msg_type = MessageType.MOVEMENT
+                msg_type = [MessageType.MOVEMENT]
             )
 
         actor.room = self
@@ -577,7 +585,7 @@ class Room:
                 send_to="room_different_actor_to_follow",
                 sound=Audio.walk(),
                 list_pretty_name_objects = [actor],
-                msg_type = MessageType.MOVEMENT
+                msg_type = [MessageType.MOVEMENT]
             )
 
     def delayed_move_actor_after(self, actor):

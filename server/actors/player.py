@@ -503,7 +503,11 @@ class Player(Actor):
         if msg_type != None:
             _msg_type = msg_type
             msg_type = " ".join(_msg_type)
-            #self.msg_history[len(self.msg_history)] = {"type": msg_type, "line": line}
+            self.msg_history[len(self.msg_history)] = {"type": msg_type, "line": line}
+
+            if self.settings_manager.get_value(SETTINGS.MUTE_WALK):
+                if MessageType.MOVEMENT in msg_type:
+                    return
 
         if (
             self.settings_manager.get_value(SETTINGS.DEBUG) == False
@@ -828,8 +832,10 @@ class Player(Actor):
             if not self.protocol.enabled_godot:
                 _text0 = f'{Color.COMBAT_TURN}Your turn Overview{Color.NORMAL}'
                 _text1 = ''#f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
-                _prompts = self.show_prompts(return_gmcp=True).strip()
-                output_self = f"{_text0}\n{_prompts}"
+                if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
+                    _text1 = '\n'.join(self.get_packed_icons(status = self.status))
+                _prompts = self.show_prompts(return_gmcp=True, status = self.status).strip()
+                output_self = f"{_text0}\n{_text1}\n{_prompts}"
                 self.send_line(output_self)
             else:
                 _text1 = f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'

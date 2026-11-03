@@ -29,6 +29,15 @@ versions:
   #
   #
   #
+  "031126":
+    id: "031126"
+    title: Frontend
+    unixtime: 1775631568
+    features:
+      - Redoing most enemy ascii art
+      - Mobile client pending
+      - Combat overview features ascii art of participants if art is enabled
+      - Combat overview filters out non particants
   "221026":
     id: "221026"
     title: Optimization

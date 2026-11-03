@@ -773,6 +773,129 @@ def command_scan(self, line):
 
     self.send_line(f"{self.pretty_name(identifier = self)} scan your surroundings and see: \n{see[:-1:]}")
 
+def get_packed_icons(self, status = None):
+    see = []
+    # XD icons
+
+    icons = []
+    first_non_player = False
+
+    #icons.append(self.command_map('',return_gmcp = True).split('\n'))
+    for i in self.room.get_actors(players_first = True, status = status).values():
+        #if i == self:
+        #    continue
+        #if type(i).__name__ == "Player":
+        #    continue
+        if len(icons) >= 10:
+            continue
+        icon = i.get_icon(who_checks = self) #get_icon(i.npc_id)
+
+        #if self.protocol.enabled_godot:
+        #    import configuration.config
+        #    icon = configuration.config.envelope_icon(i, icon)
+
+        if icon == "":
+            continue
+
+        #if not first_non_player and type(i).__name__ != 'Player':
+        #    icons.append([' '*10])
+        #    first_non_player = True
+
+        icons.append(icon.split("\n"))
+    
+    '''
+    for i in self.room.inventory_manager.items.values():
+        icon = i.get_icon(who_checks = self) #get_icon(i.npc_id)
+
+        if icon == "":
+            continue
+
+        icons.append(icon.split("\n"))
+    '''
+
+    
+
+    widths =  [0] * len(icons)
+    heights = [0] * len(icons)
+    index = 0
+    columns = len(icons)
+    for elem in icons:
+        for line in elem:
+            elem_raw = systems.utils.remove_color(line)
+            pattern = r'\[url(?:=[^\]]*)?\](.*?)\[/url\]'
+            elem_raw = re.sub(pattern, r'\1', elem_raw)
+            if widths[index] <= len(elem_raw):
+                widths[index] = len(elem_raw)
+
+            heights[index] += 1
+        index += 1
+
+    max_height = 0
+    for i in icons:
+        if len(i) >= max_height:
+            max_height = len(i)
+
+    for i in icons:
+        while len(i) < max_height:
+            i.insert(0,' ')
+    # _npcs rat;_npcs spore;_npcs rat;_npcs skeleton_soldier;l
+    # _npcs green_slime;_npcs skeleton_soldier;_npcs red_slime;_npcs blue_slime;_npcs rat;l
+
+    def pack_counts(widths, heights, limit=82):
+        _widths = []
+        _heights = []
+        current = []
+        current2 = []
+        total = 0
+
+        for num in widths:
+            if total + num > limit:
+                _widths.append(current)
+                current = []
+                total = 0
+
+            current.append(num)
+            total += num
+
+
+        if current:
+            _widths.append(current)
+        
+
+        _widths = [len(w) for w in _widths]
+        index = 0
+        for w in _widths:
+            #print(heights[index:index+w])
+            _heights.append(max(heights[index:index+w]))
+            index += w
+
+        return _widths, _heights
+
+
+
+
+    
+    columns, heights = pack_counts(widths, heights)
+    #print(columns, 'XD', heights)
+    #print(widths, columns)
+    start = 0
+    for amount in range(start, start+len(columns)):
+        height = heights[amount]
+        amount = columns[amount]
+        
+        t = systems.utils.Table(amount,0)
+        for row in range(max_height-height, max_height):
+            for column in range(start, start+amount):
+                try:
+                    t.add_data(icons[column][row])
+                except Exception as e:
+                    t.add_data("ERR")
+                
+
+        start += amount
+        see.append(t.get_table())
+
+    return see
 
 def command_look(self, line, return_gmcp=False, short = False):
     def look_room(self, room_id, short = False):
@@ -829,148 +952,8 @@ def command_look(self, line, return_gmcp=False, short = False):
                 _ = _.replace('is','are')
             see.append(_)
 
-
-        # XD icons
         if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
-            icons = []
-            #icons.append(self.command_map('',return_gmcp = True).split('\n'))
-            for i in room.get_actors(players_first = True).values():
-                #if i == self:
-                #    continue
-                #if type(i).__name__ == "Player":
-                #    continue
-                if len(icons) >= 10:
-                    continue
-                icon = i.get_icon(who_checks = self) #get_icon(i.npc_id)
-
-                #if self.protocol.enabled_godot:
-                #    import configuration.config
-                #    icon = configuration.config.envelope_icon(i, icon)
-
-                if icon == "":
-                    continue
-                icons.append(icon.split("\n"))
-
-            
-
-            widths =  [0] * len(icons)
-            heights = [0] * len(icons)
-            index = 0
-            columns = len(icons)
-            for elem in icons:
-                for line in elem:
-                    elem_raw = systems.utils.remove_color(line)
-                    pattern = r'\[url(?:=[^\]]*)?\](.*?)\[/url\]'
-                    elem_raw = re.sub(pattern, r'\1', elem_raw)
-                    if widths[index] <= len(elem_raw):
-                        widths[index] = len(elem_raw)
-
-                    heights[index] += 1
-                index += 1
-
-            max_height = 0
-            for i in icons:
-                if len(i) >= max_height:
-                    max_height = len(i)
-
-            for i in icons:
-                while len(i) < max_height:
-                    i.insert(0,' ')
-            # _npcs rat;_npcs spore;_npcs rat;_npcs skeleton_soldier;l
-            # _npcs green_slime;_npcs skeleton_soldier;_npcs red_slime;_npcs blue_slime;_npcs rat;l
-            '''
-            def pack_counts(nums, limit=82):
-                #_len = len('**********************************************************************************')
-                #print(_len)
-                nums = sorted(nums, reverse=False)
-                groups = []
-
-                for num in nums:
-                    for group in groups:
-                        if sum(group) + num <= limit:
-                            group.append(num)
-                            break
-                        continue
-                    else:
-                        groups.append([num])
-                
-                
-                return [len(group) for group in groups]
-            '''
-            
-            '''
-            def pack_counts(nums, limit=82):
-                #_len = len('**********************************************************************************')
-                #print(_len)
-                nums = sorted(nums, reverse=False)
-                groups = []
-
-                for num in nums:
-                    for group in groups:
-                        if sum(group) + num <= limit:
-                            group.append(num)
-                        continue
-                    else:
-                        groups.append([num])
-                
-                
-                
-                return [len(group) for group in groups]
-            '''
-
-            def pack_counts(widths, heights, limit=82):
-                _widths = []
-                _heights = []
-                current = []
-                current2 = []
-                total = 0
-
-                for num in widths:
-                    if total + num > limit:
-                        _widths.append(current)
-                        current = []
-                        total = 0
-
-                    current.append(num)
-                    total += num
-
-
-                if current:
-                    _widths.append(current)
-                
-
-                _widths = [len(w) for w in _widths]
-                index = 0
-                for w in _widths:
-                    #print(heights[index:index+w])
-                    _heights.append(max(heights[index:index+w]))
-                    index += w
-
-                return _widths, _heights
-
-
-
-
-            
-            columns, heights = pack_counts(widths, heights)
-            #print(columns, 'XD', heights)
-            #print(widths, columns)
-            start = 0
-            for amount in range(start, start+len(columns)):
-                height = heights[amount]
-                amount = columns[amount]
-                
-                t = systems.utils.Table(amount,0)
-                for row in range(max_height-height, max_height):
-                    for column in range(start, start+amount):
-                        try:
-                            t.add_data(icons[column][row])
-                        except Exception as e:
-                            t.add_data("ERR")
-                        
-
-                start += amount
-                see.append(t.get_table())
+            see.append('\n'.join(self.get_packed_icons()))
                 
             
 
@@ -986,6 +969,7 @@ def command_look(self, line, return_gmcp=False, short = False):
                 see.append('\n'.join(see_items))
 
         see = '\n'.join(see)
+
         if not return_gmcp:
             self.send_line(see)
         else:

@@ -37,6 +37,7 @@ class SETTINGS:
     VOL_MASTER = 'MasterVolume'
     VOL_EFFECTS = 'EffectsVolume'
     VOL_MUSIC = 'MusicVolume'
+    MUTE_WALK = 'MuteWalk'
     LIST_SETTINGS = [
         GODMODE,
         GMCP,
@@ -60,7 +61,8 @@ class SETTINGS:
         AUTO_BATTLER,
         SHORT_ROOM_DESCRIPTIONS,
         DEBUGMUTED,
-        VOL_MASTER,VOL_EFFECTS,VOL_MUSIC
+        VOL_MASTER,VOL_EFFECTS,VOL_MUSIC,
+        MUTE_WALK,
         #COLOR,  
     ]
 
@@ -93,7 +95,7 @@ class Settings:
             SETTINGS.VOL_MASTER: "The Master volume, ranging from 0 to 100",
             SETTINGS.VOL_EFFECTS: "The Sound Effect volume, ranging from 0 to 100",
             SETTINGS.VOL_MUSIC: "The Music volume, ranging from 0 to 100",
-
+            SETTINGS.MUTE_WALK: "Dont print player movement",
             }
         self.defaults = {
             SETTINGS.GODMODE: False,
@@ -115,6 +117,7 @@ class Settings:
             SETTINGS.VOL_MASTER: 100,
             SETTINGS.VOL_EFFECTS: 75,
             SETTINGS.VOL_MUSIC: 50,
+            SETTINGS.MUTE_WALK: False,
             SETTINGS.COLOR: {
                 "@normal":              "",
                 #"@back":                "\x1b[0;00x",
@@ -573,6 +576,18 @@ class Settings:
                 self.actor.protocol.send_gmcp({"vol": _effects},  "Client.Media.VolumeEffects")
                 self.actor.protocol.send_gmcp({"vol": _music},    "Client.Media.VolumeMusic")
                 self.actor.send_line(f'MusicVolume set to: {value}')
+            case SETTINGS.MUTE_WALK:
+                if len(line) == 1:
+                    self.actor.send_line(
+                        "MuteWalk setting needs an argument (on or off?)"
+                    )
+                    return
+                value = line[1]
+                self.settings[SETTINGS.MUTE_WALK] = self.true_or_false(value)
+                self.actor.send_line(
+                    f"MuteWalk enabled: {self.settings[SETTINGS.MUTE_WALK]}"
+                )
+
 
 
 def command_settings(self, line):
