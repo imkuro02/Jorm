@@ -774,7 +774,7 @@ class Table:
             tmp_output = f"{elem_raw:<{widths[i]}}"
             if elem['col'] == '':
                 tmp_output = tmp_output.replace(
-                    elem_raw, elem["val"]
+                    elem_raw, elem["val"] + f"@normal"
                 )
             else:
                 tmp_output = tmp_output.replace(
@@ -792,7 +792,7 @@ class Table:
 
         output = output[:-1] if output.endswith("\n") else output
 
-        return output+'@normal'
+        return output
 
 
 def get_unix_timestamp():

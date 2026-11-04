@@ -937,10 +937,12 @@ def command_look(self, line, return_gmcp=False, short = False):
             #see_exits = see_exits[:-2]
             see.append("EXITS: [" + ''.join(see_exits)[:-2] +']')
 
-
+        index = 0
         for i in room.get_actors(players_first = True).values():
-            #if i == self:
-            #    continue
+            index += 1
+            if index > 8:
+                see.append('and more....')
+                break
 
             _ = "" + i.pretty_name(identifier = self) + " is here"
             if i.status == ActorStatusType.DEAD:

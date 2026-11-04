@@ -76,12 +76,12 @@ COMMANDS = [
 ]
 
 for _ in range(1000):
-    COMMANDS.append("n")
-    COMMANDS.append("e")
-    COMMANDS.append("s")
-    COMMANDS.append("w")
-    COMMANDS.append("inv")
-    COMMANDS.append("say hello")
+    #COMMANDS.append("n")
+    #COMMANDS.append("e")
+    #COMMANDS.append("s")
+    #COMMANDS.append("w")
+    #COMMANDS.append("inv")
+    #COMMANDS.append("say hello")
 
 DELAY = 0.1
 
