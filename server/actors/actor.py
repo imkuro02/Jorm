@@ -412,6 +412,7 @@ class Actor:
         self.reset_stats_after_combat = True    # whether to heal to full after combat and reset cooldowns + affs
 
         self.current_dialog = None
+        self.priority = 0
 
         REFTRACKER.add_ref(self)
 
@@ -675,8 +676,7 @@ class Actor:
         return True  # return true if no errors
 
     def pretty_name(self, identifier = None, text_override = None):
-
-        output = ''
+        output = []
         name = self.name if identifier != self else 'You'
 
         # if text_override is not empty, replace the name with whatever the text says
@@ -686,28 +686,31 @@ class Actor:
         match type(self).__name__:
             case "Player":
                 if self.admin:
-                    output = output + f"{Color.NAME_ADMIN}{name}{Color.BACK}"
+                    output.append(Color.NAME_ADMIN)
                 else:
-                    output = output + f"{Color.NAME_PLAYER}{name}{Color.BACK}"
+                    output.append(Color.NAME_PLAYER)
                 #output = output + f' (ego{self.settings_manager.get_value("ego")})'
             case _:
-                output = output + f"{Color.NORMAL}{name}{Color.BACK}"
+                output.append(Color.NORMAL)
+                
+        output.append(name)
+        output.append(Color.BACK)
 
         if identifier != None:
             if identifier.ai.target == self:
-                output = f'@normal(target) {output}'
+                output.insert(0, '@normal(target)')
                 
         match type(identifier).__name__:
             case "Player":
                 if self == identifier:
-                    output = systems.utils.add_godot_url_actor_yourself(self, identifier, output)
+                    output = systems.utils.add_godot_url_actor_yourself(self, identifier, ''.join(output))
                 else:
-                    output = systems.utils.add_godot_url_actors(self, identifier, output)
+                    output = systems.utils.add_godot_url_actors(self, identifier, ''.join(output))
 
         # if self.status == ActorStatusType.FIGHTING:
         #    output = f'{output}'
         # output = output + f'{self.party_manager.get_party_id()}'
-        return output
+        return ''.join(output)
 
     def is_not_in_party_or_is_party_leader(self):
         if self.party_manager.party != None:
@@ -1248,8 +1251,14 @@ class Actor:
         # delete duplicate entires (for example skill thats cast on yourself)
         list_pretty_name_objects = list(set(list_pretty_name_objects))
 
-        
+        #index = 0
         for player in players:
+            #index += 1
+            #if index == 10:
+            #    return
+            if player.priority > 5:
+                continue
+
             if player == self:
                 if line_self == None:
                     continue

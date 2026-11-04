@@ -59,6 +59,7 @@ import threading
 
 #HOST = "jorm.kurowski.xyz"
 HOST = "localhost"
+HOST = '192.168.10.58'
 PORT = 4001
 
 COMMANDS = [
@@ -76,10 +77,10 @@ COMMANDS = [
 ]
 
 for _ in range(1000):
-    #COMMANDS.append("n")
-    #COMMANDS.append("e")
-    #COMMANDS.append("s")
-    #COMMANDS.append("w")
+    COMMANDS.append("n")
+    COMMANDS.append("e")
+    COMMANDS.append("s")
+    COMMANDS.append("w")
     #COMMANDS.append("inv")
     #COMMANDS.append("say hello")
 
