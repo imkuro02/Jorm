@@ -67,8 +67,6 @@ COMMANDS = [
     "guest", "guest", "guest", "guest", "guest", "guest", "guest",
     "go _",
     "set ascii on",
-    "set ascii on",
-    "set ascii on",
     "set gmcp on",
     "set godot on",
     "set map on",

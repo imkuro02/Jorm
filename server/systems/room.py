@@ -125,7 +125,10 @@ class Spawner:
             #_room_index = list(self.room.world.rooms.values()).index(self.room)
             _room_index = self.room.room_index
             _ticks = self.room.world.factory.ticks_passed
-            if (_ticks + _room_index) % RESPAWN_TIME_MOBS == 0:
+            
+            if (_ticks + _room_index) % RESPAWN_TIME_MOBS == 0 or self.room.last_active_tick_timestamp <= self.room.world.factory.ticks_passed - RESPAWN_TIME_MOBS:
+                if (self.room.last_active_tick_timestamp <= self.room.world.factory.ticks_passed - RESPAWN_TIME_MOBS):
+                    print('forced respawn in room', self.room.id)
 
                 self.room.world.factory.respawned_all = False
                 if _room_index == 0:
@@ -140,6 +143,7 @@ class Spawner:
                     )
                 
                 self.respawn_all()
+            
         except Exception as e:
             systems.utils.debug_print(e)
 
@@ -414,19 +418,13 @@ class Room:
         return desc.strip()
 
     def tick(self):
-        
-        actors = {}
-
-        for a in self.actors.values():
-            actors[a.id] = a
-
-        for e in actors.values():
-            e.tick()
-
         if (not self.is_an_instance()
         and self.spawner != None):
             self.spawner.tick()
-            
+        
+        for e in self.actors.copy().values():
+            e.tick()
+
         for i in self.inventory_manager.items.values():
             i.tick()
 

@@ -38,6 +38,7 @@ versions:
       - Mobile client pending
       - Combat overview features ascii art of participants if art is enabled
       - Combat overview filters out non particants
+      - Small optimizations of enemy respawns and room proximity
   "221026":
     id: "221026"
     title: Optimization

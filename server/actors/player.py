@@ -431,9 +431,9 @@ class Player(Actor):
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
         
-        if self.priority <= 10:
+        if self.priority <= 30:
             if len(self.queued_lines) >= 1:
-                self.priority += 1
+                self.priority += 5
                 
                 to_handle = self.queued_lines[0]
                 self.queued_lines.pop(0)
@@ -444,6 +444,7 @@ class Player(Actor):
                 self.update_checker.tick()
 
         self.priority -= 1
+        self.priority -= 100
         self.priority = max(0, self.priority)
 
         

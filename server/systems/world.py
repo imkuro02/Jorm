@@ -366,20 +366,58 @@ class World:
             #print('running fr fr')
             
 
-        rooms = []
 
-        for i in self.rooms:
-            rooms.append(self.rooms[i])
+
+        #return 
+        
+        players = []
+        for p in self.factory.protocols:
+            if p.actor == None:
+                continue
+            players.append(p.actor)
+
+        rooms = []
+        seen = set()
+        while len(players) > 0:
+            p = players[0]
+            _rooms = p.get_nearby_rooms(  view_range=12,
+                                                ignore_if_secret=False,
+                                                ignore_if_doorway=False,
+                                                ignore_if_blocked=False,
+                                                ignore_if_item_required=False,
+                                                ignore_z_change=False)
+            for _r in _rooms.values():
+                _r = self.rooms[_r]
+                if _r not in seen:
+                    rooms.append(_r)
+                    seen.add(_r)
+
+            for a in p.room.actors.values():
+                if a in players:
+                    players.remove(a)
+        
+        for i in rooms:
+            i.tick()
+
         
         index = 0
-        for i in rooms:
+        for i in self.rooms.copy().values():
+            if self.factory.ticks_passed % (TICKRATE * 60) == 0:
+                #print('clearing room cache')
+                i.cached_get_nearby_rooms = {}
+            i.room_index = index
+            index += 1
+
+        '''
+        index = 0
+        for i in self.rooms.copy().values():
             if self.factory.ticks_passed % (TICKRATE * 60) == 0:
                 #print('clearing room cache')
                 i.cached_get_nearby_rooms = {}
             i.room_index = index
             index += 1
             i.tick()
-            
+        '''
 
         
 

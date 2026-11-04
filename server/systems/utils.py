@@ -502,7 +502,6 @@ _colors = copy.deepcopy(colors)
 COLOR_PATTERN = re.compile("|".join(re.escape(c) for c in _colors))
 def add_color(line, color_settings=None):
     colors = _colors
-
     if color_settings:
         colors = _colors.copy()
         for k, v in color_settings.items():
@@ -526,6 +525,8 @@ def add_color(line, color_settings=None):
         return colors.get(code, "")
 
     return COLOR_PATTERN.sub(repl, line)
+
+
 
 def add_godot_url_skill_pretty_name(identifier, skill_id):
     from configuration.config import SKILLS

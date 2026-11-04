@@ -786,7 +786,7 @@ def get_packed_icons(self, status = None):
         #    continue
         #if type(i).__name__ == "Player":
         #    continue
-        if len(icons) >= 10:
+        if len(icons) >= 8:
             continue
         icon = i.get_icon(who_checks = self) #get_icon(i.npc_id)
 
