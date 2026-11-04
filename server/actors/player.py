@@ -433,7 +433,7 @@ class Player(Actor):
         
         if self.priority <= TICKRATE:
             if len(self.queued_lines) >= 1:
-                self.priority += int(TICKRATE / 4)
+                self.priority += TICKRATE
                 
                 to_handle = self.queued_lines[0]
                 self.queued_lines.pop(0)
@@ -605,8 +605,11 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
-        if len(self.queued_lines) >= 3:
-            return
+        if self.priority >= int(TICKRATE/2):
+            self.send_line(f'@bblack> Action queued {len(self.queued_lines)+1} [{line}]')
+            
+        #if len(self.queued_lines) >= 3:
+        #    return
 
         self.queued_lines.append(line)
 

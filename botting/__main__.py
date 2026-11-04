@@ -59,7 +59,7 @@ import threading
 
 #HOST = "jorm.kurowski.xyz"
 HOST = "localhost"
-HOST = '192.168.10.58'
+#HOST = '192.168.10.58'
 PORT = 4001
 
 COMMANDS = [

@@ -1256,8 +1256,8 @@ class Actor:
             #index += 1
             #if index == 10:
             #    return
-            if player.priority > 5:
-                continue
+            #if player.priority > 5:
+            #    continue
 
             if player == self:
                 if line_self == None:
