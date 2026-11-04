@@ -30,6 +30,7 @@ class TriggerManager:
         return False # did not find anything to trigger
 
     def trigger_check_surrounding(self, player, line):
+        
         to_trigger_check = []
         for i in player.inventory_manager.items.values():
             to_trigger_check.append(i)

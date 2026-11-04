@@ -415,6 +415,7 @@ def remove_jump(line):
     line = re.sub(r'\[/?jump(?:\s+[^\]]*)?\]', '', line)
     return line
 
+'''
 def remove_color(line):
     for color_code in colors:
         line = line.replace(color_code, "")
@@ -423,7 +424,13 @@ def remove_color(line):
     line = remove_jump(line)
     
     return line
+'''
 
+color_pattern = re.compile("|".join(map(re.escape, colors)))
+def remove_color(line):
+    line = color_pattern.sub("", line)
+    line = remove_jump(line)
+    return line
 
 def print_colors():
     line = ""
@@ -512,6 +519,7 @@ def add_color(line, color_settings=None):
     current = "@normal"
 
     def repl(match):
+
         nonlocal previous, current
 
         code = match.group(0)
@@ -719,7 +727,7 @@ class Table:
         self.data = []
         self.SPACE = spaces
 
-    def add_data(self, val, col="@normal", filler=" ", add_to_start = False):
+    def add_data(self, val, col="", filler=" ", add_to_start = False):
         data = {"val": str(val), "col": str(col), "fil": filler}
         if add_to_start:
             self.data.insert(0, data)
@@ -764,9 +772,14 @@ class Table:
             elem_raw = elem_raw_list[_]
 
             tmp_output = f"{elem_raw:<{widths[i]}}"
-            tmp_output = tmp_output.replace(
-                elem_raw, elem["col"] + elem["val"] + f"@normal"
-            )
+            if elem['col'] == '':
+                tmp_output = tmp_output.replace(
+                    elem_raw, elem["val"]
+                )
+            else:
+                tmp_output = tmp_output.replace(
+                    elem_raw, elem["col"] + elem["val"] + f"@normal"
+                )
 
             tmp_output = tmp_output.rstrip().ljust(len(tmp_output), elem["fil"])
 
@@ -779,7 +792,7 @@ class Table:
 
         output = output[:-1] if output.endswith("\n") else output
 
-        return output
+        return output+'@normal'
 
 
 def get_unix_timestamp():

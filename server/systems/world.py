@@ -369,7 +369,7 @@ class World:
 
 
         #return 
-        
+        '''
         players = []
         for p in self.factory.protocols:
             if p.actor == None:
@@ -399,7 +399,7 @@ class World:
         for i in rooms:
             i.tick()
 
-        
+        '''
         index = 0
         for i in self.rooms.copy().values():
             if self.factory.ticks_passed % (TICKRATE * 60) == 0:
@@ -407,6 +407,8 @@ class World:
                 i.cached_get_nearby_rooms = {}
             i.room_index = index
             index += 1
+            i.tick()
+
 
         '''
         index = 0

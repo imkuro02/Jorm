@@ -431,9 +431,9 @@ class Player(Actor):
         if self.recently_send_message_count > 0:
             self.recently_send_message_count -= 1
         
-        if self.priority <= 30:
+        if self.priority <= TICKRATE:
             if len(self.queued_lines) >= 1:
-                self.priority += 5
+                self.priority += int(TICKRATE / 4)
                 
                 to_handle = self.queued_lines[0]
                 self.queued_lines.pop(0)
@@ -443,8 +443,8 @@ class Player(Actor):
             if self.update_checker != None:
                 self.update_checker.tick()
 
-        self.priority -= 1
-        self.priority -= 100
+        self.priority -= int(TICKRATE / 10)
+        #self.priority -= 100
         self.priority = max(0, self.priority)
 
         
@@ -498,6 +498,7 @@ class Player(Actor):
 
 
     def send_line(self, line, color=True, sound=None, msg_type: [] = None):
+        #line = '@normal'+line
         if not self.protocol.enabled_godot:
             line = systems.utils.remove_jump(line)
 
@@ -535,7 +536,6 @@ class Player(Actor):
             # line += f'\n'
 
             self.protocol.transport.write(line.encode("utf-8"))
-           
             #self.send_buffer.append(line)
         else:
             # self.protocol.transport.write(b'\x00\x00\x00\x00\x00' + line.encode('utf-8'))
