@@ -426,7 +426,7 @@ class Equipment(Item):
         if self.equiped == False:
             no_changes = True
             output += f"{Color.TOOLTIP}On equip changes:{Color.NORMAL}\n"
-            t = Table(2, 0)
+            t = Table(2, 1)
             '''
             output += f"\n{Color.TOOLTIP}On equip changes:{Color.NORMAL}\n"
             eq = None
@@ -691,8 +691,10 @@ class Equipment(Item):
                     "Wearing" if self.slot != EquipmentSlotType.WEAPON else "Wielding"
                 )
                 # affliction_name = f'{wear_or_wield} {reforge_name} {slot_name}'
-                affliction_name = f"{wear_or_wield} {slot_name} {reforge_id} {obj_id}"
-                reforge_description = f"Your {slot_name} item is {reforge_name}"
+                #affliction_name = f"{wear_or_wield} {slot_name} {reforge_id} {obj_id}"
+                affliction_name = f"{wear_or_wield} {reforge_name} {slot_name}"
+
+                reforge_description = EQUIPMENT_REFORGES[reforge_id]['description'] # f"Your {slot_name} item is {reforge_name}"
                 if reforge_obj == affects.AffectReforge:
                     reforge_description = (
                         reforge_description + " (Affliction didnt load properly)"

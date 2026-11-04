@@ -1,5 +1,5 @@
 {
-    "SHA-256": "beee4d91446917f7b4633cadf536e98b0270e99f2eaa4bd6c73076109e629234",
+    "SHA-256": "4628f1de101bb1e5f9cf3c9b2032b3808a0f83ff063661a48ff3f79712c3ffa0",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -6600,7 +6600,7 @@
             "icon_scheme": "@bblack @bblack @bblack",
             "style": "sneaky",
             "bonuses": "special:chance_dont_end_turn_on_use_stealth=1",
-            "stat_hp_max": "A sign is planted firmly into the soil.",
+            "stat_hp_max": 0,
             "req_hp_max": 0,
             "stat_phy_armor_max": 25,
             "stat_mag_armor_max": 20,
@@ -13505,10 +13505,10 @@
             "premade_id": "rusty_axe",
             "name": "Rusty axe",
             "class": "Equipment",
-            "icon_id": 0,
-            "icon_scheme": 0,
+            "icon_id": "eq_weapon_axe",
+            "icon_scheme": "@red @red",
             "style": "sharp",
-            "bonuses": "skill_level:swing=1,special:skill_bonus_swing=1",
+            "bonuses": "skill_level:strike=1,special:mag_to_phy=1",
             "stat_hp_max": 0,
             "req_hp_max": 0,
             "stat_phy_armor_max": 0,
@@ -15713,7 +15713,7 @@
             "icon_id": 0,
             "icon_scheme": 0,
             "style": 0,
-            "bonuses": "special:soul_gain=1,special:skill_bonus_swing=1",
+            "bonuses": "special:soul_gain=1,special:skill_bonus_swing=1,skill_level:strike=1",
             "stat_hp_max": 0,
             "req_hp_max": 0,
             "stat_phy_armor_max": 0,

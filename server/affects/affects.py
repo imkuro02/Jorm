@@ -946,6 +946,7 @@ class AffectReforge(Affect):
         source_item=None,
         reforge_variables=None,
         dispellable=False,
+        hidden = False
     ):
         super().__init__(
             affect_source_actor,
@@ -954,7 +955,7 @@ class AffectReforge(Affect):
             description,
             turns,
             dispellable=dispellable,
-            hidden = True
+            hidden = hidden
         )
         self.source_item = source_item
         self.reforge_variables = reforge_variables
@@ -1037,6 +1038,7 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
         source_item=None,
         reforge_variables=None,
         dispellable=False,
+        hidden = True,
     ):
         super().__init__(
             affect_source_actor,
@@ -1047,6 +1049,7 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
             source_item=source_item,
             reforge_variables=reforge_variables,
             dispellable=dispellable,
+            hidden = hidden,
         )
         # self.stat = self.reforge_variables['var_a']
         # self.bonus = float(self.reforge_variables['var_b'])

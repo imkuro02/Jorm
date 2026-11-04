@@ -749,6 +749,7 @@ class Actor:
                 t.add_data(f"{aff.turns}")
                 t.add_data(aff.description)
             output = output + t.get_table()
+        output += '\n@bblackAfflictions are triggered in order top to bottom*@normal'
         return output
 
     def get_character_equipment(self, identifier = None, hide_empty=True):
