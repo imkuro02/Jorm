@@ -443,7 +443,7 @@ class Player(Actor):
             if self.update_checker != None:
                 self.update_checker.tick()
 
-        self.priority -= int(TICKRATE / 10)
+        self.priority -= int(TICKRATE / 5)
         #self.priority -= 100
         self.priority = max(0, self.priority)
 
@@ -605,11 +605,14 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
-        if self.priority >= int(TICKRATE/2):
-            self.send_line(f'@bblack> Action queued {len(self.queued_lines)+1} [{line}]')
+        if self.settings_manager.get_value(SETTINGS.ECHO):
+            self.send_line(f'@bblack> {line}@normal')
+
+        #if self.priority >= int(TICKRATE/2):
+        #    self.send_line(f'@bblack> Action queued {len(self.queued_lines)+1} [{line}]')
             
-        #if len(self.queued_lines) >= 3:
-        #    return
+        if len(self.queued_lines) >= 10:
+            return
 
         self.queued_lines.append(line)
 
@@ -643,8 +646,8 @@ class Player(Actor):
             if not line:
                 return
                 
-        if self.settings_manager.get_value(SETTINGS.ECHO):
-            self.send_line(f'@bblack> {line}@normal')
+        #if self.settings_manager.get_value(SETTINGS.ECHO):
+        #    self.send_line(f'@bblack> {line}@normal')
 
         # systems.utils.debug_print(line)
 
