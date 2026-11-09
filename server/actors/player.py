@@ -25,6 +25,7 @@ from configuration.constants.screen import SCREEN
 from systems.trade import TradeManager
 
 _len = SCREEN.WIDTH #len('**********************************************************************************')
+QUEUED_LINES_LIMIT = 20
 
 class FriendManager:
     def __init__(self, owner):
@@ -409,9 +410,61 @@ class Player(Actor):
     def set_admin(self, admin_level):
         self.admin = admin_level
 
-    # def get_character_sheet(self):
-    #    output = super().get_character_sheet()
-    #    return output
+    def send_queued_lines(self):
+
+        
+        self.queued_lines = self.queued_lines[:20]
+
+        if not self.settings_manager.get_value(SETTINGS.ECHO):
+            return
+            #self.send_line(f'@bblack> {line}@normal')
+
+        if len(self.queued_lines) == 0:
+            return
+
+        class Task:
+            def __init__(self, cmd, count):
+                self.cmd = cmd
+                self.count = count
+
+        _list = []
+        for i in self.queued_lines:
+            if ';' in i:
+                return
+            count = 1
+            i = i.strip()
+            if len(_list)<=0:
+                if i == '':
+                    i = self.last_line_handled
+
+
+            if len(_list)>=1:
+                if i == _list[-1].cmd or i == '':
+                    count = count + _list[-1].count
+                    i = _list[-1].cmd 
+                    _list.pop(-1)
+
+            _list.append(Task(i, count))
+
+        
+        _text_list = []
+        for i in _list:
+            x = 12
+            if len(i.cmd) >= x:
+                i.cmd = i.cmd[:x-3] + '...'
+            if i.count > 1:
+                _text_list.append(f'"{i.cmd}"x{i.count}')
+            else:
+                _text_list.append(f'"{i.cmd}"')
+
+        _list = _text_list
+
+        _list = list(reversed(_list))
+        output_gmcp = '\n'.join(_list)
+        output = ' <- '.join(_list)
+
+        self.send_line(f'@bblackQUEUE: {output}{Color.NORMAL}')
+        self.protocol.send_gmcp(output_gmcp, "Queue")
 
     def tick(self):
         if not self.loaded:
@@ -437,8 +490,8 @@ class Player(Actor):
                 
                 to_handle = self.queued_lines[0]
                 self.queued_lines.pop(0)
-
                 self.handle(to_handle)
+                self.send_queued_lines()
 
             if self.update_checker != None:
                 self.update_checker.tick()
@@ -605,16 +658,18 @@ class Player(Actor):
                 )
 
     def queue_handle(self, line):
-        if self.settings_manager.get_value(SETTINGS.ECHO):
-            self.send_line(f'@bblack> {line}@normal')
+        #if self.settings_manager.get_value(SETTINGS.ECHO):
+        #    self.send_line(f'@bblack> {line}@normal')
 
-        #if self.priority >= int(TICKRATE/2):
-        #    self.send_line(f'@bblack> Action queued {len(self.queued_lines)+1} [{line}]')
-            
-        if len(self.queued_lines) >= 10:
+        if len(self.queued_lines) >= QUEUED_LINES_LIMIT:
+            self.send_line('Cannot queue more')
             return
 
+        if line == '':
+            line = self.last_line_sent
+
         self.queued_lines.append(line)
+        self.send_queued_lines()
 
     def try_to_use(self, line):
         from skills.manager import get_skills
@@ -633,6 +688,8 @@ class Player(Actor):
             print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
+        if line != '':
+            self.last_line_handled = line
 
         if (self.status == ActorStatusType.FIGHTING
         and self.settings_manager.get_value(SETTINGS.AUTO_BATTLER)
@@ -726,6 +783,7 @@ class Player(Actor):
                         continue
                     self.queued_lines.append(l)
                     # systems.utils.debug_print(l)
+                
 
                 return
 
