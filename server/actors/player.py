@@ -453,14 +453,18 @@ class Player(Actor):
             if len(i.cmd) >= x:
                 i.cmd = i.cmd[:x-3] + '...'
             if i.count > 1:
-                _text_list.append(f'"{i.cmd}"x{i.count}')
+                _text_list.append(f'"{i.cmd}" x{i.count}')
             else:
                 _text_list.append(f'"{i.cmd}"')
 
         _list = _text_list
-
         _list = list(reversed(_list))
+
         output_gmcp = '\n'.join(_list)
+
+        if len(_list) > 5:
+            _list = _list[:5]+['and more...']
+            
         output = ' <- '.join(_list)
 
         self.send_line(f'@bblackQUEUE: {output}{Color.NORMAL}')
