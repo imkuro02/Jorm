@@ -40,6 +40,8 @@ versions:
       - Combat overview filters out non particants
       - Display of queued commands
       - Passive healing up to 30 life
+      - Added "brews" and brewing via herbs
+      - Flat healing items like potions and brew dont proc
   "221026":
     id: "221026"
     title: Optimization

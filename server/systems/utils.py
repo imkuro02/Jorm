@@ -1040,6 +1040,53 @@ for i in range(0,101):
 """
 
 
+def get_two_objects_from_line(line: str, dict_1, dict_2):
+    line = line.split(' ')
+
+    compare_dict_1 = dict_1
+    compare_dict_2 = dict_2
+
+
+    FIRST_MATCH_OBJ = None
+    SECOND_MATCH_OBJ = None
+
+    found_action_with = ""
+    for i in range(0, len(line)):
+        best_match = get_match(
+            " ".join(line[0 : i + 1]), {**compare_dict_1}
+        )
+        if best_match == None:
+            continue
+
+        found_action_with = " ".join(line[0 : i + 1])
+        FIRST_MATCH_OBJ = best_match
+
+    line = " ".join(line).replace(found_action_with, "", 1).strip().split(" ")
+    line.insert(0, "IDK_AND_IDC!!")
+
+    for i in range(0, len(line)):
+        if " ".join(line[len(line) - i : len(line)]).strip() == "":
+            continue
+
+        _l_bozo = line[-i:]  # ' '.join(line[len(line)-i:len(line)])
+        best_match = get_match(
+            " ".join(_l_bozo), {**compare_dict_2}
+        )
+        if best_match == None:
+            continue
+        SECOND_MATCH_OBJ = best_match
+
+    """
+    if len(line) <= 1:
+        if FIRST_MATCH_OBJ == None:
+            player.send_line(f'Use what?   - "{line}"')
+            return False        
+    """
+
+
+    return FIRST_MATCH_OBJ, SECOND_MATCH_OBJ
+
+
 if __name__ == "__main__":
     line = "@reda@backb@redhello@greenchat@backwhatsup"
     debug_print(add_color(line))

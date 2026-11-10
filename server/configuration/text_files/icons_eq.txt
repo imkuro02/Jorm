@@ -265,3 +265,8 @@
 @bblack    `o-
 @normal`""""""´
 [end]
+
+[id:item_herbs]
+@bred   )@yellowO@bred_
+@bgreen  (@bred´
+[end]

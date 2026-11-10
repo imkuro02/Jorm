@@ -594,6 +594,7 @@ class SkillDamage(Skill):
         dmg_stat_scale=None,
         dmg_type=DamageType.PHYSICAL,
         dmg_to_stat=StatType.HP,
+        dont_proc = False,
     ):
         super().use()
         
@@ -612,6 +613,7 @@ class SkillDamage(Skill):
                 damage_value=dmg,
                 damage_type=dmg_type,
                 damage_to_stat=dmg_to_stat,
+                dont_proc = dont_proc,
             )
 
             #self.combat_event.add_to_queue(damage_obj)
@@ -950,6 +952,7 @@ class SkillFlatHeal(SkillDamage):
             dmg_stat_scale=None,
             dmg_type=dmg_type,
             dmg_to_stat=stat_to_heal,
+            dont_proc = True
             )
         
 class SkillFlatHealHP(SkillFlatHeal):
@@ -1314,7 +1317,7 @@ class SkillBoostStat(Skill):
                 affect_source_actor=self.user,
                 affect_target_actor=self.other,
                 name=name_of_boost,
-                description=f"Temporary {name_of_boost} {StatType.name[stat].lower()} by {abs(int(bonus * 100))}% ({bonus_str})",
+                description=f"Temporary boosted {StatType.name[stat].lower()} by {abs(int(bonus * 100))}% ({bonus_str})",
                 turns=turns,
                 bonus=bonus,
                 stat=stat,

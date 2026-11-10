@@ -40,12 +40,13 @@ class Consumable(Item):
         for s in self.skills:
             skills_to_use += f'{SKILLS[s]["name"]} {self.skills[s]["skill_lv"]}\n'
         
-        output += f"\nContents:\n{skills_to_use}"
-        if self.trigger_manager.triggers != {}:
-            output2 = ''
-            for i in self.trigger_manager.triggers:
-                if self.trigger_manager.triggers[i]['trigger_action'].__name__ == 'trigger_consume':
-                    output2 += f'{i} '
+        if skills_to_use != '':
+            output += f"\nContents:\n{skills_to_use}"
+            if self.trigger_manager.triggers != {}:
+                output2 = ''
+                for i in self.trigger_manager.triggers:
+                    if self.trigger_manager.triggers[i]['trigger_action'].__name__ == 'trigger_consume':
+                        output2 += f'{i} '
 
             if output2 != '':
                 output +='Can be consumed with: '+output2

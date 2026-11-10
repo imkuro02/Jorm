@@ -104,9 +104,10 @@ def load_item(item_premade_id, unique_id = None, max_stats = False):
         #new_item.skill_id = ITEMS[premade_id]["skill"]
         #new_item.skill_level = ITEMS[premade_id]["skill_level"]
 
-        for skills in ITEMS[premade_id]["skills"].split(';'):
-            _skill_id, _skill_lv = skills.split('=')
-            new_item.skills[_skill_id] = {'skill_id': str(_skill_id), 'skill_lv': int(_skill_lv)}
+        if ITEMS[premade_id]["skills"] != 0:
+            for skills in ITEMS[premade_id]["skills"].split(';'):
+                _skill_id, _skill_lv = skills.split('=')
+                new_item.skills[_skill_id] = {'skill_id': str(_skill_id), 'skill_lv': int(_skill_lv)}
 
         new_item.item_del_on_use = ITEMS[premade_id]["del_on_use"]
         new_item.item_add_on_use = ITEMS[premade_id]["add_on_use"]
