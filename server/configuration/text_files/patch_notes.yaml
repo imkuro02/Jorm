@@ -39,6 +39,7 @@ versions:
       - Combat overview features ascii art of participants if art is enabled
       - Combat overview filters out non particants
       - Display of queued commands
+      - Passive healing up to 30 life
   "221026":
     id: "221026"
     title: Optimization

@@ -1054,7 +1054,8 @@ class Actor:
             if val.dispellable and val.resisted_by != None:
                 return
         #self.heal(value=self.stat_manager.stats[StatType.LVL] * 1)
-        #self.heal(value = 1, heal_armor = False, heal_marmor = False)
+        if self.stat_manager.stats[StatType.HP] < 30:
+            self.heal(value = 1, heal_armor = False, heal_marmor = False)
         self.heal(value = 10, heal_hp = False)
         return
         
