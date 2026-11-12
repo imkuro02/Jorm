@@ -24,7 +24,7 @@ class CustomCraftedPotion(Consumable):
         super().__init__(*args, **kwargs)
         self.item_properties['skills'] = '{}'
         self.item_properties['herbs_mixed'] = '0'
-        self.trigger_manager.trigger_add('mix', self.trigger_mix)
+        #self.trigger_manager.trigger_add('mix', self.trigger_mix)
         #self.trigger_manager.trigger_add('test', self.trigger_test)
     
     def after_init(self):
@@ -46,6 +46,7 @@ class CustomCraftedPotion(Consumable):
         self.description += '\n\nYou can "@tipmix <brew> with <herb>@back"'
         self.description += '\nYou can mix 1 herb for every 15 SOUL and MIND'
 
+    '''
     def trigger_mix(self, player, line):
 
         mind = player.stat_manager.stats[StatType.MIND]
@@ -113,6 +114,7 @@ class CustomCraftedPotion(Consumable):
         self.item_properties['skills'] = str(self.skills)
         self.sync_skills()
         return True
+    '''
 
     def identify(self, *args, **kwargs):
         self.sync_skills()

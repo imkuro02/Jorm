@@ -1,0 +1,15 @@
+learn_brewing:
+  name: Herbalistics
+  description: 
+    in_progress: |
+      The towns shopkeeper promised to teach me how to brew in exchange for some herbs
+    completed: |
+      I got the herbs, now I just need to give them up.
+    turned_in: |
+      The shopkeeper was satisfied with my delivery of herbs
+  objectives:
+    Get Herbs:
+      type: collect_x
+      objective: custom_potion_ingredient_0
+      completed_at: 2
+      

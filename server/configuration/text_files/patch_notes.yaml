@@ -43,6 +43,7 @@ versions:
       - Added "brews" and brewing via herbs
       - Flat healing items like potions and brew dont proc
       - Bless and Hex skills no longer spam text
+      - Fixed quest turn ins not consuming items
   "221026":
     id: "221026"
     title: Optimization

@@ -123,6 +123,7 @@ class QuestManager:
                     objective.requirement_id, stacks_to_remove
                 )
 
+
                 if not removed:
                     # if failed to remove quest items, reset it again
                     proposal = ObjectiveCountProposal(
@@ -359,7 +360,7 @@ class Quest:
                     )
                     
             if proposal_accepted:
-                continue
+                break
 
         return proposal_accepted
 

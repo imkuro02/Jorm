@@ -81,5 +81,47 @@ npc_shop:
       
 
 
+
+
+
+
+
+    learn_brewing:
+      append_to: start
+      options:
+        - line: |
+            ask "Why do you sell empty brews?"
+          goto: learn_brewing2
+          quest_start:
+          - id: learn_brewing
+          quest_check:
+          - id: learn_brewing
+            state: not_started
+        - line: |
+            ask "I got you some herbs"
+          goto: learn_brewing3
+          quest_check:
+          - id: learn_brewing
+            state: completed
+          quest_turn_in:
+          - id: learn_brewing
+            reward_exp: 10
+    learn_brewing2:
+      dialog:
+      - line: |
+          <npc> says "Oh! empty brews are quiet useful. 
+          You can mix your own brews using herbs! 
+          Here is an idea, go get me some herbs...
+          And I can teach you to brew!"   
+    learn_brewing3:
+      dialog:
+      - line: |
+          <npc> thanks you and demonstrates brewing,
+          soon the mixture begins to glow. 
+
+          "You can 'mix <brew> with <herb>' to create your own brews"
+          just like so!
         
-    
+
+      
+          
