@@ -42,6 +42,7 @@ versions:
       - Passive healing up to 30 life
       - Added "brews" and brewing via herbs
       - Flat healing items like potions and brew dont proc
+      - Bless and Hex skills no longer spam text
   "221026":
     id: "221026"
     title: Optimization

@@ -1,5 +1,5 @@
 {
-    "SHA-256": "79dbe41528e964acc888a3236ee7369b16ea04227d6acb24c575644d0c7df9a3",
+    "SHA-256": "03fe79b6fbd980f2312ae0125aab9c2121afa02fdb8f079d257a2987f93999fa",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -4159,7 +4159,7 @@
         "bless": {
             "skill_id": "bless",
             "name": "Bless",
-            "description": "Boost Grit, Flow, Mind and Soul by a percent of your Soul\n",
+            "description": "Boost Grit, Flow, Mind and Soul by BONUS%\n",
             "script_to_run": "Bless",
             "sound": "BUFF",
             "target_others_is_valid": true,
@@ -4189,10 +4189,10 @@
                     1.0,
                     0.0
                 ],
-                "old bonus": [
-                    1.0,
-                    1.0,
-                    0.0
+                "bonus": [
+                    10.0,
+                    100.0,
+                    5.0
                 ],
                 "aoe": [
                     4.0,
@@ -4209,7 +4209,7 @@
         "hex": {
             "skill_id": "hex",
             "name": "Hex",
-            "description": "Nerf Grit, Flow, Mind and Soul by percent of your Mind\n",
+            "description": "Nerf Grit, Flow, Mind and Soul by BONUS%\n",
             "script_to_run": "Hex",
             "sound": "DAMAGE_MAGIC_DEALT",
             "target_others_is_valid": true,
@@ -4239,10 +4239,10 @@
                     2.0,
                     0.0
                 ],
-                "old bonus": [
-                    1.0,
-                    1.0,
-                    0.0
+                "bonus": [
+                    10.0,
+                    100.0,
+                    5.0
                 ],
                 "aoe": [
                     1.0,
@@ -6622,7 +6622,7 @@
             "premade_id": "brown wizard robe",
             "name": "Brown robe",
             "class": "Equipment",
-            "icon_id": 0,
+            "icon_id": "custom_potion_ingredient_soul",
             "icon_scheme": 0,
             "style": 0,
             "bonuses": 0,

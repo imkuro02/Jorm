@@ -58,7 +58,7 @@ class Affect:
     #    return f'{self.name:<15} {self.turns:<3} {self.description}\n'
 
     # called when applied
-    def on_applied(self, silent=False):
+    def on_applied(self, silent = False):
         if self.resisted_by != None:
             roll = random.randint(1, 100)
             chance = 0
@@ -445,8 +445,8 @@ class AffectArmorReduceToZero(Affect):
         self.armor = 0
         self.marmor = 0
 
-    def on_applied(self):
-        super().on_applied()
+    def on_applied(self, silent = False):
+        super().on_applied(silent = silent)
         self.armor = self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR]
         #self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = 0
         self.marmor = self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR]
@@ -543,8 +543,8 @@ class AffectOvercharge(Affect):
         self.mp_start = 0
         self.mp_end = 0
 
-    def on_applied(self):
-        super().on_applied()
+    def on_applied(self, silent = False):
+        super().on_applied(silent = silent)
         self.mp_start = self.affect_source_actor.stat_manager.stats[StatType.MPMAX]
         self.affect_source_actor.stat_manager.stats[StatType.MP] = self.affect_source_actor.stat_manager.stats[StatType.MPMAX]
 
@@ -638,8 +638,8 @@ class AffectBoostStat(Affect):
         #)
         self.new_stat = 0
 
-    def on_applied(self):
-        super().on_applied()
+    def on_applied(self, silent = False):
+        super().on_applied(silent = silent)
         self.new_stat = int(
             self.affect_target_actor.stat_manager.stats[self.stat] * self.bonus
         )
@@ -664,8 +664,8 @@ class AffectStealth(Affect):
         self.bonus = bonus
         self.new_stat = 0
 
-    def on_applied(self):
-        super().on_applied()
+    def on_applied(self, silent = False):
+        super().on_applied(silent = silent)
         self.new_stat = int(
             self.affect_target_actor.stat_manager.stats[StatType.FLOW] * self.bonus
         )
@@ -791,8 +791,8 @@ class AffectPromise(Affect):
     # def merge_request(self, affect_to_merge):
     #    return True
 
-    def on_applied(self):
-        super().on_applied()
+    def on_applied(self, silent = False):
+        super().on_applied(silent = silent)
         self.accumulated_damage = 0
         self.hp = self.affect_target_actor.stat_manager.stats[StatType.HP]
         self.pa = self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR]
@@ -977,7 +977,7 @@ class AffectReforge(Affect):
         return True
 
     # called when applied
-    def on_applied(self):
+    def on_applied(self, silent = False):
         affects = self.affect_target_actor.affect_manager.affects
 
         # Move this affect to the front of the dict
@@ -1063,8 +1063,8 @@ class ReforgeStatBonusPerItemLevel(AffectReforge):
         # if self.affect_target_actor.stat_manager.stats[self.stat] - self.bonus <= 0:
         #    self.bonus = self.bonus - self.affect_target_actor.stat_manager.stats[self.stat]
 
-    def on_applied(self):
-        super().on_applied()
+    def on_applied(self, silent = False):
+        super().on_applied(silent = silent)
         # self.affect_target_actor.stat_manager.stats[self.stat] += self.bonus
 
     def on_finished(self, silent=False):

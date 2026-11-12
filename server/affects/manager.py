@@ -22,7 +22,7 @@ class AffectsManager:
         for aff in aff_to_delete:
             aff.on_finished(silent)
 
-    def set_affect_object(self, affect):
+    def set_affect_object(self, affect, silent = False):
         # send a request to merge, if it fails that means
         # the new affect will override current
         # merging logic of turns and whatnot happens in merge_request
@@ -31,11 +31,11 @@ class AffectsManager:
         if affect.name in affs:
             merged = self.affects[affect.name].merge_request(affect)
             if not merged:
-                self.affects[affect.name].on_finished()
+                self.affects[affect.name].on_finished(silent = silent)
 
         if not merged:
             self.affects[affect.name] = affect
-            affect.on_applied()
+            affect.on_applied(silent = silent)
 
     # def set_affect(self, affect_id, turns_override = None):
     #    aff = self.load_affect(affect_id, turns_override)
