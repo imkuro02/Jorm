@@ -145,11 +145,11 @@ town_gate_guard_out:
           - id: find_tree_stuck_citizen
             state: completed
           quest_turn_in:
-              id: find_tree_stuck_citizen
-              reward_exp: 10
-              reward:
-                - item: potion_hp_30
-                  amount: 3
+          - id: find_tree_stuck_citizen
+            reward_exp: 10
+            reward:
+              - item: potion_hp_30
+                amount: 3
         - line: |
             talk about quests
           goto: find_tree_stuck_citizen_in_progress

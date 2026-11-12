@@ -11,6 +11,12 @@ from actors.player_only_functions.checks import (
 from configuration.config import SKILLS
 from configuration.constants.audio import Audio
 from configuration.constants.stat_type import StatType
+from configuration.constants.item_type import ItemType
+from configuration.config import (
+    ITEMS,
+    LORE,
+)
+import items.manager as items
 
 @check_quest_state(quest_id = 'robot_scrap', required_state = 'turned_in')
 @check_not_trading

@@ -106,6 +106,12 @@ npc_shop:
           quest_turn_in:
           - id: learn_brewing
             reward_exp: 10
+        - line: |
+            ask about "brewing"
+          goto: learn_brewing4
+          quest_check:
+          - id: learn_brewing
+            state: turned_in
     learn_brewing2:
       dialog:
       - line: |
@@ -119,9 +125,12 @@ npc_shop:
           <npc> thanks you and demonstrates brewing,
           soon the mixture begins to glow. 
 
-          "You can 'mix <brew> with <herb>' to create your own brews"
-          just like so!
+          "You can 'mix <brew> with <herb>' to create your own brews
+          just like so!"
         
-
+    learn_brewing4:
+      dialog:
+      - line: |
+          "You can 'mix <brew> with <herb>' to create your own brews" says <npc>
       
           

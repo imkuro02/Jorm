@@ -134,11 +134,11 @@ npc_blacksmith:
             tell them you killed the shroomtrio
           goto: reforging
           quest_turn_in:
-              id: blacksmith_reforge
-              reward_exp: 10
-              reward:
-                - item: currency_0
-                  amount: 25
+          - id: blacksmith_reforge
+            reward_exp: 10
+            reward:
+              - item: currency_0
+                amount: 25
           quest_check:
           - id: blacksmith_reforge
             state: completed

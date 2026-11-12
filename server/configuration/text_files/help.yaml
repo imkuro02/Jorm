@@ -226,8 +226,10 @@ commands:
       - look
       - keep
       - equipment
+
+
   scrap:
-    group: items
+    group: crafting
     syntax:
       - scrap <item name>
       - scrap all
@@ -248,7 +250,7 @@ commands:
       - keep
       - equipment
   reforge:
-    group: items
+    group: crafting
     syntax:
       - reforge <item name>
     description: |
@@ -260,6 +262,36 @@ commands:
       - items
       - keep
       - equipment
+
+
+  brew:
+    group: crafting
+    syntax:
+      - mix <brew> with <herb>
+    description: |
+      Mix a herb into a empty brew to create a mixed brew.
+      Herbs can be mixed into already mixed brews.
+      Mixed brews are drinkable consumables that gain.
+      The effects of the herbs mixed.
+    related:
+      - items
+      - keep
+      - equipment
+  mix:
+    group: crafting
+    syntax:
+      - mix <brew> with <herb>
+    description: |
+      Mix a herb into a empty brew to create a mixed brew.
+      Herbs can be mixed into already mixed brews.
+      Mixed brews are drinkable consumables that gain.
+      The effects of the herbs mixed.
+    related:
+      - items
+      - keep
+      - equipment
+
+
   inventory:
     group: items
     syntax:
@@ -273,6 +305,7 @@ commands:
       - get
       - drop
       - craft
+  
   #craft:
   #  group: items
   #  syntax:
@@ -599,24 +632,24 @@ commands:
       - say
       - shout
       - rank
-  guest:
-    group: other
-    syntax:
-      - settings username <new username>
-      - settings password <new password>
-    description: |
-      As a guest, your character will NOT be saved when you log out.
-      To make your character permanent, run "settings username <new username>".
-
-      Once you set your username, you will see your account is no longer a guest account.
-
-      *** BUT ***
-      You still have no password, meaning you wont be able to log in again even if your character is saved.
-      So run "settings password <new password>" afterwards
-    related:
-      - say
-      - shout
-      - rank
+  #guest:
+  #  group: other
+  #  syntax:
+  #    - settings username <new username>
+  #    - settings password <new password>
+  #  description: |
+  #    As a guest, your character will NOT be saved when you log out.
+  #    To make your character permanent, run "settings username <new username>".
+#
+#      Once you set your username, you will see your account is no longer a guest account.
+#
+#      *** BUT ***
+#      You still have no password, meaning you wont be able to log in again even if your character is saved.
+#      So run "settings password <new password>" afterwards
+#    related:
+#      - say
+#      - shout
+#      - rank
   help:
     group: other
     syntax:
@@ -711,24 +744,23 @@ commands:
 # - kick
 # - sethp
 # - reload
-
-  room:
-    group: other
-    syntax:
-      - map
-      - look
-    description: |
-      Rooms are not literal rooms, but more like positions in the world you are in.
-      Rooms have a name, description, exits and items / characters in them.
-      Rooms with a @greengreen@normal name are resting spots.
-      Rooms with a @badpurple@normal name are dungeon rooms.
-      Where you do not regenerate passively.
-      @badPurple@normal rooms are also instanced, meaning unless in a party, other players will not be seen.
-      Rooms with a @yellowyellow@normal name are regular rooms. Where you do regenerate passively.
-    related:
-      - look
-      - map
-      - party
+  #room:
+  #  group: other
+  #  syntax:
+  #    - map
+  #    - look
+  #  description: |
+  #    Rooms are not literal rooms, but more like positions in the world you are in.
+  #    Rooms have a name, description, exits and items / characters in them.
+  #    Rooms with a @greengreen@normal name are resting spots.
+  #    Rooms with a @badpurple@normal name are dungeon rooms.
+  #    Where you do not regenerate passively.
+  #    @badPurple@normal rooms are also instanced, meaning unless in a party, other players will not be seen.
+  #    Rooms with a @yellowyellow@normal name are regular rooms. Where you do regenerate passively.
+  #  related:
+  #    - look
+  #    - map
+  #    - party
   look:
     group: other
     syntax:
@@ -749,18 +781,6 @@ commands:
  #     Will not uncover hidden exits.
  #   related:
  #     - look
-  glance:
-    group: other
-    syntax:
-      - glance
-      - glance <character>
-    description: |
-      View information about a character, item or room, if you use 'glance'
-      without arguments, you will see the room.
-      Glance does not show the description if glancing at a character or the room,
-      but does show a description on items always
-    related:
-      - map
   map:
     group: other
     syntax:
