@@ -1,5 +1,5 @@
 {
-    "SHA-256": "03fe79b6fbd980f2312ae0125aab9c2121afa02fdb8f079d257a2987f93999fa",
+    "SHA-256": "54aae5c166b9e240f8ba0ce9e229e452b6e1da2d7675dd0be5d5c7574fdf6dfd",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -5857,7 +5857,7 @@
             "item_type": "consumable",
             "dont_load": 0,
             "premade_id": "custom_potion",
-            "name": "Empty Brew",
+            "name": "Stale  Brew",
             "class": "CustomCraftedPotion",
             "icon_id": "item_potion",
             "icon_scheme": "@bcyan @cyan",

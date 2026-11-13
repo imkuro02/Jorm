@@ -352,10 +352,14 @@ def get_matches(line, things):
 def get_match(line, things):
     index = 1
 
+    # CLANKER
+    found = next((obj for obj in things.values() if obj.id == line), None)
+    if found:
+        return found
+
     if "." in line:
         index = line.split(".")[0]
         line = line.split(".")[1]
-        print(line)
         if len(index.split()) >= 2:
             return None
 
@@ -575,6 +579,11 @@ def add_godot_url_fight_etc(object, identifier, output):
             __o += f'Stats->stats,'
             __o += f'Practice->practice,'
             __o += f'Inventory->inventory,'
+            
+            __o += f'Scrap->scrap,'
+            __o += f'Reforge->reforge,'
+            __o += f'Brew->brew,'
+
             __o += f'Equipment->equipment,'
             __o += f'Level Grit->level grit,'
             __o += f'Level Flow->level flow,'

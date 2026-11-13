@@ -8,6 +8,8 @@ from actors.player_only_functions.checks import (
     check_quest_state
 )
 
+from custom.utils import CustomDialogQuestionList
+
 from configuration.config import SKILLS
 from configuration.constants.audio import Audio
 from configuration.constants.stat_type import StatType
@@ -18,12 +20,53 @@ from configuration.config import (
 )
 import items.manager as items
 
+
+def command_scrap_dialog_start(self, player, line):
+    questions = {
+        'reforge':    'What do you want to scrap?',
+    }
+
+    options = {}
+    reforges = {}
+    for item in player.inventory_manager.items.values():
+        if not item.can_tinker_with():
+            continue
+        reforges[item.id] = item.pretty_name()
+
+    if reforges == {}:
+        player.send_line('You are lacking items to scrap')
+        return
+
+    options = {
+        'reforge': reforges.copy(),
+        }
+
+
+    player.current_dialog = CustomDialogQuestionList(player, 
+        self, _dialog_tree = None, 
+        questions = questions, options = options, 
+        question_list_dialog_answers_function = self.command_scrap_dialog_answer
+        )
+
+    player.current_dialog.print_dialog()
+    return True
+
+def command_scrap_dialog_answer(dialog_obj):
+    line = f"{dialog_obj.answers['reforge']}"
+    dialog_obj.player.command_scrap(line)
+
 @check_quest_state(quest_id = 'robot_scrap', required_state = 'turned_in')
 @check_not_trading
-@check_no_empty_line
+#@check_no_empty_line
 @check_not_in_combat
 @check_alive
 def command_scrap(self, line):
+    if line == '':
+        setattr(self, 'command_scrap_dialog_answer', command_scrap_dialog_answer)
+        setattr(self, 'command_scrap_dialog_start', command_scrap_dialog_start)
+        self.command_scrap_dialog_start(self = self, player = self, line = '')
+        return
+
     items_to_get = []
 
     #if self.inventory_manager.get_amount_of_free_item_slots() == 0:
@@ -39,7 +82,7 @@ def command_scrap(self, line):
             self.send_line("Scrap what?", sound=Audio.ERROR)
             return
 
-        items_to_get = item_found
+    items_to_get = item_found
 
     items_pretty_name_before_pickup = []
     items_scrapped = []
@@ -79,12 +122,77 @@ def command_scrap(self, line):
         f"{self.pretty_name(self)} scraps {', '.join(items_pretty_name_before_pickup)}",
     )"""
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def command_reforge_dialog_start(self, player, line):
+    questions = {
+        'reforge':    'What equipment do you want to reforge?',
+    }
+
+    options = {}
+    reforges = {}
+    for item in player.inventory_manager.items.values():
+        if item.item_type != ItemType.EQUIPMENT:
+            continue
+        if not item.can_tinker_with():
+            continue
+        reforges[item.id] = item.pretty_name()
+
+    if reforges == {}:
+        player.send_line('You are lacking items to reforge')
+        return
+
+    options = {
+        'reforge': reforges.copy(),
+        }
+
+
+    player.current_dialog = CustomDialogQuestionList(player, 
+        self, _dialog_tree = None, 
+        questions = questions, options = options, 
+        question_list_dialog_answers_function = self.command_reforge_dialog_answer
+        )
+
+    player.current_dialog.print_dialog()
+    return True
+
+def command_reforge_dialog_answer(dialog_obj):
+    line = f"{dialog_obj.answers['reforge']}"
+    dialog_obj.player.command_reforge(line)
+
 @check_quest_state(quest_id = 'blacksmith_reforge', required_state = 'turned_in')
 @check_not_trading
-@check_no_empty_line
+#@check_no_empty_line
 @check_not_in_combat
 @check_alive
 def command_reforge(self, line):
+    if line == '':
+        setattr(self, 'command_reforge_dialog_answer', command_reforge_dialog_answer)
+        setattr(self, 'command_reforge_dialog_start', command_reforge_dialog_start)
+        self.command_reforge_dialog_start(self = self, player = self, line = '')
+        return
+
+    print('wtf')
     if line == "all":
         self.send_line("WHAT AN AWFUL IDEA!! NO!")
         return
@@ -95,16 +203,21 @@ def command_reforge(self, line):
         items_to_get.append(item)
 
     item_found = self.get_item(line)
-    if line != "all":
-        if item_found == None:
-            self.send_line("Reforge what?", sound=Audio.ERROR)
-            return
+    if item_found == None:
+        self.send_line("Reforge what?", sound=Audio.ERROR)
+        return
 
-        items_to_get = item_found
+    items_to_get = item_found
 
     items_pretty_name_before_reforge = []
     items_pretty_name_after_reforge = []
     for item in items_to_get:
+        if item.item_type != ItemType.EQUIPMENT:
+            self.send_line(
+                f"Cannot reforge {item.pretty_name(self)} since its not an equipment"
+            )
+            continue
+
         item_pretty_name_before_reforge = item.pretty_name(self)
 
         if not item.can_tinker_with():
@@ -145,15 +258,88 @@ def command_reforge(self, line):
     )
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def command_brew_dialog_start(self, player, line):
+    questions = {
+        'brew':    'What brew do you want to use?',
+        'herb':    'What herb do you want to use?',
+    }
+
+    options = {}
+    brews = {}
+    for item in player.inventory_manager.items.values():
+        if 'custom_potion' != f'{item.premade_id}':
+            continue
+        brews[item.id] = item.name
+    herbs = {}
+    for item in player.inventory_manager.items.values():
+        if ' custom_potion_ingredient_' not in f' {item.premade_id}_':
+            continue
+        herbs[item.id] = item.name
+
+    if herbs == {}:
+        player.send_line('You are lacking herbs')
+        return
+
+    if herbs == {}:
+        player.send_line('You are lacking brews')
+        return
+
+    options = {
+        'brew': brews.copy(),
+        'herb': herbs.copy(),
+        }
+
+
+    player.current_dialog = CustomDialogQuestionList(player, 
+        self, _dialog_tree = None, 
+        questions = questions, options = options, 
+        question_list_dialog_answers_function = self.command_brew_dialog_answer
+        )
+
+    player.current_dialog.print_dialog()
+    return True
+
+def command_brew_dialog_answer(dialog_obj):
+    line = f"{dialog_obj.answers['brew']} {dialog_obj.answers['herb']}"
+    dialog_obj.player.command_brew(line)
+
 @check_quest_state(quest_id = 'learn_brewing', required_state = 'turned_in')
 @check_not_trading
-@check_no_empty_line
 @check_not_in_combat
 @check_alive
 def command_brew(self, line):
-    player = self
-
     
+    player = self
+    #player.send_line(line)
+    #player.command_brew_dialog_answer = command_brew_dialog_answer
+    if line == '':
+        setattr(player, 'command_brew_dialog_answer', command_brew_dialog_answer)
+        setattr(player, 'command_brew_dialog_start', command_brew_dialog_start)
+        self.command_brew_dialog_start(self = player, player = player, line = '')
+        return
 
     #line = line.replace('mix','')
     _dict = player.inventory_manager.items

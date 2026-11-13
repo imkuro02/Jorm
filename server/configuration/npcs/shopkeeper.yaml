@@ -22,7 +22,7 @@ npc_shop:
             <npc> says "Need anything?"
       options:
         - line: |
-            Buy one Empty Brew for 1 scrap
+            Buy one Stale Brew for 1 scrap
           goto: shopping
           trade:
             give_to_player:

@@ -40,7 +40,7 @@ class CustomCraftedPotion(Consumable):
         self.description += f'\nIt consists of {ha} herb{"" if ha < 1 else "s"}'
         
         if self.skills == {}:
-            self.name = 'Empty Brew'
+            self.name = 'Stale Brew'
             self.description = 'This brew needs more herbs'
 
         self.description += '\n\nYou can "@tipmix <brew> with <herb>@back"'

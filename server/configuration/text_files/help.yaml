@@ -269,7 +269,7 @@ commands:
     syntax:
       - mix <brew> with <herb>
     description: |
-      Mix a herb into a empty brew to create a mixed brew.
+      Mix a herb into a stale brew to create a mixed brew.
       Herbs can be mixed into already mixed brews.
       Mixed brews are drinkable consumables that gain.
       The effects of the herbs mixed.
@@ -282,7 +282,7 @@ commands:
     syntax:
       - mix <brew> with <herb>
     description: |
-      Mix a herb into a empty brew to create a mixed brew.
+      Mix a herb into a stale brew to create a mixed brew.
       Herbs can be mixed into already mixed brews.
       Mixed brews are drinkable consumables that gain.
       The effects of the herbs mixed.
