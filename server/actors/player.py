@@ -467,8 +467,8 @@ class Player(Actor):
             
         output = ' <- '.join(_list)
 
-        self.send_line(f'@bblackQUEUE: {output}{Color.NORMAL}')
-        self.protocol.send_gmcp(output_gmcp, "Queue")
+        self.send_line(f'@bblackNEXT: {output}{Color.NORMAL}')
+        #self.protocol.send_gmcp(output_gmcp, "Queue")
 
     def tick(self):
         if not self.loaded:
@@ -496,6 +496,7 @@ class Player(Actor):
                 self.queued_lines.pop(0)
                 self.handle(to_handle)
                 self.send_queued_lines()
+
 
             if self.update_checker != None:
                 self.update_checker.tick()
@@ -669,11 +670,16 @@ class Player(Actor):
             self.send_line('Cannot queue more')
             return
 
+        
+
         if line == '':
             line = self.last_line_sent
 
+        #if self.settings_manager.get_value(SETTINGS.ECHO):
+        #    self.send_line(f'@bblack> {line}@normal')
+
         self.queued_lines.append(line)
-        self.send_queued_lines()
+        #self.send_queued_lines()
 
     def try_to_use(self, line):
         from skills.manager import get_skills
@@ -692,6 +698,7 @@ class Player(Actor):
             print("matching:", all_words, "found:", best_match, "score:", best_score)
 
     def handle(self, line):
+
         if line != '':
             self.last_line_handled = line
 
@@ -707,8 +714,11 @@ class Player(Actor):
             if not line:
                 return
                 
-        #if self.settings_manager.get_value(SETTINGS.ECHO):
-        #    self.send_line(f'@bblack> {line}@normal')
+        #self.send_queued_lines()
+        
+        if self.settings_manager.get_value(SETTINGS.ECHO):
+            self.send_line(f'@bblack> {line}@normal')
+
 
         # systems.utils.debug_print(line)
 

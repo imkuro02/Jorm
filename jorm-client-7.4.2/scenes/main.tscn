@@ -65,8 +65,9 @@ color = Color(0.243137, 0, 0.243137, 1)
 
 [node name="input" type="ColorRect" parent="canvas" unique_id=322450952]
 custom_minimum_size = Vector2(0, 32)
+offset_left = 392.0
 offset_top = 928.0
-offset_right = 888.0
+offset_right = 1264.0
 offset_bottom = 960.0
 color = Color(0.775063, 0.775063, 0.775063, 1)
 metadata/_edit_group_ = true
@@ -106,9 +107,8 @@ theme_override_fonts/font = ExtResource("19_jxno8")
 text = " >"
 
 [node name="sidebar" type="BoxContainer" parent="canvas" unique_id=143669951]
-offset_left = 896.0
-offset_top = 192.0
-offset_right = 1664.0
+offset_left = 8.0
+offset_right = 392.0
 offset_bottom = 960.0
 vertical = true
 metadata/_edit_group_ = true
@@ -125,6 +125,18 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
 bbcode_enabled = true
 selection_enabled = true
 script = ExtResource("3_gkcnj")
+
+[node name="not used" type="RichTextLabel" parent="canvas/sidebar" unique_id=107860303]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_fonts/normal_font = ExtResource("19_jxno8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_723ol")
+bbcode_enabled = true
+meta_underlined = false
+selection_enabled = true
+script = ExtResource("3_gkcnj")
+metadata/_edit_group_ = true
 
 [node name="ascii_map" type="RichTextLabel" parent="canvas/sidebar" unique_id=546041929]
 custom_minimum_size = Vector2(384, 398)
@@ -182,8 +194,10 @@ meta_underlined = false
 script = ExtResource("3_gkcnj")
 
 [node name="container" type="BoxContainer" parent="canvas" unique_id=83081352]
-offset_right = 888.0
-offset_bottom = 880.0
+offset_left = 384.0
+offset_top = 8.0
+offset_right = 1272.0
+offset_bottom = 888.0
 metadata/_edit_group_ = true
 
 [node name="output" type="VBoxContainer" parent="canvas/container" unique_id=627602021]
@@ -266,8 +280,9 @@ mouse_filter = 1
 color = Color(0.243137, 0, 0.243137, 1)
 
 [node name="smooth_exp_bar" type="RichTextLabel" parent="canvas" unique_id=1608031217]
+offset_left = 392.0
 offset_top = 896.0
-offset_right = 888.0
+offset_right = 1264.0
 offset_bottom = 916.0
 theme_override_fonts/normal_font = ExtResource("19_jxno8")
 bbcode_enabled = true

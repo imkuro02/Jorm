@@ -300,6 +300,8 @@ func update_viewport():
 	$canvas/Label.text = INPUT.text
 	$canvas/Label.position.x = (get_viewport().size.x*.5) - ($canvas/Label.size.x*.25)
 	$canvas/Label.position.y = (get_viewport().size.y*.25) - ($canvas/Label.size.y*.5)
+	
+	
 		
 	is_landscape = browser_size.x+300 > browser_size.y
 	
@@ -315,8 +317,12 @@ func update_viewport():
 		SIDEBAR.position.x = 896.0
 		SIDEBAR.position.y = 360.0
 		SIDEBAR.vertical = !false
+		
 		set_viewport_resolution(1280 , 960)
 	else:
+		$canvas/input.position.x = 0
+		$canvas/container.position.x = 0
+		$canvas/smooth_exp_bar.position.x = 0
 		SIDEBAR.position.x = 0.0
 		SIDEBAR.position.y = 960.0
 		SIDEBAR.vertical = !true
@@ -346,6 +352,9 @@ func _process(_delta):
 	$canvas/Label.text = INPUT.text
 	$canvas/Label.position.x = (OUTPUT.size.x*.5) - ($canvas/Label.size.x*.5)
 	$canvas/Label.position.y = (OUTPUT.size.y*.25) - ($canvas/Label.size.y*.5)
+	
+	
+	
 	socket.poll()
 
 	var state = socket.get_ready_state()
