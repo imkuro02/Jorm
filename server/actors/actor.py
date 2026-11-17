@@ -1067,6 +1067,8 @@ class Actor:
         pass
 
     def die(self, unload=True):
+        self.ai.die()
+        
         if self.room == None:
             systems.utils.debug_print(
                 self.id,
@@ -1078,7 +1080,7 @@ class Actor:
         self.affect_manager.unload_all_affects(silent=True, forced=False)
         self.skill_manager.unload_all_cooldowns()
 
-        #self.ai.die()
+        
         self.status = ActorStatusType.DEAD
         
         

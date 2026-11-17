@@ -352,6 +352,8 @@ def use(self, line, silent=False):
     class FakeSkill:
         def __init__(self, name):
             self.name = name
+            self.id = None
+            # builtins.AttributeError: 'FakeSkill' object has no attribute 'id'
 
         def pretty_name(self):
             return self.name

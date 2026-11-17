@@ -1,5 +1,5 @@
 {
-    "SHA-256": "54aae5c166b9e240f8ba0ce9e229e452b6e1da2d7675dd0be5d5c7574fdf6dfd",
+    "SHA-256": "8d393793b284320036055afbff63bf70fd7ce0b2b39615b0e67f7ffb5c79e6f6",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -3492,7 +3492,7 @@
             "skills": {
                 "stab": 1
             },
-            "on_death_skills_use": null,
+            "on_death_skills_use": "summon_goblin_backup=100",
             "on_start_skills_use": null,
             "loot": {
                 "custom_potion": 75,
@@ -3563,7 +3563,7 @@
             "skills": {
                 "stab": 1
             },
-            "on_death_skills_use": null,
+            "on_death_skills_use": "summon_goblin_backup=20",
             "on_start_skills_use": null,
             "loot": {
                 "custom_potion": 75,
@@ -3633,7 +3633,7 @@
                 "bless": 1,
                 "refresh": 1
             },
-            "on_death_skills_use": null,
+            "on_death_skills_use": "summon_goblin_backup=50",
             "on_start_skills_use": null,
             "loot": {
                 "custom_potion": 75,
@@ -4893,6 +4893,41 @@
                     100.0,
                     100.0,
                     0.0
+                ]
+            }
+        },
+        "summon_goblin_backup": {
+            "skill_id": "summon_goblin_backup",
+            "name": "Goblin Backup",
+            "description": "The goblin cries for help!",
+            "script_to_run": "SummonGoblinBackup",
+            "sound": "ENEMY_DEATH",
+            "target_others_is_valid": true,
+            "target_item_is_valid": false,
+            "target_self_is_valid": true,
+            "can_use_in_combat": true,
+            "can_use_out_of_combat": false,
+            "can_be_passive": false,
+            "can_be_practiced": false,
+            "practice_cost": 0,
+            "level_req": 1.0,
+            "is_offensive": 0.0,
+            "end_turn": true,
+            "script_values": {
+                "levels": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "cooldown": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "chance": [
+                    1.0,
+                    100.0,
+                    1.0
                 ]
             }
         },

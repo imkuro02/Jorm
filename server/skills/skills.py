@@ -1304,6 +1304,9 @@ class SkillBoostStat(Skill):
     def use(self, name_of_boost="affected", stat=StatType.GRIT, bonus = 0, hidden = False, silent = False):
         super().use()
         if self.success:
+            if bonus == 0:
+                bonus = self.calculate_script_value(value = 'bonus')/100
+
             turns = int(self.calculate_script_value(value = 'duration'))
             #if bonus == 0:
             #    bonus = (self.calculate_script_value(value = 'bonus')/100)
@@ -2064,6 +2067,39 @@ class SkillMushroomSpawnSpore(Skill):
         if self.user.status == ActorStatusType.FIGHTING:
             self.user.room.combat.add_participant(e)
 
+class SkillSummonGoblinBackup(Skill):
+    def use(self):
+        if self.calculate_script_value('chance') < random.randint(1,100):
+            br = f'{self.user.id} can\'t call for help!'
+            self.user.pretty_broadcast(br, br, list_pretty_name_objects = [self.user])
+            return
+
+        super().use()
+        from types import MethodType
+        
+        e = systems.utils.create_npc(self.user.room, 'goblin_citizen')
+        e.can_drop_corpse = True
+        e.party_manager.get_party_id = self.user.party_manager.get_party_id
+        e.name = e.name.replace('The','The Summoned')
+        e.loot = {}
+        e.stat_manager.stats[StatType.EXP] = 0
+
+        # this snippet of code replaces the room spawn point
+        # so this enemy becomes the new child of spawner
+        for i in self.user.room.spawner.spawn_points:
+            if self.user.room.spawner.spawn_points[i] == self.user:
+                self.user.room.spawner.spawn_points[i] = e
+                break
+
+        if self.user.status == ActorStatusType.FIGHTING:
+            self.user.room.combat.add_participant(e)
+            skill = 'guard'
+            lvl = 1
+            e.skill_manager.learn(skill_id=skill, amount=lvl)
+            e.ai.predict_use_best_skill(skill_override=skill)
+            e.ai.use_prediction(no_checks=True)
+            e.ai.actor.skill_manager.unlearn(skill_id=skill, amount=lvl)
+            e.ai.clear_prediction()
 
 class SkillAnglerTransform(SkillBoostStat):
     def use(self):

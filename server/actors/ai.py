@@ -63,10 +63,10 @@ class AI:
         # debug = f'{self.actor.name}, {self.prediction_skill}, {self.prediction_target}'
         # self.actor.simple_broadcast(debug,debug)
 
-    # this function is botched
     def die(self):
-        '''
         if self.actor.on_death_skills_use != None:
+            br = f'{self.actor.id} is dying!'
+            self.actor.pretty_broadcast(br, br, list_pretty_name_objects = [self.actor])
             skill, lvl = self.actor.on_death_skills_use.split("=")
             skill = str(skill).strip("")
             lvl = int(lvl)
@@ -75,10 +75,6 @@ class AI:
             self.use_prediction(no_checks=True)
             self.actor.skill_manager.unlearn(skill_id=skill, amount=lvl)
             self.clear_prediction()
-            
-        pass
-        '''
-        pass
 
     def has_prediction(self):
         if self.prediction == None:

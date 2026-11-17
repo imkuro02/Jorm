@@ -31,7 +31,7 @@ versions:
   #
   "031126":
     id: "031126"
-    title: Frontend
+    title: Brewing, frontend, and more
     unixtime: 1775631568
     features:
       - Redoing most enemy ascii art
@@ -46,6 +46,7 @@ versions:
       - Fixed quest turn ins not consuming items
       - One new quest for brewing
       - Scrap, Brew and Reforge now use custom dialogs
+      - Goblins now have a on death skill called backup
   "221026":
     id: "221026"
     title: Optimization
