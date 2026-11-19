@@ -919,7 +919,7 @@ class Player(Actor):
             else:
                 _text1 = f'{Color.COMBAT_TURN}Your turn{Color.NORMAL}'
                 if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
-                    _text1 = '\n'.join(self.get_packed_icons(status = self.status))
+                    _text1 += '\n'.join(self.get_packed_icons(status = self.status))
                 output_self = f"{_text1}"
                 self.send_line(output_self)
 
