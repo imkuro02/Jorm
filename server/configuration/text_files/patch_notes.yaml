@@ -35,6 +35,7 @@ versions:
     unixtime: 1775631568
     features:
       - Crypt and sleepy hill added, alongside ogres
+      - Ascii art icons show up on player turn regardless of gmcp settings
   "031126": 
     id: "031126"
     title: Brewing, frontend, and more

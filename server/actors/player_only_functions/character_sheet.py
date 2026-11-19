@@ -512,7 +512,10 @@ def command_skills(self, line, return_gmcp = False):
             self.send_line("You do not know any skills...")
             return
 
-        t = systems.utils.Table(3, spaces=1)
+        t = systems.utils.Table(6, spaces=1)
+        t.add_data("Skill")
+        t.add_data("Ready")
+        t.add_data("") #charges
         t.add_data("Skill")
         t.add_data("Ready")
         t.add_data("") #charges
