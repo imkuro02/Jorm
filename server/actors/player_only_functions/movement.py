@@ -23,8 +23,8 @@ import random
 @check_your_turn
 @check_alive
 def command_flee(self, line):
-    #self.send_line('@redFleeing is temporarely disabled in game sorry...@normal')
-    #return
+    self.send_line('@redFleeing is temporarely disabled in game sorry...@normal')
+    return
 
     if self.room.combat == None:
         self.send_line(f'{self.pretty_name(identifier = self)} are not in combat, you don\'t need to flee')

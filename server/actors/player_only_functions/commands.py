@@ -140,7 +140,7 @@ commands = {
     'use':      'command_use',
     'target':      'command_target',
     #'try':      'command_use_try',
-    #'flee':     'command_flee',
+    'flee':     'command_flee',
     'fight':    'command_fight',
     #'target':   'command_target',
     'pass':     'command_pass_turn',
