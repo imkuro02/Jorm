@@ -822,3 +822,22 @@ _ \O   o/ _
   )\_(V)_/(
    )/ " \(
 
+[id:ogre_brute]
+@green ,---._
+@green(      :   @yellow__
+@green(@redo  o@green) |  @yellow(  )  
+@green )^   )   @yellow| /
+@green @yellowuUuU @green|   @yellow|/
+@green/ @yellow$$   @green\  O 
+@green|@red*  *  @green|
+[end]
+
+[id:ogre_shaman]
+@green ,---._
+@green(      :   
+@green(@redX  X@green) |   @yellow# 
+@green )^   )  @yellow#-@cyan@@yellow-#
+@green @yellowuUuU@green |  @yellow$ | $
+@green/      \   @yellow|
+@green|@red*  *  @green|   @yellow|
+[end]

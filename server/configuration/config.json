@@ -1,5 +1,5 @@
 {
-    "SHA-256": "8d393793b284320036055afbff63bf70fd7ce0b2b39615b0e67f7ffb5c79e6f6",
+    "SHA-256": "0e71628bcc6d0ea99b3ef53dd9a3751382d46eff899e7fa6a385e1be4dcca839",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -2780,6 +2780,141 @@
                 "zombie"
             ]
         },
+        "ogre_brute": {
+            "npc_id": "ogre_brute",
+            "class": "Npc",
+            "ai": "Enemy",
+            "name": "Ogre Brute",
+            "description": "A large green humanoid with a massive jaw, grinting and swinging its massive arms when you approach.",
+            "stats": {
+                "hp": 200,
+                "phy_armor": 120,
+                "mag_armor": 60,
+                "grit": 30,
+                "flow": 20,
+                "mind": 10,
+                "soul": 10,
+                "exp": 12,
+                "lvl": 12
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {
+                "strike": 1,
+                "bash": 1,
+                "guardian_angel": 1
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "blessing_of_grit": 60,
+                "custom_potion": 75,
+                "custom_potion_ingredient_1": 20,
+                "custom_potion_ingredient_2": 50,
+                "custom_potion_ingredient_grit": 20,
+                "custom_potion_ingredient_flow": 20,
+                "custom_potion_ingredient_mind": 20,
+                "custom_potion_ingredient_soul": 20,
+                "bag_2": 1750,
+                "bag_3": 1000,
+                "bag_4": 1750,
+                "grit body 12": 120,
+                "grit body 15 golem": 225,
+                "grit body 6": 330,
+                "grit body 9": 225,
+                "grit head 12": 120,
+                "grit head 15 golem": 225,
+                "grit head 6": 330,
+                "grit head 9": 225,
+                "grit trinket 12 shield ": 120,
+                "grit trinket 12 sword": 120,
+                "grit trinket 15 golem": 225,
+                "grit trinket 6": 330,
+                "grit trinket 9": 225,
+                "grit weapon 12": 120,
+                "grit weapon 15 golem": 225,
+                "grit weapon 6": 330,
+                "grit weapon 9": 225,
+                "rock": 28,
+                "summoning_rock": 28
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "mushroom"
+            ]
+        },
+        "ogre_shaman": {
+            "npc_id": "ogre_shaman",
+            "class": "Npc",
+            "ai": "Enemy",
+            "name": "Ogre Shaman",
+            "description": "A large green humanoid with a massive jaw, chanting screaming and shouting as when you approach.",
+            "stats": {
+                "hp": 120,
+                "phy_armor": 60,
+                "mag_armor": 120,
+                "grit": 10,
+                "flow": 20,
+                "mind": 30,
+                "soul": 25,
+                "exp": 12,
+                "lvl": 12
+            },
+            "drop_corpse": true,
+            "include_in_daily_quests": true,
+            "skills": {
+                "chain_heal": 1,
+                "hex": 1,
+                "cure_light_wounds": 1,
+                "guardian_angel": 1
+            },
+            "on_death_skills_use": null,
+            "on_start_skills_use": null,
+            "loot": {
+                "translucent scroll": 100,
+                "blessing_of_mind": 60,
+                "custom_potion": 75,
+                "custom_potion_ingredient_1": 20,
+                "custom_potion_ingredient_2": 50,
+                "custom_potion_ingredient_grit": 20,
+                "custom_potion_ingredient_flow": 20,
+                "custom_potion_ingredient_mind": 20,
+                "custom_potion_ingredient_soul": 20,
+                "bag_2": 1750,
+                "bag_3": 1000,
+                "bag_4": 1750,
+                "mind body 12": 120,
+                "mind body 15": 225,
+                "mind body 6": 330,
+                "mind body 9": 225,
+                "mind head 12": 120,
+                "mind head 15": 225,
+                "mind head 6": 330,
+                "mind head 9": 225,
+                "mind trinket 12": 120,
+                "mind trinket 15": 225,
+                "mind trinket 6": 330,
+                "mind trinket 9": 225,
+                "mind weapon 12": 120,
+                "mind weapon 15": 225,
+                "mind weapon 6": 330,
+                "mind weapon 9": 225,
+                "rock": 28,
+                "summoning_rock": 28
+            },
+            "combat_loop": {},
+            "can_start_fights": true,
+            "dont_join_fights": false,
+            "no_random_loot": false,
+            "drop_tags": [
+                "all",
+                "mushroom"
+            ]
+        },
         "zombie": {
             "npc_id": "zombie",
             "class": "Npc",
@@ -4180,9 +4315,9 @@
                     0.0
                 ],
                 "duration": [
-                    10.0,
-                    30.0,
-                    5.0
+                    50.0,
+                    200.0,
+                    25.0
                 ],
                 "cooldown": [
                     1.0,
