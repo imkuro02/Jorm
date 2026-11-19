@@ -831,6 +831,24 @@ _ \O   o/ _
 @green/ @yellow$$   @green\  O 
 @green|@red*  *  @green|
 [end]
+[id:ogre_brute]
+@green      ,---._
+@yellow __  @green(      :  @yellow__
+@yellow(  ) @green(@redo  o@green) | @yellow(  )  
+@yellow \ | @green )^   )  @yellow| /
+@yellow  \|@green  @yellowuUuU@green |  @yellow|/
+@green   O / @yellow$$   @green\ O 
+@green     |@red*  *  @green|
+[end]
+[id:ogre_brute]
+@green      ,---._
+@yellow __  @green(      :
+@yellow(  ) @green(@redo  o@green) | 
+@yellow \ | @green )^   )
+@yellow  \|@green  @yellowuUuU@green |
+@green   O / @yellow$$   @green\ 
+@green     |@red*  *  @green|
+[end]
 
 [id:ogre_shaman]
 @green ,---._
