@@ -1,5 +1,5 @@
 {
-    "SHA-256": "0e71628bcc6d0ea99b3ef53dd9a3751382d46eff899e7fa6a385e1be4dcca839",
+    "SHA-256": "5df12146c88c36652857971fdfe4b0c7add410c6094ba1ca33c4e176fb3eeef3",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -6047,7 +6047,7 @@
             "description_room": null,
             "invisible": false,
             "ambience_sfx": null,
-            "ambience": "The potion emits a soft glow",
+            "ambience": null,
             "can_pick_up": true,
             "description": null
         },
@@ -6075,7 +6075,7 @@
             "description_room": null,
             "invisible": false,
             "ambience_sfx": null,
-            "ambience": "The potion emits a soft glow",
+            "ambience": null,
             "can_pick_up": true,
             "description": "These herbs can be eaten raw, or mixed in a brew"
         },
@@ -6103,7 +6103,7 @@
             "description_room": null,
             "invisible": false,
             "ambience_sfx": null,
-            "ambience": "The potion emits a soft glow",
+            "ambience": null,
             "can_pick_up": true,
             "description": "These herbs can be eaten raw, or mixed in a brew"
         },
@@ -6131,7 +6131,7 @@
             "description_room": null,
             "invisible": false,
             "ambience_sfx": null,
-            "ambience": "The potion emits a soft glow",
+            "ambience": null,
             "can_pick_up": true,
             "description": "These herbs can be eaten raw, or mixed in a brew"
         },
@@ -6159,7 +6159,7 @@
             "description_room": null,
             "invisible": false,
             "ambience_sfx": null,
-            "ambience": "The potion emits a soft glow",
+            "ambience": null,
             "can_pick_up": true,
             "description": "These herbs can be eaten raw, or mixed in a brew"
         },
@@ -6187,7 +6187,7 @@
             "description_room": null,
             "invisible": false,
             "ambience_sfx": null,
-            "ambience": "The potion emits a soft glow",
+            "ambience": null,
             "can_pick_up": true,
             "description": "These herbs can be eaten raw, or mixed in a brew"
         },
@@ -6215,7 +6215,7 @@
             "description_room": null,
             "invisible": false,
             "ambience_sfx": null,
-            "ambience": "The potion emits a soft glow",
+            "ambience": null,
             "can_pick_up": true,
             "description": "These herbs can be eaten raw, or mixed in a brew"
         },
@@ -6243,7 +6243,7 @@
             "description_room": null,
             "invisible": false,
             "ambience_sfx": null,
-            "ambience": "The potion emits a soft glow",
+            "ambience": null,
             "can_pick_up": true,
             "description": "These herbs can be eaten raw, or mixed in a brew"
         },
