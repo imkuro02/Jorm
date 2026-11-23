@@ -859,3 +859,26 @@ _ \O   o/ _
 @green/      \   @yellow|
 @green|@red*  *  @green|   @yellow|
 [end]
+
+
+
+
+
+[id:spiki]
+    ___,
+  (#;;;
+  //Q~Q)
+  >>bb
+[end]
+[id:spiki]
+   ___
+  `;;;#)
+  (Q~Q\\
+   vv<<
+[end]
+[id:spiki]
+@bblack    ___@yellow,
+@bblack  (@yellow#;;;
+@yellow  //@normalQ~Q)
+@yellow  >>@bblackbb
+[end]

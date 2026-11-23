@@ -107,16 +107,17 @@ def create_npc(room, npc_id, spawn_for_lore=False):
 
     npc_class = Npc
     _npc_classes = custom_loader.load_custom_object(npc_class())
-    for i in _npc_classes:
-        if ENEMIES[loc['npc_id']]["class"] == i.__name__:
-            npc_class = i
-            break
-    for i in _npc_classes:
-        if 'npc_class' not in loc:
-            break
-        if loc['npc_class'] == i.__name__:
-            npc_class = i
-            break
+    if loc['npc_id'] in ENEMIES:
+        for i in _npc_classes:
+            if ENEMIES[loc['npc_id']]["class"] == i.__name__:
+                npc_class = i
+                break
+        for i in _npc_classes:
+            if 'npc_class' not in loc:
+                break
+            if loc['npc_class'] == i.__name__:
+                npc_class = i
+                break
 
 
     my_npc = npc_class(
