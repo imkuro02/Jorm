@@ -512,10 +512,12 @@ def command_skills(self, line, return_gmcp = False):
             self.send_line("You do not know any skills...")
             return
 
-        t = systems.utils.Table(6, spaces=1)
+        t = systems.utils.Table(7, spaces=1)
         t.add_data("Skill")
         t.add_data("Ready")
         t.add_data("") #charges
+        SEPERATOR = "  |  "
+        t.add_data(SEPERATOR) 
         t.add_data("Skill")
         t.add_data("Ready")
         t.add_data("") #charges
@@ -582,6 +584,9 @@ def command_skills(self, line, return_gmcp = False):
             #else:
             #    cur_lvl = f"{Color.BAD}{cur_lvl}{Color.NORMAL}"
             #t.add_data(f"{cur_lvl} {diff}")
+            if len(t.data) % 7 != 0:
+                t.add_data(SEPERATOR) 
+
         
         if return_gmcp:
             return t.get_table()
