@@ -798,9 +798,28 @@ class AffectPromise(Affect):
         self.pa = self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR]
         self.ma = self.affect_target_actor.stat_manager.stats[StatType.MAGARMOR]
 
+    def set_turn(self):
+        super().set_turn()
+        i = self.affect_target_actor
+        if self.accumulated_damage >= 0:
+            br = f'{i.id} will take {self.accumulated_damage} pure damage in {self.turns+1} turn{"s" if self.turns>1 else ""} from {self.name}'
+        else:
+            br = f'{i.id} will heal {self.accumulated_damage*-1} life in {self.turns+1} turn{"s" if self.turns>1 else ""} from {self.name}'
+        i.pretty_broadcast(br,br,list_pretty_name_objects=[i, self])
+
     def on_finished(self, silent=False):
         super().on_finished(silent=False)
         if self.accumulated_damage <= 0:
+            damage_obj = Damage(
+            damage_source_actor=self.affect_target_actor,
+            damage_taker_actor=self.affect_target_actor,
+            damage_source_action=self,
+            damage_value=self.accumulated_damage*-1,
+            damage_type=DamageType.HEALING,
+            dont_proc = True,
+            )
+
+            damage_obj.run()
             return
 
         damage_obj = Damage(
@@ -818,12 +837,15 @@ class AffectPromise(Affect):
         # self.affect_target_actor.simple_broadcast('absorbed','absorbed')
         # if self.turns <= 0:
         #    return damage_obj
-
+        i = self.affect_target_actor
         damage_obj.damage_value = abs(damage_obj.damage_value)
         if damage_obj.damage_type == DamageType.HEALING:
             self.accumulated_damage -= damage_obj.damage_value
+            br = f'{self.name} absorbs {damage_obj.damage_value} {DamageType.name[damage_obj.damage_type]}'
         elif damage_obj.damage_type != DamageType.CANCELLED:
+            br = f'{self.name} absorbs {damage_obj.damage_value} {DamageType.name[damage_obj.damage_type]}'
             self.accumulated_damage += damage_obj.damage_value
+        i.pretty_broadcast(br,br,list_pretty_name_objects=[i, self])
 
         self.affect_target_actor.stat_manager.stats[StatType.HP] = self.hp
         self.affect_target_actor.stat_manager.stats[StatType.PHYARMOR] = self.pa
