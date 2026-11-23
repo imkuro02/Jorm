@@ -639,7 +639,7 @@ def rest_here(self, line):
     self.stat_manager.stats[StatType.MAGARMOR] = int(
         self.stat_manager.stats[StatType.MAGARMORMAX]
     )
-    self.affect_manager.unload_all_affects(forced=False)
+    self.affect_manager.unload_all_affects(forced=True)
     self.skill_manager.unload_all_cooldowns()
     self.skill_manager.unload_all_charges()
     # self.new_room_look()
@@ -669,6 +669,8 @@ def rest_here_request(self, line):
 def rest_home(self, line):
     self.sendSound(Audio.BUFF)
     self.skill_manager.unload_all_charges()
+    self.affect_manager.unload_all_affects(forced=True)
+
 
     if self.status == ActorStatusType.DEAD:
         self.status = ActorStatusType.NORMAL

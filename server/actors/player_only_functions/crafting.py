@@ -76,13 +76,18 @@ def command_scrap(self, line):
     for item in self.inventory_manager.items.values():
         items_to_get.append(item)
 
-    item_found = self.get_item(line)
-    if line != "all":
-        if item_found == None:
-            self.send_line("Scrap what?", sound=Audio.ERROR)
-            return
 
-    items_to_get = item_found
+    item_found = self.get_item(line)
+
+
+    
+    if items_to_get == []:
+        self.send_line("Scrap what?", sound=Audio.ERROR)
+        return
+
+    if item_found != None and line != 'all':
+        items_to_get = item_found
+    
 
     items_pretty_name_before_pickup = []
     items_scrapped = []

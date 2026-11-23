@@ -38,6 +38,9 @@ versions:
       - Ascii art icons show up on player turn regardless of gmcp settings
       - Herbs no longer have potion SFX
       - Promise skill is now more verbose
+      - Fixed "scrap all" server crash
+      - Fixed some afflictions
+      - Resting removes all afflictions
   "031126": 
     id: "031126"
     title: Brewing, frontend, and more

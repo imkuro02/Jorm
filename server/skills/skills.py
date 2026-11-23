@@ -1316,15 +1316,22 @@ class SkillBoostStat(Skill):
             else:
                 bonus_str = f'+{int(self.other.stat_manager.stats[stat] * bonus)}'
 
+            description = ''
+            if bonus >= 0:
+                description=f"Temporary enhanced {StatType.name[stat].lower()} by {abs(int(bonus * 100))}% ({bonus_str})"
+            else:
+                description=f"Temporary reduced {StatType.name[stat].lower()} by {abs(int(bonus * 100))}% ({bonus_str})"
+
             aff = affects.AffectBoostStat(
                 affect_source_actor=self.user,
                 affect_target_actor=self.other,
                 name=name_of_boost,
-                description=f"Temporary boosted {StatType.name[stat].lower()} by {abs(int(bonus * 100))}% ({bonus_str})",
+                description=description,
                 turns=turns,
                 bonus=bonus,
                 stat=stat,
                 hidden = hidden,
+                silent = silent,
                 dispellable = hidden, #hmmmm
             )
             self.other.affect_manager.set_affect_object(affect = aff, silent = silent)
@@ -1335,6 +1342,7 @@ class SkillBless(SkillBoostStat):
         Skill.use(self)
         self.no_cooldown = True
         self.silent_use = True
+
         turns = int(self.calculate_script_value(value = 'duration'))
         aff = affects.Affect(
                 affect_source_actor=self.user,
@@ -1342,22 +1350,25 @@ class SkillBless(SkillBoostStat):
                 name="Blessed",
                 description=f"",
                 turns=turns,
+                dispellable = False,
             )
+
         self.other.affect_manager.set_affect_object(affect = aff, silent = False)
-        aff.on_finished(silent = True)
+        #aff.on_finished(silent = True)
 
         bon = self.user.stat_manager.stats[StatType.SOUL]/100
         bon = self.calculate_script_value(value = 'bonus')/100
-        super().use(name_of_boost="Grit Blessed", stat=StatType.GRIT, bonus = bon, silent = True)
-        super().use(name_of_boost="Flow Blessed", stat=StatType.FLOW, bonus = bon, silent = True)
-        super().use(name_of_boost="Mind Blessed", stat=StatType.MIND, bonus = bon, silent = True)
-        super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL, bonus = bon, silent = True)
+        super().use(name_of_boost="Grit Blessed", stat=StatType.GRIT, bonus = bon, hidden = False, silent = True)
+        super().use(name_of_boost="Flow Blessed", stat=StatType.FLOW, bonus = bon, hidden = False, silent = True)
+        super().use(name_of_boost="Mind Blessed", stat=StatType.MIND, bonus = bon, hidden = False, silent = True)
+        super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL, bonus = bon, hidden = False, silent = True)
 
 class SkillHex(SkillBoostStat):
     def use(self):
         Skill.use(self)
         self.no_cooldown = True
         self.silent_use = True
+
         turns = int(self.calculate_script_value(value = 'duration'))
         aff = affects.Affect(
                 affect_source_actor=self.user,
@@ -1365,16 +1376,18 @@ class SkillHex(SkillBoostStat):
                 name="Hexed",
                 description=f"",
                 turns=turns,
+                dispellable = False,
             )
-        self.other.affect_manager.set_affect_object(affect = aff, silent = False)
-        aff.on_finished(silent = True)
 
-        bon = self.user.stat_manager.stats[StatType.SOUL]/100
-        bon = self.calculate_script_value(value = 'bonus')/100
-        super().use(name_of_boost="Grit Hexed", stat=StatType.GRIT, bonus = -bon, silent = True)
-        super().use(name_of_boost="Flow Hexed", stat=StatType.FLOW, bonus = -bon, silent = True)
-        super().use(name_of_boost="Mind Hexed", stat=StatType.MIND, bonus = -bon, silent = True)
-        super().use(name_of_boost="Soul Hexed", stat=StatType.SOUL, bonus = -bon, silent = True)
+        self.other.affect_manager.set_affect_object(affect = aff, silent = False)
+        #aff.on_finished(silent = True)
+
+        bon = -self.user.stat_manager.stats[StatType.SOUL]/100
+        bon = -self.calculate_script_value(value = 'bonus')/100
+        super().use(name_of_boost="Grit Blessed", stat=StatType.GRIT, bonus = bon, hidden = False, silent = True)
+        super().use(name_of_boost="Flow Blessed", stat=StatType.FLOW, bonus = bon, hidden = False, silent = True)
+        super().use(name_of_boost="Mind Blessed", stat=StatType.MIND, bonus = bon, hidden = False, silent = True)
+        super().use(name_of_boost="Soul Blessed", stat=StatType.SOUL, bonus = bon, hidden = False, silent = True)
 
 
 class SkillBoostStatGrit(SkillBoostStat):

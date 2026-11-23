@@ -20,6 +20,7 @@ class Affect:
         get_prediction_string_clear=False,
         dispellable=True,
         hidden = False,
+        silent = False,
         priority = 0,
     ):
         # used for pretty_name and pretty_broadcast 
@@ -45,6 +46,7 @@ class Affect:
 
         self.dispellable = dispellable
         self.hidden = hidden
+        self.silent = silent
 
     def pretty_name(self, identifier = None):
         if self.turns == 0:
@@ -90,6 +92,9 @@ class Affect:
         if self.hidden:
             return
 
+        if self.silent:
+            return
+            
         list_pretty_name_objects = [self.affect_manager.actor, self]
         self.affect_manager.actor.pretty_broadcast(
             f"{self.affect_manager.actor.id} are {self.id}",
@@ -99,7 +104,7 @@ class Affect:
 
     # called when effect is over
     def on_finished(self, silent=False):
-        if not silent and not self.hidden:
+        if not silent and not self.hidden and not self.silent:
             list_pretty_name_objects = [self.affect_manager.actor, self]
             self.affect_manager.actor.pretty_broadcast(
                 f"{self.affect_manager.actor.id} are no longer {self.id}",
@@ -157,24 +162,11 @@ class AffectWellRested(Affect):
 
 # this affect takes a skill object before its ran and runs it when affect runs outta time
 class AffectDelayedAction(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        skills_to_use_objects,
-    ):
-        super().__init__(
-            affect_source_actor,
-            affect_target_actor,
-            name,
-            description,
-            turns,
-            dispellable=False,
-        )
-        self.skills_to_use_objects = skills_to_use_objects
+    def __init__(self, *args, **kwargs):
+        self.skills_to_use_objects = kwargs['skills_to_use_objects']
+        del kwargs['skills_to_use_objects']
+        super().__init__(*args, **kwargs)
+
         self.get_prediction_string_append = f"will {self.skills_to_use_objects[0].pretty_name()} in {self.turns + 1} turn{'s' if self.turns > 1 else ''}"
         self.get_prediction_string_clear = True
         self.name = f'Charging {self.skills_to_use_objects[0].pretty_name()}'
@@ -349,19 +341,10 @@ class AffectNightmare(Affect):
 
 
 class Leech(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        leech_power,
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
-        self.leech_power = leech_power
+    def __init__(self, *args, **kwargs):
+        self.leech_power = kwargs['leech_power']  # how much in % to reflect
+        del kwargs['leech_power']
+        super().__init__(*args, **kwargs)
 
     def dealt_damage(self, damage_obj):
         if damage_obj.damage_type != DamageType.PHYSICAL:
@@ -387,19 +370,10 @@ class Leech(Affect):
 
 
 class AffectThorns(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        damage_reflected_power,
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
-        self.damage_reflected_power = damage_reflected_power  # how much in % to reflect
+    def __init__(self, *args, **kwargs):
+        self.damage_reflected_power = kwargs['damage_reflected_power']  # how much in % to reflect
+        del kwargs['damage_reflected_power']
+        super().__init__(*args, **kwargs)
 
     def take_damage_after_calc(self, damage_obj):
         if damage_obj.damage_type != DamageType.PHYSICAL:
@@ -423,25 +397,8 @@ class AffectThorns(Affect):
 
 
 class AffectArmorReduceToZero(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        dispellable=False,
-        resisted_by=None
-    ):
-        super().__init__(
-            affect_source_actor,
-            affect_target_actor,
-            name,
-            description,
-            turns,
-            dispellable=dispellable,
-            resisted_by=resisted_by,
-        )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.armor = 0
         self.marmor = 0
 
@@ -569,12 +526,8 @@ class AffectOvercharge(Affect):
 
 
 class AffectDeflectMagic(Affect):
-    def __init__(
-        self, affect_source_actor, affect_target_actor, name, description, turns
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def take_damage_before_calc(self, damage_obj: Damage):
         if damage_obj.damage_type == DamageType.MAGICAL:
@@ -585,19 +538,10 @@ class AffectDeflectMagic(Affect):
 
 
 class AffectEthereal(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        dmg_amp,
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
-        self.dmg_amp = dmg_amp
+    def __init__(self, *args, **kwargs):
+        self.dmg_amp = kwargs['dmg_amp']
+        del kwargs['dmg_amp']
+        super().__init__(*args, **kwargs)
 
     def take_damage_before_calc(self, damage_obj: Damage):
         if damage_obj.damage_type == DamageType.PHYSICAL:
@@ -655,13 +599,10 @@ class AffectBoostStat(Affect):
 
 
 class AffectStealth(Affect):
-    def __init__(
-        self, affect_source_actor, affect_target_actor, name, description, turns, bonus
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
-        self.bonus = bonus
+    def __init__(self, *args, **kwargs):
+        self.bonus = kwargs['bonus']
+        del kwargs['bonus']
+        super().__init__(*args, **kwargs)
         self.new_stat = 0
 
     def on_applied(self, silent = False):
@@ -701,25 +642,10 @@ class AffectStealth(Affect):
 
 
 class AffectBleed(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        resisted_by,
-        damage,
-    ):
-        super().__init__(
-            affect_source_actor,
-            affect_target_actor,
-            name,
-            description,
-            turns,
-            resisted_by,
-        )
-        self.damage = damage
+    def __init__(self, *args, **kwargs):
+        self.damage = kwargs['damage']
+        del kwargs['damage']
+        super().__init__(*args, **kwargs)
         
 
     # def take_damage_after_calc(self, damage_obj):
@@ -754,23 +680,14 @@ class AffectBleed(Affect):
 
 
 class AffectDOT(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        damage_value,
-        damage_type,
-        damage_to_stat,
-    ):
-        super().__init__(
-            affect_source_actor, affect_target_actor, name, description, turns
-        )
-        self.damage_value = damage_value
-        self.damage_type = damage_type
-        self.damage_to_stat = damage_to_stat
+    def __init__(self, *args, **kwargs):
+        self.damage_value = kwargs['damage_value']
+        del kwargs['damage_value']
+        self.damage_type = kwargs['damage_type']
+        del kwargs['damage_type']
+        self.damage_to_stat = kwargs['damage_to_stat']
+        del kwargs['damage_to_stat']
+        super().__init__(*args, **kwargs)
 
     def set_turn(self):
         super().set_turn()
@@ -958,29 +875,12 @@ class AffectAreaOfEffectDamageOnFinished(Affect):
 
 
 class AffectReforge(Affect):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        source_item=None,
-        reforge_variables=None,
-        dispellable=False,
-        hidden = False
-    ):
-        super().__init__(
-            affect_source_actor,
-            affect_target_actor,
-            name,
-            description,
-            turns,
-            dispellable=dispellable,
-            hidden = hidden
-        )
-        self.source_item = source_item
-        self.reforge_variables = reforge_variables
+    def __init__(self, *args, **kwargs):
+        self.source_item = kwargs['source_item']
+        del kwargs['source_item']
+        self.reforge_variables = kwargs['reforge_variables']
+        del kwargs['reforge_variables']
+        super().__init__(*args, **kwargs)
         # need to double check if afflictions get messed up when unequipping shit
         # during "practice" and "skills" commands
         # import random
@@ -1050,29 +950,8 @@ class ReforgeTest(AffectReforge):
 
 
 class ReforgeStatBonusPerItemLevel(AffectReforge):
-    def __init__(
-        self,
-        affect_source_actor,
-        affect_target_actor,
-        name,
-        description,
-        turns,
-        source_item=None,
-        reforge_variables=None,
-        dispellable=False,
-        hidden = True,
-    ):
-        super().__init__(
-            affect_source_actor,
-            affect_target_actor,
-            name,
-            description,
-            turns,
-            source_item=source_item,
-            reforge_variables=reforge_variables,
-            dispellable=dispellable,
-            hidden = hidden,
-        )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         # self.stat = self.reforge_variables['var_a']
         # self.bonus = float(self.reforge_variables['var_b'])
         # self.bonus = self.bonus * self.source_item.stat_manager.reqs[StatType.LVL]
@@ -1205,16 +1084,11 @@ class ReforgePureDamageBonusToNonTargettingEnemies(AffectReforge):
 """
 
 class ReforgeChanceDontEndTurnOnHeal(AffectReforge):
-    def __init__(self,
-            affect_source_actor,
-            affect_target_actor,
-            name, description, turns,
-            source_item = None,
-            reforge_variables = None
-        ):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.combat_round = -1 
         self.combat_id = -1
+
     def dealt_damage(self, damage_obj):
         _p = self.affect_target_actor
         _c = self.affect_target_actor.room.combat
@@ -1258,15 +1132,8 @@ class ReforgeChanceDontEndTurnOnHeal(AffectReforge):
 
 
 class ReforgeChanceDontEndTurnOnUseStealth(AffectReforge):
-    def __init__(self,
-            affect_source_actor,
-            affect_target_actor,
-            name, description, turns,
-            source_item = None,
-            reforge_variables = None
-        ):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
-        self.combat_round = -1 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.combat_id = -1
 
     def on_skill_used(self, skill_obj):
@@ -1298,14 +1165,8 @@ class ReforgeChanceDontEndTurnOnUseStealth(AffectReforge):
         return damage_obj
 
 class ReforgeChanceToUseSkill(AffectReforge):
-    def __init__(self,
-            affect_source_actor,
-            affect_target_actor,
-            name, description, turns,
-            source_item = None,
-            reforge_variables = None
-        ):
-        super().__init__(affect_source_actor, affect_target_actor, name, description, turns, source_item = source_item, reforge_variables = reforge_variables)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.combat_round = -1 
         self.combat_id = -1
         self.used = False
