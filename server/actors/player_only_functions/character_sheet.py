@@ -658,6 +658,20 @@ def get_exp_needed_to_level(self):
         #3 + (l**3.5)
     )  # int(2 ** self.stat_manager.stats[StatType.LVL]) + (self.stat_manager.stats[StatType.LVL]*self.stat_manager.stats[StatType.LVL])
     return exp_needed
+
+
+'''
+def get_exp_needed_to_level2():
+    for i in range(0,30):
+        l = i
+        exp_needed = int(
+            3 + (l**3.55075)
+        )   
+        print(exp_needed)
+    
+get_exp_needed_to_level2()
+'''
+
 '''
 0 3.0
 1 4.0

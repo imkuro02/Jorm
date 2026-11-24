@@ -65,7 +65,7 @@ class ActorStatManager:
         }
 
     def is_max_level(self):
-        return self.stats[StatType.LVL] >= 15
+        return self.stats[StatType.LVL] >= 30
             
     def gain_stat_points(self, stat=StatType.GRIT, points=1):
         hp_bonus = 0
