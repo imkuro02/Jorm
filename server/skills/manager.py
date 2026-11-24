@@ -219,7 +219,7 @@ def check_if_skill_can_be_used(skill_object):
         hp_cost = skill["script_values"]["hp_cost"][0] + (skill["script_values"]["hp_cost"][2] * (users_skill_level-1))
         hp_cost = int(hp_cost)
         #hp_cost = int(hp_cost) + int(user.stat_manager.stats[StatType.LVL] * 0.5)
-        if hp_cost >= user.stat_manager.stats[StatType.HP] + 1:
+        if hp_cost >= user.stat_manager.stats[StatType.HP]:
             error(
                 user,
                 f"You need atleast {hp_cost + 1} {Color.stat[StatType.HP]}{StatType.name[StatType.HP]}{Color.BACK} to use {skill_name}",
