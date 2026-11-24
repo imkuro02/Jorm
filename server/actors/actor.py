@@ -1268,6 +1268,8 @@ class Actor:
 
                 custom_line = line_self
                 for obj in list_pretty_name_objects:
+                    if obj == None:
+                        continue
                     if obj.id == None:
                         continue
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))
