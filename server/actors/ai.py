@@ -68,6 +68,9 @@ class AI:
             br = f'{self.actor.id} is dying!'
             self.actor.pretty_broadcast(br, br, list_pretty_name_objects = [self.actor])
             skill, lvl = self.actor.on_death_skills_use.split("=")
+
+            self.actor.on_death_skills_use = None
+
             skill = str(skill).strip("")
             lvl = int(lvl)
             self.actor.skill_manager.learn(skill_id=skill, amount=lvl)
@@ -75,6 +78,8 @@ class AI:
             self.use_prediction(no_checks=True)
             self.actor.skill_manager.unlearn(skill_id=skill, amount=lvl)
             self.clear_prediction()
+            return 'DO NOT CONTINUE'
+        return False
 
     def has_prediction(self):
         if self.prediction == None:

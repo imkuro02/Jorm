@@ -3,6 +3,10 @@ import random
 import uuid
 from copy import deepcopy
 
+
+
+from systems.utils import show_caller
+
 from configuration.constants.tickrate import TICKRATE
 import actors.ai
 import systems.utils
@@ -1067,8 +1071,11 @@ class Actor:
         pass
 
     def die(self, unload=True):
-        self.ai.die()
-        
+        #print(f'{self.name} dies')
+
+        if self.ai.die() == 'DO NOT CONTINUE':
+            return 'DO NOT CONTINUE'
+
         if self.room == None:
             systems.utils.debug_print(
                 self.id,
@@ -1268,8 +1275,6 @@ class Actor:
 
                 custom_line = line_self
                 for obj in list_pretty_name_objects:
-                    if obj == None:
-                        continue
                     if obj.id == None:
                         continue
                     custom_line = custom_line.replace(obj.id, obj.pretty_name(player))

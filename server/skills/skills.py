@@ -263,20 +263,10 @@ class Skill:
             ):
                 _line_to_send = perspectives["user on user"]
                 
-            try:
-                _line_to_send = _line_to_send.replace("#USER#", self.user.id)
-            except AttributeError:
-                pass
-                
-            try:
-                _line_to_send = _line_to_send.replace("#OTHER#", self.other.id)
-            except AttributeError:
-                pass
-
-            try:
-                _line_to_send = _line_to_send.replace("#SKILL#", self.id)
-            except AttributeError:
-                pass
+            
+            _line_to_send = _line_to_send.replace("#USER#", self.user.id)
+            _line_to_send = _line_to_send.replace("#OTHER#", self.other.id)
+            _line_to_send = _line_to_send.replace("#SKILL#", self.id)
 
             list_pretty_name_objects = [self, self.user, self.other]
             receiver.pretty_broadcast(

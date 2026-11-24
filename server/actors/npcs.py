@@ -439,11 +439,13 @@ class Npc(Actor):
             super().die()
             return
 
+        if super().die(unload=False) == 'DO NOT CONTINUE':
+            return 'DO NOT CONTINUE'
+
         room = self.room
         participants = room.combat.participants.values()
         
 
-        super().die(unload=False)
 
         room.world.kill_tracking.add_kill(self)
         
