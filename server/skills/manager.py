@@ -235,6 +235,7 @@ def check_if_skill_can_be_used(skill_object):
     #        error(user, f'You need atleast {mp_cost} MP to use {skill_name}')
     #        return False
 
+    #print(user.stat_manager.stats[StatType.HP], hp_cost)
     user.stat_manager.stats[StatType.HP] -= hp_cost
     # user.stat_manager.stats[StatType.MP] -= mp_cost
 
