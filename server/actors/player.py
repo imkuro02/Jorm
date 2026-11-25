@@ -224,7 +224,7 @@ class UpdateChecker:
         else:
             
             _map += '\n' + self.actor.show_prompts(
-                order=None, no_predictions=False, return_gmcp=True
+                order=None, no_predictions=False, return_gmcp=True, status = self.actor.status
             ) + _split
 
             _map += '\n' + str(self.actor.command_skills('', return_gmcp = True)) + _split
