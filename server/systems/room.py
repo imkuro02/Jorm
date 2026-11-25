@@ -389,7 +389,8 @@ class Room:
 
         to_del = []
         for i in mydict:
-            if status == None: continue
+            if status == None: 
+                continue
             if mydict[i].status != status:
                 to_del.append(i)
         for i in to_del:
