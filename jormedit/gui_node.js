@@ -176,6 +176,18 @@ nodeGroup.appendChild(label('save_wall_data'));
 nodeGroup.appendChild(br());
 
 
+nodeGroup.appendChild(label('floor id'));
+nodeGroup.appendChild(br());
+const nodeFloorInput = document.createElement("input");
+nodeGroup.appendChild(nodeFloorInput);
+nodeGroup.appendChild(br());
+
+const nodeSaveFloorInput = document.createElement("input");
+nodeSaveFloorInput.type = 'checkbox';
+nodeGroup.appendChild(nodeSaveFloorInput);
+nodeGroup.appendChild(label('save_floor_id'));
+nodeGroup.appendChild(br());
+
 
 nodeFormContainer.appendChild(nodeGroup);
 
@@ -237,10 +249,16 @@ function guiNodeSetSelectedNode(node){
             nodeSpawnGroupInput.value = '';
         }
 
-         if (typeof data['wall_data'] !== "undefined"){
+        if (typeof data['wall_data'] !== "undefined"){
             nodeWallDataInput.value = data['wall_data'];
         } else {
             nodeWallDataInput.value = '';
+        }
+
+        if (typeof data['floor_id'] !== "undefined"){
+            nodeFloorInput.value = data['floor_id'];
+        } else {
+            nodeFloorInput.value = '';
         }
     }
 }
@@ -256,7 +274,8 @@ function save_json() {
         'instanced': nodeInstancedInput.checked,
         'doorway': nodeDoorwayInput.checked,
         'spawner': nodeSpawnGroupInput.value,
-        'wall_data': nodeWallDataInput.value
+        'wall_data': nodeWallDataInput.value,
+        'floor_id': nodeFloorInput.value
 
     };
 
@@ -270,6 +289,7 @@ function save_json() {
     if (!nodeSaveDoorwayInput.checked){delete data['doorway'];}
     if (!nodeSaveSpawnGroupInput.checked){delete data['spawner'];}
     if (!nodeSaveWallDataInput.checked){delete data['wall_data'];}
+    if (!nodeSaveFloorInput.checked){delete data['floor_id'];}
 
 
     /*

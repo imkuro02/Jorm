@@ -894,7 +894,8 @@ def get_packed_icons(self, status = None):
 
         start += amount
         see.append(t.get_table())
-
+    
+    
     return see
 
 def command_look(self, line, return_gmcp=False, short = False):
@@ -957,7 +958,14 @@ def command_look(self, line, return_gmcp=False, short = False):
         if self.settings_manager.get_value(SETTINGS.VIEW_ASCII_ART):
             see.append('\n'.join(self.get_packed_icons()))
                 
-            
+        #from configuration.constants.screen import SCREEN
+        #see += ('_' * SCREEN.WIDTH)
+        #print(SCREEN.WIDTH)
+        #see.append('@green\|/___\|/\|/__\|/______\|/__\|/_\|/\|/__\|/______\|/__\|/______\|/___@normal' )
+        from configuration.constants.textures import FLOOR
+        floor = getattr(FLOOR, self.room.get_floor_id(), FLOOR.DEFAULT)
+        see.append(floor)
+
 
         if not room.inventory_manager.is_empty():
             see_items = []
@@ -971,6 +979,9 @@ def command_look(self, line, return_gmcp=False, short = False):
                 see.append('\n'.join(see_items))
 
         see = '\n'.join(see)
+
+
+        
 
         if not return_gmcp:
             self.send_line(see)

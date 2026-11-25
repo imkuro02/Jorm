@@ -68,6 +68,7 @@ def load_map():
         room_spawner = []
         room_from_file = data["from_file"]
         room_wall_data = "@normal:H:1001"
+        room_floor_id = "DEFAULT"
 
         skip_loading = False
 
@@ -120,6 +121,9 @@ def load_map():
         if "wall_data" in json_data:
             room_wall_data = json_data["wall_data"]
 
+        if "floor_id" in json_data:
+            room_floor_id = json_data["floor_id"]
+
         # systems.utils.debug_print(room_spawner)
         nodes[room_id] = {
             "id": room_id,
@@ -132,6 +136,7 @@ def load_map():
             "spawner": room_spawner,
             "from_file": room_from_file,
             "wall_data": room_wall_data,
+            "floor_id": room_floor_id,
             #'items': room_items
         }
 

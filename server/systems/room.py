@@ -333,6 +333,10 @@ class Room:
         # wall_data_prio = wall_data[2]
         return wall_data
 
+    def get_floor_id(self):
+        return WORLD["world"][self.get_real_id()]["floor_id"]
+
+
     def get_real_id(self):
         # systems.utils.debug_print(self.id)
         if "#" in self.id:
