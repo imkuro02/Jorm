@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c6gynqvh3t3og"
+path="res://.godot/imported/10 Sure Is Dark In Here.mp3-599ee86bfd58e00f52ed86cea79f373d.mp3str"
+
+[deps]
+
+source_file="res://audio/music/enneagon/10 Sure Is Dark In Here.mp3"
+dest_files=["res://.godot/imported/10 Sure Is Dark In Here.mp3-599ee86bfd58e00f52ed86cea79f373d.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

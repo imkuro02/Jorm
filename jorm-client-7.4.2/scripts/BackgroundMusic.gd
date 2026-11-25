@@ -1,7 +1,7 @@
 extends AudioStreamPlayer
 var states = {
-	'Normal': "res://audio/music/enneagon/10 Sure Is Dark In Here.ogg",
-	'Fighting': "res://audio/music/enneagon/19 Counterfeit Finale.ogg",
+	'Normal': "res://audio/music/enneagon/10 Sure Is Dark In Here.mp3",
+	'Fighting': "res://audio/music/enneagon/19 Counterfeit Finale.mp3",
 	'Dead': "res://audio/music/alvin/N A W A K - FOREST.mp3",
 	'Menu': "res://audio/music/alvin/N A W A K - FOREST.mp3"
 }
