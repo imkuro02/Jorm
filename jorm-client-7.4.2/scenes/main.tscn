@@ -311,6 +311,7 @@ mouse_filter = 2
 stream = ExtResource("15_77trc")
 volume_db = -80.0
 autoplay = true
+parameters/looping = true
 script = ExtResource("16_vp8dw")
 
 [connection signal="meta_clicked" from="canvas/sidebar/ascii_map" to="." method="_on_ascii_map_meta_clicked"]

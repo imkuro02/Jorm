@@ -13,6 +13,7 @@ var states = {
 
 func _ready():
 	stream.loop = true
+	
 	change_state('Menu')
 	
 	
@@ -51,7 +52,6 @@ func change_state(state):
 			play()
 			stream.loop = true
 		)
-
 		tween.tween_property(self, "volume_db", vol_desired, 0)
 		
 			
