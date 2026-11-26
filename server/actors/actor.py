@@ -146,6 +146,9 @@ class SkillManager:
         self.charges = {}
         self.skill_script_values_modifiers = []
 
+    def has_skill(self, skill_id):
+        return self.skills.get(skill_id, 0) > 0
+        
     # modify skill script values
     def add_skill_script_values_modifiers(self, skill_id, script_value, value):
         self.skill_script_values_modifiers.append((skill_id, script_value, value))

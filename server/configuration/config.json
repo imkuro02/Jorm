@@ -1,5 +1,5 @@
 {
-    "SHA-256": "5df12146c88c36652857971fdfe4b0c7add410c6094ba1ca33c4e176fb3eeef3",
+    "SHA-256": "7af8f1a2c0c2d1c6e441ee84f6817c9f9a4e09efe140115dc438593139017e91",
     "enemies": {
         "rubble": {
             "npc_id": "rubble",
@@ -3894,7 +3894,7 @@
         "bash": {
             "skill_id": "bash",
             "name": "Bash",
-            "description": "Deal physical damage based on your Grit.\n.Applies Stunned for DURATION of turns.\n",
+            "description": "Deal physical damage based on your Grit.\n.Applies Stunned for DURATION of turns.\nAdditionally, damage blocked by your Guard gets stored and added.\n",
             "script_to_run": "Bash",
             "sound": "DAMAGE_PHYSICAL_DEALT",
             "target_others_is_valid": true,
@@ -4219,7 +4219,7 @@
         "guardian_angel": {
             "skill_id": "guardian_angel",
             "name": "Daimon",
-            "description": "First time your HOLD breaks in a fight, restore BONUS% of your MAX LIFE.\n",
+            "description": "First time your HOLD breaks in a fight, restore BONUS% of your MAX LIFE.\nAdditionally, your guard lasts until your next turn, and does not break on damage.\n",
             "script_to_run": "GuardianAngel",
             "sound": "DAMAGE_MAGIC_DEALT",
             "target_others_is_valid": false,

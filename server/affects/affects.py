@@ -22,6 +22,8 @@ class Affect:
         hidden = False,
         silent = False,
         priority = 0,
+
+        *args, **kwargs
     ):
         # used for pretty_name and pretty_broadcast 
         self.id = 'affect_id-'+name
@@ -49,7 +51,7 @@ class Affect:
         self.silent = silent
 
     def pretty_name(self, identifier = None):
-        if self.turns == 0:
+        if self.turns <= 1:
             return f'{self.name}'
         return f'{self.name} x{self.turns}' 
 
@@ -236,14 +238,22 @@ class AffectStunned(Affect):
         )
         self.affect_target_actor.finish_turn()
 
+class AffectPrimed(Affect):
+    def __init__(self, *args, **kwargs):
+        self.power = kwargs['power']
+        del kwargs['power']
+        super().__init__(*args, **kwargs)
+
+    def pretty_name(self, identifier = None):
+        return f'{self.name} for {self.power} damage'
+
 class AffectGuarding(Affect):
     def __init__(self, *args, **kwargs):
         self.heal_power = kwargs['heal_power']
         del kwargs['heal_power']
         super().__init__(*args, **kwargs)
-        
+        self.stored_damage = 0
         self.got_hit = False
-
 
     def set_turn(self):
         super().set_turn()
@@ -262,16 +272,30 @@ class AffectGuarding(Affect):
             and damage_obj.damage_type != DamageType.CANCELLED
             and damage_obj.damage_type != DamageType.PURE
         ):
+            self.stored_damage += damage_obj.damage_value
             damage_obj.damage_type = DamageType.CANCELLED
             # damage_obj.damage_taker_actor.room.combat.current_actor = damage_obj.damage_taker_actor
             self.got_hit = True
-            self.on_finished()
+            if not self.affect_target_actor.skill_manager.has_skill('guardian_angel'):
+                self.on_finished()
             # damage_obj.damage_taker_actor.set_turn()
         return damage_obj
         
 
     def on_finished(self, silent=False):
         if self.got_hit:
+            if self.affect_target_actor.skill_manager.has_skill('bash'):
+                affect = AffectPrimed(
+                    affect_source_actor=self.affect_target_actor,
+                    affect_target_actor=self.affect_target_actor,
+                    name=f"Primed",
+                    description=f"{self.stored_damage} damage is primed",
+                    turns = 1,
+                    power = self.stored_damage,
+                    dispellable = True,
+                )
+                self.affect_target_actor.affect_manager.set_affect_object(affect)
+
             return super().on_finished(silent)
         else:
             power = self.heal_power

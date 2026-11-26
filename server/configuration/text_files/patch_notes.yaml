@@ -29,6 +29,17 @@ versions:
   #
   #
   #
+  "261126":
+    id: "261126"
+    title: Synergies
+    unixtime: 1775631568
+    features:
+      - Guard, Daimon and Bash now synergize
+      - Guard stores damage that can be used for Bash
+      - Daimon allows Guard to not break on damage received
+      -
+      -
+      -
   "191126":
     id: "191126"
     title: World

@@ -823,6 +823,18 @@ class SkillBash(SkillDamageByGrit):
 
     def use(self):
         damage_obj = super().use()
+        affect = self.user.affect_manager.affects.get('Primed', None)
+        print(self.user.affect_manager.affects)
+        print(affect)
+        if affect == None:
+            return damage_obj
+
+        damage_obj.damage_value += affect.power
+        affect.on_finished()
+
+        return damage_obj
+
+
       
     def after_use(self):
         stunned_affect = affects.AffectStunned(
